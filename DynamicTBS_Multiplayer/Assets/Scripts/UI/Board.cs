@@ -25,16 +25,9 @@ public class Board : MonoBehaviour
 
     private List<Tile> tiles = new List<Tile>();
 
-    // Cache um Tiles schneller anhand der Position zu finden
-    private readonly Dictionary<Vector3, Tile> tilesByPosition = new Dictionary<Vector3, Tile>();
-
     private void Start()
     {
         CreateBoard();
-    }
-
-    public Tile GetTile(Vector3 position) {
-        return tilesByPosition.GetValueOrDefault(position, null);
     }
 
     private void CreateBoard() 
@@ -45,10 +38,6 @@ public class Board : MonoBehaviour
             {
                 tiles.Add(TileFactory.CreateTile(tilePositions[column, row], GetPosition(row, column)));
             }
-        }
-
-        foreach (Tile tile in tiles) {
-            tilesByPosition.Add(tile.GetPosition(), tile);
         }
     }
 
