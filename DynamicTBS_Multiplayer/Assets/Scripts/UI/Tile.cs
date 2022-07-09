@@ -10,12 +10,12 @@ public abstract class Tile
     protected Vector3 position;
     protected GameObject tileGameObject;
     protected Sprite tileSprite;
-    protected Character currentInhabitant { get; set; }
+    protected Character currentInhabitant;
 
     protected Tile(Vector3 position) 
     {
         this.position = position;
-        this.tileGameObject = CreateTileGameObject(position);
+        this.tileGameObject = CreateTileGameObject();
         this.currentInhabitant = null;
     }
 
@@ -26,7 +26,7 @@ public abstract class Tile
         return this.position;
     }
 
-    private GameObject CreateTileGameObject(Vector3 position)
+    private GameObject CreateTileGameObject()
     {
         GameObject tile = new GameObject();
 
