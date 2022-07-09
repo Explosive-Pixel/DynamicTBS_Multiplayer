@@ -14,7 +14,7 @@ public class PlayerManager : MonoBehaviour
         bluePlayer = new Player(PlayerType.blue);
         pinkPlayer = new Player(PlayerType.pink);
 
-        currentPlayer = bluePlayer;
+        currentPlayer = pinkPlayer;
     }
 
     public Player GetOtherPlayer(Player player)
@@ -27,5 +27,26 @@ public class PlayerManager : MonoBehaviour
     public void NextPlayer() 
     {
         currentPlayer = GetOtherPlayer(currentPlayer);
+    }
+
+    public Player GetCurrentPlayer()
+    {
+        return currentPlayer;
+    }
+
+    public bool IsBlueTurn()
+    {
+        if (currentPlayer == bluePlayer)
+            return true;
+        return false;
+    }
+
+    public bool IsCurrentPlayer(string name)
+    {
+        if (name.Contains("Blue") && currentPlayer == bluePlayer)
+            return true;
+        if (name.Contains("Pink") && currentPlayer == pinkPlayer)
+            return true;
+        return false;
     }
 }

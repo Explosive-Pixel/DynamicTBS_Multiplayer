@@ -33,4 +33,15 @@ public class CharacterFactory : MonoBehaviour
 
         return character;
     }
+
+    public static Character CreateCharacter(string type, Player side)
+    {
+        if (type.Contains("_"))
+        {
+            type = type.Split("_")[0];
+        }
+
+        Enum.TryParse(type, out CharacterType characterType);
+        return CreateCharacter(characterType, side);
+    }
 }

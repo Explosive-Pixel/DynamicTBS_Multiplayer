@@ -32,7 +32,7 @@ public class Board : MonoBehaviour
 
     private void Start()
     {
-        CreateBoard();
+        //CreateBoard();
     }
 
     private void Update()
