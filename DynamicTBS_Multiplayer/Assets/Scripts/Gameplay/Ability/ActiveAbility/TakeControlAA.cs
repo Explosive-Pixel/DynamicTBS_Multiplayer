@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TakeControlAA : ActiveAbility
+public class TakeControlAA : IActiveAbility
 {
-    
+    public void Execute() { }
 }

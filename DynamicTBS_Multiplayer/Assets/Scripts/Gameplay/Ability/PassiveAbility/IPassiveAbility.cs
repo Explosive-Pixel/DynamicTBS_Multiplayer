@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface ActiveAbility
+public interface IPassiveAbility
 {
-    
+    void Apply();
 }

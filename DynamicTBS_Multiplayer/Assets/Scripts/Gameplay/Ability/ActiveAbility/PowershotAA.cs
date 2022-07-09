@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PowershotAA : ActiveAbility
+public class PowershotAA : IActiveAbility
 {
-    
+    public void Execute() { }
 }

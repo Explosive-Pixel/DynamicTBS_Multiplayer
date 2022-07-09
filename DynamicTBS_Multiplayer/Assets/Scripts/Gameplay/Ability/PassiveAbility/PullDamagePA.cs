@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PullDamagePA : PassiveAbility
+public class PullDamagePA : IPassiveAbility
 {
-    
+    public void Apply() { }
 }

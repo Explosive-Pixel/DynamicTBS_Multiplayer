@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealAA : ActiveAbility
+public class HealAA : IActiveAbility
 {
-    
+    public void Execute() { }
 }
