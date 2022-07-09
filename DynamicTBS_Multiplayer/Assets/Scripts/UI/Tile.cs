@@ -14,7 +14,6 @@ public abstract class Tile
 
     protected Tile(Vector3 position) 
     {
-        Debug.Log("TileConstructor called.");
         this.position = position;
         this.currentInhabitant = null;
     }

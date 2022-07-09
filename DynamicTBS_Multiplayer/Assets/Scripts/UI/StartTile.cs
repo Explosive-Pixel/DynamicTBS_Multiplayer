@@ -8,5 +8,7 @@ public class StartTile : Tile
     {
         this.type = TileType.StartTile;
         this.tileSprite = SpriteManager.START_TILE_SPRITE;
+
+        Init();
     }
 }

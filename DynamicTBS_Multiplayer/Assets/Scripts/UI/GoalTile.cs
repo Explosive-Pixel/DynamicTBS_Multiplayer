@@ -8,5 +8,7 @@ public class GoalTile : Tile
     {
         this.type = TileType.GoalTile;
         this.tileSprite = SpriteManager.GOAL_TILE_SPRITE;
+
+        Init();
     }
 }
