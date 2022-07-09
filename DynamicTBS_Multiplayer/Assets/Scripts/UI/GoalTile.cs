@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GoalTile : Tile
 {
-    public GoalTile(Vector3 position) : base(position)
+    public GoalTile(int row, int column) : base(row, column)
     {
         this.type = TileType.GoalTile;
         this.tileSprite = SpriteManager.GOAL_TILE_SPRITE;

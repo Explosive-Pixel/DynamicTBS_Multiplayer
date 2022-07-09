@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FloorTile : Tile
 {
-    public FloorTile(Vector3 position) : base(position)
+    public FloorTile(int row, int column) : base(row, column)
     {
         this.type = TileType.FloorTile;
         this.tileSprite = SpriteManager.FLOOR_TILE_SPRITE;

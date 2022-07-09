@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EmptyTile : Tile
 {
-    public EmptyTile(Vector3 position) : base(position) 
+    public EmptyTile(int row, int column) : base(row, column) 
     {
         this.type = TileType.EmptyTile;
         this.tileSprite = SpriteManager.EMPTY_TILE_SPRITE;

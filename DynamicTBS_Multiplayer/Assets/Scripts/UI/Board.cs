@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class Board : MonoBehaviour
 {
@@ -25,9 +26,47 @@ public class Board : MonoBehaviour
 
     private List<Tile> tiles = new List<Tile>();
 
+    private Dictionary<GameObject, Tile> tilesByGameObject = new Dictionary<GameObject, Tile>();
+
+    private Camera currentCamera;
+
     private void Start()
     {
         CreateBoard();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Mouse0)) 
+        {
+            HandleClick();
+        }
+    }
+
+    private void HandleClick()
+    {
+        Tile tile = GetTileByPosition(Input.mousePosition);
+    }
+
+    private Tile GetTileByPosition(Vector3 position) 
+    {
+        if (!currentCamera)
+        {
+            currentCamera = Camera.main;
+        }
+
+        RaycastHit hit;
+        Ray ray = currentCamera.ScreenPointToRay(position);
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+        {
+            GameObject gameObject = hit.transform.gameObject;
+            if (gameObject && gameObject.name.Contains("Tile"))
+            {
+                return tilesByGameObject.GetValueOrDefault(gameObject);
+            }
+        }
+
+        return null;
     }
 
     private void CreateBoard() 
@@ -36,13 +75,10 @@ public class Board : MonoBehaviour
         {
             for (int column = 0; column < boardSize; column++) 
             {
-                tiles.Add(TileFactory.CreateTile(tilePositions[column, row], GetPosition(row, column)));
+                Tile tile = TileFactory.CreateTile(tilePositions[column, row], row, column);
+                tiles.Add(tile);
+                tilesByGameObject.Add(tile.GetTileGameObject(), tile);
             }
         }
-    }
-
-    private Vector3 GetPosition(int x, int y) 
-    {
-        return new Vector3(Convert.ToSingle(x*0.7)-3, Convert.ToSingle(y*0.7)-3, 1);
-    }
+    }   
 }

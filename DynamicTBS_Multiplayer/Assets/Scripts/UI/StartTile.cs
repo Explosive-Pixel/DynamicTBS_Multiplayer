@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StartTile : Tile
 {
-    public StartTile(Vector3 position) : base(position)
+    public StartTile(int row, int column) : base(row, column)
     {
         this.type = TileType.StartTile;
         this.tileSprite = SpriteManager.START_TILE_SPRITE;

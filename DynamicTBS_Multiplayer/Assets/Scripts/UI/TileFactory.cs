@@ -4,31 +4,30 @@ using UnityEngine;
 
 public class TileFactory : MonoBehaviour
 {
-    public static Tile CreateTile(TileType type, Vector3 position)
+    public static Tile CreateTile(TileType type, int row, int column)
     {
         Tile tile = null;
         switch (type)
         {
             case TileType.EmptyTile:
-                tile = new EmptyTile(position);
+                tile = new EmptyTile(row, column);
                 break;
             case TileType.FloorTile:
-                tile = new FloorTile(position);
+                tile = new FloorTile(row, column);
                 break;
             case TileType.GoalTile:
-                tile = new GoalTile(position);
+                tile = new GoalTile(row, column);
                 break;
             case TileType.StartTile:
-                tile = new StartTile(position);
+                tile = new StartTile(row, column);
                 break;
             case TileType.MasterStartTile:
-                tile = new MasterStartTile(position);
+                tile = new MasterStartTile(row, column);
                 break;
         }
 
         if (tile != null) 
         {
-            //Instantiate(tile.GetTileGameObject());
             return tile;
         }
 
