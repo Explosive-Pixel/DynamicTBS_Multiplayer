@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RunnerChar : Character
 {
-    public RunnerChar(Player side, GameObject characterGameObject) : base(side, characterGameObject)
+    public RunnerChar(Player side) : base(side)
     {
         this.maxHitPoints = 1;
         this.moveSpeed = 2;
@@ -12,5 +12,7 @@ public class RunnerChar : Character
 
         this.activeAbility = new JumpAA();
         this.passiveAbility = new HighPerformancePA();
+
+        this.characterSprite = side.GetPlayerType() == PlayerType.blue ? SpriteManager.BLUE_RUNNER_SPRITE : SpriteManager.PINK_RUNNER_SPRITE;
     }
 }

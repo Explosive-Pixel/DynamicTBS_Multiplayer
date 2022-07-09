@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MasterChar : Character
 {
-    public MasterChar(Player side, GameObject characterGameObject) : base(side, characterGameObject)
+    public MasterChar(Player side) : base(side)
     {
         this.maxHitPoints = 3;
         this.moveSpeed = 1;
@@ -12,5 +12,7 @@ public class MasterChar : Character
 
         this.activeAbility = new TakeControlAA();
         this.passiveAbility = new InfluenceAuraPA();
+
+        this.characterSprite = side.GetPlayerType() == PlayerType.blue ? SpriteManager.BLUE_MASTER_SPRITE : SpriteManager.PINK_MASTER_SPRITE;
     }
 }

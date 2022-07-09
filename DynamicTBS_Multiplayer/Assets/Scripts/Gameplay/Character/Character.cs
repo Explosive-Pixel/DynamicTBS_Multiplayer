@@ -3,10 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Character : MonoBehaviour
-{
-    [SerializeField] protected GameObject characterPrefab;
-    
+public abstract class Character
+{   
     protected int moveSpeed;
     protected int maxHitPoints;
     protected int attackRange;
@@ -16,18 +14,16 @@ public abstract class Character : MonoBehaviour
     protected int hitPoints;
     protected Player side;
     protected GameObject characterGameObject;
+    protected Sprite characterSprite;
 
-    private PlayerManager playerManager;
-
-    protected Character(Player side, GameObject characterGameObject)
+    protected Character(Player side)
     {
         this.side = side;
         this.hitPoints = maxHitPoints;
-        this.characterGameObject = characterGameObject;
+        this.characterGameObject = CreateCharacterGameObject();
     }
 
-    // public void Move() { } Don't need that here since character doesn't know its current position
-    // We need a method MoveCharacter(Character character, Vector3 newPosition) in Board
+    public GameObject GetCharacterGameObject() { return characterGameObject;}
 
     public void TakeDamage(int damage) {
         this.hitPoints -= damage;
@@ -47,5 +43,22 @@ public abstract class Character : MonoBehaviour
 
     public void SwitchSide(Player newSide) {
         this.side = newSide;
+    }
+
+    private GameObject CreateCharacterGameObject()
+    {
+        GameObject character = new GameObject();
+
+        Vector3 startPosition = new Vector3(0, 0, 0);
+        Vector3 startScale = new Vector3(100, 0, 100);
+        Quaternion startRotation = Quaternion.identity;
+
+        SpriteRenderer spriteRenderer = character.AddComponent<SpriteRenderer>();
+        spriteRenderer.sprite = this.characterSprite;
+        character.transform.localScale = startScale;
+        character.transform.position = startPosition;
+        character.transform.rotation = startRotation;
+
+        return character;
     }
 }

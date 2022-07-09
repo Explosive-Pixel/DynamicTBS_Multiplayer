@@ -9,10 +9,10 @@ public class PlayerManager : MonoBehaviour
     private Player bluePlayer;
     private Player pinkPlayer;
 
-    public PlayerManager()
+    private void Awake()
     {
-        bluePlayer = new Player();
-        pinkPlayer = new Player();
+        bluePlayer = new Player(PlayerType.blue);
+        pinkPlayer = new Player(PlayerType.pink);
 
         currentPlayer = bluePlayer;
     }
@@ -22,10 +22,5 @@ public class PlayerManager : MonoBehaviour
         if (player == bluePlayer)
             return pinkPlayer;
         return bluePlayer;
-    }
-
-    public bool IsBluePlayer(Player player)
-    {
-        return player == bluePlayer;
     }
 }
