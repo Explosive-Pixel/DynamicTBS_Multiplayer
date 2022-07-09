@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class MechanicChar : Character
 {
-    public MechanicChar(Player side) : base(side){
+    public MechanicChar(Player side) : base(side)
+    {
         this.maxHitPoints = 2;
         this.moveSpeed = 1;
         this.attackRange = 1;

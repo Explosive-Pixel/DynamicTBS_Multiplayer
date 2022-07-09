@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class ShooterChar : Character
 {
-    public ShooterChar(Player side) : base(side){
+    public ShooterChar(Player side) : base(side)
+    {
         this.maxHitPoints = 2;
         this.moveSpeed = 1;
         this.attackRange = 2;
