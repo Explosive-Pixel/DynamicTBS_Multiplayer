@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MasterChar : Character
 {
-    public MasterChar(Player side) : base(side)
+    public MasterChar(Player side, GameObject characterGameObject) : base(side, characterGameObject)
     {
         this.maxHitPoints = 3;
         this.moveSpeed = 1;

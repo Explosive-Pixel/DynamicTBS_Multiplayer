@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TankChar : Character
 {
-    public TankChar(Player side) : base(side)
+    public TankChar(Player side, GameObject characterGameObject) : base(side, characterGameObject)
     {
         this.maxHitPoints = 4;
         this.moveSpeed = 1;

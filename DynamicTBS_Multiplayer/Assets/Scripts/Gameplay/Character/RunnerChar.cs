@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RunnerChar : Character
 {
-    public RunnerChar(Player side) : base(side)
+    public RunnerChar(Player side, GameObject characterGameObject) : base(side, characterGameObject)
     {
         this.maxHitPoints = 1;
         this.moveSpeed = 2;

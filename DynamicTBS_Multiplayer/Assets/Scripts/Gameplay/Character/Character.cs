@@ -15,13 +15,15 @@ public abstract class Character : MonoBehaviour
 
     protected int hitPoints;
     protected Player side;
+    protected GameObject characterGameObject;
 
     private PlayerManager playerManager;
 
-    protected Character(Player side)
+    protected Character(Player side, GameObject characterGameObject)
     {
         this.side = side;
         this.hitPoints = maxHitPoints;
+        this.characterGameObject = characterGameObject;
     }
 
     // public void Move() { } Don't need that here since character doesn't know its current position

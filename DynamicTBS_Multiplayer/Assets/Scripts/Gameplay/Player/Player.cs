@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Player
 {
-    private List<GameObject> characters;
+    private List<Character> characters;
 
-    public void AddCharacter(GameObject character) {
+    public void AddCharacter(Character character) {
         this.characters.Add(character);
     }
 
-    public bool RemoveCharacter(GameObject character) {
+    public bool RemoveCharacter(Character character) {
         return this.characters.Remove(character);
     }
 }

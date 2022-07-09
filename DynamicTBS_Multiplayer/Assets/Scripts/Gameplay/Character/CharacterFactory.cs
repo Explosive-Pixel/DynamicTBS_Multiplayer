@@ -12,7 +12,31 @@ public class CharacterFactory : MonoBehaviour
         playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
     }
 
-    public void CreateCharacter(Player side, CharacterType type)
+
+    public Character CreateCharacter(CharacterType type, Player side) 
+    {
+        GameObject gameObject = CreateCharacterGameObject(type, side);
+
+        switch (type) 
+        {
+            case CharacterType.MasterChar: 
+                return new MasterChar(side, gameObject);
+            case CharacterType.TankChar:
+                return new TankChar(side, gameObject);
+            case CharacterType.ShooterChar:
+                return new ShooterChar(side, gameObject);
+            case CharacterType.RunnerChar:
+                return new RunnerChar(side, gameObject);
+            case CharacterType.MechanicChar:
+                return new MechanicChar(side, gameObject);
+            case CharacterType.MedicChar:
+                return new MedicChar(side, gameObject);
+        }
+
+        return null;
+    }
+
+    private GameObject CreateCharacterGameObject(CharacterType type, Player side)
     {
         GameObject character = new GameObject();
 
@@ -25,9 +49,11 @@ public class CharacterFactory : MonoBehaviour
         character.transform.localScale = startScale;
         character.transform.position = startPosition;
         character.transform.rotation = startRotation;
-        
-        
+
+
         Instantiate(character);
+
+        return character;
     }
 
     private Sprite ChooseCorrectSprite(Player side, CharacterType type)

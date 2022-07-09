@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MedicChar : Character
 {
-    public MedicChar(Player side) : base(side)
+    public MedicChar(Player side, GameObject characterGameObject) : base(side, characterGameObject)
     {
         this.maxHitPoints = 2;
         this.moveSpeed = 1;
