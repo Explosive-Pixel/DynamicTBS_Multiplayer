@@ -23,4 +23,9 @@ public class PlayerManager : MonoBehaviour
             return pinkPlayer;
         return bluePlayer;
     }
+
+    public void NextPlayer() 
+    {
+        currentPlayer = GetOtherPlayer(currentPlayer);
+    }
 }
