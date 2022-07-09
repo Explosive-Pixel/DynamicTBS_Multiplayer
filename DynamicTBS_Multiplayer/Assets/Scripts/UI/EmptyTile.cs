@@ -8,5 +8,7 @@ public class EmptyTile : Tile
     {
         this.type = TileType.EmptyTile;
         this.tileSprite = SpriteManager.EMPTY_TILE_SPRITE;
+
+        Init();
     }
 }

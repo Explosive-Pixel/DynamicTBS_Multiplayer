@@ -14,5 +14,7 @@ public class MasterChar : Character
         this.passiveAbility = new InfluenceAuraPA();
 
         this.characterSprite = side.GetPlayerType() == PlayerType.blue ? SpriteManager.BLUE_MASTER_SPRITE : SpriteManager.PINK_MASTER_SPRITE;
+
+        Init();
     }
 }

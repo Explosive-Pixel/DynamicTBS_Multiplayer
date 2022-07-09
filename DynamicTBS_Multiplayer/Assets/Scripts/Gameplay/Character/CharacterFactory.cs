@@ -31,12 +31,6 @@ public class CharacterFactory : MonoBehaviour
                 break;
         }
 
-        if (character != null) 
-        {
-            Instantiate(character.GetCharacterGameObject());
-            return character;
-        }
-
-        return null;
+        return character;
     }
 }

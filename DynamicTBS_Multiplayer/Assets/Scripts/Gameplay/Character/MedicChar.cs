@@ -14,5 +14,7 @@ public class MedicChar : Character
         this.passiveAbility = new AdrenalinPA();
 
         this.characterSprite = side.GetPlayerType() == PlayerType.blue ? SpriteManager.BLUE_MEDIC_SPRITE : SpriteManager.PINK_MEDIC_SPRITE;
+
+        Init();
     }
 }

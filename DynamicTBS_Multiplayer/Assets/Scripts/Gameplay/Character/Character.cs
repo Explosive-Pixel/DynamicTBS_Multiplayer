@@ -20,6 +20,10 @@ public abstract class Character
     {
         this.side = side;
         this.hitPoints = maxHitPoints;
+    }
+
+    protected void Init()
+    {
         this.characterGameObject = CreateCharacterGameObject();
     }
 
@@ -50,12 +54,10 @@ public abstract class Character
         GameObject character = new GameObject();
 
         Vector3 startPosition = new Vector3(0, 0, 0);
-        Vector3 startScale = new Vector3(100, 0, 100);
         Quaternion startRotation = Quaternion.identity;
 
         SpriteRenderer spriteRenderer = character.AddComponent<SpriteRenderer>();
         spriteRenderer.sprite = this.characterSprite;
-        character.transform.localScale = startScale;
         character.transform.position = startPosition;
         character.transform.rotation = startRotation;
 
