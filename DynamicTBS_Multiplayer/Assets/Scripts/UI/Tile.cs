@@ -7,6 +7,8 @@ public abstract class Tile : MonoBehaviour
 {
     [SerializeField] protected GameObject tilePrefab;
 
+    protected TileType type;
+
     protected Vector3 position;
     protected Character currentInhabitant { get; set; }
 
@@ -14,5 +16,10 @@ public abstract class Tile : MonoBehaviour
     {
         this.position = position;
         this.currentInhabitant = null;
+    }
+
+    public Vector3 GetPosition() 
+    {
+        return this.position;
     }
 }

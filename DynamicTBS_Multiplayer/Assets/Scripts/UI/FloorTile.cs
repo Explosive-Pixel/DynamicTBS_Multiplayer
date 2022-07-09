@@ -6,6 +6,6 @@ public class FloorTile : Tile
 {
     public FloorTile(Vector3 position) : base(position)
     {
-
+        this.type = TileType.FloorTile;
     }
 }
