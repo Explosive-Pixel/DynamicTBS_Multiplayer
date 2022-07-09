@@ -8,10 +8,16 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject draftCanvas;
     [SerializeField] private GameObject gameplayCanvas;
 
+    private bool hasGameStarted;
+    
     private void Awake()
     {
         SpriteManager.LoadSprites();
+        hasGameStarted = false;
+        DraftEvents.OnEndDraft += GoToGameplayScreen;
     }
+
+    #region MenusRegion
 
     public void GoToStartMenu()
     {
@@ -37,11 +43,28 @@ public class GameManager : MonoBehaviour
         gameplayCanvas.SetActive(false);
     }
 
-    public void GoToGameplayScreen()
+    private void GoToGameplayScreen()
     {
         startMenuCanvas.SetActive(false);
         onlineMenuCanvas.SetActive(false);
         draftCanvas.SetActive(false);
         gameplayCanvas.SetActive(true);
+    }
+
+    #endregion
+    
+    public bool HasGameStarted()
+    {
+        return hasGameStarted;
+    }
+
+    private void SetGameStarted()
+    {
+        hasGameStarted = true;
+    }
+
+    private void OnDestroy()
+    {
+        DraftEvents.OnEndDraft -= GoToGameplayScreen;
     }
 }

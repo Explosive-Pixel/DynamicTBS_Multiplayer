@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player
 {
     private PlayerType type;
-    private List<Character> characters;
+    private List<Character> characters = new List<Character>();
 
     public Player(PlayerType type) 
     {

@@ -30,9 +30,9 @@ public class Board : MonoBehaviour
 
     private Camera currentCamera;
 
-    private void Start()
+    private void Awake()
     {
-        //CreateBoard();
+        DraftEvents.OnEndDraft += CreateBoard;
     }
 
     private void Update()
@@ -80,5 +80,10 @@ public class Board : MonoBehaviour
                 tilesByGameObject.Add(tile.GetTileGameObject(), tile);
             }
         }
-    }   
+    }
+
+    private void OnDestroy()
+    {
+        DraftEvents.OnEndDraft -= CreateBoard;
+    }
 }

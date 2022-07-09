@@ -15,11 +15,15 @@ public abstract class Character
     protected Player side;
     protected GameObject characterGameObject;
     protected Sprite characterSprite;
+    protected GameManager gameManager;
+
+    protected bool hasGameStarted;
 
     protected Character(Player side)
     {
         this.side = side;
         this.hitPoints = maxHitPoints;
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     protected void Init()

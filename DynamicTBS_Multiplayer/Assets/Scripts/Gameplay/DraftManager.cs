@@ -11,7 +11,7 @@ public class DraftManager : MonoBehaviour
     private static List<int> draftOrder = new List<int>() {3, 6, 7, 9, 11, 13};
     
     private PlayerManager playerManager;
-    private Vector3 firstPosition = new Vector3(-6.5f, -3.5f, 1);
+    private Vector3 firstPosition = new Vector3(-6.5f, -3.5f, 0.997f);
     private float offset = 1f;
     private int draftCounter;
 
@@ -23,17 +23,24 @@ public class DraftManager : MonoBehaviour
 
     public void CreateCharacter()
     {
-        if (draftCounter >= MaxDraftCount) return;
+        if (draftCounter >= MaxDraftCount)
+        {
+            DraftCompleted();
+            return;
+        }
         
         string buttonName = EventSystem.current.currentSelectedGameObject.name;
 
         if (!playerManager.IsCurrentPlayer(buttonName)) return;
         
-        Character master = CharacterFactory.CreateCharacter(buttonName, playerManager.GetCurrentPlayer());
-        GameObject masterGameObject = master.GetCharacterGameObject();
+        Character character = CharacterFactory.CreateCharacter(buttonName, playerManager.GetCurrentPlayer());
+        GameObject characterGameObject = character.GetCharacterGameObject();
 
-        masterGameObject.transform.position = firstPosition;
+        characterGameObject.transform.position = firstPosition;
         firstPosition.x += offset;
+        
+        DraftEvents.CharacterCreated(character);
+        
         AdvanceDraftOrder();
     }
 
@@ -43,5 +50,10 @@ public class DraftManager : MonoBehaviour
 
         if (draftOrder.Contains(draftCounter))
             playerManager.NextPlayer();
+    }
+
+    private void DraftCompleted()
+    {
+        DraftEvents.EndDraft();
     }
 }

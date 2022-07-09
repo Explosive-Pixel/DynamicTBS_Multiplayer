@@ -36,17 +36,27 @@ public class PlayerManager : MonoBehaviour
 
     public bool IsBlueTurn()
     {
-        if (currentPlayer == bluePlayer)
-            return true;
-        return false;
+        return currentPlayer == bluePlayer;
     }
 
     public bool IsCurrentPlayer(string name)
     {
-        if (name.Contains("Blue") && currentPlayer == bluePlayer)
+        if (name.Contains("Blue") && IsBlueTurn())
             return true;
-        if (name.Contains("Pink") && currentPlayer == pinkPlayer)
+        if (name.Contains("Pink") && !IsBlueTurn())
             return true;
         return false;
+    }
+
+    public Player GetPlayer(PlayerType playerType)
+    {
+        if (playerType == PlayerType.blue)
+            return bluePlayer;
+        return pinkPlayer;
+    }
+
+    public void AddCharacterToCurrentPlayer(Character character)
+    {
+        currentPlayer.AddCharacter(character);
     }
 }
