@@ -15,7 +15,6 @@ public abstract class Character
     protected Player side;
     protected GameObject characterGameObject;
     protected Sprite characterSprite;
-    protected GameManager gameManager;
 
     protected bool hasGameStarted;
 
@@ -23,7 +22,6 @@ public abstract class Character
     {
         this.side = side;
         this.hitPoints = maxHitPoints;
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     protected void Init()
