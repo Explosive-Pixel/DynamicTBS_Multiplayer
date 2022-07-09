@@ -7,8 +7,8 @@ using UnityEngine.EventSystems;
 public class DraftManager : MonoBehaviour
 {
     // Config
-    private const int MaxDraftCount = 14;
-    private static List<int> draftOrder = new List<int>() {3, 6, 7, 9, 11, 13};
+    private const int MaxDraftCount = 13;
+    private static List<int> draftOrder = new List<int>() {3, 6, 7, 9, 11, 12};
     
     private PlayerManager playerManager;
     private Vector3 firstPosition = new Vector3(-6.5f, -3.5f, 0.997f);

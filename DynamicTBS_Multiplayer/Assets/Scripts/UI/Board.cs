@@ -32,11 +32,17 @@ public class Board : MonoBehaviour
 
     private void Awake()
     {
-        DraftEvents.OnEndDraft += CreateBoard;
+        SubscribeEvents();
     }
 
     private void Update()
     {
+        if (!currentCamera)
+        {
+            currentCamera = Camera.main;
+            return;
+        }
+        
         if (Input.GetKeyDown(KeyCode.Mouse0)) 
         {
             HandleClick();
@@ -50,11 +56,6 @@ public class Board : MonoBehaviour
 
     private Tile GetTileByPosition(Vector3 position) 
     {
-        if (!currentCamera)
-        {
-            currentCamera = Camera.main;
-        }
-
         RaycastHit hit;
         Ray ray = currentCamera.ScreenPointToRay(position);
         if (Physics.Raycast(ray, out hit, Mathf.Infinity))
@@ -69,21 +70,71 @@ public class Board : MonoBehaviour
         return null;
     }
 
+    private Tile GetTileByCoordinates(int row, int column)
+    {
+        return tiles.Find(t => t.GetRow() == row && t.GetColumn() == column);
+    }
+
     private void CreateBoard() 
     {
         for (int row = 0; row < boardSize; row++) 
         {
             for (int column = 0; column < boardSize; column++) 
             {
-                Tile tile = TileFactory.CreateTile(tilePositions[column, row], row, column);
+                Tile tile = TileFactory.CreateTile(tilePositions[row, column], row, column);
                 tiles.Add(tile);
                 tilesByGameObject.Add(tile.GetTileGameObject(), tile);
             }
         }
     }
 
-    private void OnDestroy()
+    private void FindStartTiles(Character character)
+    {
+        List<Vector3> startTiles = new List<Vector3>();
+        int startRow = 0;
+        int endRow = 3;
+
+        if (character.GetSide().GetPlayerType() == PlayerType.blue)
+        {
+            startRow = 5;
+            endRow = 8;
+        }
+
+        int row = startRow;
+        while (row <= endRow)
+        {
+            for (int column = 0; column < boardSize; column++)
+            {
+                if (tilePositions[row, column] == TileType.StartTile)
+                {
+                    startTiles.Add(GetTileByCoordinates(row, column).GetPosition());
+                } 
+            }
+
+            row++;
+        }
+        
+        UIEvents.PassMovePositionsList(startTiles);
+    }
+
+    #region EventSubscriptions
+
+    private void SubscribeEvents()
+    {
+        DraftEvents.OnEndDraft += CreateBoard;
+        PlacementEvents.OnCharacterSelection += FindStartTiles;
+    }
+
+    private void UnsubscribeEvents()
     {
         DraftEvents.OnEndDraft -= CreateBoard;
+        PlacementEvents.OnCharacterSelection -= FindStartTiles;
+    }
+
+    #endregion
+    
+    private void OnDestroy()
+    {
+        UnsubscribeEvents();
     }
 }

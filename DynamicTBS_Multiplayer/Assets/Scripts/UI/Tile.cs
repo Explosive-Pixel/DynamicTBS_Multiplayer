@@ -9,9 +9,7 @@ public abstract class Tile
     protected TileType type;
 
     protected int row;
-    public int Row { get; }
     protected int column;
-    public int Column { get; }
     protected Vector3 position;
     protected GameObject tileGameObject;
     protected Sprite tileSprite;
@@ -28,6 +26,16 @@ public abstract class Tile
     protected void Init()
     {
         this.tileGameObject = CreateTileGameObject();
+    }
+
+    public int GetRow()
+    {
+        return row;
+    }
+
+    public int GetColumn()
+    {
+        return column;
     }
 
     public GameObject GetTileGameObject() { return tileGameObject; }
@@ -54,8 +62,8 @@ public abstract class Tile
 
         return tile;
     }
-    private Vector3 FindPosition(int x, int y)
+    private Vector3 FindPosition(int row, int column)
     {
-        return new Vector3(Convert.ToSingle(x * 0.7) - 3, Convert.ToSingle(y * 0.7) - 3, 1);
+        return new Vector3(column * 0.7f - 3, - (row * 0.7f - 3), 1);
     }
 }

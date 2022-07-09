@@ -51,6 +51,11 @@ public abstract class Character
         this.side = newSide;
     }
 
+    public Player GetSide()
+    {
+        return side;
+    }
+
     private GameObject CreateCharacterGameObject()
     {
         GameObject character = new GameObject();
@@ -62,6 +67,7 @@ public abstract class Character
         spriteRenderer.sprite = this.characterSprite;
         character.transform.position = startPosition;
         character.transform.rotation = startRotation;
+        character.AddComponent<BoxCollider>();
 
         return character;
     }

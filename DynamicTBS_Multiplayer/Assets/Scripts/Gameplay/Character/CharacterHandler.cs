@@ -18,6 +18,12 @@ public class CharacterHandler : MonoBehaviour
 
     private void Update()
     {
+        if (!currentCamera)
+        {
+            currentCamera = Camera.main;
+            return;
+        }
+        
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             HandleClick();
@@ -35,37 +41,32 @@ public class CharacterHandler : MonoBehaviour
 
         if (!gameManager.HasGameStarted())
         {
-            HandlePlacement();
+            HandlePlacement(character);
         }
         else 
         {
-            HandleAction();
+            HandleAction(character);
         }
     }
 
-    private void HandlePlacement() 
+    private void HandlePlacement(Character character) 
     { 
-        
+        PlacementEvents.SelectCharacterForPlacement(character);
     }
 
-    private void HandleAction() 
+    private void HandleAction(Character character) 
     {
         
     }
 
     private Character GetCharacterByPosition(Vector3 position)
     {
-        if (!currentCamera)
-        {
-            currentCamera = Camera.main;
-        }
-
         RaycastHit hit;
         Ray ray = currentCamera.ScreenPointToRay(position);
         if (Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
             GameObject gameObject = hit.transform.gameObject;
-            if (gameObject && gameObject.name.Contains("Char"))
+            if (gameObject)
             {
                 return characters.Find(c => c.GetCharacterGameObject().Equals(gameObject));
             }
