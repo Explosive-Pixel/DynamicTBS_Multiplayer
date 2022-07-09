@@ -4,5 +4,8 @@ using UnityEngine;
 
 public class StartTile : Tile
 {
-    
+    public StartTile(Vector3 position) : base(position)
+    {
+
+    }
 }

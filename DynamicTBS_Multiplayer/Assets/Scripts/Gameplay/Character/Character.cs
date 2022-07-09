@@ -4,6 +4,8 @@ using UnityEngine;
 
 public abstract class Character
 {
+    [SerializeField] protected GameObject characterPrefab;
+
     protected int moveSpeed;
     protected int maxHitPoints;
     protected int attackRange;
