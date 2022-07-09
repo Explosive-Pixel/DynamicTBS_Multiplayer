@@ -107,7 +107,10 @@ public class Board : MonoBehaviour
             {
                 if (tilePositions[row, column] == TileType.StartTile)
                 {
-                    startTiles.Add(GetTileByCoordinates(row, column).GetPosition());
+                    Tile tile = GetTileByCoordinates(row, column);
+                    
+                    if (!tile.IsOccupied())
+                        startTiles.Add(tile.GetPosition());
                 } 
             }
 
@@ -117,18 +120,37 @@ public class Board : MonoBehaviour
         UIEvents.PassMovePositionsList(startTiles);
     }
 
+    private void UpdateTilesAfterMove(Vector3 previousTile, Character character)
+    {
+        Tile tile = GetTileByPosition(previousTile);
+
+        if (tile != null)
+        {
+            tile.SetCurrentInhabitant(null);
+        }
+
+        tile = GetTileByPosition(character.GetCharacterGameObject().transform.position);
+
+        if (tile != null)
+        {
+            tile.SetCurrentInhabitant(character);
+        }
+    }
+
     #region EventSubscriptions
 
     private void SubscribeEvents()
     {
         DraftEvents.OnEndDraft += CreateBoard;
-        PlacementEvents.OnCharacterSelection += FindStartTiles;
+        PlacementEvents.OnCharacterSelectionForPlacement += FindStartTiles;
+        UIEvents.OnMoveOver += UpdateTilesAfterMove;
     }
 
     private void UnsubscribeEvents()
     {
         DraftEvents.OnEndDraft -= CreateBoard;
-        PlacementEvents.OnCharacterSelection -= FindStartTiles;
+        PlacementEvents.OnCharacterSelectionForPlacement -= FindStartTiles;
+        UIEvents.OnMoveOver -= UpdateTilesAfterMove;
     }
 
     #endregion

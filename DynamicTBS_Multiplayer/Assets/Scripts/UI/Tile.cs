@@ -45,6 +45,16 @@ public abstract class Tile
         return this.position;
     }
 
+    public bool IsOccupied()
+    {
+        return currentInhabitant != null;
+    }
+
+    public void SetCurrentInhabitant(Character character)
+    {
+        currentInhabitant = character;
+    }
+
     private GameObject CreateTileGameObject()
     {
         GameObject tile = new GameObject();
@@ -62,6 +72,7 @@ public abstract class Tile
 
         return tile;
     }
+    
     private Vector3 FindPosition(int row, int column)
     {
         return new Vector3(column * 0.7f - 3, - (row * 0.7f - 3), 1);

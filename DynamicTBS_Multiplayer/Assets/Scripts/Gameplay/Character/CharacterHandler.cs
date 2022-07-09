@@ -10,10 +10,15 @@ public class CharacterHandler : MonoBehaviour
     private Camera currentCamera;
     private GameManager gameManager;
 
+    private Character currentlySelectedChar;
+
+    private bool isListeningToClicks;
+
     private void Awake()
     {
-        DraftEvents.OnCharacterCreated += AddCharacterToList;
+        SubscribeEvents();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        isListeningToClicks = true;
     }
 
     private void Update()
@@ -23,6 +28,8 @@ public class CharacterHandler : MonoBehaviour
             currentCamera = Camera.main;
             return;
         }
+
+        if (!isListeningToClicks) return;
         
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
@@ -34,10 +41,9 @@ public class CharacterHandler : MonoBehaviour
     {
         Character character = GetCharacterByPosition(Input.mousePosition);
 
-        if (character == null) 
-        {
-            return;
-        }
+        currentlySelectedChar = character;
+
+        if (character == null) return;
 
         if (!gameManager.HasGameStarted())
         {
@@ -47,11 +53,23 @@ public class CharacterHandler : MonoBehaviour
         {
             HandleAction(character);
         }
+
+        isListeningToClicks = false;
     }
 
     private void HandlePlacement(Character character) 
     { 
         PlacementEvents.SelectCharacterForPlacement(character);
+    }
+
+    private void MoveCharacter(Vector3 position)
+    {
+        Vector3 oldPosition = currentlySelectedChar.GetCharacterGameObject().transform.position;
+        currentlySelectedChar.GetCharacterGameObject().transform.position = position;
+        UIEvents.MoveOver(oldPosition, currentlySelectedChar);
+        
+        currentlySelectedChar = null;
+        isListeningToClicks = true;
     }
 
     private void HandleAction(Character character) 
@@ -80,8 +98,24 @@ public class CharacterHandler : MonoBehaviour
         characters.Add(character);
     }
 
-    private void OnDestroy()
+    #region MyRegion
+
+    private void SubscribeEvents()
+    {
+        DraftEvents.OnCharacterCreated += AddCharacterToList;
+        UIEvents.OnPassMoveDestination += MoveCharacter;
+    }
+
+    private void UnsubscribeEvents()
     {
         DraftEvents.OnCharacterCreated -= AddCharacterToList;
+        UIEvents.OnPassMoveDestination -= MoveCharacter;
+    }
+
+    #endregion
+    
+    private void OnDestroy()
+    {
+        UnsubscribeEvents();
     }
 }

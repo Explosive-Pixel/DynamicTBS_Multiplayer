@@ -8,7 +8,9 @@ public static class PlacementEvents
     public static event PlacementStart OnPlacementStart;
 
     public delegate void CharacterPlacement(Character character);
-    public static event CharacterPlacement OnCharacterSelection;
+    public static event CharacterPlacement OnCharacterSelectionForPlacement;
+    
+    
 
     public static void StartPlacement()
     {
@@ -18,7 +20,7 @@ public static class PlacementEvents
 
     public static void SelectCharacterForPlacement(Character character)
     {
-        if (OnCharacterSelection != null)
-            OnCharacterSelection(character);
+        if (OnCharacterSelectionForPlacement != null)
+            OnCharacterSelectionForPlacement(character);
     }
 }
