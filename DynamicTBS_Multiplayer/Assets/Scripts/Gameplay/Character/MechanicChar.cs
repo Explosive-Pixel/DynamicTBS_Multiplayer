@@ -14,5 +14,7 @@ public class MechanicChar : Character
         this.passiveAbility = new SteadyStandPA();
 
         this.characterSprite = side.GetPlayerType() == PlayerType.blue ? SpriteManager.BLUE_MECHANIC_SPRITE : SpriteManager.PINK_MECHANIC_SPRITE;
+
+        Init();
     }
 }

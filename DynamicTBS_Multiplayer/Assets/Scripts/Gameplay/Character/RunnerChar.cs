@@ -14,5 +14,7 @@ public class RunnerChar : Character
         this.passiveAbility = new HighPerformancePA();
 
         this.characterSprite = side.GetPlayerType() == PlayerType.blue ? SpriteManager.BLUE_RUNNER_SPRITE : SpriteManager.PINK_RUNNER_SPRITE;
+
+        Init();
     }
 }

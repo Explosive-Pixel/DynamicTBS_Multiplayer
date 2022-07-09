@@ -14,5 +14,7 @@ public class TankChar : Character
         this.passiveAbility = new PullDamagePA();
 
         this.characterSprite = side.GetPlayerType() == PlayerType.blue ? SpriteManager.BLUE_TANK_SPRITE : SpriteManager.PINK_TANK_SPRITE;
+
+        Init();
     }
 }

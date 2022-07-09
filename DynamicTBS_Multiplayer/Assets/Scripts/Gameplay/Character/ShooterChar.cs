@@ -14,5 +14,7 @@ public class ShooterChar : Character
         this.passiveAbility = new ExplodePA();
 
         this.characterSprite = side.GetPlayerType() == PlayerType.blue ? SpriteManager.BLUE_SHOOTER_SPRITE : SpriteManager.PINK_SHOOTER_SPRITE;
+
+        Init();
     }
 }
