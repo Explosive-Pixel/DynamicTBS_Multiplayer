@@ -1,11 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Character
+public abstract class Character : MonoBehaviour
 {
     [SerializeField] protected GameObject characterPrefab;
-
+    
     protected int moveSpeed;
     protected int maxHitPoints;
     protected int attackRange;
@@ -15,7 +16,10 @@ public abstract class Character
     protected int hitPoints;
     protected Player side;
 
-    protected Character(Player side) {
+    private PlayerManager playerManager;
+
+    protected Character(Player side)
+    {
         this.side = side;
         this.hitPoints = maxHitPoints;
     }
