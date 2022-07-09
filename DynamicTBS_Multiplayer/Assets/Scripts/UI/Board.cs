@@ -52,9 +52,8 @@ public class Board : MonoBehaviour
         }
     }
 
-    // TODO
     private Vector3 GetPosition(int x, int y) 
     {
-        return new Vector3(x, y, 1);
+        return new Vector3(Convert.ToSingle(x*0.7)-3, Convert.ToSingle(y*0.7)-3, 1);
     }
 }
