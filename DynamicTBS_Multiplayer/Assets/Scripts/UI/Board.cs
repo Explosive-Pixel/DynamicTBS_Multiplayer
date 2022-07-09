@@ -28,7 +28,7 @@ public class Board : MonoBehaviour
     // Cache um Tiles schneller anhand der Position zu finden
     private readonly Dictionary<Vector3, Tile> tilesByPosition = new Dictionary<Vector3, Tile>();
 
-    private void Awake()
+    private void Start()
     {
         CreateBoard();
     }
@@ -55,6 +55,6 @@ public class Board : MonoBehaviour
     // TODO
     private Vector3 GetPosition(int x, int y) 
     {
-        return new Vector3(x, y);
+        return new Vector3(x, 0, y);
     }
 }

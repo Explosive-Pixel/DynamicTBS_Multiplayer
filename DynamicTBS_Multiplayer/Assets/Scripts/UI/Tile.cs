@@ -14,9 +14,14 @@ public abstract class Tile
 
     protected Tile(Vector3 position) 
     {
+        Debug.Log("TileConstructor called.");
         this.position = position;
-        this.tileGameObject = CreateTileGameObject();
         this.currentInhabitant = null;
+    }
+
+    protected void Init()
+    {
+        this.tileGameObject = CreateTileGameObject();
     }
 
     public GameObject GetTileGameObject() { return tileGameObject; }
@@ -29,13 +34,11 @@ public abstract class Tile
     private GameObject CreateTileGameObject()
     {
         GameObject tile = new GameObject();
-
-        Vector3 startScale = new Vector3(100, 0, 100);
+        
         Quaternion startRotation = Quaternion.identity;
 
         SpriteRenderer spriteRenderer = tile.AddComponent<SpriteRenderer>();
         spriteRenderer.sprite = this.tileSprite;
-        tile.transform.localScale = startScale;
         tile.transform.position = position;
         tile.transform.rotation = startRotation;
 

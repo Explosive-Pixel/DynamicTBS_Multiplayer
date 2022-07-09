@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -6,6 +7,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject onlineMenuCanvas;
     [SerializeField] private GameObject draftCanvas;
     [SerializeField] private GameObject gameplayCanvas;
+
+    private void Awake()
+    {
+        SpriteManager.LoadSprites();
+    }
 
     public void GoToStartMenu()
     {

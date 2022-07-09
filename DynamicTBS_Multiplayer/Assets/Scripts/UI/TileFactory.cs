@@ -28,7 +28,7 @@ public class TileFactory : MonoBehaviour
 
         if (tile != null) 
         {
-            Instantiate(tile.GetTileGameObject());
+            //Instantiate(tile.GetTileGameObject());
             return tile;
         }
 
