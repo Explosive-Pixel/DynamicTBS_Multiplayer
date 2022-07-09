@@ -43,7 +43,7 @@ public class Board : MonoBehaviour
         {
             for (int column = 0; column < boardSize; column++) 
             {
-                tiles.Add(TileFactory.CreateTile(tilePositions[row, column], GetPosition(row, column)));
+                tiles.Add(TileFactory.CreateTile(tilePositions[column, row], GetPosition(row, column)));
             }
         }
 
@@ -55,6 +55,6 @@ public class Board : MonoBehaviour
     // TODO
     private Vector3 GetPosition(int x, int y) 
     {
-        return new Vector3(x, 0, y);
+        return new Vector3(x, y, 1);
     }
 }
