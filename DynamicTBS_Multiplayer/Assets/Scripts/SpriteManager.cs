@@ -53,7 +53,7 @@ public class SpriteManager
         BLUE_MECHANIC_SPRITE = Resources.Load<Sprite>("CharacterSprites/Blue_Mechanic");
         PINK_MECHANIC_SPRITE = Resources.Load<Sprite>("CharacterSprites/Pink_Mechanic");
         BLUE_MEDIC_SPRITE = Resources.Load<Sprite>("CharacterSprites/Blue_Medic");
-        PINK_MEDIC_SPRITE = Resources.Load<Sprite>("CharacterSprites/Blue_Medic");
+        PINK_MEDIC_SPRITE = Resources.Load<Sprite>("CharacterSprites/Pink_Medic");
 
         EMPTY_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/EmptyTile");
         FLOOR_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/FloorTile");
