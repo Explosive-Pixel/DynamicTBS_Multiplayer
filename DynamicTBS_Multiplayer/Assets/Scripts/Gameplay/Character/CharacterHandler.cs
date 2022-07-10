@@ -11,6 +11,7 @@ public class CharacterHandler : MonoBehaviour
 
     private Camera currentCamera;
     private GameManager gameManager;
+    private PlayerManager playerManager;
 
     private Character currentlySelectedChar;
 
@@ -20,6 +21,7 @@ public class CharacterHandler : MonoBehaviour
     {
         SubscribeEvents();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
         isListeningToClicks = false;
     }
 
@@ -32,7 +34,7 @@ public class CharacterHandler : MonoBehaviour
         }
 
         if (!isListeningToClicks) return;
-        
+        Debug.Log("Am listening to clicks.");
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             HandleClick();
@@ -55,13 +57,16 @@ public class CharacterHandler : MonoBehaviour
         {
             HandleAction(character);
         }
-
-        isListeningToClicks = false;
     }
 
-    private void HandlePlacement(Character character) 
-    { 
-        PlacementEvents.SelectCharacterForPlacement(character);
+    private void HandlePlacement(Character character)
+    {
+        Debug.Log("Checking current player.");
+        if (character.GetSide() == playerManager.GetCurrentPlayer())
+        {
+            PlacementEvents.SelectCharacterForPlacement(character);
+            isListeningToClicks = false;
+        }   
     }
 
     private void MoveCharacter(Vector3 position)
@@ -107,10 +112,7 @@ public class CharacterHandler : MonoBehaviour
 
     private void ToggleClickListening()
     {
-        if (!isListeningToClicks)
-            isListeningToClicks = true;
-        else
-            isListeningToClicks = false;
+        isListeningToClicks = !isListeningToClicks;
     }
 
     #region EventsRegion

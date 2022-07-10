@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
+    private const PlayerType draftPhaseStartPlayer = PlayerType.pink;
+    private const PlayerType placementPhaseStartPlayer = PlayerType.pink;
+    private const PlayerType gameplayPhaseStartPlayer = PlayerType.blue;
+    
     private Player currentPlayer;
 
     private Player bluePlayer;
@@ -15,7 +19,7 @@ public class PlayerManager : MonoBehaviour
         pinkPlayer = new Player(PlayerType.pink);
         SubscribeEvents();
 
-        currentPlayer = pinkPlayer;
+        currentPlayer = GetPlayer(draftPhaseStartPlayer);
     }
 
     public Player GetOtherPlayer(Player player)
@@ -63,16 +67,30 @@ public class PlayerManager : MonoBehaviour
         pinkPlayer.ResetRoundCounter();
     }
 
+    private void SetPlacementPhaseStartPlayer()
+    {
+        currentPlayer = GetPlayer(placementPhaseStartPlayer);
+    }
+
+    private void SetGameplayPhaseStartPlayer()
+    {
+        currentPlayer = GetPlayer(gameplayPhaseStartPlayer);
+    }
+
     #region EventSubscriptions
 
     private void SubscribeEvents()
     {
+        DraftEvents.OnEndDraft += SetPlacementPhaseStartPlayer;
         GameplayEvents.OnGameplayPhaseStart += ResetRoundCounters;
+        GameplayEvents.OnGameplayPhaseStart += SetGameplayPhaseStartPlayer;
     }
 
     private void UnsubscribeEvents()
     {
+        DraftEvents.OnEndDraft -= SetPlacementPhaseStartPlayer;
         GameplayEvents.OnGameplayPhaseStart -= ResetRoundCounters;
+        GameplayEvents.OnGameplayPhaseStart -= SetGameplayPhaseStartPlayer;
     }
 
     #endregion

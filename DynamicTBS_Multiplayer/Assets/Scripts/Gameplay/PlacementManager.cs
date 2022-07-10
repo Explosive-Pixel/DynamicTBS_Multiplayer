@@ -15,6 +15,7 @@ public class PlacementManager : MonoBehaviour
         SubscribeEvents();
         playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
         placementCount = 0;
+        Debug.Log(placementCount);
     }
 
     private void SortCharacters()
@@ -25,6 +26,7 @@ public class PlacementManager : MonoBehaviour
     private void AdvancePlacementOrder()
     {
         placementCount += 1;
+        Debug.Log(placementCount);
         
         if (placementOrder.Contains(placementCount))
             playerManager.NextPlayer();
