@@ -100,7 +100,56 @@ public class Board : MonoBehaviour
 
     private void FindMovePositions(Character character) 
     {
-        Tile currentTile = GetTileByPosition(character.GetCharacterGameObject().transform.position);
+        Tile currentTile = GetTileByCharacter(character);
+
+        if (currentTile == null) return;
+
+        List<Vector3> movePositions = new List<Vector3>();
+
+        int range = character.GetMoveSpeed();
+        Queue<Tile> queue = new Queue<Tile>();
+        List<Tile> visited = new List<Tile>();
+        queue.Enqueue(currentTile);
+        while (queue.Count > 0 && range > 0) 
+        {
+            Tile tile = queue.Dequeue();
+            visited.Add(tile);
+
+            List<Tile> neighbors = GetNeighbors(tile);
+            foreach(Tile neighbor in neighbors) 
+            {
+                if (!visited.Contains(neighbor) && neighbor.IsAccessible()) 
+                {
+                    movePositions.Add(neighbor.GetTileGameObject().transform.position);
+                    queue.Enqueue(neighbor);
+                }
+            }
+            range--;
+        }
+
+        UIEvents.PassMovePositionsList(movePositions);
+    }
+
+    private List<Tile> GetNeighbors(Tile tile) 
+    {
+        List<Tile> neighbors = new List<Tile>();
+        if (tile.GetRow() > 0) 
+        {
+            neighbors.Add(GetTileByCoordinates(tile.GetRow() - 1, tile.GetColumn()));
+        }
+        if (tile.GetRow() < boardSize-1)
+        {
+            neighbors.Add(GetTileByCoordinates(tile.GetRow() + 1, tile.GetColumn()));
+        }
+        if (tile.GetColumn() > 0)
+        {
+            neighbors.Add(GetTileByCoordinates(tile.GetRow(), tile.GetColumn() - 1));
+        }
+        if (tile.GetColumn() < boardSize-1)
+        {
+            neighbors.Add(GetTileByCoordinates(tile.GetRow(), tile.GetColumn() + 1));
+        }
+        return neighbors;
     }
 
     private void FindStartTilePositions(Character character)

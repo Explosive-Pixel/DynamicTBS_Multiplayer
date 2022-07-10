@@ -50,6 +50,11 @@ public abstract class Tile
         return currentInhabitant != null;
     }
 
+    public bool IsAccessible() 
+    {
+        return !IsOccupied() && type != TileType.EmptyTile;
+    }
+
     public void SetCurrentInhabitant(Character character)
     {
         currentInhabitant = character;

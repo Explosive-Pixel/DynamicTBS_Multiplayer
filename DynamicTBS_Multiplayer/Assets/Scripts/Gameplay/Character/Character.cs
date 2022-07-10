@@ -29,7 +29,8 @@ public abstract class Character
         this.characterGameObject = CreateCharacterGameObject();
     }
 
-    public GameObject GetCharacterGameObject() { return characterGameObject;}
+    public GameObject GetCharacterGameObject() { return characterGameObject; }
+    public int GetMoveSpeed() { return moveSpeed; }
 
     public void TakeDamage(int damage) {
         this.hitPoints -= damage;
