@@ -86,7 +86,6 @@ public class GameManager : MonoBehaviour
     private void SetGameStarted()
     {
         hasGameStarted = true;
-        Debug.Log("Game hast started: " + hasGameStarted);
     }
 
     #region EventSubscriptions
@@ -95,14 +94,12 @@ public class GameManager : MonoBehaviour
     {
         GameplayEvents.OnGameplayPhaseStart += SetGameStarted;
         DraftEvents.OnEndDraft += GoToGameplayScreen;
-        Debug.Log("GameManager: Subscribed to events.");
     }
 
     private void UnsubscribeEvents()
     {
         GameplayEvents.OnGameplayPhaseStart -= SetGameStarted;
         DraftEvents.OnEndDraft -= GoToGameplayScreen;
-        Debug.Log("Unsubscribed from events.");
     }
 
     #endregion
