@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     {
         SpriteManager.LoadSprites();
         hasGameStarted = false;
-        DraftEvents.OnEndDraft += GoToGameplayScreen;
+        SubscribeEvents();
     }
 
     #region MenusRegion
@@ -63,8 +63,24 @@ public class GameManager : MonoBehaviour
         hasGameStarted = true;
     }
 
+    #region EventSubscriptions
+
+    private void SubscribeEvents()
+    {
+        GameplayEvents.OnGameplayPhaseStart += SetGameStarted;
+        DraftEvents.OnEndDraft += GoToGameplayScreen;
+    }
+
+    private void UnsubscribeEvents()
+    {
+        GameplayEvents.OnGameplayPhaseStart -= SetGameStarted;
+        DraftEvents.OnEndDraft -= GoToGameplayScreen;
+    }
+
+    #endregion
+
     private void OnDestroy()
     {
-        DraftEvents.OnEndDraft -= GoToGameplayScreen;
+        UnsubscribeEvents();
     }
 }

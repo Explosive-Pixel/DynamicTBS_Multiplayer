@@ -75,6 +75,11 @@ public class Board : MonoBehaviour
         return null;
     }
 
+    private Tile GetTileByCharacter(Character character) 
+    {
+        return GetTileByPosition(character.GetCharacterGameObject().transform.position);
+    }
+
     private Tile GetTileByCoordinates(int row, int column)
     {
         return tiles.Find(t => t.GetRow() == row && t.GetColumn() == column);
@@ -93,9 +98,14 @@ public class Board : MonoBehaviour
         }
     }
 
-    private void FindStartTiles(Character character)
+    private void FindMovePositions(Character character) 
     {
-        List<Vector3> startTiles = new List<Vector3>();
+        Tile currentTile = GetTileByPosition(character.GetCharacterGameObject().transform.position);
+    }
+
+    private void FindStartTilePositions(Character character)
+    {
+        List<Vector3> startTilePositions = new List<Vector3>();
         int startRow = 0;
         int endRow = boardSize/2 - 1;
 
@@ -115,14 +125,14 @@ public class Board : MonoBehaviour
                     Tile tile = GetTileByCoordinates(row, column);
                     
                     if (!tile.IsOccupied())
-                        startTiles.Add(tile.GetPosition());
+                        startTilePositions.Add(tile.GetPosition());
                 } 
             }
 
             row++;
         }
         
-        UIEvents.PassMovePositionsList(startTiles);
+        UIEvents.PassMovePositionsList(startTilePositions);
     }
 
     private void UpdateTilesAfterMove(Vector3 previousTile, Character character)
@@ -134,7 +144,7 @@ public class Board : MonoBehaviour
             tile.SetCurrentInhabitant(null);
         }
 
-        tile = GetTileByPosition(character.GetCharacterGameObject().transform.position);
+        tile = GetTileByCharacter(character);
 
         if (tile != null)
         {
@@ -147,14 +157,14 @@ public class Board : MonoBehaviour
     private void SubscribeEvents()
     {
         DraftEvents.OnEndDraft += CreateBoard;
-        PlacementEvents.OnCharacterSelectionForPlacement += FindStartTiles;
+        PlacementEvents.OnCharacterSelectionForPlacement += FindStartTilePositions;
         UIEvents.OnMoveOver += UpdateTilesAfterMove;
     }
 
     private void UnsubscribeEvents()
     {
         DraftEvents.OnEndDraft -= CreateBoard;
-        PlacementEvents.OnCharacterSelectionForPlacement -= FindStartTiles;
+        PlacementEvents.OnCharacterSelectionForPlacement -= FindStartTilePositions;
         UIEvents.OnMoveOver -= UpdateTilesAfterMove;
     }
 

@@ -13,6 +13,7 @@ public class PlayerManager : MonoBehaviour
     {
         bluePlayer = new Player(PlayerType.blue);
         pinkPlayer = new Player(PlayerType.pink);
+        SubscribeEvents();
 
         currentPlayer = pinkPlayer;
     }
@@ -26,6 +27,7 @@ public class PlayerManager : MonoBehaviour
 
     public void NextPlayer() 
     {
+        currentPlayer.IncreaseRoundCounter();
         currentPlayer = GetOtherPlayer(currentPlayer);
     }
 
@@ -53,5 +55,30 @@ public class PlayerManager : MonoBehaviour
         if (playerType == PlayerType.blue)
             return bluePlayer;
         return pinkPlayer;
+    }
+
+    private void ResetRoundCounters() 
+    {
+        bluePlayer.ResetRoundCounter();
+        pinkPlayer.ResetRoundCounter();
+    }
+
+    #region EventSubscriptions
+
+    private void SubscribeEvents()
+    {
+        GameplayEvents.OnGameplayPhaseStart += ResetRoundCounters;
+    }
+
+    private void UnsubscribeEvents()
+    {
+        GameplayEvents.OnGameplayPhaseStart -= ResetRoundCounters;
+    }
+
+    #endregion
+
+    private void OnDestroy()
+    {
+        UnsubscribeEvents();
     }
 }
