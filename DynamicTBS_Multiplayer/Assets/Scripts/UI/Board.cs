@@ -155,14 +155,8 @@ public class Board : MonoBehaviour
     private void FindStartTilePositions(Character character)
     {
         List<Vector3> startTilePositions = new List<Vector3>();
-        int startRow = 0;
-        int endRow = boardSize/2 - 1;
-
-        if (character.GetSide().GetPlayerType() == PlayerType.blue)
-        {
-            startRow = boardSize/2 + 1;
-            endRow = boardSize - 1;
-        }
+        int startRow = FindStartRow(character.GetSide().GetPlayerType());
+        int endRow = FindEndRow(character.GetSide().GetPlayerType());
 
         int row = startRow;
         while (row <= endRow)
@@ -182,6 +176,38 @@ public class Board : MonoBehaviour
         }
         
         UIEvents.PassMovePositionsList(startTilePositions);
+    }
+
+    public Tile FindMasterStartTile(PlayerType playerType) 
+    {
+        int startRow = FindStartRow(playerType);
+        int endRow = FindEndRow(playerType);
+
+        int row = startRow;
+        while (row <= endRow)
+        {
+            for (int column = 0; column < boardSize; column++)
+            {
+                if (tilePositions[row, column] == TileType.MasterStartTile)
+                {
+                    return GetTileByCoordinates(row, column);
+                }
+            }
+
+            row++;
+        }
+
+        return null;
+    }
+
+    private int FindStartRow(PlayerType side) 
+    {
+        return side == PlayerType.blue ? (boardSize / 2 + 1) : 0;
+    }
+
+    private int FindEndRow(PlayerType side)
+    {
+        return side == PlayerType.blue ? (boardSize - 1) : (boardSize / 2 - 1);
     }
 
     private void UpdateTilesAfterMove(Vector3 previousTile, Character character)
