@@ -19,7 +19,6 @@ public class PlacementManager : MonoBehaviour
         playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
         board = GameObject.Find("GameplayCanvas").GetComponent<Board>();
         placementCount = 0;
-        Debug.Log(placementCount);
     }
 
     private void SortCharacters()
@@ -30,40 +29,32 @@ public class PlacementManager : MonoBehaviour
     private void AdvancePlacementOrder()
     {
         placementCount += 1;
-        Debug.Log(placementCount);
         
         if (placementOrder.Contains(placementCount))
             playerManager.NextPlayer();
 
         if (placementCount >= MaxPlacementCount)
         {
-            SetUpMasters();
+            SpawnMasters();
             GameplayEvents.StartGameplayPhase();
         }
             
     }
     
-    private void SetUpMasters()
+    private void SpawnMasters()
     {
-        Player playerBlue = playerManager.GetPlayer(PlayerType.blue);
-        Character blueMaster = CharacterFactory.CreateCharacter(CharacterType.MasterChar, playerBlue);
+        SpawnMaster(PlayerType.blue);
+        SpawnMaster(PlayerType.pink);
+    }
 
-        Player playerPink = playerManager.GetPlayer(PlayerType.pink);
-        Character pinkMaster = CharacterFactory.CreateCharacter(CharacterType.MasterChar, playerPink);
+    private void SpawnMaster(PlayerType playerType) 
+    {
+        Character master = CharacterFactory.CreateCharacter(CharacterType.MasterChar, playerManager.GetPlayer(playerType));
 
-        Tile blueMasterSpawnTile = board.FindMasterStartTile(PlayerType.blue);
-        Tile pinkMasterSpawnTile = board.FindMasterStartTile(PlayerType.pink);
-
-        GameObject blueMasterObject = blueMaster.GetCharacterGameObject();
-        GameObject pinkMasterObject = pinkMaster.GetCharacterGameObject();
-        
-        blueMasterObject.transform.position = blueMasterSpawnTile.GetTileGameObject().transform.position;
-        blueMasterObject.transform.position = new Vector3(blueMasterObject.transform.position.x, blueMasterObject.transform.position.y, 0.997f);
-        blueMasterSpawnTile.SetCurrentInhabitant(blueMaster);
-        
-        pinkMasterObject.transform.position = pinkMasterSpawnTile.GetTileGameObject().transform.position;
-        pinkMasterObject.transform.position = new Vector3(pinkMasterObject.transform.position.x, pinkMasterObject.transform.position.y, 0.997f);
-        pinkMasterSpawnTile.SetCurrentInhabitant(pinkMaster);
+        Tile masterSpawnTile = board.FindMasterStartTile(playerType);
+        Vector3 position = masterSpawnTile.GetPosition();
+        master.GetCharacterGameObject().transform.position = new Vector3(position.x, position.y, 0.997f);
+        masterSpawnTile.SetCurrentInhabitant(master);
     }
 
     #region EventsRegion

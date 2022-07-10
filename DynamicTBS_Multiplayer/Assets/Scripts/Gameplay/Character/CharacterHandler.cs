@@ -34,7 +34,7 @@ public class CharacterHandler : MonoBehaviour
         }
 
         if (!isListeningToClicks) return;
-        Debug.Log("Am listening to clicks.");
+
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             HandleClick();
@@ -61,7 +61,6 @@ public class CharacterHandler : MonoBehaviour
 
     private void HandlePlacement(Character character)
     {
-        Debug.Log("Checking current player.");
         if (character.GetSide() == playerManager.GetCurrentPlayer())
         {
             PlacementEvents.SelectCharacterForPlacement(character);
