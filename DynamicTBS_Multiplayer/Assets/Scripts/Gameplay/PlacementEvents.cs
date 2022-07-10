@@ -4,23 +4,22 @@ using UnityEngine;
 
 public static class PlacementEvents
 {
-    public delegate void PlacementStart();
-    public static event PlacementStart OnPlacementStart;
-
     public delegate void CharacterPlacement(Character character);
     public static event CharacterPlacement OnCharacterSelectionForPlacement;
-    
-    
 
-    public static void StartPlacement()
-    {
-        if (OnPlacementStart != null)
-            OnPlacementStart();
-    }
+    public delegate void PlacementOrder();
+
+    public static event PlacementOrder OnAdvancePlacementOrder;
 
     public static void SelectCharacterForPlacement(Character character)
     {
         if (OnCharacterSelectionForPlacement != null)
             OnCharacterSelectionForPlacement(character);
+    }
+
+    public static void AdvancePlacementOrder()
+    {
+        if (OnAdvancePlacementOrder != null)
+            OnAdvancePlacementOrder();
     }
 }

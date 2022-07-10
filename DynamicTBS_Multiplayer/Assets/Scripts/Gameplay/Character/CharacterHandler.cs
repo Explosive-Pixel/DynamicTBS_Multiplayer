@@ -20,7 +20,7 @@ public class CharacterHandler : MonoBehaviour
     {
         SubscribeEvents();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        isListeningToClicks = true;
+        isListeningToClicks = false;
     }
 
     private void Update()
@@ -69,6 +69,7 @@ public class CharacterHandler : MonoBehaviour
         Vector3 oldPosition = currentlySelectedChar.GetCharacterGameObject().transform.position;
         currentlySelectedChar.GetCharacterGameObject().transform.position = position;
         UIEvents.MoveOver(oldPosition, currentlySelectedChar);
+        PlacementEvents.AdvancePlacementOrder();
         
         currentlySelectedChar = null;
         isListeningToClicks = true;
@@ -104,18 +105,28 @@ public class CharacterHandler : MonoBehaviour
         charactersByGameObject.Add(character.GetCharacterGameObject(), character);
     }
 
-    #region MyRegion
+    private void ToggleClickListening()
+    {
+        if (!isListeningToClicks)
+            isListeningToClicks = true;
+        else
+            isListeningToClicks = false;
+    }
+
+    #region EventsRegion
 
     private void SubscribeEvents()
     {
         DraftEvents.OnCharacterCreated += AddCharacterToList;
         UIEvents.OnPassMoveDestination += MoveCharacter;
+        DraftEvents.OnEndDraft += ToggleClickListening;
     }
 
     private void UnsubscribeEvents()
     {
         DraftEvents.OnCharacterCreated -= AddCharacterToList;
         UIEvents.OnPassMoveDestination -= MoveCharacter;
+        DraftEvents.OnEndDraft -= ToggleClickListening;
     }
 
     #endregion
