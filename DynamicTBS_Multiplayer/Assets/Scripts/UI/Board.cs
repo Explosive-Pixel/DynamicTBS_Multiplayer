@@ -35,7 +35,7 @@ public class Board : MonoBehaviour
         SubscribeEvents();
     }
 
-    private void Update()
+   /* private void Update()
     {
         if (!currentCamera)
         {
@@ -52,7 +52,7 @@ public class Board : MonoBehaviour
     private void HandleClick()
     {
         Tile tile = GetTileByPosition(currentCamera.ScreenToWorldPoint(Input.mousePosition));
-    }
+    }*/
 
     // Caution: position has to be a world point!
     private Tile GetTileByPosition(Vector3 position) 
@@ -99,7 +99,7 @@ public class Board : MonoBehaviour
     }
 
     private void FindMovePositions(Character character) 
-    {
+    {   
         Tile currentTile = GetTileByCharacter(character);
 
         if (currentTile == null) return;
@@ -233,6 +233,7 @@ public class Board : MonoBehaviour
     {
         DraftEvents.OnEndDraft += CreateBoard;
         PlacementEvents.OnCharacterSelectionForPlacement += FindStartTilePositions;
+        UIEvents.OnCharacterSelectionForMove += FindMovePositions;
         UIEvents.OnMoveOver += UpdateTilesAfterMove;
     }
 
@@ -240,6 +241,7 @@ public class Board : MonoBehaviour
     {
         DraftEvents.OnEndDraft -= CreateBoard;
         PlacementEvents.OnCharacterSelectionForPlacement -= FindStartTilePositions;
+        UIEvents.OnCharacterSelectionForMove -= FindMovePositions;
         UIEvents.OnMoveOver -= UpdateTilesAfterMove;
     }
 

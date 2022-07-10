@@ -73,7 +73,14 @@ public class CharacterHandler : MonoBehaviour
         Vector3 oldPosition = currentlySelectedChar.GetCharacterGameObject().transform.position;
         currentlySelectedChar.GetCharacterGameObject().transform.position = position;
         UIEvents.MoveOver(oldPosition, currentlySelectedChar);
-        PlacementEvents.AdvancePlacementOrder();
+        if (!gameManager.HasGameStarted())
+        {
+            PlacementEvents.AdvancePlacementOrder();
+        }
+        else 
+        {
+            GameplayEvents.MoveFinished();
+        }
         
         currentlySelectedChar = null;
         isListeningToClicks = true;
@@ -81,7 +88,15 @@ public class CharacterHandler : MonoBehaviour
 
     private void HandleAction(Character character) 
     {
-        
+        if (character.GetSide() == playerManager.GetCurrentPlayer())
+        {
+            isListeningToClicks = false;
+            UIEvents.SelectCharacterForMove(character);
+        }
+        else 
+        { 
+            // character got attacked
+        }
     }
 
     private Character GetCharacterByClickPosition(Vector3 position)
@@ -109,9 +124,9 @@ public class CharacterHandler : MonoBehaviour
         charactersByGameObject.Add(character.GetCharacterGameObject(), character);
     }
 
-    private void ToggleClickListening()
+    private void ListenToClicks()
     {
-        isListeningToClicks = !isListeningToClicks;
+        isListeningToClicks = true;
     }
 
     #region EventsRegion
@@ -120,14 +135,16 @@ public class CharacterHandler : MonoBehaviour
     {
         DraftEvents.OnCharacterCreated += AddCharacterToList;
         UIEvents.OnPassMoveDestination += MoveCharacter;
-        DraftEvents.OnEndDraft += ToggleClickListening;
+        UIEvents.OnInformNoMoveDestinationsAvailable += ListenToClicks;
+        DraftEvents.OnEndDraft += ListenToClicks;
     }
 
     private void UnsubscribeEvents()
     {
         DraftEvents.OnCharacterCreated -= AddCharacterToList;
         UIEvents.OnPassMoveDestination -= MoveCharacter;
-        DraftEvents.OnEndDraft -= ToggleClickListening;
+        UIEvents.OnInformNoMoveDestinationsAvailable -= ListenToClicks;
+        DraftEvents.OnEndDraft -= ListenToClicks;
     }
 
     #endregion

@@ -39,12 +39,12 @@ public class GameplayManager : MonoBehaviour
 
     private void SubscribeEvents()
     {
-        
+        GameplayEvents.OnFinishMove += OnActionFinished;
     }
 
     private void UnsubscribeEvents()
     {
-       
+        GameplayEvents.OnFinishMove -= OnActionFinished;
     }
 
     #endregion

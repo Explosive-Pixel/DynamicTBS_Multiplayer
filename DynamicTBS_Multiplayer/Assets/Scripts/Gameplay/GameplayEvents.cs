@@ -8,9 +8,18 @@ public static class GameplayEvents
 
     public static event GameplayPhase OnGameplayPhaseStart;
 
+    public delegate void FinishAction();
+    public static event FinishAction OnFinishMove;
+
     public static void StartGameplayPhase()
     {
         if (OnGameplayPhaseStart != null)
             OnGameplayPhaseStart();
+    }
+
+    public static void MoveFinished()
+    {
+        if (OnFinishMove != null)
+            OnFinishMove();
     }
 }
