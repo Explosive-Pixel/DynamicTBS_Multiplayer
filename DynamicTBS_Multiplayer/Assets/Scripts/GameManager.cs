@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -7,6 +8,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject onlineMenuCanvas;
     [SerializeField] private GameObject draftCanvas;
     [SerializeField] private GameObject gameplayCanvas;
+
+    private List<GameObject> canvasList = new List<GameObject>();
 
     private bool hasGameStarted;
     
@@ -17,6 +20,8 @@ public class GameManager : MonoBehaviour
         SubscribeEvents();
     }
 
+    
+    
     #region MenusRegion
 
     public void GoToStartMenu()
@@ -25,6 +30,11 @@ public class GameManager : MonoBehaviour
         onlineMenuCanvas.SetActive(false);
         draftCanvas.SetActive(false);
         gameplayCanvas.SetActive(false);
+    }
+
+    public void GoToLocalGame()
+    {
+        
     }
 
     public void GoToOnlineMenu()
@@ -51,6 +61,21 @@ public class GameManager : MonoBehaviour
         gameplayCanvas.SetActive(true);
     }
 
+    public void GoToTutorialScreen()
+    {
+        
+    }
+
+    public void GoToCreditScreen()
+    {
+        
+    }
+
+    private void HandleMenus(GameObject menuCanvas)
+    {
+        
+    }
+
     #endregion
     
     public bool HasGameStarted()
@@ -61,6 +86,7 @@ public class GameManager : MonoBehaviour
     private void SetGameStarted()
     {
         hasGameStarted = true;
+        Debug.Log("Game hast started: " + hasGameStarted);
     }
 
     #region EventSubscriptions
@@ -69,12 +95,14 @@ public class GameManager : MonoBehaviour
     {
         GameplayEvents.OnGameplayPhaseStart += SetGameStarted;
         DraftEvents.OnEndDraft += GoToGameplayScreen;
+        Debug.Log("GameManager: Subscribed to events.");
     }
 
     private void UnsubscribeEvents()
     {
         GameplayEvents.OnGameplayPhaseStart -= SetGameStarted;
         DraftEvents.OnEndDraft -= GoToGameplayScreen;
+        Debug.Log("Unsubscribed from events.");
     }
 
     #endregion

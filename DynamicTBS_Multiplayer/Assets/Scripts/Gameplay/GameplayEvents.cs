@@ -10,7 +10,7 @@ public static class GameplayEvents
 
     public static void StartGameplayPhase()
     {
-        if (OnGameplayPhaseStart == null)
+        if (OnGameplayPhaseStart != null)
             OnGameplayPhaseStart();
     }
 }

@@ -37,6 +37,7 @@ public class PlacementManager : MonoBehaviour
         {
             SpawnMasters();
             GameplayEvents.StartGameplayPhase();
+            Debug.Log("PM: Set off GameStart event.");
         }
             
     }
