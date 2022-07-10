@@ -55,6 +55,7 @@ public class PlacementManager : MonoBehaviour
         Vector3 position = masterSpawnTile.GetPosition();
         master.GetCharacterGameObject().transform.position = new Vector3(position.x, position.y, 0.997f);
         masterSpawnTile.SetCurrentInhabitant(master);
+        DraftEvents.CharacterCreated(master);
     }
 
     #region EventsRegion

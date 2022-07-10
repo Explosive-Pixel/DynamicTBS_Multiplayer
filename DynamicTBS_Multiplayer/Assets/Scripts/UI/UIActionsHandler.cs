@@ -72,13 +72,20 @@ public class UIActionsHandler : MonoBehaviour
 
     private void InstantiateMovePositions(List<Vector3> positions)
     {
-        ResetTmpList();
-        foreach (Vector3 position in positions)
+        if (positions.Count > 0)
         {
-            moveCirclePrefab.transform.position = new Vector3(position.x, position.y, 0.98f);
-            tmpGameObjects.Add(Instantiate(moveCirclePrefab));
+            ResetTmpList();
+            foreach (Vector3 position in positions)
+            {
+                moveCirclePrefab.transform.position = new Vector3(position.x, position.y, 0.98f);
+                tmpGameObjects.Add(Instantiate(moveCirclePrefab));
+            }
+            isPlacing = false;
         }
-        isPlacing = false;
+        else 
+        {
+            UIEvents.InformNoMoveDestinationAvailable();
+        }
     }
 
     #region EventSubscriptions
