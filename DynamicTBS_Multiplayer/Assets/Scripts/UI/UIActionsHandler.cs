@@ -34,7 +34,7 @@ public class UIActionsHandler : MonoBehaviour
 
     private void HandleClick()
     {
-        GameObject uiObject = GetUIObjectByPosition(Input.mousePosition);
+        GameObject uiObject = GetUIObjectByClickPosition(Input.mousePosition);
 
         if (uiObject == null) return;
         
@@ -42,15 +42,18 @@ public class UIActionsHandler : MonoBehaviour
         ResetTmpList();
     }
 
-    private GameObject GetUIObjectByPosition(Vector3 position) 
+    private GameObject GetUIObjectByClickPosition(Vector3 position) 
     {
-        RaycastHit hit;
         Ray ray = currentCamera.ScreenPointToRay(position);
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+        RaycastHit[] hits = Physics.RaycastAll(ray);
+        if (hits != null && hits.Length > 0)
         {
-            GameObject gameObject = hit.transform.gameObject;
-            if (tmpGameObjects.Contains(gameObject))
-                return gameObject;
+            foreach (RaycastHit hit in hits)
+            {
+                GameObject gameObject = hit.transform.gameObject;
+                if (tmpGameObjects.Contains(gameObject))
+                    return gameObject;
+            }
         }
 
         return null;

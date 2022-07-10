@@ -6,6 +6,8 @@ using UnityEngine;
 public class CharacterHandler : MonoBehaviour
 {
     private List<Character> characters = new List<Character>();
+    // Chache, um schneller Character anhand ihres GameObjects zu finden
+    private Dictionary<GameObject, Character> charactersByGameObject = new Dictionary<GameObject, Character>();
 
     private Camera currentCamera;
     private GameManager gameManager;
@@ -39,7 +41,7 @@ public class CharacterHandler : MonoBehaviour
 
     private void HandleClick()
     {
-        Character character = GetCharacterByPosition(Input.mousePosition);
+        Character character = GetCharacterByClickPosition(Input.mousePosition);
 
         currentlySelectedChar = character;
 
@@ -77,16 +79,19 @@ public class CharacterHandler : MonoBehaviour
         
     }
 
-    private Character GetCharacterByPosition(Vector3 position)
+    private Character GetCharacterByClickPosition(Vector3 position)
     {
-        RaycastHit hit;
         Ray ray = currentCamera.ScreenPointToRay(position);
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+        RaycastHit[] hits = Physics.RaycastAll(ray);
+        if (hits != null && hits.Length > 0) 
         {
-            GameObject gameObject = hit.transform.gameObject;
-            if (gameObject)
+            foreach(RaycastHit hit in hits)
             {
-                return characters.Find(c => c.GetCharacterGameObject().Equals(gameObject));
+                GameObject gameObject = hit.transform.gameObject;
+                if (gameObject && charactersByGameObject.ContainsKey(gameObject))
+                {
+                    return charactersByGameObject.GetValueOrDefault(gameObject);
+                }
             }
         }
 
@@ -96,6 +101,7 @@ public class CharacterHandler : MonoBehaviour
     private void AddCharacterToList(Character character)
     {
         characters.Add(character);
+        charactersByGameObject.Add(character.GetCharacterGameObject(), character);
     }
 
     #region MyRegion

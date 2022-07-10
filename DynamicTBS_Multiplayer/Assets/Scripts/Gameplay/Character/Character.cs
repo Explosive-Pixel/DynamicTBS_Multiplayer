@@ -45,7 +45,10 @@ public abstract class Character
         }
     }
 
-    public void Die() {  }
+    public void Die() 
+    { 
+        GameObject.Destroy(characterGameObject);
+    }
 
     public void SwitchSide(Player newSide) {
         this.side = newSide;
@@ -59,6 +62,7 @@ public abstract class Character
     private GameObject CreateCharacterGameObject()
     {
         GameObject character = new GameObject();
+        character.name = this.GetType().Name + "_" + side.GetPlayerType().ToString();
 
         Vector3 startPosition = new Vector3(0, 0, 0);
         Quaternion startRotation = Quaternion.identity;

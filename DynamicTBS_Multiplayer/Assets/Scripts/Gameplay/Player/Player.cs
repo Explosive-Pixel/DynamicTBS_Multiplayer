@@ -5,7 +5,6 @@ using UnityEngine;
 public class Player
 {
     private PlayerType type;
-    private List<Character> characters = new List<Character>();
 
     public Player(PlayerType type) 
     {
@@ -15,14 +14,5 @@ public class Player
     public PlayerType GetPlayerType() 
     {
         return this.type;
-    }
-
-
-    public void AddCharacter(Character character) {
-        this.characters.Add(character);
-    }
-
-    public bool RemoveCharacter(Character character) {
-        return this.characters.Remove(character);
     }
 }

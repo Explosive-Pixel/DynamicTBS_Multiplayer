@@ -41,9 +41,9 @@ public class PlayerManager : MonoBehaviour
 
     public bool IsCurrentPlayer(string name)
     {
-        if (name.Contains("Blue") && IsBlueTurn())
+        if (name.ToLower().Contains(PlayerType.blue.ToString()) && IsBlueTurn())
             return true;
-        if (name.Contains("Pink") && !IsBlueTurn())
+        if (name.ToLower().Contains(PlayerType.pink.ToString()) && !IsBlueTurn())
             return true;
         return false;
     }
@@ -53,10 +53,5 @@ public class PlayerManager : MonoBehaviour
         if (playerType == PlayerType.blue)
             return bluePlayer;
         return pinkPlayer;
-    }
-
-    public void AddCharacterToCurrentPlayer(Character character)
-    {
-        currentPlayer.AddCharacter(character);
     }
 }

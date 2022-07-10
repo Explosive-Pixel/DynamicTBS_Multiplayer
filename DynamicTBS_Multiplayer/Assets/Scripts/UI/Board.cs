@@ -25,7 +25,7 @@ public class Board : MonoBehaviour
     #endregion
 
     private List<Tile> tiles = new List<Tile>();
-
+    // Chache, um schneller Tiles anhand ihres GameObjects zu finden
     private Dictionary<GameObject, Tile> tilesByGameObject = new Dictionary<GameObject, Tile>();
 
     private Camera currentCamera;
@@ -51,19 +51,24 @@ public class Board : MonoBehaviour
 
     private void HandleClick()
     {
-        Tile tile = GetTileByPosition(Input.mousePosition);
+        Tile tile = GetTileByPosition(currentCamera.ScreenToWorldPoint(Input.mousePosition));
     }
 
+    // Caution: position has to be a world point!
     private Tile GetTileByPosition(Vector3 position) 
     {
-        RaycastHit hit;
-        Ray ray = currentCamera.ScreenPointToRay(position);
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+        position.z = 0;
+        RaycastHit[] hits = Physics.RaycastAll(position, transform.forward);
+
+        if (hits != null && hits.Length > 0)
         {
-            GameObject gameObject = hit.transform.gameObject;
-            if (gameObject && gameObject.name.Contains("Tile"))
+            foreach (RaycastHit hit in hits)
             {
-                return tilesByGameObject.GetValueOrDefault(gameObject);
+                GameObject gameObject = hit.transform.gameObject;
+                if (gameObject && tilesByGameObject.ContainsKey(gameObject))
+                {
+                    return tilesByGameObject.GetValueOrDefault(gameObject);
+                }
             }
         }
 
@@ -92,12 +97,12 @@ public class Board : MonoBehaviour
     {
         List<Vector3> startTiles = new List<Vector3>();
         int startRow = 0;
-        int endRow = 3;
+        int endRow = boardSize/2 - 1;
 
         if (character.GetSide().GetPlayerType() == PlayerType.blue)
         {
-            startRow = 5;
-            endRow = 8;
+            startRow = boardSize/2 + 1;
+            endRow = boardSize - 1;
         }
 
         int row = startRow;
