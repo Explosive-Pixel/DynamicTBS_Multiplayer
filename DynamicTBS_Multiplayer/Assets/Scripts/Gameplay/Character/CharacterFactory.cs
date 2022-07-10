@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class CharacterFactory : MonoBehaviour
 {
-
     public static Character CreateCharacter(CharacterType type, Player side) 
     {
         Character character = null;
