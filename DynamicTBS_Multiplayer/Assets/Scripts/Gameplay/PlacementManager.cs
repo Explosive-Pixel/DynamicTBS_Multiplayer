@@ -21,9 +21,25 @@ public class PlacementManager : MonoBehaviour
         placementCount = 0;
     }
 
-    private void SortCharacters()
+    private void SortCharacters(List<Character> characters)
     {
-        // TODO Characters will be sorted to sides after Draft is over.
+        Vector3 blueStartPosition = new Vector3(-7.5f, 3, 1);
+        Vector3 pinkStartPosition = new Vector3(7.5f, 3, 1);
+        float verticalOffset = 1;
+
+        foreach (Character character in characters)
+        {
+            if (character.GetSide().GetPlayerType() == PlayerType.blue)
+            {
+                character.GetCharacterGameObject().transform.position = blueStartPosition;
+                blueStartPosition.y -= verticalOffset;
+            }
+            else
+            {
+                character.GetCharacterGameObject().transform.position = pinkStartPosition;
+                pinkStartPosition.y -= verticalOffset;
+            }
+        }
     }
 
     private void AdvancePlacementOrder()
@@ -53,7 +69,7 @@ public class PlacementManager : MonoBehaviour
 
         Tile masterSpawnTile = board.FindMasterStartTile(playerType);
         Vector3 position = masterSpawnTile.GetPosition();
-        master.GetCharacterGameObject().transform.position = new Vector3(position.x, position.y, 0.997f);
+        master.GetCharacterGameObject().transform.position = new Vector3(position.x, position.y, 0.998f);
         masterSpawnTile.SetCurrentInhabitant(master);
         DraftEvents.CharacterCreated(master);
     }
@@ -63,11 +79,13 @@ public class PlacementManager : MonoBehaviour
     private void SubscribeEvents()
     {
         PlacementEvents.OnAdvancePlacementOrder += AdvancePlacementOrder;
+        DraftEvents.OnDeliverCharacterList += SortCharacters;
     }
 
     private void UnsubscribeEvents()
     {
         PlacementEvents.OnAdvancePlacementOrder -= AdvancePlacementOrder;
+        DraftEvents.OnDeliverCharacterList -= SortCharacters;
     }
 
     #endregion

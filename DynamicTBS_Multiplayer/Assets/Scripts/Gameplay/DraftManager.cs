@@ -11,7 +11,7 @@ public class DraftManager : MonoBehaviour
     private static List<int> draftOrder = new List<int>() {3, 6, 7, 9, 11, 13};
     
     private PlayerManager playerManager;
-    private Vector3 firstPosition = new Vector3(-6.5f, -3.5f, 0.997f);
+    private Vector3 firstPosition = new Vector3(-6.5f, -3.5f, 0.998f);
     private float offset = 1f;
     private int draftCounter;
 

@@ -6,7 +6,7 @@ using UnityEngine;
 public class CharacterHandler : MonoBehaviour
 {
     private List<Character> characters = new List<Character>();
-    // Chache, um schneller Character anhand ihres GameObjects zu finden
+    // Cache to find characters fast, based on their gameobject
     private Dictionary<GameObject, Character> charactersByGameObject = new Dictionary<GameObject, Character>();
 
     private Camera currentCamera;
@@ -124,6 +124,11 @@ public class CharacterHandler : MonoBehaviour
         charactersByGameObject.Add(character.GetCharacterGameObject(), character);
     }
 
+    private void DeliverCharacterList()
+    {
+        DraftEvents.DeliverCharacterList(characters);
+    }
+
     private void ListenToClicks()
     {
         isListeningToClicks = true;
@@ -134,17 +139,19 @@ public class CharacterHandler : MonoBehaviour
     private void SubscribeEvents()
     {
         DraftEvents.OnCharacterCreated += AddCharacterToList;
+        DraftEvents.OnEndDraft += ListenToClicks;
+        DraftEvents.OnEndDraft += DeliverCharacterList;
         UIEvents.OnPassMoveDestination += MoveCharacter;
         UIEvents.OnInformNoMoveDestinationsAvailable += ListenToClicks;
-        DraftEvents.OnEndDraft += ListenToClicks;
     }
 
     private void UnsubscribeEvents()
     {
         DraftEvents.OnCharacterCreated -= AddCharacterToList;
+        DraftEvents.OnEndDraft -= ListenToClicks;
+        DraftEvents.OnEndDraft -= DeliverCharacterList;
         UIEvents.OnPassMoveDestination -= MoveCharacter;
         UIEvents.OnInformNoMoveDestinationsAvailable -= ListenToClicks;
-        DraftEvents.OnEndDraft -= ListenToClicks;
     }
 
     #endregion

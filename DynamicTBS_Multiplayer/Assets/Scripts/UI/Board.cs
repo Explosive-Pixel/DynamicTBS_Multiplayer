@@ -25,7 +25,7 @@ public class Board : MonoBehaviour
     #endregion
 
     private List<Tile> tiles = new List<Tile>();
-    // Chache, um schneller Tiles anhand ihres GameObjects zu finden
+    // Cache to find tiles fast, based on their gameobject
     private Dictionary<GameObject, Tile> tilesByGameObject = new Dictionary<GameObject, Tile>();
 
     private Camera currentCamera;
