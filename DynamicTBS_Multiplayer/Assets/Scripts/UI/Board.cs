@@ -110,12 +110,12 @@ public class Board : MonoBehaviour
         Queue<Tile> queue = new Queue<Tile>();
         List<Tile> visited = new List<Tile>();
         queue.Enqueue(currentTile);
-        while (queue.Count > 0 && range > 0) 
+        while (queue.Count > 0 && range > 0)
         {
             Tile tile = queue.Dequeue();
             visited.Add(tile);
 
-            List<Tile> neighbors = GetNeighbors(tile);
+            List<Tile> neighbors = GetNeighbors(tile, PatternType.Cross);
             foreach(Tile neighbor in neighbors) 
             {
                 if (!visited.Contains(neighbor) && neighbor.IsAccessible()) 
@@ -130,7 +130,32 @@ public class Board : MonoBehaviour
         UIEvents.PassMovePositionsList(movePositions);
     }
 
-    private List<Tile> GetNeighbors(Tile tile) 
+    private void FindAttackPositions(Character character)
+    {
+        int range = character.GetAttackRange();
+        Tile tile = GetTileByCharacter(character);
+
+        List<Character> targets = new List<Character>();
+
+        int i = 0;
+        
+        while (range > 0)
+        {
+            if (tile.GetRow() > i) // i starts out as 0 and is then 1.
+            {
+                Tile currentTile = GetTileByCoordinates(tile.GetRow() - i - 1, tile.GetColumn());
+                if (currentTile.IsOccupied())
+                {
+                    targets.Add(currentTile.GetCurrentInhabitant());
+                }
+            }
+            
+            range--;
+            i++;
+        }
+    }
+
+    private List<Tile> GetNeighbors(Tile tile, PatternType patternType) 
     {
         List<Tile> neighbors = new List<Tile>();
         if (tile.GetRow() > 0) 
@@ -149,6 +174,15 @@ public class Board : MonoBehaviour
         {
             neighbors.Add(GetTileByCoordinates(tile.GetRow(), tile.GetColumn() + 1));
         }
+
+        if (patternType == PatternType.Star) // TODO: Finish star pattern!
+        {
+            if (tile.GetRow() > 0 && tile.GetColumn() > 0)
+            {
+                neighbors.Add(GetTileByCoordinates(tile.GetRow() - 1, tile.GetColumn() - 1));
+            }
+        }
+        
         return neighbors;
     }
 

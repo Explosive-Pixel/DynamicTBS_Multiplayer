@@ -38,6 +38,11 @@ public abstract class Tile
         return column;
     }
 
+    public Character GetCurrentInhabitant()
+    {
+        return currentInhabitant;
+    }
+
     public GameObject GetTileGameObject() { return tileGameObject; }
 
     public Vector3 GetPosition() 

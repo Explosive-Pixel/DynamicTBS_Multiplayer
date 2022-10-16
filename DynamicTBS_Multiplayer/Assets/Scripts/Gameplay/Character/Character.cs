@@ -31,6 +31,7 @@ public abstract class Character
 
     public GameObject GetCharacterGameObject() { return characterGameObject; }
     public int GetMoveSpeed() { return moveSpeed; }
+    public int GetAttackRange() { return attackRange; }
 
     public void TakeDamage(int damage) {
         this.hitPoints -= damage;
