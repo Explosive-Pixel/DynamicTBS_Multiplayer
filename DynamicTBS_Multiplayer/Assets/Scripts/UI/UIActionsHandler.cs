@@ -6,6 +6,7 @@ using UnityEngine;
 public class UIActionsHandler : MonoBehaviour
 {
     [SerializeField] private GameObject moveCirclePrefab;
+    [SerializeField] private GameObject attackCirclePrefab;
     private List<GameObject> tmpGameObjects = new List<GameObject>();
     private Camera currentCamera;
     private bool isPlacing;
@@ -74,6 +75,7 @@ public class UIActionsHandler : MonoBehaviour
     {
         if (positions.Count > 0)
         {
+            Debug.Log("InstantiatingMovePositions");
             ResetTmpList();
             foreach (Vector3 position in positions)
             {
@@ -88,16 +90,37 @@ public class UIActionsHandler : MonoBehaviour
         }
     }
 
+    private void InstantiateAttackPositions(List<Vector3> positions)
+    {
+        if (positions.Count > 0)
+        {
+            Debug.Log("InstantiatingAttackPositions");
+            ResetTmpList();
+            foreach (Vector3 position in positions)
+            {
+                attackCirclePrefab.transform.position = new Vector3(position.x, position.y, 0.98f);
+                tmpGameObjects.Add(Instantiate(attackCirclePrefab));
+            }
+            isPlacing = false;
+        }
+        else
+        {
+            UIEvents.InformNoMoveDestinationAvailable();
+        }
+    }
+
     #region EventSubscriptions
 
     private void SubscribeEvents()
     {
         UIEvents.OnPassMovePositionsList += InstantiateMovePositions;
+        UIEvents.OnPassAttackPositionsList += InstantiateAttackPositions;
     }
 
     private void UnsubscribeEvents()
     {
         UIEvents.OnPassMovePositionsList -= InstantiateMovePositions;
+        UIEvents.OnPassAttackPositionsList -= InstantiateAttackPositions;
     }
 
     #endregion

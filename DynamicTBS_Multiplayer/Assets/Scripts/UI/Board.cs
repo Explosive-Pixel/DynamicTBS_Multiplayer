@@ -132,27 +132,94 @@ public class Board : MonoBehaviour
 
     private void FindAttackPositions(Character character)
     {
+        Debug.Log("FindingAttackPositions");
+        
         int range = character.GetAttackRange();
         Tile tile = GetTileByCharacter(character);
 
         List<Character> targets = new List<Character>();
 
         int i = 0;
+
+        bool topLeft = false;
+        bool top = false;
+        bool topRight = false;
+        bool right = false;
+        bool bottomRight = false;
+        bool bottom = false;
+        bool bottomLeft = false;
+        bool left = false;
         
+        // Checking tiles in a star pattern to see if they are occupied.
+        // Adding closest enemies to list.
         while (range > 0)
         {
             if (tile.GetRow() > i) // i starts out as 0 and is then 1.
             {
                 Tile currentTile = GetTileByCoordinates(tile.GetRow() - i - 1, tile.GetColumn());
-                if (currentTile.IsOccupied())
+                if (currentTile.IsOccupied() && currentTile.GetCurrentInhabitant().GetSide() != character.GetSide() && bottom == false)
                 {
                     targets.Add(currentTile.GetCurrentInhabitant());
+                    bottom = true;
+                }
+                currentTile = GetTileByCoordinates(tile.GetRow() - i - 1, tile.GetColumn() - i - 1);
+                if (currentTile.IsOccupied() && currentTile.GetCurrentInhabitant().GetSide() != character.GetSide() && bottomLeft == false)
+                {
+                    targets.Add(currentTile.GetCurrentInhabitant());
+                    bottomLeft = true;
+                }
+                currentTile = GetTileByCoordinates(tile.GetRow(), tile.GetColumn() - i - 1);
+                if (currentTile.IsOccupied() && currentTile.GetCurrentInhabitant().GetSide() != character.GetSide() && left == false)
+                {
+                    targets.Add(currentTile.GetCurrentInhabitant());
+                    left = true;
+                }
+                currentTile = GetTileByCoordinates(tile.GetRow() - i - 1, tile.GetColumn() + i + 1);
+                if (currentTile.IsOccupied() && currentTile.GetCurrentInhabitant().GetSide() != character.GetSide() && topLeft == false)
+                {
+                    targets.Add(currentTile.GetCurrentInhabitant());
+                    topLeft = true;
+                }
+                currentTile = GetTileByCoordinates(tile.GetRow(), tile.GetColumn() + i + 1);
+                if (currentTile.IsOccupied() && currentTile.GetCurrentInhabitant().GetSide() != character.GetSide() && top == false)
+                {
+                    targets.Add(currentTile.GetCurrentInhabitant());
+                    top = true;
+                }
+                currentTile = GetTileByCoordinates(tile.GetRow() + i + 1, tile.GetColumn() + i + 1);
+                if (currentTile.IsOccupied() && currentTile.GetCurrentInhabitant().GetSide() != character.GetSide() && topRight == false)
+                {
+                    targets.Add(currentTile.GetCurrentInhabitant());
+                    topRight = true;
+                }
+                currentTile = GetTileByCoordinates(tile.GetRow(), tile.GetColumn() + i + 1);
+                if (currentTile.IsOccupied() && currentTile.GetCurrentInhabitant().GetSide() != character.GetSide() && right == false)
+                {
+                    targets.Add(currentTile.GetCurrentInhabitant());
+                    right = true;
+                }
+                currentTile = GetTileByCoordinates(tile.GetRow() - i - 1, tile.GetColumn() + i + 1);
+                if (currentTile.IsOccupied() && currentTile.GetCurrentInhabitant().GetSide() != character.GetSide() && bottomRight == false)
+                {
+                    targets.Add(currentTile.GetCurrentInhabitant());
+                    bottomRight = true;
                 }
             }
-            
             range--;
             i++;
         }
+
+        // Getting the positions of targets and passing them to the UI.
+        List<Vector3> attackPositions = new List<Vector3>();
+
+        foreach (var target in targets)
+        {
+            Vector3 position;
+            position = GetTileByCharacter(target).GetPosition();
+            attackPositions.Add(position);
+        }
+
+        UIEvents.PassAttackPositionsList(attackPositions);
     }
 
     private List<Tile> GetNeighbors(Tile tile, PatternType patternType) 
@@ -175,11 +242,23 @@ public class Board : MonoBehaviour
             neighbors.Add(GetTileByCoordinates(tile.GetRow(), tile.GetColumn() + 1));
         }
 
-        if (patternType == PatternType.Star) // TODO: Finish star pattern!
+        if (patternType == PatternType.Star)
         {
             if (tile.GetRow() > 0 && tile.GetColumn() > 0)
             {
                 neighbors.Add(GetTileByCoordinates(tile.GetRow() - 1, tile.GetColumn() - 1));
+            }
+            if (tile.GetRow() < boardSize - 1 && tile.GetColumn() < boardSize - 1)
+            {
+                neighbors.Add(GetTileByCoordinates(tile.GetRow() + 1, tile.GetColumn() + 1));
+            }
+            if (tile.GetRow() < boardSize - 1 && tile.GetColumn() > 0)
+            {
+                neighbors.Add(GetTileByCoordinates(tile.GetRow() + 1, tile.GetColumn() - 1));
+            }
+            if (tile.GetRow() > 0 && tile.GetColumn() < boardSize - 1)
+            {
+                neighbors.Add(GetTileByCoordinates(tile.GetRow() - 1, tile.GetColumn() + 1));
             }
         }
         
@@ -268,6 +347,7 @@ public class Board : MonoBehaviour
         DraftEvents.OnEndDraft += CreateBoard;
         PlacementEvents.OnCharacterSelectionForPlacement += FindStartTilePositions;
         UIEvents.OnCharacterSelectionForMove += FindMovePositions;
+        UIEvents.OnCharacterSelectionForMove += FindAttackPositions;
         UIEvents.OnMoveOver += UpdateTilesAfterMove;
     }
 
@@ -276,6 +356,7 @@ public class Board : MonoBehaviour
         DraftEvents.OnEndDraft -= CreateBoard;
         PlacementEvents.OnCharacterSelectionForPlacement -= FindStartTilePositions;
         UIEvents.OnCharacterSelectionForMove -= FindMovePositions;
+        UIEvents.OnCharacterSelectionForMove -= FindAttackPositions;
         UIEvents.OnMoveOver -= UpdateTilesAfterMove;
     }
 

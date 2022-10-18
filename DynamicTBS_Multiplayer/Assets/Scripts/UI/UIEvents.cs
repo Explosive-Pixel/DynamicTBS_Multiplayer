@@ -6,6 +6,7 @@ public static class UIEvents
 {
     public delegate void PositionsList(List<Vector3> positions);
     public static event PositionsList OnPassMovePositionsList;
+    public static event PositionsList OnPassAttackPositionsList;
 
     public delegate void SinglePosition(Vector3 position);
     public static event SinglePosition OnPassMoveDestination;
@@ -23,6 +24,12 @@ public static class UIEvents
     {
         if (OnPassMovePositionsList != null)
             OnPassMovePositionsList(positions);
+    }
+
+    public static void PassAttackPositionsList(List<Vector3> positions)
+    {
+        if (OnPassAttackPositionsList != null)
+            OnPassAttackPositionsList(positions);
     }
 
     public static void PassMoveDestination(Vector3 position)
