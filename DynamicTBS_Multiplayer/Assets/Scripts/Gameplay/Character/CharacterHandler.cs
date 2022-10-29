@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharacterHandler : MonoBehaviour
 {
@@ -26,11 +27,6 @@ public class CharacterHandler : MonoBehaviour
         isListeningToClicks = false;
     }
 
-    private void LoadBoard()
-    {
-        board = GameObject.Find("GameplayCanvas").GetComponent<Board>();
-    }
-
     private void Update()
     {
         if (!currentCamera)
@@ -47,11 +43,21 @@ public class CharacterHandler : MonoBehaviour
         }
     }
 
+    public Character GetCurrentlySelectedCharacter()
+    {
+        return currentlySelectedChar;
+    }
+
+    private void LoadBoard()
+    {
+        board = GameObject.Find("GameplayCanvas").GetComponent<Board>();
+    }
+
     private void HandleClick()
     {
         Character character = GetCharacterByPosition(Input.mousePosition, true);
 
-        currentlySelectedChar = character;
+        UpdateCurrentlySelectedCharacter(character);
 
         if (character == null) return;
 
@@ -97,7 +103,6 @@ public class CharacterHandler : MonoBehaviour
         characterToAttack.GetAttacked();
 
         GameplayEvents.ActionFinished(UIActionType.Attack);
-        ListenToClicks();
     }
 
 
@@ -109,13 +114,12 @@ public class CharacterHandler : MonoBehaviour
         if (!gameManager.HasGameStarted())
         {
             PlacementEvents.AdvancePlacementOrder();
+            ListenToClicks();
         }
         else 
         {
             GameplayEvents.ActionFinished(UIActionType.Move);
         }
-
-        ListenToClicks();
     }
 
     private void HandleAction(Character character) 
@@ -168,10 +172,21 @@ public class CharacterHandler : MonoBehaviour
         DraftEvents.DeliverCharacterList(characters);
     }
 
+    private void ActionOver(UIActionType actionType)
+    {
+        ListenToClicks();
+    }
+
     private void ListenToClicks()
     {
-        currentlySelectedChar = null;
+        UpdateCurrentlySelectedCharacter(null);
         isListeningToClicks = true;
+    }
+
+    private void UpdateCurrentlySelectedCharacter(Character character)
+    {
+        currentlySelectedChar = character;
+        GameplayEvents.ChangeCharacterSelection(character);
     }
 
     #region EventsRegion
@@ -184,6 +199,7 @@ public class CharacterHandler : MonoBehaviour
         PlacementEvents.OnPlacementStart += LoadBoard;
         UIEvents.OnPassActionDestination += ExecuteAction;
         UIEvents.OnInformNoActionDestinationsAvailable += ListenToClicks;
+        GameplayEvents.OnFinishAction += ActionOver;
     }
 
     private void UnsubscribeEvents()
@@ -194,6 +210,7 @@ public class CharacterHandler : MonoBehaviour
         PlacementEvents.OnPlacementStart -= LoadBoard;
         UIEvents.OnPassActionDestination -= ExecuteAction;
         UIEvents.OnInformNoActionDestinationsAvailable -= ListenToClicks;
+        GameplayEvents.OnFinishAction -= ActionOver;
     }
 
     #endregion

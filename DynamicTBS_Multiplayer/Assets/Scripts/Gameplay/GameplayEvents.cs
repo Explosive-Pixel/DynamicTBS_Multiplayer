@@ -13,6 +13,9 @@ public static class GameplayEvents
     public delegate void GameOver(PlayerType winner);
     public static event GameOver OnGameOver;
 
+    public delegate void CharacterSelection(Character character);
+    public static event CharacterSelection OnCharacterSelectionChange;
+
     public static void StartGameplayPhase()
     {
         if (OnGameplayPhaseStart != null)
@@ -31,5 +34,11 @@ public static class GameplayEvents
         {
             OnGameOver(winner);
         }
+    }
+
+    public static void ChangeCharacterSelection(Character character)
+    {
+        if (OnCharacterSelectionChange != null)
+            OnCharacterSelectionChange(character);
     }
 }

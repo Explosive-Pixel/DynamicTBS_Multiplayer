@@ -68,6 +68,11 @@ public abstract class Character
         return side;
     }
 
+    public IActiveAbility GetActiveAbility()
+    {
+        return activeAbility;
+    }
+
     private GameObject CreateCharacterGameObject()
     {
         GameObject character = new GameObject();
