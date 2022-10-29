@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject gameplayCanvas;
     [SerializeField] private GameObject tutorialCanvas;
     [SerializeField] private GameObject creditsCanvas;
+    [SerializeField] private GameObject gameOverCanvas;
 
     private List<GameObject> canvasList = new List<GameObject>();
 
@@ -33,6 +35,7 @@ public class GameManager : MonoBehaviour
         canvasList.Add(gameplayCanvas);
         canvasList.Add(tutorialCanvas);
         canvasList.Add(creditsCanvas);
+        canvasList.Add(gameOverCanvas);
     }
     
     #region MenusRegion
@@ -72,6 +75,13 @@ public class GameManager : MonoBehaviour
         HandleMenus(creditsCanvas);
     }
 
+    private void GoToGameOverScreen(PlayerType winner)
+    {
+        HandleMenus(gameOverCanvas);
+        Text gameOverText = gameOverCanvas.GetComponentInChildren<Text>();
+        gameOverText.text = "Player " + winner.ToString() + " has won.";
+    }
+
     private void HandleMenus(GameObject menuCanvas)
     {
         foreach (GameObject gameObject in canvasList)
@@ -105,12 +115,14 @@ public class GameManager : MonoBehaviour
     private void SubscribeEvents()
     {
         GameplayEvents.OnGameplayPhaseStart += SetGameStarted;
+        GameplayEvents.OnGameOver += GoToGameOverScreen;
         DraftEvents.OnEndDraft += GoToGameplayScreen;
     }
 
     private void UnsubscribeEvents()
     {
         GameplayEvents.OnGameplayPhaseStart -= SetGameStarted;
+        GameplayEvents.OnGameOver -= GoToGameOverScreen;
         DraftEvents.OnEndDraft -= GoToGameplayScreen;
     }
 
