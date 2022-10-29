@@ -150,16 +150,23 @@ public class UIActionsHandler : MonoBehaviour
         }
     }
 
+    private void ActionOver(UIActionType type) 
+    {
+        ResetTmpList();
+    }
+
     #region EventSubscriptions
 
     private void SubscribeEvents()
     {
         UIEvents.OnPassActionPositionsList += InstantiateActionPositions;
+        GameplayEvents.OnFinishAction += ActionOver;
     }
 
     private void UnsubscribeEvents()
     {
         UIEvents.OnPassActionPositionsList -= InstantiateActionPositions;
+        GameplayEvents.OnFinishAction -= ActionOver;
     }
 
     #endregion
