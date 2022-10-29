@@ -10,6 +10,9 @@ public static class GameplayEvents
     public delegate void FinishAction(UIActionType type);
     public static event FinishAction OnFinishAction;
 
+    public delegate void ExecuteActiveAbility();
+    public static event ExecuteActiveAbility OnExecuteActiveAbility;
+
     public delegate void GameOver(PlayerType winner);
     public static event GameOver OnGameOver;
 
@@ -26,6 +29,12 @@ public static class GameplayEvents
     {
         if (OnFinishAction != null)
             OnFinishAction(type);
+    }
+
+    public static void ExecuteActiveAbilityStarted()
+    {
+        if (OnExecuteActiveAbility != null)
+            OnExecuteActiveAbility();
     }
 
     public static void GameIsOver(PlayerType winner)

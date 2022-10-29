@@ -81,9 +81,7 @@ public class UIActionsHandler : MonoBehaviour
     {
         if (positions.Count > 0)
         {
-            if (type == UIActionType.ActiveAbility)
-                ResetTmpList();
-            else ResetTmpList(type);
+            ResetTmpList(type);
 
             List<GameObject> gameObjects = new List<GameObject>();
             GameObject prefab = prefabProvider.GetActionPrefabByActionType(type);
@@ -133,12 +131,14 @@ public class UIActionsHandler : MonoBehaviour
     {
         UIEvents.OnPassActionPositionsList += InstantiateActionPositions;
         GameplayEvents.OnFinishAction += ActionOver;
+        GameplayEvents.OnExecuteActiveAbility += ResetTmpList;
     }
 
     private void UnsubscribeEvents()
     {
         UIEvents.OnPassActionPositionsList -= InstantiateActionPositions;
         GameplayEvents.OnFinishAction -= ActionOver;
+        GameplayEvents.OnExecuteActiveAbility -= ResetTmpList;
     }
 
     #endregion
