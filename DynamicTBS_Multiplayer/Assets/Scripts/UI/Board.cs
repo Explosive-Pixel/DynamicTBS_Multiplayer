@@ -56,6 +56,50 @@ public class Board : MonoBehaviour
         return null;
     }
 
+    public List<Tile> GetTilesOfDistance(Tile tile, PatternType patternType, int distance)
+    {
+        List<Tile> tiles = new List<Tile>();
+
+        if (tile.GetRow() >= distance)
+        {
+            tiles.Add(GetTileByCoordinates(tile.GetRow() - distance, tile.GetColumn()));
+        }
+        if (tile.GetRow() < boardSize - distance)
+        {
+            tiles.Add(GetTileByCoordinates(tile.GetRow() + distance, tile.GetColumn()));
+        }
+        if (tile.GetColumn() >= distance)
+        {
+            tiles.Add(GetTileByCoordinates(tile.GetRow(), tile.GetColumn() - distance));
+        }
+        if (tile.GetColumn() < boardSize - distance)
+        {
+            tiles.Add(GetTileByCoordinates(tile.GetRow(), tile.GetColumn() + distance));
+        }
+
+        if (patternType == PatternType.Star)
+        {
+            if (tile.GetRow() >= distance && tile.GetColumn() >= distance)
+            {
+                tiles.Add(GetTileByCoordinates(tile.GetRow() - distance, tile.GetColumn() - distance));
+            }
+            if (tile.GetRow() < boardSize - distance && tile.GetColumn() < boardSize - distance)
+            {
+                tiles.Add(GetTileByCoordinates(tile.GetRow() + distance, tile.GetColumn() + distance));
+            }
+            if (tile.GetRow() < boardSize - distance && tile.GetColumn() >= distance)
+            {
+                tiles.Add(GetTileByCoordinates(tile.GetRow() + distance, tile.GetColumn() - distance));
+            }
+            if (tile.GetRow() >= distance && tile.GetColumn() < boardSize - distance)
+            {
+                tiles.Add(GetTileByCoordinates(tile.GetRow() - distance, tile.GetColumn() + distance));
+            }
+        }
+
+        return tiles;
+    }
+
     public List<Vector3> GetPositionsOfNearestCharactersOfSideWithinRadius(Tile center, PlayerType side, int radius) 
     {
         List<Vector3> positions = new List<Vector3>();
@@ -219,45 +263,7 @@ public class Board : MonoBehaviour
 
     private List<Tile> GetNeighbors(Tile tile, PatternType patternType) 
     {
-        List<Tile> neighbors = new List<Tile>();
-        if (tile.GetRow() > 0) 
-        {
-            neighbors.Add(GetTileByCoordinates(tile.GetRow() - 1, tile.GetColumn()));
-        }
-        if (tile.GetRow() < boardSize-1)
-        {
-            neighbors.Add(GetTileByCoordinates(tile.GetRow() + 1, tile.GetColumn()));
-        }
-        if (tile.GetColumn() > 0)
-        {
-            neighbors.Add(GetTileByCoordinates(tile.GetRow(), tile.GetColumn() - 1));
-        }
-        if (tile.GetColumn() < boardSize-1)
-        {
-            neighbors.Add(GetTileByCoordinates(tile.GetRow(), tile.GetColumn() + 1));
-        }
-
-        if (patternType == PatternType.Star)
-        {
-            if (tile.GetRow() > 0 && tile.GetColumn() > 0)
-            {
-                neighbors.Add(GetTileByCoordinates(tile.GetRow() - 1, tile.GetColumn() - 1));
-            }
-            if (tile.GetRow() < boardSize - 1 && tile.GetColumn() < boardSize - 1)
-            {
-                neighbors.Add(GetTileByCoordinates(tile.GetRow() + 1, tile.GetColumn() + 1));
-            }
-            if (tile.GetRow() < boardSize - 1 && tile.GetColumn() > 0)
-            {
-                neighbors.Add(GetTileByCoordinates(tile.GetRow() + 1, tile.GetColumn() - 1));
-            }
-            if (tile.GetRow() > 0 && tile.GetColumn() < boardSize - 1)
-            {
-                neighbors.Add(GetTileByCoordinates(tile.GetRow() - 1, tile.GetColumn() + 1));
-            }
-        }
-        
-        return neighbors;
+        return GetTilesOfDistance(tile, patternType, 1);
     }
 
     private void FindStartTilePositions(Character character)

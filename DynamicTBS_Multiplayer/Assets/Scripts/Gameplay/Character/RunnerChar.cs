@@ -10,7 +10,7 @@ public class RunnerChar : Character
         this.moveSpeed = 2;
         this.attackRange = 1;
 
-        this.activeAbility = new JumpAA();
+        this.activeAbility = new JumpAA(this);
         this.passiveAbility = new HighPerformancePA();
 
         this.characterSprite = side.GetPlayerType() == PlayerType.blue ? SpriteManager.BLUE_RUNNER_SPRITE : SpriteManager.PINK_RUNNER_SPRITE;

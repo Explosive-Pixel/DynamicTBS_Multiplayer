@@ -2,5 +2,6 @@ public enum UIActionType
 {
    Move,
    Attack,
-   ActiveAbility
+   ActiveAbility_Heal,
+   ActiveAbility_Jump
 }

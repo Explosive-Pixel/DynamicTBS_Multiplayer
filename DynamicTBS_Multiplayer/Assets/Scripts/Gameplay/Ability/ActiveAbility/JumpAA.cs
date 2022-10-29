@@ -4,5 +4,21 @@ using UnityEngine;
 
 public class JumpAA : IActiveAbility
 {
-    public void Execute() { }
+    public static PatternType movePattern = PatternType.Star;
+    public static int distance = 3;
+
+    private JumpAAHandler jumpAAHandler;
+
+    Character character;
+
+    public JumpAA(Character character)
+    {
+        this.character = character;
+        jumpAAHandler = GameObject.Find("ActiveAbilityObject").GetComponent<JumpAAHandler>();
+    }
+
+    public void Execute()
+    {
+        jumpAAHandler.ExecuteJumpAA(character);
+    }
 }

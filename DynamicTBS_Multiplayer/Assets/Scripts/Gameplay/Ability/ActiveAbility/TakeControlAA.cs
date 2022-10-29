@@ -11,7 +11,7 @@ public class TakeControlAA : IActiveAbility
     public TakeControlAA(Character character)
     {
         this.character = character;
-        takeControlAAHandler = GameObject.Find("ActiveAbilityHandler").GetComponent<TakeControlAAHandler>();
+        takeControlAAHandler = GameObject.Find("ActiveAbilityObject").GetComponent<TakeControlAAHandler>();
     }
 
     public void Execute() 

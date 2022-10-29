@@ -18,9 +18,13 @@ public class PrefabProvider : MonoBehaviour
                 {
                     return attackCirclePrefab;
                 }
-            case UIActionType.ActiveAbility:
+            case UIActionType.ActiveAbility_Heal:
                 {
                     return activeAbilityCirclePrefab;
+                }
+            case UIActionType.ActiveAbility_Jump:
+                {
+                    return moveCirclePrefab;
                 }
         }
 

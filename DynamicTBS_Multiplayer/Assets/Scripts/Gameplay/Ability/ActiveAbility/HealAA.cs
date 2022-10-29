@@ -14,7 +14,7 @@ public class HealAA : IActiveAbility
     public HealAA(Character character)
     {
         this.character = character;
-        healAAHandler = GameObject.Find("ActiveAbilityHandler").GetComponent<HealAAHandler>();
+        healAAHandler = GameObject.Find("ActiveAbilityObject").GetComponent<HealAAHandler>();
     }
 
     public void Execute() 

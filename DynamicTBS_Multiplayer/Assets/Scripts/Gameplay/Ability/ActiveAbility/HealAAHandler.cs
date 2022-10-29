@@ -25,13 +25,13 @@ public class HealAAHandler : MonoBehaviour
 
         // TODO: Filter characters with max health
 
-        UIEvents.PassActionPositionsList(healPositions, UIActionType.ActiveAbility);
+        UIEvents.PassActionPositionsList(healPositions, UIActionType.ActiveAbility_Heal);
         waitForHealTarget = true;
     }
 
     private void PerformHeal(Vector3 position, UIActionType type)
     {
-        if (waitForHealTarget && type == UIActionType.ActiveAbility)
+        if (waitForHealTarget && type == UIActionType.ActiveAbility_Heal)
         {
             Tile tile = board.GetTileByPosition(position);
             if (tile != null)
@@ -40,7 +40,7 @@ public class HealAAHandler : MonoBehaviour
                 characterToHeal.Heal(HealAA.healingPoints);
             }
             waitForHealTarget = false;
-            GameplayEvents.ActionFinished(UIActionType.ActiveAbility);
+            GameplayEvents.ActionFinished(UIActionType.ActiveAbility_Heal);
         }
     }
 

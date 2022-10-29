@@ -8,7 +8,7 @@ public class ActiveAbilityHandler : MonoBehaviour
 
     private void Awake()
     {
-        GameplayEvents.OnCharacterSelectionChange += ChangeButtonVisibility;
+        SubscribeEvents();
         ChangeButtonVisibility(null);
     }
 
@@ -28,8 +28,22 @@ public class ActiveAbilityHandler : MonoBehaviour
             activeAbilityButton.gameObject.SetActive(true);
     }
 
-    private void OnDestroy()
+    #region EventsRegion
+
+    private void SubscribeEvents()
+    {
+        GameplayEvents.OnCharacterSelectionChange += ChangeButtonVisibility;
+    }
+
+    private void UnsubscribeEvents()
     {
         GameplayEvents.OnCharacterSelectionChange -= ChangeButtonVisibility;
+    }
+
+    #endregion
+
+    private void OnDestroy()
+    {
+        UnsubscribeEvents();
     }
 }

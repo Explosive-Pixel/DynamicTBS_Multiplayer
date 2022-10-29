@@ -62,27 +62,31 @@ public class CharacterHandler : MonoBehaviour
     {
         Character character = GetCharacterByPosition(Input.mousePosition, true);
 
-        UpdateCurrentlySelectedCharacter(character);
-
-        if (character == null) return;
-
-        if (!gameManager.HasGameStarted())
+        if (character == null)
         {
-            HandlePlacement(character);
+            UpdateCurrentlySelectedCharacter(null);
+            return;
         }
-        else 
+
+        if (character.GetSide() == playerManager.GetCurrentPlayer())
         {
-            HandleAction(character);
+            UpdateCurrentlySelectedCharacter(character);
+
+            if (!gameManager.HasGameStarted())
+            {
+                HandlePlacement(character);
+            }
+            else
+            {
+                HandleAction(character);
+            }
         }
     }
 
     private void HandlePlacement(Character character)
     {
-        if (character.GetSide() == playerManager.GetCurrentPlayer())
-        {
-            PlacementEvents.SelectCharacterForPlacement(character);
-            isListeningToClicks = false;
-        }   
+        PlacementEvents.SelectCharacterForPlacement(character);
+        isListeningToClicks = false;
     }
 
     private void ExecuteAction(Vector3 position, UIActionType type)
@@ -129,12 +133,9 @@ public class CharacterHandler : MonoBehaviour
 
     private void HandleAction(Character character) 
     {
-        if (character.GetSide() == playerManager.GetCurrentPlayer())
-        {
-            isListeningToClicks = false;
-            UIEvents.SelectCharacterForAction(character, UIActionType.Move);
-            UIEvents.SelectCharacterForAction(character, UIActionType.Attack);
-        }
+        isListeningToClicks = false;
+        UIEvents.SelectCharacterForAction(character, UIActionType.Move);
+        UIEvents.SelectCharacterForAction(character, UIActionType.Attack);
     }
 
     private Character GetCharacterByPosition(Vector3 position, bool isClick)
@@ -180,11 +181,11 @@ public class CharacterHandler : MonoBehaviour
     private void ActionOver(UIActionType actionType)
     {
         ListenToClicks();
+        UpdateCurrentlySelectedCharacter(null);
     }
 
     private void ListenToClicks()
     {
-        UpdateCurrentlySelectedCharacter(null);
         isListeningToClicks = true;
     }
 

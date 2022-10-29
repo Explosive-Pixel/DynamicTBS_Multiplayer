@@ -861,6 +861,7 @@ GameObject:
   - component: {fileID: 83611008}
   - component: {fileID: 83611007}
   - component: {fileID: 83611009}
+  - component: {fileID: 83611010}
   m_Layer: 0
   m_Name: ActiveAbilityObject
   m_TagString: Untagged
@@ -905,6 +906,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 637138236f4aaea4ca8dd123402b317b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &83611010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 83611006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef3e1d0dc8db5ca46a57b0a22a0f346e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &99576323
@@ -9467,7 +9480,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 32580856}
         m_TargetAssemblyTypeName: ActiveAbilityHandler, Assembly-CSharp
         m_MethodName: ExecuteActiveAbility
         m_Mode: 1
