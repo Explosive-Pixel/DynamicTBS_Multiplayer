@@ -25,7 +25,7 @@ public class GameplayManager : MonoBehaviour
         remainingActions = maxActionsPerRound;
     }
 
-    private void OnActionFinished() 
+    private void OnActionFinished(UIActionType type) 
     {
         remainingActions--;
         if (remainingActions == 0) 
@@ -39,12 +39,12 @@ public class GameplayManager : MonoBehaviour
 
     private void SubscribeEvents()
     {
-        GameplayEvents.OnFinishMove += OnActionFinished;
+        GameplayEvents.OnFinishAction += OnActionFinished;
     }
 
     private void UnsubscribeEvents()
     {
-        GameplayEvents.OnFinishMove -= OnActionFinished;
+        GameplayEvents.OnFinishAction -= OnActionFinished;
     }
 
     #endregion

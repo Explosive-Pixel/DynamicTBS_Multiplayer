@@ -21,20 +21,26 @@ public abstract class Character
     protected Character(Player side)
     {
         this.side = side;
-        this.hitPoints = maxHitPoints;
     }
 
     protected void Init()
     {
         this.characterGameObject = CreateCharacterGameObject();
+        this.hitPoints = maxHitPoints;
     }
 
     public GameObject GetCharacterGameObject() { return characterGameObject; }
     public int GetMoveSpeed() { return moveSpeed; }
     public int GetAttackRange() { return attackRange; }
 
+    public void GetAttacked() 
+    {
+        TakeDamage(1);
+    }
+
     public void TakeDamage(int damage) {
         this.hitPoints -= damage;
+        Debug.Log("Character " + characterGameObject.name + " now has " + hitPoints + " hit points remaining.");
         if (this.hitPoints <= 0) {
             this.Die();
         }

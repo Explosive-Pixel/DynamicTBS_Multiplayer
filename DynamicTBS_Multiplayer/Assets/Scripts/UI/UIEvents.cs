@@ -4,50 +4,43 @@ using UnityEngine;
 
 public static class UIEvents
 {
-    public delegate void PositionsList(List<Vector3> positions);
-    public static event PositionsList OnPassMovePositionsList;
-    public static event PositionsList OnPassAttackPositionsList;
+    public delegate void PositionsList(List<Vector3> positions, UIActionType type);
+    public static event PositionsList OnPassActionPositionsList;
 
-    public delegate void SinglePosition(Vector3 position);
-    public static event SinglePosition OnPassMoveDestination;
+    public delegate void SinglePosition(Vector3 position, UIActionType type);
+    public static event SinglePosition OnPassActionDestination;
 
     public delegate void NoPosition();
-    public static event NoPosition OnInformNoMoveDestinationsAvailable;
+    public static event NoPosition OnInformNoActionDestinationsAvailable;
 
-    public delegate void CharacterMove(Character character);
-    public static event CharacterMove OnCharacterSelectionForMove;
+    public delegate void CharacterAction(Character character, UIActionType type);
+    public static event CharacterAction OnCharacterSelectionForAction;
 
     public delegate void AfterMove(Vector3 oldPosition, Character character);
     public static event AfterMove OnMoveOver;
 
-    public static void PassMovePositionsList(List<Vector3> positions)
+    public static void PassActionPositionsList(List<Vector3> positions, UIActionType type)
     {
-        if (OnPassMovePositionsList != null)
-            OnPassMovePositionsList(positions);
+        if (OnPassActionPositionsList != null)
+            OnPassActionPositionsList(positions, type);
     }
 
-    public static void PassAttackPositionsList(List<Vector3> positions)
+    public static void PassActionDestination(Vector3 position, UIActionType type)
     {
-        if (OnPassAttackPositionsList != null)
-            OnPassAttackPositionsList(positions);
+        if (OnPassActionDestination != null)
+            OnPassActionDestination(position, type);
     }
 
-    public static void PassMoveDestination(Vector3 position)
+    public static void InformNoActionDestinationAvailable()
     {
-        if (OnPassMoveDestination != null)
-            OnPassMoveDestination(position);
+        if (OnInformNoActionDestinationsAvailable != null)
+            OnInformNoActionDestinationsAvailable();
     }
 
-    public static void InformNoMoveDestinationAvailable()
+    public static void SelectCharacterForAction(Character character, UIActionType type)
     {
-        if (OnInformNoMoveDestinationsAvailable != null)
-            OnInformNoMoveDestinationsAvailable();
-    }
-
-    public static void SelectCharacterForMove(Character character)
-    {
-        if (OnCharacterSelectionForMove != null)
-            OnCharacterSelectionForMove(character);
+        if (OnCharacterSelectionForAction != null)
+            OnCharacterSelectionForAction(character, type);
     }
 
     public static void MoveOver(Vector3 oldPosition, Character character)

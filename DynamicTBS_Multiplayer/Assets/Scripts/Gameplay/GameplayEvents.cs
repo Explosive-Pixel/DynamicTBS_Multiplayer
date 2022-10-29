@@ -8,8 +8,8 @@ public static class GameplayEvents
 
     public static event GameplayPhase OnGameplayPhaseStart;
 
-    public delegate void FinishAction();
-    public static event FinishAction OnFinishMove;
+    public delegate void FinishAction(UIActionType type);
+    public static event FinishAction OnFinishAction;
 
     public static void StartGameplayPhase()
     {
@@ -17,9 +17,9 @@ public static class GameplayEvents
             OnGameplayPhaseStart();
     }
 
-    public static void MoveFinished()
+    public static void ActionFinished(UIActionType type)
     {
-        if (OnFinishMove != null)
-            OnFinishMove();
+        if (OnFinishAction != null)
+            OnFinishAction(type);
     }
 }

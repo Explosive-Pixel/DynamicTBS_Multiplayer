@@ -7,14 +7,12 @@ public class UIActionsHandler : MonoBehaviour
 {
     [SerializeField] private GameObject moveCirclePrefab;
     [SerializeField] private GameObject attackCirclePrefab;
-    private List<GameObject> tmpGameObjects = new List<GameObject>();
+    private Dictionary<UIActionType, List<GameObject>> tmpGameObjectsByUIActionType = new Dictionary<UIActionType, List<GameObject>>();
     private Camera currentCamera;
-    private bool isPlacing;
 
     private void Awake()
     {
         SubscribeEvents();
-        isPlacing = true;
     }
     
     private void Update()
@@ -25,7 +23,11 @@ public class UIActionsHandler : MonoBehaviour
             return;
         }
 
-        if (isPlacing) return;
+        if (tmpGameObjectsByUIActionType.Count == 0)
+        {
+            UIEvents.InformNoActionDestinationAvailable();
+            return;
+        }
         
         if (Input.GetKeyDown(KeyCode.Mouse0)) 
         {
@@ -35,15 +37,15 @@ public class UIActionsHandler : MonoBehaviour
 
     private void HandleClick()
     {
-        GameObject uiObject = GetUIObjectByClickPosition(Input.mousePosition);
+        (GameObject uiObject, UIActionType? actionType) = GetUIObjectByClickPosition(Input.mousePosition);
 
-        if (uiObject == null) return;
-        
-        UIEvents.PassMoveDestination(uiObject.transform.position);
+        if (uiObject == null || actionType == null) return;
+
+        UIEvents.PassActionDestination(uiObject.transform.position, (UIActionType) actionType);
         ResetTmpList();
     }
 
-    private GameObject GetUIObjectByClickPosition(Vector3 position) 
+    private (GameObject, UIActionType?) GetUIObjectByClickPosition(Vector3 position) 
     {
         Ray ray = currentCamera.ScreenPointToRay(position);
         RaycastHit[] hits = Physics.RaycastAll(ray);
@@ -52,41 +54,82 @@ public class UIActionsHandler : MonoBehaviour
             foreach (RaycastHit hit in hits)
             {
                 GameObject gameObject = hit.transform.gameObject;
-                if (tmpGameObjects.Contains(gameObject))
-                    return gameObject;
+                var actionType = IsUIObject(gameObject);
+                if (actionType != null)
+                    return (gameObject, actionType);
             }
         }
 
+        return (null, null);
+    }
+
+    private UIActionType? IsUIObject(GameObject gameObject)
+    {
+        foreach (var tmpGameObjects in tmpGameObjectsByUIActionType)
+        {
+            if (tmpGameObjects.Value.Contains(gameObject))
+            {
+                return tmpGameObjects.Key;
+            }
+        }
         return null;
     }
 
-    private void ResetTmpList()
+    private void ResetTmpList() 
     {
-        foreach (GameObject gameObject in tmpGameObjects)
+        List<UIActionType> keys = new List<UIActionType>(tmpGameObjectsByUIActionType.Keys);
+        foreach (UIActionType type in keys)
+        {
+            ResetTmpList(type);
+        }
+    }
+
+    private void ResetTmpList(UIActionType type)
+    {
+        if (!tmpGameObjectsByUIActionType.ContainsKey(type)) 
+        {
+            return;
+        }
+
+        foreach (GameObject gameObject in tmpGameObjectsByUIActionType.GetValueOrDefault(type))
         {
             GameObject.Destroy(gameObject);
         }
-        
-        tmpGameObjects.Clear();
-        isPlacing = true;
+
+        tmpGameObjectsByUIActionType.Remove(type);
+    }
+
+    private void InstantiateActionPositions(List<Vector3> positions, UIActionType type)
+    {
+        switch (type)
+        {
+            case UIActionType.Move:
+            {
+                InstantiateMovePositions(positions);
+                break;
+            }
+            case UIActionType.Attack:
+            {
+                InstantiateAttackPositions(positions);
+                break;
+            }
+        }
     }
 
     private void InstantiateMovePositions(List<Vector3> positions)
     {
         if (positions.Count > 0)
         {
-            Debug.Log("InstantiatingMovePositions");
-            ResetTmpList();
+            ResetTmpList(UIActionType.Move);
+            List<GameObject> moveGameObjects = new List<GameObject>();
             foreach (Vector3 position in positions)
             {
                 moveCirclePrefab.transform.position = new Vector3(position.x, position.y, 0.98f);
-                tmpGameObjects.Add(Instantiate(moveCirclePrefab));
+                moveGameObjects.Add(Instantiate(moveCirclePrefab));
             }
-            isPlacing = false;
-        }
-        else 
-        {
-            UIEvents.InformNoMoveDestinationAvailable();
+
+            if(moveGameObjects.Count > 0)
+                tmpGameObjectsByUIActionType.Add(UIActionType.Move, moveGameObjects);
         }
     }
 
@@ -94,18 +137,16 @@ public class UIActionsHandler : MonoBehaviour
     {
         if (positions.Count > 0)
         {
-            Debug.Log("InstantiatingAttackPositions");
-            ResetTmpList();
+            ResetTmpList(UIActionType.Attack);
+            List<GameObject> attackGameObjects = new List<GameObject>();
             foreach (Vector3 position in positions)
             {
                 attackCirclePrefab.transform.position = new Vector3(position.x, position.y, 0.98f);
-                tmpGameObjects.Add(Instantiate(attackCirclePrefab));
+                attackGameObjects.Add(Instantiate(attackCirclePrefab));
             }
-            isPlacing = false;
-        }
-        else
-        {
-            UIEvents.InformNoMoveDestinationAvailable();
+
+            if(attackGameObjects.Count > 0)
+                tmpGameObjectsByUIActionType.Add(UIActionType.Attack, attackGameObjects);
         }
     }
 
@@ -113,14 +154,12 @@ public class UIActionsHandler : MonoBehaviour
 
     private void SubscribeEvents()
     {
-        UIEvents.OnPassMovePositionsList += InstantiateMovePositions;
-        UIEvents.OnPassAttackPositionsList += InstantiateAttackPositions;
+        UIEvents.OnPassActionPositionsList += InstantiateActionPositions;
     }
 
     private void UnsubscribeEvents()
     {
-        UIEvents.OnPassMovePositionsList -= InstantiateMovePositions;
-        UIEvents.OnPassAttackPositionsList -= InstantiateAttackPositions;
+        UIEvents.OnPassActionPositionsList -= InstantiateActionPositions;
     }
 
     #endregion

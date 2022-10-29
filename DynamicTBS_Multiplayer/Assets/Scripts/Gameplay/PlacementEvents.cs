@@ -8,6 +8,7 @@ public static class PlacementEvents
     public static event CharacterPlacement OnCharacterSelectionForPlacement;
 
     public delegate void PlacementOrder();
+    public static event PlacementOrder OnPlacementStart;
     public static event PlacementOrder OnAdvancePlacementOrder;
 
     public delegate void PlacementMessageText();
@@ -17,6 +18,14 @@ public static class PlacementEvents
     {
         if (OnCharacterSelectionForPlacement != null)
             OnCharacterSelectionForPlacement(character);
+    }
+
+    public static void StartPlacement()
+    {
+        if (OnPlacementStart != null)
+        {
+            OnPlacementStart();
+        }
     }
 
     public static void AdvancePlacementOrder()

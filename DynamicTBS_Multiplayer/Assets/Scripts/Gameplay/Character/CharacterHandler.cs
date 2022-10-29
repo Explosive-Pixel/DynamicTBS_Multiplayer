@@ -12,6 +12,7 @@ public class CharacterHandler : MonoBehaviour
     private Camera currentCamera;
     private GameManager gameManager;
     private PlayerManager playerManager;
+    private Board board;
 
     private Character currentlySelectedChar;
 
@@ -23,6 +24,11 @@ public class CharacterHandler : MonoBehaviour
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
         isListeningToClicks = false;
+    }
+
+    private void LoadBoard()
+    {
+        board = GameObject.Find("GameplayCanvas").GetComponent<Board>();
     }
 
     private void Update()
@@ -43,7 +49,7 @@ public class CharacterHandler : MonoBehaviour
 
     private void HandleClick()
     {
-        Character character = GetCharacterByClickPosition(Input.mousePosition);
+        Character character = GetCharacterByPosition(Input.mousePosition, true);
 
         currentlySelectedChar = character;
 
@@ -68,6 +74,33 @@ public class CharacterHandler : MonoBehaviour
         }   
     }
 
+    private void ExecuteAction(Vector3 position, UIActionType type)
+    {
+        switch (type)
+        {
+            case UIActionType.Move:
+                {
+                    MoveCharacter(position);
+                    break;
+                }
+            case UIActionType.Attack:
+                {
+                    PerformAttack(position);
+                    break;
+                }
+        }
+    }
+
+    private void PerformAttack(Vector3 position) 
+    {
+        Character characterToAttack = GetCharacterByPosition(position, false);
+        characterToAttack.GetAttacked();
+
+        GameplayEvents.ActionFinished(UIActionType.Attack);
+        ListenToClicks();
+    }
+
+
     private void MoveCharacter(Vector3 position)
     {
         Vector3 oldPosition = currentlySelectedChar.GetCharacterGameObject().transform.position;
@@ -79,11 +112,10 @@ public class CharacterHandler : MonoBehaviour
         }
         else 
         {
-            GameplayEvents.MoveFinished();
+            GameplayEvents.ActionFinished(UIActionType.Move);
         }
-        
-        currentlySelectedChar = null;
-        isListeningToClicks = true;
+
+        ListenToClicks();
     }
 
     private void HandleAction(Character character) 
@@ -91,28 +123,35 @@ public class CharacterHandler : MonoBehaviour
         if (character.GetSide() == playerManager.GetCurrentPlayer())
         {
             isListeningToClicks = false;
-            UIEvents.SelectCharacterForMove(character);
-        }
-        else 
-        { 
-            // character got attacked
+            UIEvents.SelectCharacterForAction(character, UIActionType.Move);
+            UIEvents.SelectCharacterForAction(character, UIActionType.Attack);
         }
     }
 
-    private Character GetCharacterByClickPosition(Vector3 position)
+    private Character GetCharacterByPosition(Vector3 position, bool isClick)
     {
-        Ray ray = currentCamera.ScreenPointToRay(position);
-        RaycastHit[] hits = Physics.RaycastAll(ray);
-        if (hits != null && hits.Length > 0) 
+        if (isClick)
         {
-            foreach(RaycastHit hit in hits)
+            Ray ray = currentCamera.ScreenPointToRay(position);
+
+            RaycastHit[] hits = Physics.RaycastAll(ray);
+            if (hits != null && hits.Length > 0)
             {
-                GameObject gameObject = hit.transform.gameObject;
-                if (gameObject && charactersByGameObject.ContainsKey(gameObject))
+                foreach (RaycastHit hit in hits)
                 {
-                    return charactersByGameObject.GetValueOrDefault(gameObject);
+                    GameObject gameObject = hit.transform.gameObject;
+                    if (gameObject && charactersByGameObject.ContainsKey(gameObject))
+                    {
+                        return charactersByGameObject.GetValueOrDefault(gameObject);
+                    }
                 }
             }
+        }
+        else 
+        {
+            Tile tile = board.GetTileByPosition(position);
+            if (tile != null)
+                return tile.GetCurrentInhabitant();
         }
 
         return null;
@@ -131,6 +170,7 @@ public class CharacterHandler : MonoBehaviour
 
     private void ListenToClicks()
     {
+        currentlySelectedChar = null;
         isListeningToClicks = true;
     }
 
@@ -141,8 +181,9 @@ public class CharacterHandler : MonoBehaviour
         DraftEvents.OnCharacterCreated += AddCharacterToList;
         DraftEvents.OnEndDraft += ListenToClicks;
         DraftEvents.OnEndDraft += DeliverCharacterList;
-        UIEvents.OnPassMoveDestination += MoveCharacter;
-        UIEvents.OnInformNoMoveDestinationsAvailable += ListenToClicks;
+        PlacementEvents.OnPlacementStart += LoadBoard;
+        UIEvents.OnPassActionDestination += ExecuteAction;
+        UIEvents.OnInformNoActionDestinationsAvailable += ListenToClicks;
     }
 
     private void UnsubscribeEvents()
@@ -150,8 +191,9 @@ public class CharacterHandler : MonoBehaviour
         DraftEvents.OnCharacterCreated -= AddCharacterToList;
         DraftEvents.OnEndDraft -= ListenToClicks;
         DraftEvents.OnEndDraft -= DeliverCharacterList;
-        UIEvents.OnPassMoveDestination -= MoveCharacter;
-        UIEvents.OnInformNoMoveDestinationsAvailable -= ListenToClicks;
+        PlacementEvents.OnPlacementStart -= LoadBoard;
+        UIEvents.OnPassActionDestination -= ExecuteAction;
+        UIEvents.OnInformNoActionDestinationsAvailable -= ListenToClicks;
     }
 
     #endregion

@@ -19,6 +19,8 @@ public class PlacementManager : MonoBehaviour
         playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
         board = GameObject.Find("GameplayCanvas").GetComponent<Board>();
         placementCount = 0;
+
+        PlacementEvents.StartPlacement();
     }
 
     private void SortCharacters(List<Character> characters)
