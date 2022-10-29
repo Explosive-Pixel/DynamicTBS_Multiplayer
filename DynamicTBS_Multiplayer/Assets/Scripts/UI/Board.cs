@@ -56,6 +56,80 @@ public class Board : MonoBehaviour
         return null;
     }
 
+    public List<Vector3> GetPositionsOfNearestCharactersOfSideWithinRadius(Tile center, PlayerType side, int radius) 
+    {
+        List<Vector3> positions = new List<Vector3>();
+
+        int i = 0;
+
+        bool topLeft = false;
+        bool top = false;
+        bool topRight = false;
+        bool right = false;
+        bool bottomRight = false;
+        bool bottom = false;
+        bool bottomLeft = false;
+        bool left = false;
+
+        // Checking tiles in a star pattern to see if they are occupied.
+        // Adding closest enemies to list.
+        while (radius > 0)
+        {
+            Tile currentTile = GetTileByCoordinates(center.GetRow() - i - 1, center.GetColumn());
+            if (currentTile != null && currentTile.IsOccupied() && currentTile.GetCurrentInhabitant().GetSide().GetPlayerType() == side && bottom == false)
+            {
+                positions.Add(currentTile.GetPosition());
+                bottom = true;
+            }
+            currentTile = GetTileByCoordinates(center.GetRow() - i - 1, center.GetColumn() - i - 1);
+            if (currentTile != null && currentTile.IsOccupied() && currentTile.GetCurrentInhabitant().GetSide().GetPlayerType() == side && bottomLeft == false)
+            {
+                positions.Add(currentTile.GetPosition());
+                bottomLeft = true;
+            }
+            currentTile = GetTileByCoordinates(center.GetRow(), center.GetColumn() - i - 1);
+            if (currentTile != null && currentTile.IsOccupied() && currentTile.GetCurrentInhabitant().GetSide().GetPlayerType() == side && left == false)
+            {
+                positions.Add(currentTile.GetPosition());
+                left = true;
+            }
+            currentTile = GetTileByCoordinates(center.GetRow() - i - 1, center.GetColumn() + i + 1);
+            if (currentTile != null && currentTile.IsOccupied() && currentTile.GetCurrentInhabitant().GetSide().GetPlayerType() == side && topLeft == false)
+            {
+                positions.Add(currentTile.GetPosition());
+                topLeft = true;
+            }
+            currentTile = GetTileByCoordinates(center.GetRow(), center.GetColumn() + i + 1);
+            if (currentTile != null && currentTile.IsOccupied() && currentTile.GetCurrentInhabitant().GetSide().GetPlayerType() == side && top == false)
+            {
+                positions.Add(currentTile.GetPosition());
+                top = true;
+            }
+            currentTile = GetTileByCoordinates(center.GetRow() + i + 1, center.GetColumn() + i + 1);
+            if (currentTile != null && currentTile.IsOccupied() && currentTile.GetCurrentInhabitant().GetSide().GetPlayerType() == side && topRight == false)
+            {
+                positions.Add(currentTile.GetPosition());
+                topRight = true;
+            }
+            currentTile = GetTileByCoordinates(center.GetRow(), center.GetColumn() + i + 1);
+            if (currentTile != null && currentTile.IsOccupied() && currentTile.GetCurrentInhabitant().GetSide().GetPlayerType() == side && right == false)
+            {
+                positions.Add(currentTile.GetPosition());
+                right = true;
+            }
+            currentTile = GetTileByCoordinates(center.GetRow() - i - 1, center.GetColumn() + i + 1);
+            if (currentTile != null && currentTile.IsOccupied() && currentTile.GetCurrentInhabitant().GetSide().GetPlayerType() == side && bottomRight == false)
+            {
+                positions.Add(currentTile.GetPosition());
+                bottomRight = true;
+            }
+            radius--;
+            i++;
+        }
+
+        return positions;
+    }
+
     private Tile GetTileByCharacter(Character character) 
     {
         return GetTileByPosition(character.GetCharacterGameObject().transform.position);
@@ -137,74 +211,8 @@ public class Board : MonoBehaviour
         int range = character.GetAttackRange();
         Tile tile = GetTileByCharacter(character);
 
-        List<Vector3> attackPositions = new List<Vector3>();
-
-        int i = 0;
-
-        bool topLeft = false;
-        bool top = false;
-        bool topRight = false;
-        bool right = false;
-        bool bottomRight = false;
-        bool bottom = false;
-        bool bottomLeft = false;
-        bool left = false;
-        
-        // Checking tiles in a star pattern to see if they are occupied.
-        // Adding closest enemies to list.
-        while (range > 0)
-        {
-            Tile currentTile = GetTileByCoordinates(tile.GetRow() - i - 1, tile.GetColumn());
-            if (currentTile != null && currentTile.IsOccupied() && currentTile.GetCurrentInhabitant().GetSide() != character.GetSide() && bottom == false)
-            {
-                attackPositions.Add(currentTile.GetPosition());
-                bottom = true;
-            }
-            currentTile = GetTileByCoordinates(tile.GetRow() - i - 1, tile.GetColumn() - i - 1);
-            if (currentTile != null && currentTile.IsOccupied() && currentTile.GetCurrentInhabitant().GetSide() != character.GetSide() && bottomLeft == false)
-            {
-                attackPositions.Add(currentTile.GetPosition());
-                bottomLeft = true;
-            }
-            currentTile = GetTileByCoordinates(tile.GetRow(), tile.GetColumn() - i - 1);
-            if (currentTile != null && currentTile.IsOccupied() && currentTile.GetCurrentInhabitant().GetSide() != character.GetSide() && left == false)
-            {
-                attackPositions.Add(currentTile.GetPosition());
-                left = true;
-            }
-            currentTile = GetTileByCoordinates(tile.GetRow() - i - 1, tile.GetColumn() + i + 1);
-            if (currentTile != null && currentTile.IsOccupied() && currentTile.GetCurrentInhabitant().GetSide() != character.GetSide() && topLeft == false)
-            {
-                attackPositions.Add(currentTile.GetPosition());
-                topLeft = true;
-            }
-            currentTile = GetTileByCoordinates(tile.GetRow(), tile.GetColumn() + i + 1);
-            if (currentTile != null && currentTile.IsOccupied() && currentTile.GetCurrentInhabitant().GetSide() != character.GetSide() && top == false)
-            {
-                attackPositions.Add(currentTile.GetPosition());
-                top = true;
-            }
-            currentTile = GetTileByCoordinates(tile.GetRow() + i + 1, tile.GetColumn() + i + 1);
-            if (currentTile != null && currentTile.IsOccupied() && currentTile.GetCurrentInhabitant().GetSide() != character.GetSide() && topRight == false)
-            {
-                attackPositions.Add(currentTile.GetPosition());
-                topRight = true;
-            }
-            currentTile = GetTileByCoordinates(tile.GetRow(), tile.GetColumn() + i + 1);
-            if (currentTile != null && currentTile.IsOccupied() && currentTile.GetCurrentInhabitant().GetSide() != character.GetSide() && right == false)
-            {
-                attackPositions.Add(currentTile.GetPosition());
-                right = true;
-            }
-            currentTile = GetTileByCoordinates(tile.GetRow() - i - 1, tile.GetColumn() + i + 1);
-            if (currentTile != null && currentTile.IsOccupied() && currentTile.GetCurrentInhabitant().GetSide() != character.GetSide() && bottomRight == false)
-            {
-                attackPositions.Add(currentTile.GetPosition());
-                bottomRight = true;
-            }
-            range--;
-            i++;
-        }
+        PlayerType otherSide = character.GetSide().GetPlayerType() == PlayerType.blue ? PlayerType.pink : PlayerType.blue;
+        List<Vector3> attackPositions = GetPositionsOfNearestCharactersOfSideWithinRadius(tile, otherSide, range);
 
         UIEvents.PassActionPositionsList(attackPositions, UIActionType.Attack);
     }

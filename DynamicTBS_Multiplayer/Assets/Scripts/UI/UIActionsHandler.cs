@@ -9,10 +9,12 @@ public class UIActionsHandler : MonoBehaviour
     [SerializeField] private GameObject attackCirclePrefab;
     private Dictionary<UIActionType, List<GameObject>> tmpGameObjectsByUIActionType = new Dictionary<UIActionType, List<GameObject>>();
     private Camera currentCamera;
+    private PrefabProvider prefabProvider;
 
     private void Awake()
     {
         SubscribeEvents();
+        prefabProvider = GameObject.Find("PrefabProvider").GetComponent<PrefabProvider>();
     }
     
     private void Update()
@@ -75,7 +77,33 @@ public class UIActionsHandler : MonoBehaviour
         return null;
     }
 
-    private void ResetTmpList() 
+    private void InstantiateActionPositions(List<Vector3> positions, UIActionType type)
+    {
+        if (positions.Count > 0)
+        {
+            if (type == UIActionType.ActiveAbility)
+                ResetTmpList();
+            else ResetTmpList(type);
+
+            List<GameObject> gameObjects = new List<GameObject>();
+            GameObject prefab = prefabProvider.GetActionPrefabByActionType(type);
+            foreach (Vector3 position in positions)
+            {
+                prefab.transform.position = new Vector3(position.x, position.y, 0.98f);
+                gameObjects.Add(Instantiate(prefab));
+            }
+
+            if (gameObjects.Count > 0)
+                tmpGameObjectsByUIActionType.Add(type, gameObjects);
+        }
+    }
+
+    private void ActionOver(UIActionType type) 
+    {
+        ResetTmpList();
+    }
+
+    private void ResetTmpList()
     {
         List<UIActionType> keys = new List<UIActionType>(tmpGameObjectsByUIActionType.Keys);
         foreach (UIActionType type in keys)
@@ -86,7 +114,7 @@ public class UIActionsHandler : MonoBehaviour
 
     private void ResetTmpList(UIActionType type)
     {
-        if (!tmpGameObjectsByUIActionType.ContainsKey(type)) 
+        if (!tmpGameObjectsByUIActionType.ContainsKey(type))
         {
             return;
         }
@@ -97,62 +125,6 @@ public class UIActionsHandler : MonoBehaviour
         }
 
         tmpGameObjectsByUIActionType.Remove(type);
-    }
-
-    private void InstantiateActionPositions(List<Vector3> positions, UIActionType type)
-    {
-        switch (type)
-        {
-            case UIActionType.Move:
-            {
-                InstantiateMovePositions(positions);
-                break;
-            }
-            case UIActionType.Attack:
-            {
-                InstantiateAttackPositions(positions);
-                break;
-            }
-        }
-    }
-
-    private void InstantiateMovePositions(List<Vector3> positions)
-    {
-        if (positions.Count > 0)
-        {
-            ResetTmpList(UIActionType.Move);
-            List<GameObject> moveGameObjects = new List<GameObject>();
-            foreach (Vector3 position in positions)
-            {
-                moveCirclePrefab.transform.position = new Vector3(position.x, position.y, 0.98f);
-                moveGameObjects.Add(Instantiate(moveCirclePrefab));
-            }
-
-            if(moveGameObjects.Count > 0)
-                tmpGameObjectsByUIActionType.Add(UIActionType.Move, moveGameObjects);
-        }
-    }
-
-    private void InstantiateAttackPositions(List<Vector3> positions)
-    {
-        if (positions.Count > 0)
-        {
-            ResetTmpList(UIActionType.Attack);
-            List<GameObject> attackGameObjects = new List<GameObject>();
-            foreach (Vector3 position in positions)
-            {
-                attackCirclePrefab.transform.position = new Vector3(position.x, position.y, 0.98f);
-                attackGameObjects.Add(Instantiate(attackCirclePrefab));
-            }
-
-            if(attackGameObjects.Count > 0)
-                tmpGameObjectsByUIActionType.Add(UIActionType.Attack, attackGameObjects);
-        }
-    }
-
-    private void ActionOver(UIActionType type) 
-    {
-        ResetTmpList();
     }
 
     #region EventSubscriptions

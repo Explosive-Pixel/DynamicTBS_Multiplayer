@@ -51,6 +51,7 @@ public abstract class Character
         if (this.hitPoints > this.maxHitPoints) {
             this.hitPoints = this.maxHitPoints;
         }
+        Debug.Log("Character " + characterGameObject.name + " now has " + hitPoints + " hit points remaining.");
     }
 
     public virtual void Die() 
