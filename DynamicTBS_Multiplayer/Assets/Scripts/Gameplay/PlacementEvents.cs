@@ -8,8 +8,10 @@ public static class PlacementEvents
     public static event CharacterPlacement OnCharacterSelectionForPlacement;
 
     public delegate void PlacementOrder();
-
     public static event PlacementOrder OnAdvancePlacementOrder;
+
+    public delegate void PlacementMessageText();
+    public static event PlacementMessageText OnPlacementMessageChange;
 
     public static void SelectCharacterForPlacement(Character character)
     {
@@ -21,5 +23,11 @@ public static class PlacementEvents
     {
         if (OnAdvancePlacementOrder != null)
             OnAdvancePlacementOrder();
+    }
+
+    public static void ChangePlacementMessage()
+    {
+        if (OnPlacementMessageChange != null)
+            OnPlacementMessageChange();
     }
 }
