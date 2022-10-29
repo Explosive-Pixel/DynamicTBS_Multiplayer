@@ -5,11 +5,13 @@ using UnityEngine;
 public static class GameplayEvents
 {
     public delegate void GameplayPhase();
-
     public static event GameplayPhase OnGameplayPhaseStart;
 
     public delegate void FinishAction(UIActionType type);
     public static event FinishAction OnFinishAction;
+
+    public delegate void GameOver(PlayerType winner);
+    public static event GameOver OnGameOver;
 
     public static void StartGameplayPhase()
     {
@@ -21,5 +23,13 @@ public static class GameplayEvents
     {
         if (OnFinishAction != null)
             OnFinishAction(type);
+    }
+
+    public static void GameIsOver(PlayerType winner)
+    {
+        if (OnGameOver != null) 
+        {
+            OnGameOver(winner);
+        }
     }
 }

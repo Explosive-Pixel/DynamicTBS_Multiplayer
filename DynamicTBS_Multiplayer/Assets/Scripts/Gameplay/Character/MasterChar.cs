@@ -10,11 +10,17 @@ public class MasterChar : Character
         this.moveSpeed = 1;
         this.attackRange = 0;
 
-        this.activeAbility = new TakeControlAA();
+        this.activeAbility = new TakeControlAA(this);
         this.passiveAbility = new InfluenceAuraPA();
 
         this.characterSprite = side.GetPlayerType() == PlayerType.blue ? SpriteManager.BLUE_MASTER_SPRITE : SpriteManager.PINK_MASTER_SPRITE;
 
         Init();
+    }
+
+    public override void Die()
+    {
+        base.Die();
+        GameplayEvents.GameIsOver(side.GetPlayerType() == PlayerType.blue ? PlayerType.blue : PlayerType.pink);
     }
 }

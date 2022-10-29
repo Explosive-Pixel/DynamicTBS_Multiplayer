@@ -4,12 +4,12 @@ using UnityEngine;
 
 public static class CharacterEvents
 {
-    public delegate void CharacterDeath(Vector3 position);
+    public delegate void CharacterDeath(Character character, Vector3 lastPosition);
     public static event CharacterDeath OnCharacterDeath;
 
-    public static void KillCharacter(Vector3 position)
+    public static void CharacterDies(Character character, Vector3 lastPosition)
     {
         if (OnCharacterDeath != null)
-            OnCharacterDeath(position);
+            OnCharacterDeath(character, lastPosition);
     }
 }

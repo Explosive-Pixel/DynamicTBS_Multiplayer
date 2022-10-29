@@ -35,25 +35,6 @@ public class Board : MonoBehaviour
         SubscribeEvents();
     }
 
-   /* private void Update()
-    {
-        if (!currentCamera)
-        {
-            currentCamera = Camera.main;
-            return;
-        }
-        
-        if (Input.GetKeyDown(KeyCode.Mouse0)) 
-        {
-            HandleClick();
-        }
-    }
-
-    private void HandleClick()
-    {
-        Tile tile = GetTileByPosition(currentCamera.ScreenToWorldPoint(Input.mousePosition));
-    }*/
-
     // Caution: position has to be a world point!
     public Tile GetTileByPosition(Vector3 position) 
     {
@@ -225,8 +206,6 @@ public class Board : MonoBehaviour
             i++;
         }
 
-        Debug.Log("Found " + attackPositions.Count + " Attack positions");
-
         UIEvents.PassActionPositionsList(attackPositions, UIActionType.Attack);
     }
 
@@ -355,6 +334,16 @@ public class Board : MonoBehaviour
         }
     }
 
+    private void UpdateTileAfterCharacterDeath(Character character, Vector3 position)
+    {
+        Tile tile = GetTileByPosition(position);
+
+        if (tile != null)
+        {
+            tile.SetCurrentInhabitant(null);
+        }
+    }
+
     #region EventSubscriptions
 
     private void SubscribeEvents()
@@ -363,6 +352,7 @@ public class Board : MonoBehaviour
         PlacementEvents.OnCharacterSelectionForPlacement += FindStartTilePositions;
         UIEvents.OnCharacterSelectionForAction += FindActionPositions;
         UIEvents.OnMoveOver += UpdateTilesAfterMove;
+        CharacterEvents.OnCharacterDeath += UpdateTileAfterCharacterDeath;
     }
 
     private void UnsubscribeEvents()
@@ -371,6 +361,7 @@ public class Board : MonoBehaviour
         PlacementEvents.OnCharacterSelectionForPlacement -= FindStartTilePositions;
         UIEvents.OnCharacterSelectionForAction -= FindActionPositions;
         UIEvents.OnMoveOver -= UpdateTilesAfterMove;
+        CharacterEvents.OnCharacterDeath -= UpdateTileAfterCharacterDeath;
     }
 
     #endregion

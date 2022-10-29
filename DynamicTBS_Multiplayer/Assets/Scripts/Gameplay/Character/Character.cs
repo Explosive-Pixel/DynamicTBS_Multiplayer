@@ -53,8 +53,9 @@ public abstract class Character
         }
     }
 
-    public void Die() 
-    { 
+    public virtual void Die() 
+    {
+        CharacterEvents.CharacterDies(this, characterGameObject.transform.position);
         GameObject.Destroy(characterGameObject);
     }
 
