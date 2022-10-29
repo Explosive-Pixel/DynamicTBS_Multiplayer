@@ -11,7 +11,7 @@ public class UIPlacementMessages : MonoBehaviour
     private void Awake()
     {
         messageCounter = 0;
-        // Event subscription
+        PlacementEvents.OnPlacementMessageChange += DisplayPlacementMessages;
         DisplayPlacementMessages();
     }
 
@@ -37,6 +37,6 @@ public class UIPlacementMessages : MonoBehaviour
 
     private void OnDestroy()
     {
-        // Event unsubscription
+        PlacementEvents.OnPlacementMessageChange -= DisplayPlacementMessages;
     }
 }

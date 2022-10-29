@@ -45,7 +45,11 @@ public class DraftManager : MonoBehaviour
         draftCounter += 1;
 
         if (draftOrder.Contains(draftCounter))
+        {
             playerManager.NextPlayer();
+            DraftEvents.ChangeDraftMessageText();
+        }
+            
         
         if (draftCounter >= MaxDraftCount)
         {

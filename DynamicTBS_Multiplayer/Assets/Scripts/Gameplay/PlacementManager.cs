@@ -49,8 +49,11 @@ public class PlacementManager : MonoBehaviour
         placementCount += 1;
         
         if (placementOrder.Contains(placementCount))
+        {
             playerManager.NextPlayer();
-
+            PlacementEvents.ChangePlacementMessage();
+        }
+            
         if (placementCount >= MaxPlacementCount)
         {
             SpawnMasters();

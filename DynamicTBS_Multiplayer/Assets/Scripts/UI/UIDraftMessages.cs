@@ -11,7 +11,7 @@ public class UIDraftMessages : MonoBehaviour
     private void Awake()
     {
         messageCounter = 0;
-        // Event subscription
+        DraftEvents.OnDraftMessageTextChange += DisplayDraftMessages;
         DisplayDraftMessages();
     }
 
@@ -37,6 +37,6 @@ public class UIDraftMessages : MonoBehaviour
 
     private void OnDestroy()
     {
-        // Event unsubscription
+        DraftEvents.OnDraftMessageTextChange -= DisplayDraftMessages;
     }
 }
