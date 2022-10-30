@@ -12,6 +12,7 @@ public abstract class Character
     protected IPassiveAbility passiveAbility;
 
     protected int hitPoints;
+    protected int activeAbilityCooldown;
     protected Player side;
     protected GameObject characterGameObject;
     protected Sprite characterSprite;
@@ -27,6 +28,7 @@ public abstract class Character
     {
         this.characterGameObject = CreateCharacterGameObject();
         this.hitPoints = maxHitPoints;
+        this.activeAbilityCooldown = 0;
     }
 
     public GameObject GetCharacterGameObject() { return characterGameObject; }
@@ -52,6 +54,29 @@ public abstract class Character
             this.hitPoints = this.maxHitPoints;
         }
         Debug.Log("Character " + characterGameObject.name + " now has " + hitPoints + " hit points remaining.");
+    }
+
+    public int GetActiveAbilityCooldown()
+    {
+        return activeAbilityCooldown;
+    }
+
+    public void SetActiveAbilityOnCooldown()
+    {
+        activeAbilityCooldown = activeAbility.Cooldown + 1;
+    }
+
+    public void ReduceActiveAbilityCooldown()
+    {
+        if(activeAbilityCooldown > 0)
+        {
+            activeAbilityCooldown -= 1;
+        }
+    }
+
+    public bool IsActiveAbilityOnCooldown()
+    {
+        return activeAbilityCooldown > 0;
     }
 
     public virtual void Die() 

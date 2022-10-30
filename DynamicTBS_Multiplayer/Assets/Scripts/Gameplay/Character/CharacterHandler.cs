@@ -70,6 +70,7 @@ public class CharacterHandler : MonoBehaviour
 
         if (character.GetSide() == playerManager.GetCurrentPlayer())
         {
+            Debug.Log("Active ability cooldown of character " + character + " is " + character.GetActiveAbilityCooldown());
             UpdateCurrentlySelectedCharacter(character);
 
             if (!gameManager.HasGameStarted())
@@ -195,6 +196,17 @@ public class CharacterHandler : MonoBehaviour
         GameplayEvents.ChangeCharacterSelection(character);
     }
 
+    private void ReduceActiveAbiliyCooldowns(Player player)
+    {
+        foreach (Character character in characters)
+        {
+            if (character.GetSide().Equals(player))
+            {
+                character.ReduceActiveAbilityCooldown();
+            }
+        }
+    }
+
     #region EventsRegion
 
     private void SubscribeEvents()
@@ -206,6 +218,7 @@ public class CharacterHandler : MonoBehaviour
         UIEvents.OnPassActionDestination += ExecuteAction;
         UIEvents.OnInformNoActionDestinationsAvailable += ListenToClicks;
         GameplayEvents.OnFinishAction += ActionOver;
+        GameplayEvents.OnPlayerRoundEnded += ReduceActiveAbiliyCooldowns;
     }
 
     private void UnsubscribeEvents()
@@ -217,6 +230,7 @@ public class CharacterHandler : MonoBehaviour
         UIEvents.OnPassActionDestination -= ExecuteAction;
         UIEvents.OnInformNoActionDestinationsAvailable -= ListenToClicks;
         GameplayEvents.OnFinishAction -= ActionOver;
+        GameplayEvents.OnPlayerRoundEnded -= ReduceActiveAbiliyCooldowns;
     }
 
     #endregion

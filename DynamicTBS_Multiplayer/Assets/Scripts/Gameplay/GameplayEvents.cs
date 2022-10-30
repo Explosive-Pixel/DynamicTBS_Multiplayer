@@ -19,6 +19,9 @@ public static class GameplayEvents
     public delegate void CharacterSelection(Character character);
     public static event CharacterSelection OnCharacterSelectionChange;
 
+    public delegate void NextRound(Player player);
+    public static event NextRound OnPlayerRoundEnded;
+
     public static void StartGameplayPhase()
     {
         if (OnGameplayPhaseStart != null)
@@ -49,5 +52,11 @@ public static class GameplayEvents
     {
         if (OnCharacterSelectionChange != null)
             OnCharacterSelectionChange(character);
+    }
+
+    public static void EndPlayerRound(Player player)
+    {
+        if (OnPlayerRoundEnded != null)
+            OnPlayerRoundEnded(player);
     }
 }

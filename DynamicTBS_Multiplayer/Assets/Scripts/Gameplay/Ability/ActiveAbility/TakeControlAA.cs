@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TakeControlAA : IActiveAbility
 {
+    public int Cooldown { get { return 0; } }
+
     private TakeControlAAHandler takeControlAAHandler;
 
     Character character;

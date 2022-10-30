@@ -32,6 +32,8 @@ public class PlayerManager : MonoBehaviour
     public void NextPlayer() 
     {
         currentPlayer.IncreaseRoundCounter();
+        GameplayEvents.EndPlayerRound(currentPlayer);
+
         currentPlayer = GetOtherPlayer(currentPlayer);
     }
 

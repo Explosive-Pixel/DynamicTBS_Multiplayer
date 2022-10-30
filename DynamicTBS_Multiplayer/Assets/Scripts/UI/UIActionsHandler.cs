@@ -131,12 +131,14 @@ public class UIActionsHandler : MonoBehaviour
     {
         UIEvents.OnPassActionPositionsList += InstantiateActionPositions;
         GameplayEvents.OnFinishAction += ActionOver;
+        GameplayEvents.OnExecuteActiveAbility += ResetTmpList;
     }
 
     private void UnsubscribeEvents()
     {
         UIEvents.OnPassActionPositionsList -= InstantiateActionPositions;
         GameplayEvents.OnFinishAction -= ActionOver;
+        GameplayEvents.OnExecuteActiveAbility -= ResetTmpList;
     }
 
     #endregion

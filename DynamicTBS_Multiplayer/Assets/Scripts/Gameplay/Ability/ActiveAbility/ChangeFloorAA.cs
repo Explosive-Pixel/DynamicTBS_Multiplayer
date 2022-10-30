@@ -4,5 +4,6 @@ using UnityEngine;
 
 public class ChangeFloorAA : IActiveAbility
 {
+    public int Cooldown { get { return 3; } }
     public void Execute() { }
 }

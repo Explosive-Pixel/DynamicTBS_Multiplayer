@@ -4,5 +4,6 @@ using UnityEngine;
 
 public interface IActiveAbility
 {
+    int Cooldown { get; }
     void Execute();
 }

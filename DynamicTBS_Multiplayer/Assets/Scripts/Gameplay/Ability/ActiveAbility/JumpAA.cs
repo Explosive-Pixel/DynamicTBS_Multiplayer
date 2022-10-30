@@ -7,6 +7,8 @@ public class JumpAA : IActiveAbility
     public static PatternType movePattern = PatternType.Star;
     public static int distance = 3;
 
+    public int Cooldown { get { return 2; } }
+
     private JumpAAHandler jumpAAHandler;
 
     Character character;

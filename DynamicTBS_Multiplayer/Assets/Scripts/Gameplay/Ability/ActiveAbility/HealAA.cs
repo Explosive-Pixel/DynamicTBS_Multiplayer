@@ -7,6 +7,8 @@ public class HealAA : IActiveAbility
     public static int healingRange = 2;
     public static int healingPoints = 1;
 
+    public int Cooldown { get { return 3; } }
+
     private HealAAHandler healAAHandler;
 
     Character character;
