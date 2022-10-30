@@ -24,12 +24,6 @@ public class UIActionsHandler : MonoBehaviour
             currentCamera = Camera.main;
             return;
         }
-
-        /*if (tmpGameObjectsByUIActionType.Count == 0 && !activeAbilityCurrentlyPerformed)
-        {
-            UIEvents.InformNoActionDestinationAvailable();
-            return;
-        }*/
         
         if (Input.GetKeyDown(KeyCode.Mouse0)) 
         {

@@ -218,7 +218,7 @@ public class CharacterHandler : MonoBehaviour
         UIEvents.OnPassActionDestination += ExecuteAction;
         UIEvents.OnInformNoActionDestinationsAvailable += ListenToClicks;
         GameplayEvents.OnFinishAction += ActionOver;
-        GameplayEvents.OnPlayerRoundEnded += ReduceActiveAbiliyCooldowns;
+        GameplayEvents.OnPlayerTurnEnded += ReduceActiveAbiliyCooldowns;
     }
 
     private void UnsubscribeEvents()
@@ -230,7 +230,7 @@ public class CharacterHandler : MonoBehaviour
         UIEvents.OnPassActionDestination -= ExecuteAction;
         UIEvents.OnInformNoActionDestinationsAvailable -= ListenToClicks;
         GameplayEvents.OnFinishAction -= ActionOver;
-        GameplayEvents.OnPlayerRoundEnded -= ReduceActiveAbiliyCooldowns;
+        GameplayEvents.OnPlayerTurnEnded -= ReduceActiveAbiliyCooldowns;
     }
 
     #endregion

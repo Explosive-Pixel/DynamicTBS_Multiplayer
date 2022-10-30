@@ -29,10 +29,10 @@ public class PlayerManager : MonoBehaviour
         return bluePlayer;
     }
 
-    public void NextPlayer() 
+    public void NextPlayer()
     {
         currentPlayer.IncreaseRoundCounter();
-        GameplayEvents.EndPlayerRound(currentPlayer);
+        GameplayEvents.EndPlayerTurn(currentPlayer);
 
         currentPlayer = GetOtherPlayer(currentPlayer);
     }
