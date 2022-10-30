@@ -19,7 +19,7 @@ public abstract class Tile
     {
         this.row = row;
         this.column = column;
-        this.position = FindPosition(row, column);
+        this.position = Board.FindPosition(row, column);
         this.currentInhabitant = null;
     }
 
@@ -97,10 +97,5 @@ public abstract class Tile
         tile.AddComponent<BoxCollider>();
 
         return tile;
-    }
-    
-    private Vector3 FindPosition(int row, int column)
-    {
-        return new Vector3(column * 0.7f - 3, - (row * 0.7f - 3), 1);
     }
 }

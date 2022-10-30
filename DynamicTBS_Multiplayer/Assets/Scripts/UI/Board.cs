@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 public class Board : MonoBehaviour
 {
     #region Board Config
-    private static readonly int boardSize = 9;
+    public static readonly int boardSize = 9;
 
     private static TileType[,] tilePositions = new TileType[9, 9]
     {
@@ -28,11 +28,19 @@ public class Board : MonoBehaviour
     // Cache to find tiles fast, based on their gameobject
     private Dictionary<GameObject, Tile> tilesByGameObject = new Dictionary<GameObject, Tile>();
 
-    private Camera currentCamera;
-
     private void Awake()
     {
         SubscribeEvents();
+    }
+
+    public static Vector3 FindPosition(int row, int column)
+    {
+        return new Vector3(column * 0.7f - 3, -(row * 0.7f - 3), 1);
+    }
+
+    public Tile GetTileByCharacter(Character character)
+    {
+        return GetTileByPosition(character.GetCharacterGameObject().transform.position);
     }
 
     // Caution: position has to be a world point!
@@ -192,10 +200,53 @@ public class Board : MonoBehaviour
         return positions;
     }
 
-    private Tile GetTileByCharacter(Character character) 
+    public List<Tile> GetAllOccupiedTilesInOneDirection(Tile startTile, Vector3 direction)
     {
-        return GetTileByPosition(character.GetCharacterGameObject().transform.position);
+        List<Tile> occupiedTiles = new List<Tile>();
+
+        if(direction.y != 0)
+        {
+            if (direction.y < 0)
+            {
+                for (int i = startTile.GetRow() + 1; i < boardSize; i++)
+                {
+                    Tile tile = GetTileByCoordinates(i, startTile.GetColumn());
+                    if (tile.IsOccupied()) occupiedTiles.Add(tile);
+                }
+            }
+            else
+            {
+                for (int i = startTile.GetRow() - 1; i >= 0; i--)
+                {
+                    Tile tile = GetTileByCoordinates(i, startTile.GetColumn());
+                    if (tile.IsOccupied()) occupiedTiles.Add(tile);
+                }
+            }
+        }
+        else
+        {
+            if(direction.x > 0)
+            {
+                for (int j = startTile.GetColumn() + 1; j < boardSize; j++)
+                {
+                    Tile tile = GetTileByCoordinates(startTile.GetRow(), j);
+                    if (tile.IsOccupied()) occupiedTiles.Add(tile);
+                }
+            }
+            else
+            {
+                for (int j = startTile.GetColumn() - 1; j >= 0; j--)
+                {
+                    Tile tile = GetTileByCoordinates(startTile.GetRow(), j);
+                    if (tile.IsOccupied()) occupiedTiles.Add(tile);
+                }
+            }
+        }
+
+        return occupiedTiles;
     }
+
+    
 
     private Tile GetTileByCoordinates(int row, int column)
     {

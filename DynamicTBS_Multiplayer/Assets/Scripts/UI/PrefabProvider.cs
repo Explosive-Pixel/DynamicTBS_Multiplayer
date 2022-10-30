@@ -30,6 +30,10 @@ public class PrefabProvider : MonoBehaviour
                 {
                     return activeAbilityCirclePrefab;
                 }
+            case UIActionType.ActiveAbility_Powershot:
+                {
+                    return activeAbilityCirclePrefab;
+                }
         }
 
         return null;

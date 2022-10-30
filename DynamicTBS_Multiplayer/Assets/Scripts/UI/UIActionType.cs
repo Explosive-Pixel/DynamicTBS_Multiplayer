@@ -5,5 +5,6 @@ public enum UIActionType
    ActiveAbility_Heal,
    ActiveAbility_Jump,
    ActiveAbility_ChangeFloor,
-   ActiveAbility_Block
+   ActiveAbility_Block,
+   ActiveAbility_Powershot
 }

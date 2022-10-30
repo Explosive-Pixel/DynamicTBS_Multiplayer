@@ -10,7 +10,7 @@ public class ShooterChar : Character
         this.moveSpeed = 1;
         this.attackRange = 2;
 
-        this.activeAbility = new PowershotAA();
+        this.activeAbility = new PowershotAA(this);
         this.passiveAbility = new ExplodePA();
 
         this.characterSprite = side.GetPlayerType() == PlayerType.blue ? SpriteManager.BLUE_SHOOTER_SPRITE : SpriteManager.PINK_SHOOTER_SPRITE;
