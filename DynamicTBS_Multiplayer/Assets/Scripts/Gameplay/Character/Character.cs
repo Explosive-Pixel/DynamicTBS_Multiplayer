@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Character
-{   
+{
     protected int moveSpeed;
     protected int maxHitPoints;
     protected int attackRange;
@@ -41,7 +41,7 @@ public abstract class Character
     public int GetMoveSpeed() { return moveSpeed; }
     public int GetAttackRange() { return attackRange; }
 
-    public void GetAttacked() 
+    public void GetAttacked()
     {
         TakeDamage(1);
     }
@@ -68,6 +68,11 @@ public abstract class Character
             }
             Debug.Log("Character " + characterGameObject.name + " now has " + hitPoints + " hit points remaining.");
         }
+    }
+
+    public bool HasFullHP()
+    {
+        return this.hitPoints == this.maxHitPoints;
     }
 
     public int GetActiveAbilityCooldown()
