@@ -26,6 +26,10 @@ public class PrefabProvider : MonoBehaviour
                 {
                     return moveCirclePrefab;
                 }
+            case UIActionType.ActiveAbility_ChangeFloor:
+                {
+                    return activeAbilityCirclePrefab;
+                }
         }
 
         return null;

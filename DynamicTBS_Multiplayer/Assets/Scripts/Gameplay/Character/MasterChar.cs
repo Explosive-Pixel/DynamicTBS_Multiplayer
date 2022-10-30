@@ -21,7 +21,6 @@ public class MasterChar : Character
     public override void Die()
     {
         base.Die();
-        CharacterHandler characterHandler = GameObject.Find("GameplayCanvas").GetComponent<CharacterHandler>();
-        characterHandler.InformAboutGameOver(side.GetPlayerType() == PlayerType.blue ? PlayerType.blue : PlayerType.pink);
+        GameplayEvents.GameIsOver(side.GetPlayerType() == PlayerType.blue ? PlayerType.blue : PlayerType.pink);
     }
 }

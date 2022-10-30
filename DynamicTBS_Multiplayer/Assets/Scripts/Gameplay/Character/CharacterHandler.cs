@@ -48,11 +48,6 @@ public class CharacterHandler : MonoBehaviour
         return currentlySelectedChar;
     }
 
-    public void InformAboutGameOver(PlayerType winner)
-    {
-        GameplayEvents.GameIsOver(winner);
-    }
-
     private void LoadBoard()
     {
         board = GameObject.Find("GameplayCanvas").GetComponent<Board>();

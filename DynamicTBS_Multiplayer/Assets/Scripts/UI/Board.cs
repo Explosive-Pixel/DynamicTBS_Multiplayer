@@ -100,6 +100,24 @@ public class Board : MonoBehaviour
         return tiles;
     }
 
+    public List<Tile> GetAllTilesWithinRadius(Tile center, int radius)
+    {
+        List<Tile> tiles = new List<Tile>();
+        Action<Tile> add = tile => { if (tile != null) tiles.Add(tile); };
+
+        for (int i = -radius; i <= radius; i++) 
+        {
+            for (int j = -radius; j <= radius; j++) 
+            {
+                if (i == 0 && j == 0) continue;
+
+                add(GetTileByCoordinates(center.GetRow() + i, center.GetColumn() + j));
+            }
+        }
+
+        return tiles;
+    }
+
     public List<Vector3> GetPositionsOfNearestCharactersOfSideWithinRadius(Tile center, PlayerType side, int radius) 
     {
         List<Vector3> positions = new List<Vector3>();
@@ -358,6 +376,13 @@ public class Board : MonoBehaviour
         }
     }
 
+    private void UpdateTilesAfterTileTransformation(Tile oldTile, Tile newTile)
+    {
+        tiles.Remove(oldTile);
+        tiles.Add(newTile);
+        tilesByGameObject.Add(newTile.GetTileGameObject(), newTile);
+    }
+
     #region EventSubscriptions
 
     private void SubscribeEvents()
@@ -367,6 +392,7 @@ public class Board : MonoBehaviour
         UIEvents.OnCharacterSelectionForAction += FindActionPositions;
         UIEvents.OnMoveOver += UpdateTilesAfterMove;
         CharacterEvents.OnCharacterDeath += UpdateTileAfterCharacterDeath;
+        GameplayEvents.OnTileChanged += UpdateTilesAfterTileTransformation;
     }
 
     private void UnsubscribeEvents()
@@ -376,6 +402,7 @@ public class Board : MonoBehaviour
         UIEvents.OnCharacterSelectionForAction -= FindActionPositions;
         UIEvents.OnMoveOver -= UpdateTilesAfterMove;
         CharacterEvents.OnCharacterDeath -= UpdateTileAfterCharacterDeath;
+        GameplayEvents.OnTileChanged -= UpdateTilesAfterTileTransformation;
     }
 
     #endregion

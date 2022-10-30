@@ -38,6 +38,11 @@ public abstract class Tile
         return column;
     }
 
+    public TileType GetTileType()
+    {
+        return type;
+    }
+
     public Character GetCurrentInhabitant()
     {
         return currentInhabitant;
@@ -63,6 +68,17 @@ public abstract class Tile
     public void SetCurrentInhabitant(Character character)
     {
         currentInhabitant = character;
+    }
+
+    public Tile Transform(TileType newTileType)
+    {
+        Tile newTile = TileFactory.CreateTile(newTileType, this.GetRow(), this.GetColumn());
+        newTile.currentInhabitant = this.currentInhabitant;
+        GameObject.Destroy(tileGameObject);
+
+        GameplayEvents.TileHasChanged(this, newTile);
+
+        return newTile;
     }
 
     private GameObject CreateTileGameObject()
