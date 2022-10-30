@@ -26,8 +26,6 @@ public class HealAAHandler : MonoBehaviour
 
         List<Vector3> healPositions = healTiles.ConvertAll(tile => tile.GetPosition());
 
-        // TODO: Filter characters with max health
-
         UIEvents.PassActionPositionsList(healPositions, UIActionType.ActiveAbility_Heal);
         waitForHealTarget = true;
     }
