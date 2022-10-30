@@ -21,7 +21,10 @@ public class HealAAHandler : MonoBehaviour
 
         Tile characterTile = board.GetTileByPosition(character.GetCharacterGameObject().transform.position);
 
-        List<Vector3> healPositions = board.GetPositionsOfNearestCharactersOfSideWithinRadius(characterTile, character.GetSide().GetPlayerType(), HealAA.healingRange);
+        List<Tile> healTiles = board.GetTilesOfNearestCharactersOfSideWithinRadius(characterTile, character.GetSide().GetPlayerType(), HealAA.healingRange)
+            .FindAll(tile => tile.GetCurrentInhabitant() != null && tile.GetCurrentInhabitant().CanBeHealed());
+
+        List<Vector3> healPositions = healTiles.ConvertAll(tile => tile.GetPosition());
 
         // TODO: Filter characters with max health
 

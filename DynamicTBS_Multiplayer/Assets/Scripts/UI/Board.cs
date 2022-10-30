@@ -118,9 +118,9 @@ public class Board : MonoBehaviour
         return tiles;
     }
 
-    public List<Vector3> GetPositionsOfNearestCharactersOfSideWithinRadius(Tile center, PlayerType side, int radius) 
+    public List<Tile> GetTilesOfNearestCharactersOfSideWithinRadius(Tile center, PlayerType side, int radius) 
     {
-        List<Vector3> positions = new List<Vector3>();
+        List<Tile> positions = new List<Tile>();
 
         int i = 0;
 
@@ -140,49 +140,49 @@ public class Board : MonoBehaviour
             Tile currentTile = GetTileByCoordinates(center.GetRow() - i - 1, center.GetColumn());
             if (currentTile != null && currentTile.IsOccupied() && currentTile.GetCurrentInhabitant().GetSide().GetPlayerType() == side && bottom == false)
             {
-                positions.Add(currentTile.GetPosition());
+                positions.Add(currentTile);
                 bottom = true;
             }
             currentTile = GetTileByCoordinates(center.GetRow() - i - 1, center.GetColumn() - i - 1);
             if (currentTile != null && currentTile.IsOccupied() && currentTile.GetCurrentInhabitant().GetSide().GetPlayerType() == side && bottomLeft == false)
             {
-                positions.Add(currentTile.GetPosition());
+                positions.Add(currentTile);
                 bottomLeft = true;
             }
             currentTile = GetTileByCoordinates(center.GetRow(), center.GetColumn() - i - 1);
             if (currentTile != null && currentTile.IsOccupied() && currentTile.GetCurrentInhabitant().GetSide().GetPlayerType() == side && left == false)
             {
-                positions.Add(currentTile.GetPosition());
+                positions.Add(currentTile);
                 left = true;
             }
             currentTile = GetTileByCoordinates(center.GetRow() - i - 1, center.GetColumn() + i + 1);
             if (currentTile != null && currentTile.IsOccupied() && currentTile.GetCurrentInhabitant().GetSide().GetPlayerType() == side && topLeft == false)
             {
-                positions.Add(currentTile.GetPosition());
+                positions.Add(currentTile);
                 topLeft = true;
             }
             currentTile = GetTileByCoordinates(center.GetRow(), center.GetColumn() + i + 1);
             if (currentTile != null && currentTile.IsOccupied() && currentTile.GetCurrentInhabitant().GetSide().GetPlayerType() == side && top == false)
             {
-                positions.Add(currentTile.GetPosition());
+                positions.Add(currentTile);
                 top = true;
             }
             currentTile = GetTileByCoordinates(center.GetRow() + i + 1, center.GetColumn() + i + 1);
             if (currentTile != null && currentTile.IsOccupied() && currentTile.GetCurrentInhabitant().GetSide().GetPlayerType() == side && topRight == false)
             {
-                positions.Add(currentTile.GetPosition());
+                positions.Add(currentTile);
                 topRight = true;
             }
             currentTile = GetTileByCoordinates(center.GetRow(), center.GetColumn() + i + 1);
             if (currentTile != null && currentTile.IsOccupied() && currentTile.GetCurrentInhabitant().GetSide().GetPlayerType() == side && right == false)
             {
-                positions.Add(currentTile.GetPosition());
+                positions.Add(currentTile);
                 right = true;
             }
             currentTile = GetTileByCoordinates(center.GetRow() - i - 1, center.GetColumn() + i + 1);
             if (currentTile != null && currentTile.IsOccupied() && currentTile.GetCurrentInhabitant().GetSide().GetPlayerType() == side && bottomRight == false)
             {
-                positions.Add(currentTile.GetPosition());
+                positions.Add(currentTile);
                 bottomRight = true;
             }
             radius--;
@@ -274,7 +274,11 @@ public class Board : MonoBehaviour
         Tile tile = GetTileByCharacter(character);
 
         PlayerType otherSide = character.GetSide().GetPlayerType() == PlayerType.blue ? PlayerType.pink : PlayerType.blue;
-        List<Vector3> attackPositions = GetPositionsOfNearestCharactersOfSideWithinRadius(tile, otherSide, range);
+
+        List<Tile> attackTiles = GetTilesOfNearestCharactersOfSideWithinRadius(tile, otherSide, range)
+            .FindAll(tile => tile.GetCurrentInhabitant() != null && tile.GetCurrentInhabitant().CanReceiveDamage());
+
+        List<Vector3> attackPositions = attackTiles.ConvertAll(tile => tile.GetPosition());
 
         UIEvents.PassActionPositionsList(attackPositions, UIActionType.Attack);
     }

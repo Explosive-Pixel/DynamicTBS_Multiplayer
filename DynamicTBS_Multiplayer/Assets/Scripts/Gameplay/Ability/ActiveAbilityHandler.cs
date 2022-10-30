@@ -17,8 +17,8 @@ public class ActiveAbilityHandler : MonoBehaviour
     public void ExecuteActiveAbility()
     {
         GameplayEvents.ExecuteActiveAbilityStarted();
-        currentCharacter.GetActiveAbility().Execute();
         currentCharacter.SetActiveAbilityOnCooldown();
+        currentCharacter.GetActiveAbility().Execute();
         // Please remember to call this after every execution (in AAHandler classes): GameplayEvents.ActionFinished(UIActionType.ActiveAbility);
     }
 
@@ -27,7 +27,7 @@ public class ActiveAbilityHandler : MonoBehaviour
         currentCharacter = character;
 
         bool active = gameHasStarted && character != null;
-        bool disabled = active && character.IsActiveAbilityOnCooldown();
+        bool disabled = active && (character.IsActiveAbilityOnCooldown() || character.IsDisabled());
 
         activeAbilityButton.gameObject.SetActive(active);
         activeAbilityButton.interactable = !disabled;

@@ -74,7 +74,8 @@ public class CharacterHandler : MonoBehaviour
             }
             else
             {
-                HandleAction(character);
+                if(!character.IsDisabled())
+                    HandleAction(character);
             }
         }
     }

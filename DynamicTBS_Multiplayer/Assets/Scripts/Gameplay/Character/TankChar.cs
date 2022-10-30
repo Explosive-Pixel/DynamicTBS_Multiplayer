@@ -10,7 +10,7 @@ public class TankChar : Character
         this.moveSpeed = 1;
         this.attackRange = 1;
 
-        this.activeAbility = new BlockAA();
+        this.activeAbility = new BlockAA(this);
         this.passiveAbility = new PullDamagePA();
 
         this.characterSprite = side.GetPlayerType() == PlayerType.blue ? SpriteManager.BLUE_TANK_SPRITE : SpriteManager.PINK_TANK_SPRITE;
