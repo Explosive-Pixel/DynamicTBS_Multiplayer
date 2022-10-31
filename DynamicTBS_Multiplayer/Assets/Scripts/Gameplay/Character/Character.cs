@@ -34,11 +34,16 @@ public abstract class Character
         this.hitPoints = maxHitPoints;
         this.activeAbilityCooldown = 0;
         this.disabled = false;
+
+        // Better let CharacterHandler do this for all character when game starts?
+        // passiveAbility.Apply();
     }
 
     public GameObject GetCharacterGameObject() { return characterGameObject; }
     public int GetMoveSpeed() { return moveSpeed; }
     public int GetAttackRange() { return attackRange; }
+
+    public IPassiveAbility GetPassiveAbility() { return passiveAbility; }
 
     public void GetAttacked()
     {
