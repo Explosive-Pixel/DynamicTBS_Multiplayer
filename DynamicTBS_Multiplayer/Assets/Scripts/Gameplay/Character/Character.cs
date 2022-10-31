@@ -11,11 +11,12 @@ public abstract class Character
     protected IActiveAbility activeAbility;
     protected IPassiveAbility passiveAbility;
 
+    public delegate bool IsAttackableBy(Character attacker);
+    public IsAttackableBy isAttackableBy = (attacker) => true; 
+
     protected int hitPoints;
     protected int activeAbilityCooldown;
     protected bool disabled;
-    protected bool canReceiveDamage;
-    protected bool canBeHealed;
     protected Player side;
     protected GameObject characterGameObject;
     protected Sprite characterSprite;
@@ -33,8 +34,6 @@ public abstract class Character
         this.hitPoints = maxHitPoints;
         this.activeAbilityCooldown = 0;
         this.disabled = false;
-        this.canReceiveDamage = true;
-        this.canBeHealed = true;
     }
 
     public GameObject GetCharacterGameObject() { return characterGameObject; }
@@ -46,28 +45,20 @@ public abstract class Character
         TakeDamage(1);
     }
 
-    public void TakeDamage(int damage) {
-        if (canReceiveDamage)
+    public void TakeDamage(int damage) {this.hitPoints -= damage;
+        Debug.Log("Character " + characterGameObject.name + " now has " + hitPoints + " hit points remaining.");
+        if (this.hitPoints <= 0)
         {
-            this.hitPoints -= damage;
-            Debug.Log("Character " + characterGameObject.name + " now has " + hitPoints + " hit points remaining.");
-            if (this.hitPoints <= 0)
-            {
-                this.Die();
-            }
+            this.Die();
         }
     }
 
-    public void Heal(int healPoints) {
-        if (canBeHealed)
+    public void Heal(int healPoints) {this.hitPoints += healPoints;
+        if (this.hitPoints > this.maxHitPoints)
         {
-            this.hitPoints += healPoints;
-            if (this.hitPoints > this.maxHitPoints)
-            {
-                this.hitPoints = this.maxHitPoints;
-            }
-            Debug.Log("Character " + characterGameObject.name + " now has " + hitPoints + " hit points remaining.");
+            this.hitPoints = this.maxHitPoints;
         }
+        Debug.Log("Character " + characterGameObject.name + " now has " + hitPoints + " hit points remaining.");
     }
 
     public bool HasFullHP()
@@ -106,26 +97,6 @@ public abstract class Character
     public void SetDisabled(bool disabled)
     {
         this.disabled = disabled;
-    }
-
-    public bool CanReceiveDamage()
-    {
-        return canReceiveDamage;
-    }
-
-    public void SetCanReceiveDamage(bool canReceiveDamage)
-    {
-        this.canReceiveDamage = canReceiveDamage;
-    }
-
-    public bool CanBeHealed()
-    {
-        return canBeHealed;
-    }
-
-    public void SetCanBeHealed(bool canBeHealed)
-    {
-        this.canBeHealed = canBeHealed;
     }
 
     public virtual void Die() 

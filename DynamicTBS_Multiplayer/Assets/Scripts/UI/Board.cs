@@ -327,7 +327,7 @@ public class Board : MonoBehaviour
         PlayerType otherSide = character.GetSide().GetPlayerType() == PlayerType.blue ? PlayerType.pink : PlayerType.blue;
 
         List<Tile> attackTiles = GetTilesOfNearestCharactersOfSideWithinRadius(tile, otherSide, range)
-            .FindAll(tile => tile.GetCurrentInhabitant() != null && tile.GetCurrentInhabitant().CanReceiveDamage());
+            .FindAll(tile => tile.GetCurrentInhabitant() != null && tile.GetCurrentInhabitant().isAttackableBy(character));
 
         List<Vector3> attackPositions = attackTiles.ConvertAll(tile => tile.GetPosition());
 

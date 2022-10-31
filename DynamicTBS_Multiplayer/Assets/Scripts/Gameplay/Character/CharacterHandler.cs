@@ -43,6 +43,11 @@ public class CharacterHandler : MonoBehaviour
         }
     }
 
+    public List<Character> GetAllCharacters()
+    {
+        return characters;
+    }
+
     public Character GetCurrentlySelectedCharacter()
     {
         return currentlySelectedChar;

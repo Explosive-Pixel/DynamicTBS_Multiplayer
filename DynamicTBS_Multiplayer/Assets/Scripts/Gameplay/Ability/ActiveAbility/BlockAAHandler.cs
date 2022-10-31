@@ -17,8 +17,6 @@ public class BlockAAHandler : MonoBehaviour
         GameplayEvents.ActionFinished(UIActionType.ActiveAbility_Block);
     }
 
-    // TODO: Block damage of other characters
-
     private void ReduceBlockCounters(Player player)
     {
         List<BlockAA> finishedBlocks = new List<BlockAA>();
