@@ -25,7 +25,7 @@ public class BlockAA : IActiveAbility
 
         var defaultIsAttackableBy = character.isAttackableBy;
         character.isAttackableBy = (attacker) => {
-            if (currentBlockCount > 0) return false;
+            if (IsBlocking()) return false;
             return defaultIsAttackableBy(character);
         };
 
@@ -36,11 +36,11 @@ public class BlockAA : IActiveAbility
             return defaultIsDisabled();
         };
 
-        /* var defaultIsDamageable = character.isDamageable;
+         var defaultIsDamageable = character.isDamageable;
          character.isDamageable = (damage) => {
-             if (currentBlockCount > 0) return false;
+             if (IsBlocking()) return false;
              return defaultIsDamageable(damage);
-         }; */
+         };
     }
     public void Execute() 
     {
