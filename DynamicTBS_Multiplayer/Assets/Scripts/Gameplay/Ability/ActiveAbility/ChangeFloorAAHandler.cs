@@ -28,7 +28,7 @@ public class ChangeFloorAAHandler : MonoBehaviour
 
         List<Vector3> changeFloorPositions = Enumerable.Union(changeFlootWithInhabitantTiles, changeFloorWithoutInhabitantTiles)
             .ToList()
-            .FindAll(tile => tile.GetTileType() != TileType.MasterStartTile)
+            .FindAll(tile => tile.isChangeable())
             .ConvertAll(tile => tile.GetPosition());
 
         UIEvents.PassActionPositionsList(changeFloorPositions, UIActionType.ActiveAbility_ChangeFloor);

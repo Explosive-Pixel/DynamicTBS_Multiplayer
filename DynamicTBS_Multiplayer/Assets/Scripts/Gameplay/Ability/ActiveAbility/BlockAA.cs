@@ -28,6 +28,19 @@ public class BlockAA : IActiveAbility
             if (currentBlockCount > 0) return false;
             return defaultIsAttackableBy(character);
         };
+
+        var defaultIsDisabled = character.isDisabled;
+        character.isDisabled = () =>
+        {
+            if (IsBlocking()) return true;
+            return defaultIsDisabled();
+        };
+
+        /* var defaultIsDamageable = character.isDamageable;
+         character.isDamageable = (damage) => {
+             if (currentBlockCount > 0) return false;
+             return defaultIsDamageable(damage);
+         }; */
     }
     public void Execute() 
     {
@@ -36,6 +49,7 @@ public class BlockAA : IActiveAbility
             characterHandler = GameObject.Find("GameplayCanvas").GetComponent<CharacterHandler>();
             board = GameObject.Find("GameplayCanvas").GetComponent<Board>();
             ChangeIsAttackableByOfOtherCharacters();
+
             firstExecution = false;
         }
         blockAAHandler.ExecuteBlockAA(this);
@@ -55,7 +69,6 @@ public class BlockAA : IActiveAbility
     {
         currentBlockCount = blockingRounds + 1;
         blockGameObject = CreateBlockGameObject();
-        character.SetDisabled(true);
     }
 
     public void ReduceBlockCount()
@@ -68,14 +81,13 @@ public class BlockAA : IActiveAbility
             {
                 GameObject.Destroy(blockGameObject);
                 blockGameObject = null;
-                character.SetDisabled(false);
             }
         }
     }
 
     private void ChangeIsAttackableByOfOtherCharacters()
     { 
-        foreach(Character c in characterHandler.GetAllCharacters())
+        foreach(Character c in characterHandler.GetAllLivingCharacters())
         {
             var cDefaultIsAttackableBy = c.isAttackableBy;
             c.isAttackableBy = (attacker) =>

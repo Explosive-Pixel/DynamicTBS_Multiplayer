@@ -27,7 +27,7 @@ public class ActiveAbilityHandler : MonoBehaviour
         currentCharacter = character;
 
         bool active = gameHasStarted && character != null;
-        bool disabled = active && (character.IsActiveAbilityOnCooldown() || character.IsDisabled());
+        bool disabled = active && (character.IsActiveAbilityOnCooldown() || character.isDisabled());
 
         activeAbilityButton.gameObject.SetActive(active);
         activeAbilityButton.interactable = !disabled;

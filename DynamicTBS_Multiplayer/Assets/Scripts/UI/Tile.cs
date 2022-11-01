@@ -15,12 +15,16 @@ public abstract class Tile
     protected Sprite tileSprite;
     protected Character currentInhabitant;
 
+    public delegate bool IsChangeable();
+    public IsChangeable isChangeable;
+
     protected Tile(int row, int column) 
     {
         this.row = row;
         this.column = column;
         this.position = Board.FindPosition(row, column);
         this.currentInhabitant = null;
+        this.isChangeable = () => true;
     }
 
     protected void Init()

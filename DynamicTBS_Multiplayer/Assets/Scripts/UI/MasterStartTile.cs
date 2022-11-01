@@ -8,6 +8,7 @@ public class MasterStartTile : Tile
     {
         this.type = TileType.MasterStartTile;
         this.tileSprite = SpriteManager.MASTER_START_TILE_SPRITE;
+        this.isChangeable = () => false;
 
         Init();
     }

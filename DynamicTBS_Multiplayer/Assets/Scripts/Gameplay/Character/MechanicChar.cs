@@ -11,10 +11,13 @@ public class MechanicChar : Character
         this.attackRange = 1;
 
         this.activeAbility = new ChangeFloorAA(this);
-        this.passiveAbility = new SteadyStandPA();
-
-        this.characterSprite = side.GetPlayerType() == PlayerType.blue ? SpriteManager.BLUE_MECHANIC_SPRITE : SpriteManager.PINK_MECHANIC_SPRITE;
+        this.passiveAbility = new SteadyStandPA(this);
 
         Init();
+    }
+
+    protected override Sprite CharacterSprite(Player side)
+    {
+        return side.GetPlayerType() == PlayerType.blue ? SpriteManager.BLUE_MECHANIC_SPRITE : SpriteManager.PINK_MECHANIC_SPRITE;
     }
 }

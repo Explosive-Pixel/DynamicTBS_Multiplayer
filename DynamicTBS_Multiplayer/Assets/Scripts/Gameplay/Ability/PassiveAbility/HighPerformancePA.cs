@@ -5,5 +5,16 @@ using UnityEngine;
 
 public class HighPerformancePA : IPassiveAbility
 {
-    public void Apply() { }
+    private Character owner;
+
+    public HighPerformancePA(Character character)
+    {
+        owner = character;
+    }
+
+    public void Apply() 
+    {
+        owner.attackDamage *= 2;
+        owner.movePattern = PatternType.Star;
+    }
 }

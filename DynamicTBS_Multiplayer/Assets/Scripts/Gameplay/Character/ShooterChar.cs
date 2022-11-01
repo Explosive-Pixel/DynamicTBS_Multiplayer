@@ -11,10 +11,13 @@ public class ShooterChar : Character
         this.attackRange = 2;
 
         this.activeAbility = new PowershotAA(this);
-        this.passiveAbility = new ExplodePA();
-
-        this.characterSprite = side.GetPlayerType() == PlayerType.blue ? SpriteManager.BLUE_SHOOTER_SPRITE : SpriteManager.PINK_SHOOTER_SPRITE;
+        this.passiveAbility = new ExplodePA(this);
 
         Init();
+    }
+
+    protected override Sprite CharacterSprite(Player side)
+    {
+        return side.GetPlayerType() == PlayerType.blue ? SpriteManager.BLUE_SHOOTER_SPRITE : SpriteManager.PINK_SHOOTER_SPRITE;
     }
 }

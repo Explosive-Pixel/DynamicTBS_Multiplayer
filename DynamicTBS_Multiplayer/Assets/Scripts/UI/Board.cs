@@ -38,9 +38,16 @@ public class Board : MonoBehaviour
         return new Vector3(column * 0.7f - 3, -(row * 0.7f - 3), 1);
     }
 
+    public List<Tile> GetAllTiles()
+    {
+        return tiles;
+    }
+
     public Tile GetTileByCharacter(Character character)
     {
-        return GetTileByPosition(character.GetCharacterGameObject().transform.position);
+        if(character.GetCharacterGameObject() != null)
+            return GetTileByPosition(character.GetCharacterGameObject().transform.position);
+        return null;
     }
 
     // Caution: position has to be a world point!
@@ -62,6 +69,16 @@ public class Board : MonoBehaviour
         }
 
         return null;
+    }
+
+    public bool Neighbors(Tile tile1, Tile tile2, PatternType patternType)
+    {
+        bool crossNeighbors = (tile1.GetRow() == tile2.GetRow() && Math.Abs(tile1.GetColumn() - tile2.GetColumn()) == 1) || (tile1.GetColumn() == tile2.GetColumn() && Math.Abs(tile1.GetRow() - tile2.GetRow()) == 1);
+
+        if (patternType == PatternType.Cross)
+            return crossNeighbors;
+
+        return (crossNeighbors || (Math.Abs(tile1.GetColumn() - tile2.GetColumn()) == 1) && (Math.Abs(tile1.GetRow() - tile2.GetRow()) == 1));
     }
 
     public List<Tile> GetTilesOfDistance(Tile tile, PatternType patternType, int distance)
@@ -304,7 +321,7 @@ public class Board : MonoBehaviour
             Tile tile = queue.Dequeue();
             visited.Add(tile);
 
-            List<Tile> neighbors = GetNeighbors(tile, PatternType.Cross);
+            List<Tile> neighbors = GetNeighbors(tile, character.movePattern);
             foreach(Tile neighbor in neighbors) 
             {
                 if (!visited.Contains(neighbor) && neighbor.IsAccessible()) 

@@ -4,5 +4,34 @@ using UnityEngine;
 
 public class AdrenalinPA : IPassiveAbility
 {
-    public void Apply() { }
+    private Character owner;
+
+    public AdrenalinPA(Character character)
+    {
+        owner = character;
+    }
+
+    public void Apply() 
+    {
+        CharacterEvents.OnCharacterTakesDamage += ResetActiveAbilityCooldown;
+    }
+
+    private void ResetActiveAbilityCooldown(Character character, int damage)
+    {
+        if (owner.IsDead())
+        {
+            CharacterEvents.OnCharacterTakesDamage -= ResetActiveAbilityCooldown;
+            return;
+        }
+
+        if (character == owner && owner.isDamageable(damage))
+        {
+            owner.activeAbilityCooldown = 0;
+        }
+    }
+
+    ~AdrenalinPA()
+    {
+        CharacterEvents.OnCharacterTakesDamage -= ResetActiveAbilityCooldown;
+    }
 }

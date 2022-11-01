@@ -11,12 +11,17 @@ public class MasterChar : Character
         this.attackRange = 0;
 
         this.activeAbility = new TakeControlAA(this);
-        this.passiveAbility = new InfluenceAuraPA();
+        this.passiveAbility = new InfluenceAuraPA(this);
 
-        this.characterSprite = side.GetPlayerType() == PlayerType.blue ? SpriteManager.BLUE_MASTER_SPRITE : SpriteManager.PINK_MASTER_SPRITE;
-
+        
         Init();
     }
+
+    protected override Sprite CharacterSprite(Player side)
+    {
+        return side.GetPlayerType() == PlayerType.blue ? SpriteManager.BLUE_MASTER_SPRITE : SpriteManager.PINK_MASTER_SPRITE;
+    }
+
 
     public override void Die()
     {

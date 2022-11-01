@@ -43,14 +43,29 @@ public class CharacterHandler : MonoBehaviour
         }
     }
 
-    public List<Character> GetAllCharacters()
+    public List<Character> GetAllLivingCharacters()
     {
-        return characters;
+        return characters.FindAll(character => character.GetCharacterGameObject() != null);
     }
 
     public Character GetCurrentlySelectedCharacter()
     {
         return currentlySelectedChar;
+    }
+
+    public bool Neighbors(Character c1, Character c2, PatternType patternType)
+    {
+        Tile c1Tile = board.GetTileByCharacter(c1);
+        Tile c2Tile = board.GetTileByCharacter(c2);
+
+        if (c1Tile == null || c2Tile == null) return false;
+
+        return board.Neighbors(c1Tile, c2Tile, patternType);
+    }
+
+    public bool AlliedNeighbors(Character c1, Character c2, PatternType patternType)
+    {
+        return c1.GetSide() == c2.GetSide() && Neighbors(c1, c2, patternType);
     }
 
     private void LoadBoard()
@@ -79,7 +94,7 @@ public class CharacterHandler : MonoBehaviour
             }
             else
             {
-                if(!character.IsDisabled())
+                if(!character.isDisabled())
                     HandleAction(character);
             }
         }
@@ -111,7 +126,7 @@ public class CharacterHandler : MonoBehaviour
     private void PerformAttack(Vector3 position) 
     {
         Character characterToAttack = GetCharacterByPosition(position, false);
-        characterToAttack.GetAttacked();
+        characterToAttack.TakeDamage(currentlySelectedChar.attackDamage);
 
         GameplayEvents.ActionFinished(UIActionType.Attack);
     }

@@ -5,41 +5,66 @@ using UnityEngine;
 
 public class PullDamagePA : IPassiveAbility
 {
-    // TODO: init
-    List<Character> characters;
-    Board board;
-    Character owner;
+    private static PatternType pullDamagePatternType = PatternType.Cross;
 
-    // TODO: do not use IsAttackableBy => define new delegate canTakeDamage(damage) and call this as condition in TakeDamage()
+    private Character owner;
+    private CharacterHandler characterHandler;
+
+    public PullDamagePA(Character character)
+    {
+        owner = character;
+    }
+
     public void Apply() 
     {
+        characterHandler = GameObject.Find("GameplayCanvas").GetComponent<CharacterHandler>();
+
+        List<Character> characters = characterHandler.GetAllLivingCharacters();
+
         foreach (Character character in characters)
         {
-            var defaultIsAttackableBy = character.isAttackableBy;
-            character.isAttackableBy = (attacker) =>
+            var defaultIsDamageable = character.isDamageable;
+            character.isDamageable = (damage) =>
             {
                 if (character.GetPassiveAbility().GetType() == typeof(PullDamagePA))
                 {
-                    return defaultIsAttackableBy(attacker);
+                    return defaultIsDamageable(damage);
                 }
 
-                if(character.GetSide() == owner.GetSide() && Neighbors(character, owner) && owner.isAttackableBy(attacker))
+                if(owner.isDamageable(damage) && characterHandler.AlliedNeighbors(character, owner, pullDamagePatternType))
                 {
                     return false;
                 }
 
-                return defaultIsAttackableBy(attacker);
+                return defaultIsDamageable(damage);
             };
+        }
+
+        CharacterEvents.OnCharacterTakesDamage += AbsorbDamage;
+    }
+
+    private void AbsorbDamage(Character character, int damage)
+    {
+        if (owner.IsDead())
+        {
+            CharacterEvents.OnCharacterTakesDamage -= AbsorbDamage;
+            return;
+        }
+
+        if (character.GetPassiveAbility().GetType() == typeof(PullDamagePA))
+        {
+            return;
+        }
+
+        if(owner.isDamageable(damage) && characterHandler.AlliedNeighbors(character, owner, pullDamagePatternType))
+        {
+            owner.TakeDamage(damage);
         }
     }
 
-    // TODO: Listen to event TakeDamage and check if character is neighbor of owner -> if yes: owner takes damage
 
-    private bool Neighbors(Character c1, Character c2) 
+    ~PullDamagePA()
     {
-        Tile c1Tile = board.GetTileByCharacter(c1);
-        Tile c2Tile = board.GetTileByCharacter(c2);
-
-        return (c1Tile.GetRow() == c2Tile.GetRow() && Math.Abs(c1Tile.GetColumn() - c2Tile.GetColumn()) == 1) || (c1Tile.GetColumn() == c2Tile.GetColumn() && Math.Abs(c1Tile.GetRow() - c2Tile.GetRow()) == 1);
+        CharacterEvents.OnCharacterTakesDamage -= AbsorbDamage;
     }
 }

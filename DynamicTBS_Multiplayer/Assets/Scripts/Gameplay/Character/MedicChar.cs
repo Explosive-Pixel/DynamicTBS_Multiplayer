@@ -11,10 +11,13 @@ public class MedicChar : Character
         this.attackRange = 1;
 
         this.activeAbility = new HealAA(this);
-        this.passiveAbility = new AdrenalinPA();
-
-        this.characterSprite = side.GetPlayerType() == PlayerType.blue ? SpriteManager.BLUE_MEDIC_SPRITE : SpriteManager.PINK_MEDIC_SPRITE;
+        this.passiveAbility = new AdrenalinPA(this);
 
         Init();
+    }
+
+    protected override Sprite CharacterSprite(Player side)
+    {
+        return side.GetPlayerType() == PlayerType.blue ? SpriteManager.BLUE_MEDIC_SPRITE : SpriteManager.PINK_MEDIC_SPRITE;
     }
 }

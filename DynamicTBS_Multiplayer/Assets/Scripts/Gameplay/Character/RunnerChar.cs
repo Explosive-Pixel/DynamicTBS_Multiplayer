@@ -11,10 +11,13 @@ public class RunnerChar : Character
         this.attackRange = 1;
 
         this.activeAbility = new JumpAA(this);
-        this.passiveAbility = new HighPerformancePA();
-
-        this.characterSprite = side.GetPlayerType() == PlayerType.blue ? SpriteManager.BLUE_RUNNER_SPRITE : SpriteManager.PINK_RUNNER_SPRITE;
+        this.passiveAbility = new HighPerformancePA(this);
 
         Init();
+    }
+
+    protected override Sprite CharacterSprite(Player side)
+    {
+        return side.GetPlayerType() == PlayerType.blue ? SpriteManager.BLUE_RUNNER_SPRITE : SpriteManager.PINK_RUNNER_SPRITE;
     }
 }
