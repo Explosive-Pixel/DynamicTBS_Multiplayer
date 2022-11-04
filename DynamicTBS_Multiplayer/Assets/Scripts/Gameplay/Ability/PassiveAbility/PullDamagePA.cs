@@ -8,7 +8,6 @@ public class PullDamagePA : IPassiveAbility
     private static PatternType pullDamagePatternType = PatternType.Cross;
 
     private Character owner;
-    private CharacterHandler characterHandler;
 
     public PullDamagePA(Character character)
     {
@@ -17,9 +16,7 @@ public class PullDamagePA : IPassiveAbility
 
     public void Apply() 
     {
-        characterHandler = GameObject.Find("GameplayCanvas").GetComponent<CharacterHandler>();
-
-        List<Character> characters = characterHandler.GetAllLivingCharacters();
+        List<Character> characters = CharacterHandler.GetAllLivingCharacters();
 
         foreach (Character character in characters)
         {
@@ -31,7 +28,7 @@ public class PullDamagePA : IPassiveAbility
                     return defaultIsDamageable(damage);
                 }
 
-                if(owner.isDamageable(damage) && characterHandler.AlliedNeighbors(character, owner, pullDamagePatternType))
+                if(owner.isDamageable(damage) && CharacterHandler.AlliedNeighbors(character, owner, pullDamagePatternType))
                 {
                     return false;
                 }
@@ -56,7 +53,7 @@ public class PullDamagePA : IPassiveAbility
             return;
         }
 
-        if(owner.isDamageable(damage) && characterHandler.AlliedNeighbors(character, owner, pullDamagePatternType))
+        if(owner.isDamageable(damage) && CharacterHandler.AlliedNeighbors(character, owner, pullDamagePatternType))
         {
             owner.TakeDamage(damage);
         }

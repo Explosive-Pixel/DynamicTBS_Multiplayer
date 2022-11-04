@@ -6,182 +6,38 @@ using UnityEngine.UI;
 
 public class CharacterHandler : MonoBehaviour
 {
-    private List<Character> characters = new List<Character>();
+    private static List<Character> characters = new List<Character>();
     // Cache to find characters fast, based on their gameobject
-    private Dictionary<GameObject, Character> charactersByGameObject = new Dictionary<GameObject, Character>();
-
-    private Camera currentCamera;
-    private GameManager gameManager;
-    private PlayerManager playerManager;
-    private Board board;
-
-    private Character currentlySelectedChar;
-
-    private bool isListeningToClicks;
+    private static Dictionary<GameObject, Character> charactersByGameObject = new Dictionary<GameObject, Character>();
 
     private void Awake()
     {
         SubscribeEvents();
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
-        isListeningToClicks = false;
     }
 
-    private void Update()
-    {
-        if (!currentCamera)
-        {
-            currentCamera = Camera.main;
-            return;
-        }
-
-        if (!isListeningToClicks) return;
-
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            HandleClick();
-        }
-    }
-
-    public List<Character> GetAllLivingCharacters()
+    public static List<Character> GetAllLivingCharacters()
     {
         return characters.FindAll(character => character.GetCharacterGameObject() != null);
     }
 
-    public Character GetCurrentlySelectedCharacter()
+    public static Character GetCharacterByGameObject(GameObject characterGameObject)
     {
-        return currentlySelectedChar;
+        return charactersByGameObject[characterGameObject];
     }
 
-    public bool Neighbors(Character c1, Character c2, PatternType patternType)
+    public static bool Neighbors(Character c1, Character c2, PatternType patternType)
     {
-        Tile c1Tile = board.GetTileByCharacter(c1);
-        Tile c2Tile = board.GetTileByCharacter(c2);
+        Tile c1Tile = Board.GetTileByCharacter(c1);
+        Tile c2Tile = Board.GetTileByCharacter(c2);
 
         if (c1Tile == null || c2Tile == null) return false;
 
-        return board.Neighbors(c1Tile, c2Tile, patternType);
+        return Board.Neighbors(c1Tile, c2Tile, patternType);
     }
 
-    public bool AlliedNeighbors(Character c1, Character c2, PatternType patternType)
+    public static bool AlliedNeighbors(Character c1, Character c2, PatternType patternType)
     {
         return c1.GetSide() == c2.GetSide() && Neighbors(c1, c2, patternType);
-    }
-
-    private void LoadBoard()
-    {
-        board = GameObject.Find("GameplayCanvas").GetComponent<Board>();
-    }
-
-    private void HandleClick()
-    {
-        Character character = GetCharacterByPosition(Input.mousePosition, true);
-
-        if (character == null)
-        {
-            UpdateCurrentlySelectedCharacter(null);
-            return;
-        }
-
-        if (character.GetSide() == playerManager.GetCurrentPlayer())
-        {
-            Debug.Log("Active ability cooldown of character " + character + " is " + character.GetActiveAbilityCooldown());
-            UpdateCurrentlySelectedCharacter(character);
-
-            if (!gameManager.HasGameStarted())
-            {
-                HandlePlacement(character);
-            }
-            else
-            {
-                if(!character.isDisabled())
-                    HandleAction(character);
-            }
-        }
-    }
-
-    private void HandlePlacement(Character character)
-    {
-        PlacementEvents.SelectCharacterForPlacement(character);
-        isListeningToClicks = false;
-    }
-
-    private void ExecuteAction(Vector3 position, UIActionType type)
-    {
-        switch (type)
-        {
-            case UIActionType.Move:
-                {
-                    MoveCharacter(position);
-                    break;
-                }
-            case UIActionType.Attack:
-                {
-                    PerformAttack(position);
-                    break;
-                }
-        }
-    }
-
-    private void PerformAttack(Vector3 position) 
-    {
-        Character characterToAttack = GetCharacterByPosition(position, false);
-        characterToAttack.TakeDamage(currentlySelectedChar.attackDamage);
-
-        GameplayEvents.ActionFinished(UIActionType.Attack);
-    }
-
-
-    private void MoveCharacter(Vector3 position)
-    {
-        Vector3 oldPosition = currentlySelectedChar.GetCharacterGameObject().transform.position;
-        currentlySelectedChar.GetCharacterGameObject().transform.position = position;
-        UIEvents.MoveOver(oldPosition, currentlySelectedChar);
-        if (!gameManager.HasGameStarted())
-        {
-            PlacementEvents.AdvancePlacementOrder();
-            ListenToClicks();
-        }
-        else 
-        {
-            GameplayEvents.ActionFinished(UIActionType.Move);
-        }
-    }
-
-    private void HandleAction(Character character) 
-    {
-        isListeningToClicks = false;
-        UIEvents.SelectCharacterForAction(character, UIActionType.Move);
-        UIEvents.SelectCharacterForAction(character, UIActionType.Attack);
-    }
-
-    private Character GetCharacterByPosition(Vector3 position, bool isClick)
-    {
-        if (isClick)
-        {
-            Ray ray = currentCamera.ScreenPointToRay(position);
-
-            RaycastHit[] hits = Physics.RaycastAll(ray);
-            if (hits != null && hits.Length > 0)
-            {
-                foreach (RaycastHit hit in hits)
-                {
-                    GameObject gameObject = hit.transform.gameObject;
-                    if (gameObject && charactersByGameObject.ContainsKey(gameObject))
-                    {
-                        return charactersByGameObject.GetValueOrDefault(gameObject);
-                    }
-                }
-            }
-        }
-        else 
-        {
-            Tile tile = board.GetTileByPosition(position);
-            if (tile != null)
-                return tile.GetCurrentInhabitant();
-        }
-
-        return null;
     }
 
     private void AddCharacterToList(Character character)
@@ -195,58 +51,18 @@ public class CharacterHandler : MonoBehaviour
         DraftEvents.DeliverCharacterList(characters);
     }
 
-    private void ActionOver(UIActionType actionType)
-    {
-        ListenToClicks();
-        UpdateCurrentlySelectedCharacter(null);
-    }
-
-    private void ListenToClicks()
-    {
-        isListeningToClicks = true;
-    }
-
-    private void UpdateCurrentlySelectedCharacter(Character character)
-    {
-        currentlySelectedChar = character;
-        GameplayEvents.ChangeCharacterSelection(character);
-    }
-
-    private void ReduceActiveAbiliyCooldowns(Player player)
-    {
-        foreach (Character character in characters)
-        {
-            if (character.GetSide().Equals(player))
-            {
-                character.ReduceActiveAbilityCooldown();
-            }
-        }
-    }
-
     #region EventsRegion
 
     private void SubscribeEvents()
     {
         DraftEvents.OnCharacterCreated += AddCharacterToList;
-        DraftEvents.OnEndDraft += ListenToClicks;
         DraftEvents.OnEndDraft += DeliverCharacterList;
-        PlacementEvents.OnPlacementStart += LoadBoard;
-        UIEvents.OnPassActionDestination += ExecuteAction;
-        UIEvents.OnInformNoActionDestinationsAvailable += ListenToClicks;
-        GameplayEvents.OnFinishAction += ActionOver;
-        GameplayEvents.OnPlayerTurnEnded += ReduceActiveAbiliyCooldowns;
     }
 
     private void UnsubscribeEvents()
     {
         DraftEvents.OnCharacterCreated -= AddCharacterToList;
-        DraftEvents.OnEndDraft -= ListenToClicks;
         DraftEvents.OnEndDraft -= DeliverCharacterList;
-        PlacementEvents.OnPlacementStart -= LoadBoard;
-        UIEvents.OnPassActionDestination -= ExecuteAction;
-        UIEvents.OnInformNoActionDestinationsAvailable -= ListenToClicks;
-        GameplayEvents.OnFinishAction -= ActionOver;
-        GameplayEvents.OnPlayerTurnEnded -= ReduceActiveAbiliyCooldowns;
     }
 
     #endregion

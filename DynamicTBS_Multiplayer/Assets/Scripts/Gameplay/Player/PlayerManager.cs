@@ -8,10 +8,10 @@ public class PlayerManager : MonoBehaviour
     private const PlayerType placementPhaseStartPlayer = PlayerType.pink;
     private const PlayerType gameplayPhaseStartPlayer = PlayerType.blue;
     
-    private Player currentPlayer;
+    private static Player currentPlayer;
 
-    private Player bluePlayer;
-    private Player pinkPlayer;
+    private static Player bluePlayer;
+    private static Player pinkPlayer;
 
     private void Awake()
     {
@@ -22,14 +22,14 @@ public class PlayerManager : MonoBehaviour
         currentPlayer = GetPlayer(draftPhaseStartPlayer);
     }
 
-    public Player GetOtherPlayer(Player player)
+    public static Player GetOtherPlayer(Player player)
     {
         if (player == bluePlayer)
             return pinkPlayer;
         return bluePlayer;
     }
 
-    public void NextPlayer()
+    public static void NextPlayer()
     {
         currentPlayer.IncreaseRoundCounter();
         GameplayEvents.EndPlayerTurn(currentPlayer);
@@ -37,17 +37,17 @@ public class PlayerManager : MonoBehaviour
         currentPlayer = GetOtherPlayer(currentPlayer);
     }
 
-    public Player GetCurrentPlayer()
+    public static Player GetCurrentPlayer()
     {
         return currentPlayer;
     }
 
-    public bool IsBlueTurn()
+    public static bool IsBlueTurn()
     {
         return currentPlayer == bluePlayer;
     }
 
-    public bool IsCurrentPlayer(string name)
+    public static bool IsCurrentPlayer(string name)
     {
         if (name.ToLower().Contains(PlayerType.blue.ToString()) && IsBlueTurn())
             return true;
@@ -56,7 +56,7 @@ public class PlayerManager : MonoBehaviour
         return false;
     }
 
-    public Player GetPlayer(PlayerType playerType)
+    public static Player GetPlayer(PlayerType playerType)
     {
         if (playerType == PlayerType.blue)
             return bluePlayer;

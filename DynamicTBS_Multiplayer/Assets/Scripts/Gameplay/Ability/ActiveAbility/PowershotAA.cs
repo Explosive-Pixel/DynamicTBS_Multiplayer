@@ -8,17 +8,18 @@ public class PowershotAA : IActiveAbility
     public static int selfDamage = 1;
     public int Cooldown { get { return 3; } }
 
-    private PowershotAAHandler powershotAA;
+    private PowershotAAAction powershotAAAction;
 
     Character character;
 
     public PowershotAA(Character character)
     {
         this.character = character;
-        powershotAA = GameObject.Find("ActiveAbilityObject").GetComponent<PowershotAAHandler>();
+        powershotAAAction = GameObject.Find("ActionRegistry").GetComponent<PowershotAAAction>();
     }
     public void Execute()
     {
-        powershotAA.ExecutePowershotAA(character);
+        powershotAAAction.CreateActionDestinations(character);
+        ActionRegistry.Register(powershotAAAction);
     }
 }

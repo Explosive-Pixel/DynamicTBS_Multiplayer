@@ -8,8 +8,6 @@ public class ExplodePA : IPassiveAbility
     private static int explodeDamage = 1;
 
     private Character owner;
-    private CharacterHandler characterHandler;
-    private Board board;
 
     public ExplodePA(Character character)
     {
@@ -18,9 +16,6 @@ public class ExplodePA : IPassiveAbility
 
     public void Apply() 
     {
-        characterHandler = GameObject.Find("GameplayCanvas").GetComponent<CharacterHandler>();
-        board = GameObject.Find("GameplayCanvas").GetComponent<Board>();
-
         CharacterEvents.OnCharacterDeath += Explode;
     }
 
@@ -28,11 +23,11 @@ public class ExplodePA : IPassiveAbility
     {
         if(deadCharacter == owner)
         {
-            Tile ownerLastTile = board.GetTileByPosition(lastPosition);
-            foreach(Character character in characterHandler.GetAllLivingCharacters())
+            Tile ownerLastTile = Board.GetTileByPosition(lastPosition);
+            foreach(Character character in CharacterHandler.GetAllLivingCharacters())
             {
-                Tile neightborTile = board.GetTileByPosition(character.GetCharacterGameObject().transform.position);
-                if(board.Neighbors(ownerLastTile, neightborTile, explodePatternType))
+                Tile neightborTile = Board.GetTileByPosition(character.GetCharacterGameObject().transform.position);
+                if(Board.Neighbors(ownerLastTile, neightborTile, explodePatternType))
                 {
                     character.TakeDamage(explodeDamage);
                 }

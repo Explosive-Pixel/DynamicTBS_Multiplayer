@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
 
     private List<GameObject> canvasList = new List<GameObject>();
 
-    private bool hasGameStarted;
+    private static bool hasGameStarted;
     
     private void Awake()
     {
@@ -100,12 +100,12 @@ public class GameManager : MonoBehaviour
 
     #endregion
     
-    public bool HasGameStarted()
+    public static bool HasGameStarted()
     {
         return hasGameStarted;
     }
 
-    private void SetGameStarted()
+    private static void SetGameStarted()
     {
         hasGameStarted = true;
     }

@@ -29,7 +29,7 @@ public abstract class Character
     public delegate bool IsDamageable(int damage);
     public IsDamageable isDamageable = (damage) => true;
 
-    // States whether the character is disabled, i.e. can not perform any action (move/attack/active ability)
+    // States whether the character is disabled, i.e. can not perform any action (move/attack/perform active ability)
     public delegate bool IsDisabled();
     public IsDisabled isDisabled = () => false;
 
@@ -89,14 +89,10 @@ public abstract class Character
         return this.hitPoints == this.maxHitPoints;
     }
 
-    public int GetActiveAbilityCooldown()
-    {
-        return activeAbilityCooldown;
-    }
-
     public void SetActiveAbilityOnCooldown()
     {
         activeAbilityCooldown = activeAbility.Cooldown + 1;
+        GameplayEvents.OnPlayerTurnEnded += ReduceActiveAbiliyCooldown;
     }
 
     public void ReduceActiveAbilityCooldown()
@@ -104,6 +100,11 @@ public abstract class Character
         if(activeAbilityCooldown > 0)
         {
             activeAbilityCooldown -= 1;
+
+            if(activeAbilityCooldown == 0)
+            {
+                GameplayEvents.OnPlayerTurnEnded -= ReduceActiveAbiliyCooldown;
+            }
         }
     }
 
@@ -124,23 +125,22 @@ public abstract class Character
         return characterGameObject == null;
     }
 
-    public void SwitchSide(Player newSide) {
-        this.side = newSide;
-    }
-
     public Player GetSide()
     {
         return side;
     }
 
-    public PatternType GetMovePattern()
-    {
-        return movePattern;
-    }
-
     public IActiveAbility GetActiveAbility()
     {
         return activeAbility;
+    }
+
+    private void ReduceActiveAbiliyCooldown(Player player)
+    {
+        if (side.Equals(player))
+        {
+            ReduceActiveAbilityCooldown();
+        }
     }
 
     private void ApplyPassiveAbility()
@@ -150,8 +150,10 @@ public abstract class Character
 
     private GameObject CreateCharacterGameObject()
     {
-        GameObject character = new GameObject();
-        character.name = this.GetType().Name + "_" + side.GetPlayerType().ToString();
+        GameObject character = new GameObject
+        {
+            name = this.GetType().Name + "_" + side.GetPlayerType().ToString()
+        };
 
         Vector3 startPosition = new Vector3(0, 0, 0);
         Quaternion startRotation = Quaternion.identity;
@@ -168,5 +170,6 @@ public abstract class Character
     ~Character()
     {
         GameplayEvents.OnGameplayPhaseStart -= ApplyPassiveAbility;
+        GameplayEvents.OnPlayerTurnEnded -= ReduceActiveAbiliyCooldown;
     }
 }

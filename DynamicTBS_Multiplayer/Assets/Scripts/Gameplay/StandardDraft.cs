@@ -3,14 +3,6 @@ using System.Collections.Generic;
 
 public class StandardDraft : MonoBehaviour
 {
-    private PlayerManager playerManager;
-    private Board board;
-
-    private void Awake()
-    {
-        playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
-    }
-
     public void PerformStandardDraft()
     {
         List<Character> characters = new List<Character>();
@@ -33,11 +25,9 @@ public class StandardDraft : MonoBehaviour
 
         DraftEvents.EndDraft();
 
-        board = GameObject.Find("GameplayCanvas").GetComponent<Board>();
-
         foreach (Character character in characters) 
         {
-            Tile startTile = board.FindStartTiles(character)[0];
+            Tile startTile = Board.FindStartTiles(character)[0];
             Vector3 position = startTile.GetPosition();
             character.GetCharacterGameObject().transform.position = new Vector3(position.x, position.y, 0.997f);
             startTile.SetCurrentInhabitant(character);
@@ -50,7 +40,7 @@ public class StandardDraft : MonoBehaviour
 
     private Character SpawnCharacter(CharacterType characterType, PlayerType playerType) 
     {
-        Character character = CharacterFactory.CreateCharacter(characterType, playerManager.GetPlayer(playerType));
+        Character character = CharacterFactory.CreateCharacter(characterType, PlayerManager.GetPlayer(playerType));
      
         DraftEvents.CharacterCreated(character);
         return character;
@@ -64,9 +54,9 @@ public class StandardDraft : MonoBehaviour
 
     private void SpawnMaster(PlayerType playerType)
     {
-        Character master = CharacterFactory.CreateCharacter(CharacterType.MasterChar, playerManager.GetPlayer(playerType));
+        Character master = CharacterFactory.CreateCharacter(CharacterType.MasterChar, PlayerManager.GetPlayer(playerType));
 
-        Tile masterSpawnTile = board.FindMasterStartTile(playerType);
+        Tile masterSpawnTile = Board.FindMasterStartTile(playerType);
         Vector3 position = masterSpawnTile.GetPosition();
         master.GetCharacterGameObject().transform.position = new Vector3(position.x, position.y, 0.998f);
         masterSpawnTile.SetCurrentInhabitant(master);

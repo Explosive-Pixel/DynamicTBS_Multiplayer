@@ -13,9 +13,7 @@ public class SteadyStandPA : IPassiveAbility
 
     public void Apply() 
     {
-        Board board = GameObject.Find("GameplayCanvas").GetComponent<Board>();
-
-        foreach (Tile tile in board.GetAllTiles())
+        foreach (Tile tile in Board.GetAllTiles())
         {
             var defaultIsChangeable = tile.isChangeable;
             tile.isChangeable = () =>

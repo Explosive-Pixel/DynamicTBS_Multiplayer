@@ -9,18 +9,19 @@ public class JumpAA : IActiveAbility
 
     public int Cooldown { get { return 2; } }
 
-    private JumpAAHandler jumpAAHandler;
+    private JumpAAAction jumpAAAction;
 
     Character character;
 
     public JumpAA(Character character)
     {
         this.character = character;
-        jumpAAHandler = GameObject.Find("ActiveAbilityObject").GetComponent<JumpAAHandler>();
+        jumpAAAction = GameObject.Find("ActionRegistry").GetComponent<JumpAAAction>();
     }
 
     public void Execute()
     {
-        jumpAAHandler.ExecuteJumpAA(character);
+        jumpAAAction.CreateActionDestinations(character);
+        ActionRegistry.Register(jumpAAAction);
     }
 }

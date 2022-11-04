@@ -16,10 +16,10 @@ public class ActiveAbilityHandler : MonoBehaviour
 
     public void ExecuteActiveAbility()
     {
-        GameplayEvents.ExecuteActiveAbilityStarted();
-        currentCharacter.SetActiveAbilityOnCooldown();
+        // GameplayEvents.ExecuteActiveAbilityStarted();
         currentCharacter.GetActiveAbility().Execute();
         // Please remember to call this after every execution (in AAHandler classes): GameplayEvents.ActionFinished(UIActionType.ActiveAbility);
+        // Nope: THIS PLEASE currentCharacter.SetActiveAbilityOnCooldown();
     }
 
     private void ChangeButtonVisibility(Character character)

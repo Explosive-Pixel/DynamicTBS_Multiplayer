@@ -9,19 +9,20 @@ public class HealAA : IActiveAbility
 
     public int Cooldown { get { return 3; } }
 
-    private HealAAHandler healAAHandler;
+    private HealAAAction healAAAction;
 
     Character character;
 
     public HealAA(Character character)
     {
         this.character = character;
-        healAAHandler = GameObject.Find("ActiveAbilityObject").GetComponent<HealAAHandler>();
+        healAAAction = GameObject.Find("ActionRegistry").GetComponent<HealAAAction>();
     }
 
     public void Execute() 
     {
-        healAAHandler.ExecuteHealAA(character);
+        healAAAction.CreateActionDestinations(character);
+        ActionRegistry.Register(healAAAction);
     }
 
 

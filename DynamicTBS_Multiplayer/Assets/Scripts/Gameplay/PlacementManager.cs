@@ -8,16 +8,11 @@ public class PlacementManager : MonoBehaviour
     private const int MaxPlacementCount = 14;
     private static List<int> placementOrder = new List<int>() { 1, 3, 5, 7, 8, 11 };
     
-    private PlayerManager playerManager;
-    private Board board;
-    
     private int placementCount;
 
     private void Awake()
     {
         SubscribeEvents();
-        playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
-        board = GameObject.Find("GameplayCanvas").GetComponent<Board>();
         placementCount = 0;
 
         PlacementEvents.StartPlacement();
@@ -50,7 +45,7 @@ public class PlacementManager : MonoBehaviour
         
         if (placementOrder.Contains(placementCount))
         {
-            playerManager.NextPlayer();
+            PlayerManager.NextPlayer();
             PlacementEvents.ChangePlacementMessage();
         }
             
@@ -70,9 +65,9 @@ public class PlacementManager : MonoBehaviour
 
     private void SpawnMaster(PlayerType playerType) 
     {
-        Character master = CharacterFactory.CreateCharacter(CharacterType.MasterChar, playerManager.GetPlayer(playerType));
+        Character master = CharacterFactory.CreateCharacter(CharacterType.MasterChar, PlayerManager.GetPlayer(playerType));
 
-        Tile masterSpawnTile = board.FindMasterStartTile(playerType);
+        Tile masterSpawnTile = Board.FindMasterStartTile(playerType);
         Vector3 position = masterSpawnTile.GetPosition();
         master.GetCharacterGameObject().transform.position = new Vector3(position.x, position.y, 0.998f);
         masterSpawnTile.SetCurrentInhabitant(master);
@@ -83,14 +78,16 @@ public class PlacementManager : MonoBehaviour
 
     private void SubscribeEvents()
     {
-        PlacementEvents.OnAdvancePlacementOrder += AdvancePlacementOrder;
+        GameplayEvents.OnFinishAction += AdvancePlacementOrder;
         DraftEvents.OnDeliverCharacterList += SortCharacters;
+        GameplayEvents.OnGameplayPhaseStart += UnsubscribeEvents;
     }
 
     private void UnsubscribeEvents()
     {
-        PlacementEvents.OnAdvancePlacementOrder -= AdvancePlacementOrder;
+        GameplayEvents.OnFinishAction -= AdvancePlacementOrder;
         DraftEvents.OnDeliverCharacterList -= SortCharacters;
+        GameplayEvents.OnGameplayPhaseStart -= UnsubscribeEvents;
     }
 
     #endregion

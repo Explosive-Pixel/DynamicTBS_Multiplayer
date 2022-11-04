@@ -8,18 +8,19 @@ public class ChangeFloorAA : IActiveAbility
     public static int radiusWithInhabitants = 1;
 
     public int Cooldown { get { return 3; } }
-    private ChangeFloorAAHandler changeFloorAAHandler;
+    private ChangeFloorAAAction changeFloorAAAction;
 
     Character character;
 
     public ChangeFloorAA(Character character)
     {
         this.character = character;
-        changeFloorAAHandler = GameObject.Find("ActiveAbilityObject").GetComponent<ChangeFloorAAHandler>();
+        changeFloorAAAction = GameObject.Find("ActionRegistry").GetComponent<ChangeFloorAAAction>();
     }
 
     public void Execute()
     {
-        changeFloorAAHandler.ExecuteChangeFloorAA(character);
+        changeFloorAAAction.CreateActionDestinations(character);
+        ActionRegistry.Register(changeFloorAAAction);
     }
 }

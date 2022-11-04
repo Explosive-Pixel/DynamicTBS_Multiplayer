@@ -6,18 +6,19 @@ public class TakeControlAA : IActiveAbility
 {
     public int Cooldown { get { return 0; } }
 
-    private TakeControlAAHandler takeControlAAHandler;
-
     Character character;
 
     public TakeControlAA(Character character)
     {
         this.character = character;
-        takeControlAAHandler = GameObject.Find("ActiveAbilityObject").GetComponent<TakeControlAAHandler>();
     }
 
     public void Execute() 
     {
-        takeControlAAHandler.ExecuteTakeControlAA(character);
+        Tile tile = Board.GetTileByPosition(character.GetCharacterGameObject().transform.position);
+        if (tile.GetType().Equals(TileType.GoalTile))
+        {
+            GameplayEvents.GameIsOver(character.GetSide().GetPlayerType());
+        }
     }
 }

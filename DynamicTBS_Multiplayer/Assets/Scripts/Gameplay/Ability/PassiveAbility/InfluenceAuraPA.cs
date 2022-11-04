@@ -8,8 +8,6 @@ public class InfluenceAuraPA : IPassiveAbility
     private static PatternType influenceAuraPatternType = PatternType.Cross;
 
     private Character owner;
-    private CharacterHandler characterHandler;
-    private PlayerManager playerManager;
 
     private Dictionary<Character, int> influencePoints = new Dictionary<Character, int>();
 
@@ -20,9 +18,6 @@ public class InfluenceAuraPA : IPassiveAbility
 
     public void Apply() 
     {
-        characterHandler = GameObject.Find("GameplayCanvas").GetComponent<CharacterHandler>();
-        playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
-
         GameplayEvents.OnPlayerTurnEnded += UpdateInfluences;
     }
 
@@ -36,12 +31,12 @@ public class InfluenceAuraPA : IPassiveAbility
 
         if (player != owner.GetSide())
         {
-            List<Character> characters = characterHandler.GetAllLivingCharacters()
+            List<Character> characters = CharacterHandler.GetAllLivingCharacters()
                 .FindAll(character => character.GetSide() == player);
 
             foreach(Character character in characters)
             {
-                if (characterHandler.Neighbors(owner, character, influenceAuraPatternType))
+                if (CharacterHandler.Neighbors(owner, character, influenceAuraPatternType))
                 {
                     if (!influencePoints.ContainsKey(character))
                         influencePoints.Add(character, 0);
@@ -59,7 +54,7 @@ public class InfluenceAuraPA : IPassiveAbility
 
     private void SwapSides(Character character)
     {
-        character.side = playerManager.GetOtherPlayer(character.side);
+        character.side = PlayerManager.GetOtherPlayer(character.side);
         character.GetCharacterGameObject().GetComponent<SpriteRenderer>().sprite = character.GetCharacterSprite(character.side);
     }
 

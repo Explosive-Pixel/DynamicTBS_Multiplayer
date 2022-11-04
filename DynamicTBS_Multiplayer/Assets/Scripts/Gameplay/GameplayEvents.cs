@@ -7,11 +7,8 @@ public static class GameplayEvents
     public delegate void GameplayPhase();
     public static event GameplayPhase OnGameplayPhaseStart;
 
-    public delegate void FinishAction(UIActionType type);
+    public delegate void FinishAction();
     public static event FinishAction OnFinishAction;
-
-    public delegate void ExecuteActiveAbility();
-    public static event ExecuteActiveAbility OnExecuteActiveAbility;
 
     public delegate void GameOver(PlayerType winner);
     public static event GameOver OnGameOver;
@@ -31,16 +28,10 @@ public static class GameplayEvents
             OnGameplayPhaseStart();
     }
 
-    public static void ActionFinished(UIActionType type)
+    public static void ActionFinished()
     {
         if (OnFinishAction != null)
-            OnFinishAction(type);
-    }
-
-    public static void ExecuteActiveAbilityStarted()
-    {
-        if (OnExecuteActiveAbility != null)
-            OnExecuteActiveAbility();
+            OnFinishAction();
     }
 
     public static void GameIsOver(PlayerType winner)

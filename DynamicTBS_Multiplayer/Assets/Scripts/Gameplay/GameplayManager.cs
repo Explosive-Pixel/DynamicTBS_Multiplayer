@@ -4,19 +4,13 @@ using UnityEngine;
 
 public class GameplayManager : MonoBehaviour
 {
-    // Config
     private static int maxActionsPerRound = 2;
-
-    private GameManager gameManager;
-    private PlayerManager playerManager;
 
     private int remainingActions;
 
     private void Awake()
     {
         SubscribeEvents();
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
         ResetRemainingActions();
     }
 
@@ -25,25 +19,31 @@ public class GameplayManager : MonoBehaviour
         remainingActions = maxActionsPerRound;
     }
 
-    private void OnActionFinished(UIActionType type) 
+    private void OnActionFinished() 
     {
         remainingActions--;
-        if (remainingActions == 0) 
+        if (remainingActions == 0)
         {
-            playerManager.NextPlayer();
+            PlayerManager.NextPlayer();
             ResetRemainingActions();
         }
+    }
+
+    private void ListenToFinishedActions()
+    {
+        GameplayEvents.OnFinishAction += OnActionFinished;
     }
 
     #region EventSubscriptions
 
     private void SubscribeEvents()
     {
-        GameplayEvents.OnFinishAction += OnActionFinished;
+        GameplayEvents.OnGameplayPhaseStart += ListenToFinishedActions;
     }
 
     private void UnsubscribeEvents()
     {
+        GameplayEvents.OnGameplayPhaseStart -= ListenToFinishedActions;
         GameplayEvents.OnFinishAction -= OnActionFinished;
     }
 

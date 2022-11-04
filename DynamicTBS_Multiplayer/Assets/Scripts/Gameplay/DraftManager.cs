@@ -6,18 +6,15 @@ using UnityEngine.EventSystems;
 
 public class DraftManager : MonoBehaviour
 {
-    // Config
     private const int MaxDraftCount = 14;
     private static List<int> draftOrder = new List<int>() {3, 6, 7, 9, 11, 13};
     
-    private PlayerManager playerManager;
     private Vector3 firstPosition = new Vector3(-6.5f, -3.5f, 0.998f);
     private float offset = 1f;
     private int draftCounter;
 
     private void Awake()
     {
-        playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
         draftCounter = 0;
     }
 
@@ -27,16 +24,16 @@ public class DraftManager : MonoBehaviour
         
         string buttonName = EventSystem.current.currentSelectedGameObject.name;
 
-        if (!playerManager.IsCurrentPlayer(buttonName)) return;
+        if (!PlayerManager.IsCurrentPlayer(buttonName)) return;
         
-        Character character = CharacterFactory.CreateCharacter(buttonName, playerManager.GetCurrentPlayer());
+        Character character = CharacterFactory.CreateCharacter(buttonName, PlayerManager.GetCurrentPlayer());
         GameObject characterGameObject = character.GetCharacterGameObject();
 
         characterGameObject.transform.position = firstPosition;
         firstPosition.x += offset;
-        
+
         DraftEvents.CharacterCreated(character);
-        
+
         AdvanceDraftOrder();
     }
 
@@ -46,7 +43,7 @@ public class DraftManager : MonoBehaviour
 
         if (draftOrder.Contains(draftCounter))
         {
-            playerManager.NextPlayer();
+            PlayerManager.NextPlayer();
             DraftEvents.ChangeDraftMessageText();
         }
             

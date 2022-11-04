@@ -8,20 +8,15 @@ public class BlockAA : IActiveAbility
 
     public int Cooldown { get { return 3; } }
 
-    private BlockAAHandler blockAAHandler;
-
     private Character character;
     private int currentBlockCount = 0;
     private GameObject blockGameObject = null;
 
-    private CharacterHandler characterHandler;
-    private Board board;
     private bool firstExecution = true;
 
     public BlockAA(Character character)
     {
         this.character = character;
-        blockAAHandler = GameObject.Find("ActiveAbilityObject").GetComponent<BlockAAHandler>();
 
         var defaultIsAttackableBy = character.isAttackableBy;
         character.isAttackableBy = (attacker) => {
@@ -46,13 +41,11 @@ public class BlockAA : IActiveAbility
     {
         if (firstExecution)
         {
-            characterHandler = GameObject.Find("GameplayCanvas").GetComponent<CharacterHandler>();
-            board = GameObject.Find("GameplayCanvas").GetComponent<Board>();
             ChangeIsAttackableByOfOtherCharacters();
-
             firstExecution = false;
         }
-        blockAAHandler.ExecuteBlockAA(this);
+        ActivateBlock();
+
     }
 
     public Character GetCharacter()
@@ -69,6 +62,7 @@ public class BlockAA : IActiveAbility
     {
         currentBlockCount = blockingRounds + 1;
         blockGameObject = CreateBlockGameObject();
+        GameplayEvents.OnPlayerTurnEnded += ReduceBlockCounter;
     }
 
     public void ReduceBlockCount()
@@ -87,16 +81,16 @@ public class BlockAA : IActiveAbility
 
     private void ChangeIsAttackableByOfOtherCharacters()
     { 
-        foreach(Character c in characterHandler.GetAllLivingCharacters())
+        foreach(Character c in CharacterHandler.GetAllLivingCharacters())
         {
             var cDefaultIsAttackableBy = c.isAttackableBy;
             c.isAttackableBy = (attacker) =>
                 {
                     if (currentBlockCount > 0 && attacker != character)
                     {
-                        Tile attackerTile = board.GetTileByCharacter(attacker);
-                        Tile cTile = board.GetTileByCharacter(c);
-                        Tile characterTile = board.GetTileByCharacter(character);
+                        Tile attackerTile = Board.GetTileByCharacter(attacker);
+                        Tile cTile = Board.GetTileByCharacter(c);
+                        Tile characterTile = Board.GetTileByCharacter(character);
                         if(attackerTile.GetRow() == cTile.GetRow() && cTile.GetRow() == characterTile.GetRow())
                         {
                             if (attackerTile.GetColumn() < characterTile.GetColumn() && characterTile.GetColumn() < cTile.GetColumn())
@@ -133,5 +127,23 @@ public class BlockAA : IActiveAbility
         blockGameObject.AddComponent<BoxCollider>();
 
         return blockGameObject;
+    }
+
+    private void ReduceBlockCounter(Player player)
+    {
+        if (character.GetSide() == player)
+        {
+            ReduceBlockCount();
+
+            if (!IsBlocking())
+            {
+                GameplayEvents.OnPlayerTurnEnded -= ReduceBlockCounter;
+            }
+        }
+    }
+
+    ~BlockAA()
+    {
+        GameplayEvents.OnPlayerTurnEnded -= ReduceBlockCounter;
     }
 }
