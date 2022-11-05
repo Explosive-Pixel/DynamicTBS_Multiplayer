@@ -6,9 +6,13 @@ using UnityEngine.EventSystems;
 
 public class DraftManager : MonoBehaviour
 {
+    #region Draft Config
+
     private const int MaxDraftCount = 14;
-    private static List<int> draftOrder = new List<int>() {3, 6, 7, 9, 11, 13};
-    
+    private static readonly List<int> draftOrder = new List<int>() {3, 6, 7, 9, 11, 13};
+
+    #endregion
+
     private Vector3 firstPosition = new Vector3(-6.5f, -3.5f, 0.998f);
     private float offset = 1f;
     private int draftCounter;

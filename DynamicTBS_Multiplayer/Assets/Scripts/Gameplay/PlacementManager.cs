@@ -5,9 +5,13 @@ using UnityEngine;
 
 public class PlacementManager : MonoBehaviour
 {
+    #region Placement Config
+
     private const int MaxPlacementCount = 14;
-    private static List<int> placementOrder = new List<int>() { 1, 3, 5, 7, 8, 11 };
-    
+    private static readonly List<int> placementOrder = new List<int>() { 1, 3, 5, 7, 8, 11 };
+
+    #endregion
+
     private int placementCount;
 
     private void Awake()

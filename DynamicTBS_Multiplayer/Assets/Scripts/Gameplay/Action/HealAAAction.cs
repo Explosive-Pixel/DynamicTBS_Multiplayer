@@ -19,7 +19,7 @@ public class HealAAAction : MonoBehaviour, IAction
     {
         Tile characterTile = Board.GetTileByPosition(character.GetCharacterGameObject().transform.position);
 
-        List<Tile> healTiles = Board.GetTilesOfNearestCharactersOfSideWithinRadius(characterTile, character.GetSide().GetPlayerType(), HealAA.healingRange)
+        List<Tile> healTiles = Board.GetTilesOfClosestCharactersOfSideWithinRadius(characterTile, character.GetSide().GetPlayerType(), HealAA.healingRange)
             .FindAll(tile => tile.IsOccupied() && tile.GetCurrentInhabitant().isHealableBy(character) && !tile.GetCurrentInhabitant().HasFullHP());
 
         List<Vector3> healPositions = healTiles.ConvertAll(tile => tile.GetPosition());

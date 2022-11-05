@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class GameplayManager : MonoBehaviour
 {
-    private static readonly int maxActionsPerRound = 2;
+    #region Gameplay Config
+
+    private const int maxActionsPerRound = 2;
+
+    #endregion
 
     private static int remainingActions;
 

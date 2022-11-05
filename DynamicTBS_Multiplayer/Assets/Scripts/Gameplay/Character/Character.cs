@@ -5,6 +5,13 @@ using UnityEngine;
 
 public abstract class Character
 {
+    #region Character default stats Config
+
+    protected const PatternType defaultMovePattern = PatternType.Cross;
+    protected const int defaultAttackDamage = 1;
+
+    #endregion
+
     protected int moveSpeed;
     protected int maxHitPoints;
     protected int attackRange;
@@ -48,8 +55,8 @@ public abstract class Character
         this.characterGameObject = CreateCharacterGameObject();
         this.hitPoints = maxHitPoints;
         this.activeAbilityCooldown = 0;
-        this.movePattern = PatternType.Cross;
-        this.attackDamage = 1;
+        this.movePattern = defaultMovePattern;
+        this.attackDamage = defaultAttackDamage;
 
         GameplayEvents.OnGameplayPhaseStart += ApplyPassiveAbility;
     }

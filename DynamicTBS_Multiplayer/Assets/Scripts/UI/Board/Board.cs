@@ -4,13 +4,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.Linq;
 
 public class Board : MonoBehaviour
 {
     #region Board Config
-    public static readonly int boardSize = 9;
 
-    private static TileType[,] tilePositions = new TileType[9, 9]
+    public const int boardSize = 9;
+
+    private const float tileSize = 0.7f;
+
+    private static readonly TileType[,] tilePositions = new TileType[9, 9]
     {
         { TileType.FloorTile, TileType.FloorTile, TileType.MasterStartTile, TileType.FloorTile, TileType.FloorTile, TileType.FloorTile, TileType.FloorTile, TileType.FloorTile, TileType.FloorTile },
         { TileType.EmptyTile, TileType.EmptyTile, TileType.FloorTile, TileType.StartTile, TileType.EmptyTile, TileType.StartTile, TileType.FloorTile, TileType.EmptyTile, TileType.EmptyTile },
@@ -22,11 +26,13 @@ public class Board : MonoBehaviour
         { TileType.EmptyTile, TileType.EmptyTile, TileType.FloorTile, TileType.StartTile, TileType.EmptyTile, TileType.StartTile, TileType.FloorTile, TileType.EmptyTile, TileType.EmptyTile },
         { TileType.FloorTile, TileType.FloorTile, TileType.FloorTile, TileType.FloorTile, TileType.FloorTile, TileType.FloorTile, TileType.MasterStartTile, TileType.FloorTile, TileType.FloorTile }
     };
+
     #endregion
 
-    private static List<Tile> tiles = new List<Tile>();
+    private static readonly List<Tile> tiles = new List<Tile>();
+
     // Cache to find tiles fast, based on their gameobject
-    private static Dictionary<GameObject, Tile> tilesByGameObject = new Dictionary<GameObject, Tile>();
+    private static readonly Dictionary<GameObject, Tile> tilesByGameObject = new Dictionary<GameObject, Tile>();
 
     private void Awake()
     {
@@ -35,7 +41,7 @@ public class Board : MonoBehaviour
 
     public static Vector3 FindPosition(int row, int column)
     {
-        return new Vector3(column * 0.7f - 3, -(row * 0.7f - 3), 1);
+        return new Vector3(column * tileSize - 3, -(row * tileSize - 3), 1);
     }
 
     public static List<Tile> GetAllTiles()
@@ -88,52 +94,31 @@ public class Board : MonoBehaviour
 
     public static List<Tile> GetTilesOfDistance(Tile tile, PatternType patternType, int distance)
     {
-        List<Tile> tiles = new List<Tile>();
-
-        if (tile.GetRow() >= distance)
-        {
-            tiles.Add(GetTileByCoordinates(tile.GetRow() - distance, tile.GetColumn()));
-        }
-        if (tile.GetRow() < boardSize - distance)
-        {
-            tiles.Add(GetTileByCoordinates(tile.GetRow() + distance, tile.GetColumn()));
-        }
-        if (tile.GetColumn() >= distance)
-        {
-            tiles.Add(GetTileByCoordinates(tile.GetRow(), tile.GetColumn() - distance));
-        }
-        if (tile.GetColumn() < boardSize - distance)
-        {
-            tiles.Add(GetTileByCoordinates(tile.GetRow(), tile.GetColumn() + distance));
-        }
-
-        if (patternType == PatternType.Star)
-        {
-            if (tile.GetRow() >= distance && tile.GetColumn() >= distance)
-            {
-                tiles.Add(GetTileByCoordinates(tile.GetRow() - distance, tile.GetColumn() - distance));
+        var tiles = (new[] {
+                GetTileByCoordinates(tile.GetRow() - distance, tile.GetColumn()),
+                GetTileByCoordinates(tile.GetRow() + distance, tile.GetColumn()),
+                GetTileByCoordinates(tile.GetRow(), tile.GetColumn() - distance),
+                GetTileByCoordinates(tile.GetRow(), tile.GetColumn() + distance)
             }
-            if (tile.GetRow() < boardSize - distance && tile.GetColumn() < boardSize - distance)
-            {
-                tiles.Add(GetTileByCoordinates(tile.GetRow() + distance, tile.GetColumn() + distance));
-            }
-            if (tile.GetRow() < boardSize - distance && tile.GetColumn() >= distance)
-            {
-                tiles.Add(GetTileByCoordinates(tile.GetRow() + distance, tile.GetColumn() - distance));
-            }
-            if (tile.GetRow() >= distance && tile.GetColumn() < boardSize - distance)
-            {
-                tiles.Add(GetTileByCoordinates(tile.GetRow() - distance, tile.GetColumn() + distance));
-            }
+        );
+        
+        if(patternType == PatternType.Star)
+        {
+            tiles = tiles.Union(new[] {
+                GetTileByCoordinates(tile.GetRow() - distance, tile.GetColumn() - distance),
+                GetTileByCoordinates(tile.GetRow() + distance, tile.GetColumn() + distance),
+                GetTileByCoordinates(tile.GetRow() + distance, tile.GetColumn() - distance),
+                GetTileByCoordinates(tile.GetRow() - distance, tile.GetColumn() + distance)
+            }).ToArray();
         }
-
-        return tiles;
+        
+        return tiles.Where(tile => tile != null).ToList();
     }
 
     public static List<Tile> GetAllTilesWithinRadius(Tile center, int radius)
     {
         List<Tile> tiles = new List<Tile>();
-        Action<Tile> add = tile => { if (tile != null) tiles.Add(tile); };
+        void add(Tile tile) { if (tile != null) tiles.Add(tile); }
 
         for (int i = -radius; i <= radius; i++) 
         {
@@ -148,75 +133,42 @@ public class Board : MonoBehaviour
         return tiles;
     }
 
-    public static List<Tile> GetTilesOfNearestCharactersOfSideWithinRadius(Tile center, PlayerType side, int radius) 
+    public static List<Tile> GetTilesOfClosestCharactersOfSideWithinRadius(Tile center, PlayerType side, int radius)
     {
+        var signa = new [] { -1, 0, 1 };
+        var directionFinished = new Dictionary<(int, int), bool>();
+
+        foreach(int sig1 in signa)
+        {
+            foreach(int sig2 in signa)
+            {
+                directionFinished.Add((sig1, sig2), false);
+            }
+        }
+
         List<Tile> positions = new List<Tile>();
 
-        int i = 0;
-
-        bool topLeft = false;
-        bool top = false;
-        bool topRight = false;
-        bool right = false;
-        bool bottomRight = false;
-        bool bottom = false;
-        bool bottomLeft = false;
-        bool left = false;
-
-        // Checking tiles in a star pattern to see if they are occupied.
-        // Adding closest enemies to list.
-        while (radius > 0)
+        int i = 1;
+        while(radius > 0)
         {
-            Tile currentTile = GetTileByCoordinates(center.GetRow() - i - 1, center.GetColumn());
-            if (currentTile != null && currentTile.IsOccupied() && currentTile.GetCurrentInhabitant().GetSide().GetPlayerType() == side && bottom == false)
+            foreach (int sig1 in signa)
             {
-                positions.Add(currentTile);
-                bottom = true;
+                foreach (int sig2 in signa)
+                {
+                    if(!directionFinished[(sig1, sig2)])
+                    {
+                        Tile currentTile = GetTileByCoordinates(center.GetRow() + sig1*i, center.GetColumn() + sig2*i);
+                        if (currentTile != null && currentTile.IsOccupied() && currentTile.GetCurrentInhabitant().GetSide().GetPlayerType() == side)
+                        {
+                            positions.Add(currentTile);
+                            directionFinished[(sig1, sig2)] = true;
+                        }
+                    }
+                }
             }
-            currentTile = GetTileByCoordinates(center.GetRow() - i - 1, center.GetColumn() - i - 1);
-            if (currentTile != null && currentTile.IsOccupied() && currentTile.GetCurrentInhabitant().GetSide().GetPlayerType() == side && bottomLeft == false)
-            {
-                positions.Add(currentTile);
-                bottomLeft = true;
-            }
-            currentTile = GetTileByCoordinates(center.GetRow(), center.GetColumn() - i - 1);
-            if (currentTile != null && currentTile.IsOccupied() && currentTile.GetCurrentInhabitant().GetSide().GetPlayerType() == side && left == false)
-            {
-                positions.Add(currentTile);
-                left = true;
-            }
-            currentTile = GetTileByCoordinates(center.GetRow() - i - 1, center.GetColumn() + i + 1);
-            if (currentTile != null && currentTile.IsOccupied() && currentTile.GetCurrentInhabitant().GetSide().GetPlayerType() == side && topLeft == false)
-            {
-                positions.Add(currentTile);
-                topLeft = true;
-            }
-            currentTile = GetTileByCoordinates(center.GetRow(), center.GetColumn() + i + 1);
-            if (currentTile != null && currentTile.IsOccupied() && currentTile.GetCurrentInhabitant().GetSide().GetPlayerType() == side && top == false)
-            {
-                positions.Add(currentTile);
-                top = true;
-            }
-            currentTile = GetTileByCoordinates(center.GetRow() + i + 1, center.GetColumn() + i + 1);
-            if (currentTile != null && currentTile.IsOccupied() && currentTile.GetCurrentInhabitant().GetSide().GetPlayerType() == side && topRight == false)
-            {
-                positions.Add(currentTile);
-                topRight = true;
-            }
-            currentTile = GetTileByCoordinates(center.GetRow(), center.GetColumn() + i + 1);
-            if (currentTile != null && currentTile.IsOccupied() && currentTile.GetCurrentInhabitant().GetSide().GetPlayerType() == side && right == false)
-            {
-                positions.Add(currentTile);
-                right = true;
-            }
-            currentTile = GetTileByCoordinates(center.GetRow() - i - 1, center.GetColumn() + i + 1);
-            if (currentTile != null && currentTile.IsOccupied() && currentTile.GetCurrentInhabitant().GetSide().GetPlayerType() == side && bottomRight == false)
-            {
-                positions.Add(currentTile);
-                bottomRight = true;
-            }
-            radius--;
+
             i++;
+            radius--;
         }
 
         return positions;
@@ -226,43 +178,11 @@ public class Board : MonoBehaviour
     {
         List<Tile> occupiedTiles = new List<Tile>();
 
-        if(direction.y != 0)
+        for(int i = 1; i < boardSize; i++)
         {
-            if (direction.y < 0)
-            {
-                for (int i = startTile.GetRow() + 1; i < boardSize; i++)
-                {
-                    Tile tile = GetTileByCoordinates(i, startTile.GetColumn());
-                    if (tile.IsOccupied()) occupiedTiles.Add(tile);
-                }
-            }
-            else
-            {
-                for (int i = startTile.GetRow() - 1; i >= 0; i--)
-                {
-                    Tile tile = GetTileByCoordinates(i, startTile.GetColumn());
-                    if (tile.IsOccupied()) occupiedTiles.Add(tile);
-                }
-            }
-        }
-        else
-        {
-            if(direction.x > 0)
-            {
-                for (int j = startTile.GetColumn() + 1; j < boardSize; j++)
-                {
-                    Tile tile = GetTileByCoordinates(startTile.GetRow(), j);
-                    if (tile.IsOccupied()) occupiedTiles.Add(tile);
-                }
-            }
-            else
-            {
-                for (int j = startTile.GetColumn() - 1; j >= 0; j--)
-                {
-                    Tile tile = GetTileByCoordinates(startTile.GetRow(), j);
-                    if (tile.IsOccupied()) occupiedTiles.Add(tile);
-                }
-            }
+            Tile tile = GetTileByCoordinates(startTile.GetRow() - (i * (int)direction.y), startTile.GetColumn() + (i * (int)direction.x));
+            if (tile == null) break;
+            if (tile.IsOccupied()) occupiedTiles.Add(tile);
         }
 
         return occupiedTiles;

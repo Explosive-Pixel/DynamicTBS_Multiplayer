@@ -27,7 +27,7 @@ public class AttackAction : MonoBehaviour, IAction
 
         PlayerType otherSide = PlayerManager.GetOtherPlayer(character.GetSide()).GetPlayerType();
 
-        List<Vector3> targetPositions = Board.GetTilesOfNearestCharactersOfSideWithinRadius(tile, otherSide, range)
+        List<Vector3> targetPositions = Board.GetTilesOfClosestCharactersOfSideWithinRadius(tile, otherSide, range)
             .FindAll(tile => tile.IsOccupied() && tile.GetCurrentInhabitant().isAttackableBy(character))
             .ConvertAll(tile => tile.GetTileGameObject().transform.position);
 
