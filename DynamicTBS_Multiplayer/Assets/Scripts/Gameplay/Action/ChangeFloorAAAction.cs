@@ -8,10 +8,13 @@ public class ChangeFloorAAAction : MonoBehaviour, IAction
     [SerializeField]
     private GameObject changeFloorPrefab;
 
+    public ActionType ActionType { get { return ActionType.ActiveAbility; } }
+
     private List<GameObject> changeFloorTargets = new List<GameObject>();
     public List<GameObject> ActionDestinations { get { return changeFloorTargets; } }
 
     private Character characterInAction = null;
+    public Character CharacterInAction { get { return characterInAction; } }
 
     public void CreateActionDestinations(Character character)
     {
@@ -47,7 +50,6 @@ public class ChangeFloorAAAction : MonoBehaviour, IAction
 
         }
 
-        characterInAction.SetActiveAbilityOnCooldown();
         AbortAction();
     }
 

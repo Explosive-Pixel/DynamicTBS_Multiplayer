@@ -6,9 +6,10 @@ using UnityEngine.UI;
 
 public class CharacterHandler : MonoBehaviour
 {
-    private static List<Character> characters = new List<Character>();
+    private static readonly List<Character> characters = new List<Character>();
+
     // Cache to find characters fast, based on their gameobject
-    private static Dictionary<GameObject, Character> charactersByGameObject = new Dictionary<GameObject, Character>();
+    private static readonly Dictionary<GameObject, Character> charactersByGameObject = new Dictionary<GameObject, Character>();
 
     private void Awake()
     {
@@ -46,6 +47,14 @@ public class CharacterHandler : MonoBehaviour
         charactersByGameObject.Add(character.GetCharacterGameObject(), character);
     }
 
+    private void SetActiveAbilityOnCooldown(Character character, ActionType actionType)
+    {
+        if(actionType == ActionType.ActiveAbility)
+        {
+            character.SetActiveAbilityOnCooldown();
+        }
+    }
+
     private void DeliverCharacterList()
     {
         DraftEvents.DeliverCharacterList(characters);
@@ -57,12 +66,14 @@ public class CharacterHandler : MonoBehaviour
     {
         DraftEvents.OnCharacterCreated += AddCharacterToList;
         DraftEvents.OnEndDraft += DeliverCharacterList;
+        GameplayEvents.OnFinishAction += SetActiveAbilityOnCooldown;
     }
 
     private void UnsubscribeEvents()
     {
         DraftEvents.OnCharacterCreated -= AddCharacterToList;
         DraftEvents.OnEndDraft -= DeliverCharacterList;
+        GameplayEvents.OnFinishAction -= SetActiveAbilityOnCooldown;
     }
 
     #endregion

@@ -23,22 +23,23 @@ public class UIClickHandler : MonoBehaviour
 
     private void HandleClick(Vector3 clickPosition)
     {
-        // First check whether click was onto a action field (like move destination or attack target)
+        // First check whether click was onto an action field (like move destination or attack target)
         // If yes, execute that action
         bool noActionExecuted = true;
         foreach (IAction action in ActionRegistry.GetActions()) {
-            GameObject hit = FindGameObjectByClickPosition(action.GetActionDestinationPositions(), clickPosition);
+            GameObject hit = FindGameObjectByClickPosition(action.ActionDestinations, clickPosition);
             if (hit != null)
-            { 
+            {
+                Character characterInAction = action.CharacterInAction;
                 action.ExecuteAction(hit);
-                GameplayEvents.ActionFinished();
+                GameplayEvents.ActionFinished(characterInAction, action.ActionType);
                 noActionExecuted = false; 
             } 
             else 
                 action.AbortAction();
         }
 
-        // If no, check whether click was onto a character
+        // If not, check whether click was onto a character
         // If yes, create action destinations for this character
         if (noActionExecuted) {
             List<GameObject> charactersOfPlayer = CharacterHandler.GetAllLivingCharacters()
@@ -58,9 +59,10 @@ public class UIClickHandler : MonoBehaviour
             Character character = CharacterHandler.GetCharacterByGameObject(characterGameObject);
             foreach (IAction action in ActionRegistry.GetActions())
             {
-                action.CreateActionDestinations(character);
-                GameplayEvents.ChangeCharacterSelection(character);
-            }  
+                if(GameplayManager.ActionAvailable(character, action.ActionType))
+                    action.CreateActionDestinations(character);
+            }
+            GameplayEvents.ChangeCharacterSelection(character);
         } else
         {
             GameplayEvents.ChangeCharacterSelection(null);

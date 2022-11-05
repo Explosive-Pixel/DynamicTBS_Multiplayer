@@ -7,10 +7,13 @@ public class HealAAAction : MonoBehaviour, IAction
     [SerializeField]
     private GameObject healPrefab;
 
+    public ActionType ActionType { get { return ActionType.ActiveAbility; } }
+
     private List<GameObject> healTargets = new List<GameObject>();
     public List<GameObject> ActionDestinations { get { return healTargets; } }
 
     private Character characterInAction = null;
+    public Character CharacterInAction { get { return characterInAction; } }
 
     public void CreateActionDestinations(Character character)
     {
@@ -37,7 +40,6 @@ public class HealAAAction : MonoBehaviour, IAction
             characterToHeal.Heal(HealAA.healingPoints);
         }
 
-        characterInAction.SetActiveAbilityOnCooldown();
         AbortAction();
     }
 

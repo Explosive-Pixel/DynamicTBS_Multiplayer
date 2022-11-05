@@ -29,6 +29,6 @@ public class ActionUtils : MonoBehaviour
         {
             Destroy(gameobject);
         }
-        actionGameObjects.RemoveAll(dest => true);
+        actionGameObjects.Clear();
     }
 }

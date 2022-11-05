@@ -7,10 +7,13 @@ public class JumpAAAction : MonoBehaviour, IAction
     [SerializeField]
     private GameObject jumpPrefab;
 
+    public ActionType ActionType { get { return ActionType.ActiveAbility; } }
+
     private List<GameObject> jumpTargets = new List<GameObject>();
     public List<GameObject> ActionDestinations { get { return jumpTargets; } }
 
     private Character characterInAction = null;
+    public Character CharacterInAction { get { return characterInAction; } }
 
     public void CreateActionDestinations(Character character)
     {
@@ -39,7 +42,6 @@ public class JumpAAAction : MonoBehaviour, IAction
             Board.UpdateTilesAfterMove(oldPosition, characterInAction);
         }
 
-        characterInAction.SetActiveAbilityOnCooldown();
         AbortAction();
     }
 

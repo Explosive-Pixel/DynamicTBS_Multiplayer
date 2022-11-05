@@ -7,15 +7,18 @@ public class AttackAction : MonoBehaviour, IAction
     [SerializeField]
     private GameObject attackCirclePrefab;
 
-    private void Awake()
-    {
-        GameplayEvents.OnGameplayPhaseStart += Register;
-    }
+    public ActionType ActionType { get { return ActionType.Attack; } }
 
     private List<GameObject> targets = new List<GameObject>();
     public List<GameObject> ActionDestinations { get { return targets; } }
 
     private Character characterInAction = null;
+    public Character CharacterInAction { get { return characterInAction; } }
+
+    private void Awake()
+    {
+        GameplayEvents.OnGameplayPhaseStart += Register;
+    }
 
     public void CreateActionDestinations(Character character)
     {

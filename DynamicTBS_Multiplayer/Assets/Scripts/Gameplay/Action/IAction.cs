@@ -4,10 +4,11 @@ using UnityEngine;
 
 public interface IAction
 {
+    ActionType ActionType { get; }
     List<GameObject> ActionDestinations { get; }
-    void CreateActionDestinations(Character character);
+    Character CharacterInAction { get; }
 
-    List<GameObject> GetActionDestinationPositions() { return ActionDestinations; }
+    void CreateActionDestinations(Character character);
 
     void ExecuteAction(GameObject actionDestination);
 

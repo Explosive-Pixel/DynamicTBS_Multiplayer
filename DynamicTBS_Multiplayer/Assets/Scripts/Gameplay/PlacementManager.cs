@@ -39,7 +39,7 @@ public class PlacementManager : MonoBehaviour
         }
     }
 
-    private void AdvancePlacementOrder()
+    private void AdvancePlacementOrder(Character character, ActionType actionType)
     {
         placementCount += 1;
         

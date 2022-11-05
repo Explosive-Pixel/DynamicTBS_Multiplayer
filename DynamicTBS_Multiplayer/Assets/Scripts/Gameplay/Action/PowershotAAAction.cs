@@ -9,10 +9,13 @@ public class PowershotAAAction : MonoBehaviour, IAction
     [SerializeField] private GameObject powershotLeftPrefab;
     [SerializeField] private GameObject powershotRightPrefab;
 
+    public ActionType ActionType { get { return ActionType.ActiveAbility; } }
+
     private List<GameObject> powershotTargets = new List<GameObject>();
     public List<GameObject> ActionDestinations { get { return powershotTargets; } }
 
     private Character characterInAction = null;
+    public Character CharacterInAction { get { return characterInAction; } }
 
     public void CreateActionDestinations(Character character)
     {
@@ -59,7 +62,6 @@ public class PowershotAAAction : MonoBehaviour, IAction
         }
         characterInAction.TakeDamage(PowershotAA.selfDamage);
 
-        characterInAction.SetActiveAbilityOnCooldown();
         AbortAction();
     }
 

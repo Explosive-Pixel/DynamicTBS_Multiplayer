@@ -4,28 +4,49 @@ using UnityEngine;
 
 public class GameplayManager : MonoBehaviour
 {
-    private static int maxActionsPerRound = 2;
+    private static readonly int maxActionsPerRound = 2;
 
-    private int remainingActions;
+    private static int remainingActions;
+
+    private static Dictionary<Character, List<ActionType>> actionsPerCharacterPerTurn = new Dictionary<Character, List<ActionType>>();
 
     private void Awake()
     {
         SubscribeEvents();
-        ResetRemainingActions();
+        ResetStates();
     }
 
-    private void ResetRemainingActions() 
+    public static bool ActionAvailable(Character character, ActionType actionType)
+    {
+        if(actionsPerCharacterPerTurn.ContainsKey(character) && actionsPerCharacterPerTurn[character].Contains(actionType))
+        {
+            return false;
+        }
+        return true;
+    }
+
+    private void ResetStates() 
     {
         remainingActions = maxActionsPerRound;
+        actionsPerCharacterPerTurn.Clear();
     }
 
-    private void OnActionFinished() 
+    private void OnActionFinished(Character character, ActionType actionType) 
     {
         remainingActions--;
         if (remainingActions == 0)
         {
             PlayerManager.NextPlayer();
-            ResetRemainingActions();
+            ResetStates();
+        } else
+        {
+            if(actionsPerCharacterPerTurn.ContainsKey(character))
+            {
+                actionsPerCharacterPerTurn[character].Add(actionType);
+            } else
+            {
+                actionsPerCharacterPerTurn.Add(character, new List<ActionType>() { actionType });
+            }
         }
     }
 

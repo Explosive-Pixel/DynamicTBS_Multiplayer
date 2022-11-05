@@ -7,15 +7,18 @@ public class MoveAction : MonoBehaviour, IAction
     [SerializeField]
     private GameObject moveCirclePrefab;
 
-    private void Awake()
-    {
-        PlacementEvents.OnPlacementStart += Register;
-    }
+    public ActionType ActionType { get { return ActionType.Move; } }
 
     private List<GameObject> moveDestinations = new List<GameObject>();
     public List<GameObject> ActionDestinations { get { return moveDestinations; } }
 
     private Character characterInAction = null;
+    public Character CharacterInAction { get { return characterInAction; } }
+
+    private void Awake()
+    {
+        PlacementEvents.OnPlacementStart += Register;
+    }
 
     public void CreateActionDestinations(Character character)
     {
