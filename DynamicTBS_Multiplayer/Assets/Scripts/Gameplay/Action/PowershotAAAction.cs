@@ -21,8 +21,8 @@ public class PowershotAAAction : MonoBehaviour, IAction
         powershotTargets = new List<GameObject>() {
             ActionUtils.InstantiateActionPosition(Board.FindPosition(characterTile.GetRow(), -1), powershotLeftPrefab),
             ActionUtils.InstantiateActionPosition(Board.FindPosition(characterTile.GetRow(), Board.boardSize), powershotRightPrefab),
-            ActionUtils.InstantiateActionPosition(Board.FindPosition(-1, characterTile.GetColumn()), powershotDownPrefab),
-            ActionUtils.InstantiateActionPosition(Board.FindPosition(Board.boardSize, characterTile.GetColumn()), powershotUpPrefab)
+            ActionUtils.InstantiateActionPosition(Board.FindPosition(-1, characterTile.GetColumn()), powershotUpPrefab),
+            ActionUtils.InstantiateActionPosition(Board.FindPosition(Board.boardSize, characterTile.GetColumn()), powershotDownPrefab)
         };
 
         characterInAction = character;

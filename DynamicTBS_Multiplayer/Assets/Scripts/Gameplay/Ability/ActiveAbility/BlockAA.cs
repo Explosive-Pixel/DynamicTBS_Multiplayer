@@ -63,6 +63,7 @@ public class BlockAA : IActiveAbility
         currentBlockCount = blockingRounds + 1;
         blockGameObject = CreateBlockGameObject();
         GameplayEvents.OnPlayerTurnEnded += ReduceBlockCounter;
+        character.SetActiveAbilityOnCooldown();
     }
 
     public void ReduceBlockCount()

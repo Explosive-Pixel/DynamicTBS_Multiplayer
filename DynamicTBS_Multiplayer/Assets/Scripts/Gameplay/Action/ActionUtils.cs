@@ -19,7 +19,7 @@ public class ActionUtils : MonoBehaviour
 
     public static GameObject InstantiateActionPosition(Vector3 position, GameObject prefab)
     {
-        prefab.transform.position = new Vector3(position.x, position.y, 0.95f);
+        prefab.transform.position = new Vector3(position.x, position.y, 0.995f);
         return Instantiate(prefab);
     }
 

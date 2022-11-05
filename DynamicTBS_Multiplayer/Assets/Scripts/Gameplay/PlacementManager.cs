@@ -57,13 +57,13 @@ public class PlacementManager : MonoBehaviour
             
     }
     
-    private void SpawnMasters()
+    public static void SpawnMasters()
     {
         SpawnMaster(PlayerType.blue);
         SpawnMaster(PlayerType.pink);
     }
 
-    private void SpawnMaster(PlayerType playerType) 
+    private static void SpawnMaster(PlayerType playerType) 
     {
         Character master = CharacterFactory.CreateCharacter(CharacterType.MasterChar, PlayerManager.GetPlayer(playerType));
 
