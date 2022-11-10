@@ -18,8 +18,6 @@ public class PlacementManager : MonoBehaviour
     {
         SubscribeEvents();
         placementCount = 0;
-
-        PlacementEvents.StartPlacement();
     }
 
     private void SortCharacters(List<Character> characters)
@@ -41,9 +39,11 @@ public class PlacementManager : MonoBehaviour
                 pinkStartPosition.y -= verticalOffset;
             }
         }
+
+        PlacementEvents.StartPlacement();
     }
 
-    private void AdvancePlacementOrder(Character character, ActionType actionType)
+    private void AdvancePlacementOrder(Character character, ActionType actionType, Vector3 characterInitialPosition, Vector3? actionDestinationPosition)
     {
         placementCount += 1;
         
@@ -57,8 +57,7 @@ public class PlacementManager : MonoBehaviour
         {
             SpawnMasters();
             GameplayEvents.StartGameplayPhase();
-        }
-            
+        }    
     }
     
     public static void SpawnMasters()

@@ -6,6 +6,7 @@ public class MasterChar : Character
 {
     public MasterChar(Player side) : base(side)
     {
+        this.characterType = CharacterType.MasterChar;
         this.maxHitPoints = 3;
         this.moveSpeed = 1;
         this.attackRange = 0;

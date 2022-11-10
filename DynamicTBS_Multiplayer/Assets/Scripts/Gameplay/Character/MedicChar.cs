@@ -6,6 +6,7 @@ public class MedicChar : Character
 {
     public MedicChar(Player side) : base(side)
     {
+        this.characterType = CharacterType.MedicChar;
         this.maxHitPoints = 2;
         this.moveSpeed = 1;
         this.attackRange = 1;

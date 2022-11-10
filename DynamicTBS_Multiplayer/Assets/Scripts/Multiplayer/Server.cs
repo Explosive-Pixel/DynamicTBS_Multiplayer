@@ -27,6 +27,8 @@ public class Server : MonoBehaviour
 
     public Action connectionDropped;
 
+    public int playerCount = 0;
+
     private void Update()
     {
         if (!isActive) return;

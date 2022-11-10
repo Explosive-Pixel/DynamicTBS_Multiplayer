@@ -61,22 +61,13 @@ public class Board : MonoBehaviour
         return null;
     }
 
-    // Caution: position has to be a world point (not a click position)!
     public static Tile GetTileByPosition(Vector3 position) 
     {
-        position.z = 0;
-        RaycastHit[] hits = Physics.RaycastAll(position, new Vector3(0, 0, 1));
+        GameObject gameObject = UIUtils.FindGameObjectByPosition(tilesByGameObject.Keys.ToList(), position);
 
-        if (hits != null && hits.Length > 0)
+        if (gameObject && tilesByGameObject.ContainsKey(gameObject))
         {
-            foreach (RaycastHit hit in hits)
-            {
-                GameObject gameObject = hit.transform.gameObject;
-                if (gameObject && tilesByGameObject.ContainsKey(gameObject))
-                {
-                    return tilesByGameObject.GetValueOrDefault(gameObject);
-                }
-            }
+            return tilesByGameObject.GetValueOrDefault(gameObject);
         }
 
         return null;

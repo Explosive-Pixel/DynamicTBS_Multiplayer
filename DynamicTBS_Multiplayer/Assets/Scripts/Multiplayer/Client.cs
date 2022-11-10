@@ -24,6 +24,8 @@ public class Client : MonoBehaviour
 
     public Action connectionDropped;
 
+    public PlayerType side;
+
     #region Init & Destroy
 
     public void Init(string ip, ushort port) // Initiation method.

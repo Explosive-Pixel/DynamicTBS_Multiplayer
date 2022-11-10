@@ -6,6 +6,7 @@ public class ShooterChar : Character
 {
     public ShooterChar(Player side) : base(side)
     {
+        this.characterType = CharacterType.ShooterChar;
         this.maxHitPoints = 2;
         this.moveSpeed = 1;
         this.attackRange = 2;

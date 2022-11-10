@@ -6,6 +6,7 @@ public class TankChar : Character
 {
     public TankChar(Player side) : base(side)
     {
+        this.characterType = CharacterType.TankChar;
         this.maxHitPoints = 4;
         this.moveSpeed = 1;
         this.attackRange = 1;

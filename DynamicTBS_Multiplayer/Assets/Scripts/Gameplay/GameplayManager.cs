@@ -35,7 +35,7 @@ public class GameplayManager : MonoBehaviour
         actionsPerCharacterPerTurn.Clear();
     }
 
-    private void OnActionFinished(Character character, ActionType actionType) 
+    private void OnActionFinished(Character character, ActionType actionType, Vector3 characterInitialPosition, Vector3? actionDestinationPosition) 
     {
         remainingActions--;
         if (remainingActions == 0)

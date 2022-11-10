@@ -31,4 +31,37 @@ public class ActionUtils : MonoBehaviour
         }
         actionGameObjects.Clear();
     }
+
+    public static void InstantiateAllActionPositions(Character character)
+    {
+        foreach (IAction action in ActionRegistry.GetActions())
+        {
+            if (GameplayManager.ActionAvailable(character, action.ActionType))
+                action.CreateActionDestinations(character);
+        }
+    }
+
+    public static bool ExecuteAction(Ray ray)
+    {
+        bool actionExecuted = false;
+        foreach (IAction action in ActionRegistry.GetActions())
+        {
+            GameObject hit = UIUtils.FindGameObjectByRay(action.ActionDestinations, ray);
+            if (hit != null)
+            {
+                Character characterInAction = action.CharacterInAction;
+                Vector3 initialPosition = characterInAction.GetCharacterGameObject().transform.position;
+                Vector3 actionDestinationPosition = hit.transform.position;
+
+                action.ExecuteAction(hit);
+
+                GameplayEvents.ActionFinished(characterInAction, action.ActionType, initialPosition, actionDestinationPosition);
+                actionExecuted = true;
+            }
+            else
+                action.AbortAction();
+        }
+
+        return actionExecuted;
+    }
 }

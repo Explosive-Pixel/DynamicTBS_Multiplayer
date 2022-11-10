@@ -64,7 +64,7 @@ public class BlockAA : IActiveAbility
         blockGameObject = CreateBlockGameObject();
         GameplayEvents.OnPlayerTurnEnded += ReduceBlockCounter;
 
-        GameplayEvents.ActionFinished(character, ActionType.ActiveAbility);
+        GameplayEvents.ActionFinished(character, ActionType.ActiveAbility, character.GetCharacterGameObject().transform.position, null);
     }
 
     public void ReduceBlockCount()

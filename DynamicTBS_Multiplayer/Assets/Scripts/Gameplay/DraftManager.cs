@@ -13,9 +13,9 @@ public class DraftManager : MonoBehaviour
 
     #endregion
 
-    private Vector3 firstPosition = new Vector3(-6.5f, -3.5f, 0.998f);
-    private float offset = 1f;
-    private int draftCounter;
+    private static Vector3 firstPosition = new Vector3(-6.5f, -3.5f, 0.998f);
+    private static float offset = 1f;
+    private static int draftCounter;
 
     private void Awake()
     {
@@ -29,8 +29,15 @@ public class DraftManager : MonoBehaviour
         string buttonName = EventSystem.current.currentSelectedGameObject.name;
 
         if (!PlayerManager.IsCurrentPlayer(buttonName)) return;
-        
-        Character character = CharacterFactory.CreateCharacter(buttonName, PlayerManager.GetCurrentPlayer());
+
+        Enum.TryParse(buttonName.Split("_")[0], out CharacterType characterType);
+
+        DraftCharacter(characterType, PlayerManager.GetCurrentPlayer());
+    }
+
+    public static void DraftCharacter(CharacterType type, Player side)
+    {
+        Character character = CharacterFactory.CreateCharacter(type, side);
         GameObject characterGameObject = character.GetCharacterGameObject();
 
         characterGameObject.transform.position = firstPosition;
@@ -41,7 +48,7 @@ public class DraftManager : MonoBehaviour
         AdvanceDraftOrder();
     }
 
-    private void AdvanceDraftOrder()
+    private static void AdvanceDraftOrder()
     {
         draftCounter += 1;
 
@@ -58,7 +65,7 @@ public class DraftManager : MonoBehaviour
         }
     }
 
-    private void DraftCompleted()
+    private static void DraftCompleted()
     {
         DraftEvents.EndDraft();
     }

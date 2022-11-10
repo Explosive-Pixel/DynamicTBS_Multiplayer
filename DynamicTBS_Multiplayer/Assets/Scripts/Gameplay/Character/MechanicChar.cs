@@ -6,6 +6,7 @@ public class MechanicChar : Character
 {
     public MechanicChar(Player side) : base(side)
     {
+        this.characterType = CharacterType.MechanicChar;
         this.maxHitPoints = 2;
         this.moveSpeed = 1;
         this.attackRange = 1;

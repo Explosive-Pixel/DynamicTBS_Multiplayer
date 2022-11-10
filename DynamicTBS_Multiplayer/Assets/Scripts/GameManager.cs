@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
 
     private List<GameObject> canvasList = new List<GameObject>();
 
+    public static GameType gameType = GameType.local;
     private static bool hasGameStarted;
     
     private void Awake()

@@ -7,7 +7,7 @@ public static class GameplayEvents
     public delegate void GameplayPhase();
     public static event GameplayPhase OnGameplayPhaseStart;
 
-    public delegate void FinishAction(Character character, ActionType actionType);
+    public delegate void FinishAction(Character character, ActionType actionType, Vector3 characterInitialPosition, Vector3? actionDestinationPosition);
     public static event FinishAction OnFinishAction;
 
     public delegate void GameOver(PlayerType winner);
@@ -28,10 +28,10 @@ public static class GameplayEvents
             OnGameplayPhaseStart();
     }
 
-    public static void ActionFinished(Character character, ActionType actionType)
+    public static void ActionFinished(Character character, ActionType actionType, Vector3 characterInitialPosition, Vector3? actionDestinationPosition)
     {
         if (OnFinishAction != null)
-            OnFinishAction(character, actionType);
+            OnFinishAction(character, actionType, characterInitialPosition, actionDestinationPosition);
     }
 
     public static void GameIsOver(PlayerType winner)

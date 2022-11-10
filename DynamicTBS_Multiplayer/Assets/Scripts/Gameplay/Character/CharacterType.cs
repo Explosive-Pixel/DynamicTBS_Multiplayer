@@ -4,10 +4,10 @@ using UnityEngine;
 
 public enum CharacterType
 {
-    MasterChar,
-    MechanicChar,
-    MedicChar,
-    RunnerChar,
-    ShooterChar,
-    TankChar
+    MasterChar = 1,
+    MechanicChar = 2,
+    MedicChar = 3,
+    RunnerChar = 4,
+    ShooterChar = 5,
+    TankChar = 6
 }

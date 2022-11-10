@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,6 +27,18 @@ public class CharacterHandler : MonoBehaviour
         return charactersByGameObject[characterGameObject];
     }
 
+    public static Character GetCharacterByPosition(Vector3 position)
+    {
+        GameObject gameObject = UIUtils.FindGameObjectByPosition(charactersByGameObject.Keys.ToList(), position);
+
+        if (gameObject && charactersByGameObject.ContainsKey(gameObject))
+        {
+            return charactersByGameObject.GetValueOrDefault(gameObject);
+        }
+
+        return null;
+    }
+
     public static bool Neighbors(Character c1, Character c2, PatternType patternType)
     {
         Tile c1Tile = Board.GetTileByCharacter(c1);
@@ -47,7 +60,7 @@ public class CharacterHandler : MonoBehaviour
         charactersByGameObject.Add(character.GetCharacterGameObject(), character);
     }
 
-    private void SetActiveAbilityOnCooldown(Character character, ActionType actionType)
+    private void SetActiveAbilityOnCooldown(Character character, ActionType actionType, Vector3 characterInitialPosition, Vector3? actionDestinationPosition)
     {
         if(actionType == ActionType.ActiveAbility)
         {

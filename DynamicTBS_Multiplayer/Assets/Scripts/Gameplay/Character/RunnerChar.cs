@@ -6,6 +6,7 @@ public class RunnerChar : Character
 {
     public RunnerChar(Player side) : base(side)
     {
+        this.characterType = CharacterType.RunnerChar;
         this.maxHitPoints = 1;
         this.moveSpeed = 2;
         this.attackRange = 1;

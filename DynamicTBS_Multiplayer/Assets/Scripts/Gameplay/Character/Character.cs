@@ -12,6 +12,7 @@ public abstract class Character
 
     #endregion
 
+    protected CharacterType characterType;
     protected int moveSpeed;
     protected int maxHitPoints;
     protected int attackRange;
@@ -62,6 +63,7 @@ public abstract class Character
     }
 
     public GameObject GetCharacterGameObject() { return characterGameObject; }
+    public CharacterType GetCharacterType() { return characterType; }
     public int GetMoveSpeed() { return moveSpeed; }
     public int GetAttackRange() { return attackRange; }
     public IPassiveAbility GetPassiveAbility() { return passiveAbility; }

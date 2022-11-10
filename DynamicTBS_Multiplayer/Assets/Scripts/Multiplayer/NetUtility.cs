@@ -9,8 +9,9 @@ public enum OperationCode
     KEEP_ALIVE = 1,
     WELCOME = 2,
     START_GAME = 3,
-    MAKE_MOVE = 4,
-    REMATCH = 5
+    DRAFT_CHARACTER = 4,
+    PERFORM_ACTION = 5,
+    REMATCH = 6
 }
 
 public static class NetUtility
@@ -31,8 +32,11 @@ public static class NetUtility
             case OperationCode.START_GAME:
                 msg = new NetStartGame(stream);
                 break;
-            case OperationCode.MAKE_MOVE:
-                msg = new NetMakeMove(stream);
+            case OperationCode.DRAFT_CHARACTER:
+                msg = new NetDraftCharacter(stream);
+                break;
+            case OperationCode.PERFORM_ACTION:
+                msg = new NetPerformAction(stream);
                 break;
             case OperationCode.REMATCH:
                 msg = new NetRematch(stream);
@@ -54,14 +58,16 @@ public static class NetUtility
     public static Action<NetMessage> C_KEEP_ALIVE;
     public static Action<NetMessage> C_WELCOME;
     public static Action<NetMessage> C_START_GAME;
-    public static Action<NetMessage> C_MAKE_MOVE;
+    public static Action<NetMessage> C_DRAFT_CHARACTER;
+    public static Action<NetMessage> C_PERFORM_ACTION;
     public static Action<NetMessage> C_REMATCH;
 
     // Server side messages.
     public static Action<NetMessage, NetworkConnection> S_KEEP_ALIVE;
     public static Action<NetMessage, NetworkConnection> S_WELCOME;
     public static Action<NetMessage, NetworkConnection> S_START_GAME;
-    public static Action<NetMessage, NetworkConnection> S_MAKE_MOVE;
+    public static Action<NetMessage, NetworkConnection> S_DRAFT_CHARACTER;
+    public static Action<NetMessage, NetworkConnection> S_PERFORM_ACTION;
     public static Action<NetMessage, NetworkConnection> S_REMATCH;
 
     #endregion
