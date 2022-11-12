@@ -24,7 +24,6 @@ public class StandardDraft : MonoBehaviour
         characters.Add(SpawnCharacter(CharacterType.MedicChar, PlayerType.pink));
 
         DraftEvents.EndDraft();
-        PlacementEvents.StartPlacement();
 
         foreach (Character character in characters) 
         {
