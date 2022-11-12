@@ -14,7 +14,7 @@ public class Board : MonoBehaviour
 
     private const float tileSize = 0.7f;
 
-    private static readonly TileType[,] tilePositions = new TileType[9, 9]
+    private static readonly TileType[,] tilePositions = new TileType[boardSize, boardSize]
     {
         { TileType.FloorTile, TileType.FloorTile, TileType.MasterStartTile, TileType.FloorTile, TileType.FloorTile, TileType.FloorTile, TileType.FloorTile, TileType.FloorTile, TileType.FloorTile },
         { TileType.EmptyTile, TileType.EmptyTile, TileType.FloorTile, TileType.StartTile, TileType.EmptyTile, TileType.StartTile, TileType.FloorTile, TileType.EmptyTile, TileType.EmptyTile },

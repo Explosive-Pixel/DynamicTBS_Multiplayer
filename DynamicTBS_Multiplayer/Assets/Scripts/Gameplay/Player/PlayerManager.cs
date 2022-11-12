@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
+    #region Player Config
+
     private const PlayerType draftPhaseStartPlayer = PlayerType.pink;
     private const PlayerType placementPhaseStartPlayer = PlayerType.pink;
     private const PlayerType gameplayPhaseStartPlayer = PlayerType.blue;
-    
+
+    #endregion
+
     private static Player currentPlayer;
 
     private static Player bluePlayer;
