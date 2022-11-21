@@ -85,6 +85,7 @@ public class Client : MonoBehaviour
 
         while ((cmd = connection.PopEvent(driver, out stream)) != NetworkEvent.Type.Empty)
         {
+            Debug.Log("Reading message " + cmd);
             if (cmd == NetworkEvent.Type.Connect)
             {
                 SendToServer(new NetWelcome());

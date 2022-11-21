@@ -106,6 +106,8 @@ public class Server : MonoBehaviour
         DataStreamReader stream; // Reads incoming messages.
         for (int i = 0; i < connections.Length; i++)
         {
+            if (connections[i] == null) continue;
+
             NetworkEvent.Type cmd;
             // There are 4 types of network events:
             // Empty = nothing was sent.
