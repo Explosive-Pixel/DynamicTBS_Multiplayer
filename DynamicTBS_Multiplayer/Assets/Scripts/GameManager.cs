@@ -17,6 +17,11 @@ public class GameManager : MonoBehaviour
 
     public static GameType gameType = GameType.local;
     private static bool hasGameStarted;
+
+    public GameObject GetGameplayCanvas() 
+    {
+        return gameplayCanvas;
+    }
     
     private void Awake()
     {
