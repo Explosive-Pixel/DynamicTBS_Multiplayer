@@ -18,9 +18,18 @@ public class GameManager : MonoBehaviour
     public static GameType gameType = GameType.local;
     private static bool hasGameStarted;
 
+    public delegate void RecordStart();
+    public static event RecordStart OnStartRecording;
+
     public GameObject GetGameplayCanvas() 
     {
         return gameplayCanvas;
+    }
+
+    public static void StartRecording()
+    {
+        if (OnStartRecording != null)
+            OnStartRecording();
     }
     
     private void Awake()
@@ -54,6 +63,7 @@ public class GameManager : MonoBehaviour
     public void GoToLocalGame()
     {
         HandleMenus(draftCanvas);
+        StartRecording();
     }
 
     public void GoToOnlineMenu()
