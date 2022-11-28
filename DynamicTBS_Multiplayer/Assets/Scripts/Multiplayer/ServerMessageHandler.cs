@@ -12,14 +12,17 @@ public class ServerMessageHandler : MonoBehaviour
 
     private void OnWelcomeServer(NetMessage msg, NetworkConnection cnn)
     {
+        Debug.Log("Server: Welcome");
         NetWelcome netWelcome = msg as NetWelcome;
 
         netWelcome.AssignedTeam = ++Server.Instance.playerCount;
+        Debug.Log("Server: Connected players: " + netWelcome.AssignedTeam);
 
         Server.Instance.SendToClient(netWelcome, cnn);
 
         if(Server.Instance.playerCount == 2)
         {
+            Debug.Log("Server: Two players connected");
             Server.Instance.Broadcast(new NetStartGame());
         }
     }

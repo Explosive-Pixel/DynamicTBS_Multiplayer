@@ -11,11 +11,11 @@ public class OnlineUI : MonoBehaviour
 
     [SerializeField] InputField addressInput;
 
-    private GameObject gameplayCanvas;
+    private GameObject onlineGameManager;
 
     private void Awake()
     {
-        gameplayCanvas = GameObject.Find("GameManager").GetComponent<GameManager>().GetGameplayCanvas();
+        onlineGameManager = GameObject.Find("OnlineGameManager");
     }
 
     public void OnlineHostButton()
@@ -40,13 +40,13 @@ public class OnlineUI : MonoBehaviour
 
     private void AddMessageHandlers()
     {
-        gameplayCanvas.AddComponent<ClientMessageHandler>();
-        gameplayCanvas.AddComponent<ServerMessageHandler>();
+        onlineGameManager.AddComponent<ClientMessageHandler>();
+        onlineGameManager.AddComponent<ServerMessageHandler>();
     }
 
     private void RemoveMessageHandlers()
     {
-        Destroy(gameplayCanvas.GetComponent<ClientMessageHandler>());
-        Destroy(gameplayCanvas.GetComponent<ServerMessageHandler>());
+        Destroy(onlineGameManager.GetComponent<ClientMessageHandler>());
+        Destroy(onlineGameManager.GetComponent<ServerMessageHandler>());
     }
 }

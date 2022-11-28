@@ -11,6 +11,7 @@ public class ClientMessageHandler : MonoBehaviour
 
     private void OnWelcomeClient(NetMessage msg)
     {
+        Debug.Log("Client: Welcome");
         NetWelcome netWelcome = msg as NetWelcome;
 
         Client.Instance.side = (PlayerType)netWelcome.AssignedTeam;
@@ -25,7 +26,7 @@ public class ClientMessageHandler : MonoBehaviour
 
     private void SendDraftCharacterMessage(Character character)
     {
-        if(Client.Instance.side == character.GetSide().GetPlayerType())
+        if(Client.Instance.side == character.GetSide().GetPlayerType() && character.GetCharacterType() != CharacterType.MasterChar)
         {
             NetDraftCharacter msg = new NetDraftCharacter
             {
@@ -51,6 +52,7 @@ public class ClientMessageHandler : MonoBehaviour
     {
         if (Client.Instance.side == character.GetSide().GetPlayerType()) // TODO: Could character be turned by Master's passive -> problem?
         {
+            Debug.Log("CharacterInitialPosition: (x: " + characterInitialPosition.x + ", y: " + characterInitialPosition.y + ")");
             NetPerformAction msg = new NetPerformAction
             {
                 characterX = characterInitialPosition.x,
@@ -69,23 +71,30 @@ public class ClientMessageHandler : MonoBehaviour
     {
         NetPerformAction netPerformAction = msg as NetPerformAction;
 
+        Debug.Log("Client: Received NetPerformAction");
+
         PlayerType playerType = (PlayerType)netPerformAction.playerId;
         if (Client.Instance.side != playerType)
         {
+            Debug.Log("CharacterInitialPosition: (x: " + netPerformAction.characterX + ", y: " + netPerformAction.characterY + ")");
             Character character = CharacterHandler.GetCharacterByPosition(new Vector3(netPerformAction.characterX, netPerformAction.characterY, 0));
+            Debug.Log("Client: Character in Action: " + character);
             if(netPerformAction.activeAbility)
             {
                 character.GetActiveAbility().Execute();
+                Debug.Log("Client: Execute Active ability");
             }
             else
             {
                 ActionUtils.InstantiateAllActionPositions(character);
+                Debug.Log("Client: InstantiateActionPosition");
             }
 
             if(netPerformAction.hasDestination)
             {
                 Ray ray = UIUtils.DefaultRay(new Vector3(netPerformAction.destinationX, netPerformAction.destinationY, 0));
                 ActionUtils.ExecuteAction(ray);
+                Debug.Log("Client: Execute Action");
             }
         }
     }

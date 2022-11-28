@@ -6,12 +6,13 @@ public class UIUtils : MonoBehaviour
 {
     public static GameObject FindGameObjectByPosition(List<GameObject> destinations, Vector3 position)
     {
+        Debug.Log(position.ToString());
         return FindGameObjectByRay(destinations, DefaultRay(position));
     }
 
     public static Ray DefaultRay(Vector3 position)
     {
-        position.z = 0;
+        position.z = 0f;
         return new Ray(position, Vector3.forward);
     }
 
@@ -22,6 +23,7 @@ public class UIUtils : MonoBehaviour
         {
             foreach (RaycastHit hit in hits)
             {
+                Debug.Log("Hit: " + hit.ToString());
                 GameObject gameObject = hit.transform.gameObject;
                 if (destinations.Contains(gameObject))
                     return gameObject;

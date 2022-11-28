@@ -30,6 +30,9 @@ public class DraftManager : MonoBehaviour
 
         if (!PlayerManager.IsCurrentPlayer(buttonName)) return;
 
+        if (GameManager.gameType == GameType.multiplayer && Client.Instance.side != PlayerManager.GetCurrentPlayer().GetPlayerType())
+            return;
+
         Enum.TryParse(buttonName.Split("_")[0], out CharacterType characterType);
 
         DraftCharacter(characterType, PlayerManager.GetCurrentPlayer());
@@ -37,6 +40,8 @@ public class DraftManager : MonoBehaviour
 
     public static void DraftCharacter(CharacterType type, Player side)
     {
+        if (draftCounter >= MaxDraftCount) return;
+
         Character character = CharacterFactory.CreateCharacter(type, side);
         GameObject characterGameObject = character.GetCharacterGameObject();
 
