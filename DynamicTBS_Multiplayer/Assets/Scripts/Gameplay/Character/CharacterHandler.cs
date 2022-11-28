@@ -30,10 +30,11 @@ public class CharacterHandler : MonoBehaviour
     public static Character GetCharacterByPosition(Vector3 position)
     {
         GameObject gameObject = UIUtils.FindGameObjectByPosition(charactersByGameObject.Keys.ToList(), position);
-
+        Debug.Log("found gameObject " + gameObject.name);
         if (gameObject && charactersByGameObject.ContainsKey(gameObject))
         {
-            return charactersByGameObject.GetValueOrDefault(gameObject);
+            Debug.Log("found character");
+            return charactersByGameObject[gameObject];
         }
 
         return null;

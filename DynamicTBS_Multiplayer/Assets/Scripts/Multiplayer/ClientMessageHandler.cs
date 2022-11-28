@@ -25,7 +25,7 @@ public class ClientMessageHandler : MonoBehaviour
 
     private void SendDraftCharacterMessage(Character character)
     {
-        if(Client.Instance.side == character.GetSide().GetPlayerType())
+        if(Client.Instance.side == character.GetSide().GetPlayerType() && character.GetCharacterType() != CharacterType.MasterChar)
         {
             NetDraftCharacter msg = new NetDraftCharacter
             {

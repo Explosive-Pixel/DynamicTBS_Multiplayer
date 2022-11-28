@@ -6,12 +6,13 @@ public class UIUtils : MonoBehaviour
 {
     public static GameObject FindGameObjectByPosition(List<GameObject> destinations, Vector3 position)
     {
-        return FindGameObjectByRay(destinations, DefaultRay(position));
+        return destinations.Find(gameObject => gameObject.transform.position.x == position.x && gameObject.transform.position.y == position.y);
+        //return FindGameObjectByRay(destinations, DefaultRay(position));
     }
 
     public static Ray DefaultRay(Vector3 position)
     {
-        position.z = 0;
+        position.z = 0f;
         return new Ray(position, Vector3.forward);
     }
 
