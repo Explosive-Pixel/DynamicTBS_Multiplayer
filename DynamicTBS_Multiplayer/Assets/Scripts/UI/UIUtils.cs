@@ -6,8 +6,8 @@ public class UIUtils : MonoBehaviour
 {
     public static GameObject FindGameObjectByPosition(List<GameObject> destinations, Vector3 position)
     {
-        Debug.Log(position.ToString());
-        return FindGameObjectByRay(destinations, DefaultRay(position));
+        return destinations.Find(gameObject => gameObject.transform.position.x == position.x && gameObject.transform.position.y == position.y);
+        //return FindGameObjectByRay(destinations, DefaultRay(position));
     }
 
     public static Ray DefaultRay(Vector3 position)
@@ -23,7 +23,6 @@ public class UIUtils : MonoBehaviour
         {
             foreach (RaycastHit hit in hits)
             {
-                Debug.Log("Hit: " + hit.ToString());
                 GameObject gameObject = hit.transform.gameObject;
                 if (destinations.Contains(gameObject))
                     return gameObject;
