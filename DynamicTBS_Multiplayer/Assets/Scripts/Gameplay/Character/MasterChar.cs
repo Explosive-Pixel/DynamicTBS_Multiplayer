@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MasterChar : Character
 {
+
     public MasterChar(Player side) : base(side)
     {
         this.characterType = CharacterType.MasterChar;
