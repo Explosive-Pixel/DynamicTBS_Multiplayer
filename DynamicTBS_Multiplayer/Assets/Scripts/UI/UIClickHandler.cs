@@ -5,6 +5,7 @@ using UnityEngine;
 public class UIClickHandler : MonoBehaviour
 {
     private Camera currentCamera;
+    public GameObject cardhandler;
 
     private void Update()
     {
@@ -50,6 +51,7 @@ public class UIClickHandler : MonoBehaviour
 
             Character character = CharacterHandler.GetCharacterByGameObject(characterGameObject);
             ActionUtils.InstantiateAllActionPositions(character);
+            cardhandler.GetComponent<cardhandleScript>().setActive(character.GetCharacterType());
             GameplayEvents.ChangeCharacterSelection(character);
         } else
         {
