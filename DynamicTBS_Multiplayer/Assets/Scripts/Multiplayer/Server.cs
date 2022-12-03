@@ -23,7 +23,7 @@ public class Server : MonoBehaviour
 
     private bool isActive = false;
     private const float KeepAliveTickRate = 20f; // Constant tick rate, so connection won't time out.
-    private float lastKeepAlive; // Timestamp for last connection.
+    private float lastKeepAlive = 0f; // Timestamp for last connection.
 
     public Action connectionDropped;
 
@@ -33,10 +33,12 @@ public class Server : MonoBehaviour
     {
         if (!isActive) return;
 
+        driver.ScheduleFlushSend(default).Complete();
+
         KeepAlive(); // Prevents connection timeout.
 
         driver.ScheduleUpdate().Complete(); // Makes sure driver processed all incoming messages.
-
+        
         CleanUpConnections(); // Cleans up connections of disconnected clients.
         AcceptNewConnections(); // Accepts new connections if capacity is available.
         UpdateMessagePump(); // Check for messages and if server has to reply.
@@ -52,13 +54,13 @@ public class Server : MonoBehaviour
 
         if (driver.Bind(endPoint) != 0)
         {
-            Debug.Log("Unable to bind to port " + endPoint.Port);
+            Debug.Log("Server: Unable to bind to port " + endPoint.Port);
             return;
         }
         else
         {
             driver.Listen(); // Makes server listen to clients.
-            Debug.Log("Currently listening on port " + endPoint.Port);
+            Debug.Log("Server: Currently listening on port " + endPoint.Port);
         }
 
         connections = new NativeList<NetworkConnection>(2, Allocator.Persistent); // Allows up to two connections at a time.
@@ -98,35 +100,44 @@ public class Server : MonoBehaviour
         while ((c = driver.Accept()) != default(NetworkConnection)) // Checks if a client tries to connect who's not the default connection.
         {
             connections.Add(c);
+            Debug.Log("Server: New client connected");
+            Debug.Log(c.ToString());
         }
     }
 
     private void UpdateMessagePump()
     {
-        DataStreamReader stream; // Reads incoming messages.
-        for (int i = 0; i < connections.Length; i++)
+        try
         {
-            NetworkEvent.Type cmd;
-            // There are 4 types of network events:
-            // Empty = nothing was sent.
-            // Connect = connection is made.
-            // Data = any net-message sent.
-            // Disconnect = connection is severed.
-
-            while ((cmd = driver.PopEventForConnection(connections[i], out stream)) != NetworkEvent.Type.Empty)
+            DataStreamReader stream; // Reads incoming messages.
+            for (int i = 0; i < connections.Length; i++)
             {
-                if (cmd == NetworkEvent.Type.Data)
+                NetworkEvent.Type cmd;
+                // There are 4 types of network events:
+                // Empty = nothing was sent.
+                // Connect = connection is made.
+                // Data = any net-message sent.
+                // Disconnect = connection is severed.
+
+                while ((cmd = driver.PopEventForConnection(connections[i], out stream)) != NetworkEvent.Type.Empty)
                 {
-                    NetUtility.OnData(stream, connections[i], this);
-                }
-                else if (cmd == NetworkEvent.Type.Disconnect)
-                {
-                    Debug.Log("Client disconnected from server.");
-                    connections[i] = default(NetworkConnection);
-                    connectionDropped?.Invoke();
-                    Shutdown(); // Does not happen usually, only because this is a 2 person game.
+                    if (cmd == NetworkEvent.Type.Data)
+                    {
+                        NetUtility.OnData(stream, connections[i], this);
+                    }
+                    else if (cmd == NetworkEvent.Type.Disconnect)
+                    {
+                        Debug.Log("Server: Client disconnected from server.");
+                        connections[i] = default(NetworkConnection);
+                        connectionDropped?.Invoke();
+                        Shutdown(); // Does not happen usually, only because this is a 2 person game.
+                    }
                 }
             }
+        }
+        catch (ObjectDisposedException)
+        {
+            return;
         }
     }
 
@@ -157,7 +168,7 @@ public class Server : MonoBehaviour
         {
             if (connections[i].IsCreated)
             {
-                Debug.Log($"Sending {msg.Code} to : {connections[i].InternalId}");
+                Debug.Log($"Server: Sending {msg.Code} to : {connections[i].InternalId}");
                 SendToClient(msg, connections[i]);
             }
         }

@@ -34,7 +34,7 @@ public class Client : MonoBehaviour
         NetworkEndPoint endPoint = NetworkEndPoint.Parse(ip, port); // Specific endpoint for connection.
 
         connection = driver.Connect(endPoint); // Connecting based on the endpoint that was just created.
-        Debug.Log("Attempting to connect to server on " + endPoint.Address);
+        Debug.Log("Client: Attempting to connect to server on " + endPoint.Address);
 
         isActive = true;
 
@@ -72,7 +72,7 @@ public class Client : MonoBehaviour
     {
         if (!connection.IsCreated && isActive) // If no connections is created, but client is active, something went wrong.
         {
-            Debug.Log("Something went wrong. Lost connection to server.");
+            Debug.Log("Client: Something went wrong. Lost connection to server.");
             connectionDropped?.Invoke();
             Shutdown();
         }
@@ -80,26 +80,36 @@ public class Client : MonoBehaviour
 
     private void UpdateMessagePump()
     {
-        DataStreamReader stream; // Reads incoming messages.
-        NetworkEvent.Type cmd;
-
-        while ((cmd = connection.PopEvent(driver, out stream)) != NetworkEvent.Type.Empty)
+        try
         {
-            if (cmd == NetworkEvent.Type.Connect)
+            DataStreamReader stream; // Reads incoming messages.
+            NetworkEvent.Type cmd;
+
+            while ((cmd = connection.PopEvent(driver, out stream)) != NetworkEvent.Type.Empty)
             {
-                SendToServer(new NetWelcome());
+                Debug.Log("Client: Reading message " + cmd);
+                if (cmd == NetworkEvent.Type.Connect)
+                {
+                    Debug.Log("Client: We're connected!");
+                    SendToServer(new NetWelcome());
+                }
+                else if (cmd == NetworkEvent.Type.Data)
+                {
+                    NetUtility.OnData(stream, default(NetworkConnection));
+                }
+                else if (cmd == NetworkEvent.Type.Disconnect)
+                {
+                    Debug.Log("Client: Client disconnected from server.");
+                    connection = default(NetworkConnection);
+                    connectionDropped?.Invoke();
+                    Shutdown();
+                }
             }
-            else if (cmd == NetworkEvent.Type.Data)
-            {
-                NetUtility.OnData(stream, default(NetworkConnection));
-            }
-            else if (cmd == NetworkEvent.Type.Disconnect)
-            {
-                Debug.Log("Client disconnected from server.");
-                connection = default(NetworkConnection);
-                connectionDropped?.Invoke();
-                Shutdown();
-            }
+        }
+        catch (ObjectDisposedException)
+        {
+            Debug.Log("Client: Error");
+            return;
         }
     }
 

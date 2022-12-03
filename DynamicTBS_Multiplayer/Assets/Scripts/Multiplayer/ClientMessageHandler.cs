@@ -19,13 +19,13 @@ public class ClientMessageHandler : MonoBehaviour
     private void OnStartGameClient(NetMessage msg)
     {
         GameManager.gameType = GameType.multiplayer;
-
+        GameObject.Find("GameManager").GetComponent<GameManager>().GotToDraftScreen();
         // TODO: Change Camera angle
     }
 
     private void SendDraftCharacterMessage(Character character)
     {
-        if(Client.Instance.side == character.GetSide().GetPlayerType())
+        if(Client.Instance.side == character.GetSide().GetPlayerType() && character.GetCharacterType() != CharacterType.MasterChar)
         {
             NetDraftCharacter msg = new NetDraftCharacter
             {

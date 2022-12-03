@@ -15,6 +15,7 @@ public class ServerMessageHandler : MonoBehaviour
         NetWelcome netWelcome = msg as NetWelcome;
 
         netWelcome.AssignedTeam = ++Server.Instance.playerCount;
+        Debug.Log("Server: Connected players: " + netWelcome.AssignedTeam);
 
         Server.Instance.SendToClient(netWelcome, cnn);
 
