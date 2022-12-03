@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Character
+// TODO: Character als Prefab anlegen um in Unity anpassen zu können
+public abstract class Character : MonoBehaviour
 {
     #region Character default stats Config
 
@@ -59,6 +60,27 @@ public abstract class Character
         this.movePattern = defaultMovePattern;
         this.attackDamage = defaultAttackDamage;
 
+
+        //load leben + cooldown prefab -> TODO über entity in unity anpassbar machen
+        GameObject lebenObject = Resources.Load<GameObject>("Prefabs/CharacterCooldown");
+        GameObject cooldownObject = Resources.Load<GameObject>("Prefabs/CharacterLeben");
+
+        //TODO: "leben" als String übergeben
+        //spawn Leben Prefab als child und setze animation auf aktuelle lebenspunkte
+        Instantiate(lebenObject, this.characterGameObject.transform.position, Quaternion.identity, this.characterGameObject.transform);
+
+
+        //TODO: "cooldown" als string übergeben
+        //spawn cooldown Prefab als child und setze animation auf 0
+        Instantiate(cooldownObject, this.characterGameObject.transform.position, Quaternion.identity, this.characterGameObject.transform);
+
+
+        for (int i = 0; i < this.characterGameObject.transform.childCount; i++)
+        {
+            this.characterGameObject.transform.GetChild(i).GetComponent<Animator>().SetInteger("leben", this.hitPoints);
+            this.characterGameObject.transform.GetChild(i).GetComponent<Animator>().SetInteger("cooldown", 0);
+        }
+
         GameplayEvents.OnGameplayPhaseStart += ApplyPassiveAbility;
     }
 
@@ -75,6 +97,7 @@ public abstract class Character
         if(isDamageable(damage))
         {
             this.hitPoints -= damage;
+            this.characterGameObject.transform.GetChild(0).GetComponent<Animator>().SetInteger("leben", this.hitPoints);
             Debug.Log("Character " + characterGameObject.name + " now has " + hitPoints + " hit points remaining.");
             if (this.hitPoints <= 0)
             {
@@ -89,6 +112,7 @@ public abstract class Character
         if (this.hitPoints > this.maxHitPoints)
         {
             this.hitPoints = this.maxHitPoints;
+            this.characterGameObject.transform.GetChild(0).GetComponent<Animator>().SetInteger("leben", this.hitPoints);
         }
         Debug.Log("Character " + characterGameObject.name + " now has " + hitPoints + " hit points remaining.");
     }
@@ -101,6 +125,7 @@ public abstract class Character
     public void SetActiveAbilityOnCooldown()
     {
         activeAbilityCooldown = activeAbility.Cooldown + 1;
+        this.characterGameObject.transform.GetChild(1).GetComponent<Animator>().SetInteger("cooldown", activeAbilityCooldown);
         GameplayEvents.OnPlayerTurnEnded += ReduceActiveAbiliyCooldown;
     }
 
@@ -109,7 +134,7 @@ public abstract class Character
         if(activeAbilityCooldown > 0)
         {
             activeAbilityCooldown -= 1;
-
+            this.characterGameObject.transform.GetChild(1).GetComponent<Animator>().SetInteger("cooldown", activeAbilityCooldown);
             if(activeAbilityCooldown == 0)
             {
                 GameplayEvents.OnPlayerTurnEnded -= ReduceActiveAbiliyCooldown;
