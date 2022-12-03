@@ -51,7 +51,8 @@ public class UIClickHandler : MonoBehaviour
 
             Character character = CharacterHandler.GetCharacterByGameObject(characterGameObject);
             ActionUtils.InstantiateAllActionPositions(character);
-            cardhandler.GetComponent<cardhandleScript>().setActive(character.GetCharacterType());
+            if(character!= null)cardhandler.GetComponent<cardhandleScript>().setActive(character.GetCharacterType());
+            
             GameplayEvents.ChangeCharacterSelection(character);
         } else
         {
