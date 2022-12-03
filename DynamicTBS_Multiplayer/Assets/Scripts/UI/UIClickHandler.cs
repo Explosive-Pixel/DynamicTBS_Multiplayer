@@ -6,6 +6,13 @@ public class UIClickHandler : MonoBehaviour
 {
     private Camera currentCamera;
     public GameObject cardhandler;
+    public GameObject uibutton;
+    private bool hasStarted = false;
+
+    private void Start()
+    {
+        GameplayEvents.OnGameplayPhaseStart += onStartGameplayPhase;
+    }
 
     private void Update()
     {
@@ -51,11 +58,24 @@ public class UIClickHandler : MonoBehaviour
 
             Character character = CharacterHandler.GetCharacterByGameObject(characterGameObject);
             ActionUtils.InstantiateAllActionPositions(character);
-            cardhandler.GetComponent<cardhandleScript>().setActive(character.GetCharacterType());
+            if (characterGameObject != null && hasStarted)
+            {
+                cardhandler.GetComponent<cardhandleScript>().setActive(character.GetCharacterType());
+                uibutton.SetActive(true);
+            }
+
+            
             GameplayEvents.ChangeCharacterSelection(character);
         } else
         {
             GameplayEvents.ChangeCharacterSelection(null);
         }
     }
+
+    void onStartGameplayPhase()
+    {
+        hasStarted = true;
+    }
+
+
 }
