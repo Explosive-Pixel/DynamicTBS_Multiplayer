@@ -4,6 +4,8 @@ using System;
 
 public class GameRecorder : MonoBehaviour
 {
+    // TODO: Create structure so that all game records from online games are saved to the same location.
+    
     public bool record;
     private string path;
     private string filename;
