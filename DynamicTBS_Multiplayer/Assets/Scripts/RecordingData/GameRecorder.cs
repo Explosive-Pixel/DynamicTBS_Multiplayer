@@ -5,8 +5,6 @@ using System;
 public class GameRecorder : MonoBehaviour
 {
     // TODO: Create structure so that all game records from online games are saved to the same location.
-    
-    public bool record;
     private string path;
     private string filename;
     
@@ -47,7 +45,20 @@ public class GameRecorder : MonoBehaviour
         }
 
         Debug.Log(recordLine);
+    }
 
+    private void RecordWinner(PlayerType winningSide)
+    {
+        string recordLine = "Player " + winningSide.ToString() + " won.";
+
+        if (path != null)
+        {
+            StreamWriter writer = new StreamWriter(path, true);
+            writer.WriteLine(recordLine);
+            writer.Close();
+        }
+
+        Debug.Log(recordLine);
     }
 
     private string TranslateTilePosition(Vector3? position)
@@ -75,6 +86,7 @@ public class GameRecorder : MonoBehaviour
         GameManager.OnStartRecording += SetPath;
         DraftEvents.OnCharacterCreated += RecordDraft;
         GameplayEvents.OnFinishAction += RecordMove;
+        GameplayEvents.OnGameOver += RecordWinner;
     }
 
     private void UnsubscribeEvents()
@@ -82,6 +94,7 @@ public class GameRecorder : MonoBehaviour
         GameManager.OnStartRecording -= SetPath;
         DraftEvents.OnCharacterCreated -= RecordDraft;
         GameplayEvents.OnFinishAction -= RecordMove;
+        GameplayEvents.OnGameOver -= RecordWinner;
     }
 
     #endregion
