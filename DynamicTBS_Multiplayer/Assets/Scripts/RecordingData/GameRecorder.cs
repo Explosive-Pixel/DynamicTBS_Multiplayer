@@ -97,10 +97,10 @@ public class GameRecorder : MonoBehaviour
         GameplayEvents.OnGameOver -= RecordWinner;
     }
 
-    #endregion
-
     private void OnDestroy()
     {
         UnsubscribeEvents();
     }
+
+    #endregion
 }
