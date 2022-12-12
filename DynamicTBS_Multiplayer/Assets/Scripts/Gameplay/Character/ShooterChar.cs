@@ -6,6 +6,7 @@ public class ShooterChar : Character
 {
     public ShooterChar(Player side) : base(side)
     {
+        this.characterPrefab = side.GetPlayerType() == PlayerType.blue ? PrefabManager.BLUE_SHOOTER_PREFAB : PrefabManager.PINK_SHOOTER_PREFAB;
         this.characterType = CharacterType.ShooterChar;
         this.maxHitPoints = 2;
         this.moveSpeed = 1;
