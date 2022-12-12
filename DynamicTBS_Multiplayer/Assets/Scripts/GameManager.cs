@@ -34,7 +34,9 @@ public class GameManager : MonoBehaviour
     
     private void Awake()
     {
+        //Wird SpriteManager noch gebraucht?
         SpriteManager.LoadSprites();
+        PrefabManager.LoadPrefabs();
         hasGameStarted = false;
         SubscribeEvents();
         
