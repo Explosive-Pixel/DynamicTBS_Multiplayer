@@ -8,7 +8,11 @@ public class RecordableStats
     public int gameNumber;
     public int blueWins;
 
+    // Records how many times a certain unit count as been drafted
     public Dictionary<(int, string), int> unitsInDraftDictionary = new Dictionary<(int, string), int>();
+
+    // Records unique drafts as strings, how many times a draft has been played and how many times it has won
+    public Dictionary<string, (int, int)> uniqueDraftsDictionary = new Dictionary<string, (int, int)>();
 
     public RecordableStats()
     {

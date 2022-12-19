@@ -3,14 +3,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 
 public class StatsRecorder : MonoBehaviour
 {
     private RecordableStats recordableStats;
 
-    private string filePath = Application.dataPath + "/Resources/GameRecords/SaveStats.txt";
-    private const string SAVE_SEPARATOR = "§§";
+    private string filePath;
 
     private string tankShorthand = "TA";
     private string shooterShorthand = "SH";
@@ -21,8 +21,9 @@ public class StatsRecorder : MonoBehaviour
     private void Awake()
     {
         SubscribeEvents();
+        filePath = Application.dataPath + "/Resources/GameRecords/SaveStats.txt";
     }
-
+    
     // Load old save stats from file and store in variables.
     private void LoadStats()
     {
@@ -58,63 +59,178 @@ public class StatsRecorder : MonoBehaviour
 
     private void IncreaseUnitInDraftCount(List<Character> draftList)
     {
-        // Count how many of each character type there are in the draft
-        int tankCount = 0;
-        int shooterCount = 0;
-        int runnerCount = 0;
-        int mechanicCount = 0;
-        int medicCount = 0;
+        // Count how many of each character type there are in the draft of each team
+        int blueTankCount = 0;
+        int blueShooterCount = 0;
+        int blueRunnerCount = 0;
+        int blueMechanicCount = 0;
+        int blueMedicCount = 0;
+
+        int pinkTankCount = 0;
+        int pinkShooterCount = 0;
+        int pinkRunnerCount = 0;
+        int pinkMechanicCount = 0;
+        int pinkMedicCount = 0;
+
+        List<Character> blueDraftList = new List<Character>();
+        List<Character> pinkDraftList = new List<Character>();
 
         foreach (Character character in draftList)
         {
-            if (character.GetCharacterType() == CharacterType.TankChar)
-                tankCount += 1;
-            if (character.GetCharacterType() == CharacterType.ShooterChar)
-                shooterCount += 1;
-            if (character.GetCharacterType() == CharacterType.RunnerChar)
-                runnerCount += 1;
-            if (character.GetCharacterType() == CharacterType.MechanicChar)
-                mechanicCount += 1;
-            if (character.GetCharacterType() == CharacterType.MedicChar)
-                medicCount += 1;
+            if (character.GetSide().GetPlayerType() == PlayerType.blue)
+            {
+                blueDraftList.Add(character);
+            }
+            else
+            {
+                pinkDraftList.Add(character);
+            }
         }
-        // TODO: differentiate between the two teams!
 
-        // Put in for loop after rewriting code above as dictionary.
-        recordableStats.unitsInDraftDictionary[(tankCount, CharacterType.TankChar.ToString())] += 1;
+        foreach (Character character in blueDraftList)
+        {
+            if (character.GetCharacterType() == CharacterType.TankChar)
+                blueTankCount += 1;
+            if (character.GetCharacterType() == CharacterType.ShooterChar)
+                blueShooterCount += 1;
+            if (character.GetCharacterType() == CharacterType.RunnerChar)
+                blueRunnerCount += 1;
+            if (character.GetCharacterType() == CharacterType.MechanicChar)
+                blueMechanicCount += 1;
+            if (character.GetCharacterType() == CharacterType.MedicChar)
+                blueMedicCount += 1;
+        }
 
-        // Add this to other times there were this many characters of a certain type in a draft
-        // Store this information in the file
+        foreach (Character character in pinkDraftList)
+        {
+            if (character.GetCharacterType() == CharacterType.TankChar)
+                pinkTankCount += 1;
+            if (character.GetCharacterType() == CharacterType.ShooterChar)
+                pinkShooterCount += 1;
+            if (character.GetCharacterType() == CharacterType.RunnerChar)
+                pinkRunnerCount += 1;
+            if (character.GetCharacterType() == CharacterType.MechanicChar)
+                pinkMechanicCount += 1;
+            if (character.GetCharacterType() == CharacterType.MedicChar)
+                pinkMedicCount += 1;
+        }
+
+        // Put in for loop after rewriting code above as dictionary -> HOW?
+        if (blueTankCount > 0)
+            recordableStats.unitsInDraftDictionary[(blueTankCount, CharacterType.TankChar.ToString())] += 1;
+        if (blueShooterCount > 0)
+            recordableStats.unitsInDraftDictionary[(blueShooterCount, CharacterType.ShooterChar.ToString())] += 1;
+        if (blueRunnerCount > 0)
+            recordableStats.unitsInDraftDictionary[(blueRunnerCount, CharacterType.RunnerChar.ToString())] += 1;
+        if (blueMechanicCount > 0)
+            recordableStats.unitsInDraftDictionary[(blueMechanicCount, CharacterType.MechanicChar.ToString())] += 1;
+        if (blueMedicCount > 0)
+            recordableStats.unitsInDraftDictionary[(blueMedicCount, CharacterType.MedicChar.ToString())] += 1;
+        if (pinkTankCount > 0)
+            recordableStats.unitsInDraftDictionary[(pinkTankCount, CharacterType.TankChar.ToString())] += 1;
+        if (pinkShooterCount > 0)
+            recordableStats.unitsInDraftDictionary[(pinkShooterCount, CharacterType.ShooterChar.ToString())] += 1;
+        if (pinkRunnerCount > 0)
+            recordableStats.unitsInDraftDictionary[(pinkRunnerCount, CharacterType.RunnerChar.ToString())] += 1;
+        if (pinkMechanicCount > 0)
+            recordableStats.unitsInDraftDictionary[(pinkMechanicCount, CharacterType.MechanicChar.ToString())] += 1;
+        if (pinkMedicCount > 0)
+            recordableStats.unitsInDraftDictionary[(pinkMedicCount, CharacterType.MedicChar.ToString())] += 1;
     }
 
     private void IncreaseUniqueDraftCombinationCount(List<Character> draftList)
     {
         // Translates the draft list to a string of shorthands for characters
-        List<string> shortHandList = new List<string>();
+        List<string> blueShortHandList = new List<string>();
+        List<string> pinkShortHandList = new List<string>();
 
-        // TODO: Differentiate between pink and blue draft and record both separately
+        List<Character> blueDraftList = new List<Character>();
+        List<Character> pinkDraftList = new List<Character>();
+
+        string blueDraftString;
+        string pinkDraftString;
+
         foreach (Character character in draftList)
         {
-            if (character.GetCharacterType() == CharacterType.TankChar)
-                shortHandList.Add(tankShorthand);
-            if (character.GetCharacterType() == CharacterType.ShooterChar)
-                shortHandList.Add(shooterShorthand);
-            if (character.GetCharacterType() == CharacterType.RunnerChar)
-                shortHandList.Add(runnerShorthand);
-            if (character.GetCharacterType() == CharacterType.MechanicChar)
-                shortHandList.Add(mechanicShorthand);
-            if (character.GetCharacterType() == CharacterType.MedicChar)
-                shortHandList.Add(medicShorthand);
+            if (character.GetSide().GetPlayerType() == PlayerType.blue)
+            {
+                blueDraftList.Add(character);
+            }
+            else
+            {
+                pinkDraftList.Add(character);
+            }
         }
 
-        if (shortHandList.Count == 7)
+        foreach (Character character in blueDraftList)
         {
-            string blueDraftString = shortHandList[0] + ":" + shortHandList[1] + ":" + shortHandList[2] + ":" + shortHandList[3] + ":" + shortHandList[4] + ":" + shortHandList[5] + ":" + shortHandList[6];
+            if (character.GetCharacterType() == CharacterType.TankChar)
+                blueShortHandList.Add(tankShorthand);
+            if (character.GetCharacterType() == CharacterType.ShooterChar)
+                blueShortHandList.Add(shooterShorthand);
+            if (character.GetCharacterType() == CharacterType.RunnerChar)
+                blueShortHandList.Add(runnerShorthand);
+            if (character.GetCharacterType() == CharacterType.MechanicChar)
+                blueShortHandList.Add(mechanicShorthand);
+            if (character.GetCharacterType() == CharacterType.MedicChar)
+                blueShortHandList.Add(medicShorthand);
         }
 
-        // Check if this draft string is already recorded
-        // If yes, increase its count by 1
-        // If no, add it and set its count to 1
+        foreach (Character character in pinkDraftList)
+        {
+            if (character.GetCharacterType() == CharacterType.TankChar)
+                pinkShortHandList.Add(tankShorthand);
+            if (character.GetCharacterType() == CharacterType.ShooterChar)
+                pinkShortHandList.Add(shooterShorthand);
+            if (character.GetCharacterType() == CharacterType.RunnerChar)
+                pinkShortHandList.Add(runnerShorthand);
+            if (character.GetCharacterType() == CharacterType.MechanicChar)
+                pinkShortHandList.Add(mechanicShorthand);
+            if (character.GetCharacterType() == CharacterType.MedicChar)
+                pinkShortHandList.Add(medicShorthand);
+        }
+
+        if (blueShortHandList.Count == 7)
+        {
+            blueDraftString = blueShortHandList[0] + ":" + blueShortHandList[1] + ":" + blueShortHandList[2] + ":" + blueShortHandList[3] + ":" + blueShortHandList[4] + ":" + blueShortHandList[5] + ":" + blueShortHandList[6];
+            pinkDraftString = pinkShortHandList[0] + ":" + pinkShortHandList[1] + ":" + pinkShortHandList[2] + ":" + pinkShortHandList[3] + ":" + pinkShortHandList[4] + ":" + pinkShortHandList[5] + ":" + pinkShortHandList[6];
+
+            foreach (string uniqueDraft in recordableStats.uniqueDraftsDictionary.Keys)
+            {
+                if (uniqueDraft == blueDraftString)
+                {
+                    int gamesPlayedWithThisDraft = recordableStats.uniqueDraftsDictionary[uniqueDraft].Item1;
+                    int gameWonWithThisDraft = recordableStats.uniqueDraftsDictionary[uniqueDraft].Item2;
+
+                    gamesPlayedWithThisDraft += 1;
+
+                    recordableStats.uniqueDraftsDictionary[uniqueDraft] = (gamesPlayedWithThisDraft, gameWonWithThisDraft);
+                }
+                else
+                {
+                    recordableStats.uniqueDraftsDictionary.Add(blueDraftString, (1, 0));
+                }
+            }
+
+            foreach (string uniqueDraft in recordableStats.uniqueDraftsDictionary.Keys)
+            {
+                if (uniqueDraft == pinkDraftString)
+                {
+                    int gamesPlayedWithThisDraft = recordableStats.uniqueDraftsDictionary[uniqueDraft].Item1;
+                    int gameWonWithThisDraft = recordableStats.uniqueDraftsDictionary[uniqueDraft].Item2;
+
+                    gamesPlayedWithThisDraft += 1;
+
+                    recordableStats.uniqueDraftsDictionary[uniqueDraft] = (gamesPlayedWithThisDraft, gameWonWithThisDraft);
+                }
+                else
+                {
+                    recordableStats.uniqueDraftsDictionary.Add(blueDraftString, (1, 0));
+                }
+            }
+        }
+
+        // TODO: After game ends record the win stat of the draft that won
     }
 
     #region EventsRegion
