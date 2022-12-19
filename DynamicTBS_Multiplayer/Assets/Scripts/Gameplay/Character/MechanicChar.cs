@@ -7,7 +7,7 @@ public class MechanicChar : Character
     public MechanicChar(Player side) : base(side)
     {
 
-        this.characterPrefab = side.GetPlayerType() == PlayerType.blue ? PrefabManager.BLUE_MECHANIC_PREFAB : PrefabManager.PINK_MECHANIC_PREFAB;
+        this.characterPrefab = GameObject.Instantiate(side.GetPlayerType() == PlayerType.blue ? PrefabManager.BLUE_MECHANIC_PREFAB : PrefabManager.PINK_MECHANIC_PREFAB);
         this.characterType = CharacterType.MechanicChar;
         this.maxHitPoints = 2;
         this.moveSpeed = 1;
