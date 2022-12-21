@@ -6,7 +6,7 @@ public class UIClickHandler : MonoBehaviour
 {
     private Camera currentCamera;
     public GameObject cardhandler;
-    public GameObject uibutton;
+    //public GameObject uibutton;
 
     private void Update()
     {
