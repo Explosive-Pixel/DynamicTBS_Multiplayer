@@ -6,6 +6,7 @@ public class TankChar : Character
 {
     public TankChar(Player side) : base(side)
     {
+        this.characterPrefab = GameObject.Instantiate(side.GetPlayerType() == PlayerType.blue ? PrefabManager.BLUE_TANK_PREFAB : PrefabManager.PINK_TANK_PREFAB);
         this.characterType = CharacterType.TankChar;
         this.maxHitPoints = 4;
         this.moveSpeed = 1;

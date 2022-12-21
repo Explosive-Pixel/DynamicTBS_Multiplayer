@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // TODO: Character als Prefab anlegen um in Unity anpassen zu können
-public abstract class Character : MonoBehaviour
+public abstract class Character //: MonoBehaviour
 {
     #region Character default stats Config
 
@@ -17,6 +17,7 @@ public abstract class Character : MonoBehaviour
     protected int moveSpeed;
     protected int maxHitPoints;
     protected int attackRange;
+    protected GameObject characterPrefab;
     protected IActiveAbility activeAbility;
     protected IPassiveAbility passiveAbility;
     protected abstract Sprite CharacterSprite(Player side);
@@ -54,7 +55,9 @@ public abstract class Character : MonoBehaviour
 
     protected void Init()
     {
-        this.characterGameObject = CreateCharacterGameObject();
+        Debug.Log(characterPrefab);
+        //this.characterGameObject = GameObject.Instantiate(characterPrefab) as GameObject;
+        this.characterGameObject = characterPrefab;
         this.hitPoints = maxHitPoints;
         this.activeAbilityCooldown = 0;
         this.movePattern = defaultMovePattern;
@@ -62,19 +65,20 @@ public abstract class Character : MonoBehaviour
 
 
         //load leben + cooldown prefab -> TODO über entity in unity anpassbar machen
-        GameObject lebenObject = Resources.Load<GameObject>("Prefabs/CharacterCooldown");
-        GameObject cooldownObject = Resources.Load<GameObject>("Prefabs/CharacterLeben");
+        //GameObject lebenObject = Resources.Load<GameObject>("Prefabs/CharacterCooldown");
+        //GameObject cooldownObject = Resources.Load<GameObject>("Prefabs/CharacterLeben");
 
         //TODO: "leben" als String übergeben
         //spawn Leben Prefab als child und setze animation auf aktuelle lebenspunkte
-        Instantiate(lebenObject, this.characterGameObject.transform.position, Quaternion.identity, this.characterGameObject.transform);
+        //Instantiate(lebenObject, this.characterGameObject.transform.position, Quaternion.identity, this.characterGameObject.transform);
 
 
         //TODO: "cooldown" als string übergeben
         //spawn cooldown Prefab als child und setze animation auf 0
-        Instantiate(cooldownObject, this.characterGameObject.transform.position, Quaternion.identity, this.characterGameObject.transform);
+        //Instantiate(cooldownObject, this.characterGameObject.transform.position, Quaternion.identity, this.characterGameObject.transform);
 
 
+        //TODO: in script in Prefab setzen
         for (int i = 0; i < this.characterGameObject.transform.childCount; i++)
         {
             this.characterGameObject.transform.GetChild(i).GetComponent<Animator>().SetInteger("leben", this.hitPoints);
@@ -182,21 +186,25 @@ public abstract class Character : MonoBehaviour
         passiveAbility.Apply();
     }
 
+    //wird nicht mehr gebraucht?
     private GameObject CreateCharacterGameObject()
     {
+        GameObject character = GameObject.Instantiate(characterPrefab) as GameObject;
+        /*
         GameObject character = new GameObject
         {
             name = this.GetType().Name + "_" + side.GetPlayerType().ToString()
         };
-
+        */
         Vector3 startPosition = new Vector3(0, 0, 0);
         Quaternion startRotation = Quaternion.identity;
 
-        SpriteRenderer spriteRenderer = character.AddComponent<SpriteRenderer>();
-        spriteRenderer.sprite = CharacterSprite(side);
+        //SpriteRenderer spriteRenderer = character.AddComponent<SpriteRenderer>();
+        //spriteRenderer.sprite = CharacterSprite(side);
         character.transform.position = startPosition;
         character.transform.rotation = startRotation;
-        character.AddComponent<BoxCollider>();
+        //TODO: Collider in Prefab
+        //character.AddComponent<BoxCollider>();
 
         return character;
     }

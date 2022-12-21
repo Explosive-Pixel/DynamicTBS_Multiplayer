@@ -6,6 +6,7 @@ public class RunnerChar : Character
 {
     public RunnerChar(Player side) : base(side)
     {
+        this.characterPrefab = GameObject.Instantiate(side.GetPlayerType() == PlayerType.blue ? PrefabManager.BLUE_RUNNER_PREFAB : PrefabManager.PINK_RUNNER_PREFAB);
         this.characterType = CharacterType.RunnerChar;
         this.maxHitPoints = 1;
         this.moveSpeed = 2;
