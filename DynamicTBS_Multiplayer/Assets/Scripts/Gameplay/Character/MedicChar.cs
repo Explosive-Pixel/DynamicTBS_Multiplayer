@@ -6,7 +6,7 @@ public class MedicChar : Character
 {
     public MedicChar(Player side) : base(side)
     {
-        this.characterPrefab = side.GetPlayerType() == PlayerType.blue ? PrefabManager.BLUE_MEDIC_PREFAB : PrefabManager.PINK_MEDIC_PREFAB;
+        this.characterPrefab = GameObject.Instantiate(side.GetPlayerType() == PlayerType.blue ? PrefabManager.BLUE_MEDIC_PREFAB : PrefabManager.PINK_MEDIC_PREFAB);
         this.characterType = CharacterType.MedicChar;
         this.maxHitPoints = 2;
         this.moveSpeed = 1;

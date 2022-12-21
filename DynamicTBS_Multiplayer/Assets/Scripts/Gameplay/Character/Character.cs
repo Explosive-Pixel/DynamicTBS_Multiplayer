@@ -55,6 +55,8 @@ public abstract class Character //: MonoBehaviour
 
     protected void Init()
     {
+        Debug.Log(characterPrefab);
+        //this.characterGameObject = GameObject.Instantiate(characterPrefab) as GameObject;
         this.characterGameObject = characterPrefab;
         this.hitPoints = maxHitPoints;
         this.activeAbilityCooldown = 0;
@@ -187,11 +189,13 @@ public abstract class Character //: MonoBehaviour
     //wird nicht mehr gebraucht?
     private GameObject CreateCharacterGameObject()
     {
+        GameObject character = GameObject.Instantiate(characterPrefab) as GameObject;
+        /*
         GameObject character = new GameObject
         {
             name = this.GetType().Name + "_" + side.GetPlayerType().ToString()
         };
-
+        */
         Vector3 startPosition = new Vector3(0, 0, 0);
         Quaternion startRotation = Quaternion.identity;
 

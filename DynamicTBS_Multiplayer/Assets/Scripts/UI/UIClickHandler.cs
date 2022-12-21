@@ -8,11 +8,6 @@ public class UIClickHandler : MonoBehaviour
     public GameObject cardhandler;
     public GameObject uibutton;
 
-    private void Start()
-    {
-        GameplayEvents.OnGameplayPhaseStart += onStartGameplayPhase;
-    }
-
     private void Update()
     {
         // In multiplayer mode only listen to clicks of current player

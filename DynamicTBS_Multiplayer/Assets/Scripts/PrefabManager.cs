@@ -20,17 +20,17 @@ public class PrefabManager
 
     public static void LoadPrefabs()
     {
-        BLUE_MASTER_PREFAB = Resources.Load<GameObject>("Prefabs/Charakters/Blue/Master Blue");
-        PINK_MASTER_PREFAB = Resources.Load<GameObject>("Prefabs/Charakters/Pink/Master Pink");
-        BLUE_TANK_PREFAB = Resources.Load<GameObject>("Prefabs/Charakters/Blue/Tank Blue");
-        PINK_TANK_PREFAB = Resources.Load<GameObject>("Prefabs/Charakters/Pink/Tank Pink");
-        BLUE_SHOOTER_PREFAB = Resources.Load<GameObject>("Prefabs/Charakters/Blue/Shooter Blue");
-        PINK_SHOOTER_PREFAB = Resources.Load<GameObject>("Prefabs/Charakters/Pink/Shooter Pink");
-        BLUE_RUNNER_PREFAB = Resources.Load<GameObject>("Prefabs/Charakters/Blue/Runner Blue");
-        PINK_RUNNER_PREFAB = Resources.Load<GameObject>("Prefabs/Charakters/Pink/Runner Pink");
-        BLUE_MECHANIC_PREFAB = Resources.Load<GameObject>("Prefabs/Charakters/Blue/Mechanic Blue");
-        PINK_MECHANIC_PREFAB = Resources.Load<GameObject>("Prefabs/Charakters/Pink/Mechanic Pink");
-        BLUE_MEDIC_PREFAB = Resources.Load<GameObject>("Prefabs/Charakters/Blue/Medic Blue");
-        PINK_MEDIC_PREFAB = Resources.Load<GameObject>("Prefabs/Charakters/Pink/Medic Pink");
+        BLUE_MASTER_PREFAB = Resources.Load<GameObject>("Charakters/Blue/Master Blue");
+        PINK_MASTER_PREFAB = Resources.Load<GameObject>("Charakters/Pink/Master Pink");
+        BLUE_TANK_PREFAB = Resources.Load<GameObject>("Charakters/Blue/Tank Blue");
+        PINK_TANK_PREFAB = Resources.Load<GameObject>("Charakters/Pink/Tank Pink");
+        BLUE_SHOOTER_PREFAB = Resources.Load<GameObject>("Charakters/Blue/Shooter Blue");
+        PINK_SHOOTER_PREFAB = Resources.Load<GameObject>("Charakters/Pink/Shooter Pink");
+        BLUE_RUNNER_PREFAB = Resources.Load<GameObject>("Charakters/Blue/Runner Blue");
+        PINK_RUNNER_PREFAB = Resources.Load<GameObject>("Charakters/Pink/Runner Pink");
+        BLUE_MECHANIC_PREFAB = Resources.Load<GameObject>("Charakters/Blue/Mechanic Blue");
+        PINK_MECHANIC_PREFAB = Resources.Load<GameObject>("Charakters/Pink/Mechanic Pink");
+        BLUE_MEDIC_PREFAB = Resources.Load<GameObject>("Charakters/Blue/Medic Blue");
+        PINK_MEDIC_PREFAB = Resources.Load<GameObject>("Charakters/Pink/Medic Pink");
     }
 }

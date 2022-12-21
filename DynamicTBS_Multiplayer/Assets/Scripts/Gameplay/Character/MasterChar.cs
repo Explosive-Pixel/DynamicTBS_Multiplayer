@@ -6,7 +6,7 @@ public class MasterChar : Character
 {
     public MasterChar(Player side) : base(side)
     {
-        this.characterPrefab = side.GetPlayerType() == PlayerType.blue ? PrefabManager.BLUE_MASTER_PREFAB : PrefabManager.PINK_MASTER_PREFAB;
+        this.characterPrefab = GameObject.Instantiate(side.GetPlayerType() == PlayerType.blue ? PrefabManager.BLUE_MASTER_PREFAB : PrefabManager.PINK_MASTER_PREFAB);
         this.characterType = CharacterType.MasterChar;
         this.maxHitPoints = 3;
         this.moveSpeed = 1;
