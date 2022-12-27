@@ -4,31 +4,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class Tile
+public class Tile
 {
-    protected TileType type;
+    private TileType type;
 
-    protected int row;
-    protected int column;
-    protected Vector3 position;
-    protected GameObject tileGameObject;
-    protected Sprite tileSprite;
-    protected Character currentInhabitant;
+    private int row;
+    private int column;
+    private Vector3 position;
+    private GameObject tileGameObject;
+    private Sprite tileSprite;
+    private Character currentInhabitant;
 
     public delegate bool IsChangeable();
     public IsChangeable isChangeable;
 
-    protected Tile(int row, int column) 
+    public Tile(TileType type, int row, int column) 
     {
+        this.type = type;
         this.row = row;
         this.column = column;
+        this.tileSprite = SpriteManager.GetTileSprite(type);
         this.position = Board.FindPosition(row, column);
         this.currentInhabitant = null;
         this.isChangeable = () => true;
-    }
-
-    protected void Init()
-    {
         this.tileGameObject = CreateTileGameObject();
     }
 
