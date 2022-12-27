@@ -70,9 +70,7 @@ public class GameRecorder : MonoBehaviour
             Tile tile = Board.GetTileByPosition(position.GetValueOrDefault());
             if (tile != null)
             {
-                int row = 9 - tile.GetRow();
-                char columnChar = (char)(tile.GetColumn() + 65);
-                text = columnChar.ToString() + row.ToString();
+                text = tile.GetTileName();
             }
         }
         

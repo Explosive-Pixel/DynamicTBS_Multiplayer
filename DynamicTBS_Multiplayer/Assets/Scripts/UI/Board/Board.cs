@@ -291,27 +291,18 @@ public class Board : MonoBehaviour
         }
     }
 
-    private void UpdateTilesAfterTileTransformation(Tile oldTile, Tile newTile)
-    {
-        tiles.Remove(oldTile);
-        tiles.Add(newTile);
-        tilesByGameObject.Add(newTile.GetTileGameObject(), newTile);
-    }
-
     #region EventSubscriptions
 
     private void SubscribeEvents()
     {
         DraftEvents.OnEndDraft += CreateBoard;
         CharacterEvents.OnCharacterDeath += UpdateTileAfterCharacterDeath;
-        GameplayEvents.OnTileChanged += UpdateTilesAfterTileTransformation;
     }
 
     private void UnsubscribeEvents()
     {
         DraftEvents.OnEndDraft -= CreateBoard;
         CharacterEvents.OnCharacterDeath -= UpdateTileAfterCharacterDeath;
-        GameplayEvents.OnTileChanged -= UpdateTilesAfterTileTransformation;
     }
 
     #endregion

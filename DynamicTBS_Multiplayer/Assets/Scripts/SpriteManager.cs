@@ -77,4 +77,23 @@ public class SpriteManager
         HP_4_SPRITE = Resources.Load<Sprite>("UI/HP_4");
         TANK_BLOCK_FRAME_SPRITE = Resources.Load<Sprite>("UI/Tank_BlockFrame");
     }
+
+    public static Sprite GetTileSprite(TileType tileType)
+    {
+        switch (tileType)
+        {
+            case TileType.EmptyTile:
+                return EMPTY_TILE_SPRITE;
+            case TileType.FloorTile:
+                return FLOOR_TILE_SPRITE;
+            case TileType.GoalTile:
+                return GOAL_TILE_SPRITE;
+            case TileType.StartTile:
+                return START_TILE_SPRITE;
+            case TileType.MasterStartTile:
+                return MASTER_START_TILE_SPRITE;
+            default:
+                return null;
+        }
+    }
 }

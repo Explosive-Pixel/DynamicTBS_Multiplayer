@@ -19,9 +19,6 @@ public static class GameplayEvents
     public delegate void NextPlayer(Player player);
     public static event NextPlayer OnPlayerTurnEnded;
 
-    public delegate void ChangeTile(Tile oldTile, Tile newTile);
-    public static event ChangeTile OnTileChanged;
-
     public static void StartGameplayPhase()
     {
         if (OnGameplayPhaseStart != null)
@@ -52,11 +49,5 @@ public static class GameplayEvents
     {
         if (OnPlayerTurnEnded != null)
             OnPlayerTurnEnded(player);
-    }
-
-    public static void TileHasChanged(Tile oldTile, Tile newTile)
-    {
-        if (OnTileChanged != null)
-            OnTileChanged(oldTile, newTile);
     }
 }

@@ -76,20 +76,25 @@ public abstract class Tile
 
     public Tile Transform(TileType newTileType)
     {
-        Tile newTile = TileFactory.CreateTile(newTileType, this.GetRow(), this.GetColumn());
-        newTile.currentInhabitant = this.currentInhabitant;
-        GameObject.Destroy(tileGameObject);
+        this.type = newTileType;
+        this.tileSprite = SpriteManager.GetTileSprite(newTileType);
+        this.tileGameObject.GetComponent<SpriteRenderer>().sprite = this.tileSprite;
 
-        GameplayEvents.TileHasChanged(this, newTile);
+        return this;
+    }
 
-        return newTile;
+    public string GetTileName()
+    {
+        int row = 9 - this.GetRow();
+        char columnChar = (char)(this.GetColumn() + 65);
+        return columnChar.ToString() + row.ToString();
     }
 
     private GameObject CreateTileGameObject()
     {
         GameObject tile = new GameObject();
 
-        tile.name = this.GetType().Name;
+        tile.name = GetTileName();
         
         Quaternion startRotation = Quaternion.identity;
 
