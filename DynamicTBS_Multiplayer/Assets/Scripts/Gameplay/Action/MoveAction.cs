@@ -55,24 +55,37 @@ public class MoveAction : MonoBehaviour, IAction
         List<Vector3> movePositions = new List<Vector3>();
 
         int range = character.GetMoveSpeed();
-        Queue<Tile> queue = new Queue<Tile>();
+        Dictionary<int, Queue<Tile>> tileQueueByDistance = new Dictionary<int, Queue<Tile>>();
+        int distance = 0;
+        tileQueueByDistance[distance] = new Queue<Tile>();
+        tileQueueByDistance[distance].Enqueue(currentTile);
         List<Tile> visited = new List<Tile>();
-        queue.Enqueue(currentTile);
-        while (queue.Count > 0 && range > 0)
+        while (distance <= range && tileQueueByDistance[distance].Count > 0)
         {
-            Tile tile = queue.Dequeue();
+            Tile tile = tileQueueByDistance[distance].Dequeue();
             visited.Add(tile);
 
-            List<Tile> neighbors = Board.GetNeighbors(tile, character.movePattern);
-            foreach (Tile neighbor in neighbors)
+            if (distance + 1 <= range)
             {
-                if (!visited.Contains(neighbor) && neighbor.IsAccessible())
+                List<Tile> neighbors = Board.GetNeighbors(tile, character.movePattern);
+                foreach (Tile neighbor in neighbors)
                 {
-                    movePositions.Add(neighbor.GetTileGameObject().transform.position);
-                    queue.Enqueue(neighbor);
+                    if (!visited.Contains(neighbor) && neighbor.IsAccessible())
+                    {
+                        movePositions.Add(neighbor.GetTileGameObject().transform.position);
+                        if (!tileQueueByDistance.ContainsKey(distance + 1))
+                        {
+                            tileQueueByDistance[distance + 1] = new Queue<Tile>();
+                        }
+                        tileQueueByDistance[distance + 1].Enqueue(neighbor);
+                    }
                 }
             }
-            range--;
+
+            if (tileQueueByDistance[distance].Count == 0) 
+            {
+                distance++;
+            }
         }
 
         return movePositions;

@@ -90,10 +90,11 @@ public class Tile
 
     private GameObject CreateTileGameObject()
     {
-        GameObject tile = new GameObject();
+        GameObject tile = new GameObject
+        {
+            name = GetTileName()
+        };
 
-        tile.name = GetTileName();
-        
         Quaternion startRotation = Quaternion.identity;
 
         SpriteRenderer spriteRenderer = tile.AddComponent<SpriteRenderer>();

@@ -30,10 +30,8 @@ public class CharacterHandler : MonoBehaviour
     public static Character GetCharacterByPosition(Vector3 position)
     {
         GameObject gameObject = UIUtils.FindGameObjectByPosition(charactersByGameObject.Keys.ToList(), position);
-        Debug.Log("found gameObject " + gameObject.name);
         if (gameObject && charactersByGameObject.ContainsKey(gameObject))
         {
-            Debug.Log("found character");
             return charactersByGameObject[gameObject];
         }
 
@@ -69,6 +67,15 @@ public class CharacterHandler : MonoBehaviour
         }
     }
 
+    private void UpdateCharactersAfterCharacterDeath(Character character, Vector3 position)
+    {
+        characters.Remove(character);
+        charactersByGameObject.Clear();
+        foreach (Character c in characters) {
+            charactersByGameObject.Add(c.GetCharacterGameObject(), c);
+        }
+    }
+
     private void DeliverCharacterList()
     {
         DraftEvents.DeliverCharacterList(characters);
@@ -81,6 +88,7 @@ public class CharacterHandler : MonoBehaviour
         DraftEvents.OnCharacterCreated += AddCharacterToList;
         DraftEvents.OnEndDraft += DeliverCharacterList;
         GameplayEvents.OnFinishAction += SetActiveAbilityOnCooldown;
+        CharacterEvents.OnCharacterDeath += UpdateCharactersAfterCharacterDeath;
     }
 
     private void UnsubscribeEvents()
@@ -88,6 +96,7 @@ public class CharacterHandler : MonoBehaviour
         DraftEvents.OnCharacterCreated -= AddCharacterToList;
         DraftEvents.OnEndDraft -= DeliverCharacterList;
         GameplayEvents.OnFinishAction -= SetActiveAbilityOnCooldown;
+        CharacterEvents.OnCharacterDeath -= UpdateCharactersAfterCharacterDeath;
     }
 
     #endregion
