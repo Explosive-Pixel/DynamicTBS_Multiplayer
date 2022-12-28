@@ -135,7 +135,7 @@ public abstract class Character //: MonoBehaviour
 
     public void ReduceActiveAbilityCooldown()
     {
-        if(activeAbilityCooldown > 0)
+        if(activeAbilityCooldown > 0 && !IsDead())
         {
             activeAbilityCooldown -= 1;
             this.characterGameObject.transform.GetChild(1).GetComponent<Animator>().SetInteger("cooldown", activeAbilityCooldown);
@@ -154,6 +154,7 @@ public abstract class Character //: MonoBehaviour
     public virtual void Die() 
     {
         CharacterEvents.CharacterDies(this, characterGameObject.transform.position);
+        GameplayEvents.OnPlayerTurnEnded -= ReduceActiveAbiliyCooldown;
         GameObject.Destroy(characterGameObject);
         characterGameObject = null;
         GameplayEvents.OnPlayerTurnEnded -= ReduceActiveAbiliyCooldown;

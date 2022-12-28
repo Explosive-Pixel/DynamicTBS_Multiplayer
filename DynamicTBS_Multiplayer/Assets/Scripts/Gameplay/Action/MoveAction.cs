@@ -60,7 +60,7 @@ public class MoveAction : MonoBehaviour, IAction
         tileQueueByDistance[distance] = new Queue<Tile>();
         tileQueueByDistance[distance].Enqueue(currentTile);
         List<Tile> visited = new List<Tile>();
-        while (distance <= range && tileQueueByDistance[distance].Count > 0)
+        while (distance <= range && tileQueueByDistance.ContainsKey(distance) && tileQueueByDistance[distance].Count > 0)
         {
             Tile tile = tileQueueByDistance[distance].Dequeue();
             visited.Add(tile);
