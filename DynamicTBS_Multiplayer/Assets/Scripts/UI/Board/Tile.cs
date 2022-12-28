@@ -26,7 +26,7 @@ public class Tile
         this.tileSprite = SpriteManager.GetTileSprite(type);
         this.position = Board.FindPosition(row, column);
         this.currentInhabitant = null;
-        this.isChangeable = () => true;
+        this.isChangeable = () => type != TileType.GoalTile;
         this.tileGameObject = CreateTileGameObject();
     }
 

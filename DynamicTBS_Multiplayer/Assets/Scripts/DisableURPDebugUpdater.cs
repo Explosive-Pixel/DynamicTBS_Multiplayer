@@ -7,7 +7,7 @@ public class DisableURPDebugUpdater : MonoBehaviour
     {
         DebugManager.instance.enableRuntimeUI = false;
 
-        // Debug.LogError(null); // Uncomment this to show console on startup
+        Debug.LogError(null); // Uncomment this to show console on startup
     }
 }
 

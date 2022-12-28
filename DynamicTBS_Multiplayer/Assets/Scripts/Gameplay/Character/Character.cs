@@ -156,6 +156,7 @@ public abstract class Character //: MonoBehaviour
         CharacterEvents.CharacterDies(this, characterGameObject.transform.position);
         GameObject.Destroy(characterGameObject);
         characterGameObject = null;
+        GameplayEvents.OnPlayerTurnEnded -= ReduceActiveAbiliyCooldown;
     }
 
     public bool IsDead()
