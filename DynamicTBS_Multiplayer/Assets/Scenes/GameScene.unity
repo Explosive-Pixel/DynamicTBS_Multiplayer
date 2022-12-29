@@ -143,6 +143,7 @@ GameObject:
   - component: {fileID: 32580860}
   - component: {fileID: 32580859}
   - component: {fileID: 32580861}
+  - component: {fileID: 32580862}
   - component: {fileID: 32580858}
   m_Layer: 5
   m_Name: GameplayCanvas
@@ -351,6 +352,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   surrenderButton: {fileID: 903296275}
+--- !u!114 &32580862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 32580846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40bc3812735c6a944a0eea70bb2de81f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blueActionsCounter: {fileID: 1552067223}
+  pinkActionsCounter: {fileID: 111991153}
 --- !u!1 &34118702
 GameObject:
   m_ObjectHideFlags: 0
@@ -1108,7 +1123,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &111991154
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1162,7 +1177,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 2
+  m_Text: 0
 --- !u!222 &111991156
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8276,7 +8291,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1552067224
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8310,7 +8325,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.18396229, g: 0.7269476, b: 1, a: 1}
+  m_Color: {r: 0.18431371, g: 0.37272125, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
