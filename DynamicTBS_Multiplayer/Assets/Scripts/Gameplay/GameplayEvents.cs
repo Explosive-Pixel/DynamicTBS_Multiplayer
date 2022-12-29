@@ -7,7 +7,7 @@ public static class GameplayEvents
     public delegate void GameplayPhase();
     public static event GameplayPhase OnGameplayPhaseStart;
 
-    public delegate void FinishAction(Character character, ActionType actionType, Vector3 characterInitialPosition, Vector3? actionDestinationPosition);
+    public delegate void FinishAction(ActionMetadata actionMetadata);
     public static event FinishAction OnFinishAction;
 
     public delegate void ChangeRemainingActions();
@@ -28,10 +28,10 @@ public static class GameplayEvents
             OnGameplayPhaseStart();
     }
 
-    public static void ActionFinished(Character character, ActionType actionType, Vector3 characterInitialPosition, Vector3? actionDestinationPosition)
+    public static void ActionFinished(ActionMetadata actionMetadata)
     {
         if (OnFinishAction != null)
-            OnFinishAction(character, actionType, characterInitialPosition, actionDestinationPosition);
+            OnFinishAction(actionMetadata);
     }
 
     public static void RemainingActionsChanged()

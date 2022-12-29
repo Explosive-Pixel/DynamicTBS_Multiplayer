@@ -50,21 +50,21 @@ public class GameplayManager : MonoBehaviour
         actionsPerCharacterPerTurn.Clear();
     }
 
-    private void OnActionFinished(Character character, ActionType actionType, Vector3 characterInitialPosition, Vector3? actionDestinationPosition) 
+    private void OnActionFinished(ActionMetadata actionMetadata) 
     {
         SetRemainingActions(remainingActions - 1);
         if (remainingActions == 0)
         {
             PlayerManager.NextPlayer();
             ResetStates();
-        } else
+        } else if(actionMetadata.CharacterInAction != null)
         {
-            if(actionsPerCharacterPerTurn.ContainsKey(character))
+            if(actionsPerCharacterPerTurn.ContainsKey(actionMetadata.CharacterInAction))
             {
-                actionsPerCharacterPerTurn[character].Add(actionType);
+                actionsPerCharacterPerTurn[actionMetadata.CharacterInAction].Add(actionMetadata.ExecutedActionType);
             } else
             {
-                actionsPerCharacterPerTurn.Add(character, new List<ActionType>() { actionType });
+                actionsPerCharacterPerTurn.Add(actionMetadata.CharacterInAction, new List<ActionType>() { actionMetadata.ExecutedActionType });
             }
         }
     }

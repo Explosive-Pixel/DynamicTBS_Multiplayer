@@ -19,16 +19,12 @@ public class GameRecorder : MonoBehaviour
         path = "Assets/Resources/GameRecords/" + filename + ".txt";
     }
 
-    private void RecordMove(Character character, ActionType actionType, Vector3 characterInitialPosition, Vector3? actionDestinationPosition)
+    private void RecordMove(ActionMetadata actionMetadata)
     {
-        string recordLine = "";
-        if (actionType == ActionType.Skip)
+        string recordLine = "Player: " + actionMetadata.ExecutingPlayer.GetPlayerType().ToString() + "\nPerformed action: " + actionMetadata.ExecutedActionType.ToString();
+        if(actionMetadata.CharacterInAction != null)
         {
-            recordLine = "Action has been skiped.";
-        }
-        else
-        {
-            recordLine = "Player: " + character.GetSide().GetPlayerType().ToString() + "\nCharacter: " + character.ToString() + "\nPerformed action: " + actionType.ToString() + "\nOriginal position: " + TranslateTilePosition(characterInitialPosition) + "\nTarget position: " + TranslateTilePosition(actionDestinationPosition) + "\n";
+            recordLine = "\nCharacter: " + actionMetadata.CharacterInAction.ToString() + "\nOriginal position: " + TranslateTilePosition(actionMetadata.CharacterInitialPosition) + "\nTarget position: " + TranslateTilePosition(actionMetadata.ActionDestinationPosition) + "\n";
         }
 
         if (path != null)

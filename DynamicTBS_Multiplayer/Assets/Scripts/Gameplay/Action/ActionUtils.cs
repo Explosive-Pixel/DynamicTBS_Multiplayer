@@ -68,7 +68,14 @@ public class ActionUtils : MonoBehaviour
 
                 action.ExecuteAction(hit);
 
-                GameplayEvents.ActionFinished(characterInAction, action.ActionType, initialPosition, actionDestinationPosition);
+                GameplayEvents.ActionFinished(new ActionMetadata
+                {
+                    ExecutingPlayer = characterInAction.GetSide(),
+                    ExecutedActionType = action.ActionType,
+                    CharacterInAction = characterInAction,
+                    CharacterInitialPosition = initialPosition,
+                    ActionDestinationPosition = actionDestinationPosition
+                });
                 actionExecuted = true;
             }
             else

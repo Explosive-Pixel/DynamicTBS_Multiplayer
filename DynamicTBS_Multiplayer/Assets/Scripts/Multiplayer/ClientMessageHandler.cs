@@ -47,19 +47,19 @@ public class ClientMessageHandler : MonoBehaviour
         }
     }
 
-    private void SendPerformActionMessage(Character character, ActionType actionType, Vector3 characterInitialPosition, Vector3? actionDestinationPosition)
+    private void SendPerformActionMessage(ActionMetadata actionMetadata)
     {
-        if (Client.Instance.side == character.GetSide().GetPlayerType()) // TODO: Could character be turned by Master's passive -> problem?
+        if (Client.Instance.side == actionMetadata.ExecutingPlayer.GetPlayerType())
         {
             NetPerformAction msg = new NetPerformAction
             {
-                characterX = characterInitialPosition.x,
-                characterY = characterInitialPosition.y,
-                actionType = (int)actionType,
-                hasDestination = actionDestinationPosition != null,
-                destinationX = actionDestinationPosition != null ? actionDestinationPosition.Value.x : 0f,
-                destinationY = actionDestinationPosition != null ? actionDestinationPosition.Value.y : 0f,
-                playerId = (int)character.GetSide().GetPlayerType()
+                characterX = actionMetadata.CharacterInitialPosition != null ? actionMetadata.CharacterInitialPosition.Value.x : 0f,
+                characterY = actionMetadata.CharacterInitialPosition != null ? actionMetadata.CharacterInitialPosition.Value.y : 0f,
+                actionType = (int)actionMetadata.ExecutedActionType,
+                hasDestination = actionMetadata.ActionDestinationPosition != null,
+                destinationX = actionMetadata.ActionDestinationPosition != null ? actionMetadata.ActionDestinationPosition.Value.x : 0f,
+                destinationY = actionMetadata.ActionDestinationPosition != null ? actionMetadata.ActionDestinationPosition.Value.y : 0f,
+                playerId = (int)actionMetadata.CharacterInAction.GetSide().GetPlayerType()
             };
             Client.Instance.SendToServer(msg);
         }

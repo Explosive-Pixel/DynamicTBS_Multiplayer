@@ -59,11 +59,11 @@ public class CharacterHandler : MonoBehaviour
         charactersByGameObject.Add(character.GetCharacterGameObject(), character);
     }
 
-    private void SetActiveAbilityOnCooldown(Character character, ActionType actionType, Vector3 characterInitialPosition, Vector3? actionDestinationPosition)
+    private void SetActiveAbilityOnCooldown(ActionMetadata actionMetadata)
     {
-        if(actionType == ActionType.ActiveAbility)
+        if(actionMetadata.ExecutedActionType == ActionType.ActiveAbility)
         {
-            character.SetActiveAbilityOnCooldown();
+            actionMetadata.CharacterInAction.SetActiveAbilityOnCooldown();
         }
     }
 

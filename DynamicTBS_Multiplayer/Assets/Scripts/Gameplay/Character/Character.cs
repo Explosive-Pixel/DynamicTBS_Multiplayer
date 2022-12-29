@@ -120,8 +120,8 @@ public abstract class Character //: MonoBehaviour
             if (this.hitPoints > this.maxHitPoints)
             {
                 this.hitPoints = this.maxHitPoints;
-                this.characterGameObject.transform.GetChild(0).GetComponent<Animator>().SetInteger("leben", this.hitPoints);
             }
+            this.characterGameObject.transform.GetChild(0).GetComponent<Animator>().SetInteger("leben", this.hitPoints);
             Debug.Log("Character " + characterGameObject.name + " now has " + hitPoints + " hit points remaining.");
         }
     }

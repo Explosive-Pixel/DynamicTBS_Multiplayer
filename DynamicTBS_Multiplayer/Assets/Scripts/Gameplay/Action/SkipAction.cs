@@ -6,6 +6,10 @@ public class SkipAction : MonoBehaviour
 {
     public static void Execute()
     {
-        GameplayEvents.ActionFinished(null, ActionType.Skip, new Vector3(), null);
+        GameplayEvents.ActionFinished(new ActionMetadata
+        {
+            ExecutingPlayer = PlayerManager.GetCurrentPlayer(),
+            ExecutedActionType = ActionType.Skip
+        });
     }
 }

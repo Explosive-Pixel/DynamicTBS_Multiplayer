@@ -43,7 +43,7 @@ public class PlacementManager : MonoBehaviour
         PlacementEvents.StartPlacement();
     }
 
-    private void AdvancePlacementOrder(Character character, ActionType actionType, Vector3 characterInitialPosition, Vector3? actionDestinationPosition)
+    private void AdvancePlacementOrder(ActionMetadata actionMetadata)
     {
         placementCount += 1;
         
