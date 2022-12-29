@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ActiveAbilityHandler : MonoBehaviour
+public class ActiveAbilityButtonHandler : MonoBehaviour
 {
     [SerializeField] private Button activeAbilityButton;
     private Character currentCharacter;
@@ -15,7 +15,7 @@ public class ActiveAbilityHandler : MonoBehaviour
     public void ExecuteActiveAbility()
     {
         currentCharacter.GetActiveAbility().Execute();
-        // Please remember to call this after every execution (in AAHandler classes): GameplayEvents.ActionFinished(character, ActionType.ActiveAbility, character.GetCharacterGameObject().transform.position, ...);
+        // Please remember to call this after every execution (in AAHandler classes): GameplayEvents.ActionFinished(actionMetadata);
     }
 
     private void ChangeButtonVisibility(Character character)

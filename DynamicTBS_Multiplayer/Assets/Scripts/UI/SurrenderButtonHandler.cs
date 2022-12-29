@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TurnEndedHandler : MonoBehaviour
+public class SurrenderButtonHandler : MonoBehaviour
 {
-    [SerializeField] private Button turnEndedButton;
+    [SerializeField] private Button surrenderButton;
 
     private void Awake()
     {
@@ -13,26 +13,19 @@ public class TurnEndedHandler : MonoBehaviour
         ChangeButtonVisibility(false);
     }
 
-    public void FinishTurn()
+    public void Surrender()
     {
-        SkipAction.Execute();
-    }
-
-    private void ChangeButtonInteractability()
-    {
-        turnEndedButton.interactable = GameplayManager.GetRemainingActions() == 1;
+        GameplayEvents.GameIsOver(PlayerManager.GetOtherPlayer(PlayerManager.GetCurrentPlayer()).GetPlayerType());
     }
 
     private void ChangeButtonVisibility(bool active)
     {
-        turnEndedButton.gameObject.SetActive(active);
+        surrenderButton.gameObject.SetActive(active);
     }
 
     private void SetActive()
     {
         ChangeButtonVisibility(true);
-        ChangeButtonInteractability();
-        GameplayEvents.OnChangeRemainingActions += ChangeButtonInteractability;
     }
 
     #region EventsRegion
@@ -45,7 +38,6 @@ public class TurnEndedHandler : MonoBehaviour
     private void UnsubscribeEvents()
     {
         GameplayEvents.OnGameplayPhaseStart -= SetActive;
-        GameplayEvents.OnChangeRemainingActions -= ChangeButtonInteractability;
     }
 
     #endregion
