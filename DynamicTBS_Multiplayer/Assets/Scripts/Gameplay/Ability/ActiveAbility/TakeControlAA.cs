@@ -34,7 +34,7 @@ public class TakeControlAA : IActiveAbility
     private bool Executable()
     {
         Tile tile = Board.GetTileByPosition(character.GetCharacterGameObject().transform.position);
-        if (tile != null && tile.GetType().Equals(TileType.GoalTile))
+        if (tile != null && tile.GetTileType().Equals(TileType.GoalTile))
         {
             return true;
         }
