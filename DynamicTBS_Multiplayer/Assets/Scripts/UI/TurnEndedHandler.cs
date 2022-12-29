@@ -31,7 +31,7 @@ public class TurnEndedHandler : MonoBehaviour
     private void SetActive()
     {
         ChangeButtonVisibility(true);
-        turnEndedButton.interactable = false;
+        ChangeButtonInteractability();
         GameplayEvents.OnChangeRemainingActions += ChangeButtonInteractability;
     }
 
