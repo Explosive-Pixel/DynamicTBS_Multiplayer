@@ -159,6 +159,16 @@ public abstract class Character //: MonoBehaviour
         return activeAbilityCooldown > 0;
     }
 
+    public bool CanPerformActiveAbility()
+    {
+        return !IsActiveAbilityOnCooldown() && activeAbility.CountActionDestinations() > 0; 
+    }
+
+    public bool CanPerformAction()
+    {
+        return ActionUtils.CountAllActionDestinations(this) > 0 || CanPerformActiveAbility();
+    }
+
     public virtual void Die() 
     {
         CharacterEvents.CharacterDies(this, characterGameObject.transform.position);

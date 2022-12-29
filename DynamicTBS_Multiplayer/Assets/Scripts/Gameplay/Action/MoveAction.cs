@@ -20,9 +20,21 @@ public class MoveAction : MonoBehaviour, IAction
         PlacementEvents.OnPlacementStart += Register;
     }
 
+    public int CountActionDestinations(Character character)
+    {
+        List<Vector3> movePositions = FindMovePositions(character);
+
+        if (movePositions != null)
+        {
+            return movePositions.Count;
+        }
+
+        return 0;
+    }
+
     public void CreateActionDestinations(Character character)
     {
-        List<Vector3> movePositions = GameManager.HasGameStarted() ? FindMovePositions(character) : Board.FindStartTiles(character).ConvertAll(tile => tile.GetPosition());
+        List<Vector3> movePositions = FindMovePositions(character);
 
         if(movePositions != null)
         {
@@ -48,6 +60,11 @@ public class MoveAction : MonoBehaviour, IAction
 
     private List<Vector3> FindMovePositions(Character character)
     {
+        if(!GameManager.HasGameStarted())
+        {
+            return Board.FindStartTiles(character).ConvertAll(tile => tile.GetPosition());
+        }
+
         Tile currentTile = Board.GetTileByCharacter(character);
 
         if (currentTile == null) return null;

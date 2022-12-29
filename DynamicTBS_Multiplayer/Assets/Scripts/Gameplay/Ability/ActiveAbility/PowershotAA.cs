@@ -22,4 +22,9 @@ public class PowershotAA : IActiveAbility
         powershotAAAction.CreateActionDestinations(character);
         ActionRegistry.Register(powershotAAAction);
     }
+
+    public int CountActionDestinations()
+    { 
+        return powershotAAAction.CountActionDestinations(character);
+    }
 }

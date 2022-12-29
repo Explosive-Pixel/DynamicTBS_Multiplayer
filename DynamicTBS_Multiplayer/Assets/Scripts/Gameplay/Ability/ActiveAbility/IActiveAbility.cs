@@ -6,4 +6,6 @@ public interface IActiveAbility
 {
     int Cooldown { get; }
     void Execute();
+
+    int CountActionDestinations();
 }

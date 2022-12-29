@@ -15,16 +15,23 @@ public class HealAAAction : MonoBehaviour, IAction
     private Character characterInAction = null;
     public Character CharacterInAction { get { return characterInAction; } }
 
+    public int CountActionDestinations(Character character)
+    {
+        List<Vector3> healPositions = FindHealPositions(character);
+
+        if (healPositions != null)
+        {
+            return healPositions.Count;
+        }
+
+        return 0;
+    }
+
     public void CreateActionDestinations(Character character)
     {
-        Tile characterTile = Board.GetTileByPosition(character.GetCharacterGameObject().transform.position);
+        List<Vector3> healPositions = FindHealPositions(character);
 
-        List<Tile> healTiles = Board.GetTilesOfClosestCharactersOfSideWithinRadius(characterTile, character.GetSide().GetPlayerType(), HealAA.healingRange)
-            .FindAll(tile => tile.IsOccupied() && tile.GetCurrentInhabitant().isHealableBy(character) && !tile.GetCurrentInhabitant().HasFullHP());
-
-        List<Vector3> healPositions = healTiles.ConvertAll(tile => tile.GetPosition());
-
-        if(healPositions.Count > 0)
+        if(healPositions != null && healPositions.Count > 0)
         {
             healTargets = ActionUtils.InstantiateActionPositions(healPositions, healPrefab);
             characterInAction = character;
@@ -48,5 +55,17 @@ public class HealAAAction : MonoBehaviour, IAction
         ActionUtils.Clear(healTargets);
         ActionRegistry.Remove(this);
         characterInAction = null;
+    }
+
+    private List<Vector3> FindHealPositions(Character character)
+    {
+        Tile characterTile = Board.GetTileByPosition(character.GetCharacterGameObject().transform.position);
+
+        List<Tile> healTiles = Board.GetTilesOfClosestCharactersOfSideWithinRadius(characterTile, character.GetSide().GetPlayerType(), HealAA.healingRange)
+            .FindAll(tile => tile.IsOccupied() && tile.GetCurrentInhabitant().isHealableBy(character) && !tile.GetCurrentInhabitant().HasFullHP());
+
+        List<Vector3> healPositions = healTiles.ConvertAll(tile => tile.GetPosition());
+
+        return healPositions;
     }
 }

@@ -23,4 +23,9 @@ public class ChangeFloorAA : IActiveAbility
         changeFloorAAAction.CreateActionDestinations(character);
         ActionRegistry.Register(changeFloorAAAction);
     }
+
+    public int CountActionDestinations()
+    {
+        return changeFloorAAAction.CountActionDestinations(character);
+    }
 }

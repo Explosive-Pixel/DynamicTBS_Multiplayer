@@ -48,6 +48,11 @@ public class BlockAA : IActiveAbility
 
     }
 
+    public int CountActionDestinations()
+    {
+        return 1;
+    }
+
     public Character GetCharacter()
     {
         return character;

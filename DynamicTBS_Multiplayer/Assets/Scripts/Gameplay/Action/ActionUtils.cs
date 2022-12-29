@@ -41,6 +41,19 @@ public class ActionUtils : MonoBehaviour
         }
     }
 
+    public static int CountAllActionDestinations(Character character)
+    {
+        int actionDestinationCount = 0;
+
+        foreach(IAction action in ActionRegistry.GetActions())
+        {
+            if (GameplayManager.ActionAvailable(character, action.ActionType))
+                actionDestinationCount += action.CountActionDestinations(character);
+        }
+
+        return actionDestinationCount;
+    }
+
     public static bool ExecuteAction(Ray ray)
     {
         bool actionExecuted = false;

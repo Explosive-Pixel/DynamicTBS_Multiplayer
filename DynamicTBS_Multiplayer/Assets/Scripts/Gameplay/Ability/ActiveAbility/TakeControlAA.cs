@@ -15,10 +15,30 @@ public class TakeControlAA : IActiveAbility
 
     public void Execute() 
     {
-        Tile tile = Board.GetTileByPosition(character.GetCharacterGameObject().transform.position);
-        if (tile.GetType().Equals(TileType.GoalTile))
+        if (Executable())
         {
             GameplayEvents.GameIsOver(character.GetSide().GetPlayerType());
         }
+    }
+
+    public int CountActionDestinations()
+    {
+        if (Executable())
+        {
+            return 1;
+        }
+
+        return 0;
+    }
+
+    private bool Executable()
+    {
+        Tile tile = Board.GetTileByPosition(character.GetCharacterGameObject().transform.position);
+        if (tile != null && tile.GetType().Equals(TileType.GoalTile))
+        {
+            return true;
+        }
+
+        return false;
     }
 }

@@ -8,8 +8,10 @@ public interface IAction
     List<GameObject> ActionDestinations { get; }
     Character CharacterInAction { get; }
 
-    void CreateActionDestinations(Character character);
+    int CountActionDestinations(Character character);
 
+    void CreateActionDestinations(Character character);
+   
     void ExecuteAction(GameObject actionDestination);
 
     void AbortAction();
