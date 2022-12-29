@@ -45,7 +45,6 @@ public class BlockAA : IActiveAbility
             firstExecution = false;
         }
         ActivateBlock();
-
     }
 
     public int CountActionDestinations()

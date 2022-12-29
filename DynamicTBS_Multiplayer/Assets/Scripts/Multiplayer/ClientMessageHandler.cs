@@ -55,7 +55,7 @@ public class ClientMessageHandler : MonoBehaviour
             {
                 characterX = characterInitialPosition.x,
                 characterY = characterInitialPosition.y,
-                activeAbility = actionType == ActionType.ActiveAbility,
+                actionType = (int)actionType,
                 hasDestination = actionDestinationPosition != null,
                 destinationX = actionDestinationPosition != null ? actionDestinationPosition.Value.x : 0f,
                 destinationY = actionDestinationPosition != null ? actionDestinationPosition.Value.y : 0f,
@@ -73,7 +73,11 @@ public class ClientMessageHandler : MonoBehaviour
         if (Client.Instance.side != playerType)
         {
             Character character = CharacterHandler.GetCharacterByPosition(new Vector3(netPerformAction.characterX, netPerformAction.characterY, 0));
-            if(netPerformAction.activeAbility)
+            if(netPerformAction.actionType == (int)ActionType.Skip)
+            {
+                SkipAction.Execute();
+            }
+            else if(netPerformAction.actionType == (int)ActionType.ActiveAbility)
             {
                 character.GetActiveAbility().Execute();
             }

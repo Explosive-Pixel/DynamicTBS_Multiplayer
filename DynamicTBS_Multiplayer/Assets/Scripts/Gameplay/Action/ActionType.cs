@@ -4,7 +4,8 @@ using UnityEngine;
 
 public enum ActionType
 {
-   Move,
-   Attack,
-   ActiveAbility
+   Skip = 0,
+   Move = 1,
+   Attack = 2,
+   ActiveAbility = 3
 }

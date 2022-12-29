@@ -21,7 +21,15 @@ public class GameRecorder : MonoBehaviour
 
     private void RecordMove(Character character, ActionType actionType, Vector3 characterInitialPosition, Vector3? actionDestinationPosition)
     {
-        string recordLine = "Player: " + character.GetSide().GetPlayerType().ToString() + "\nCharacter: " + character.ToString() + "\nPerformed action: " + actionType.ToString() + "\nOriginal position: " + TranslateTilePosition(characterInitialPosition) + "\nTarget position: " + TranslateTilePosition(actionDestinationPosition) + "\n";
+        string recordLine = "";
+        if (actionType == ActionType.Skip)
+        {
+            recordLine = "Action has been skiped.";
+        }
+        else
+        {
+            recordLine = "Player: " + character.GetSide().GetPlayerType().ToString() + "\nCharacter: " + character.ToString() + "\nPerformed action: " + actionType.ToString() + "\nOriginal position: " + TranslateTilePosition(characterInitialPosition) + "\nTarget position: " + TranslateTilePosition(actionDestinationPosition) + "\n";
+        }
 
         if (path != null)
         {

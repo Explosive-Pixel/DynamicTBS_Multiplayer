@@ -10,7 +10,7 @@ public class NetPerformAction : NetMessage
     // When transporting information through the internet it's important to choose the most basic types possible.
     public float characterX;
     public float characterY;
-    public bool activeAbility;
+    public int actionType;
     public bool hasDestination;
     public float destinationX;
     public float destinationY;
@@ -34,7 +34,7 @@ public class NetPerformAction : NetMessage
         writer.WriteByte((byte)Code);
         writer.WriteFloat(characterX);
         writer.WriteFloat(characterY);
-        writer.WriteInt(toInt(activeAbility));
+        writer.WriteInt(actionType);
         writer.WriteInt(toInt(hasDestination));
         writer.WriteFloat(destinationX);
         writer.WriteFloat(destinationY);
@@ -47,7 +47,7 @@ public class NetPerformAction : NetMessage
 
         characterX = reader.ReadFloat();
         characterY = reader.ReadFloat();
-        activeAbility = toBool(reader.ReadInt());
+        actionType = reader.ReadInt();
         hasDestination = toBool(reader.ReadInt());
         destinationX = reader.ReadFloat();
         destinationY = reader.ReadFloat();

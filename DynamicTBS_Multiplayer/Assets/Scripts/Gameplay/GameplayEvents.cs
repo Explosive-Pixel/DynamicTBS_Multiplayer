@@ -10,6 +10,9 @@ public static class GameplayEvents
     public delegate void FinishAction(Character character, ActionType actionType, Vector3 characterInitialPosition, Vector3? actionDestinationPosition);
     public static event FinishAction OnFinishAction;
 
+    public delegate void ChangeRemainingActions();
+    public static event ChangeRemainingActions OnChangeRemainingActions;
+
     public delegate void GameOver(PlayerType winner);
     public static event GameOver OnGameOver;
 
@@ -29,6 +32,12 @@ public static class GameplayEvents
     {
         if (OnFinishAction != null)
             OnFinishAction(character, actionType, characterInitialPosition, actionDestinationPosition);
+    }
+
+    public static void RemainingActionsChanged()
+    {
+        if (OnChangeRemainingActions != null)
+            OnChangeRemainingActions();
     }
 
     public static void GameIsOver(PlayerType winner)

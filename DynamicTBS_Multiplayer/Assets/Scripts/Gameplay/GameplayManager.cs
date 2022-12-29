@@ -30,6 +30,11 @@ public class GameplayManager : MonoBehaviour
         ResetStates();
     }
 
+    public static int GetRemainingActions()
+    {
+        return remainingActions;
+    }
+
     public static bool ActionAvailable(Character character, ActionType actionType)
     {
         if(actionsPerCharacterPerTurn.ContainsKey(character) && actionsPerCharacterPerTurn[character].Contains(actionType))
@@ -41,13 +46,13 @@ public class GameplayManager : MonoBehaviour
 
     private void ResetStates() 
     {
-        remainingActions = maxActionsPerRound;
+        SetRemainingActions(maxActionsPerRound);
         actionsPerCharacterPerTurn.Clear();
     }
 
     private void OnActionFinished(Character character, ActionType actionType, Vector3 characterInitialPosition, Vector3? actionDestinationPosition) 
     {
-        remainingActions--;
+        SetRemainingActions(remainingActions - 1);
         if (remainingActions == 0)
         {
             PlayerManager.NextPlayer();
@@ -62,6 +67,12 @@ public class GameplayManager : MonoBehaviour
                 actionsPerCharacterPerTurn.Add(character, new List<ActionType>() { actionType });
             }
         }
+    }
+
+    private void SetRemainingActions(int newRemainingActions)
+    {
+        remainingActions = newRemainingActions;
+        GameplayEvents.RemainingActionsChanged();
     }
 
     private void OnPlayerTurnEnded(Player player)
@@ -80,7 +91,7 @@ public class GameplayManager : MonoBehaviour
             }
         }
 
-        Debug.Log("Player " + otherPlayer.GetPlayerType() + " lost because player can not perform any action this round.");
+        Debug.Log("Player " + otherPlayer.GetPlayerType() + " lost because player can not perform any action this turn.");
         GameplayEvents.GameIsOver(player.GetPlayerType());
     }
 
