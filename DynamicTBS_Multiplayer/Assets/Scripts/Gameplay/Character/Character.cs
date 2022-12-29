@@ -55,7 +55,6 @@ public abstract class Character //: MonoBehaviour
 
     protected void Init()
     {
-        Debug.Log(characterPrefab);
         //this.characterGameObject = GameObject.Instantiate(characterPrefab) as GameObject;
         this.characterGameObject = characterPrefab;
         this.hitPoints = maxHitPoints;
@@ -97,28 +96,34 @@ public abstract class Character //: MonoBehaviour
 
     public void TakeDamage(int damage) 
     {
-        CharacterEvents.CharacterTakesDamage(this, damage);
-        if(isDamageable(damage))
+        if (!IsDead())
         {
-            this.hitPoints -= damage;
-            this.characterGameObject.transform.GetChild(0).GetComponent<Animator>().SetInteger("leben", this.hitPoints);
-            Debug.Log("Character " + characterGameObject.name + " now has " + hitPoints + " hit points remaining.");
-            if (this.hitPoints <= 0)
+            CharacterEvents.CharacterTakesDamage(this, damage);
+            if (isDamageable(damage))
             {
-                this.Die();
+                this.hitPoints -= damage;
+                this.characterGameObject.transform.GetChild(0).GetComponent<Animator>().SetInteger("leben", this.hitPoints);
+                Debug.Log("Character " + characterGameObject.name + " now has " + hitPoints + " hit points remaining.");
+                if (this.hitPoints <= 0)
+                {
+                    this.Die();
+                }
             }
         }
     }
 
     public void Heal(int healPoints) 
     {
-        this.hitPoints += healPoints;
-        if (this.hitPoints > this.maxHitPoints)
+        if (!IsDead())
         {
-            this.hitPoints = this.maxHitPoints;
-            this.characterGameObject.transform.GetChild(0).GetComponent<Animator>().SetInteger("leben", this.hitPoints);
+            this.hitPoints += healPoints;
+            if (this.hitPoints > this.maxHitPoints)
+            {
+                this.hitPoints = this.maxHitPoints;
+                this.characterGameObject.transform.GetChild(0).GetComponent<Animator>().SetInteger("leben", this.hitPoints);
+            }
+            Debug.Log("Character " + characterGameObject.name + " now has " + hitPoints + " hit points remaining.");
         }
-        Debug.Log("Character " + characterGameObject.name + " now has " + hitPoints + " hit points remaining.");
     }
 
     public bool HasFullHP()
@@ -128,9 +133,12 @@ public abstract class Character //: MonoBehaviour
 
     public void SetActiveAbilityOnCooldown()
     {
-        activeAbilityCooldown = activeAbility.Cooldown + 1;
-        this.characterGameObject.transform.GetChild(1).GetComponent<Animator>().SetInteger("cooldown", activeAbilityCooldown);
-        GameplayEvents.OnPlayerTurnEnded += ReduceActiveAbiliyCooldown;
+        if(!IsDead())
+        {
+            activeAbilityCooldown = activeAbility.Cooldown + 1;
+            this.characterGameObject.transform.GetChild(1).GetComponent<Animator>().SetInteger("cooldown", activeAbilityCooldown);
+            GameplayEvents.OnPlayerTurnEnded += ReduceActiveAbiliyCooldown;
+        }
     }
 
     public void ReduceActiveAbilityCooldown()
@@ -186,29 +194,6 @@ public abstract class Character //: MonoBehaviour
     private void ApplyPassiveAbility()
     {
         passiveAbility.Apply();
-    }
-
-    //wird nicht mehr gebraucht?
-    private GameObject CreateCharacterGameObject()
-    {
-        GameObject character = GameObject.Instantiate(characterPrefab) as GameObject;
-        /*
-        GameObject character = new GameObject
-        {
-            name = this.GetType().Name + "_" + side.GetPlayerType().ToString()
-        };
-        */
-        Vector3 startPosition = new Vector3(0, 0, 0);
-        Quaternion startRotation = Quaternion.identity;
-
-        //SpriteRenderer spriteRenderer = character.AddComponent<SpriteRenderer>();
-        //spriteRenderer.sprite = CharacterSprite(side);
-        character.transform.position = startPosition;
-        character.transform.rotation = startRotation;
-        //TODO: Collider in Prefab
-        //character.AddComponent<BoxCollider>();
-
-        return character;
     }
 
     ~Character()
