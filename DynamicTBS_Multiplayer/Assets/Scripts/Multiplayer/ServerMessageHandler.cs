@@ -21,7 +21,7 @@ public class ServerMessageHandler : MonoBehaviour
 
             if(Server.Instance.playerCount > 1)
             {
-                netWelcome.AssignedTeam = (Server.Instance.hostSide + 1) % 2;
+                netWelcome.AssignedTeam = Server.Instance.GetNonHostSide();
                 Server.Instance.SendToClient(netWelcome, Server.Instance.connections[1]);
             }
         }
@@ -30,7 +30,7 @@ public class ServerMessageHandler : MonoBehaviour
         {
             Server.Instance.playerCount++;
         }*/
-        netWelcome.AssignedTeam = Server.Instance.hostSide == 0 ? Server.Instance.playerCount : ((Server.Instance.hostSide + 1) % 2);
+        netWelcome.AssignedTeam = Server.Instance.hostSide == 0 ? Server.Instance.playerCount : Server.Instance.GetNonHostSide();
         Debug.Log("Server: Connected players: " + netWelcome.AssignedTeam);
 
         Server.Instance.SendToClient(netWelcome, cnn);

@@ -80,6 +80,15 @@ public class Server : MonoBehaviour
         return -1;
     }
 
+    public int GetNonHostSide()
+    {
+        if (hostSide == 1)
+            return 2;
+        if (hostSide == 2)
+            return 1;
+        return 0;
+    }
+
     public void Shutdown() // For shutting down the server.
     {
         if (isActive)
