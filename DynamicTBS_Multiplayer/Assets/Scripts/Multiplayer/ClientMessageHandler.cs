@@ -60,7 +60,7 @@ public class ClientMessageHandler : MonoBehaviour
                 hasDestination = actionMetadata.ActionDestinationPosition != null,
                 destinationX = actionMetadata.ActionDestinationPosition != null ? actionMetadata.ActionDestinationPosition.Value.x : 0f,
                 destinationY = actionMetadata.ActionDestinationPosition != null ? actionMetadata.ActionDestinationPosition.Value.y : 0f,
-                playerId = (int)actionMetadata.CharacterInAction.GetSide().GetPlayerType()
+                playerId = (int)actionMetadata.ExecutingPlayer.GetPlayerType()
             };
             Client.Instance.SendToServer(msg);
         }
