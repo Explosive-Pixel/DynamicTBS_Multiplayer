@@ -17,6 +17,14 @@ public class TakeControlAA : IActiveAbility
     {
         if (Executable())
         {
+            GameplayEvents.ActionFinished(new ActionMetadata
+            {
+                ExecutingPlayer = character.GetSide(),
+                ExecutedActionType = ActionType.ActiveAbility,
+                CharacterInAction = character,
+                CharacterInitialPosition = character.GetCharacterGameObject().transform.position,
+                ActionDestinationPosition = null
+            });
             GameplayEvents.GameIsOver(character.GetSide().GetPlayerType());
         }
     }
