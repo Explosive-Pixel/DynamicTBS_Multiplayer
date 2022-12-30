@@ -51,9 +51,9 @@ public class GameRecorder : MonoBehaviour
         Debug.Log(recordLine);
     }
 
-    private void RecordWinner(PlayerType winningSide)
+    private void RecordWinner(PlayerType? winningSide)
     {
-        string recordLine = "Player " + winningSide.ToString() + " won.";
+        string recordLine = winningSide != null ? "Player " + winningSide.ToString() + " won." : "No player won the match.";
 
         if (path != null)
         {

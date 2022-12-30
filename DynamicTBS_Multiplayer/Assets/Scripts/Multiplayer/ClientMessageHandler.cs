@@ -98,6 +98,31 @@ public class ClientMessageHandler : MonoBehaviour
         }
     }
 
+    private void SendExecuteUIActionMessage(Player player, UIActionType uIActionType)
+    {
+        if (Client.Instance.side == player.GetPlayerType())
+        {
+            NetExecuteUIAction msg = new NetExecuteUIAction
+            {
+                uiActionType = (int)uIActionType,
+                playerId = (int)player.GetPlayerType()
+            };
+            Client.Instance.SendToServer(msg);
+        }
+    }
+
+    private void OnExecuteUIAction(NetMessage msg)
+    {
+        NetExecuteUIAction netExecuteUIAction = msg as NetExecuteUIAction;
+
+        PlayerType playerType = (PlayerType)netExecuteUIAction.playerId;
+        UIActionType uIActionType = (UIActionType)netExecuteUIAction.uiActionType;
+        if (Client.Instance.side != playerType)
+        {
+            GameplayEvents.UIActionExecuted(PlayerManager.GetPlayer(playerType), uIActionType);
+        }
+    }
+
     #region EventsRegion
 
     private void SubscribeEvents()
@@ -110,6 +135,9 @@ public class ClientMessageHandler : MonoBehaviour
 
         GameplayEvents.OnFinishAction += SendPerformActionMessage;
         NetUtility.C_PERFORM_ACTION += OnPerformAction;
+
+        GameplayEvents.OnExecuteUIAction += SendExecuteUIActionMessage;
+        NetUtility.C_EXECUTE_UIACTION += OnExecuteUIAction;
     }
 
     private void UnsubscribeEvents()
@@ -122,6 +150,9 @@ public class ClientMessageHandler : MonoBehaviour
 
         GameplayEvents.OnFinishAction -= SendPerformActionMessage;
         NetUtility.C_PERFORM_ACTION -= OnPerformAction;
+
+        GameplayEvents.OnExecuteUIAction -= SendExecuteUIActionMessage;
+        NetUtility.C_EXECUTE_UIACTION -= OnExecuteUIAction;
     }
 
     #endregion

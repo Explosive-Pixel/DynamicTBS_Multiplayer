@@ -97,11 +97,17 @@ public class GameManager : MonoBehaviour
         HandleMenus(creditsCanvas);
     }
 
-    private void GoToGameOverScreen(PlayerType winner)
+    private void GoToGameOverScreen(PlayerType? winner)
     {
         HandleMenus(gameOverCanvas);
         Text gameOverText = gameOverCanvas.GetComponentInChildren<Text>();
-        gameOverText.text = "Player " + winner.ToString() + " has won.";
+        if(winner != null)
+        {
+            gameOverText.text = "Player " + winner.ToString() + " has won.";
+        } else
+        {
+            gameOverText.text = "No player has won the game.";
+        }
     }
 
     private void HandleMenus(GameObject menuCanvas)

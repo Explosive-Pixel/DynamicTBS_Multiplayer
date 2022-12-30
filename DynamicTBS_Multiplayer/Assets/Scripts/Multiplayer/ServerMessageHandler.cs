@@ -48,6 +48,13 @@ public class ServerMessageHandler : MonoBehaviour
         Server.Instance.Broadcast(netPerformAction);
     }
 
+    private void OnExecuteUIActionServer(NetMessage msg, NetworkConnection cnn)
+    {
+        NetExecuteUIAction netExecuteUIAction = msg as NetExecuteUIAction;
+
+        Server.Instance.Broadcast(netExecuteUIAction);
+    }
+
     #region EventsRegion
 
     private void SubscribeEvents()
@@ -55,6 +62,7 @@ public class ServerMessageHandler : MonoBehaviour
         NetUtility.S_WELCOME += OnWelcomeServer;
         NetUtility.S_DRAFT_CHARACTER += OnDraftCharacterServer;
         NetUtility.S_PERFORM_ACTION += OnPeformActionServer;
+        NetUtility.S_EXECUTE_UIACTION += OnExecuteUIActionServer;
     }
 
     private void UnsubscribeEvents()
@@ -62,6 +70,7 @@ public class ServerMessageHandler : MonoBehaviour
         NetUtility.S_WELCOME -= OnWelcomeServer;
         NetUtility.S_DRAFT_CHARACTER -= OnDraftCharacterServer;
         NetUtility.S_PERFORM_ACTION -= OnPeformActionServer;
+        NetUtility.S_EXECUTE_UIACTION -= OnExecuteUIActionServer;
     }
 
     #endregion
