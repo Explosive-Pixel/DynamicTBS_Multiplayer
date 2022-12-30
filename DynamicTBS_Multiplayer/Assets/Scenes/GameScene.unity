@@ -1322,7 +1322,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 160965114}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 720936209}
+        m_TargetAssemblyTypeName: OnlineHostUI, Assembly-CSharp
+        m_MethodName: OnSelectBlue
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &160965114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4398,7 +4410,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 2011208733}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: OnlineUI, Assembly-CSharp
         m_MethodName: BackToMainMenuButton
         m_Mode: 1
@@ -5096,7 +5108,7 @@ GameObject:
   - component: {fileID: 720936207}
   - component: {fileID: 720936206}
   - component: {fileID: 720936205}
-  - component: {fileID: 720936204}
+  - component: {fileID: 720936209}
   m_Layer: 5
   m_Name: OnlineHostCanvas
   m_TagString: Untagged
@@ -5104,24 +5116,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &720936204
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 720936203}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f87dc8a0f5b7d404784434df519115ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  server: {fileID: 1322263673}
-  client: {fileID: 1322263674}
-  addressInput: {fileID: 0}
-  onlineMenuCanvas: {fileID: 0}
-  onlineHostCanvas: {fileID: 0}
-  onlineClientCanvas: {fileID: 0}
 --- !u!114 &720936205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5210,6 +5204,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &720936209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 720936203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b35ebb2fee680ff469000c262a1a511c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startGameButton: {fileID: 1975994773}
+  selectPinkButton: {fileID: 840944657}
+  selectBlueButton: {fileID: 160965113}
+  connectedPlayer: {fileID: 1829979936}
 --- !u!1 &730934768
 GameObject:
   m_ObjectHideFlags: 0
@@ -5969,7 +5979,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 840944658}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 720936209}
+        m_TargetAssemblyTypeName: OnlineHostUI, Assembly-CSharp
+        m_MethodName: OnSelectPink
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &840944658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7436,7 +7458,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 720936204}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: OnlineUI, Assembly-CSharp
         m_MethodName: BackToMainMenuButton
         m_Mode: 1
@@ -8864,6 +8886,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCount: 0
+  hostSide: 0
 --- !u!114 &1322263674
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12384,7 +12407,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1975994774}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 720936209}
+        m_TargetAssemblyTypeName: OnlineHostUI, Assembly-CSharp
+        m_MethodName: OnStartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1975994774
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12768,7 +12803,6 @@ GameObject:
   - component: {fileID: 2011208736}
   - component: {fileID: 2011208735}
   - component: {fileID: 2011208734}
-  - component: {fileID: 2011208733}
   m_Layer: 5
   m_Name: OnlineClientCanvas
   m_TagString: Untagged
@@ -12776,24 +12810,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2011208733
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2011208732}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f87dc8a0f5b7d404784434df519115ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  server: {fileID: 1322263673}
-  client: {fileID: 1322263674}
-  addressInput: {fileID: 0}
-  onlineMenuCanvas: {fileID: 0}
-  onlineHostCanvas: {fileID: 0}
-  onlineClientCanvas: {fileID: 0}
 --- !u!114 &2011208734
 MonoBehaviour:
   m_ObjectHideFlags: 0

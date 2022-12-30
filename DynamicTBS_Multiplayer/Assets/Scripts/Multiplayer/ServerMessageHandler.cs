@@ -14,15 +14,31 @@ public class ServerMessageHandler : MonoBehaviour
     {
         NetWelcome netWelcome = msg as NetWelcome;
 
-        netWelcome.AssignedTeam = ++Server.Instance.playerCount;
+        if(netWelcome.AssignedTeam != 0)
+        {
+            Server.Instance.hostSide = netWelcome.AssignedTeam;
+            Server.Instance.SendToClient(netWelcome, Server.Instance.connections[0]);
+
+            if(Server.Instance.playerCount > 1)
+            {
+                netWelcome.AssignedTeam = (Server.Instance.hostSide + 1) % 2;
+                Server.Instance.SendToClient(netWelcome, Server.Instance.connections[1]);
+            }
+        }
+
+       /* if (Server.Instance.FindConnection(cnn) == -1)
+        {
+            Server.Instance.playerCount++;
+        }*/
+        netWelcome.AssignedTeam = Server.Instance.hostSide == 0 ? Server.Instance.playerCount : ((Server.Instance.hostSide + 1) % 2);
         Debug.Log("Server: Connected players: " + netWelcome.AssignedTeam);
 
         Server.Instance.SendToClient(netWelcome, cnn);
 
-        if(Server.Instance.playerCount == 2)
+        /*if(Server.Instance.playerCount == 2)
         {
             Server.Instance.Broadcast(new NetStartGame());
-        }
+        }*/
     }
 
     private void OnDraftCharacterServer(NetMessage msg, NetworkConnection cnn)
