@@ -9,7 +9,10 @@ public class SkipAction : MonoBehaviour
         GameplayEvents.ActionFinished(new ActionMetadata
         {
             ExecutingPlayer = PlayerManager.GetCurrentPlayer(),
-            ExecutedActionType = ActionType.Skip
+            ExecutedActionType = ActionType.Skip,
+            CharacterInAction = null,
+            CharacterInitialPosition = null,
+            ActionDestinationPosition = null
         });
     }
 }

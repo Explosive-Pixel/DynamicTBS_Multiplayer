@@ -73,12 +73,15 @@ public class ClientMessageHandler : MonoBehaviour
         PlayerType playerType = (PlayerType)netPerformAction.playerId;
         if (Client.Instance.side != playerType)
         {
-            Character character = CharacterHandler.GetCharacterByPosition(new Vector3(netPerformAction.characterX, netPerformAction.characterY, 0));
+            
             if(netPerformAction.actionType == (int)ActionType.Skip)
             {
                 SkipAction.Execute();
+                return;
             }
-            else if(netPerformAction.actionType == (int)ActionType.ActiveAbility)
+
+            Character character = CharacterHandler.GetCharacterByPosition(new Vector3(netPerformAction.characterX, netPerformAction.characterY, 0));
+            if (netPerformAction.actionType == (int)ActionType.ActiveAbility)
             {
                 character.GetActiveAbility().Execute();
             }
