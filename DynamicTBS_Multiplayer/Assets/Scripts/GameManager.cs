@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject startMenuCanvas;
     [SerializeField] private GameObject onlineMenuCanvas;
+    [SerializeField] private GameObject onlineHostCanvas;
+    [SerializeField] private GameObject onlineClientCanvas;
     [SerializeField] private GameObject draftCanvas;
     [SerializeField] private GameObject gameplayCanvas;
     [SerializeField] private GameObject tutorialCanvas;
@@ -48,6 +50,8 @@ public class GameManager : MonoBehaviour
     {
         canvasList.Add(startMenuCanvas);
         canvasList.Add(onlineMenuCanvas);
+        canvasList.Add(onlineHostCanvas);
+        canvasList.Add(onlineClientCanvas);
         canvasList.Add(draftCanvas);
         canvasList.Add(gameplayCanvas);
         canvasList.Add(tutorialCanvas);
