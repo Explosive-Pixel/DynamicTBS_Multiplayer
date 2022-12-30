@@ -17,11 +17,12 @@ public class ServerMessageHandler : MonoBehaviour
         if(netWelcome.AssignedTeam != 0)
         {
             Server.Instance.hostSide = netWelcome.AssignedTeam;
-            Server.Instance.SendToClient(netWelcome, Server.Instance.connections[0]);
+            Server.Instance.SendToClient(netWelcome, cnn);
 
-            if(Server.Instance.playerCount > 1)
+            NetworkConnection? otherConnection = Server.Instance.FindOtherConnection(cnn);
+            if(otherConnection != null)
             {
-                Server.Instance.SendToClient(new NetWelcome { AssignedTeam = Server.Instance.GetNonHostSide() }, Server.Instance.connections[1]);
+                Server.Instance.SendToClient(new NetWelcome { AssignedTeam = Server.Instance.GetNonHostSide() }, otherConnection.Value);
             }
         }
 

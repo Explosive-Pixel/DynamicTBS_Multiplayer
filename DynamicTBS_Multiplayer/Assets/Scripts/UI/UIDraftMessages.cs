@@ -6,11 +6,17 @@ using UnityEngine.UI;
 public class UIDraftMessages : MonoBehaviour
 {
     [SerializeField] private Text draftMessageText;
+    [SerializeField] private Text playerInfoText;
 
     private void Awake()
     {
         DraftEvents.OnDraftMessageTextChange += DisplayDraftMessages;
         DisplayDraftMessages();
+
+        if(GameManager.gameType == GameType.multiplayer)
+        {
+            playerInfoText.text = "You are player " + Client.Instance.side + ".";
+        }
     }
 
     private void DisplayDraftMessages()

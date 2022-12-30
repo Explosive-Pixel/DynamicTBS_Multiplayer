@@ -68,16 +68,28 @@ public class Server : MonoBehaviour
         isActive = true;
     }
 
-    public int FindConnection(NetworkConnection cnn)
+    public NetworkConnection? FindConnection(NetworkConnection cnn)
     {
         for (int i = 0; i < connections.Length; i++)
         {
             if(connections[i] == cnn)
             {
-                return i;
+                return connections[i];
             }
         }
-        return -1;
+        return null;
+    }
+
+    public NetworkConnection? FindOtherConnection(NetworkConnection host)
+    {
+        for (int i = 0; i < connections.Length; i++)
+        {
+            if (connections[i] != host)
+            {
+                return connections[i];
+            }
+        }
+        return null;
     }
 
     public int GetNonHostSide()
