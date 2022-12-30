@@ -12,12 +12,6 @@ public class UIDraftMessages : MonoBehaviour
     {
         DraftEvents.OnDraftMessageTextChange += DisplayDraftMessages;
         DisplayDraftMessages();
-
-        playerInfoText.text = "";
-        if (GameManager.gameType == GameType.multiplayer)
-        {
-            playerInfoText.text = "You are player " + Client.Instance.side + ".";
-        }
     }
 
     private void DisplayDraftMessages()
@@ -29,6 +23,12 @@ public class UIDraftMessages : MonoBehaviour
             draftMessageText.text += "s";
         }
         draftMessageText.text += ".";
+
+        playerInfoText.text = "";
+        if (GameManager.gameType == GameType.multiplayer)
+        {
+            playerInfoText.text = "You are player " + Client.Instance.side + ".";
+        }
     }
 
     private void OnDestroy()

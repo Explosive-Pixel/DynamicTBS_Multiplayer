@@ -14,31 +14,29 @@ public class ServerMessageHandler : MonoBehaviour
     {
         NetWelcome netWelcome = msg as NetWelcome;
 
-        if(netWelcome.AssignedTeam != 0)
+        if (netWelcome.AssignedTeam != 0)
         {
             Server.Instance.hostSide = netWelcome.AssignedTeam;
             Server.Instance.SendToClient(netWelcome, cnn);
 
             NetworkConnection? otherConnection = Server.Instance.FindOtherConnection(cnn);
-            if(otherConnection != null)
+            if (otherConnection != null)
             {
                 Server.Instance.SendToClient(new NetWelcome { AssignedTeam = Server.Instance.GetNonHostSide() }, otherConnection.Value);
             }
         }
-
-       /* if (Server.Instance.FindConnection(cnn) == -1)
+        else
         {
-            Server.Instance.playerCount++;
-        }*/
-        netWelcome.AssignedTeam = Server.Instance.hostSide == 0 ? Server.Instance.playerCount : Server.Instance.GetNonHostSide();
-        Debug.Log("Server: Connected players: " + netWelcome.AssignedTeam);
+            netWelcome.AssignedTeam = Server.Instance.hostSide == 0 ? Server.Instance.playerCount : Server.Instance.GetNonHostSide();
+            Debug.Log("Server: Connected players: " + netWelcome.AssignedTeam);
 
-        Server.Instance.SendToClient(netWelcome, cnn);
+            Server.Instance.SendToClient(netWelcome, cnn);
 
-        /*if(Server.Instance.playerCount == 2)
-        {
-            Server.Instance.Broadcast(new NetStartGame());
-        }*/
+            /*if(Server.Instance.playerCount == 2)
+            {
+                Server.Instance.Broadcast(new NetStartGame());
+            }*/
+        }
     }
 
     private void OnDraftCharacterServer(NetMessage msg, NetworkConnection cnn)
