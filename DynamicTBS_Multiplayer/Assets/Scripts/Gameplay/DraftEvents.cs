@@ -4,10 +4,10 @@ using UnityEngine;
 
 public static class DraftEvents
 {
-    public delegate void DraftEnd();
-    public static event DraftEnd OnEndDraft;
+    public delegate void DraftPhase();
+    public static event DraftPhase OnStartDraft;
+    public static event DraftPhase OnEndDraft;
 
-    
     public delegate void CharacterCreation(Character character);
     public static event CharacterCreation OnCharacterCreated;
 
@@ -16,6 +16,12 @@ public static class DraftEvents
 
     public delegate void DraftMessageText();
     public static event DraftMessageText OnDraftMessageTextChange;
+
+    public static void StartDraft()
+    {
+        if (OnStartDraft != null)
+            OnStartDraft();
+    }
 
     public static void EndDraft()
     {

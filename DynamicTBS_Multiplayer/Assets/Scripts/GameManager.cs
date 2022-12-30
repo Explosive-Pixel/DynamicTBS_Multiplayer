@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
 
     public void GoToLocalGame()
     {
-        HandleMenus(draftCanvas);
+        DraftEvents.StartDraft();
         StartRecording();
     }
 
@@ -77,7 +77,7 @@ public class GameManager : MonoBehaviour
         HandleMenus(onlineMenuCanvas);
     }
 
-    public void GotToDraftScreen()
+    public void GoToDraftScreen()
     {
         HandleMenus(draftCanvas);
     }
@@ -136,6 +136,7 @@ public class GameManager : MonoBehaviour
 
     private void SubscribeEvents()
     {
+        DraftEvents.OnStartDraft += GoToDraftScreen;
         GameplayEvents.OnGameplayPhaseStart += SetGameStarted;
         GameplayEvents.OnGameOver += GoToGameOverScreen;
         DraftEvents.OnEndDraft += GoToGameplayScreen;
@@ -143,6 +144,7 @@ public class GameManager : MonoBehaviour
 
     private void UnsubscribeEvents()
     {
+        DraftEvents.OnStartDraft -= GoToDraftScreen;
         GameplayEvents.OnGameplayPhaseStart -= SetGameStarted;
         GameplayEvents.OnGameOver -= GoToGameOverScreen;
         DraftEvents.OnEndDraft -= GoToGameplayScreen;

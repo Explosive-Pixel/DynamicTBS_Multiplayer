@@ -10,6 +10,11 @@ public class UIDraftMessages : MonoBehaviour
 
     private void Awake()
     {
+        DraftEvents.OnStartDraft += Init;   
+    }
+
+    private void Init()
+    {
         DraftEvents.OnDraftMessageTextChange += DisplayDraftMessages;
         DisplayDraftMessages();
     }
@@ -33,6 +38,7 @@ public class UIDraftMessages : MonoBehaviour
 
     private void OnDestroy()
     {
+        DraftEvents.OnStartDraft -= Init;
         DraftEvents.OnDraftMessageTextChange -= DisplayDraftMessages;
     }
 }

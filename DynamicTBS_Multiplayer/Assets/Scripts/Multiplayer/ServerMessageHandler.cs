@@ -31,11 +31,6 @@ public class ServerMessageHandler : MonoBehaviour
             Debug.Log("Server: Connected players: " + netWelcome.AssignedTeam);
 
             Server.Instance.SendToClient(netWelcome, cnn);
-
-            /*if(Server.Instance.playerCount == 2)
-            {
-                Server.Instance.Broadcast(new NetStartGame());
-            }*/
         }
     }
 
