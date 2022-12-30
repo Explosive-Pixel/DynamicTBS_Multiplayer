@@ -13,7 +13,8 @@ public class UIDraftMessages : MonoBehaviour
         DraftEvents.OnDraftMessageTextChange += DisplayDraftMessages;
         DisplayDraftMessages();
 
-        if(GameManager.gameType == GameType.multiplayer)
+        playerInfoText.text = "";
+        if (GameManager.gameType == GameType.multiplayer)
         {
             playerInfoText.text = "You are player " + Client.Instance.side + ".";
         }
