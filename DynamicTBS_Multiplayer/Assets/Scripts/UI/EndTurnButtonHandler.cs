@@ -20,6 +20,7 @@ public class EndTurnButtonHandler : MonoBehaviour
 
     private void ChangeButtonInteractability()
     {
+        ChangeButtonVisibilityOnMultiplayer();
         turnEndedButton.interactable = GameplayManager.GetRemainingActions() == 1;
     }
 
@@ -28,10 +29,25 @@ public class EndTurnButtonHandler : MonoBehaviour
         turnEndedButton.gameObject.SetActive(active);
     }
 
+    private void ChangeButtonVisibilityOnMultiplayer()
+    {
+        if (GameManager.gameType == GameType.multiplayer)
+        {
+            ChangeButtonVisibility(PlayerManager.GetCurrentPlayer().GetPlayerType() == Client.Instance.side);
+        }
+    }
+
     private void SetActive()
     {
-        ChangeButtonVisibility(true);
-        ChangeButtonInteractability();
+        if (GameManager.gameType == GameType.multiplayer && PlayerManager.GameplayPhaseStartPlayer != Client.Instance.side)
+        {
+            ChangeButtonVisibility(false);
+        }
+        else
+        {
+            ChangeButtonVisibility(true);
+        }
+        turnEndedButton.interactable = false;
         GameplayEvents.OnChangeRemainingActions += ChangeButtonInteractability;
     }
 

@@ -17,6 +17,8 @@ public class PlayerManager : MonoBehaviour
     private static Player bluePlayer;
     private static Player pinkPlayer;
 
+    public static PlayerType GameplayPhaseStartPlayer { get { return gameplayPhaseStartPlayer; } }
+
     private void Awake()
     {
         bluePlayer = new Player(PlayerType.blue);
