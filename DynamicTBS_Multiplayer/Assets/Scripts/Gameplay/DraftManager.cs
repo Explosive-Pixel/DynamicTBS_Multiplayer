@@ -8,18 +8,20 @@ public class DraftManager : MonoBehaviour
 {
     #region Draft Config
 
-    private const int MaxDraftCount = 14;
-    private static readonly List<int> draftOrder = new List<int>() {3, 6, 7, 9, 11, 13};
+    public const int MaxDraftCount = 14;
+    public static readonly List<int> draftOrder = new List<int>() {3, 6, 7, 9, 11, 13};
 
     #endregion
 
     private static Vector3 firstPosition = new Vector3(-6.5f, -3.5f, 0.998f);
     private static float offset = 1f;
     private static int draftCounter;
+    private static int draftOrderIndex;
 
     private void Awake()
     {
         draftCounter = 0;
+        draftOrderIndex = 0;
     }
 
     public void CreateCharacter()
@@ -53,12 +55,25 @@ public class DraftManager : MonoBehaviour
         AdvanceDraftOrder();
     }
 
+    public static int GetCurrentDraftCount()
+    {
+        if(draftOrderIndex == 0)
+        {
+            return draftOrder[draftOrderIndex];
+        } else if(draftOrderIndex == draftOrder.Count)
+        {
+            return MaxDraftCount - draftOrder[draftOrderIndex - 1];
+        }
+        return draftOrder[draftOrderIndex] - draftOrder[draftOrderIndex - 1];
+    }
+
     private static void AdvanceDraftOrder()
     {
         draftCounter += 1;
 
         if (draftOrder.Contains(draftCounter))
         {
+            draftOrderIndex++;
             PlayerManager.NextPlayer();
             DraftEvents.ChangeDraftMessageText();
         }
