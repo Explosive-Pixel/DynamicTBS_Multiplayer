@@ -21,8 +21,7 @@ public class ServerMessageHandler : MonoBehaviour
 
             if(Server.Instance.playerCount > 1)
             {
-                netWelcome.AssignedTeam = Server.Instance.GetNonHostSide();
-                Server.Instance.SendToClient(netWelcome, Server.Instance.connections[1]);
+                Server.Instance.SendToClient(new NetWelcome { AssignedTeam = Server.Instance.GetNonHostSide() }, Server.Instance.connections[1]);
             }
         }
 
