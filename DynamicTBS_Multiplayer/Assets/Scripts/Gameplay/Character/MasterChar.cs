@@ -28,6 +28,6 @@ public class MasterChar : Character
     public override void Die()
     {
         base.Die();
-        GameplayEvents.GameIsOver(side.GetPlayerType() == PlayerType.blue ? PlayerType.blue : PlayerType.pink);
+        GameplayEvents.GameIsOver(PlayerManager.GetOtherPlayer(side).GetPlayerType());
     }
 }

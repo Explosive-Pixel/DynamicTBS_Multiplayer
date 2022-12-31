@@ -11,6 +11,7 @@ public class Board : MonoBehaviour
     #region Board Config
 
     public const int boardSize = 9;
+    public const float startTranslation = 3;
 
     private const float tileSize = 0.7f;
 
@@ -41,7 +42,7 @@ public class Board : MonoBehaviour
 
     public static Vector3 FindPosition(int row, int column)
     {
-        return new Vector3(column * tileSize - 3, -(row * tileSize - 3), 1);
+        return new Vector3(column * tileSize - startTranslation, -(row * tileSize - startTranslation), 1);
     }
 
     public static List<Tile> GetAllTiles()
@@ -274,7 +275,7 @@ public class Board : MonoBehaviour
         {
             for (int column = 0; column < boardSize; column++)
             {
-                Tile tile = TileFactory.CreateTile(tilePositions[row, column], row, column);
+                Tile tile = new Tile(tilePositions[row, column], row, column);
                 tiles.Add(tile);
                 tilesByGameObject.Add(tile.GetTileGameObject(), tile);
             }
@@ -291,27 +292,18 @@ public class Board : MonoBehaviour
         }
     }
 
-    private void UpdateTilesAfterTileTransformation(Tile oldTile, Tile newTile)
-    {
-        tiles.Remove(oldTile);
-        tiles.Add(newTile);
-        tilesByGameObject.Add(newTile.GetTileGameObject(), newTile);
-    }
-
     #region EventSubscriptions
 
     private void SubscribeEvents()
     {
         DraftEvents.OnEndDraft += CreateBoard;
         CharacterEvents.OnCharacterDeath += UpdateTileAfterCharacterDeath;
-        GameplayEvents.OnTileChanged += UpdateTilesAfterTileTransformation;
     }
 
     private void UnsubscribeEvents()
     {
         DraftEvents.OnEndDraft -= CreateBoard;
         CharacterEvents.OnCharacterDeath -= UpdateTileAfterCharacterDeath;
-        GameplayEvents.OnTileChanged -= UpdateTilesAfterTileTransformation;
     }
 
     #endregion

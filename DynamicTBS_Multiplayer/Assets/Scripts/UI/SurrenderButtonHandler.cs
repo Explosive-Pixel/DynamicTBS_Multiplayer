@@ -1,0 +1,58 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class SurrenderButtonHandler : MonoBehaviour
+{
+    [SerializeField] private Button surrenderButton;
+
+    private void Awake()
+    {
+        SubscribeEvents();
+        ChangeButtonVisibility(false);
+    }
+
+    public void Surrender()
+    {
+        Player player = GameManager.gameType == GameType.multiplayer ? PlayerManager.GetPlayer(Client.Instance.side) : PlayerManager.GetCurrentPlayer();
+        GameplayEvents.UIActionExecuted(player, UIActionType.Surrender);
+    }
+
+    private void OnSurrenderClicked(Player player, UIActionType uIActionType)
+    {
+        if(uIActionType == UIActionType.Surrender)
+            GameplayEvents.GameIsOver(PlayerManager.GetOtherPlayer(player).GetPlayerType());
+    }
+
+    private void ChangeButtonVisibility(bool active)
+    {
+        surrenderButton.gameObject.SetActive(active);
+    }
+
+    private void SetActive()
+    {
+        ChangeButtonVisibility(true);
+    }
+
+    #region EventsRegion
+
+    private void SubscribeEvents()
+    {
+        GameplayEvents.OnGameplayPhaseStart += SetActive;
+        GameplayEvents.OnExecuteUIAction += OnSurrenderClicked;
+    }
+
+    private void UnsubscribeEvents()
+    {
+        GameplayEvents.OnGameplayPhaseStart -= SetActive;
+        GameplayEvents.OnExecuteUIAction -= OnSurrenderClicked;
+    }
+
+    #endregion
+
+    private void OnDestroy()
+    {
+        UnsubscribeEvents();
+    }
+}

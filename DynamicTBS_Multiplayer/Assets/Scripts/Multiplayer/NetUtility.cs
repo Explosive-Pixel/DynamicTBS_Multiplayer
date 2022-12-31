@@ -11,7 +11,8 @@ public enum OperationCode
     START_GAME = 3,
     DRAFT_CHARACTER = 4,
     PERFORM_ACTION = 5,
-    REMATCH = 6
+    EXECUTE_UIACTION = 6,
+    REMATCH = 7
 }
 
 public static class NetUtility
@@ -38,6 +39,9 @@ public static class NetUtility
             case OperationCode.PERFORM_ACTION:
                 msg = new NetPerformAction(stream);
                 break;
+            case OperationCode.EXECUTE_UIACTION:
+                msg = new NetExecuteUIAction(stream);
+                break;
             case OperationCode.REMATCH:
                 msg = new NetRematch(stream);
                 break;
@@ -60,6 +64,7 @@ public static class NetUtility
     public static Action<NetMessage> C_START_GAME;
     public static Action<NetMessage> C_DRAFT_CHARACTER;
     public static Action<NetMessage> C_PERFORM_ACTION;
+    public static Action<NetMessage> C_EXECUTE_UIACTION;
     public static Action<NetMessage> C_REMATCH;
 
     // Server side messages.
@@ -68,6 +73,7 @@ public static class NetUtility
     public static Action<NetMessage, NetworkConnection> S_START_GAME;
     public static Action<NetMessage, NetworkConnection> S_DRAFT_CHARACTER;
     public static Action<NetMessage, NetworkConnection> S_PERFORM_ACTION;
+    public static Action<NetMessage, NetworkConnection> S_EXECUTE_UIACTION;
     public static Action<NetMessage, NetworkConnection> S_REMATCH;
 
     #endregion

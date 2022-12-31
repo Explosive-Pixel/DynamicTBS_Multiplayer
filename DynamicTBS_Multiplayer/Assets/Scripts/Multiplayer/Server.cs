@@ -19,7 +19,7 @@ public class Server : MonoBehaviour
     #endregion
 
     public NetworkDriver driver;
-    private NativeList<NetworkConnection> connections;
+    public NativeList<NetworkConnection> connections;
 
     private bool isActive = false;
     private const float KeepAliveTickRate = 20f; // Constant tick rate, so connection won't time out.
@@ -28,6 +28,7 @@ public class Server : MonoBehaviour
     public Action connectionDropped;
 
     public int playerCount = 0;
+    public int hostSide = 0;
 
     private void Update()
     {
@@ -67,6 +68,39 @@ public class Server : MonoBehaviour
         isActive = true;
     }
 
+    public NetworkConnection? FindConnection(NetworkConnection cnn)
+    {
+        for (int i = 0; i < connections.Length; i++)
+        {
+            if(connections[i] == cnn)
+            {
+                return connections[i];
+            }
+        }
+        return null;
+    }
+
+    public NetworkConnection? FindOtherConnection(NetworkConnection host)
+    {
+        for (int i = 0; i < connections.Length; i++)
+        {
+            if (connections[i] != host)
+            {
+                return connections[i];
+            }
+        }
+        return null;
+    }
+
+    public int GetNonHostSide()
+    {
+        if (hostSide == 1)
+            return 2;
+        if (hostSide == 2)
+            return 1;
+        return 0;
+    }
+
     public void Shutdown() // For shutting down the server.
     {
         if (isActive)
@@ -92,6 +126,7 @@ public class Server : MonoBehaviour
                 --i;
             }
         }
+        playerCount = connections.Length;
     }
 
     private void AcceptNewConnections()
@@ -100,6 +135,7 @@ public class Server : MonoBehaviour
         while ((c = driver.Accept()) != default(NetworkConnection)) // Checks if a client tries to connect who's not the default connection.
         {
             connections.Add(c);
+            playerCount = connections.Length;
             Debug.Log("Server: New client connected");
             Debug.Log(c.ToString());
         }

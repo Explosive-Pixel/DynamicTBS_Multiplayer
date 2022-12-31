@@ -40,27 +40,22 @@ public class UIClickHandler : MonoBehaviour
                 .FindAll(character => character.GetSide() == PlayerManager.GetCurrentPlayer())
                 .ConvertAll(character => character.GetCharacterGameObject());
 
-            GameObject characterGameObject = UIUtils.FindGameObjectByRay(charactersOfPlayer, currentCamera.ScreenPointToRay(clickPosition));
+            Ray click = currentCamera.ScreenPointToRay(clickPosition);
+            GameObject characterGameObject = UIUtils.FindGameObjectByRay(charactersOfPlayer, click);
 
             if (characterGameObject == null)
             {
-                // TODO: Check if click is on UI Element (like active ability button)
-                // If not:
-                //GameplayEvents.ChangeCharacterSelection(null);
+                // Check if click is on UI Element (like active ability button)
+                if (!UIUtils.IsHit())
+                {
+                    // If not
+                    GameplayEvents.ChangeCharacterSelection(null);
+                }
                 return;
             }
 
             Character character = CharacterHandler.GetCharacterByGameObject(characterGameObject);
             ActionUtils.InstantiateAllActionPositions(character);
-            //TODO: in gameManager verlegen
-            /*
-            if (characterGameObject != null && hasStarted)
-            {
-                cardhandler.GetComponent<cardhandleScript>().setActive(character.GetCharacterType());
-                uibutton.SetActive(true);
-            }
-            */
-
             
             GameplayEvents.ChangeCharacterSelection(character);
         } else

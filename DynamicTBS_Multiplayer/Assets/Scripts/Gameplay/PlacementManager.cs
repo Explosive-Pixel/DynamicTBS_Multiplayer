@@ -12,12 +12,14 @@ public class PlacementManager : MonoBehaviour
 
     #endregion
 
-    private int placementCount;
+    private static int placementCount;
+    private static int placementOrderIndex;
 
     private void Awake()
     {
         SubscribeEvents();
         placementCount = 0;
+        placementOrderIndex = 0;
     }
 
     private void SortCharacters(List<Character> characters)
@@ -43,12 +45,13 @@ public class PlacementManager : MonoBehaviour
         PlacementEvents.StartPlacement();
     }
 
-    private void AdvancePlacementOrder(Character character, ActionType actionType, Vector3 characterInitialPosition, Vector3? actionDestinationPosition)
+    private void AdvancePlacementOrder(ActionMetadata actionMetadata)
     {
         placementCount += 1;
         
         if (placementOrder.Contains(placementCount))
         {
+            placementOrderIndex++;
             PlayerManager.NextPlayer();
             PlacementEvents.ChangePlacementMessage();
         }
@@ -64,6 +67,19 @@ public class PlacementManager : MonoBehaviour
     {
         SpawnMaster(PlayerType.blue);
         SpawnMaster(PlayerType.pink);
+    }
+
+    public static int GetCurrentPlacementCount()
+    {
+        if (placementOrderIndex == 0)
+        {
+            return placementOrder[placementOrderIndex];
+        }
+        else if (placementOrderIndex == placementOrder.Count)
+        {
+            return MaxPlacementCount - placementOrder[placementOrderIndex - 1];
+        }
+        return placementOrder[placementOrderIndex] - placementOrder[placementOrderIndex - 1];
     }
 
     private static void SpawnMaster(PlayerType playerType) 

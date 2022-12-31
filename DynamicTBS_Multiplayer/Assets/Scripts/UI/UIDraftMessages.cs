@@ -6,37 +6,39 @@ using UnityEngine.UI;
 public class UIDraftMessages : MonoBehaviour
 {
     [SerializeField] private Text draftMessageText;
-    private int messageCounter;
+    [SerializeField] private Text playerInfoText;
 
     private void Awake()
     {
-        messageCounter = 0;
+        DraftEvents.OnStartDraft += Init;   
+    }
+
+    private void Init()
+    {
         DraftEvents.OnDraftMessageTextChange += DisplayDraftMessages;
         DisplayDraftMessages();
     }
 
     private void DisplayDraftMessages()
     {
-        if (messageCounter == 0)
-            draftMessageText.text = "Pink selects 3 units.";
-        if (messageCounter == 1)
-            draftMessageText.text = "Blue selects 3 units.";
-        if (messageCounter == 2)
-            draftMessageText.text = "Pink selects 1 unit.";
-        if (messageCounter == 3)
-            draftMessageText.text = "Blue selects 2 units.";
-        if (messageCounter == 4)
-            draftMessageText.text = "Pink selects 2 units.";
-        if (messageCounter == 5)
-            draftMessageText.text = "Blue selects 2 units.";
-        if (messageCounter == 6)
-            draftMessageText.text = "Pink selects 1 unit.";
+        int count = DraftManager.GetCurrentDraftCount();
+        draftMessageText.text = PlayerManager.GetCurrentPlayer().GetPlayerType() + " selects " + count + " unit";
+        if(count > 1)
+        {
+            draftMessageText.text += "s";
+        }
+        draftMessageText.text += ".";
 
-        messageCounter += 1;
+        playerInfoText.text = "";
+        if (GameManager.gameType == GameType.multiplayer)
+        {
+            playerInfoText.text = "You are player " + Client.Instance.side + ".";
+        }
     }
 
     private void OnDestroy()
     {
+        DraftEvents.OnStartDraft -= Init;
         DraftEvents.OnDraftMessageTextChange -= DisplayDraftMessages;
     }
 }

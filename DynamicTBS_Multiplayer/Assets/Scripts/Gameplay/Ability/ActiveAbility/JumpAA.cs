@@ -24,4 +24,9 @@ public class JumpAA : IActiveAbility
         jumpAAAction.CreateActionDestinations(character);
         ActionRegistry.Register(jumpAAAction);
     }
+
+    public int CountActionDestinations()
+    {
+        return jumpAAAction.CountActionDestinations(character);
+    }
 }

@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject startMenuCanvas;
     [SerializeField] private GameObject onlineMenuCanvas;
+    [SerializeField] private GameObject onlineHostCanvas;
+    [SerializeField] private GameObject onlineClientCanvas;
     [SerializeField] private GameObject draftCanvas;
     [SerializeField] private GameObject gameplayCanvas;
     [SerializeField] private GameObject tutorialCanvas;
@@ -48,6 +50,8 @@ public class GameManager : MonoBehaviour
     {
         canvasList.Add(startMenuCanvas);
         canvasList.Add(onlineMenuCanvas);
+        canvasList.Add(onlineHostCanvas);
+        canvasList.Add(onlineClientCanvas);
         canvasList.Add(draftCanvas);
         canvasList.Add(gameplayCanvas);
         canvasList.Add(tutorialCanvas);
@@ -64,7 +68,7 @@ public class GameManager : MonoBehaviour
 
     public void GoToLocalGame()
     {
-        HandleMenus(draftCanvas);
+        DraftEvents.StartDraft();
         StartRecording();
     }
 
@@ -73,7 +77,7 @@ public class GameManager : MonoBehaviour
         HandleMenus(onlineMenuCanvas);
     }
 
-    public void GotToDraftScreen()
+    public void GoToDraftScreen()
     {
         HandleMenus(draftCanvas);
     }
@@ -93,11 +97,17 @@ public class GameManager : MonoBehaviour
         HandleMenus(creditsCanvas);
     }
 
-    private void GoToGameOverScreen(PlayerType winner)
+    private void GoToGameOverScreen(PlayerType? winner)
     {
         HandleMenus(gameOverCanvas);
         Text gameOverText = gameOverCanvas.GetComponentInChildren<Text>();
-        gameOverText.text = "Player " + winner.ToString() + " has won.";
+        if(winner != null)
+        {
+            gameOverText.text = "Player " + winner.ToString() + " has won.";
+        } else
+        {
+            gameOverText.text = "No player has won the game.";
+        }
     }
 
     private void HandleMenus(GameObject menuCanvas)
@@ -132,6 +142,7 @@ public class GameManager : MonoBehaviour
 
     private void SubscribeEvents()
     {
+        DraftEvents.OnStartDraft += GoToDraftScreen;
         GameplayEvents.OnGameplayPhaseStart += SetGameStarted;
         GameplayEvents.OnGameOver += GoToGameOverScreen;
         DraftEvents.OnEndDraft += GoToGameplayScreen;
@@ -139,6 +150,7 @@ public class GameManager : MonoBehaviour
 
     private void UnsubscribeEvents()
     {
+        DraftEvents.OnStartDraft -= GoToDraftScreen;
         GameplayEvents.OnGameplayPhaseStart -= SetGameStarted;
         GameplayEvents.OnGameOver -= GoToGameOverScreen;
         DraftEvents.OnEndDraft -= GoToGameplayScreen;

@@ -20,18 +20,23 @@ public class AttackAction : MonoBehaviour, IAction
         GameplayEvents.OnGameplayPhaseStart += Register;
     }
 
+    public int CountActionDestinations(Character character)
+    {
+        List<Vector3> targetPositions = FindTargetPositions(character);
+
+        if (targetPositions != null)
+        {
+            return targetPositions.Count;
+        }
+
+        return 0;
+    }
+
     public void CreateActionDestinations(Character character)
     {
-        int range = character.GetAttackRange();
-        Tile tile = Board.GetTileByPosition(character.GetCharacterGameObject().transform.position);
+        List<Vector3> targetPositions = FindTargetPositions(character);
 
-        PlayerType otherSide = PlayerManager.GetOtherPlayer(character.GetSide()).GetPlayerType();
-
-        List<Vector3> targetPositions = Board.GetTilesOfClosestCharactersOfSideWithinRadius(tile, otherSide, range)
-            .FindAll(tile => tile.IsOccupied() && tile.GetCurrentInhabitant().isAttackableBy(character))
-            .ConvertAll(tile => tile.GetTileGameObject().transform.position);
-
-        if(targetPositions.Count > 0)
+        if(targetPositions != null && targetPositions.Count > 0)
         {
             characterInAction = character;
             targets = ActionUtils.InstantiateActionPositions(targetPositions, attackCirclePrefab);
@@ -54,6 +59,20 @@ public class AttackAction : MonoBehaviour, IAction
     {
         ActionUtils.Clear(targets);
         characterInAction = null;
+    }
+
+    private List<Vector3> FindTargetPositions(Character character)
+    {
+        int range = character.GetAttackRange();
+        Tile tile = Board.GetTileByPosition(character.GetCharacterGameObject().transform.position);
+
+        PlayerType otherSide = PlayerManager.GetOtherPlayer(character.GetSide()).GetPlayerType();
+
+        List<Vector3> targetPositions = Board.GetTilesOfClosestCharactersOfSideWithinRadius(tile, otherSide, range)
+            .FindAll(tile => tile.IsOccupied() && tile.GetCurrentInhabitant().isAttackableBy(character))
+            .ConvertAll(tile => tile.GetTileGameObject().transform.position);
+
+        return targetPositions;
     }
     
     private void Register()

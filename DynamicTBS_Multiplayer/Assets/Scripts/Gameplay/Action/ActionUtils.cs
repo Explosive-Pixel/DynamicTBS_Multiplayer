@@ -41,6 +41,19 @@ public class ActionUtils : MonoBehaviour
         }
     }
 
+    public static int CountAllActionDestinations(Character character)
+    {
+        int actionDestinationCount = 0;
+
+        foreach(IAction action in ActionRegistry.GetActions())
+        {
+            if (GameplayManager.ActionAvailable(character, action.ActionType))
+                actionDestinationCount += action.CountActionDestinations(character);
+        }
+
+        return actionDestinationCount;
+    }
+
     public static bool ExecuteAction(Ray ray)
     {
         bool actionExecuted = false;
@@ -55,7 +68,14 @@ public class ActionUtils : MonoBehaviour
 
                 action.ExecuteAction(hit);
 
-                GameplayEvents.ActionFinished(characterInAction, action.ActionType, initialPosition, actionDestinationPosition);
+                GameplayEvents.ActionFinished(new ActionMetadata
+                {
+                    ExecutingPlayer = characterInAction.GetSide(),
+                    ExecutedActionType = action.ActionType,
+                    CharacterInAction = characterInAction,
+                    CharacterInitialPosition = initialPosition,
+                    ActionDestinationPosition = actionDestinationPosition
+                });
                 actionExecuted = true;
             }
             else

@@ -30,10 +30,8 @@ public class CharacterHandler : MonoBehaviour
     public static Character GetCharacterByPosition(Vector3 position)
     {
         GameObject gameObject = UIUtils.FindGameObjectByPosition(charactersByGameObject.Keys.ToList(), position);
-        Debug.Log("found gameObject " + gameObject.name);
         if (gameObject && charactersByGameObject.ContainsKey(gameObject))
         {
-            Debug.Log("found character");
             return charactersByGameObject[gameObject];
         }
 
@@ -61,11 +59,20 @@ public class CharacterHandler : MonoBehaviour
         charactersByGameObject.Add(character.GetCharacterGameObject(), character);
     }
 
-    private void SetActiveAbilityOnCooldown(Character character, ActionType actionType, Vector3 characterInitialPosition, Vector3? actionDestinationPosition)
+    private void SetActiveAbilityOnCooldown(ActionMetadata actionMetadata)
     {
-        if(actionType == ActionType.ActiveAbility)
+        if(actionMetadata.ExecutedActionType == ActionType.ActiveAbility)
         {
-            character.SetActiveAbilityOnCooldown();
+            actionMetadata.CharacterInAction.SetActiveAbilityOnCooldown();
+        }
+    }
+
+    private void UpdateCharactersAfterCharacterDeath(Character character, Vector3 position)
+    {
+        characters.Remove(character);
+        charactersByGameObject.Clear();
+        foreach (Character c in characters) {
+            charactersByGameObject.Add(c.GetCharacterGameObject(), c);
         }
     }
 
@@ -81,6 +88,7 @@ public class CharacterHandler : MonoBehaviour
         DraftEvents.OnCharacterCreated += AddCharacterToList;
         DraftEvents.OnEndDraft += DeliverCharacterList;
         GameplayEvents.OnFinishAction += SetActiveAbilityOnCooldown;
+        CharacterEvents.OnCharacterDeath += UpdateCharactersAfterCharacterDeath;
     }
 
     private void UnsubscribeEvents()
@@ -88,6 +96,7 @@ public class CharacterHandler : MonoBehaviour
         DraftEvents.OnCharacterCreated -= AddCharacterToList;
         DraftEvents.OnEndDraft -= DeliverCharacterList;
         GameplayEvents.OnFinishAction -= SetActiveAbilityOnCooldown;
+        CharacterEvents.OnCharacterDeath -= UpdateCharactersAfterCharacterDeath;
     }
 
     #endregion

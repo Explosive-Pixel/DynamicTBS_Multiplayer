@@ -14,12 +14,13 @@ public class ClientMessageHandler : MonoBehaviour
         NetWelcome netWelcome = msg as NetWelcome;
 
         Client.Instance.side = (PlayerType)netWelcome.AssignedTeam;
+        Debug.Log("Assigned Team " + Client.Instance.side);
     }
 
     private void OnStartGameClient(NetMessage msg)
     {
         GameManager.gameType = GameType.multiplayer;
-        GameObject.Find("GameManager").GetComponent<GameManager>().GotToDraftScreen();
+        DraftEvents.StartDraft();
         // TODO: Change Camera angle
     }
 
@@ -47,19 +48,19 @@ public class ClientMessageHandler : MonoBehaviour
         }
     }
 
-    private void SendPerformActionMessage(Character character, ActionType actionType, Vector3 characterInitialPosition, Vector3? actionDestinationPosition)
+    private void SendPerformActionMessage(ActionMetadata actionMetadata)
     {
-        if (Client.Instance.side == character.GetSide().GetPlayerType()) // TODO: Could character be turned by Master's passive -> problem?
+        if (Client.Instance.side == actionMetadata.ExecutingPlayer.GetPlayerType())
         {
             NetPerformAction msg = new NetPerformAction
             {
-                characterX = characterInitialPosition.x,
-                characterY = characterInitialPosition.y,
-                activeAbility = actionType == ActionType.ActiveAbility,
-                hasDestination = actionDestinationPosition != null,
-                destinationX = actionDestinationPosition != null ? actionDestinationPosition.Value.x : 0f,
-                destinationY = actionDestinationPosition != null ? actionDestinationPosition.Value.y : 0f,
-                playerId = (int)character.GetSide().GetPlayerType()
+                characterX = actionMetadata.CharacterInitialPosition != null ? actionMetadata.CharacterInitialPosition.Value.x : 0f,
+                characterY = actionMetadata.CharacterInitialPosition != null ? actionMetadata.CharacterInitialPosition.Value.y : 0f,
+                actionType = (int)actionMetadata.ExecutedActionType,
+                hasDestination = actionMetadata.ActionDestinationPosition != null,
+                destinationX = actionMetadata.ActionDestinationPosition != null ? actionMetadata.ActionDestinationPosition.Value.x : 0f,
+                destinationY = actionMetadata.ActionDestinationPosition != null ? actionMetadata.ActionDestinationPosition.Value.y : 0f,
+                playerId = (int)actionMetadata.ExecutingPlayer.GetPlayerType()
             };
             Client.Instance.SendToServer(msg);
         }
@@ -72,8 +73,15 @@ public class ClientMessageHandler : MonoBehaviour
         PlayerType playerType = (PlayerType)netPerformAction.playerId;
         if (Client.Instance.side != playerType)
         {
+            
+            if(netPerformAction.actionType == (int)ActionType.Skip)
+            {
+                SkipAction.Execute();
+                return;
+            }
+
             Character character = CharacterHandler.GetCharacterByPosition(new Vector3(netPerformAction.characterX, netPerformAction.characterY, 0));
-            if(netPerformAction.activeAbility)
+            if (netPerformAction.actionType == (int)ActionType.ActiveAbility)
             {
                 character.GetActiveAbility().Execute();
             }
@@ -90,6 +98,31 @@ public class ClientMessageHandler : MonoBehaviour
         }
     }
 
+    private void SendExecuteUIActionMessage(Player player, UIActionType uIActionType)
+    {
+        if (Client.Instance.side == player.GetPlayerType())
+        {
+            NetExecuteUIAction msg = new NetExecuteUIAction
+            {
+                uiActionType = (int)uIActionType,
+                playerId = (int)player.GetPlayerType()
+            };
+            Client.Instance.SendToServer(msg);
+        }
+    }
+
+    private void OnExecuteUIAction(NetMessage msg)
+    {
+        NetExecuteUIAction netExecuteUIAction = msg as NetExecuteUIAction;
+
+        PlayerType playerType = (PlayerType)netExecuteUIAction.playerId;
+        UIActionType uIActionType = (UIActionType)netExecuteUIAction.uiActionType;
+        if (Client.Instance.side != playerType)
+        {
+            GameplayEvents.UIActionExecuted(PlayerManager.GetPlayer(playerType), uIActionType);
+        }
+    }
+
     #region EventsRegion
 
     private void SubscribeEvents()
@@ -102,6 +135,9 @@ public class ClientMessageHandler : MonoBehaviour
 
         GameplayEvents.OnFinishAction += SendPerformActionMessage;
         NetUtility.C_PERFORM_ACTION += OnPerformAction;
+
+        GameplayEvents.OnExecuteUIAction += SendExecuteUIActionMessage;
+        NetUtility.C_EXECUTE_UIACTION += OnExecuteUIAction;
     }
 
     private void UnsubscribeEvents()
@@ -114,6 +150,9 @@ public class ClientMessageHandler : MonoBehaviour
 
         GameplayEvents.OnFinishAction -= SendPerformActionMessage;
         NetUtility.C_PERFORM_ACTION -= OnPerformAction;
+
+        GameplayEvents.OnExecuteUIAction -= SendExecuteUIActionMessage;
+        NetUtility.C_EXECUTE_UIACTION -= OnExecuteUIAction;
     }
 
     #endregion

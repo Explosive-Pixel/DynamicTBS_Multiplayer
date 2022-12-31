@@ -1,12 +1,10 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ActiveAbilityHandler : MonoBehaviour
+public class ActiveAbilityButtonHandler : MonoBehaviour
 {
     [SerializeField] private Button activeAbilityButton;
     private Character currentCharacter;
-
-    private bool gameHasStarted = false;
 
     private void Awake()
     {
@@ -16,39 +14,32 @@ public class ActiveAbilityHandler : MonoBehaviour
 
     public void ExecuteActiveAbility()
     {
-        // GameplayEvents.ExecuteActiveAbilityStarted();
         currentCharacter.GetActiveAbility().Execute();
-        // Please remember to call this after every execution (in AAHandler classes): GameplayEvents.ActionFinished(UIActionType.ActiveAbility);
-        // Nope: THIS PLEASE currentCharacter.SetActiveAbilityOnCooldown();
+        // Please remember to call this after every execution (in AAHandler classes): GameplayEvents.ActionFinished(actionMetadata);
+
+        activeAbilityButton.interactable = false;
     }
 
     private void ChangeButtonVisibility(Character character)
     {
         currentCharacter = character;
 
-        bool active = gameHasStarted && character != null;
+        bool active = GameManager.HasGameStarted() && character != null;
         bool disabled = active && (character.IsActiveAbilityOnCooldown() || character.isDisabled());
 
         activeAbilityButton.gameObject.SetActive(active);
         activeAbilityButton.interactable = !disabled;
     }
 
-    private void SetGameHasStarted()
-    {
-        gameHasStarted = true;
-    }
-
     #region EventsRegion
 
     private void SubscribeEvents()
     {
-        GameplayEvents.OnGameplayPhaseStart += SetGameHasStarted;
         GameplayEvents.OnCharacterSelectionChange += ChangeButtonVisibility;
     }
 
     private void UnsubscribeEvents()
     {
-        GameplayEvents.OnGameplayPhaseStart -= SetGameHasStarted;
         GameplayEvents.OnCharacterSelectionChange -= ChangeButtonVisibility;
     }
 

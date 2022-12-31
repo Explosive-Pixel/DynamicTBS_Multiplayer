@@ -17,6 +17,11 @@ public class PowershotAAAction : MonoBehaviour, IAction
     private Character characterInAction = null;
     public Character CharacterInAction { get { return characterInAction; } }
 
+    public int CountActionDestinations(Character character)
+    {
+        return 4;
+    }
+
     public void CreateActionDestinations(Character character)
     {
         Tile characterTile = Board.GetTileByCharacter(character);

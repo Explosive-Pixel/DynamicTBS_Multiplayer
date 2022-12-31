@@ -53,8 +53,14 @@ public class StatsRecorder : MonoBehaviour
         recordableStats.gameNumber += 1;
     }
 
-    private void RedordWin(PlayerType winningPlayer)
+    private void RedordWin(PlayerType? winningPlayer)
     {
+        if(winningPlayer == null)
+        {
+            // TODO: Record Draw
+            return;
+        }
+
         if (winningPlayer == PlayerType.blue)
         {
             // Records the blue win in general

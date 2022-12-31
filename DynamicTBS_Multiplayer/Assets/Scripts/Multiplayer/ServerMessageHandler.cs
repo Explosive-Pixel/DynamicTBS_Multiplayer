@@ -14,14 +14,23 @@ public class ServerMessageHandler : MonoBehaviour
     {
         NetWelcome netWelcome = msg as NetWelcome;
 
-        netWelcome.AssignedTeam = ++Server.Instance.playerCount;
-        Debug.Log("Server: Connected players: " + netWelcome.AssignedTeam);
-
-        Server.Instance.SendToClient(netWelcome, cnn);
-
-        if(Server.Instance.playerCount == 2)
+        if (netWelcome.AssignedTeam != 0)
         {
-            Server.Instance.Broadcast(new NetStartGame());
+            Server.Instance.hostSide = netWelcome.AssignedTeam;
+            Server.Instance.SendToClient(netWelcome, cnn);
+
+            NetworkConnection? otherConnection = Server.Instance.FindOtherConnection(cnn);
+            if (otherConnection != null)
+            {
+                Server.Instance.SendToClient(new NetWelcome { AssignedTeam = Server.Instance.GetNonHostSide() }, otherConnection.Value);
+            }
+        }
+        else
+        {
+            netWelcome.AssignedTeam = Server.Instance.hostSide == 0 ? Server.Instance.playerCount : Server.Instance.GetNonHostSide();
+            Debug.Log("Server: Connected players: " + netWelcome.AssignedTeam);
+
+            Server.Instance.SendToClient(netWelcome, cnn);
         }
     }
 
@@ -39,6 +48,13 @@ public class ServerMessageHandler : MonoBehaviour
         Server.Instance.Broadcast(netPerformAction);
     }
 
+    private void OnExecuteUIActionServer(NetMessage msg, NetworkConnection cnn)
+    {
+        NetExecuteUIAction netExecuteUIAction = msg as NetExecuteUIAction;
+
+        Server.Instance.Broadcast(netExecuteUIAction);
+    }
+
     #region EventsRegion
 
     private void SubscribeEvents()
@@ -46,6 +62,7 @@ public class ServerMessageHandler : MonoBehaviour
         NetUtility.S_WELCOME += OnWelcomeServer;
         NetUtility.S_DRAFT_CHARACTER += OnDraftCharacterServer;
         NetUtility.S_PERFORM_ACTION += OnPeformActionServer;
+        NetUtility.S_EXECUTE_UIACTION += OnExecuteUIActionServer;
     }
 
     private void UnsubscribeEvents()
@@ -53,6 +70,7 @@ public class ServerMessageHandler : MonoBehaviour
         NetUtility.S_WELCOME -= OnWelcomeServer;
         NetUtility.S_DRAFT_CHARACTER -= OnDraftCharacterServer;
         NetUtility.S_PERFORM_ACTION -= OnPeformActionServer;
+        NetUtility.S_EXECUTE_UIACTION -= OnExecuteUIActionServer;
     }
 
     #endregion

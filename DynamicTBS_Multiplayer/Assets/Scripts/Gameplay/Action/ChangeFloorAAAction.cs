@@ -16,20 +16,23 @@ public class ChangeFloorAAAction : MonoBehaviour, IAction
     private Character characterInAction = null;
     public Character CharacterInAction { get { return characterInAction; } }
 
+    public int CountActionDestinations(Character character)
+    {
+        List<Vector3> changeFloorPositions = FindChangeFloorPositions(character);
+
+        if (changeFloorPositions != null)
+        {
+            return changeFloorPositions.Count;
+        }
+
+        return 0;
+    }
+
     public void CreateActionDestinations(Character character)
     {
-        Tile characterTile = Board.GetTileByPosition(character.GetCharacterGameObject().transform.position);
+        List<Vector3> changeFloorPositions = FindChangeFloorPositions(character);
 
-        List<Tile> changeFlootWithInhabitantTiles = Board.GetAllTilesWithinRadius(characterTile, ChangeFloorAA.radiusWithInhabitants);
-        List<Tile> changeFloorWithoutInhabitantTiles = Board.GetAllTilesWithinRadius(characterTile, ChangeFloorAA.radius)
-            .FindAll(tile => !changeFlootWithInhabitantTiles.Contains(tile) && !tile.IsOccupied());
-
-        List<Vector3> changeFloorPositions = Enumerable.Union(changeFlootWithInhabitantTiles, changeFloorWithoutInhabitantTiles)
-            .ToList()
-            .FindAll(tile => tile.isChangeable())
-            .ConvertAll(tile => tile.GetPosition());
-
-        if (changeFloorPositions.Count > 0)
+        if (changeFloorPositions != null && changeFloorPositions.Count > 0)
         {
             changeFloorTargets = ActionUtils.InstantiateActionPositions(changeFloorPositions, changeFloorPrefab);
             characterInAction = character;
@@ -63,5 +66,21 @@ public class ChangeFloorAAAction : MonoBehaviour, IAction
     private TileType OtherTileType(TileType tileType)
     {
         return tileType == TileType.EmptyTile ? TileType.FloorTile : TileType.EmptyTile;
+    }
+
+    private List<Vector3> FindChangeFloorPositions(Character character)
+    {
+        Tile characterTile = Board.GetTileByPosition(character.GetCharacterGameObject().transform.position);
+
+        List<Tile> changeFlootWithInhabitantTiles = Board.GetAllTilesWithinRadius(characterTile, ChangeFloorAA.radiusWithInhabitants);
+        List<Tile> changeFloorWithoutInhabitantTiles = Board.GetAllTilesWithinRadius(characterTile, ChangeFloorAA.radius)
+            .FindAll(tile => !changeFlootWithInhabitantTiles.Contains(tile) && !tile.IsOccupied());
+
+        List<Vector3> changeFloorPositions = Enumerable.Union(changeFlootWithInhabitantTiles, changeFloorWithoutInhabitantTiles)
+            .ToList()
+            .FindAll(tile => tile.isChangeable())
+            .ConvertAll(tile => tile.GetPosition());
+
+        return changeFloorPositions;
     }
 }

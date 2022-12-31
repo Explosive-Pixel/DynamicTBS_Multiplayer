@@ -7,10 +7,13 @@ public static class GameplayEvents
     public delegate void GameplayPhase();
     public static event GameplayPhase OnGameplayPhaseStart;
 
-    public delegate void FinishAction(Character character, ActionType actionType, Vector3 characterInitialPosition, Vector3? actionDestinationPosition);
+    public delegate void FinishAction(ActionMetadata actionMetadata);
     public static event FinishAction OnFinishAction;
 
-    public delegate void GameOver(PlayerType winner);
+    public delegate void ChangeRemainingActions();
+    public static event ChangeRemainingActions OnChangeRemainingActions;
+
+    public delegate void GameOver(PlayerType? winner);
     public static event GameOver OnGameOver;
 
     public delegate void CharacterSelection(Character character);
@@ -19,8 +22,8 @@ public static class GameplayEvents
     public delegate void NextPlayer(Player player);
     public static event NextPlayer OnPlayerTurnEnded;
 
-    public delegate void ChangeTile(Tile oldTile, Tile newTile);
-    public static event ChangeTile OnTileChanged;
+    public delegate void ExecuteUIAction(Player player, UIActionType uIActionType);
+    public static event ExecuteUIAction OnExecuteUIAction;
 
     public static void StartGameplayPhase()
     {
@@ -28,13 +31,19 @@ public static class GameplayEvents
             OnGameplayPhaseStart();
     }
 
-    public static void ActionFinished(Character character, ActionType actionType, Vector3 characterInitialPosition, Vector3? actionDestinationPosition)
+    public static void ActionFinished(ActionMetadata actionMetadata)
     {
         if (OnFinishAction != null)
-            OnFinishAction(character, actionType, characterInitialPosition, actionDestinationPosition);
+            OnFinishAction(actionMetadata);
     }
 
-    public static void GameIsOver(PlayerType winner)
+    public static void RemainingActionsChanged()
+    {
+        if (OnChangeRemainingActions != null)
+            OnChangeRemainingActions();
+    }
+
+    public static void GameIsOver(PlayerType? winner)
     {
         if (OnGameOver != null) 
         {
@@ -54,9 +63,9 @@ public static class GameplayEvents
             OnPlayerTurnEnded(player);
     }
 
-    public static void TileHasChanged(Tile oldTile, Tile newTile)
+    public static void UIActionExecuted(Player player, UIActionType uIActionType)
     {
-        if (OnTileChanged != null)
-            OnTileChanged(oldTile, newTile);
+        if (OnExecuteUIAction != null)
+            OnExecuteUIAction(player, uIActionType);
     }
 }

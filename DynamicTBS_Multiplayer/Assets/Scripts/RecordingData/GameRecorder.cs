@@ -10,7 +10,7 @@ public class GameRecorder : MonoBehaviour
     
     private void Awake()
     {
-        SubscribeEvents();
+       // SubscribeEvents();
     }
 
     private void SetPath()
@@ -19,9 +19,13 @@ public class GameRecorder : MonoBehaviour
         path = "Assets/Resources/GameRecords/" + filename + ".txt";
     }
 
-    private void RecordMove(Character character, ActionType actionType, Vector3 characterInitialPosition, Vector3? actionDestinationPosition)
+    private void RecordMove(ActionMetadata actionMetadata)
     {
-        string recordLine = "Player: " + character.GetSide().GetPlayerType().ToString() + "\nCharacter: " + character.ToString() + "\nPerformed action: " + actionType.ToString() + "\nOriginal position: " + TranslateTilePosition(characterInitialPosition) + "\nTarget position: " + TranslateTilePosition(actionDestinationPosition) + "\n";
+        string recordLine = "Player: " + actionMetadata.ExecutingPlayer.GetPlayerType().ToString() + "\nPerformed action: " + actionMetadata.ExecutedActionType.ToString();
+        if(actionMetadata.CharacterInAction != null)
+        {
+            recordLine = "\nCharacter: " + actionMetadata.CharacterInAction.ToString() + "\nOriginal position: " + TranslateTilePosition(actionMetadata.CharacterInitialPosition) + "\nTarget position: " + TranslateTilePosition(actionMetadata.ActionDestinationPosition) + "\n";
+        }
 
         if (path != null)
         {
@@ -47,9 +51,9 @@ public class GameRecorder : MonoBehaviour
         Debug.Log(recordLine);
     }
 
-    private void RecordWinner(PlayerType winningSide)
+    private void RecordWinner(PlayerType? winningSide)
     {
-        string recordLine = "Player " + winningSide.ToString() + " won.";
+        string recordLine = winningSide != null ? "Player " + winningSide.ToString() + " won." : "No player won the match.";
 
         if (path != null)
         {
@@ -70,9 +74,7 @@ public class GameRecorder : MonoBehaviour
             Tile tile = Board.GetTileByPosition(position.GetValueOrDefault());
             if (tile != null)
             {
-                int row = 9 - tile.GetRow();
-                char columnChar = (char)(tile.GetColumn() + 65);
-                text = columnChar.ToString() + row.ToString();
+                text = tile.GetTileName();
             }
         }
         

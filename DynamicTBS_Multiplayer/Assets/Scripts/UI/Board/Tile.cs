@@ -4,31 +4,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class Tile
+public class Tile
 {
-    protected TileType type;
+    private TileType type;
 
-    protected int row;
-    protected int column;
-    protected Vector3 position;
-    protected GameObject tileGameObject;
-    protected Sprite tileSprite;
-    protected Character currentInhabitant;
+    private int row;
+    private int column;
+    private Vector3 position;
+    private GameObject tileGameObject;
+    private Sprite tileSprite;
+    private Character currentInhabitant;
 
     public delegate bool IsChangeable();
     public IsChangeable isChangeable;
 
-    protected Tile(int row, int column) 
+    public Tile(TileType type, int row, int column) 
     {
+        this.type = type;
         this.row = row;
         this.column = column;
+        this.tileSprite = SpriteManager.GetTileSprite(type);
         this.position = Board.FindPosition(row, column);
         this.currentInhabitant = null;
-        this.isChangeable = () => true;
-    }
-
-    protected void Init()
-    {
+        this.isChangeable = () => type != TileType.GoalTile;
         this.tileGameObject = CreateTileGameObject();
     }
 
@@ -76,21 +74,27 @@ public abstract class Tile
 
     public Tile Transform(TileType newTileType)
     {
-        Tile newTile = TileFactory.CreateTile(newTileType, this.GetRow(), this.GetColumn());
-        newTile.currentInhabitant = this.currentInhabitant;
-        GameObject.Destroy(tileGameObject);
+        this.type = newTileType;
+        this.tileSprite = SpriteManager.GetTileSprite(newTileType);
+        this.tileGameObject.GetComponent<SpriteRenderer>().sprite = this.tileSprite;
 
-        GameplayEvents.TileHasChanged(this, newTile);
+        return this;
+    }
 
-        return newTile;
+    public string GetTileName()
+    {
+        int row = 9 - this.GetRow();
+        char columnChar = (char)(this.GetColumn() + 65);
+        return columnChar.ToString() + row.ToString();
     }
 
     private GameObject CreateTileGameObject()
     {
-        GameObject tile = new GameObject();
+        GameObject tile = new GameObject
+        {
+            name = GetTileName()
+        };
 
-        tile.name = this.GetType().Name;
-        
         Quaternion startRotation = Quaternion.identity;
 
         SpriteRenderer spriteRenderer = tile.AddComponent<SpriteRenderer>();

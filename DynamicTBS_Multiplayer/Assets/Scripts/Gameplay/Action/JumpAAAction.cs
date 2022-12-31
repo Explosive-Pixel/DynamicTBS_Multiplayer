@@ -15,17 +15,23 @@ public class JumpAAAction : MonoBehaviour, IAction
     private Character characterInAction = null;
     public Character CharacterInAction { get { return characterInAction; } }
 
+    public int CountActionDestinations(Character character)
+    {
+        List<Vector3> movePositions = FindMovePositions(character);
+
+        if (movePositions != null)
+        {
+            return movePositions.Count;
+        }
+
+        return 0;
+    }
+
     public void CreateActionDestinations(Character character)
     {
-        Tile characterTile = Board.GetTileByPosition(character.GetCharacterGameObject().transform.position);
+        List<Vector3> movePositions = FindMovePositions(character);
 
-        List<Tile> moveTiles = Board.GetTilesOfDistance(characterTile, JumpAA.movePattern, JumpAA.distance);
-
-        List<Vector3> movePositions = moveTiles
-            .FindAll(tile => tile.IsAccessible())
-            .ConvertAll(tile => tile.GetPosition());
-
-        if (movePositions.Count > 0)
+        if (movePositions != null && movePositions.Count > 0)
         {
             jumpTargets = ActionUtils.InstantiateActionPositions(movePositions, jumpPrefab);
             characterInAction = character;
@@ -50,5 +56,18 @@ public class JumpAAAction : MonoBehaviour, IAction
         ActionUtils.Clear(jumpTargets);
         characterInAction = null;
         ActionRegistry.Remove(this);
+    }
+
+    private List<Vector3> FindMovePositions(Character character)
+    {
+        Tile characterTile = Board.GetTileByPosition(character.GetCharacterGameObject().transform.position);
+
+        List<Tile> moveTiles = Board.GetTilesOfDistance(characterTile, JumpAA.movePattern, JumpAA.distance);
+
+        List<Vector3> movePositions = moveTiles
+            .FindAll(tile => tile.IsAccessible())
+            .ConvertAll(tile => tile.GetPosition());
+
+        return movePositions;
     }
 }

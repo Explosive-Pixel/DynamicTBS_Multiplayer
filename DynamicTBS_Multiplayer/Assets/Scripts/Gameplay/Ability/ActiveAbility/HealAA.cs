@@ -25,5 +25,8 @@ public class HealAA : IActiveAbility
         ActionRegistry.Register(healAAAction);
     }
 
-
+    public int CountActionDestinations()
+    {
+        return healAAAction.CountActionDestinations(character);
+    }
 }

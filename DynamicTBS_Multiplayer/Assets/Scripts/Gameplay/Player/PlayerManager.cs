@@ -17,6 +17,8 @@ public class PlayerManager : MonoBehaviour
     private static Player bluePlayer;
     private static Player pinkPlayer;
 
+    public static PlayerType GameplayPhaseStartPlayer { get { return gameplayPhaseStartPlayer; } }
+
     private void Awake()
     {
         bluePlayer = new Player(PlayerType.blue);
@@ -53,11 +55,19 @@ public class PlayerManager : MonoBehaviour
 
     public static bool IsCurrentPlayer(string name)
     {
-        if (name.ToLower().Contains(PlayerType.blue.ToString()) && IsBlueTurn())
-            return true;
-        if (name.ToLower().Contains(PlayerType.pink.ToString()) && !IsBlueTurn())
-            return true;
-        return false;
+        return GetPlayer(name) == GetCurrentPlayer();
+    }
+
+    public static Player GetPlayer(string name)
+    {
+        if(name.ToLower().Contains(PlayerType.blue.ToString()))
+        {
+            return bluePlayer;
+        } else if(name.ToLower().Contains(PlayerType.pink.ToString()))
+        {
+            return pinkPlayer;
+        }
+        return null;
     }
 
     public static Player GetPlayer(PlayerType playerType)

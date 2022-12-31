@@ -31,4 +31,14 @@ public class UIUtils : MonoBehaviour
 
         return null;
     }
+
+    public static bool IsHit()
+    {
+        if (UnityEngine.EventSystems.EventSystem.current != null &&
+                     UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+        {
+            return true;
+        }
+        return false;
+    }
 }
