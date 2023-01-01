@@ -50,7 +50,7 @@ public class Server : MonoBehaviour
     public void Init(ushort port) // Initiation method.
     {
         driver = NetworkDriver.Create();
-        NetworkEndPoint endPoint = NetworkEndPoint.AnyIpv6; // Point where clients connect to server.
+        NetworkEndPoint endPoint = NetworkEndPoint.AnyIpv4; // Point where clients connect to server.
         endPoint.Port = port; // Port for this server.
 
         if (driver.Bind(endPoint) != 0)

@@ -31,7 +31,7 @@ public class Client : MonoBehaviour
     public void Init(string ip, ushort port) // Initiation method.
     {
         driver = NetworkDriver.Create();
-        NetworkEndPoint endPoint = NetworkEndPoint.Parse(ip, port, NetworkFamily.Ipv6); // Specific endpoint for connection.
+        NetworkEndPoint endPoint = NetworkEndPoint.Parse(ip, port); // Specific endpoint for connection.
 
         connection = driver.Connect(endPoint); // Connecting based on the endpoint that was just created.
         Debug.Log("Client: Attempting to connect to server on " + endPoint.Address);
