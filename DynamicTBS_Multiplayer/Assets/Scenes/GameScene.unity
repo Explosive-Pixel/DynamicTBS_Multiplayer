@@ -145,6 +145,7 @@ GameObject:
   - component: {fileID: 32580861}
   - component: {fileID: 32580862}
   - component: {fileID: 32580858}
+  - component: {fileID: 32580864}
   - component: {fileID: 32580863}
   m_Layer: 5
   m_Name: GameplayCanvas
@@ -385,6 +386,18 @@ MonoBehaviour:
   answerDrawBox: {fileID: 387501501}
   acceptDrawButton: {fileID: 406946164}
   declineDrawButton: {fileID: 210404378}
+--- !u!114 &32580864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 32580846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d09cdf0364e2c6b438640e84352e24aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &34118702
 GameObject:
   m_ObjectHideFlags: 0
@@ -1294,7 +1307,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 141842954}
-  - component: {fileID: 141842955}
+  - component: {fileID: 141842956}
   m_Layer: 0
   m_Name: CardHandler
   m_TagString: Untagged
@@ -1310,7 +1323,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 141842953}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.34, y: 0, z: 1}
+  m_LocalPosition: {x: 5, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1323,7 +1336,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &141842955
+--- !u!114 &141842956
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1332,10 +1345,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 141842953}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa08646afeee4c74594b92a0c1a03f00, type: 3}
+  m_Script: {fileID: 11500000, guid: 3dcf6d25939c7d0488d905d6bbc1c540, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  character: 1
 --- !u!1 &160965111
 GameObject:
   m_ObjectHideFlags: 0
@@ -13097,7 +13109,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 766, y: -157}
+  m_AnchoredPosition: {x: 550, y: -274}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2010398120
@@ -13219,6 +13231,7 @@ GameObject:
   - component: {fileID: 2011208736}
   - component: {fileID: 2011208735}
   - component: {fileID: 2011208734}
+  - component: {fileID: 2011208738}
   m_Layer: 5
   m_Name: OnlineClientCanvas
   m_TagString: Untagged
@@ -13310,6 +13323,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &2011208738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011208732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c43a245a312b224c896163b7d0370b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clientInfoText: {fileID: 1264546263}
 --- !u!1 &2014880162
 GameObject:
   m_ObjectHideFlags: 0

@@ -21,6 +21,9 @@ public class Client : MonoBehaviour
     private NetworkConnection connection;
 
     private bool isActive = false;
+    private bool isConnected = false;
+    public bool IsActive { get { return isActive;  } }
+    public bool IsConnected { get { return isConnected; } }
 
     public Action connectionDropped;
 
@@ -48,6 +51,7 @@ public class Client : MonoBehaviour
             UnregisterToEvent();
             driver.Dispose();
             isActive = false;
+            isConnected = false;
             connection = default(NetworkConnection);
         }
     }
@@ -85,7 +89,7 @@ public class Client : MonoBehaviour
             DataStreamReader stream; // Reads incoming messages.
             NetworkEvent.Type cmd;
 
-            while ((cmd = connection.PopEvent(driver, out stream)) != NetworkEvent.Type.Empty)
+            while (connection != null && (cmd = connection.PopEvent(driver, out stream)) != NetworkEvent.Type.Empty)
             {
                 Debug.Log("Client: Reading message " + cmd);
                 if (cmd == NetworkEvent.Type.Connect)
@@ -135,6 +139,7 @@ public class Client : MonoBehaviour
 
     private void OnKeepAlive(NetMessage nm)
     {
+        isConnected = true;
         SendToServer(nm); // Sends message back to keep both sides alive.
     }
 
