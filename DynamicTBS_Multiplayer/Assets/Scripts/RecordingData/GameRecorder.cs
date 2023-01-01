@@ -10,13 +10,15 @@ public class GameRecorder : MonoBehaviour
     
     private void Awake()
     {
-       // SubscribeEvents();
+       SubscribeEvents();
     }
 
     private void SetPath()
     {
         filename = "GameRecord_" + DateTime.Now.ToString("dd-MM-yyyy_HH-mm-ss");
-        path = "Assets/Resources/GameRecords/" + filename + ".txt";
+        string directory = Application.dataPath + "/Resources/GameRecords";
+        Directory.CreateDirectory(directory);
+        path = directory + "/" + filename + ".txt"; 
     }
 
     private void RecordMove(ActionMetadata actionMetadata)

@@ -145,6 +145,7 @@ GameObject:
   - component: {fileID: 32580861}
   - component: {fileID: 32580862}
   - component: {fileID: 32580858}
+  - component: {fileID: 32580864}
   - component: {fileID: 32580863}
   m_Layer: 5
   m_Name: GameplayCanvas
@@ -385,6 +386,18 @@ MonoBehaviour:
   answerDrawBox: {fileID: 387501501}
   acceptDrawButton: {fileID: 406946164}
   declineDrawButton: {fileID: 210404378}
+--- !u!114 &32580864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 32580846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d09cdf0364e2c6b438640e84352e24aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &34118702
 GameObject:
   m_ObjectHideFlags: 0

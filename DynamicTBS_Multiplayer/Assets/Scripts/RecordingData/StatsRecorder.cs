@@ -24,7 +24,9 @@ public class StatsRecorder : MonoBehaviour
     private void Awake()
     {
         SubscribeEvents();
-        filePath = Application.dataPath + "/Resources/GameRecords/SaveStats.txt"; //TODO: Saving to a remote file online
+        string directory = Application.dataPath + "/Resources/GameRecords";
+        Directory.CreateDirectory(directory);
+        filePath = directory + "/SaveStats.json"; //TODO: Saving to a remote file online
     }
     
     // Load old save stats from file and store in variables.
@@ -58,6 +60,7 @@ public class StatsRecorder : MonoBehaviour
         if(winningPlayer == null)
         {
             // TODO: Record Draw
+            SaveStats();
             return;
         }
 
