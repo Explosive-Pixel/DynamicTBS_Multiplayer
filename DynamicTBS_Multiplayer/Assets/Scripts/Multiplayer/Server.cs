@@ -135,6 +135,7 @@ public class Server : MonoBehaviour
         while ((c = driver.Accept()) != default(NetworkConnection)) // Checks if a client tries to connect who's not the default connection.
         {
             connections.Add(c);
+            SendToClient(new NetKeepAlive(), c);
             playerCount = connections.Length;
             Debug.Log("Server: New client connected");
             Debug.Log(c.ToString());
