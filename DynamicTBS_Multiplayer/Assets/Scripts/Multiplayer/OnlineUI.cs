@@ -24,7 +24,7 @@ public class OnlineUI : MonoBehaviour
     public void OnlineHostButton()
     {
         server.Init(8007);
-        client.Init("127.0.0.1", 8007);
+        client.Init("::1", 8007);
         AddMessageHandlers();
         GameManager.StartRecording();
         onlineHostCanvas.SetActive(true);
