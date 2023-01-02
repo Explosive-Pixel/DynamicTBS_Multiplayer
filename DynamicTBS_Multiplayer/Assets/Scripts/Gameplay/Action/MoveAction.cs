@@ -60,7 +60,7 @@ public class MoveAction : MonoBehaviour, IAction
 
     private List<Vector3> FindMovePositions(Character character)
     {
-        if(!GameManager.HasGameStarted())
+        if(!GameplayManager.HasGameStarted())
         {
             return Board.FindStartTiles(character).ConvertAll(tile => tile.GetPosition());
         }

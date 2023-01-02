@@ -14,12 +14,16 @@ public class Server : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        onlineGameManagerObject = this.gameObject;
+        DontDestroyOnLoad(onlineGameManagerObject);
     }
 
     #endregion
 
     public int PlayerCount { get { return isActive ? players.Length : 0; } }
     public int HostSide { get { return hostSide; } set { hostSide = value; } }
+
+    private GameObject onlineGameManagerObject;
 
     private NetworkDriver driver;
     private NativeList<NetworkConnection> players;

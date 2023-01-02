@@ -17,6 +17,11 @@ public class ActionRegistry
             actions.Remove(action);
     }
 
+    public static void RemoveAll()
+    {
+        actions.Clear();
+    }
+
     public static List<IAction> GetActions()
     {
         List<IAction> copy = new List<IAction>();

@@ -36,7 +36,7 @@ public class GameRecorder : MonoBehaviour
             writer.Close();
         }
         
-        Debug.Log(recordLine);
+        //Debug.Log(recordLine);
     }
 
     private void RecordDraft(Character character)
