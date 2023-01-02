@@ -10,20 +10,23 @@ public class Server : MonoBehaviour
     #region SingletonImplementation
 
     public static Server Instance { set; get; }
+    private GameObject onlineGameManagerObject;
 
     private void Awake()
     {
         Instance = this;
         onlineGameManagerObject = this.gameObject;
         DontDestroyOnLoad(onlineGameManagerObject);
+
+        spectators.Clear();
+        allConnections.Clear();
+        nonAssignedConnections.Clear();
     }
 
     #endregion
 
     public int PlayerCount { get { return isActive ? players.Length : 0; } }
     public int HostSide { get { return hostSide; } set { hostSide = value; } }
-
-    private GameObject onlineGameManagerObject;
 
     private NetworkDriver driver;
     private NativeList<NetworkConnection> players;
@@ -74,6 +77,7 @@ public class Server : MonoBehaviour
 
         players = new NativeList<NetworkConnection>(2, Allocator.Persistent); // Allows up to two connections at a time.
         isActive = true;
+        hostSide = 0;
     }
 
     public void RegisterAs(NetworkConnection c, ClientType role)
@@ -206,7 +210,7 @@ public class Server : MonoBehaviour
                 }
             }
         }
-        catch (ObjectDisposedException)
+        catch (Exception)
         {
             return;
         }

@@ -19,6 +19,7 @@ public class OnlineUI : MonoBehaviour
     private void Awake()
     {
         onlineGameManager = GameObject.Find("OnlineGameManager");
+        BackToMainMenuButton();
     }
 
     public void OnlineHostButton()
@@ -55,7 +56,14 @@ public class OnlineUI : MonoBehaviour
 
     private void RemoveMessageHandlers()
     {
-        Destroy(onlineGameManager.GetComponent<ClientMessageHandler>());
-        Destroy(onlineGameManager.GetComponent<ServerMessageHandler>());
+        if(onlineGameManager.TryGetComponent(out ClientMessageHandler cmh))
+        {
+            Destroy(cmh);
+        }
+
+        if (onlineGameManager.TryGetComponent(out ServerMessageHandler smh))
+        {
+            Destroy(smh);
+        }
     }
 }

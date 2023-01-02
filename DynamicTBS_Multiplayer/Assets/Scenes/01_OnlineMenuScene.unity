@@ -1797,8 +1797,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e85d67f65ca918c4886ab1a7d431d31d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCount: 0
-  hostSide: 0
 --- !u!114 &1316232589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1811,6 +1809,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd93577a5e507044db71762f79e4ada8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  role: 0
   side: 0
 --- !u!4 &1316232590
 Transform:
@@ -2753,9 +2752,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: GoToStartMenu
+      - m_Target: {fileID: 975854607}
+        m_TargetAssemblyTypeName: OnlineUI, Assembly-CSharp
+        m_MethodName: BackToMainMenuButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

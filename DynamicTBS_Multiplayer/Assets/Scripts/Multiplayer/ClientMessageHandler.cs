@@ -23,7 +23,7 @@ public class ClientMessageHandler : MonoBehaviour
     private void OnStartGameClient(NetMessage msg)
     {
         GameManager.gameType = GameType.multiplayer;
-        DraftEvents.StartDraft();
+        GameSceneManager.StartGame();
         // TODO: Change Camera angle
     }
 

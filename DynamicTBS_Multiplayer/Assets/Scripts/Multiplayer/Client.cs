@@ -9,10 +9,13 @@ public class Client : MonoBehaviour
     #region SingletonImplementation
 
     public static Client Instance { set; get; }
+    private GameObject onlineGameManagerObject;
 
     private void Awake()
     {
         Instance = this;
+        onlineGameManagerObject = this.gameObject;
+        DontDestroyOnLoad(onlineGameManagerObject);
     }
 
     #endregion
@@ -114,9 +117,8 @@ public class Client : MonoBehaviour
                 }
             }
         }
-        catch (ObjectDisposedException)
+        catch (Exception)
         {
-            Debug.Log("Client: Error");
             return;
         }
     }
