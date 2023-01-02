@@ -14,9 +14,13 @@ public class Server : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        onlineGameManagerObject = this.gameObject;
+        DontDestroyOnLoad(onlineGameManagerObject);
     }
 
     #endregion
+
+    private GameObject onlineGameManagerObject;
 
     public NetworkDriver driver;
     public NativeList<NetworkConnection> connections;
