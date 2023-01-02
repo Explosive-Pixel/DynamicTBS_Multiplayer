@@ -10,11 +10,12 @@ public class UIDraftMessages : MonoBehaviour
 
     private void Awake()
     {
-        DraftEvents.OnStartDraft += Init;   
+        DraftEvents.OnStartDraft += Init;
     }
 
     private void Init()
     {
+        Debug.Log("Initiated draft messages.");
         DraftEvents.OnDraftMessageTextChange += DisplayDraftMessages;
         DisplayDraftMessages();
     }
