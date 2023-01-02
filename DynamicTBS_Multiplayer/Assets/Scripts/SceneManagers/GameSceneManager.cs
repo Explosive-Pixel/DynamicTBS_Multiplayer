@@ -51,7 +51,6 @@ public class GameSceneManager : MonoBehaviour
     {
         HandleMenus(draftCanvas);
         DraftEvents.StartDraft();
-        Debug.Log("StartDraft.");
     }
 
     private void GoToGameplayScreen()
@@ -63,14 +62,24 @@ public class GameSceneManager : MonoBehaviour
     {
         HandleMenus(gameOverCanvas);
         Text gameOverText = gameOverCanvas.GetComponentInChildren<Text>();
+        Color backgroundColor = Color.gray;
         if (winner != null)
         {
             gameOverText.text = "Player " + winner.ToString() + " has won.";
+            if (winner == PlayerType.pink)
+            {
+                backgroundColor = new Color(1f, 0.18f, 0.8f, 1);
+            }
+            else
+            {
+                backgroundColor = new Color(0.224f, 0.53f, 0.961f, 1);
+            }
         }
         else
         {
             gameOverText.text = "No player has won the game.";
         }
+        gameOverCanvas.GetComponent<Image>().color = backgroundColor;
     }
     #endregion
 

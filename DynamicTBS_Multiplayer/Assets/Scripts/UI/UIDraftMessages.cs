@@ -15,7 +15,6 @@ public class UIDraftMessages : MonoBehaviour
 
     private void Init()
     {
-        Debug.Log("Initiated draft messages.");
         DraftEvents.OnDraftMessageTextChange += DisplayDraftMessages;
         DisplayDraftMessages();
     }

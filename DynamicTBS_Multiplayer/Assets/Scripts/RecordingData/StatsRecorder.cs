@@ -29,7 +29,6 @@ public class StatsRecorder : MonoBehaviour
     // Load old save stats from file and store in variables.
     private void LoadStats()
     {
-        Debug.Log("Loading stats.");
         if (File.Exists(filePath))
         {
             string loadString = File.ReadAllText(filePath);
