@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class NetWelcome : NetMessage
 {
+    public int Role { set; get; }
     public int AssignedTeam { set; get; }
 
     public NetWelcome() // Constructing a message.
@@ -21,12 +22,14 @@ public class NetWelcome : NetMessage
     public override void Serialize(ref DataStreamWriter writer)
     {
         writer.WriteByte((byte)Code);
+        writer.WriteInt(Role);
         writer.WriteInt(AssignedTeam);
     }
 
     public override void Deserialize(DataStreamReader reader)
     {
         // Byte is already read in the NetUtility::OnData.
+        Role = reader.ReadInt();
         AssignedTeam = reader.ReadInt();
     }
 

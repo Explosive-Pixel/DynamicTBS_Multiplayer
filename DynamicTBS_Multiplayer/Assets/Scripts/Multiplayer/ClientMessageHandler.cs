@@ -13,8 +13,11 @@ public class ClientMessageHandler : MonoBehaviour
     {
         NetWelcome netWelcome = msg as NetWelcome;
 
-        Client.Instance.side = (PlayerType)netWelcome.AssignedTeam;
-        Debug.Log("Assigned Team " + Client.Instance.side);
+        if (netWelcome.AssignedTeam != 0)
+        {
+            Client.Instance.side = (PlayerType)netWelcome.AssignedTeam;
+            Debug.Log("Assigned Team " + Client.Instance.side);
+        }
     }
 
     private void OnStartGameClient(NetMessage msg)
