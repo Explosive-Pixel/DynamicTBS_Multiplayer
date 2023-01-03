@@ -11,9 +11,9 @@ public class Board : MonoBehaviour
     #region Board Config
 
     public const int boardSize = 9;
-    public const float startTranslation = 3;
+    public const float startTranslation = 4f;
 
-    private const float tileSize = 0.7f;
+    private const float tileSize = 1f;
 
     private static readonly TileType[,] tilePositions = new TileType[boardSize, boardSize]
     {

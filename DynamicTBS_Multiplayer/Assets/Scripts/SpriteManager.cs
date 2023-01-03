@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SpriteManager
@@ -40,6 +41,8 @@ public class SpriteManager
     public static Sprite HP_4_SPRITE;
     public static Sprite TANK_BLOCK_FRAME_SPRITE;
 
+    private List<Sprite> floorTileSprites = new List<Sprite>();
+
     public static void LoadSprites()
     {
         BLUE_MASTER_SPRITE = Resources.Load<Sprite>("CharacterSprites/Blue_Master");
@@ -55,12 +58,18 @@ public class SpriteManager
         BLUE_MEDIC_SPRITE = Resources.Load<Sprite>("CharacterSprites/Blue_Medic");
         PINK_MEDIC_SPRITE = Resources.Load<Sprite>("CharacterSprites/Pink_Medic");
 
-        EMPTY_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/EmptyTile");
-        FLOOR_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/FloorTile");
-        START_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/StartTile");
-        MASTER_START_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/MasterStartTile");
-        GOAL_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/GoalTile");
-        
+        //EMPTY_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/EmptyTile");
+        //FLOOR_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/FloorTile");
+        //START_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/StartTile");
+        //MASTER_START_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/MasterStartTile");
+        //GOAL_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/GoalTile");
+
+        EMPTY_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/v100/Hole_v3");
+        FLOOR_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/v100/Floor_v1");
+        START_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/v100/UnitStartBlank_v1");
+        MASTER_START_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/v100/MasterStartBlank_v1");
+        GOAL_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/v100/Goal_v2");
+
         ABILITY_CIRCLE_SPRITE = Resources.Load<Sprite>("UI/AbilityCircle");
         ATTACK_CIRCLE_SPRITE = Resources.Load<Sprite>("UI/AttackCircle");
         MOVE_CIRCLE_SPRITE = Resources.Load<Sprite>("UI/MoveCircle");
@@ -95,5 +104,37 @@ public class SpriteManager
             default:
                 return null;
         }
+    }
+
+    private void AddSpritesToFloorTileList()
+    {
+        if (floorTileSprites.Count > 0)
+            floorTileSprites.Clear();
+        else
+        {
+            // Filling the list with 10 sprites
+            // Chance for floor tile should be at 60%
+            // Chance for variations should be at 20% each
+            for (int i = 0; i <= 5; i++)
+            {
+                // Add base floor tile
+                floorTileSprites.Add(FLOOR_TILE_SPRITE);
+            }
+            for (int i = 0; i <= 1; i++)
+            {
+                // Add first variation
+            }
+            for (int i = 0; i <= 1; i++)
+            {
+                // Add second variation
+            }
+        }
+    }
+
+    // Put this in GetTileSprite in the FloorTile case
+    private Sprite GetRandomFloorSprite() 
+    {
+        int i = Random.Range(0, floorTileSprites.Count);
+        return floorTileSprites[i];
     }
 }
