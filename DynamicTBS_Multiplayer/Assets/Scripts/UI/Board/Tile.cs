@@ -23,7 +23,7 @@ public class Tile
         this.type = type;
         this.row = row;
         this.column = column;
-        this.tileSprite = SpriteManager.GetTileSprite(type, side);
+        this.tileSprite = SpriteManager.GetTileSprite(type, side, WithDepth());
         this.position = Board.FindPosition(row, column);
         this.currentInhabitant = null;
         this.isChangeable = () => type != TileType.GoalTile;
@@ -75,7 +75,7 @@ public class Tile
     public Tile Transform(TileType newTileType)
     {
         this.type = newTileType;
-        this.tileSprite = SpriteManager.GetTileSprite(newTileType, Board.FindSideOfTile(row));
+        this.tileSprite = SpriteManager.GetTileSprite(newTileType, Board.FindSideOfTile(row), WithDepth());
         this.tileGameObject.GetComponent<SpriteRenderer>().sprite = this.tileSprite;
 
         return this;
@@ -105,5 +105,17 @@ public class Tile
         tile.AddComponent<BoxCollider>();
 
         return tile;
+    }
+
+    private bool WithDepth()
+    {
+        bool withDepth = false;
+        Tile tileAbove = Board.GetTileByPosition(Board.FindPosition(row - 1, column));
+        if (tileAbove != null && tileAbove.GetTileType() != TileType.EmptyTile)
+        {
+            withDepth = true;
+        }
+
+        return withDepth;
     }
 }
