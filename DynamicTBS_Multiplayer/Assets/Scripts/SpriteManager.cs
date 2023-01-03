@@ -25,8 +25,10 @@ public class SpriteManager
     public static Sprite FLOOR_TILE_SPRITE_VAR_2;
     public static Sprite FLOOR_TILE_SPRITE_VAR_3;
     public static Sprite FLOOR_TILE_SPRITE_VAR_4;
-    public static Sprite START_TILE_SPRITE;
-    public static Sprite MASTER_START_TILE_SPRITE;
+    public static Sprite PINK_START_TILE_SPRITE;
+    public static Sprite BLUE_START_TILE_SPRITE;
+    public static Sprite PINK_MASTER_START_TILE_SPRITE;
+    public static Sprite BLUE_MASTER_START_TILE_SPRITE;
     public static Sprite GOAL_TILE_SPRITE;
     
     // UI
@@ -63,12 +65,6 @@ public class SpriteManager
         BLUE_MEDIC_SPRITE = Resources.Load<Sprite>("CharacterSprites/Blue_Medic");
         PINK_MEDIC_SPRITE = Resources.Load<Sprite>("CharacterSprites/Pink_Medic");
 
-        //EMPTY_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/EmptyTile");
-        //FLOOR_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/FloorTile");
-        //START_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/StartTile");
-        //MASTER_START_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/MasterStartTile");
-        //GOAL_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/GoalTile");
-
         EMPTY_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/v100/Hole");
         EMPTY_TILE_SPRITE_WITH_DEPTH = Resources.Load<Sprite>("TileSprites/v100/HoleWithDepth");
         FLOOR_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/v100/FloorTileBase");
@@ -76,8 +72,10 @@ public class SpriteManager
         FLOOR_TILE_SPRITE_VAR_2 = Resources.Load<Sprite>("TileSprites/v100/FloorTileVariation_2");
         FLOOR_TILE_SPRITE_VAR_3 = Resources.Load<Sprite>("TileSprites/v100/FloorTileVariation_3");
         FLOOR_TILE_SPRITE_VAR_4 = Resources.Load<Sprite>("TileSprites/v100/FloorTileVariation_4");
-        START_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/Old/UnitStartBlank_v1");
-        MASTER_START_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/Old/MasterStartBlank_v1");
+        PINK_START_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/v100/Pink_StartTile");
+        BLUE_START_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/v100/Blue_StartTile");
+        PINK_MASTER_START_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/v100/Pink_MasterStartTile");
+        BLUE_MASTER_START_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/v100/Blue_MasterStartTile");
         GOAL_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/v100/Goal_Dark");
 
         ABILITY_CIRCLE_SPRITE = Resources.Load<Sprite>("UI/AbilityCircle");
@@ -113,14 +111,14 @@ public class SpriteManager
                 return GOAL_TILE_SPRITE;
             case TileType.StartTile:
                 if (side == PlayerType.blue)
-                    return START_TILE_SPRITE;
+                    return BLUE_START_TILE_SPRITE;
                 else
-                    return START_TILE_SPRITE;
+                    return PINK_START_TILE_SPRITE;
             case TileType.MasterStartTile:
                 if (side == PlayerType.blue)
-                    return MASTER_START_TILE_SPRITE;
+                    return BLUE_MASTER_START_TILE_SPRITE;
                 else
-                    return MASTER_START_TILE_SPRITE;
+                    return PINK_MASTER_START_TILE_SPRITE;
             default:
                 return null;
         }
