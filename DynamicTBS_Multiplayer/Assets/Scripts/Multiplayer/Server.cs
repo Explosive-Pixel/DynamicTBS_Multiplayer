@@ -47,9 +47,10 @@ public class Server : MonoBehaviour
         KeepAlive(); // Prevents connection timeout.
 
         driver.ScheduleUpdate().Complete(); // Makes sure driver processed all incoming messages.
-        
+
         CleanUpConnections(); // Cleans up connections of disconnected clients.
         AcceptNewConnections(); // Accepts new connections if capacity is available.
+
         UpdateMessagePump(); // Check for messages and if server has to reply.
     }
 
@@ -87,6 +88,8 @@ public class Server : MonoBehaviour
             } else
             {
                 spectators.Add(c);
+                Broadcast(new NetMetadata() { spectatorCount = spectators.Count });
+
             }
             nonAssignedConnections.Remove(c);
             UpdateConnections();
@@ -158,8 +161,6 @@ public class Server : MonoBehaviour
         {
             nonAssignedConnections.Add(c);
             UpdateConnections();
-            //SendToClient(new NetKeepAlive(), c);
-            //playerCount = players.Length;
             Debug.Log("Server: New client connected");
             Debug.Log(c.ToString());
         }
@@ -249,7 +250,8 @@ public class Server : MonoBehaviour
         if (Time.time - lastKeepAlive > KeepAliveTickRate)
         {
             lastKeepAlive = Time.time;
-            Broadcast(new NetKeepAlive());
+            //Broadcast(new NetKeepAlive());
+            Broadcast(new NetMetadata() { spectatorCount = spectators.Count });
         }
     }
 

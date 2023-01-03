@@ -27,7 +27,14 @@ public class SurrenderButtonHandler : MonoBehaviour
 
     private void ChangeButtonVisibility(bool active)
     {
-        surrenderButton.gameObject.SetActive(active);
+        if (GameManager.gameType == GameType.multiplayer && Client.Instance.role == ClientType.spectator)
+        {
+            surrenderButton.gameObject.SetActive(false);
+        }
+        else
+        {
+            surrenderButton.gameObject.SetActive(active);
+        }
     }
 
     private void SetActive()

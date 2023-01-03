@@ -12,7 +12,8 @@ public enum OperationCode
     DRAFT_CHARACTER = 4,
     PERFORM_ACTION = 5,
     EXECUTE_UIACTION = 6,
-    REMATCH = 7
+    REMATCH = 7,
+    METADATA = 8
 }
 
 public static class NetUtility
@@ -45,6 +46,9 @@ public static class NetUtility
             case OperationCode.REMATCH:
                 msg = new NetRematch(stream);
                 break;
+            case OperationCode.METADATA:
+                msg = new NetMetadata(stream);
+                break;
             default:
                 Debug.LogError("Message received had no operation code.");
                 break;
@@ -66,6 +70,7 @@ public static class NetUtility
     public static Action<NetMessage> C_PERFORM_ACTION;
     public static Action<NetMessage> C_EXECUTE_UIACTION;
     public static Action<NetMessage> C_REMATCH;
+    public static Action<NetMetadata> C_METADATA;
 
     // Server side messages.
     public static Action<NetMessage, NetworkConnection> S_KEEP_ALIVE;
@@ -75,6 +80,7 @@ public static class NetUtility
     public static Action<NetMessage, NetworkConnection> S_PERFORM_ACTION;
     public static Action<NetMessage, NetworkConnection> S_EXECUTE_UIACTION;
     public static Action<NetMessage, NetworkConnection> S_REMATCH;
+    public static Action<NetMessage, NetworkConnection> S_METADATA;
 
     #endregion
 }

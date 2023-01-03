@@ -11,7 +11,7 @@ public class UIClickHandler : MonoBehaviour
     private void Update()
     {
         // In multiplayer mode only listen to clicks of current player
-        if (GameManager.gameType == GameType.multiplayer && Client.Instance.side != PlayerManager.GetCurrentPlayer().GetPlayerType())
+        if (GameManager.gameType == GameType.multiplayer && (Client.Instance.role != ClientType.player || Client.Instance.side != PlayerManager.GetCurrentPlayer().GetPlayerType()))
             return;
 
         if (!currentCamera)

@@ -36,7 +36,7 @@ public class Client : MonoBehaviour
 
     #region Init & Destroy
 
-    public void Init(string ip, ushort port) // Initiation method.
+    public void Init(string ip, ushort port, ClientType clientType) // Initiation method.
     {
         driver = NetworkDriver.Create();
         NetworkEndPoint endPoint = NetworkEndPoint.Parse(ip, port); // Specific endpoint for connection.
@@ -45,7 +45,7 @@ public class Client : MonoBehaviour
         Debug.Log("Client: Attempting to connect to server on " + endPoint.Address);
 
         isActive = true;
-        role = ClientType.player;
+        role = clientType;
 
         RegisterToEvent();
     }
@@ -138,11 +138,13 @@ public class Client : MonoBehaviour
     private void RegisterToEvent()
     {
         NetUtility.C_KEEP_ALIVE += OnKeepAlive;
+        NetUtility.C_METADATA += OnKeepAlive;
     }
 
     private void UnregisterToEvent()
     {
         NetUtility.C_KEEP_ALIVE -= OnKeepAlive;
+        NetUtility.C_METADATA -= OnKeepAlive;
     }
 
     private void OnKeepAlive(NetMessage nm)
