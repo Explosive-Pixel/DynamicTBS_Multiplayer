@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SpriteManager
@@ -19,6 +20,8 @@ public class SpriteManager
     // Tiles
     public static Sprite EMPTY_TILE_SPRITE;
     public static Sprite FLOOR_TILE_SPRITE;
+    public static Sprite FLOOR_TILE_SPRITE_VAR_1;
+    public static Sprite FLOOR_TILE_SPRITE_VAR_2;
     public static Sprite START_TILE_SPRITE;
     public static Sprite MASTER_START_TILE_SPRITE;
     public static Sprite GOAL_TILE_SPRITE;
@@ -40,6 +43,8 @@ public class SpriteManager
     public static Sprite HP_4_SPRITE;
     public static Sprite TANK_BLOCK_FRAME_SPRITE;
 
+    private static List<Sprite> floorTileSprites = new List<Sprite>();
+
     public static void LoadSprites()
     {
         BLUE_MASTER_SPRITE = Resources.Load<Sprite>("CharacterSprites/Blue_Master");
@@ -55,12 +60,20 @@ public class SpriteManager
         BLUE_MEDIC_SPRITE = Resources.Load<Sprite>("CharacterSprites/Blue_Medic");
         PINK_MEDIC_SPRITE = Resources.Load<Sprite>("CharacterSprites/Pink_Medic");
 
-        EMPTY_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/EmptyTile");
-        FLOOR_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/FloorTile");
-        START_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/StartTile");
-        MASTER_START_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/MasterStartTile");
-        GOAL_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/GoalTile");
-        
+        //EMPTY_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/EmptyTile");
+        //FLOOR_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/FloorTile");
+        //START_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/StartTile");
+        //MASTER_START_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/MasterStartTile");
+        //GOAL_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/GoalTile");
+
+        EMPTY_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/v100/Hole_v3");
+        FLOOR_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/v100/Floor_v1");
+        FLOOR_TILE_SPRITE_VAR_1 = Resources.Load<Sprite>("TileSprites/v100/FloorTileVariation_1");
+        FLOOR_TILE_SPRITE_VAR_2 = Resources.Load<Sprite>("TileSprites/v100/FloorTileVariation_2");
+        START_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/v100/UnitStartBlank_v1");
+        MASTER_START_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/v100/MasterStartBlank_v1");
+        GOAL_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/v100/Goal_v2");
+
         ABILITY_CIRCLE_SPRITE = Resources.Load<Sprite>("UI/AbilityCircle");
         ATTACK_CIRCLE_SPRITE = Resources.Load<Sprite>("UI/AttackCircle");
         MOVE_CIRCLE_SPRITE = Resources.Load<Sprite>("UI/MoveCircle");
@@ -76,6 +89,8 @@ public class SpriteManager
         HP_3_SPRITE = Resources.Load<Sprite>("UI/HP_3");
         HP_4_SPRITE = Resources.Load<Sprite>("UI/HP_4");
         TANK_BLOCK_FRAME_SPRITE = Resources.Load<Sprite>("UI/Tank_BlockFrame");
+
+        AddSpritesToFloorTileList();
     }
 
     public static Sprite GetTileSprite(TileType tileType)
@@ -85,7 +100,7 @@ public class SpriteManager
             case TileType.EmptyTile:
                 return EMPTY_TILE_SPRITE;
             case TileType.FloorTile:
-                return FLOOR_TILE_SPRITE;
+                return GetRandomFloorSprite();
             case TileType.GoalTile:
                 return GOAL_TILE_SPRITE;
             case TileType.StartTile:
@@ -95,5 +110,32 @@ public class SpriteManager
             default:
                 return null;
         }
+    }
+
+    private static void AddSpritesToFloorTileList()
+    {
+        if (floorTileSprites.Count > 0)
+            floorTileSprites.Clear();
+        
+        // Filling the list with 10 sprites
+        // Chance for floor tile should be at 60%
+        // Chance for variations should be at 20% each
+        for (int i = 0; i <= 5; i++)
+        {
+            // Add base floor tile
+            floorTileSprites.Add(FLOOR_TILE_SPRITE);
+        }
+        for (int i = 0; i <= 1; i++)
+        {
+            floorTileSprites.Add(FLOOR_TILE_SPRITE_VAR_1);
+            floorTileSprites.Add(FLOOR_TILE_SPRITE_VAR_2);
+        }
+    }
+
+    // Put this in GetTileSprite in the FloorTile case
+    private static Sprite GetRandomFloorSprite() 
+    {
+        int i = Random.Range(0, floorTileSprites.Count);
+        return floorTileSprites[i];
     }
 }
