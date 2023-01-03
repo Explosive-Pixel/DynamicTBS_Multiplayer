@@ -38,6 +38,8 @@ public class Board : MonoBehaviour
     private void Awake()
     {
         SubscribeEvents();
+        tiles.Clear();
+        tilesByGameObject.Clear();
     }
 
     public static Vector3 FindPosition(int row, int column)

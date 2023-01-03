@@ -13,13 +13,14 @@ public class DraftManager : MonoBehaviour
 
     #endregion
 
-    private static Vector3 firstPosition = new Vector3(-6.5f, -3.5f, 0.998f);
+    private static Vector3 firstPosition;
     private static float offset = 1f;
     private static int draftCounter;
     private static int draftOrderIndex;
 
     private void Awake()
     {
+        firstPosition = new Vector3(-6.5f, -3.5f, 0.998f);
         draftCounter = 0;
         draftOrderIndex = 0;
     }

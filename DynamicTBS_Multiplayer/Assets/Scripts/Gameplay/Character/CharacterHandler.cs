@@ -15,6 +15,8 @@ public class CharacterHandler : MonoBehaviour
     private void Awake()
     {
         SubscribeEvents();
+        characters.Clear();
+        charactersByGameObject.Clear();
     }
 
     public static List<Character> GetAllLivingCharacters()

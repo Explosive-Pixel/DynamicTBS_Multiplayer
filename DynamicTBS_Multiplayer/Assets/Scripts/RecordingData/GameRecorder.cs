@@ -36,7 +36,7 @@ public class GameRecorder : MonoBehaviour
             writer.Close();
         }
         
-        Debug.Log(recordLine);
+        //Debug.Log(recordLine);
     }
 
     private void RecordDraft(Character character)
@@ -87,7 +87,7 @@ public class GameRecorder : MonoBehaviour
 
     private void SubscribeEvents()
     {
-        GameManager.OnStartRecording += SetPath;
+        DraftEvents.OnStartDraft += SetPath;
         DraftEvents.OnCharacterCreated += RecordDraft;
         GameplayEvents.OnFinishAction += RecordMove;
         GameplayEvents.OnGameOver += RecordWinner;
@@ -95,7 +95,7 @@ public class GameRecorder : MonoBehaviour
 
     private void UnsubscribeEvents()
     {
-        GameManager.OnStartRecording -= SetPath;
+        DraftEvents.OnStartDraft -= SetPath;
         DraftEvents.OnCharacterCreated -= RecordDraft;
         GameplayEvents.OnFinishAction -= RecordMove;
         GameplayEvents.OnGameOver -= RecordWinner;

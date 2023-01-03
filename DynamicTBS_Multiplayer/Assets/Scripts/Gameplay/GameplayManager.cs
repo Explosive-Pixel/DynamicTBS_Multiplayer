@@ -24,10 +24,15 @@ public class GameplayManager : MonoBehaviour
 
     private static Dictionary<Character, List<ActionType>> actionsPerCharacterPerTurn = new Dictionary<Character, List<ActionType>>();
 
+    private static bool hasGameStarted;
+
     private void Awake()
     {
+        UnsubscribeEvents();
         SubscribeEvents();
         ResetStates();
+        hasGameStarted = false;
+        ActionRegistry.RemoveAll();
     }
 
     public static int GetRemainingActions()
@@ -95,10 +100,16 @@ public class GameplayManager : MonoBehaviour
         GameplayEvents.GameIsOver(player.GetPlayerType());
     }
 
+    public static bool HasGameStarted()
+    {
+        return hasGameStarted;
+    }
+
     private void SubscribeToGameplayEvents()
     {
         GameplayEvents.OnFinishAction += OnActionFinished;
         GameplayEvents.OnPlayerTurnEnded += OnPlayerTurnEnded;
+        hasGameStarted = true;
     }
 
     #region EventSubscriptions

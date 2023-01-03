@@ -9,10 +9,14 @@ public class Client : MonoBehaviour
     #region SingletonImplementation
 
     public static Client Instance { set; get; }
+    private GameObject onlineGameManagerObject;
 
     private void Awake()
     {
         Instance = this;
+        Shutdown();
+        onlineGameManagerObject = this.gameObject;
+        DontDestroyOnLoad(onlineGameManagerObject);
     }
 
     #endregion
@@ -27,6 +31,7 @@ public class Client : MonoBehaviour
 
     public Action connectionDropped;
 
+    public ClientType role;
     public PlayerType side;
 
     #region Init & Destroy
@@ -40,6 +45,7 @@ public class Client : MonoBehaviour
         Debug.Log("Client: Attempting to connect to server on " + endPoint.Address);
 
         isActive = true;
+        role = ClientType.player;
 
         RegisterToEvent();
     }
@@ -48,6 +54,7 @@ public class Client : MonoBehaviour
     {
         if (isActive)
         {
+            Debug.Log("Shutting down Client.");
             UnregisterToEvent();
             driver.Dispose();
             isActive = false;
@@ -94,8 +101,9 @@ public class Client : MonoBehaviour
                 Debug.Log("Client: Reading message " + cmd);
                 if (cmd == NetworkEvent.Type.Connect)
                 {
-                    Debug.Log("Client: We're connected!");
-                    SendToServer(new NetWelcome());
+                    Debug.Log("Client: We're connected! Role: " + role);
+                    isConnected = true;
+                    SendToServer(new NetWelcome() { Role = (int)role });
                 }
                 else if (cmd == NetworkEvent.Type.Data)
                 {
@@ -104,15 +112,15 @@ public class Client : MonoBehaviour
                 else if (cmd == NetworkEvent.Type.Disconnect)
                 {
                     Debug.Log("Client: Client disconnected from server.");
+                    isConnected = false;
                     connection = default(NetworkConnection);
                     connectionDropped?.Invoke();
                     Shutdown();
                 }
             }
         }
-        catch (ObjectDisposedException)
+        catch (Exception)
         {
-            Debug.Log("Client: Error");
             return;
         }
     }
@@ -139,7 +147,7 @@ public class Client : MonoBehaviour
 
     private void OnKeepAlive(NetMessage nm)
     {
-        isConnected = true;
+        //isConnected = true;
         SendToServer(nm); // Sends message back to keep both sides alive.
     }
 
