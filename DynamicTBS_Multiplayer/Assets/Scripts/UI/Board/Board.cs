@@ -152,9 +152,12 @@ public class Board : MonoBehaviour
                     if(!directionFinished[(sig1, sig2)])
                     {
                         Tile currentTile = GetTileByCoordinates(center.GetRow() + sig1*i, center.GetColumn() + sig2*i);
-                        if (currentTile != null && currentTile.IsOccupied() && currentTile.GetCurrentInhabitant().GetSide().GetPlayerType() == side)
+                        if (currentTile != null && currentTile.IsOccupied())
                         {
-                            positions.Add(currentTile);
+                            if(currentTile.GetCurrentInhabitant().GetSide().GetPlayerType() == side)
+                            {
+                                positions.Add(currentTile);
+                            }
                             directionFinished[(sig1, sig2)] = true;
                         }
                     }
