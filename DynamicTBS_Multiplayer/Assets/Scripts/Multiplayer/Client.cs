@@ -14,6 +14,7 @@ public class Client : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        Shutdown();
         onlineGameManagerObject = this.gameObject;
         DontDestroyOnLoad(onlineGameManagerObject);
     }
@@ -53,6 +54,7 @@ public class Client : MonoBehaviour
     {
         if (isActive)
         {
+            Debug.Log("Shutting down Client.");
             UnregisterToEvent();
             driver.Dispose();
             isActive = false;

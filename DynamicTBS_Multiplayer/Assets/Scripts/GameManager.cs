@@ -10,37 +10,10 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        SubscribeEvents();
         //Wird SpriteManager noch gebraucht? -> Ja für Tiles!
         SpriteManager.LoadSprites();
         PrefabManager.LoadPrefabs();
     }
-
-    public delegate void RecordStart();
-    public static event RecordStart OnStartRecording;
-
-    public static void StartRecording()
-    {
-        if (OnStartRecording != null)
-            OnStartRecording();
-    }
-
-    #region EventSubscriptions
-    private void SubscribeEvents()
-    {
-        DraftEvents.OnStartDraft += StartRecording;
-    }
-
-    private void UnsubscribeEvents()
-    {
-        DraftEvents.OnStartDraft -= StartRecording;
-    }
-
-    private void OnDestroy()
-    {
-        UnsubscribeEvents();
-    }
-    #endregion
 
     public void EndGame()
     {

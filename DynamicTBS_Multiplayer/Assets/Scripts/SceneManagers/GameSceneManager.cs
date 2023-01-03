@@ -11,15 +11,6 @@ public class GameSceneManager : MonoBehaviour
 
     private List<GameObject> canvasList = new List<GameObject>();
 
-    public delegate void GamePhase();
-    public static event GamePhase OnGameStart;
-
-    public static void StartGame()
-    {
-        if (OnGameStart != null)
-            OnGameStart();
-    }
-
     public GameObject GetGameplayCanvas()
     {
         return gameplayCanvas;
@@ -57,7 +48,6 @@ public class GameSceneManager : MonoBehaviour
     #region ScreenChangeRegion
     private void GoToDraftScreen()
     {
-        Debug.Log("SCENE: Going to draft Screen");
         HandleMenus(draftCanvas);
         DraftEvents.StartDraft();
     }
@@ -96,14 +86,12 @@ public class GameSceneManager : MonoBehaviour
 
     private void SubscribeEvents()
     {
-        OnGameStart += GoToDraftScreen;
         DraftEvents.OnEndDraft += GoToGameplayScreen;
         GameplayEvents.OnGameOver += GoToGameOverScreen;
     }
 
     private void UnsubscribeEvents()
     {
-        OnGameStart -= GoToDraftScreen;
         DraftEvents.OnEndDraft -= GoToGameplayScreen;
         GameplayEvents.OnGameOver -= GoToGameOverScreen;
     }

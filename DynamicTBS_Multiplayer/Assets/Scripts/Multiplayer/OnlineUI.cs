@@ -27,7 +27,6 @@ public class OnlineUI : MonoBehaviour
         server.Init(8007);
         client.Init("127.0.0.1", 8007);
         AddMessageHandlers();
-        GameManager.StartRecording();
         onlineHostCanvas.SetActive(true);
         onlineMenuCanvas.SetActive(false);
     }
@@ -36,7 +35,6 @@ public class OnlineUI : MonoBehaviour
     {
         client.Init(addressInput.text, 8007);
         AddMessageHandlers();
-        GameManager.StartRecording();
         onlineClientCanvas.SetActive(true);
         onlineMenuCanvas.SetActive(false);
     }

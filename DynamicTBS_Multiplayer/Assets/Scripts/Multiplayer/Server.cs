@@ -15,12 +15,9 @@ public class Server : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        Shutdown();
         onlineGameManagerObject = this.gameObject;
         DontDestroyOnLoad(onlineGameManagerObject);
-
-        spectators.Clear();
-        allConnections.Clear();
-        nonAssignedConnections.Clear();
     }
 
     #endregion
@@ -122,6 +119,7 @@ public class Server : MonoBehaviour
     {
         if (isActive)
         {
+            Debug.Log("Shutting down Server.");
             driver.Dispose();
             players.Dispose();
             spectators.Clear();
