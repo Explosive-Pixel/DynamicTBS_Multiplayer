@@ -93,7 +93,7 @@ public class SpriteManager
         AddSpritesToFloorTileList();
     }
 
-    public static Sprite GetTileSprite(TileType tileType)
+    public static Sprite GetTileSprite(TileType tileType, PlayerType side)
     {
         switch (tileType)
         {
@@ -104,9 +104,15 @@ public class SpriteManager
             case TileType.GoalTile:
                 return GOAL_TILE_SPRITE;
             case TileType.StartTile:
-                return START_TILE_SPRITE;
+                if (side == PlayerType.blue)
+                    return START_TILE_SPRITE;
+                else
+                    return START_TILE_SPRITE;
             case TileType.MasterStartTile:
-                return MASTER_START_TILE_SPRITE;
+                if (side == PlayerType.blue)
+                    return MASTER_START_TILE_SPRITE;
+                else
+                    return MASTER_START_TILE_SPRITE;
             default:
                 return null;
         }

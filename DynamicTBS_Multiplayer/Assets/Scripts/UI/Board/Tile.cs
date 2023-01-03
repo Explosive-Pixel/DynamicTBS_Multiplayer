@@ -18,12 +18,12 @@ public class Tile
     public delegate bool IsChangeable();
     public IsChangeable isChangeable;
 
-    public Tile(TileType type, int row, int column) 
+    public Tile(TileType type, PlayerType side, int row, int column) 
     {
         this.type = type;
         this.row = row;
         this.column = column;
-        this.tileSprite = SpriteManager.GetTileSprite(type);
+        this.tileSprite = SpriteManager.GetTileSprite(type, side);
         this.position = Board.FindPosition(row, column);
         this.currentInhabitant = null;
         this.isChangeable = () => type != TileType.GoalTile;
@@ -75,7 +75,7 @@ public class Tile
     public Tile Transform(TileType newTileType)
     {
         this.type = newTileType;
-        this.tileSprite = SpriteManager.GetTileSprite(newTileType);
+        this.tileSprite = SpriteManager.GetTileSprite(newTileType, Board.FindSideOfTile(row));
         this.tileGameObject.GetComponent<SpriteRenderer>().sprite = this.tileSprite;
 
         return this;

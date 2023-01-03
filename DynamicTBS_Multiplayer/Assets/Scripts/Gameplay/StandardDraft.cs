@@ -27,10 +27,11 @@ public class StandardDraft : MonoBehaviour
 
         foreach (Character character in characters) 
         {
-            Tile startTile = Board.FindStartTiles(character)[0];
+            Tile startTile = Board.FindStartTiles(character.GetSide().GetPlayerType())[0];
             Vector3 position = startTile.GetPosition();
             character.GetCharacterGameObject().transform.position = new Vector3(position.x, position.y, 0.997f);
             startTile.SetCurrentInhabitant(character);
+            PlacementEvents.CharacterPlaced(character);
         }
 
         PlacementManager.SpawnMasters();
