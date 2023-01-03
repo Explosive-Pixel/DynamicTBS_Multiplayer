@@ -14,8 +14,8 @@ public class DrawButtonHandler : MonoBehaviour
     private void Awake()
     {
         SubscribeEvents();
-        offerDrawButton.gameObject.SetActive(false);
-        answerDrawBox.SetActive(false);
+        SetActive(offerDrawButton.gameObject, false);
+        SetActive(answerDrawBox, false);
     }
 
     public void OfferDraw()
@@ -46,7 +46,7 @@ public class DrawButtonHandler : MonoBehaviour
             offerDrawButton.interactable = false;
             if (!(GameManager.gameType == GameType.multiplayer && Client.Instance.side == player.GetPlayerType()))
             {
-                answerDrawBox.SetActive(true);
+                SetActive(answerDrawBox, true);
             }
         }
         else if(uIActionType == UIActionType.AcceptDraw)
@@ -55,26 +55,38 @@ public class DrawButtonHandler : MonoBehaviour
         } else if(uIActionType == UIActionType.DeclineDraw)
         {
             offerDrawButton.interactable = true;
-            answerDrawBox.SetActive(false);
+            SetActive(answerDrawBox, false);
         }
     }
 
-    private void SetActive()
+    private void SetOfferDrawButtonActive()
     {
-        offerDrawButton.gameObject.SetActive(true);
+        SetActive(offerDrawButton.gameObject, true);
+    }
+
+    private void SetActive(GameObject gameObject, bool active)
+    {
+        if (GameManager.gameType == GameType.multiplayer && Client.Instance.role == ClientType.spectator)
+        {
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            gameObject.SetActive(active);
+        }
     }
 
     #region EventsRegion
 
     private void SubscribeEvents()
     {
-        GameplayEvents.OnGameplayPhaseStart += SetActive;
+        GameplayEvents.OnGameplayPhaseStart += SetOfferDrawButtonActive;
         GameplayEvents.OnExecuteUIAction += OnDrawButtonClicked;
     }
 
     private void UnsubscribeEvents()
     {
-        GameplayEvents.OnGameplayPhaseStart -= SetActive;
+        GameplayEvents.OnGameplayPhaseStart -= SetOfferDrawButtonActive;
         GameplayEvents.OnExecuteUIAction -= OnDrawButtonClicked;
     }
 

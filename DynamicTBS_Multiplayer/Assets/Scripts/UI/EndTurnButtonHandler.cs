@@ -26,7 +26,14 @@ public class EndTurnButtonHandler : MonoBehaviour
 
     private void ChangeButtonVisibility(bool active)
     {
-        turnEndedButton.gameObject.SetActive(active);
+        if (GameManager.gameType == GameType.multiplayer && Client.Instance.role == ClientType.spectator)
+        {
+            turnEndedButton.gameObject.SetActive(false);
+        }
+        else
+        {
+            turnEndedButton.gameObject.SetActive(active);
+        }
     }
 
     private void ChangeButtonVisibilityOnMultiplayer()

@@ -25,18 +25,20 @@ public class OnlineUI : MonoBehaviour
     public void OnlineHostButton()
     {
         server.Init(8007);
-        client.Init("127.0.0.1", 8007);
+        client.Init("127.0.0.1", 8007, ClientType.player);
         AddMessageHandlers();
         onlineHostCanvas.SetActive(true);
         onlineMenuCanvas.SetActive(false);
     }
 
-    public void OnlineConnectButton()
+    public void OnlineConnectAsPlayerButton()
     {
-        client.Init(addressInput.text, 8007);
-        AddMessageHandlers();
-        onlineClientCanvas.SetActive(true);
-        onlineMenuCanvas.SetActive(false);
+        ConnectAsClient(ClientType.player);
+    }
+
+    public void OnlineConnectAsSpectatorButton()
+    {
+        ConnectAsClient(ClientType.spectator);
     }
 
     public void BackToMainMenuButton()
@@ -44,6 +46,14 @@ public class OnlineUI : MonoBehaviour
         server.Shutdown();
         client.Shutdown();
         RemoveMessageHandlers();
+    }
+
+    private void ConnectAsClient(ClientType clientType)
+    {
+        client.Init(addressInput.text, 8007, clientType);
+        AddMessageHandlers();
+        onlineClientCanvas.SetActive(true);
+        onlineMenuCanvas.SetActive(false);
     }
 
     private void AddMessageHandlers()

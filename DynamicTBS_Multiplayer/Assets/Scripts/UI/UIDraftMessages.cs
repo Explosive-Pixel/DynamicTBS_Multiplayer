@@ -32,7 +32,14 @@ public class UIDraftMessages : MonoBehaviour
         playerInfoText.text = "";
         if (GameManager.gameType == GameType.multiplayer)
         {
-            playerInfoText.text = "You are player " + Client.Instance.side + ".";
+            if (Client.Instance.role == ClientType.spectator)
+            {
+                playerInfoText.text = "";
+            }
+            else
+            {
+                playerInfoText.text = "You are player " + Client.Instance.side + ".";
+            }
         }
     }
 
