@@ -23,10 +23,11 @@ public class Server : MonoBehaviour
     #endregion
 
     public int PlayerCount { get { return isActive ? players.Length : 0; } }
-    public int HostSide { get { return hostSide; } set { hostSide = value; } }
+    public int ChosenSide { get { return chosenSide; } set { chosenSide = value; } }
 
     private NetworkDriver driver;
     private NativeList<NetworkConnection> players;
+    private NetworkConnection adminPlayer;
     private readonly List<NetworkConnection> spectators = new List<NetworkConnection>();
     private readonly List<NetworkConnection> allConnections = new List<NetworkConnection>();
     private readonly List<NetworkConnection> nonAssignedConnections = new List<NetworkConnection>();
@@ -36,7 +37,7 @@ public class Server : MonoBehaviour
     private float lastKeepAlive = 0f; // Timestamp for last connection.
 
     private Action connectionDropped;
-    private int hostSide = 0;
+    private int chosenSide = 0;
 
     private void Update()
     {
@@ -75,7 +76,7 @@ public class Server : MonoBehaviour
 
         players = new NativeList<NetworkConnection>(2, Allocator.Persistent); // Allows up to two connections at a time.
         isActive = true;
-        hostSide = 0;
+        chosenSide = 0;
     }
 
     public void RegisterAs(NetworkConnection c, ClientType role)
@@ -84,38 +85,44 @@ public class Server : MonoBehaviour
         {
             if(role == ClientType.player)
             {
+                if (PlayerCount == 0) 
+                {
+                    adminPlayer = c;
+                }
                 players.Add(c);
             } else
             {
                 spectators.Add(c);
-                Broadcast(new NetMetadata() { spectatorCount = spectators.Count });
-
             }
+            BroadcastMetadata();
             nonAssignedConnections.Remove(c);
             UpdateConnections();
         }
     }
 
-    public NetworkConnection? FindOtherConnection(NetworkConnection host)
+    public NetworkConnection? FindOtherPlayer(NetworkConnection cnn)
     {
-        Debug.Log("Player connections: " + players.Length);
-        for (int i = 0; i < players.Length; i++)
+        if (players.Length == 2) 
         {
-            if (players[i] != host)
-            {
-                return players[i];
-            }
+            if (players[0] == cnn)
+                return players[1];
+            return players[0];
         }
         return null;
     }
 
-    public int GetNonHostSide()
+    public int GetOtherSide()
     {
-        if (hostSide == 1)
+        if (chosenSide == 1)
             return 2;
-        if (hostSide == 2)
+        if (chosenSide == 2)
             return 1;
         return 0;
+    }
+
+    public bool IsAdmin(NetworkConnection cnn)
+    {
+        return adminPlayer == cnn;
     }
 
     public void Shutdown() // For shutting down the server.
@@ -251,8 +258,13 @@ public class Server : MonoBehaviour
         {
             lastKeepAlive = Time.time;
             //Broadcast(new NetKeepAlive());
-            Broadcast(new NetMetadata() { spectatorCount = spectators.Count });
+            BroadcastMetadata();
         }
+    }
+
+    private void BroadcastMetadata()
+    {
+        Broadcast(new NetMetadata() { playerCount = PlayerCount, spectatorCount = spectators.Count });
     }
 
     public void SendToClient(NetMessage msg, NetworkConnection connection) // Send specific message to specific client.

@@ -5,6 +5,7 @@ using Unity.Networking.Transport;
 
 public class NetMetadata : NetMessage
 {
+    public int playerCount;
     public int spectatorCount;
 
     public NetMetadata() // Constructing a message.
@@ -21,11 +22,13 @@ public class NetMetadata : NetMessage
     public override void Serialize(ref DataStreamWriter writer)
     {
         writer.WriteByte((byte)Code);
+        writer.WriteInt(playerCount);
         writer.WriteInt(spectatorCount);
     }
 
     public override void Deserialize(DataStreamReader reader)
     {
+        playerCount = reader.ReadInt();
         spectatorCount = reader.ReadInt();
     }
 

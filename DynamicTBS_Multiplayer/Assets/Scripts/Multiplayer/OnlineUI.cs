@@ -11,7 +11,6 @@ public class OnlineUI : MonoBehaviour
 
     [SerializeField] InputField addressInput;
     [SerializeField] GameObject onlineMenuCanvas;
-    [SerializeField] GameObject onlineHostCanvas;
     [SerializeField] GameObject onlineClientCanvas;
 
     private GameObject onlineGameManager;
@@ -53,14 +52,17 @@ public class OnlineUI : MonoBehaviour
     {
         server.Init(8007);
         client.Init("127.0.0.1", 8007, clientType);
-        AddMessageHandlers();
-        onlineHostCanvas.SetActive(true);
-        onlineMenuCanvas.SetActive(false);
+        ReworkConnection();
     }
 
     private void ConnectAsClient(ClientType clientType)
     {
         client.Init(addressInput.text, 8007, clientType);
+        ReworkConnection();
+    }
+
+    private void ReworkConnection()
+    {
         AddMessageHandlers();
         onlineClientCanvas.SetActive(true);
         onlineMenuCanvas.SetActive(false);

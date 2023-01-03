@@ -34,6 +34,8 @@ public class Client : MonoBehaviour
     public ClientType role;
     public PlayerType side;
 
+    public bool isAdmin;
+
     #region Init & Destroy
 
     public void Init(string ip, ushort port, ClientType clientType) // Initiation method.
@@ -46,6 +48,7 @@ public class Client : MonoBehaviour
 
         isActive = true;
         role = clientType;
+        isAdmin = false;
 
         RegisterToEvent();
     }

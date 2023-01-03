@@ -3429,6 +3429,7 @@ MonoBehaviour:
   draftCanvas: {fileID: 1840157248}
   gameplayCanvas: {fileID: 32580846}
   gameOverCanvas: {fileID: 212387994}
+  playAgainButton: {fileID: 899053606}
 --- !u!4 &891951932
 Transform:
   m_ObjectHideFlags: 0
@@ -3608,9 +3609,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1546648674}
-        m_TargetAssemblyTypeName: SceneChangeManager, Assembly-CSharp
-        m_MethodName: LoadGameScene
+      - m_Target: {fileID: 891951931}
+        m_TargetAssemblyTypeName: GameSceneManager, Assembly-CSharp
+        m_MethodName: PlayAgain
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

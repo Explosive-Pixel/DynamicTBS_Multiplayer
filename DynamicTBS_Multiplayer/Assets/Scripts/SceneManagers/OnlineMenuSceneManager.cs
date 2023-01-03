@@ -5,7 +5,6 @@ using UnityEngine;
 public class OnlineMenuSceneManager : MonoBehaviour
 {
     [SerializeField] private GameObject onlineMenuCanvas;
-    [SerializeField] private GameObject onlineHostCanvas;
     [SerializeField] private GameObject onlineClientCanvas;
 
     private List<GameObject> canvasList = new List<GameObject>();
@@ -19,7 +18,6 @@ public class OnlineMenuSceneManager : MonoBehaviour
     private void SetCanvasList()
     {
         canvasList.Add(onlineMenuCanvas);
-        canvasList.Add(onlineHostCanvas);
         canvasList.Add(onlineClientCanvas);
     }
 

@@ -6,6 +6,7 @@ public static class GameplayEvents
 {
     public delegate void GameplayPhase();
     public static event GameplayPhase OnGameplayPhaseStart;
+    public static event GameplayPhase OnRestartGame;
 
     public delegate void FinishAction(ActionMetadata actionMetadata);
     public static event FinishAction OnFinishAction;
@@ -29,6 +30,12 @@ public static class GameplayEvents
     {
         if (OnGameplayPhaseStart != null)
             OnGameplayPhaseStart();
+    }
+
+    public static void RestartGameplay()
+    {
+        if (OnRestartGame != null)
+            OnRestartGame();
     }
 
     public static void ActionFinished(ActionMetadata actionMetadata)

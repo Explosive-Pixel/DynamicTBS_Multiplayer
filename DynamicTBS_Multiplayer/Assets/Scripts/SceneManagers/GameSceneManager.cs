@@ -9,6 +9,8 @@ public class GameSceneManager : MonoBehaviour
     [SerializeField] private GameObject gameplayCanvas;
     [SerializeField] private GameObject gameOverCanvas;
 
+    [SerializeField] private Button playAgainButton;
+
     private List<GameObject> canvasList = new List<GameObject>();
 
     public GameObject GetGameplayCanvas()
@@ -25,6 +27,23 @@ public class GameSceneManager : MonoBehaviour
     private void Start()
     {
         GoToDraftScreen();
+    }
+
+    public void PlayAgain()
+    {
+        if (GameManager.gameType == GameType.local)
+        {
+            GameEvents.StartGame();
+        }
+        else
+        {
+            //TODO: Send message to Server to Switch Admin player;
+            GameplayEvents.RestartGameplay();
+            foreach (GameObject canvas in canvasList) 
+            {
+                canvas.SetActive(false);
+            }
+        }
     }
 
     private void SetCanvasList()
