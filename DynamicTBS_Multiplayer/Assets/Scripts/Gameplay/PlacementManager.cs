@@ -47,6 +47,7 @@ public class PlacementManager : MonoBehaviour
 
     private void AdvancePlacementOrder(ActionMetadata actionMetadata)
     {
+        PlacementEvents.CharacterPlaced(actionMetadata.CharacterInAction);
         placementCount += 1;
         
         if (placementOrder.Contains(placementCount))
@@ -91,6 +92,7 @@ public class PlacementManager : MonoBehaviour
         master.GetCharacterGameObject().transform.position = new Vector3(position.x, position.y, 0.998f);
         masterSpawnTile.SetCurrentInhabitant(master);
         DraftEvents.CharacterCreated(master);
+        PlacementEvents.CharacterPlaced(master);
     }
 
     #region EventsRegion

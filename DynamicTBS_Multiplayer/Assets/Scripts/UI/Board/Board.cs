@@ -37,6 +37,7 @@ public class Board : MonoBehaviour
 
     private void Awake()
     {
+        UnsubscribeEvents();
         SubscribeEvents();
         tiles.Clear();
         tilesByGameObject.Clear();
@@ -152,9 +153,12 @@ public class Board : MonoBehaviour
                     if(!directionFinished[(sig1, sig2)])
                     {
                         Tile currentTile = GetTileByCoordinates(center.GetRow() + sig1*i, center.GetColumn() + sig2*i);
-                        if (currentTile != null && currentTile.IsOccupied() && currentTile.GetCurrentInhabitant().GetSide().GetPlayerType() == side)
+                        if (currentTile != null && currentTile.IsOccupied())
                         {
-                            positions.Add(currentTile);
+                            if(currentTile.GetCurrentInhabitant().GetSide().GetPlayerType() == side)
+                            {
+                                positions.Add(currentTile);
+                            }
                             directionFinished[(sig1, sig2)] = true;
                         }
                     }
@@ -213,11 +217,11 @@ public class Board : MonoBehaviour
         return GetTilesOfDistance(tile, patternType, 1);
     }
 
-    public static List<Tile> FindStartTiles(Character character) 
+    public static List<Tile> FindStartTiles(PlayerType playerType) 
     {
         List<Tile> startTiles = new List<Tile>();
-        int startRow = FindStartRow(character.GetSide().GetPlayerType());
-        int endRow = FindEndRow(character.GetSide().GetPlayerType());
+        int startRow = FindStartRow(playerType);
+        int endRow = FindEndRow(playerType);
 
         int row = startRow;
         while (row <= endRow)
@@ -261,6 +265,15 @@ public class Board : MonoBehaviour
         return null;
     }
 
+    public static PlayerType FindSideOfTile(int row)
+    {
+        if(row >= (boardSize / 2 + 1))
+        {
+            return PlayerType.blue;
+        }
+        return PlayerType.pink;
+    }
+
     private static int FindStartRow(PlayerType side) 
     {
         return side == PlayerType.blue ? (boardSize / 2 + 1) : 0;
@@ -277,7 +290,7 @@ public class Board : MonoBehaviour
         {
             for (int column = 0; column < boardSize; column++)
             {
-                Tile tile = new Tile(tilePositions[row, column], row, column);
+                Tile tile = new Tile(tilePositions[row, column], FindSideOfTile(row), row, column);
                 tiles.Add(tile);
                 tilesByGameObject.Add(tile.GetTileGameObject(), tile);
             }
@@ -294,17 +307,28 @@ public class Board : MonoBehaviour
         }
     }
 
+    private void TransformTileToFloorTile(Character character)
+    {
+        Tile tile = GetTileByPosition(character.GetCharacterGameObject().transform.position);
+        if(tile != null)
+        {
+            tile.Transform(TileType.FloorTile);
+        }
+    }
+
     #region EventSubscriptions
 
     private void SubscribeEvents()
     {
         DraftEvents.OnEndDraft += CreateBoard;
+        PlacementEvents.OnPlaceCharacter += TransformTileToFloorTile;
         CharacterEvents.OnCharacterDeath += UpdateTileAfterCharacterDeath;
     }
 
     private void UnsubscribeEvents()
     {
         DraftEvents.OnEndDraft -= CreateBoard;
+        PlacementEvents.OnPlaceCharacter -= TransformTileToFloorTile;
         CharacterEvents.OnCharacterDeath -= UpdateTileAfterCharacterDeath;
     }
 

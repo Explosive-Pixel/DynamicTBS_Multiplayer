@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ExplodePA : IPassiveAbility
 {
-    private static PatternType explodePatternType = PatternType.Cross;
+    private static PatternType explodePatternType = PatternType.Star;
     private static int explodeDamage = 1;
 
     private Character owner;

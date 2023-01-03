@@ -62,7 +62,7 @@ public class MoveAction : MonoBehaviour, IAction
     {
         if(!GameplayManager.HasGameStarted())
         {
-            return Board.FindStartTiles(character).ConvertAll(tile => tile.GetPosition());
+            return Board.FindStartTiles(character.GetSide().GetPlayerType()).ConvertAll(tile => tile.GetPosition());
         }
 
         Tile currentTile = Board.GetTileByCharacter(character);

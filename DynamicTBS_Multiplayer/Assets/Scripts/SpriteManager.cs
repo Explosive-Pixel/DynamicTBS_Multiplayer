@@ -19,6 +19,7 @@ public class SpriteManager
     
     // Tiles
     public static Sprite EMPTY_TILE_SPRITE;
+    public static Sprite EMPTY_TILE_SPRITE_WITH_DEPTH;
     public static Sprite FLOOR_TILE_SPRITE;
     public static Sprite FLOOR_TILE_SPRITE_VAR_1;
     public static Sprite FLOOR_TILE_SPRITE_VAR_2;
@@ -68,7 +69,8 @@ public class SpriteManager
         //MASTER_START_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/MasterStartTile");
         //GOAL_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/GoalTile");
 
-        EMPTY_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/v100/Hole_v3");
+        EMPTY_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/v100/Hole");
+        EMPTY_TILE_SPRITE_WITH_DEPTH = Resources.Load<Sprite>("TileSprites/v100/HoleWithDepth");
         FLOOR_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/v100/FloorTileBase");
         FLOOR_TILE_SPRITE_VAR_1 = Resources.Load<Sprite>("TileSprites/v100/FloorTileVariation_1");
         FLOOR_TILE_SPRITE_VAR_2 = Resources.Load<Sprite>("TileSprites/v100/FloorTileVariation_2");
@@ -97,20 +99,28 @@ public class SpriteManager
         AddSpritesToFloorTileList();
     }
 
-    public static Sprite GetTileSprite(TileType tileType)
+    public static Sprite GetTileSprite(TileType tileType, PlayerType side, bool withDepth)
     {
         switch (tileType)
         {
             case TileType.EmptyTile:
-                return EMPTY_TILE_SPRITE;
+                if (withDepth)
+                    return EMPTY_TILE_SPRITE_WITH_DEPTH;
+                else return EMPTY_TILE_SPRITE;
             case TileType.FloorTile:
                 return GetRandomFloorSprite();
             case TileType.GoalTile:
                 return GOAL_TILE_SPRITE;
             case TileType.StartTile:
-                return START_TILE_SPRITE;
+                if (side == PlayerType.blue)
+                    return START_TILE_SPRITE;
+                else
+                    return START_TILE_SPRITE;
             case TileType.MasterStartTile:
-                return MASTER_START_TILE_SPRITE;
+                if (side == PlayerType.blue)
+                    return MASTER_START_TILE_SPRITE;
+                else
+                    return MASTER_START_TILE_SPRITE;
             default:
                 return null;
         }
