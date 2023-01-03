@@ -27,7 +27,7 @@ public class Server : MonoBehaviour
 
     private NetworkDriver driver;
     private NativeList<NetworkConnection> players;
-    private NetworkConnection adminPlayer;
+    private NetworkConnection? adminPlayer;
     private readonly List<NetworkConnection> spectators = new List<NetworkConnection>();
     private readonly List<NetworkConnection> allConnections = new List<NetworkConnection>();
     private readonly List<NetworkConnection> nonAssignedConnections = new List<NetworkConnection>();
@@ -139,6 +139,32 @@ public class Server : MonoBehaviour
         }
     }
 
+    public void SwapAdmin()
+    {
+        if(adminPlayer != null)
+        {
+            NetworkConnection? otherPlayer = FindOtherPlayer(adminPlayer.Value);
+            if(otherPlayer != null)
+            {
+                adminPlayer = otherPlayer;
+            }
+        } else if (PlayerCount > 0)
+        {
+            adminPlayer = players[0];
+        }
+    }
+
+    public void WelcomePlayers()
+    {
+        for (int i = 0; i < players.Length; i++)
+        {
+            if (players[i].IsCreated)
+            {
+                SendToClient(new NetWelcome() { AssignedTeam = 0, Role = (int)ClientType.player, isAdmin = IsAdmin(players[i]) }, players[i]);
+            }
+        }
+    }
+
     private void OnDestroy() // Shutting down server on destroy.
     {
         Shutdown();
@@ -150,9 +176,18 @@ public class Server : MonoBehaviour
         {
             if (!players[i].IsCreated)
             {
+                if(adminPlayer == players[i])
+                {
+                    adminPlayer = null;
+                }
                 players.RemoveAtSwapBack(i);
                 --i;
             }
+        }
+
+        if(PlayerCount == 1)
+        {
+            adminPlayer = players[0];
         }
 
         spectators.RemoveAll(spectator => !spectator.IsCreated);

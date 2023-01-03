@@ -52,26 +52,22 @@ public class OnlineUI : MonoBehaviour
     {
         server.Init(8007);
         client.Init("127.0.0.1", 8007, clientType);
+        onlineGameManager.AddComponent<ClientMessageHandler>();
+        onlineGameManager.AddComponent<ServerMessageHandler>();
         ReworkConnection();
     }
 
     private void ConnectAsClient(ClientType clientType)
     {
         client.Init(addressInput.text, 8007, clientType);
+        onlineGameManager.AddComponent<ClientMessageHandler>();
         ReworkConnection();
     }
 
     private void ReworkConnection()
     {
-        AddMessageHandlers();
         onlineClientCanvas.SetActive(true);
         onlineMenuCanvas.SetActive(false);
-    }
-
-    private void AddMessageHandlers()
-    {
-        onlineGameManager.AddComponent<ClientMessageHandler>();
-        onlineGameManager.AddComponent<ServerMessageHandler>();
     }
 
     private void RemoveMessageHandlers()

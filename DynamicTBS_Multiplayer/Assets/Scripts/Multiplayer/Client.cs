@@ -115,6 +115,7 @@ public class Client : MonoBehaviour
                 else if (cmd == NetworkEvent.Type.Disconnect)
                 {
                     Debug.Log("Client: Client disconnected from server.");
+                    // TODO: Show disconnect message on UI
                     isConnected = false;
                     connection = default(NetworkConnection);
                     connectionDropped?.Invoke();

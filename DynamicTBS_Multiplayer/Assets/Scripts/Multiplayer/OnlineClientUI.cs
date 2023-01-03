@@ -18,12 +18,8 @@ public class OnlineClientUI : MonoBehaviour
     private void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
-
         SubscribeEvents();
-
-        selectPinkButton.gameObject.SetActive(false);
-        selectBlueButton.gameObject.SetActive(false);
-        startGameButton.gameObject.SetActive(false);
+        ResetCanvas();
     }
 
     private void Update()
@@ -35,14 +31,14 @@ public class OnlineClientUI : MonoBehaviour
     {
         OnSelectSide(PlayerType.pink);
         selectPinkButton.interactable = false;
-        selectBlueButton.gameObject.SetActive(false);
+        selectBlueButton.interactable = true;
     }
 
     public void OnSelectBlue()
     {
         OnSelectSide(PlayerType.blue);
         selectBlueButton.interactable = false;
-        selectPinkButton.gameObject.SetActive(false);
+        selectPinkButton.interactable = true;
     }
 
     private void OnSelectSide(PlayerType side)
@@ -71,6 +67,9 @@ public class OnlineClientUI : MonoBehaviour
             if (!Client.Instance.isAdmin)
             {
                 clientInfoText.text += "\nWaiting for other player to start the game ...";
+                selectPinkButton.gameObject.SetActive(false);
+                selectBlueButton.gameObject.SetActive(false);
+                startGameButton.gameObject.SetActive(false);
             }
             else 
             {
@@ -111,10 +110,17 @@ public class OnlineClientUI : MonoBehaviour
 
     private void ShowCanvas()
     {
+        ResetCanvas();
         gameObject.SetActive(true);
+    }
+
+    private void ResetCanvas()
+    {
         sideSelected = false;
         selectPinkButton.interactable = true;
         selectBlueButton.interactable = true;
+        selectPinkButton.gameObject.SetActive(false);
+        selectBlueButton.gameObject.SetActive(false);
         startGameButton.gameObject.SetActive(false);
     }
 

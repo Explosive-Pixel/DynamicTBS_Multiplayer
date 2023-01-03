@@ -69,6 +69,12 @@ public class ServerMessageHandler : MonoBehaviour
         Server.Instance.Broadcast(netExecuteUIAction);
     }
 
+    private void SwapAdmin(PlayerType? winner)
+    {
+        Server.Instance.SwapAdmin();
+        Server.Instance.WelcomePlayers();
+    }
+
     #region EventsRegion
 
     private void SubscribeEvents()
@@ -78,6 +84,8 @@ public class ServerMessageHandler : MonoBehaviour
         NetUtility.S_DRAFT_CHARACTER += OnDraftCharacterServer;
         NetUtility.S_PERFORM_ACTION += OnPeformActionServer;
         NetUtility.S_EXECUTE_UIACTION += OnExecuteUIActionServer;
+
+        GameplayEvents.OnGameOver += SwapAdmin;
     }
 
     private void UnsubscribeEvents()
@@ -87,6 +95,8 @@ public class ServerMessageHandler : MonoBehaviour
         NetUtility.S_DRAFT_CHARACTER -= OnDraftCharacterServer;
         NetUtility.S_PERFORM_ACTION -= OnPeformActionServer;
         NetUtility.S_EXECUTE_UIACTION -= OnExecuteUIActionServer;
+
+        GameplayEvents.OnGameOver -= SwapAdmin;
     }
 
     #endregion

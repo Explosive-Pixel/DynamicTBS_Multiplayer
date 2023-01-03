@@ -37,7 +37,6 @@ public class GameSceneManager : MonoBehaviour
         }
         else
         {
-            //TODO: Send message to Server to Switch Admin player;
             GameplayEvents.RestartGameplay();
             foreach (GameObject canvas in canvasList) 
             {
