@@ -46,6 +46,11 @@ public class SceneChangeManager : MonoBehaviour
         LoadSceneOnButtonPress(5);
     }
 
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
     private void LoadSceneOnButtonPress(int sceneNumber)
     {
         SceneManager.LoadScene(sceneNumber, LoadSceneMode.Single);

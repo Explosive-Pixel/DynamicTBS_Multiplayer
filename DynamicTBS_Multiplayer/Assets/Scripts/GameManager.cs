@@ -14,9 +14,4 @@ public class GameManager : MonoBehaviour
         SpriteManager.LoadSprites();
         PrefabManager.LoadPrefabs();
     }
-
-    public void EndGame()
-    {
-        Application.Quit();
-    }
 }
