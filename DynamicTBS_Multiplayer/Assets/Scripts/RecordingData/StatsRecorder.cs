@@ -37,7 +37,7 @@ public class StatsRecorder : MonoBehaviour
         else
         {
             recordableStats = new RecordableStats();
-            File.WriteAllText(filePath, "");
+            SaveStats();
         }
         IncreaseGameNumber();
     }
