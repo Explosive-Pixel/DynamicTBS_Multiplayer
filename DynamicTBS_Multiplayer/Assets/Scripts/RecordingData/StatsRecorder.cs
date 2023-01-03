@@ -37,9 +37,9 @@ public class StatsRecorder : MonoBehaviour
         else
         {
             recordableStats = new RecordableStats();
-            File.WriteAllText(filePath, "");
+            SaveStats();
         }
-        //IncreaseGameNumber();
+        IncreaseGameNumber();
     }
 
     private void SaveStats()
@@ -292,7 +292,7 @@ public class StatsRecorder : MonoBehaviour
 
     private void SubscribeEvents()
     {
-        GameManager.OnStartRecording += LoadStats;
+        DraftEvents.OnStartDraft += LoadStats;
         //DraftEvents.OnDeliverCharacterList += IncreaseUnitInDraftCount;
         //DraftEvents.OnDeliverCharacterList += IncreaseUniqueDraftCombinationCount;
         GameplayEvents.OnGameOver += RedordWin;
@@ -300,7 +300,7 @@ public class StatsRecorder : MonoBehaviour
 
     private void UnsubscribeEvents()
     {
-        GameManager.OnStartRecording -= LoadStats;
+        DraftEvents.OnStartDraft -= LoadStats;
         //DraftEvents.OnDeliverCharacterList -= IncreaseUnitInDraftCount;
         //DraftEvents.OnDeliverCharacterList -= IncreaseUniqueDraftCombinationCount;
         GameplayEvents.OnGameOver -= RedordWin;

@@ -19,8 +19,8 @@ public class OnlineHostUI : MonoBehaviour
 
     private void Update()
     {
-        connectedPlayer.text = "Connected players: " + Server.Instance.connections.Length;
-        if(Server.Instance.playerCount == 2 && sideSelected)
+        connectedPlayer.text = "Connected players: " + Server.Instance.PlayerCount;
+        if(Server.Instance.PlayerCount == 2 && sideSelected)
         {
             startGameButton.gameObject.SetActive(true);
         }
@@ -42,7 +42,7 @@ public class OnlineHostUI : MonoBehaviour
 
     private void OnSelectSide(PlayerType side)
     {
-        Client.Instance.SendToServer(new NetWelcome() { AssignedTeam = (int)side });
+        Client.Instance.SendToServer(new NetWelcome() { AssignedTeam = (int)side, Role = (int)Client.Instance.role});
         sideSelected = true;
     }
 

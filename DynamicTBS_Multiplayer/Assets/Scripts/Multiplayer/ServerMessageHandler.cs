@@ -14,22 +14,29 @@ public class ServerMessageHandler : MonoBehaviour
     {
         NetWelcome netWelcome = msg as NetWelcome;
 
-        if (netWelcome.AssignedTeam != 0)
-        {
-            Server.Instance.hostSide = netWelcome.AssignedTeam;
-            Server.Instance.SendToClient(netWelcome, cnn);
+        Server.Instance.RegisterAs(cnn, (ClientType)netWelcome.Role);
+        Debug.Log("Welcome Server role: " + netWelcome.Role + ", assigned Team: " + netWelcome.AssignedTeam);
 
-            NetworkConnection? otherConnection = Server.Instance.FindOtherConnection(cnn);
-            if (otherConnection != null)
+        if (netWelcome.Role == (int)ClientType.player)
+        {
+            if (netWelcome.AssignedTeam != 0)
             {
-                Server.Instance.SendToClient(new NetWelcome { AssignedTeam = Server.Instance.GetNonHostSide() }, otherConnection.Value);
-            }
-        }
-        else
-        {
-            netWelcome.AssignedTeam = Server.Instance.hostSide == 0 ? Server.Instance.playerCount : Server.Instance.GetNonHostSide();
-            Debug.Log("Server: Connected players: " + netWelcome.AssignedTeam);
+                Server.Instance.HostSide = netWelcome.AssignedTeam;
+                Server.Instance.SendToClient(netWelcome, cnn);
 
+                NetworkConnection? otherConnection = Server.Instance.FindOtherConnection(cnn);
+                if (otherConnection != null)
+                {
+                    Server.Instance.SendToClient(new NetWelcome() { AssignedTeam = Server.Instance.GetNonHostSide(), Role = netWelcome.Role}, otherConnection.Value);
+                }
+            }
+            else
+            {
+                netWelcome.AssignedTeam = Server.Instance.HostSide == 0 ? Server.Instance.PlayerCount : Server.Instance.GetNonHostSide();
+                Server.Instance.SendToClient(netWelcome, cnn);
+            }
+        } else
+        {
             Server.Instance.SendToClient(netWelcome, cnn);
         }
     }

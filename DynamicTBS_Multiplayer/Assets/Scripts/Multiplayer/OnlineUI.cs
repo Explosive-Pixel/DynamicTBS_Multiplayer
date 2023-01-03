@@ -19,6 +19,7 @@ public class OnlineUI : MonoBehaviour
     private void Awake()
     {
         onlineGameManager = GameObject.Find("OnlineGameManager");
+        BackToMainMenuButton();
     }
 
     public void OnlineHostButton()
@@ -26,7 +27,6 @@ public class OnlineUI : MonoBehaviour
         server.Init(8007);
         client.Init("127.0.0.1", 8007);
         AddMessageHandlers();
-        GameManager.StartRecording();
         onlineHostCanvas.SetActive(true);
         onlineMenuCanvas.SetActive(false);
     }
@@ -35,7 +35,6 @@ public class OnlineUI : MonoBehaviour
     {
         client.Init(addressInput.text, 8007);
         AddMessageHandlers();
-        GameManager.StartRecording();
         onlineClientCanvas.SetActive(true);
         onlineMenuCanvas.SetActive(false);
     }
@@ -55,7 +54,14 @@ public class OnlineUI : MonoBehaviour
 
     private void RemoveMessageHandlers()
     {
-        Destroy(onlineGameManager.GetComponent<ClientMessageHandler>());
-        Destroy(onlineGameManager.GetComponent<ServerMessageHandler>());
+        if(onlineGameManager.TryGetComponent(out ClientMessageHandler cmh))
+        {
+            Destroy(cmh);
+        }
+
+        if (onlineGameManager.TryGetComponent(out ServerMessageHandler smh))
+        {
+            Destroy(smh);
+        }
     }
 }

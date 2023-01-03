@@ -20,7 +20,6 @@ public class GameSceneManager : MonoBehaviour
     {
         SubscribeEvents();
         SetCanvasList();
-        
     }
 
     private void Start()
@@ -47,7 +46,7 @@ public class GameSceneManager : MonoBehaviour
     }
 
     #region ScreenChangeRegion
-    public void GoToDraftScreen()
+    private void GoToDraftScreen()
     {
         HandleMenus(draftCanvas);
         DraftEvents.StartDraft();

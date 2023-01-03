@@ -11,6 +11,11 @@ public class SceneChangeManager : MonoBehaviour
     // 4: Lore Scene
     // 5: Credits Scene
 
+    private void Awake()
+    {
+        SubscribeEvents();
+    }
+
     public void LoadMainMenuScene()
     {
         LoadSceneOnButtonPress(0);
@@ -41,8 +46,42 @@ public class SceneChangeManager : MonoBehaviour
         LoadSceneOnButtonPress(5);
     }
 
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
     private void LoadSceneOnButtonPress(int sceneNumber)
     {
         SceneManager.LoadScene(sceneNumber, LoadSceneMode.Single);
+
+        // Shut down Server and Client if it is not the online menu or game scene
+        if(sceneNumber != 1 && sceneNumber != 2)
+        {
+            GameObject onlineGameManager = GameObject.Find("OnlineGameManager");
+            if (onlineGameManager)
+            {
+                Destroy(onlineGameManager);
+            }
+        }
     }
+
+    #region EventSubscriptions
+
+    private void SubscribeEvents()
+    {
+        GameEvents.OnGameStart += LoadGameScene;
+    }
+
+    private void UnsubscribeEvents()
+    {
+        GameEvents.OnGameStart -= LoadGameScene;
+    }
+
+    private void OnDestroy()
+    {
+        UnsubscribeEvents();
+    }
+
+    #endregion
 }

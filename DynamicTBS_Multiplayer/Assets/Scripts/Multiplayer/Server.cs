@@ -10,29 +10,33 @@ public class Server : MonoBehaviour
     #region SingletonImplementation
 
     public static Server Instance { set; get; }
+    private GameObject onlineGameManagerObject;
 
     private void Awake()
     {
         Instance = this;
+        Shutdown();
         onlineGameManagerObject = this.gameObject;
         DontDestroyOnLoad(onlineGameManagerObject);
     }
 
     #endregion
 
-    private GameObject onlineGameManagerObject;
+    public int PlayerCount { get { return isActive ? players.Length : 0; } }
+    public int HostSide { get { return hostSide; } set { hostSide = value; } }
 
-    public NetworkDriver driver;
-    public NativeList<NetworkConnection> connections;
+    private NetworkDriver driver;
+    private NativeList<NetworkConnection> players;
+    private readonly List<NetworkConnection> spectators = new List<NetworkConnection>();
+    private readonly List<NetworkConnection> allConnections = new List<NetworkConnection>();
+    private readonly List<NetworkConnection> nonAssignedConnections = new List<NetworkConnection>();
 
     private bool isActive = false;
     private const float KeepAliveTickRate = 20f; // Constant tick rate, so connection won't time out.
     private float lastKeepAlive = 0f; // Timestamp for last connection.
 
-    public Action connectionDropped;
-
-    public int playerCount = 0;
-    public int hostSide = 0;
+    private Action connectionDropped;
+    private int hostSide = 0;
 
     private void Update()
     {
@@ -68,29 +72,35 @@ public class Server : MonoBehaviour
             Debug.Log("Server: Currently listening on port " + endPoint.Port);
         }
 
-        connections = new NativeList<NetworkConnection>(2, Allocator.Persistent); // Allows up to two connections at a time.
+        players = new NativeList<NetworkConnection>(2, Allocator.Persistent); // Allows up to two connections at a time.
         isActive = true;
+        hostSide = 0;
     }
 
-    public NetworkConnection? FindConnection(NetworkConnection cnn)
+    public void RegisterAs(NetworkConnection c, ClientType role)
     {
-        for (int i = 0; i < connections.Length; i++)
+        if(nonAssignedConnections.Contains(c))
         {
-            if(connections[i] == cnn)
+            if(role == ClientType.player)
             {
-                return connections[i];
+                players.Add(c);
+            } else
+            {
+                spectators.Add(c);
             }
+            nonAssignedConnections.Remove(c);
+            UpdateConnections();
         }
-        return null;
     }
 
     public NetworkConnection? FindOtherConnection(NetworkConnection host)
     {
-        for (int i = 0; i < connections.Length; i++)
+        Debug.Log("Player connections: " + players.Length);
+        for (int i = 0; i < players.Length; i++)
         {
-            if (connections[i] != host)
+            if (players[i] != host)
             {
-                return connections[i];
+                return players[i];
             }
         }
         return null;
@@ -109,8 +119,12 @@ public class Server : MonoBehaviour
     {
         if (isActive)
         {
+            Debug.Log("Shutting down Server.");
             driver.Dispose();
-            connections.Dispose();
+            players.Dispose();
+            spectators.Clear();
+            nonAssignedConnections.Clear();
+            allConnections.Clear();
             isActive = false;
         }
     }
@@ -122,15 +136,19 @@ public class Server : MonoBehaviour
 
     private void CleanUpConnections()
     {
-        for (int i = 0; i < connections.Length; i++)
+        for (int i = 0; i < players.Length; i++)
         {
-            if (!connections[i].IsCreated)
+            if (!players[i].IsCreated)
             {
-                connections.RemoveAtSwapBack(i);
+                players.RemoveAtSwapBack(i);
                 --i;
             }
         }
-        playerCount = connections.Length;
+
+        spectators.RemoveAll(spectator => !spectator.IsCreated);
+        nonAssignedConnections.RemoveAll(cnn => !cnn.IsCreated);
+
+        UpdateConnections();
     }
 
     private void AcceptNewConnections()
@@ -138,12 +156,26 @@ public class Server : MonoBehaviour
         NetworkConnection c;
         while ((c = driver.Accept()) != default(NetworkConnection)) // Checks if a client tries to connect who's not the default connection.
         {
-            connections.Add(c);
-            SendToClient(new NetKeepAlive(), c);
-            playerCount = connections.Length;
+            nonAssignedConnections.Add(c);
+            UpdateConnections();
+            //SendToClient(new NetKeepAlive(), c);
+            //playerCount = players.Length;
             Debug.Log("Server: New client connected");
             Debug.Log(c.ToString());
         }
+    }
+
+    private void UpdateConnections()
+    {
+        allConnections.Clear();
+
+        for (int i = 0; i < players.Length; i++)
+        {
+            allConnections.Add(players[i]);
+        }
+
+        allConnections.AddRange(spectators);
+        allConnections.AddRange(nonAssignedConnections);
     }
 
     private void UpdateMessagePump()
@@ -151,7 +183,7 @@ public class Server : MonoBehaviour
         try
         {
             DataStreamReader stream; // Reads incoming messages.
-            for (int i = 0; i < connections.Length; i++)
+            for (int i = 0; i < allConnections.Count; i++)
             {
                 NetworkEvent.Type cmd;
                 // There are 4 types of network events:
@@ -160,25 +192,51 @@ public class Server : MonoBehaviour
                 // Data = any net-message sent.
                 // Disconnect = connection is severed.
 
-                while ((cmd = driver.PopEventForConnection(connections[i], out stream)) != NetworkEvent.Type.Empty)
+                while ((cmd = driver.PopEventForConnection(allConnections[i], out stream)) != NetworkEvent.Type.Empty)
                 {
                     if (cmd == NetworkEvent.Type.Data)
                     {
-                        NetUtility.OnData(stream, connections[i], this);
+                        NetUtility.OnData(stream, allConnections[i], this);
                     }
                     else if (cmd == NetworkEvent.Type.Disconnect)
                     {
                         Debug.Log("Server: Client disconnected from server.");
-                        connections[i] = default(NetworkConnection);
+                        DropConnection(allConnections[i]);
                         connectionDropped?.Invoke();
                         Shutdown(); // Does not happen usually, only because this is a 2 person game.
                     }
                 }
             }
         }
-        catch (ObjectDisposedException)
+        catch (Exception)
         {
             return;
+        }
+    }
+
+    private void DropConnection(NetworkConnection cnn)
+    {
+        allConnections.Remove(cnn);
+
+        if(spectators.Contains(cnn))
+        {
+            spectators.Remove(cnn);
+            return;
+        }
+
+        if(nonAssignedConnections.Contains(cnn))
+        {
+            nonAssignedConnections.Remove(cnn);
+            return;
+        }
+
+        for (int i = 0; i < players.Length; i++)
+        {
+            if (players[i] == cnn)
+            {
+                players[i] = default(NetworkConnection);
+                return;
+            }
         }
     }
 
@@ -205,12 +263,12 @@ public class Server : MonoBehaviour
 
     public void Broadcast(NetMessage msg) // Send message to every client.
     {
-        for (int i = 0; i < connections.Length; i++)
+        for (int i = 0; i < allConnections.Count; i++)
         {
-            if (connections[i].IsCreated)
+            if (allConnections[i].IsCreated)
             {
-                Debug.Log($"Server: Sending {msg.Code} to : {connections[i].InternalId}");
-                SendToClient(msg, connections[i]);
+                Debug.Log($"Server: Sending {msg.Code} to : {allConnections[i].InternalId}");
+                SendToClient(msg, allConnections[i]);
             }
         }
     }
