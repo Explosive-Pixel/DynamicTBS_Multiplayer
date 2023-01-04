@@ -36,7 +36,7 @@ public class ActionUtils : MonoBehaviour
     {
         foreach (IAction action in ActionRegistry.GetActions())
         {
-            if (GameplayManager.ActionAvailable(character, action.ActionType))
+            if (GameplayManager.ActionAvailable(character, action.ActionType) && !character.isDisabled())
                 action.CreateActionDestinations(character);
         }
     }
