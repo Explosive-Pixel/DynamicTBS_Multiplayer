@@ -11,7 +11,6 @@ public class OnlineUI : MonoBehaviour
 
     [SerializeField] InputField addressInput;
     [SerializeField] GameObject onlineMenuCanvas;
-    [SerializeField] GameObject onlineHostCanvas;
     [SerializeField] GameObject onlineClientCanvas;
 
     private GameObject onlineGameManager;
@@ -22,13 +21,14 @@ public class OnlineUI : MonoBehaviour
         BackToMainMenuButton();
     }
 
-    public void OnlineHostButton()
+    public void OnlineHostAsPlayerButton()
     {
-        server.Init(8007);
-        client.Init("127.0.0.1", 8007, ClientType.player);
-        AddMessageHandlers();
-        onlineHostCanvas.SetActive(true);
-        onlineMenuCanvas.SetActive(false);
+        OnlineHostButton(ClientType.player);
+    }
+
+    public void OnlineHostAsSpectatorButton()
+    {
+        OnlineHostButton(ClientType.spectator);
     }
 
     public void OnlineConnectAsPlayerButton()
@@ -48,18 +48,26 @@ public class OnlineUI : MonoBehaviour
         RemoveMessageHandlers();
     }
 
+    private void OnlineHostButton(ClientType clientType)
+    {
+        server.Init(8007);
+        client.Init("127.0.0.1", 8007, clientType);
+        onlineGameManager.AddComponent<ClientMessageHandler>();
+        onlineGameManager.AddComponent<ServerMessageHandler>();
+        ReworkConnection();
+    }
+
     private void ConnectAsClient(ClientType clientType)
     {
         client.Init(addressInput.text, 8007, clientType);
-        AddMessageHandlers();
-        onlineClientCanvas.SetActive(true);
-        onlineMenuCanvas.SetActive(false);
+        onlineGameManager.AddComponent<ClientMessageHandler>();
+        ReworkConnection();
     }
 
-    private void AddMessageHandlers()
+    private void ReworkConnection()
     {
-        onlineGameManager.AddComponent<ClientMessageHandler>();
-        onlineGameManager.AddComponent<ServerMessageHandler>();
+        onlineClientCanvas.SetActive(true);
+        onlineMenuCanvas.SetActive(false);
     }
 
     private void RemoveMessageHandlers()

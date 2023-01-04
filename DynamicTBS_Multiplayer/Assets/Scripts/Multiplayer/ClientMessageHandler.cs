@@ -18,6 +18,8 @@ public class ClientMessageHandler : MonoBehaviour
             Client.Instance.side = (PlayerType)netWelcome.AssignedTeam;
             Debug.Log("Assigned Team " + Client.Instance.side);
         }
+
+        Client.Instance.isAdmin = netWelcome.isAdmin;
     }
 
     private void OnStartGameClient(NetMessage msg)

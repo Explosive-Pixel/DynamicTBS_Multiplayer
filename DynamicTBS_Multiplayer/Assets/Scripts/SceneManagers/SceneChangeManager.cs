@@ -58,11 +58,17 @@ public class SceneChangeManager : MonoBehaviour
         // Shut down Server and Client if it is not the online menu or game scene
         if(sceneNumber != 1 && sceneNumber != 2)
         {
-            GameObject onlineGameManager = GameObject.Find("OnlineGameManager");
-            if (onlineGameManager)
-            {
-                Destroy(onlineGameManager);
-            }
+            DestroyManually("OnlineGameManager");
+            DestroyManually("OnlineClientCanvas");
+        }
+    }
+
+    private void DestroyManually(string gameObjectName)
+    {
+        GameObject go = GameObject.Find(gameObjectName);
+        if(go)
+        {
+            Destroy(go);
         }
     }
 

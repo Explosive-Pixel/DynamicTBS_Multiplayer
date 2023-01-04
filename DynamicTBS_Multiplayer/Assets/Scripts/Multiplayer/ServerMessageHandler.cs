@@ -19,26 +19,33 @@ public class ServerMessageHandler : MonoBehaviour
 
         if (netWelcome.Role == (int)ClientType.player)
         {
+            netWelcome.isAdmin = Server.Instance.IsAdmin(cnn);
+
             if (netWelcome.AssignedTeam != 0)
             {
-                Server.Instance.HostSide = netWelcome.AssignedTeam;
+                Server.Instance.ChosenSide = netWelcome.AssignedTeam;
                 Server.Instance.SendToClient(netWelcome, cnn);
 
-                NetworkConnection? otherConnection = Server.Instance.FindOtherConnection(cnn);
+                NetworkConnection? otherConnection = Server.Instance.FindOtherPlayer(cnn);
                 if (otherConnection != null)
                 {
-                    Server.Instance.SendToClient(new NetWelcome() { AssignedTeam = Server.Instance.GetNonHostSide(), Role = netWelcome.Role}, otherConnection.Value);
+                    Server.Instance.SendToClient(new NetWelcome() { AssignedTeam = Server.Instance.GetOtherSide(), Role = netWelcome.Role}, otherConnection.Value);
                 }
             }
             else
             {
-                netWelcome.AssignedTeam = Server.Instance.HostSide == 0 ? Server.Instance.PlayerCount : Server.Instance.GetNonHostSide();
+                netWelcome.AssignedTeam = Server.Instance.ChosenSide == 0 ? Server.Instance.PlayerCount : Server.Instance.GetOtherSide();
                 Server.Instance.SendToClient(netWelcome, cnn);
             }
         } else
         {
             Server.Instance.SendToClient(netWelcome, cnn);
         }
+    }
+
+    private void OnNetStartGame(NetMessage msg, NetworkConnection cnn)
+    {
+        Server.Instance.Broadcast(msg);
     }
 
     private void OnDraftCharacterServer(NetMessage msg, NetworkConnection cnn)
@@ -62,22 +69,34 @@ public class ServerMessageHandler : MonoBehaviour
         Server.Instance.Broadcast(netExecuteUIAction);
     }
 
+    private void SwapAdmin(PlayerType? winner)
+    {
+        Server.Instance.SwapAdmin();
+        Server.Instance.WelcomePlayers();
+    }
+
     #region EventsRegion
 
     private void SubscribeEvents()
     {
         NetUtility.S_WELCOME += OnWelcomeServer;
+        NetUtility.S_START_GAME += OnNetStartGame;
         NetUtility.S_DRAFT_CHARACTER += OnDraftCharacterServer;
         NetUtility.S_PERFORM_ACTION += OnPeformActionServer;
         NetUtility.S_EXECUTE_UIACTION += OnExecuteUIActionServer;
+
+        GameplayEvents.OnGameOver += SwapAdmin;
     }
 
     private void UnsubscribeEvents()
     {
         NetUtility.S_WELCOME -= OnWelcomeServer;
+        NetUtility.S_START_GAME -= OnNetStartGame;
         NetUtility.S_DRAFT_CHARACTER -= OnDraftCharacterServer;
         NetUtility.S_PERFORM_ACTION -= OnPeformActionServer;
         NetUtility.S_EXECUTE_UIACTION -= OnExecuteUIActionServer;
+
+        GameplayEvents.OnGameOver -= SwapAdmin;
     }
 
     #endregion
