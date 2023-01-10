@@ -203,7 +203,7 @@ public class Board : MonoBehaviour
         }
     }
 
-    private static Tile GetTileByCoordinates(int row, int column)
+    public static Tile GetTileByCoordinates(int row, int column)
     {
         if (row < 0 || row >= boardSize || column < 0 || column >= boardSize) {
             return null;
