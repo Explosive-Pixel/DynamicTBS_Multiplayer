@@ -110,7 +110,7 @@ public class Tile
     private bool WithDepth()
     {
         bool withDepth = false;
-        Tile tileAbove = Board.GetTileByPosition(Board.FindPosition(row - 1, column));
+        Tile tileAbove = Board.GetTileByCoordinates(row - 1, column);
         if (tileAbove != null && tileAbove.GetTileType() != TileType.EmptyTile)
         {
             withDepth = true;
