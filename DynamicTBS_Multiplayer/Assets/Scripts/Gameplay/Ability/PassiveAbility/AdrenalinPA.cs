@@ -24,7 +24,7 @@ public class AdrenalinPA : IPassiveAbility
             return;
         }
 
-        if (character == owner && owner.isDamageable(damage))
+        if (character == owner)
         {
             owner.activeAbilityCooldown = 0;
         }
