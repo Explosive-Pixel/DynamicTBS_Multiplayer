@@ -38,6 +38,9 @@ public abstract class Character //: MonoBehaviour
     // States whether the character can take damage
     public delegate bool IsDamageable(int damage);
     public IsDamageable isDamageable = (damage) => true;
+    // States how much damage a character actually receives when attacked
+    public delegate int NetDamage(int damage);
+    public NetDamage netDamage = (damage) => damage;
 
     // States whether the character is disabled, i.e. can not perform any action (move/attack/perform active ability)
     public delegate bool IsDisabled();
@@ -98,17 +101,21 @@ public abstract class Character //: MonoBehaviour
     {
         if (!IsDead())
         {
-            CharacterEvents.CharacterTakesDamage(this, damage);
-            if (isDamageable(damage))
+            int actualDamage = netDamage(damage);
+            if (isDamageable(damage) && actualDamage > 0)
             {
-                this.hitPoints -= damage;
+                this.hitPoints -= actualDamage;
                 this.characterGameObject.transform.GetChild(0).GetComponent<Animator>().SetInteger("leben", this.hitPoints);
                 Debug.Log("Character " + characterGameObject.name + " now has " + hitPoints + " hit points remaining.");
+
+                CharacterEvents.CharacterTakesDamage(this, actualDamage);
+
                 if (this.hitPoints <= 0)
                 {
                     this.Die();
                 }
             }
+            CharacterEvents.CharacterReceivesDamage(this, damage);
         }
     }
 
@@ -136,7 +143,7 @@ public abstract class Character //: MonoBehaviour
         if(!IsDead())
         {
             activeAbilityCooldown = activeAbility.Cooldown + 1;
-            this.characterGameObject.transform.GetChild(1).GetComponent<Animator>().SetInteger("cooldown", activeAbilityCooldown);
+            this.characterGameObject.transform.GetChild(1).GetComponent<Animator>().SetInteger("cooldown", activeAbility.Cooldown);
             GameplayEvents.OnPlayerTurnEnded += ReduceActiveAbiliyCooldown;
         }
     }

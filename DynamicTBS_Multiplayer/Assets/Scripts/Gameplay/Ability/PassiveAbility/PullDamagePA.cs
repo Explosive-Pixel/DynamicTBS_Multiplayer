@@ -20,31 +20,35 @@ public class PullDamagePA : IPassiveAbility
 
         foreach (Character character in characters)
         {
-            var defaultIsDamageable = character.isDamageable;
-            character.isDamageable = (damage) =>
+            var defaultNetDamage = character.netDamage;
+            character.netDamage = (damage) =>
             {
                 if (character.GetPassiveAbility().GetType() == typeof(PullDamagePA))
                 {
-                    return defaultIsDamageable(damage);
+                    return defaultNetDamage(damage);
                 }
 
-                if(owner.isDamageable(damage) && CharacterHandler.AlliedNeighbors(character, owner, pullDamagePatternType))
+                if (owner.isDamageable(damage) && CharacterHandler.AlliedNeighbors(character, owner, pullDamagePatternType))
                 {
-                    return false;
+                    int netDamage = damage - owner.hitPoints;
+                    if(netDamage < defaultNetDamage(damage))
+                    {
+                        return netDamage;
+                    }
                 }
 
-                return defaultIsDamageable(damage);
+                return defaultNetDamage(damage);
             };
         }
 
-        CharacterEvents.OnCharacterTakesDamage += AbsorbDamage;
+        CharacterEvents.OnCharacterReceivesDamage += AbsorbDamage;
     }
 
     private void AbsorbDamage(Character character, int damage)
     {
         if (owner.IsDead())
         {
-            CharacterEvents.OnCharacterTakesDamage -= AbsorbDamage;
+            CharacterEvents.OnCharacterReceivesDamage -= AbsorbDamage;
             return;
         }
 
@@ -62,6 +66,6 @@ public class PullDamagePA : IPassiveAbility
 
     ~PullDamagePA()
     {
-        CharacterEvents.OnCharacterTakesDamage -= AbsorbDamage;
+        CharacterEvents.OnCharacterReceivesDamage -= AbsorbDamage;
     }
 }
