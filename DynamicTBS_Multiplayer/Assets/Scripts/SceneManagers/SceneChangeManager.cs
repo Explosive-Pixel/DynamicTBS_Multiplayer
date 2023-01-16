@@ -9,7 +9,8 @@ public class SceneChangeManager : MonoBehaviour
     // 2: Game Scene (Draft/Placement/Fight/GameOver)
     // 3: Tutorial Scene
     // 4: Lore Scene
-    // 5: Credits Scene
+    // 5: Settings Scene
+    // 6: Credits Scene
 
     private void Awake()
     {
@@ -41,9 +42,14 @@ public class SceneChangeManager : MonoBehaviour
         LoadSceneOnButtonPress(4);
     }
 
-    public void LoadCreditsScene()
+    public void LoadSettingsScene()
     {
         LoadSceneOnButtonPress(5);
+    }
+
+    public void LoadCreditsScene()
+    {
+        LoadSceneOnButtonPress(6);
     }
 
     public void QuitGame()
