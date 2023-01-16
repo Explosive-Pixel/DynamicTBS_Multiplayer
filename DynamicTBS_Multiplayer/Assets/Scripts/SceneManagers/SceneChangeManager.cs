@@ -11,7 +11,8 @@ public class SceneChangeManager : MonoBehaviour
     // 4: Lore Scene
     // 5: Settings Scene
     // 6: Credits Scene
-
+    
+    // TODO: Put saving and loading PlayerPrefs and the Quit-Option in separate class which doesn't destroy on load.
     private void Awake()
     {
         SubscribeEvents();
@@ -54,7 +55,22 @@ public class SceneChangeManager : MonoBehaviour
 
     public void QuitGame()
     {
+        SaveSettings();
         Application.Quit();
+    }
+
+    private void SaveSettings()
+    {
+        PlayerPrefs.SetFloat("VolumeSetting", SettingsManager.currentVolume);
+        PlayerPrefs.SetInt("FullscreenSetting", SettingsManager.currentFullscreenSetting);
+    }
+
+    private void LoadSettings()
+    {
+        if (PlayerPrefs.HasKey("VolumeSetting"))
+            SettingsManager.currentVolume = PlayerPrefs.GetFloat("VolumeSetting");
+        if (PlayerPrefs.HasKey("FullscreenSetting"))
+            SettingsManager.currentFullscreenSetting = PlayerPrefs.GetInt("FullscreenSetting");
     }
 
     private void LoadSceneOnButtonPress(int sceneNumber)

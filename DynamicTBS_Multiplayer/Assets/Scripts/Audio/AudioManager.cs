@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
+    public static AudioManager instance;
+    
     private GameObject audioManagerObject;
-    private AudioSource audioSource;
+    [SerializeField] private AudioSource audioSource;
 
+    #region ClipsRegion
     // Music
     [SerializeField] private AudioClip mainThemeClip;
     [SerializeField] private AudioClip fightThemeClip;
@@ -36,13 +39,17 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip runnerVoicelineClip;
     [SerializeField] private AudioClip mechanicVoicelineClip;
     [SerializeField] private AudioClip medicVoicelineClip;
+    #endregion
 
     private void Awake()
     {
+        if (instance != null)
+            Destroy(gameObject);
+        else
+            instance = this;
+
         audioManagerObject = this.gameObject;
         DontDestroyOnLoad(audioManagerObject);
-
-        audioSource = GetComponent<AudioSource>();
         
         if (!audioSource.isPlaying)
         {
@@ -50,6 +57,7 @@ public class AudioManager : MonoBehaviour
             audioSource.loop = true;
             audioSource.volume = 0.2f;
             audioSource.Play();
+            Debug.Log(audioSource.isPlaying);
         }
     }
 }
