@@ -44,20 +44,30 @@ public class AudioManager : MonoBehaviour
     private void Awake()
     {
         if (instance != null)
-            Destroy(gameObject);
+        {
+            Destroy(this.gameObject);
+        }
         else
+        {
             instance = this;
+        }
+    }
 
+    private void Start()
+    {
         audioManagerObject = this.gameObject;
         DontDestroyOnLoad(audioManagerObject);
-        
+        PlayMainTheme();
+    }
+
+    private void PlayMainTheme()
+    {
         if (!audioSource.isPlaying)
         {
             audioSource.clip = mainThemeClip;
             audioSource.loop = true;
             audioSource.volume = 0.2f;
             audioSource.Play();
-            Debug.Log(audioSource.isPlaying);
         }
     }
 }

@@ -9,8 +9,7 @@ public class SceneChangeManager : MonoBehaviour
     // 2: Game Scene (Draft/Placement/Fight/GameOver)
     // 3: Tutorial Scene
     // 4: Lore Scene
-    // 5: Settings Scene
-    // 6: Credits Scene
+    // 5: Credits Scene
     
     // TODO: Put saving and loading PlayerPrefs and the Quit-Option in separate class which doesn't destroy on load.
     private void Awake()
@@ -43,14 +42,9 @@ public class SceneChangeManager : MonoBehaviour
         LoadSceneOnButtonPress(4);
     }
 
-    public void LoadSettingsScene()
-    {
-        LoadSceneOnButtonPress(5);
-    }
-
     public void LoadCreditsScene()
     {
-        LoadSceneOnButtonPress(6);
+        LoadSceneOnButtonPress(5);
     }
 
     public void QuitGame()

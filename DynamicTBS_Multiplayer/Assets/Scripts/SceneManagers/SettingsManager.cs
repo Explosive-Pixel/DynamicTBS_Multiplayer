@@ -5,6 +5,8 @@ using UnityEngine.Audio;
 
 public class SettingsManager : MonoBehaviour
 {
+    public static SettingsManager instance;
+
     private GameObject settingsObject;
 
     [SerializeField] private GameObject toggleObjects;
@@ -14,6 +16,14 @@ public class SettingsManager : MonoBehaviour
     public static int currentFullscreenSetting;
 
     private void Awake()
+    {
+        if (instance != null)
+            Destroy(this.gameObject);
+        else
+            instance = this;
+    }
+
+    private void Start()
     {
         settingsObject = this.gameObject;
         DontDestroyOnLoad(settingsObject);
