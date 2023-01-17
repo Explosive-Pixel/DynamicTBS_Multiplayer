@@ -131,7 +131,7 @@ public class SpriteManager
         
         // Filling the list with 10 sprites
         // Chance for floor tile should be at 60%
-        // Chance for variations should be at 20% each
+        // Chance for variations should be at 10% each
         for (int i = 0; i <= 5; i++)
         {
             // Add base floor tile

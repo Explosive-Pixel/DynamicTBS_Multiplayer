@@ -48,6 +48,8 @@ public class MoveAction : MonoBehaviour, IAction
         Vector3 oldPosition = characterInAction.GetCharacterGameObject().transform.position;
         characterInAction.GetCharacterGameObject().transform.position = actionDestination.transform.position;
 
+        //characterInAction.GetCharacterGameObject().transform.position = new Vector3(actionDestination.transform.position.x, actionDestination.transform.position.y + 0.1f, actionDestination.transform.position.z);
+
         Board.UpdateTilesAfterMove(oldPosition, characterInAction);
 
         AbortAction();
