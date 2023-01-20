@@ -10,10 +10,26 @@ public class DraftManager : MonoBehaviour
 
     public const int MaxDraftCount = 14;
     public static readonly List<int> draftOrder = new List<int>() {3, 6, 7, 9, 11, 13};
+    private static List<Vector3> instantiationPositions = new List<Vector3>() {
+        new Vector3(1f, 3.25f, 0.998f), 
+        new Vector3(2f, 3.25f, 0.998f), 
+        new Vector3(3f, 3.25f, 0.998f), 
+        new Vector3(-1f, 2.3f, 0.998f), 
+        new Vector3(-2f, 2.3f, 0.998f), 
+        new Vector3(-3f, 2.3f, 0.998f), 
+        new Vector3(1f, 1.4f, 0.998f), 
+        new Vector3(-1f, 0.45f, 0.998f), 
+        new Vector3(-2f, 0.45f, 0.998f), 
+        new Vector3(1f, -0.45f, 0.998f), 
+        new Vector3(2f, -0.45f, 0.998f), 
+        new Vector3(-1f, -1.4f, 0.998f), 
+        new Vector3(-2f, -1.4f, 0.998f), 
+        new Vector3(1f, -2.35f, 0.998f) };
 
     #endregion
 
     private static Vector3 firstPosition;
+    
     private static float offset = 1f;
     private static int draftCounter;
     private static int draftOrderIndex;
@@ -49,8 +65,9 @@ public class DraftManager : MonoBehaviour
         Character character = CharacterFactory.CreateCharacter(type, side);
         GameObject characterGameObject = character.GetCharacterGameObject();
 
-        characterGameObject.transform.position = firstPosition;
-        firstPosition.x += offset;
+        //characterGameObject.transform.position = firstPosition;
+        characterGameObject.transform.position = instantiationPositions[draftCounter];
+        //firstPosition.x += offset;
 
         DraftEvents.CharacterCreated(character);
 
