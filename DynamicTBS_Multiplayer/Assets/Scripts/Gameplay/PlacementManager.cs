@@ -17,14 +17,15 @@ public class PlacementManager : MonoBehaviour
 
     [SerializeField] private GameObject pinkPlacementTurnOverlay;
     [SerializeField] private GameObject bluePlacementTurnOverlay;
+    private Vector3 oldPinkOverlayPosition = new Vector3(10, 0, 1.1f);
+    private Vector3 oldBlueOverlayPosition = new Vector3(-10, 0, 1.1f);
+    private Vector3 newOverlayPosition = new Vector3(0, 0, 1.1f);
 
     private void Awake()
     {
         SubscribeEvents();
         placementCount = 0;
         placementOrderIndex = 0;
-        //pinkPlacementTurnOverlay.SetActive(false);
-        //bluePlacementTurnOverlay.SetActive(false);
     }
 
     private void SortCharacters(List<Character> characters)
@@ -48,6 +49,8 @@ public class PlacementManager : MonoBehaviour
         }
 
         PlacementEvents.StartPlacement();
+        pinkPlacementTurnOverlay.transform.position = newOverlayPosition;
+        bluePlacementTurnOverlay.transform.position = newOverlayPosition;
         pinkPlacementTurnOverlay.SetActive(true);
     }
 
@@ -78,6 +81,10 @@ public class PlacementManager : MonoBehaviour
         {
             SpawnMasters();
             GameplayEvents.StartGameplayPhase();
+            pinkPlacementTurnOverlay.SetActive(false);
+            bluePlacementTurnOverlay.SetActive(false);
+            pinkPlacementTurnOverlay.transform.position = oldPinkOverlayPosition;
+            bluePlacementTurnOverlay.transform.position = oldBlueOverlayPosition;
         }    
     }
     

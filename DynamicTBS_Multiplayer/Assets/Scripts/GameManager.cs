@@ -10,7 +10,6 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        //Wird SpriteManager noch gebraucht? -> Ja für Tiles!
         SpriteManager.LoadSprites();
         PrefabManager.LoadPrefabs();
     }
