@@ -8,6 +8,9 @@ public class UIDraftMessages : MonoBehaviour
     [SerializeField] private Text draftMessageText;
     [SerializeField] private Text playerInfoText;
 
+    [SerializeField] private GameObject pinkDraftOverlay;
+    [SerializeField] private GameObject blueDraftOverlay;
+
     private void Awake()
     {
         DraftEvents.OnStartDraft += Init;
@@ -17,6 +20,8 @@ public class UIDraftMessages : MonoBehaviour
     {
         DraftEvents.OnDraftMessageTextChange += DisplayDraftMessages;
         DisplayDraftMessages();
+        pinkDraftOverlay.SetActive(true);
+        blueDraftOverlay.SetActive(false);
     }
 
     private void DisplayDraftMessages()
@@ -40,6 +45,17 @@ public class UIDraftMessages : MonoBehaviour
             {
                 playerInfoText.text = "You are player " + Client.Instance.side + ".";
             }
+        }
+
+        if (pinkDraftOverlay.activeSelf == true)
+        {
+            pinkDraftOverlay.SetActive(false);
+            blueDraftOverlay.SetActive(true);
+        }
+        else
+        {
+            pinkDraftOverlay.SetActive(true);
+            blueDraftOverlay.SetActive(false);
         }
     }
 

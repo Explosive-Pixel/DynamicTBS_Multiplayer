@@ -23,6 +23,7 @@ public class DraftManager : MonoBehaviour
         firstPosition = new Vector3(-6.5f, -3.5f, 0.998f);
         draftCounter = 0;
         draftOrderIndex = 0;
+        
     }
 
     public void CreateCharacter()
