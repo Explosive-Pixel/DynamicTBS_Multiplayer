@@ -30,6 +30,8 @@ public abstract class Character //: MonoBehaviour
     public PatternType movePattern;
     public int attackDamage;
 
+    public bool isClickable = true;
+
     // States whether the character can be targeted by another character to get attacked/healed
     public delegate bool IsTargetable(Character attacker);
     public IsTargetable isAttackableBy = (attacker) => true;

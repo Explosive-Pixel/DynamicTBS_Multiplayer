@@ -37,7 +37,7 @@ public class UIClickHandler : MonoBehaviour
         // If yes, create action destinations for this character
         if (!actionExecuted) {
             List<GameObject> charactersOfPlayer = CharacterHandler.GetAllLivingCharacters()
-                .FindAll(character => character.GetSide() == PlayerManager.GetCurrentPlayer())
+                .FindAll(character => character.isClickable && character.GetSide() == PlayerManager.GetCurrentPlayer())
                 .ConvertAll(character => character.GetCharacterGameObject());
 
             Ray click = currentCamera.ScreenPointToRay(clickPosition);
