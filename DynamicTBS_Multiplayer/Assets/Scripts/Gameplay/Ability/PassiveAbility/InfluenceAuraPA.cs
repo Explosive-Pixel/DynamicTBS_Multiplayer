@@ -32,7 +32,7 @@ public class InfluenceAuraPA : IPassiveAbility
         if (player != owner.GetSide())
         {
             List<Character> characters = CharacterHandler.GetAllLivingCharacters()
-                .FindAll(character => character.GetSide() == player);
+                .FindAll(character => character.GetSide() == player && character.GetPassiveAbility().GetType() != typeof(InfluenceAuraPA));
 
             foreach(Character character in characters)
             {
