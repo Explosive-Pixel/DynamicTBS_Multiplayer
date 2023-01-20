@@ -10,6 +10,9 @@ public class OnlineSpectatorInfo : MonoBehaviour
     private void Awake()
     {
         NetUtility.C_METADATA += UpdateSpectatorText;
+        if (GameManager.gameType == GameType.multiplayer)
+            DraftEvents.OnStartDraft += InitSpectatorText;
+
         spectatorText.text = "";
     }
 
@@ -18,15 +21,21 @@ public class OnlineSpectatorInfo : MonoBehaviour
         Debug.Log("Update Spectator Count");
         NetMetadata netMetadata = msg as NetMetadata;
 
-        spectatorText.text = "";
+        spectatorText.text = "Connected players: " + netMetadata.playerCount;
         if (netMetadata.spectatorCount > 0)
         {
-            spectatorText.text = "Spectators: " + netMetadata.spectatorCount;
+            spectatorText.text += "\nSpectators: " + netMetadata.spectatorCount;
         }
+    }
+
+    private void InitSpectatorText()
+    {
+        spectatorText.text = "Connected players: 2";
     }
 
     private void OnDestroy()
     {
         NetUtility.C_METADATA -= UpdateSpectatorText;
+        DraftEvents.OnStartDraft -= InitSpectatorText;
     }
 }

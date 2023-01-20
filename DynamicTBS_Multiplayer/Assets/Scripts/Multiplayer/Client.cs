@@ -24,6 +24,10 @@ public class Client : MonoBehaviour
     public NetworkDriver driver;
     private NetworkConnection connection;
 
+    private string ip;
+    private ushort port;
+    private ClientType clientType;
+
     private bool isActive = false;
     private bool isConnected = false;
     public bool IsActive { get { return isActive;  } }
@@ -40,6 +44,10 @@ public class Client : MonoBehaviour
 
     public void Init(string ip, ushort port, ClientType clientType) // Initiation method.
     {
+        this.ip = ip;
+        this.port = port;
+        this.clientType = clientType;
+
         driver = NetworkDriver.Create();
         NetworkEndPoint endPoint = NetworkEndPoint.Parse(ip, port); // Specific endpoint for connection.
 
@@ -88,7 +96,8 @@ public class Client : MonoBehaviour
         {
             Debug.Log("Client: Something went wrong. Lost connection to server.");
             connectionDropped?.Invoke();
-            Shutdown();
+            // Shutdown();
+            Reconnect();
         }
     }
 
@@ -135,6 +144,11 @@ public class Client : MonoBehaviour
         driver.BeginSend(connection, out writer);
         msg.Serialize(ref writer);
         driver.EndSend(writer);
+    }
+
+    private void Reconnect()
+    {
+        Init(ip, port, clientType);
     }
 
     #region Events

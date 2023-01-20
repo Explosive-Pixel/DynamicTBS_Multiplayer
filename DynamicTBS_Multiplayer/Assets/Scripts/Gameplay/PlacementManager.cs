@@ -54,6 +54,7 @@ public class PlacementManager : MonoBehaviour
     private void AdvancePlacementOrder(ActionMetadata actionMetadata)
     {
         PlacementEvents.CharacterPlaced(actionMetadata.CharacterInAction);
+        actionMetadata.CharacterInAction.isClickable = false;
         placementCount += 1;
         
         if (placementOrder.Contains(placementCount))

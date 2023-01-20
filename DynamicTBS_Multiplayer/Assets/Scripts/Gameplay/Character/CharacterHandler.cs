@@ -83,12 +83,18 @@ public class CharacterHandler : MonoBehaviour
         DraftEvents.DeliverCharacterList(characters);
     }
 
+    private void PrepareCharacters()
+    {
+        characters.ForEach(c => c.isClickable = true);
+    }
+
     #region EventsRegion
 
     private void SubscribeEvents()
     {
         DraftEvents.OnCharacterCreated += AddCharacterToList;
         DraftEvents.OnEndDraft += DeliverCharacterList;
+        GameplayEvents.OnGameplayPhaseStart += PrepareCharacters;
         GameplayEvents.OnFinishAction += SetActiveAbilityOnCooldown;
         CharacterEvents.OnCharacterDeath += UpdateCharactersAfterCharacterDeath;
     }
@@ -97,6 +103,7 @@ public class CharacterHandler : MonoBehaviour
     {
         DraftEvents.OnCharacterCreated -= AddCharacterToList;
         DraftEvents.OnEndDraft -= DeliverCharacterList;
+        GameplayEvents.OnGameplayPhaseStart -= PrepareCharacters;
         GameplayEvents.OnFinishAction -= SetActiveAbilityOnCooldown;
         CharacterEvents.OnCharacterDeath -= UpdateCharactersAfterCharacterDeath;
     }
