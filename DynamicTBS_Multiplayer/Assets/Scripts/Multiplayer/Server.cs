@@ -246,7 +246,7 @@ public class Server : MonoBehaviour
                         Debug.Log("Server: Client disconnected from server.");
                         DropConnection(allConnections[i]);
                         connectionDropped?.Invoke();
-                        Shutdown(); // Does not happen usually, only because this is a 2 person game.
+                        // Shutdown(); // Does not happen usually, only because this is a 2 person game.
                     }
                 }
             }
@@ -273,14 +273,23 @@ public class Server : MonoBehaviour
             return;
         }
 
+        int j = -1;
         for (int i = 0; i < players.Length; i++)
         {
             if (players[i] == cnn)
             {
-                players[i] = default(NetworkConnection);
-                return;
+                j = i;
+                //players[i] = default(NetworkConnection);
+                Debug.Log("player disconnected from game");
+                break;
             }
         }
+        if(j != -1)
+        {
+            players.RemoveAt(j);
+        }
+        
+        BroadcastMetadata();
     }
 
     #endregion
