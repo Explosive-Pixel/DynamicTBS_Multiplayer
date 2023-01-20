@@ -15,6 +15,12 @@ public class PlacementManager : MonoBehaviour
     private static int placementCount;
     private static int placementOrderIndex;
 
+    [SerializeField] private GameObject pinkPlacementTurnOverlay;
+    [SerializeField] private GameObject bluePlacementTurnOverlay;
+    private Vector3 oldPinkOverlayPosition = new Vector3(10, 0, 1.1f);
+    private Vector3 oldBlueOverlayPosition = new Vector3(-10, 0, 1.1f);
+    private Vector3 newOverlayPosition = new Vector3(0, 0, 1.1f);
+
     private void Awake()
     {
         SubscribeEvents();
@@ -43,6 +49,9 @@ public class PlacementManager : MonoBehaviour
         }
 
         PlacementEvents.StartPlacement();
+        pinkPlacementTurnOverlay.transform.position = newOverlayPosition;
+        bluePlacementTurnOverlay.transform.position = newOverlayPosition;
+        pinkPlacementTurnOverlay.SetActive(true);
     }
 
     private void AdvancePlacementOrder(ActionMetadata actionMetadata)
@@ -56,12 +65,26 @@ public class PlacementManager : MonoBehaviour
             placementOrderIndex++;
             PlayerManager.NextPlayer();
             PlacementEvents.ChangePlacementMessage();
+            if (pinkPlacementTurnOverlay.activeSelf)
+            {
+                pinkPlacementTurnOverlay.SetActive(false);
+                bluePlacementTurnOverlay.SetActive(true);
+            }
+            else
+            {
+                pinkPlacementTurnOverlay.SetActive(true);
+                bluePlacementTurnOverlay.SetActive(false);
+            }
         }
             
         if (placementCount >= MaxPlacementCount)
         {
             SpawnMasters();
             GameplayEvents.StartGameplayPhase();
+            pinkPlacementTurnOverlay.SetActive(false);
+            bluePlacementTurnOverlay.SetActive(false);
+            pinkPlacementTurnOverlay.transform.position = oldPinkOverlayPosition;
+            bluePlacementTurnOverlay.transform.position = oldBlueOverlayPosition;
         }    
     }
     
