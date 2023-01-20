@@ -15,11 +15,16 @@ public class PlacementManager : MonoBehaviour
     private static int placementCount;
     private static int placementOrderIndex;
 
+    [SerializeField] private GameObject pinkPlacementTurnOverlay;
+    [SerializeField] private GameObject bluePlacementTurnOverlay;
+
     private void Awake()
     {
         SubscribeEvents();
         placementCount = 0;
         placementOrderIndex = 0;
+        //pinkPlacementTurnOverlay.SetActive(false);
+        //bluePlacementTurnOverlay.SetActive(false);
     }
 
     private void SortCharacters(List<Character> characters)
@@ -43,6 +48,7 @@ public class PlacementManager : MonoBehaviour
         }
 
         PlacementEvents.StartPlacement();
+        pinkPlacementTurnOverlay.SetActive(true);
     }
 
     private void AdvancePlacementOrder(ActionMetadata actionMetadata)
@@ -55,6 +61,16 @@ public class PlacementManager : MonoBehaviour
             placementOrderIndex++;
             PlayerManager.NextPlayer();
             PlacementEvents.ChangePlacementMessage();
+            if (pinkPlacementTurnOverlay.activeSelf)
+            {
+                pinkPlacementTurnOverlay.SetActive(false);
+                bluePlacementTurnOverlay.SetActive(true);
+            }
+            else
+            {
+                pinkPlacementTurnOverlay.SetActive(true);
+                bluePlacementTurnOverlay.SetActive(false);
+            }
         }
             
         if (placementCount >= MaxPlacementCount)

@@ -28,18 +28,13 @@ public class DraftManager : MonoBehaviour
 
     #endregion
 
-    private static Vector3 firstPosition;
-    
-    private static float offset = 1f;
     private static int draftCounter;
     private static int draftOrderIndex;
 
     private void Awake()
     {
-        firstPosition = new Vector3(-6.5f, -3.5f, 0.998f);
         draftCounter = 0;
         draftOrderIndex = 0;
-        
     }
 
     public void CreateCharacter()
@@ -65,9 +60,7 @@ public class DraftManager : MonoBehaviour
         Character character = CharacterFactory.CreateCharacter(type, side);
         GameObject characterGameObject = character.GetCharacterGameObject();
 
-        //characterGameObject.transform.position = firstPosition;
         characterGameObject.transform.position = instantiationPositions[draftCounter];
-        //firstPosition.x += offset;
 
         DraftEvents.CharacterCreated(character);
 

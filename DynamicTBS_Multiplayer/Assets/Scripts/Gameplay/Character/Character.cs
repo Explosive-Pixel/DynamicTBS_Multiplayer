@@ -60,6 +60,7 @@ public abstract class Character //: MonoBehaviour
     {
         //this.characterGameObject = GameObject.Instantiate(characterPrefab) as GameObject;
         this.characterGameObject = characterPrefab;
+        this.characterGameObject.transform.SetParent(GameObject.Find("GameplayObjects").transform);
         this.hitPoints = maxHitPoints;
         this.activeAbilityCooldown = 0;
         this.movePattern = defaultMovePattern;

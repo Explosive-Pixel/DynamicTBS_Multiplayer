@@ -104,6 +104,8 @@ public class Tile
 
         tile.AddComponent<BoxCollider>();
 
+        tile.transform.SetParent(GameObject.Find("GameplayObjects").transform);
+
         return tile;
     }
 

@@ -8,6 +8,7 @@ public class GameSceneManager : MonoBehaviour
     [SerializeField] private GameObject draftCanvas;
     [SerializeField] private GameObject gameplayCanvas;
     [SerializeField] private GameObject gameOverCanvas;
+    [SerializeField] private GameObject gameplayObjectsObject;
 
     [SerializeField] private Button playAgainButton;
 
@@ -73,11 +74,13 @@ public class GameSceneManager : MonoBehaviour
     private void GoToGameplayScreen()
     {
         HandleMenus(gameplayCanvas);
+        gameplayObjectsObject.SetActive(true);
     }
 
     private void GoToGameOverScreen(PlayerType? winner)
     {
         HandleMenus(gameOverCanvas);
+        gameplayObjectsObject.SetActive(false);
         Text gameOverText = gameOverCanvas.GetComponentInChildren<Text>();
         Color backgroundColor = Color.gray;
         if (winner != null)
