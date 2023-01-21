@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class PowershotAAAction : MonoBehaviour, IAction
 {
-    [SerializeField] private GameObject powershotUpPrefab;
-    [SerializeField] private GameObject powershotDownPrefab;
-    [SerializeField] private GameObject powershotLeftPrefab;
-    [SerializeField] private GameObject powershotRightPrefab;
+    [SerializeField]
+    private GameObject attackCirclePrefab;
 
     public ActionType ActionType { get { return ActionType.ActiveAbility; } }
 
@@ -26,12 +24,20 @@ public class PowershotAAAction : MonoBehaviour, IAction
     {
         Tile characterTile = Board.GetTileByCharacter(character);
 
-        powershotTargets = new List<GameObject>() {
-            ActionUtils.InstantiateActionPosition(Board.FindPosition(characterTile.GetRow(), -1), powershotLeftPrefab),
-            ActionUtils.InstantiateActionPosition(Board.FindPosition(characterTile.GetRow(), Board.boardSize), powershotRightPrefab),
-            ActionUtils.InstantiateActionPosition(Board.FindPosition(-1, characterTile.GetColumn()), powershotUpPrefab),
-            ActionUtils.InstantiateActionPosition(Board.FindPosition(Board.boardSize, characterTile.GetColumn()), powershotDownPrefab)
-        };
+        powershotTargets = new List<GameObject>();
+
+        for(int i = 0; i < Board.boardSize; i++)
+        {
+            if(i != characterTile.GetColumn())
+            {
+                powershotTargets.Add(ActionUtils.InstantiateActionPosition(Board.FindPosition(characterTile.GetRow(), i), attackCirclePrefab));
+            }
+
+            if(i != characterTile.GetRow())
+            {
+                powershotTargets.Add(ActionUtils.InstantiateActionPosition(Board.FindPosition(i, characterTile.GetColumn()), attackCirclePrefab));
+            }
+        }
 
         characterInAction = character;
     }

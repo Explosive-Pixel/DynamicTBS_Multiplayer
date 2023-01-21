@@ -28,8 +28,10 @@ public class Client : MonoBehaviour
     private ushort port;
     private ClientType clientType;
 
+    private bool isInitialized = false;
     private bool isActive = false;
     private bool isConnected = false;
+    public bool IsInitialized { get { return isInitialized; } }
     public bool IsActive { get { return isActive;  } }
     public bool IsConnected { get { return isConnected; } }
 
@@ -57,6 +59,7 @@ public class Client : MonoBehaviour
         isActive = true;
         role = clientType;
         isAdmin = false;
+        isInitialized = true;
 
         RegisterToEvent();
     }
@@ -96,6 +99,7 @@ public class Client : MonoBehaviour
         {
             Debug.Log("Client: Something went wrong. Lost connection to server.");
             connectionDropped?.Invoke();
+            isConnected = false;
             // Shutdown();
             Reconnect();
         }

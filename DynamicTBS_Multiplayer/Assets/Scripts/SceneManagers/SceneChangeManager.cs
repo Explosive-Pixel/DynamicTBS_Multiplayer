@@ -76,6 +76,7 @@ public class SceneChangeManager : MonoBehaviour
         {
             DestroyManually("OnlineGameManager");
             DestroyManually("OnlineClientCanvas");
+            DestroyManually("OnlineMetadataCanvas");
         }
     }
 
