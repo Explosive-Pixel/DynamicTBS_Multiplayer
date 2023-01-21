@@ -21,7 +21,7 @@ public class OnlineMetadata : MonoBehaviour
 
     private void Update()
     {
-        if (Client.Instance.IsInitialized)
+        if (Client.Instance && Client.Instance.IsInitialized)
         {
             if (Client.Instance.IsActive)
             {

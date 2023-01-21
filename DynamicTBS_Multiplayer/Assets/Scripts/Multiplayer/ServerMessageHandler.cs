@@ -41,6 +41,8 @@ public class ServerMessageHandler : MonoBehaviour
         {
             Server.Instance.SendToClient(netWelcome, cnn);
         }
+
+        StartCoroutine(Server.Instance.SendGameState(cnn));
     }
 
     private void OnNetStartGame(NetMessage msg, NetworkConnection cnn)

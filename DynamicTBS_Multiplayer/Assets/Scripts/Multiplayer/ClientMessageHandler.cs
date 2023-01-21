@@ -31,7 +31,7 @@ public class ClientMessageHandler : MonoBehaviour
 
     private void SendDraftCharacterMessage(Character character)
     {
-        if(Client.Instance.side == character.GetSide().GetPlayerType() && character.GetCharacterType() != CharacterType.MasterChar)
+        if(Client.Instance.ShouldSendMessage(character.GetSide().GetPlayerType()) && character.GetCharacterType() != CharacterType.MasterChar)
         {
             NetDraftCharacter msg = new NetDraftCharacter
             {
@@ -47,7 +47,7 @@ public class ClientMessageHandler : MonoBehaviour
         NetDraftCharacter netDraftCharacter = msg as NetDraftCharacter;
 
         PlayerType playerType = (PlayerType)netDraftCharacter.playerId;
-        if (Client.Instance.side != playerType)
+        if (Client.Instance.ShouldReadMessage(playerType))
         {
             DraftManager.DraftCharacter((CharacterType)netDraftCharacter.characterType, PlayerManager.GetPlayer(playerType));
         }
@@ -55,7 +55,7 @@ public class ClientMessageHandler : MonoBehaviour
 
     private void SendPerformActionMessage(ActionMetadata actionMetadata)
     {
-        if (Client.Instance.side == actionMetadata.ExecutingPlayer.GetPlayerType())
+        if (Client.Instance.ShouldSendMessage(actionMetadata.ExecutingPlayer.GetPlayerType()))
         {
             NetPerformAction msg = new NetPerformAction
             {
@@ -76,7 +76,7 @@ public class ClientMessageHandler : MonoBehaviour
         NetPerformAction netPerformAction = msg as NetPerformAction;
 
         PlayerType playerType = (PlayerType)netPerformAction.playerId;
-        if (Client.Instance.side != playerType)
+        if (Client.Instance.ShouldReadMessage(playerType))
         {
             
             if(netPerformAction.actionType == (int)ActionType.Skip)
@@ -105,7 +105,7 @@ public class ClientMessageHandler : MonoBehaviour
 
     private void SendExecuteUIActionMessage(Player player, UIActionType uIActionType)
     {
-        if (Client.Instance.side == player.GetPlayerType())
+        if (Client.Instance.ShouldSendMessage(player.GetPlayerType()))
         {
             NetExecuteUIAction msg = new NetExecuteUIAction
             {
@@ -122,7 +122,7 @@ public class ClientMessageHandler : MonoBehaviour
 
         PlayerType playerType = (PlayerType)netExecuteUIAction.playerId;
         UIActionType uIActionType = (UIActionType)netExecuteUIAction.uiActionType;
-        if (Client.Instance.side != playerType)
+        if (Client.Instance.ShouldReadMessage(playerType))
         {
             GameplayEvents.UIActionExecuted(PlayerManager.GetPlayer(playerType), uIActionType);
         }
