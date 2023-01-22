@@ -28,8 +28,13 @@ public class Client : MonoBehaviour
     private ushort port;
     private ClientType clientType;
 
+    private bool isLoadingGame = false;
+    public bool IsLoadingGame { get { return isLoadingGame; } }
+
+    private bool isInitialized = false;
     private bool isActive = false;
     private bool isConnected = false;
+    public bool IsInitialized { get { return isInitialized; } }
     public bool IsActive { get { return isActive;  } }
     public bool IsConnected { get { return isConnected; } }
 
@@ -57,6 +62,7 @@ public class Client : MonoBehaviour
         isActive = true;
         role = clientType;
         isAdmin = false;
+        isInitialized = true;
 
         RegisterToEvent();
     }
@@ -67,10 +73,11 @@ public class Client : MonoBehaviour
         {
             Debug.Log("Shutting down Client.");
             UnregisterToEvent();
+            connection.Disconnect(driver);
             driver.Dispose();
             isActive = false;
             isConnected = false;
-            connection = default(NetworkConnection);
+            //connection = default(NetworkConnection);
         }
     }
 
@@ -96,6 +103,7 @@ public class Client : MonoBehaviour
         {
             Debug.Log("Client: Something went wrong. Lost connection to server.");
             connectionDropped?.Invoke();
+            isConnected = false;
             // Shutdown();
             Reconnect();
         }
@@ -110,7 +118,7 @@ public class Client : MonoBehaviour
 
             while (connection != null && (cmd = connection.PopEvent(driver, out stream)) != NetworkEvent.Type.Empty)
             {
-                Debug.Log("Client: Reading message " + cmd);
+                // Debug.Log("Client: Reading message " + cmd);
                 if (cmd == NetworkEvent.Type.Connect)
                 {
                     Debug.Log("Client: We're connected! Role: " + role);
@@ -127,6 +135,7 @@ public class Client : MonoBehaviour
                     // TODO: Show disconnect message on UI
                     isConnected = false;
                     connection = default(NetworkConnection);
+                    //connection.Disconnect(driver);
                     connectionDropped?.Invoke();
                     Shutdown();
                 }
@@ -136,6 +145,16 @@ public class Client : MonoBehaviour
         {
             return;
         }
+    }
+
+    public bool ShouldReadMessage(PlayerType playerType)
+    {
+        return side != playerType || IsLoadingGame;
+    }
+
+    public bool ShouldSendMessage(PlayerType playerType)
+    {
+        return side == playerType && !IsLoadingGame;
     }
 
     public void SendToServer(NetMessage msg)
@@ -155,13 +174,13 @@ public class Client : MonoBehaviour
 
     private void RegisterToEvent()
     {
-        NetUtility.C_KEEP_ALIVE += OnKeepAlive;
+        NetUtility.C_KEEP_ALIVE += ToggleIsLoadingGame;
         NetUtility.C_METADATA += OnKeepAlive;
     }
 
     private void UnregisterToEvent()
     {
-        NetUtility.C_KEEP_ALIVE -= OnKeepAlive;
+        NetUtility.C_KEEP_ALIVE -= ToggleIsLoadingGame;
         NetUtility.C_METADATA -= OnKeepAlive;
     }
 
@@ -169,6 +188,12 @@ public class Client : MonoBehaviour
     {
         //isConnected = true;
         SendToServer(nm); // Sends message back to keep both sides alive.
+    }
+
+    private void ToggleIsLoadingGame(NetMessage nm)
+    {
+        isLoadingGame = !isLoadingGame;
+        GameEvents.IsGameLoading(isLoadingGame);
     }
 
     #endregion

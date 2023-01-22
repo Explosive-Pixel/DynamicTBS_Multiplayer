@@ -26,27 +26,35 @@ public static class NetUtility
         switch (opCode) // Makes server and client able to decode messages when they're being received.
         {
             case OperationCode.KEEP_ALIVE:
+                Debug.Log("Client: Reading message KEEP_ALIVE");
                 msg = new NetKeepAlive(stream);
                 break;
             case OperationCode.WELCOME:
+                Debug.Log("Client: Reading message WELCOME");
                 msg = new NetWelcome(stream);
                 break;
             case OperationCode.START_GAME:
+                Debug.Log("Client: Reading message START_GAME");
                 msg = new NetStartGame(stream);
                 break;
             case OperationCode.DRAFT_CHARACTER:
+                Debug.Log("Client: Reading message DRAFT_CHARACTER");
                 msg = new NetDraftCharacter(stream);
                 break;
             case OperationCode.PERFORM_ACTION:
+                Debug.Log("Client: Reading message PERFORM_ACTION");
                 msg = new NetPerformAction(stream);
                 break;
             case OperationCode.EXECUTE_UIACTION:
+                Debug.Log("Client: Reading message EXECUTE_UIACTION");
                 msg = new NetExecuteUIAction(stream);
                 break;
             case OperationCode.REMATCH:
+                Debug.Log("Client: Reading message REMATCH");
                 msg = new NetRematch(stream);
                 break;
             case OperationCode.METADATA:
+                Debug.Log("Client: Reading message METADATA");
                 msg = new NetMetadata(stream);
                 break;
             default:

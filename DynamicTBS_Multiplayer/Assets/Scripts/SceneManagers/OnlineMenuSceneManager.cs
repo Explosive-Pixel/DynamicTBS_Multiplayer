@@ -6,13 +6,19 @@ public class OnlineMenuSceneManager : MonoBehaviour
 {
     [SerializeField] private GameObject onlineMenuCanvas;
     [SerializeField] private GameObject onlineClientCanvas;
+    [SerializeField] private GameObject onlineLoadingScreenCanvas;
 
     private List<GameObject> canvasList = new List<GameObject>();
 
     private void Awake()
     {
+        GameEvents.OnGameIsLoading += ToggleOnlineLoadingScreen;
         SetCanvasList();
         GoToOnlineMenu();
+
+        onlineLoadingScreenCanvas.SetActive(false);
+        DontDestroyOnLoad(this);
+        DontDestroyOnLoad(onlineLoadingScreenCanvas);
     }
 
     private void SetCanvasList()
@@ -32,8 +38,23 @@ public class OnlineMenuSceneManager : MonoBehaviour
         }
     }
 
+    private void ToggleOnlineLoadingScreen(bool isLoading)
+    {
+        onlineLoadingScreenCanvas.SetActive(isLoading);
+        if (!isLoading)
+        {
+            Destroy(onlineLoadingScreenCanvas);
+            Destroy(this.gameObject);
+        }
+    }
+
     public void GoToOnlineMenu()
     {
         HandleMenus(onlineMenuCanvas);
+    }
+
+    private void OnDestroy()
+    {
+        GameEvents.OnGameIsLoading -= ToggleOnlineLoadingScreen;
     }
 }

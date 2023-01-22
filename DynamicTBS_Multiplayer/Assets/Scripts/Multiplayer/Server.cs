@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.Collections;
 using UnityEngine;
 using Unity.Networking.Transport;
+using System.Threading;
 
 public class Server : MonoBehaviour
 {
@@ -31,6 +32,8 @@ public class Server : MonoBehaviour
     private readonly List<NetworkConnection> spectators = new List<NetworkConnection>();
     private readonly List<NetworkConnection> allConnections = new List<NetworkConnection>();
     private readonly List<NetworkConnection> nonAssignedConnections = new List<NetworkConnection>();
+
+    private readonly List<NetMessage> messageHistory = new List<NetMessage>();
 
     private bool isActive = false;
     private const float KeepAliveTickRate = 20f; // Constant tick rate, so connection won't time out.
@@ -286,6 +289,7 @@ public class Server : MonoBehaviour
         }
         if(j != -1)
         {
+            players[j].Disconnect(driver);
             players.RemoveAt(j);
         }
         
@@ -321,6 +325,7 @@ public class Server : MonoBehaviour
 
     public void Broadcast(NetMessage msg) // Send message to every client.
     {
+        ArchiveMessage(msg);
         for (int i = 0; i < allConnections.Count; i++)
         {
             if (allConnections[i].IsCreated)
@@ -328,6 +333,39 @@ public class Server : MonoBehaviour
                 Debug.Log($"Server: Sending {msg.Code} to : {allConnections[i].InternalId}");
                 SendToClient(msg, allConnections[i]);
             }
+        }
+    }
+
+    private void ArchiveMessage(NetMessage msg)
+    {
+        if(msg.GetType() == typeof(NetStartGame))
+        {
+            messageHistory.Clear();
+        }
+
+        if(msg.GetType() != typeof(NetMetadata))
+        {
+            messageHistory.Add(msg);
+        }
+    }
+
+    public IEnumerator SendGameState(NetworkConnection connection)
+    {
+        if (messageHistory.Count > 0)
+        {
+            Debug.Log("Sending history to client: " + messageHistory.Count);
+
+            SendToClient(new NetKeepAlive(), connection);
+            yield return new WaitForSeconds(0.01f);
+
+            foreach (NetMessage msg in messageHistory)
+            {
+                Debug.Log(msg);
+                SendToClient(msg, connection);
+                yield return new WaitForSeconds(0.01f);
+            }
+
+            SendToClient(new NetKeepAlive(), connection);
         }
     }
 
