@@ -14,7 +14,6 @@ public abstract class Character //: MonoBehaviour
     #endregion
 
     protected CharacterType characterType;
-    protected int moveSpeed;
     protected int maxHitPoints;
     protected int attackRange;
     protected GameObject characterPrefab;
@@ -29,6 +28,7 @@ public abstract class Character //: MonoBehaviour
     public Player side;
     public PatternType movePattern;
     public int attackDamage;
+    public int moveSpeed;
 
     public bool isClickable = true;
 

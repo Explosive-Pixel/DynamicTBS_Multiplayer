@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class HealAA : IActiveAbility
 {
-    public static int healingRange = 2;
+    public static int range = 2;
     public static int healingPoints = 1;
+    public static int moveSpeedBuff = 1;
 
     public int Cooldown { get { return 3; } }
 
