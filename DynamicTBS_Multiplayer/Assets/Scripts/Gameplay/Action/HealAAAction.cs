@@ -51,10 +51,15 @@ public class HealAAAction : MonoBehaviour, IAction
         if (tile != null)
         {
             Character characterToHeal = tile.GetCurrentInhabitant();
+            int hitPointsBeforeHeal = characterToHeal.hitPoints;
             characterToHeal.Heal(HealAA.healingPoints);
 
-            characterToHeal.moveSpeed += HealAA.moveSpeedBuff;
-            buffedCharacters.Add(characterToHeal);
+            if (characterToHeal.hitPoints > hitPointsBeforeHeal)
+            {
+                characterToHeal.moveSpeed += HealAA.moveSpeedBuff;
+                // TODO: Put correct buff sprite onto characterToHeal
+                buffedCharacters.Add(characterToHeal);
+            }
         }
 
         AbortAction();
@@ -87,6 +92,7 @@ public class HealAAAction : MonoBehaviour, IAction
             if(buffedCharacter.Count > 0)
             {
                 actionMetadata.CharacterInAction.moveSpeed -= (HealAA.moveSpeedBuff * buffedCharacter.Count);
+                // TODO: Change buff sprite onto actionMetadata.CharacterInAction
                 buffedCharacters = buffedCharacters.FindAll(c => c != actionMetadata.CharacterInAction);
             }
         }
