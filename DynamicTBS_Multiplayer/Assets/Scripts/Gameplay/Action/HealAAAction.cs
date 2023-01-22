@@ -15,6 +15,13 @@ public class HealAAAction : MonoBehaviour, IAction
     private Character characterInAction = null;
     public Character CharacterInAction { get { return characterInAction; } }
 
+    private List<Character> buffedCharacters = new List<Character>();
+
+    private void Awake()
+    {
+        GameplayEvents.OnFinishAction += DebuffCharacter;
+    }
+
     public int CountActionDestinations(Character character)
     {
         List<Vector3> healPositions = FindHealPositions(character);
@@ -45,6 +52,9 @@ public class HealAAAction : MonoBehaviour, IAction
         {
             Character characterToHeal = tile.GetCurrentInhabitant();
             characterToHeal.Heal(HealAA.healingPoints);
+
+            characterToHeal.moveSpeed += HealAA.moveSpeedBuff;
+            buffedCharacters.Add(characterToHeal);
         }
 
         AbortAction();
@@ -61,11 +71,29 @@ public class HealAAAction : MonoBehaviour, IAction
     {
         Tile characterTile = Board.GetTileByPosition(character.GetCharacterGameObject().transform.position);
 
-        List<Tile> healTiles = Board.GetTilesOfClosestCharactersOfSideWithinRadius(characterTile, character.GetSide().GetPlayerType(), HealAA.healingRange)
+        List<Tile> healTiles = Board.GetTilesOfClosestCharactersOfSideWithinRadius(characterTile, character.GetSide().GetPlayerType(), HealAA.range)
             .FindAll(tile => tile.IsOccupied() && tile.GetCurrentInhabitant().isHealableBy(character) && !tile.GetCurrentInhabitant().HasFullHP());
 
         List<Vector3> healPositions = healTiles.ConvertAll(tile => tile.GetPosition());
 
         return healPositions;
+    }
+
+    private void DebuffCharacter(ActionMetadata actionMetadata)
+    {
+        if(actionMetadata.ExecutedActionType == ActionType.Move)
+        {
+            List<Character> buffedCharacter = buffedCharacters.FindAll(c => c == actionMetadata.CharacterInAction);
+            if(buffedCharacter.Count > 0)
+            {
+                actionMetadata.CharacterInAction.moveSpeed -= (HealAA.moveSpeedBuff * buffedCharacter.Count);
+                buffedCharacters = buffedCharacters.FindAll(c => c != actionMetadata.CharacterInAction);
+            }
+        }
+    }
+
+    private void OnDestroy()
+    {
+        GameplayEvents.OnFinishAction -= DebuffCharacter;
     }
 }
