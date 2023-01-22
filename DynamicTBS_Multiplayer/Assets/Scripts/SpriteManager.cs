@@ -66,7 +66,7 @@ public class SpriteManager
         PINK_MEDIC_SPRITE = Resources.Load<Sprite>("CharacterSprites/Pink_Medic");
 
         EMPTY_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/v100/Hole");
-        EMPTY_TILE_SPRITE_WITH_DEPTH = Resources.Load<Sprite>("TileSprites/v100/HoleWithDepth");
+        EMPTY_TILE_SPRITE_WITH_DEPTH = Resources.Load<Sprite>("TileSprites/v100/HoleWithDepthsFixed");
         FLOOR_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/v100/FloorTileBase");
         FLOOR_TILE_SPRITE_VAR_1 = Resources.Load<Sprite>("TileSprites/v100/FloorTileVariation_1");
         FLOOR_TILE_SPRITE_VAR_2 = Resources.Load<Sprite>("TileSprites/v100/FloorTileVariation_2");
