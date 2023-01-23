@@ -80,6 +80,7 @@ public class Server : MonoBehaviour
         players = new NativeList<NetworkConnection>(2, Allocator.Persistent); // Allows up to two connections at a time.
         isActive = true;
         chosenSide = 0;
+        SubscribeEvents();
     }
 
     public void RegisterAs(NetworkConnection c, ClientType role)
@@ -139,6 +140,7 @@ public class Server : MonoBehaviour
             nonAssignedConnections.Clear();
             allConnections.Clear();
             isActive = false;
+            UnsubscribeEvents();
         }
     }
 
@@ -349,6 +351,11 @@ public class Server : MonoBehaviour
         }
     }
 
+    private void ClearMessageHistory(PlayerType? winner)
+    {
+        messageHistory.Clear();
+    }
+
     public IEnumerator SendGameState(NetworkConnection connection)
     {
         if (messageHistory.Count > 0)
@@ -370,4 +377,14 @@ public class Server : MonoBehaviour
     }
 
     #endregion
+
+    private void SubscribeEvents()
+    {
+        GameplayEvents.OnGameOver += ClearMessageHistory;
+    }
+
+    private void UnsubscribeEvents()
+    {
+        GameplayEvents.OnGameOver -= ClearMessageHistory;
+    }
 }
