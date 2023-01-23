@@ -61,45 +61,51 @@ public class OnlineClientUI : MonoBehaviour
 
     private void UpdateInfoTexts()
     {
-        if (Client.Instance.IsConnected)
+        if (Client.Instance && Client.Instance.ConnectionAccepted)
         {
-            clientInfoText.text = "You are connected!\n";
-            if (!Client.Instance.isAdmin)
+            if (Client.Instance.IsConnected)
             {
-                clientInfoText.text += "\nWaiting for other player to start the game ...";
-                selectPinkButton.gameObject.SetActive(false);
-                selectBlueButton.gameObject.SetActive(false);
-                startGameButton.gameObject.SetActive(false);
-            }
-            else 
-            {
-                clientInfoText.text += "\nPlease choose a team ";
-                if (connectedPlayersCount < 2)
+                clientInfoText.text = "You are connected!\n";
+                if (!Client.Instance.isAdmin)
                 {
-                    clientInfoText.text += "and wait for another player to connect.";
+                    clientInfoText.text += "\nWaiting for other player to start the game ...";
+                    selectPinkButton.gameObject.SetActive(false);
+                    selectBlueButton.gameObject.SetActive(false);
+                    startGameButton.gameObject.SetActive(false);
                 }
                 else
                 {
-                    clientInfoText.text += "and start the game.";
+                    clientInfoText.text += "\nPlease choose a team ";
+                    if (connectedPlayersCount < 2)
+                    {
+                        clientInfoText.text += "and wait for another player to connect.";
+                    }
+                    else
+                    {
+                        clientInfoText.text += "and start the game.";
+                    }
+
+                    selectPinkButton.gameObject.SetActive(true);
+                    selectBlueButton.gameObject.SetActive(true);
                 }
-
-                selectPinkButton.gameObject.SetActive(true);
-                selectBlueButton.gameObject.SetActive(true);
             }
-        }
-        else if (Client.Instance.IsActive)
-        {
-            clientInfoText.text = "Trying to connect to host ...";
-        }
-        else
-        {
-            clientInfoText.text = "Could not connect to host. Please try again.";
-        }
+            else if (Client.Instance.IsActive)
+            {
+                clientInfoText.text = "Trying to connect to host ...";
+            }
+            else
+            {
+                clientInfoText.text = "Could not connect to host. Please try again.";
+            }
 
-        connectedPlayers.text = "Connected players: " + connectedPlayersCount;
-        if (connectedPlayersCount == 2 && sideSelected)
+            connectedPlayers.text = "Connected players: " + connectedPlayersCount;
+            if (connectedPlayersCount == 2 && sideSelected)
+            {
+                startGameButton.gameObject.SetActive(true);
+            }
+        } else
         {
-            startGameButton.gameObject.SetActive(true);
+            clientInfoText.text = "The Server refused the connection since there are already two players in the game.\nIf you just disconnected and are trying to reconnect, please try again in a few seconds.";
         }
     }
 

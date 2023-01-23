@@ -14,35 +14,29 @@ public class ServerMessageHandler : MonoBehaviour
     {
         NetWelcome netWelcome = msg as NetWelcome;
 
-        Server.Instance.RegisterAs(cnn, (ClientType)netWelcome.Role);
-        Debug.Log("Welcome Server role: " + netWelcome.Role + ", assigned Team: " + netWelcome.AssignedTeam);
-
-        if (netWelcome.Role == (int)ClientType.player)
+        if (Server.Instance.RegisterClient(cnn, (ClientType)netWelcome.Role))
         {
-            netWelcome.isAdmin = Server.Instance.IsAdmin(cnn);
+            Debug.Log("Welcome Server role: " + netWelcome.Role + ", assigned Team: " + netWelcome.AssignedTeam);
 
-            if (netWelcome.AssignedTeam != 0)
+            if (netWelcome.Role == (int)ClientType.player)
             {
-                Server.Instance.ChosenSide = netWelcome.AssignedTeam;
-                Server.Instance.SendToClient(netWelcome, cnn);
-
-                NetworkConnection? otherConnection = Server.Instance.FindOtherPlayer(cnn);
-                if (otherConnection != null)
+                if (netWelcome.AssignedTeam != 0)
                 {
-                    Server.Instance.SendToClient(new NetWelcome() { AssignedTeam = Server.Instance.GetOtherSide(), Role = netWelcome.Role}, otherConnection.Value);
+                    Server.Instance.ReassignSides(cnn, (PlayerType)netWelcome.AssignedTeam);
+                    Server.Instance.WelcomePlayers();
+                }
+                else
+                {
+                    Server.Instance.WelcomePlayer(cnn);
                 }
             }
             else
             {
-                netWelcome.AssignedTeam = Server.Instance.ChosenSide == 0 ? Server.Instance.PlayerCount : Server.Instance.GetOtherSide();
                 Server.Instance.SendToClient(netWelcome, cnn);
             }
-        } else
-        {
-            Server.Instance.SendToClient(netWelcome, cnn);
-        }
 
-        StartCoroutine(Server.Instance.SendGameState(cnn));
+            StartCoroutine(Server.Instance.SendGameState(cnn));
+        }
     }
 
     private void OnNetStartGame(NetMessage msg, NetworkConnection cnn)

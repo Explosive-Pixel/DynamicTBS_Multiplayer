@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using Unity.Networking.Transport;
 using UnityEngine;
 
-public class NetKeepAlive : NetMessage
+public class NetChangeLoadGameStatus : NetMessage
 {
-    public NetKeepAlive() // Constructing a message.
+    public NetChangeLoadGameStatus() // Constructing a message.
     {
-        Code = OperationCode.KEEP_ALIVE;
+        Code = OperationCode.CHANGE_LOAD_GAME_STATUS;
     }
 
-    public NetKeepAlive(DataStreamReader reader) // Receiving a message.
+    public NetChangeLoadGameStatus(DataStreamReader reader) // Receiving a message.
     {
-        Code = OperationCode.KEEP_ALIVE;
+        Code = OperationCode.CHANGE_LOAD_GAME_STATUS;
         Deserialize(reader);
     }
 
@@ -28,11 +28,11 @@ public class NetKeepAlive : NetMessage
 
     public override void ReceivedOnClient()
     {
-        NetUtility.C_KEEP_ALIVE?.Invoke(this);
+        NetUtility.C_CHANGE_LOAD_GAME_STATUS?.Invoke(this);
     }
 
     public override void ReceivedOnServer(NetworkConnection cnn)
     {
-        NetUtility.S_KEEP_ALIVE?.Invoke(this, cnn);
+        NetUtility.S_CHANGE_LOAD_GAME_STATUS?.Invoke(this, cnn);
     }
 }

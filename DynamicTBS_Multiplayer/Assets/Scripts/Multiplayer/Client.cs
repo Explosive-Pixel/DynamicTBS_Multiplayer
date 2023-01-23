@@ -38,6 +38,9 @@ public class Client : MonoBehaviour
     public bool IsActive { get { return isActive;  } }
     public bool IsConnected { get { return isConnected; } }
 
+    private bool connectionAccepted = true;
+    public bool ConnectionAccepted { get { return connectionAccepted;  } }
+
     public Action connectionDropped;
 
     public ClientType role;
@@ -118,7 +121,6 @@ public class Client : MonoBehaviour
 
             while (connection != null && (cmd = connection.PopEvent(driver, out stream)) != NetworkEvent.Type.Empty)
             {
-                // Debug.Log("Client: Reading message " + cmd);
                 if (cmd == NetworkEvent.Type.Connect)
                 {
                     Debug.Log("Client: We're connected! Role: " + role);
@@ -170,20 +172,6 @@ public class Client : MonoBehaviour
         Init(ip, port, clientType);
     }
 
-    #region Events
-
-    private void RegisterToEvent()
-    {
-        NetUtility.C_KEEP_ALIVE += ToggleIsLoadingGame;
-        NetUtility.C_METADATA += OnKeepAlive;
-    }
-
-    private void UnregisterToEvent()
-    {
-        NetUtility.C_KEEP_ALIVE -= ToggleIsLoadingGame;
-        NetUtility.C_METADATA -= OnKeepAlive;
-    }
-
     private void OnKeepAlive(NetMessage nm)
     {
         //isConnected = true;
@@ -194,6 +182,28 @@ public class Client : MonoBehaviour
     {
         isLoadingGame = !isLoadingGame;
         GameEvents.IsGameLoading(isLoadingGame);
+    }
+
+    private void SetConnectionForbidden(NetMessage msg)
+    {
+        connectionAccepted = false;
+        Shutdown();
+    }
+
+    #region Events
+
+    private void RegisterToEvent()
+    {
+        NetUtility.C_CONNECTION_FORBIDDEN += SetConnectionForbidden;
+        NetUtility.C_CHANGE_LOAD_GAME_STATUS += ToggleIsLoadingGame;
+        NetUtility.C_METADATA += OnKeepAlive;
+    }
+
+    private void UnregisterToEvent()
+    {
+        NetUtility.C_CONNECTION_FORBIDDEN -= SetConnectionForbidden;
+        NetUtility.C_CHANGE_LOAD_GAME_STATUS -= ToggleIsLoadingGame;
+        NetUtility.C_METADATA -= OnKeepAlive;
     }
 
     #endregion

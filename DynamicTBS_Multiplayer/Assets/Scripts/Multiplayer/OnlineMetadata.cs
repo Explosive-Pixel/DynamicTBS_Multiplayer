@@ -23,16 +23,23 @@ public class OnlineMetadata : MonoBehaviour
     {
         if (Client.Instance && Client.Instance.IsInitialized)
         {
-            if (Client.Instance.IsActive)
+            if (Client.Instance.ConnectionAccepted)
             {
-                if (!Client.Instance.IsConnected)
+                if (Client.Instance.IsActive)
                 {
-                    infoText.text = "Lost connection to server. Trying to reconnect ...";
+                    if (!Client.Instance.IsConnected)
+                    {
+                        infoText.text = "Lost connection to server. Trying to reconnect ...";
+                    }
+                }
+                else
+                {
+                    infoText.text = "Unable to reconnect to server.";
                 }
             }
             else
             {
-                infoText.text = "Unable to reconnect to server.";
+                infoText.text = "Unable to connect to server.";
             }
         }
     }
