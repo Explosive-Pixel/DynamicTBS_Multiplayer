@@ -7,19 +7,28 @@ public class AudioManager : MonoBehaviour
     public static AudioManager instance;
     
     private GameObject audioManagerObject;
-    [SerializeField] private AudioSource audioSource;
+
+    [SerializeField] private AudioSource musicSource;
+    [SerializeField] private AudioSource atmoSource;
+    [SerializeField] private AudioSource fxSource;
 
     #region ClipsRegion
-    // Music
+    // Music & Atmo
     [SerializeField] private AudioClip mainThemeClip;
-    [SerializeField] private AudioClip fightThemeClip;
+    [SerializeField] private AudioClip atmoClip;
 
     // Actions
     [SerializeField] private AudioClip buttonPressClip;
-    [SerializeField] private AudioClip attackClip;
-    [SerializeField] private AudioClip doubleAttackClip;
-    [SerializeField] private AudioClip takeDamageClip;
-    [SerializeField] private AudioClip moveClip;
+    [SerializeField] private AudioClip turnChangeClip;
+    [SerializeField] private AudioClip unitDraftedClip;
+    [SerializeField] private AudioClip unitPlacedClip;
+    [SerializeField] private AudioClip moveClip; // hat idealerweise auch einen pro Einheit, aber erstmal egal
+    [SerializeField] private AudioClip tankAttackClip;
+    [SerializeField] private AudioClip shooterAttackClip;
+    [SerializeField] private AudioClip runnerDoubleAttackClip;
+    [SerializeField] private AudioClip mechanicAttackClip;
+    [SerializeField] private AudioClip docAttackClip;
+    [SerializeField] private AudioClip takeDamageClip; // erstmal nur einen, nicht als hit oder voice, sondern als lebenspunkte verlieren
     [SerializeField] private AudioClip takeControlClip;
     [SerializeField] private AudioClip blockClip;
     [SerializeField] private AudioClip powershotClip;
@@ -29,9 +38,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip healClip;
     [SerializeField] private AudioClip explosionClip;
     [SerializeField] private AudioClip adrenalinClip;
-    [SerializeField] private AudioClip unitDraftedClip;
-    [SerializeField] private AudioClip unitPlacedClip;
-
+    
     // Voicelines
     [SerializeField] private AudioClip masterVoicelineClip;
     [SerializeField] private AudioClip tankVoicelineClip;
@@ -43,6 +50,7 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
+        #region SingletonImpelementation
         if (instance != null)
         {
             Destroy(this.gameObject);
@@ -51,6 +59,8 @@ public class AudioManager : MonoBehaviour
         {
             instance = this;
         }
+        #endregion
+        SubscribeEvents();
     }
 
     private void Start()
@@ -62,12 +72,52 @@ public class AudioManager : MonoBehaviour
 
     private void PlayMainTheme()
     {
-        if (!audioSource.isPlaying)
+        if (!musicSource.isPlaying)
         {
-            audioSource.clip = mainThemeClip;
-            audioSource.loop = true;
-            audioSource.volume = 0.2f;
-            audioSource.Play();
+            musicSource.clip = mainThemeClip;
+            musicSource.loop = true;
+            musicSource.volume = 0.5f;
+            musicSource.Play();
         }
     }
+
+    private void StopMainTheme()
+    {
+        musicSource.Stop();
+    }
+
+    private void PlayAtmo()
+    {
+        if (!atmoSource.isPlaying)
+        {
+            atmoSource.clip = atmoClip;
+            atmoSource.loop = true;
+            atmoSource.Play();
+        }
+    }
+
+    private void TurnChangeAudio(Player player)
+    {
+        fxSource.PlayOneShot(turnChangeClip);
+    }
+
+    #region EventsRegion
+    private void SubscribeEvents()
+    {
+        GameplayEvents.OnPlayerTurnEnded += TurnChangeAudio;
+        GameEvents.OnGameStart += StopMainTheme;
+    }
+
+    private void UnsubscribeEvents()
+    {
+        GameplayEvents.OnPlayerTurnEnded -= TurnChangeAudio;
+        GameEvents.OnGameStart -= StopMainTheme;
+    }
+
+    private void OnDestroy()
+    {
+        UnsubscribeEvents();
+    }
+
+    #endregion
 }
