@@ -6,13 +6,13 @@ using UnityEngine;
 
 public enum OperationCode
 {
-    KEEP_ALIVE = 1,
+    CHANGE_LOAD_GAME_STATUS = 1,
     WELCOME = 2,
     START_GAME = 3,
     DRAFT_CHARACTER = 4,
     PERFORM_ACTION = 5,
     EXECUTE_UIACTION = 6,
-    REMATCH = 7,
+    CONNECTION_FORBIDDEN = 7,
     METADATA = 8
 }
 
@@ -25,9 +25,9 @@ public static class NetUtility
 
         switch (opCode) // Makes server and client able to decode messages when they're being received.
         {
-            case OperationCode.KEEP_ALIVE:
-                Debug.Log("Client: Reading message KEEP_ALIVE");
-                msg = new NetKeepAlive(stream);
+            case OperationCode.CHANGE_LOAD_GAME_STATUS:
+                Debug.Log("Client: Reading message CHANGE_LOAD_GAME_STATUS");
+                msg = new NetChangeLoadGameStatus(stream);
                 break;
             case OperationCode.WELCOME:
                 Debug.Log("Client: Reading message WELCOME");
@@ -49,9 +49,9 @@ public static class NetUtility
                 Debug.Log("Client: Reading message EXECUTE_UIACTION");
                 msg = new NetExecuteUIAction(stream);
                 break;
-            case OperationCode.REMATCH:
-                Debug.Log("Client: Reading message REMATCH");
-                msg = new NetRematch(stream);
+            case OperationCode.CONNECTION_FORBIDDEN:
+                Debug.Log("Client: Reading message CONNECTION_FORBIDDEN");
+                msg = new NetConnectionForbidden(stream);
                 break;
             case OperationCode.METADATA:
                 Debug.Log("Client: Reading message METADATA");
@@ -71,23 +71,23 @@ public static class NetUtility
     #region NetMessages
 
     // Client side messages.
-    public static Action<NetMessage> C_KEEP_ALIVE;
+    public static Action<NetMessage> C_CHANGE_LOAD_GAME_STATUS;
     public static Action<NetMessage> C_WELCOME;
     public static Action<NetMessage> C_START_GAME;
     public static Action<NetMessage> C_DRAFT_CHARACTER;
     public static Action<NetMessage> C_PERFORM_ACTION;
     public static Action<NetMessage> C_EXECUTE_UIACTION;
-    public static Action<NetMessage> C_REMATCH;
-    public static Action<NetMetadata> C_METADATA;
+    public static Action<NetMessage> C_CONNECTION_FORBIDDEN;
+    public static Action<NetMessage> C_METADATA;
 
     // Server side messages.
-    public static Action<NetMessage, NetworkConnection> S_KEEP_ALIVE;
+    public static Action<NetMessage, NetworkConnection> S_CHANGE_LOAD_GAME_STATUS;
     public static Action<NetMessage, NetworkConnection> S_WELCOME;
     public static Action<NetMessage, NetworkConnection> S_START_GAME;
     public static Action<NetMessage, NetworkConnection> S_DRAFT_CHARACTER;
     public static Action<NetMessage, NetworkConnection> S_PERFORM_ACTION;
     public static Action<NetMessage, NetworkConnection> S_EXECUTE_UIACTION;
-    public static Action<NetMessage, NetworkConnection> S_REMATCH;
+    public static Action<NetMessage, NetworkConnection> S_CONNECTION_FORBIDDEN;
     public static Action<NetMessage, NetworkConnection> S_METADATA;
 
     #endregion

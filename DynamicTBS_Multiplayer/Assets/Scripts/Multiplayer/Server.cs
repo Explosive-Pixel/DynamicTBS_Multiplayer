@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.Collections;
 using UnityEngine;
 using Unity.Networking.Transport;
-using System.Threading;
+using System.Linq;
 
 public class Server : MonoBehaviour
 {
@@ -23,15 +23,21 @@ public class Server : MonoBehaviour
 
     #endregion
 
+    class PlayerInfo
+    {
+        public PlayerType? side = null;
+        public bool IsAdmin = false;
+    }
+
     public int PlayerCount { get { return isActive ? players.Length : 0; } }
-    public int ChosenSide { get { return chosenSide; } set { chosenSide = value; } }
 
     private NetworkDriver driver;
     private NativeList<NetworkConnection> players;
-    private NetworkConnection? adminPlayer;
     private readonly List<NetworkConnection> spectators = new List<NetworkConnection>();
     private readonly List<NetworkConnection> allConnections = new List<NetworkConnection>();
     private readonly List<NetworkConnection> nonAssignedConnections = new List<NetworkConnection>();
+
+    private readonly Dictionary<NetworkConnection, PlayerInfo> playerInfo = new Dictionary<NetworkConnection, PlayerInfo>();
 
     private readonly List<NetMessage> messageHistory = new List<NetMessage>();
 
@@ -40,7 +46,6 @@ public class Server : MonoBehaviour
     private float lastKeepAlive = 0f; // Timestamp for last connection.
 
     private Action connectionDropped;
-    private int chosenSide = 0;
 
     private void Update()
     {
@@ -79,21 +84,23 @@ public class Server : MonoBehaviour
 
         players = new NativeList<NetworkConnection>(2, Allocator.Persistent); // Allows up to two connections at a time.
         isActive = true;
-        chosenSide = 0;
         SubscribeEvents();
     }
 
-    public void RegisterAs(NetworkConnection c, ClientType role)
+
+    public bool RegisterClient(NetworkConnection c, ClientType role)
     {
         if(nonAssignedConnections.Contains(c))
         {
             if(role == ClientType.player)
             {
-                if (PlayerCount == 0) 
+                if(PlayerCount == 2)
                 {
-                    adminPlayer = c;
+                    SendToClient(new NetConnectionForbidden(), c);
+                    DropConnection(c);
+                    return false;
                 }
-                players.Add(c);
+                RegisterPlayer(c);
             } else
             {
                 spectators.Add(c);
@@ -101,32 +108,89 @@ public class Server : MonoBehaviour
             BroadcastMetadata();
             nonAssignedConnections.Remove(c);
             UpdateConnections();
-        }
-    }
 
-    public NetworkConnection? FindOtherPlayer(NetworkConnection cnn)
-    {
-        if (players.Length == 2) 
+            return true;
+        }
+
+        if(allConnections.Contains(c))
         {
-            if (players[0] == cnn)
-                return players[1];
-            return players[0];
+            return true;
         }
-        return null;
+
+        return false;
     }
 
-    public int GetOtherSide()
+    public void ReassignSides(NetworkConnection cnn, PlayerType side)
     {
-        if (chosenSide == 1)
-            return 2;
-        if (chosenSide == 2)
-            return 1;
-        return 0;
+        foreach (NetworkConnection c in playerInfo.Keys)
+        {
+            if (c == cnn)
+            {
+                playerInfo[c].side = side;
+            }
+            else
+            {
+                playerInfo[c].side = GetOtherSide(side);
+            }
+        }
     }
 
-    public bool IsAdmin(NetworkConnection cnn)
+    public void SwapAdmin()
     {
-        return adminPlayer == cnn;
+        foreach (NetworkConnection c in playerInfo.Keys)
+        {
+            playerInfo[c].IsAdmin = !playerInfo[c].IsAdmin;
+        }
+    }
+
+    private void RegisterPlayer(NetworkConnection c)
+    {
+        PlayerInfo playerMetadata = new PlayerInfo();
+
+        if(PlayerCount == 0)
+        {
+            playerMetadata.IsAdmin = true;
+        }
+
+        if(PlayerCount == 1)
+        {
+            PlayerInfo other = playerInfo[playerInfo.Keys.First()];
+            playerMetadata.IsAdmin = !other.IsAdmin;
+            playerMetadata.side = GetOtherSide(other.side);
+        }
+
+        players.Add(c);
+        playerInfo.Add(c, playerMetadata);
+    }
+
+    private bool IsAdmin(NetworkConnection cnn)
+    {
+        return playerInfo[cnn].IsAdmin;
+    }
+
+    private PlayerType? GetSide(NetworkConnection cnn)
+    {
+        return playerInfo[cnn].side;
+    }
+
+    private int GetSideAsInt(NetworkConnection cnn)
+    {
+        PlayerType? side = GetSide(cnn);
+        return side != null ? (int)side : 0;
+    }
+
+    private PlayerType? GetOtherSide(PlayerType? side)
+    {
+        if(side == null)
+        {
+            return null;
+        }
+
+        if(side == PlayerType.pink)
+        {
+            return PlayerType.blue;
+        }
+        return PlayerType.pink;
     }
 
     public void Shutdown() // For shutting down the server.
@@ -144,29 +208,19 @@ public class Server : MonoBehaviour
         }
     }
 
-    public void SwapAdmin()
-    {
-        if(adminPlayer != null)
-        {
-            NetworkConnection? otherPlayer = FindOtherPlayer(adminPlayer.Value);
-            if(otherPlayer != null)
-            {
-                adminPlayer = otherPlayer;
-            }
-        } else if (PlayerCount > 0)
-        {
-            adminPlayer = players[0];
-        }
-    }
-
     public void WelcomePlayers()
     {
         for (int i = 0; i < players.Length; i++)
         {
-            if (players[i].IsCreated)
-            {
-                SendToClient(new NetWelcome() { AssignedTeam = 0, Role = (int)ClientType.player, isAdmin = IsAdmin(players[i]) }, players[i]);
-            }
+            WelcomePlayer(players[i]);
+        }
+    }
+
+    public void WelcomePlayer(NetworkConnection cnn)
+    {
+        if(cnn.IsCreated)
+        {
+            SendToClient(new NetWelcome() { AssignedTeam = GetSideAsInt(cnn), Role = (int)ClientType.player, isAdmin = IsAdmin(cnn) }, cnn);
         }
     }
 
@@ -181,18 +235,10 @@ public class Server : MonoBehaviour
         {
             if (!players[i].IsCreated)
             {
-                if(adminPlayer == players[i])
-                {
-                    adminPlayer = null;
-                }
+                playerInfo.Remove(players[i]);
                 players.RemoveAtSwapBack(i);
                 --i;
             }
-        }
-
-        if(PlayerCount == 1)
-        {
-            adminPlayer = players[0];
         }
 
         spectators.RemoveAll(spectator => !spectator.IsCreated);
@@ -251,7 +297,6 @@ public class Server : MonoBehaviour
                         Debug.Log("Server: Client disconnected from server.");
                         DropConnection(allConnections[i]);
                         connectionDropped?.Invoke();
-                        // Shutdown(); // Does not happen usually, only because this is a 2 person game.
                     }
                 }
             }
@@ -291,6 +336,7 @@ public class Server : MonoBehaviour
         }
         if(j != -1)
         {
+            playerInfo.Remove(players[j]);
             players[j].Disconnect(driver);
             players.RemoveAt(j);
         }
@@ -307,7 +353,6 @@ public class Server : MonoBehaviour
         if (Time.time - lastKeepAlive > KeepAliveTickRate)
         {
             lastKeepAlive = Time.time;
-            //Broadcast(new NetKeepAlive());
             BroadcastMetadata();
         }
     }
@@ -361,18 +406,18 @@ public class Server : MonoBehaviour
         if (messageHistory.Count > 0)
         {
             Debug.Log("Sending history to client: " + messageHistory.Count);
+            float delay = 0.02f;
 
-            SendToClient(new NetKeepAlive(), connection);
-            yield return new WaitForSeconds(0.01f);
+            SendToClient(new NetChangeLoadGameStatus(), connection);
+            yield return new WaitForSeconds(delay);
 
             foreach (NetMessage msg in messageHistory)
             {
-                Debug.Log(msg);
                 SendToClient(msg, connection);
-                yield return new WaitForSeconds(0.01f);
+                yield return new WaitForSeconds(delay);
             }
 
-            SendToClient(new NetKeepAlive(), connection);
+            SendToClient(new NetChangeLoadGameStatus(), connection);
         }
     }
 
