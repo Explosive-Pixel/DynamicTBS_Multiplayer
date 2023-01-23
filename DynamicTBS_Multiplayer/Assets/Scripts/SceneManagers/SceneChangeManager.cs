@@ -55,14 +55,23 @@ public class SceneChangeManager : MonoBehaviour
 
     private void SaveSettings()
     {
-        PlayerPrefs.SetFloat("VolumeSetting", SettingsManager.currentVolume);
+        PlayerPrefs.SetFloat("MainVolumeSetting", SettingsManager.currentMainVolume);
+        PlayerPrefs.SetFloat("MusicVolumeSetting", SettingsManager.currentMusicVolume);
+        PlayerPrefs.SetFloat("AtmoVolumeSetting", SettingsManager.currentAtmoVolume);
+        PlayerPrefs.SetFloat("FXVolumeSetting", SettingsManager.currentFXVolume);
         PlayerPrefs.SetInt("FullscreenSetting", SettingsManager.currentFullscreenSetting);
     }
 
     private void LoadSettings()
     {
-        if (PlayerPrefs.HasKey("VolumeSetting"))
-            SettingsManager.currentVolume = PlayerPrefs.GetFloat("VolumeSetting");
+        if (PlayerPrefs.HasKey("MainVolumeSetting"))
+            SettingsManager.currentMainVolume = PlayerPrefs.GetFloat("MainVolumeSetting");
+        if (PlayerPrefs.HasKey("MusicVolumeSetting"))
+            SettingsManager.currentMusicVolume = PlayerPrefs.GetFloat("MusicVolumeSetting");
+        if (PlayerPrefs.HasKey("AtmoVolumeSetting"))
+            SettingsManager.currentAtmoVolume = PlayerPrefs.GetFloat("AtmoVolumeSetting");
+        if (PlayerPrefs.HasKey("FXVolumeSetting"))
+            SettingsManager.currentFXVolume = PlayerPrefs.GetFloat("FXVolumeSetting");
         if (PlayerPrefs.HasKey("FullscreenSetting"))
             SettingsManager.currentFullscreenSetting = PlayerPrefs.GetInt("FullscreenSetting");
     }
