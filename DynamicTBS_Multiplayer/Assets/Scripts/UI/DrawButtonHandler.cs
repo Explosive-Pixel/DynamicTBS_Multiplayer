@@ -51,7 +51,7 @@ public class DrawButtonHandler : MonoBehaviour
         }
         else if(uIActionType == UIActionType.AcceptDraw)
         {
-            GameplayEvents.GameIsOver(null);
+            GameplayEvents.GameIsOver(null, GameOverCondition.DRAW_ACCEPTED);
         } else if(uIActionType == UIActionType.DeclineDraw)
         {
             offerDrawButton.interactable = true;

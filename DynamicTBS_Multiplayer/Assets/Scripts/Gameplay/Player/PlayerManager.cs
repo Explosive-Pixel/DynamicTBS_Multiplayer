@@ -35,6 +35,15 @@ public class PlayerManager : MonoBehaviour
         return bluePlayer;
     }
 
+    public static PlayerType GetOtherSide(PlayerType side)
+    {
+        if(side == PlayerType.blue)
+        {
+            return PlayerType.pink;
+        }
+        return PlayerType.blue;
+    }
+
     public static void NextPlayer()
     {
         currentPlayer.IncreaseRoundCounter();

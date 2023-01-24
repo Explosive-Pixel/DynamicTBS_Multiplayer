@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MedicChar : Character
 {
+    public static readonly string name = "Medic";
+
     public MedicChar(Player side) : base(side)
     {
         this.characterPrefab = GameObject.Instantiate(side.GetPlayerType() == PlayerType.blue ? PrefabManager.BLUE_MEDIC_PREFAB : PrefabManager.PINK_MEDIC_PREFAB);

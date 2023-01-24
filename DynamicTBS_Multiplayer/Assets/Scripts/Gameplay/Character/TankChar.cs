@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TankChar : Character
 {
+    public static readonly string name = "Tank";
+
     public TankChar(Player side) : base(side)
     {
         this.characterPrefab = GameObject.Instantiate(side.GetPlayerType() == PlayerType.blue ? PrefabManager.BLUE_TANK_PREFAB : PrefabManager.PINK_TANK_PREFAB);

@@ -65,7 +65,7 @@ public class ServerMessageHandler : MonoBehaviour
         Server.Instance.Broadcast(netExecuteUIAction);
     }
 
-    private void SwapAdmin(PlayerType? winner)
+    private void SwapAdmin(PlayerType? winner, GameOverCondition endGameCondition)
     {
         Server.Instance.SwapAdmin();
         Server.Instance.WelcomePlayers();

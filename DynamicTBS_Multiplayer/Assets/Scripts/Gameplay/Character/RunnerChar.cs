@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class RunnerChar : Character
 {
+    public static readonly string name = "Runner";
+
     public RunnerChar(Player side) : base(side)
     {
         this.characterPrefab = GameObject.Instantiate(side.GetPlayerType() == PlayerType.blue ? PrefabManager.BLUE_RUNNER_PREFAB : PrefabManager.PINK_RUNNER_PREFAB);

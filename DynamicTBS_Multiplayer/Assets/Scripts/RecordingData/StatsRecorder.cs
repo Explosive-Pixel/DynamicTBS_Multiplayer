@@ -53,7 +53,7 @@ public class StatsRecorder : MonoBehaviour
         recordableStats.gameNumber += 1;
     }
 
-    private void RedordWin(PlayerType? winningPlayer)
+    private void RedordWin(PlayerType? winningPlayer, GameOverCondition endGameCondition)
     {
         if(winningPlayer == null)
         {

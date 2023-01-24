@@ -82,7 +82,7 @@ public class GameSceneManager : MonoBehaviour
         gameplayObjectsObject.SetActive(true);
     }
 
-    private void GoToGameOverScreen(PlayerType? winner)
+    private void GoToGameOverScreen(PlayerType? winner, GameOverCondition endGameCondition)
     {
         HandleMenus(gameOverCanvas);
         gameplayObjectsObject.SetActive(false);
@@ -104,6 +104,7 @@ public class GameSceneManager : MonoBehaviour
         {
             gameOverText.text = "No player has won the game.";
         }
+        gameOverText.text += "\n\n" + endGameCondition.ToText(winner);
         gameOverCanvas.GetComponent<Image>().color = backgroundColor;
     }
     #endregion

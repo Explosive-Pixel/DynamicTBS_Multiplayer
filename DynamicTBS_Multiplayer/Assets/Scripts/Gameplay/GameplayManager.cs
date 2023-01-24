@@ -4,16 +4,6 @@ using UnityEngine;
 
 public class GameplayManager : MonoBehaviour
 {
-    // Implement the following win/loss/draw-conditions...
-    // (DONE) WIN/LOSS: A side wins, if...
-    //           - the master unit is first to activate its active ability on the goal square.
-    //           - the opposing master unit is killed while the own master unit is still alive.
-    //           - the opposing side has no more legal moves, but 2 actions in their turn.
-    // (TODO) DRAW: A game is drawn, if...
-    //           - no mechanic units are alive on either side...
-    //           & the goal square can't be reached...
-    //           & both master units can't be killed.
-
     #region Gameplay Config
 
     private const int maxActionsPerRound = 2;
@@ -97,7 +87,7 @@ public class GameplayManager : MonoBehaviour
         }
 
         Debug.Log("Player " + otherPlayer.GetPlayerType() + " lost because player can not perform any action this turn.");
-        GameplayEvents.GameIsOver(player.GetPlayerType());
+        GameplayEvents.GameIsOver(player.GetPlayerType(), GameOverCondition.NO_AVAILABLE_ACTION);
     }
 
     public static bool HasGameStarted()
