@@ -61,6 +61,11 @@ public class GameplayManager : MonoBehaviour
             {
                 actionsPerCharacterPerTurn.Add(actionMetadata.CharacterInAction, new List<ActionType>() { actionMetadata.ExecutedActionType });
             }
+
+            if(!actionMetadata.ExecutingPlayer.HasAvailableAction())
+            {
+                SkipAction.Execute();
+            }
         }
     }
 
@@ -75,19 +80,11 @@ public class GameplayManager : MonoBehaviour
         // Check if other player can perform any action (move/attack/ActiveAbility) -> if not, player wins
         Player otherPlayer = PlayerManager.GetOtherPlayer(player);
 
-        List<Character> charactersOfOtherPlayer = CharacterHandler.GetAllLivingCharacters()
-               .FindAll(character => character.GetSide() == otherPlayer);
-
-        foreach(Character character in charactersOfOtherPlayer)
+        if (!otherPlayer.HasAvailableAction())
         {
-            if(character.CanPerformAction())
-            {
-                return;
-            }
+            Debug.Log("Player " + otherPlayer.GetPlayerType() + " lost because player can not perform any action this turn.");
+            GameplayEvents.GameIsOver(player.GetPlayerType(), GameOverCondition.NO_AVAILABLE_ACTION);
         }
-
-        Debug.Log("Player " + otherPlayer.GetPlayerType() + " lost because player can not perform any action this turn.");
-        GameplayEvents.GameIsOver(player.GetPlayerType(), GameOverCondition.NO_AVAILABLE_ACTION);
     }
 
     public static bool HasGameStarted()

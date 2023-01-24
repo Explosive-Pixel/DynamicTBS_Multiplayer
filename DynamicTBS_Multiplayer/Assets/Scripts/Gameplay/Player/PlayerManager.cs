@@ -57,11 +57,6 @@ public class PlayerManager : MonoBehaviour
         return currentPlayer;
     }
 
-    public static bool IsBlueTurn()
-    {
-        return currentPlayer == bluePlayer;
-    }
-
     public static bool IsCurrentPlayer(string name)
     {
         return GetPlayer(name) == GetCurrentPlayer();
