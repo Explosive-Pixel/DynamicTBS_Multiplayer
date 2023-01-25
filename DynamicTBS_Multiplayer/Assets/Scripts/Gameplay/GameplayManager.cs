@@ -16,6 +16,8 @@ public class GameplayManager : MonoBehaviour
 
     private static bool hasGameStarted;
 
+    public Animator anim;
+
     private void Awake()
     {
         UnsubscribeEvents();
@@ -48,6 +50,7 @@ public class GameplayManager : MonoBehaviour
     private void OnActionFinished(ActionMetadata actionMetadata) 
     {
         SetRemainingActions(remainingActions - 1);
+        anim.SetInteger("Actions", remainingActions);
         if (remainingActions == 0)
         {
             PlayerManager.NextPlayer();
