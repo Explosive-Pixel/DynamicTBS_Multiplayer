@@ -14,7 +14,7 @@ public static class GameplayEvents
     public delegate void ChangeRemainingActions();
     public static event ChangeRemainingActions OnChangeRemainingActions;
 
-    public delegate void GameOver(PlayerType? winner);
+    public delegate void GameOver(PlayerType? winner, GameOverCondition endGameCondition);
     public static event GameOver OnGameOver;
 
     public delegate void CharacterSelection(Character character);
@@ -50,11 +50,11 @@ public static class GameplayEvents
             OnChangeRemainingActions();
     }
 
-    public static void GameIsOver(PlayerType? winner)
+    public static void GameIsOver(PlayerType? winner, GameOverCondition endGameCondition)
     {
         if (OnGameOver != null) 
         {
-            OnGameOver(winner);
+            OnGameOver(winner, endGameCondition);
         }
     }
 

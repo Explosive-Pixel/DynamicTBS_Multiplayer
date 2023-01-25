@@ -4,16 +4,6 @@ using UnityEngine;
 
 public class GameplayManager : MonoBehaviour
 {
-    // Implement the following win/loss/draw-conditions...
-    // (DONE) WIN/LOSS: A side wins, if...
-    //           - the master unit is first to activate its active ability on the goal square.
-    //           - the opposing master unit is killed while the own master unit is still alive.
-    //           - the opposing side has no more legal moves, but 2 actions in their turn.
-    // (TODO) DRAW: A game is drawn, if...
-    //           - no mechanic units are alive on either side...
-    //           & the goal square can't be reached...
-    //           & both master units can't be killed.
-
     #region Gameplay Config
 
     private const int maxActionsPerRound = 2;
@@ -71,6 +61,11 @@ public class GameplayManager : MonoBehaviour
             {
                 actionsPerCharacterPerTurn.Add(actionMetadata.CharacterInAction, new List<ActionType>() { actionMetadata.ExecutedActionType });
             }
+
+            if(!actionMetadata.ExecutingPlayer.HasAvailableAction())
+            {
+                SkipAction.Execute();
+            }
         }
     }
 
@@ -85,19 +80,11 @@ public class GameplayManager : MonoBehaviour
         // Check if other player can perform any action (move/attack/ActiveAbility) -> if not, player wins
         Player otherPlayer = PlayerManager.GetOtherPlayer(player);
 
-        List<Character> charactersOfOtherPlayer = CharacterHandler.GetAllLivingCharacters()
-               .FindAll(character => character.GetSide() == otherPlayer);
-
-        foreach(Character character in charactersOfOtherPlayer)
+        if (!otherPlayer.HasAvailableAction())
         {
-            if(character.CanPerformAction())
-            {
-                return;
-            }
+            Debug.Log("Player " + otherPlayer.GetPlayerType() + " lost because player can not perform any action this turn.");
+            GameplayEvents.GameIsOver(player.GetPlayerType(), GameOverCondition.NO_AVAILABLE_ACTION);
         }
-
-        Debug.Log("Player " + otherPlayer.GetPlayerType() + " lost because player can not perform any action this turn.");
-        GameplayEvents.GameIsOver(player.GetPlayerType());
     }
 
     public static bool HasGameStarted()

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MasterChar : Character
 {
+    public static readonly string name = "Master";
+
     public MasterChar(Player side) : base(side)
     {
         this.characterPrefab = GameObject.Instantiate(side.GetPlayerType() == PlayerType.blue ? PrefabManager.BLUE_MASTER_PREFAB : PrefabManager.PINK_MASTER_PREFAB);
@@ -28,6 +30,6 @@ public class MasterChar : Character
     public override void Die()
     {
         base.Die();
-        GameplayEvents.GameIsOver(PlayerManager.GetOtherPlayer(side).GetPlayerType());
+        GameplayEvents.GameIsOver(PlayerManager.GetOtherPlayer(side).GetPlayerType(), GameOverCondition.MASTER_DIED);
     }
 }

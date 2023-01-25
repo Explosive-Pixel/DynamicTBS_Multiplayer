@@ -25,7 +25,7 @@ public class TakeControlAA : IActiveAbility
                 CharacterInitialPosition = character.GetCharacterGameObject().transform.position,
                 ActionDestinationPosition = null
             });
-            GameplayEvents.GameIsOver(character.GetSide().GetPlayerType());
+            GameplayEvents.GameIsOver(character.GetSide().GetPlayerType(), GameOverCondition.MASTER_TOOK_CONTROL);
         }
     }
 

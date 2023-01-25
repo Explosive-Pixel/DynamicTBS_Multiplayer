@@ -186,11 +186,7 @@ public class Server : MonoBehaviour
             return null;
         }
 
-        if(side == PlayerType.pink)
-        {
-            return PlayerType.blue;
-        }
-        return PlayerType.pink;
+        return PlayerManager.GetOtherSide(side.Value);
     }
 
     public void Shutdown() // For shutting down the server.
@@ -396,7 +392,7 @@ public class Server : MonoBehaviour
         }
     }
 
-    private void ClearMessageHistory(PlayerType? winner)
+    private void ClearMessageHistory(PlayerType? winner, GameOverCondition endGameCondition)
     {
         messageHistory.Clear();
     }

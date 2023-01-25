@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ShooterChar : Character
 {
+    public static readonly string name = "Shooter";
+
     public ShooterChar(Player side) : base(side)
     {
         this.characterPrefab = GameObject.Instantiate(side.GetPlayerType() == PlayerType.blue ? PrefabManager.BLUE_SHOOTER_PREFAB : PrefabManager.PINK_SHOOTER_PREFAB);

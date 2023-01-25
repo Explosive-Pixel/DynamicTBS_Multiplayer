@@ -18,6 +18,22 @@ public class Player
         return this.type;
     }
 
+    public bool HasAvailableAction()
+    {
+        List<Character> charactersOfOtherPlayer = CharacterHandler.GetAllLivingCharacters()
+               .FindAll(character => character.GetSide() == this);
+
+        foreach (Character character in charactersOfOtherPlayer)
+        {
+            if (character.CanPerformAction())
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public void IncreaseRoundCounter() 
     {
         this.roundCounter++;

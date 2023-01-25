@@ -22,7 +22,7 @@ public class SurrenderButtonHandler : MonoBehaviour
     private void OnSurrenderClicked(Player player, UIActionType uIActionType)
     {
         if(uIActionType == UIActionType.Surrender)
-            GameplayEvents.GameIsOver(PlayerManager.GetOtherPlayer(player).GetPlayerType());
+            GameplayEvents.GameIsOver(PlayerManager.GetOtherPlayer(player).GetPlayerType(), GameOverCondition.PLAYER_SURRENDERED);
     }
 
     private void ChangeButtonVisibility(bool active)

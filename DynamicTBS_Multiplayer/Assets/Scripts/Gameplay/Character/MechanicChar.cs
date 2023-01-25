@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MechanicChar : Character
 {
+    public static readonly string name = "Mechanic";
+
     public MechanicChar(Player side) : base(side)
     {
 
