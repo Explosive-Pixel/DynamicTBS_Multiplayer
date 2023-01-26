@@ -7,23 +7,36 @@ using TMPro;
 
 public class TimerScript : MonoBehaviour
 {
+    #region Timer config
+
+    private const float timePerTurn = 90;
+    private const float debuffRate = 0.25f;
+    private const int maxDebuffs = 3;
+
+    #endregion
+
+    [SerializeField]
+    private Animator lampAnimator;
+
     public float Timeleft;
-    private float InitTime;
     public bool TimerOn = false;
 
-    public TMPro.TMP_Text  Timertext;
+    public TMPro.TMP_Text Timertext;
+
+    private readonly Dictionary<Player, int> timerDebuffsPerPlayer = new Dictionary<Player, int>();
 
 
     private void Start()
     {
-        InitTime = Timeleft;
+        Timeleft = timePerTurn;
         setActive();
-        SubscribeEvents();
-    }
 
-    private void SubscribeEvents()
-    {
-        GameplayEvents.OnPlayerTurnEnded += resetTimer;
+        foreach(Player player in PlayerManager.GetAllPlayers())
+        {
+            timerDebuffsPerPlayer[player] = 0;
+        }
+
+        SubscribeEvents();
     }
 
     private void setActive()
@@ -34,7 +47,14 @@ public class TimerScript : MonoBehaviour
 
     private void resetTimer(Player player)
     {
-        Timeleft = InitTime;
+        Player nextPlayer = PlayerManager.GetOtherPlayer(player);
+        Timeleft = timePerTurn * Mathf.Pow(1 - debuffRate, timerDebuffsPerPlayer[nextPlayer]);
+
+        // TODO: if
+        // timerDebuffsPerPlayer[nextPlayer] = 0 -> set both lamps on
+        // timerDebuffsPerPlayer[nextPlayer] = 1 -> set one lamp on, one lamp off
+        // timerDebuffsPerPlayer[nextPlayer] = 2 -> set both lamps off
+        lampAnimator.SetInteger("Actions", GameplayManager.maxActionsPerRound - timerDebuffsPerPlayer[nextPlayer]);
     }
 
     private void Update()
@@ -48,8 +68,14 @@ public class TimerScript : MonoBehaviour
             }
             else
             {
-                SkipAction.Execute();
-                Timeleft = InitTime;
+                Player currentPlayer = PlayerManager.GetCurrentPlayer();
+                timerDebuffsPerPlayer[currentPlayer] += 1;
+                if(timerDebuffsPerPlayer[currentPlayer] == maxDebuffs)
+                {
+                    GameplayEvents.GameIsOver(PlayerManager.GetOtherPlayer(currentPlayer).GetPlayerType(), GameOverCondition.PLAYER_TIMEOUT);
+                }
+
+                GameplayEvents.AbortCurrentPlayerTurn();
             }
         }
     }
@@ -62,5 +88,23 @@ public class TimerScript : MonoBehaviour
         float seconds = Mathf.FloorToInt(currentTime % 60);
 
         Timertext.text = string.Format("{0:00} : {1:00}", minutes, seconds);
+    }
+
+    #region Events
+
+    private void SubscribeEvents()
+    {
+        GameplayEvents.OnPlayerTurnEnded += resetTimer;
+    }
+    private void UnsubscribeEvents()
+    {
+        GameplayEvents.OnPlayerTurnEnded -= resetTimer;
+    }
+
+    #endregion
+
+    private void OnDestroy()
+    {
+        UnsubscribeEvents();
     }
 }

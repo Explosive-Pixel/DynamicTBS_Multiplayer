@@ -6,7 +6,7 @@ public class GameplayManager : MonoBehaviour
 {
     #region Gameplay Config
 
-    private const int maxActionsPerRound = 2;
+    public const int maxActionsPerRound = 2;
 
     #endregion
 
@@ -15,8 +15,6 @@ public class GameplayManager : MonoBehaviour
     private static Dictionary<Character, List<ActionType>> actionsPerCharacterPerTurn = new Dictionary<Character, List<ActionType>>();
 
     private static bool hasGameStarted;
-
-    public Animator anim;
 
     private void Awake()
     {
@@ -50,7 +48,6 @@ public class GameplayManager : MonoBehaviour
     private void OnActionFinished(ActionMetadata actionMetadata) 
     {
         SetRemainingActions(remainingActions - 1);
-        anim.SetInteger("Actions", remainingActions);
         if (remainingActions == 0)
         {
             PlayerManager.NextPlayer();
@@ -90,6 +87,17 @@ public class GameplayManager : MonoBehaviour
         }
     }
 
+    private void AbortTurn()
+    {
+        int actionsToSkip = remainingActions;
+        Debug.Log("Skipping " + remainingActions + " actions");
+        while(actionsToSkip > 0)
+        {
+            SkipAction.Execute();
+            actionsToSkip--;
+        }
+    }
+
     public static bool HasGameStarted()
     {
         return hasGameStarted;
@@ -99,6 +107,7 @@ public class GameplayManager : MonoBehaviour
     {
         GameplayEvents.OnFinishAction += OnActionFinished;
         GameplayEvents.OnPlayerTurnEnded += OnPlayerTurnEnded;
+        GameplayEvents.OnPlayerTurnAborted += AbortTurn;
         hasGameStarted = true;
     }
 
@@ -114,6 +123,7 @@ public class GameplayManager : MonoBehaviour
         GameplayEvents.OnGameplayPhaseStart -= SubscribeToGameplayEvents;
         GameplayEvents.OnFinishAction -= OnActionFinished;
         GameplayEvents.OnPlayerTurnEnded -= OnPlayerTurnEnded;
+        GameplayEvents.OnPlayerTurnAborted -= AbortTurn;
     }
 
     #endregion

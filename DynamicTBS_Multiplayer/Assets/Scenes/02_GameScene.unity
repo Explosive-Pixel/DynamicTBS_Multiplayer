@@ -292,7 +292,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d88d01d307373a438d654e983207327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 380034114}
 --- !u!114 &32580857
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7535,6 +7534,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bef33b741b518024ba8aea29f92a9fec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lampAnimator: {fileID: 380034114}
   Timeleft: 90
   TimerOn: 0
   Timertext: {fileID: 1819619958}

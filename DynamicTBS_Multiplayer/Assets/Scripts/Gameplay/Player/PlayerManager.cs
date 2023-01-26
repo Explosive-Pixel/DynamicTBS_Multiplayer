@@ -28,6 +28,11 @@ public class PlayerManager : MonoBehaviour
         currentPlayer = GetPlayer(draftPhaseStartPlayer);
     }
 
+    public static List<Player> GetAllPlayers()
+    {
+        return new List<Player>() { bluePlayer, pinkPlayer };
+    }
+
     public static Player GetOtherPlayer(Player player)
     {
         if (player == bluePlayer)
