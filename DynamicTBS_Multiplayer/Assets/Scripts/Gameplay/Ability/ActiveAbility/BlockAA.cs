@@ -66,7 +66,7 @@ public class BlockAA : IActiveAbility
     {
         currentBlockCount = blockingRounds + 1;
         blockGameObject = CreateBlockGameObject();
-        GameplayEvents.OnPlayerTurnEnded += ReduceBlockCounter;
+        SubscribeEvents();
         GameplayEvents.ActionFinished(new ActionMetadata
         {
             ExecutingPlayer = character.GetSide(),
@@ -85,8 +85,7 @@ public class BlockAA : IActiveAbility
 
             if (currentBlockCount == 0)
             {
-                GameObject.Destroy(blockGameObject);
-                blockGameObject = null;
+                DestroyBlock();
             }
         }
     }
@@ -146,16 +145,46 @@ public class BlockAA : IActiveAbility
         if (character.GetSide() == player)
         {
             ReduceBlockCount();
-
-            if (!IsBlocking())
-            {
-                GameplayEvents.OnPlayerTurnEnded -= ReduceBlockCounter;
-            }
         }
+    }
+
+    private void DestroyBlock()
+    {
+        GameObject.Destroy(blockGameObject);
+        blockGameObject = null;
+        currentBlockCount = 0;
+        UnsubscribeEvents();
+    }
+
+    private void DestroyBlock(Character character, Vector3 lastPosition)
+    {
+        if(character == this.character)
+        {
+            DestroyBlock();
+        }
+    }
+
+    private void DestroyBlock(PlayerType? winner, GameOverCondition endGameCondition)
+    {
+        DestroyBlock();
+    }
+
+    private void SubscribeEvents()
+    {
+        GameplayEvents.OnPlayerTurnEnded += ReduceBlockCounter;
+        CharacterEvents.OnCharacterDeath += DestroyBlock;
+        GameplayEvents.OnGameOver += DestroyBlock;
+    }
+
+    private void UnsubscribeEvents()
+    {
+        GameplayEvents.OnPlayerTurnEnded -= ReduceBlockCounter;
+        CharacterEvents.OnCharacterDeath -= DestroyBlock;
+        GameplayEvents.OnGameOver -= DestroyBlock;
     }
 
     ~BlockAA()
     {
-        GameplayEvents.OnPlayerTurnEnded -= ReduceBlockCounter;
+        UnsubscribeEvents();
     }
 }
