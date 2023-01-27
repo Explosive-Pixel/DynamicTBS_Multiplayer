@@ -17,14 +17,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1870058351444059126, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_text
-      value: "Powerschuss\nF\xFCgt allen Einheiten (verb\xFCndeten und gegnerischen)
-        in einer Richtung (horizontal oder vertikal) 1 Schaden zu. Kann nur durch
-        F\xE4higkeit \"Block\" aufgehalten werden. F\xFCgt der Einheit mit dieser
-        F\xE4higkeit bei Aktivierung 1 Schaden zu.\n\nCooldown: 3"
+      value: 'Powershot (AA): Deals 1 damage to all units in a direction in
+
+        a
+        cross pattern and to itself. Can only be stopped by an
+
+        active Block
+        ability.
+
+        CD: 3
+
+        Explosion (PA): If this unit dies it explodes,
+        dealing 1 damage
+
+        to all units in a radius of 1.'
       objectReference: {fileID: 0}
     - target: {fileID: 1870058351444059126, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_fontSize
-      value: 0.94
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 1870058351444059126, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_fontSizeBase
