@@ -21,13 +21,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1870058351444059126, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_text
-      value: "Block\nDie blockende Einheit blockt f\xFCr 2 Runden Schaden aus allen
-        Richtungen. W\xE4hrend dieser Zeit kann sie sich weder bewegen, noch angreifen.\n\nCooldown:
-        3"
+      value: 'Block (AA): Blocks all damage for 2 turns. While this ability is
+
+        active,
+        this unit cannot move or attack and its passive ability
+
+        is suspended.
+        CD: 3
+
+        Pull Damage (PA): If an allied unit is on a square next to
+        this
+
+        one in a cross pattern this unit will take all damage for
+        them.
+
+        Does not work on other Tanks. If two Tanks are next to a
+
+        different
+        type of unit and that unit takes damage, both
+
+        Tanks take the damage
+        for them.'
       objectReference: {fileID: 0}
     - target: {fileID: 1870058351444059126, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_fontSize
-      value: 1.4
+      value: 1.35
       objectReference: {fileID: 0}
     - target: {fileID: 1870058351444059126, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_fontSizeBase

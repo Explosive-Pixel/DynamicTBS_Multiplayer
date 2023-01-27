@@ -17,13 +17,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1870058351444059126, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_text
-      value: "Sprung\nDie Einheit mit dieser F\xE4higkeit springt 3 Felder in eine
-        Richtung (sternf\xF6rmig) \xFCber L\xF6cher und Einheiten hinweg. Sie muss
-        auf einem leeren, begehbaren Feld landen.\n\nCooldown: 2"
+      value: 'Jump (AA): Jumps 3 squares in a star pattern over units and
+
+        holes.
+        Has to land on an empty floor square. CD: 2
+
+        High Performance (PA):
+        This unit is able to move in a star
+
+        pattern and deals 2 damage
+        with each attack.'
       objectReference: {fileID: 0}
     - target: {fileID: 1870058351444059126, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_fontSize
-      value: 0.98
+      value: 1.8
       objectReference: {fileID: 0}
     - target: {fileID: 1870058351444059126, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_fontSizeBase
