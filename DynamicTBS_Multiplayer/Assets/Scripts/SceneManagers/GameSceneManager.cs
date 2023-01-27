@@ -24,6 +24,8 @@ public class GameSceneManager : MonoBehaviour
         SubscribeEvents();
         SetCanvasList();
 
+        GameEvents.StartGame();
+
         if (GameManager.gameType == GameType.multiplayer && Client.Instance.role == ClientType.spectator)
         {
             playAgainButton.gameObject.SetActive(false);

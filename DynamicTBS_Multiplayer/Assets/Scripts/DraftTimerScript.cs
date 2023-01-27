@@ -7,20 +7,35 @@ public class DraftTimerScript : MonoBehaviour
     public float Timeleft;
     private float InitTime;
     public bool TimerOn = false;
+    public Color Player1;
+    public Color Player2;
 
     public TMPro.TMP_Text Timertext;
 
 
     private void Start()
     {
-        InitTime = Timeleft;
-        setActive();
-        SubscribeEvents();
+        //Timertext.color = Player1;
+        //InitTime = Timeleft;
+        //setActive();
+        //SubscribeEvents();
     }
 
     private void SubscribeEvents()
     {
         DraftEvents.OnDraftMessageTextChange += resetTimer;
+    }
+
+    private void changeTextColor()
+    {
+        if (Timertext.color == Player1)
+        {
+            Timertext.color = Player2;
+        }
+        else
+        {
+            Timertext.color = Player1;
+        }
     }
 
     private void setActive()
@@ -31,6 +46,7 @@ public class DraftTimerScript : MonoBehaviour
 
     private void resetTimer()
     {
+        changeTextColor();
         Timeleft = InitTime;
     }
 
@@ -47,6 +63,7 @@ public class DraftTimerScript : MonoBehaviour
             {
                 //TODO: Random Draft + next Player
                 Timeleft = InitTime;
+                changeTextColor();
             }
         }
     }

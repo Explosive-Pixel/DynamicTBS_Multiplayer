@@ -20,6 +20,12 @@ public class TimerScript : MonoBehaviour
 
     public float Timeleft;
     public bool TimerOn = false;
+    public Color Player1;
+    public Color Player2;
+    private int CounterPlayer1 = 0;
+    private int CounterPlayer2 = 0;
+
+    public GameObject SurrenderComponent;
 
     public TMPro.TMP_Text Timertext;
 
@@ -28,7 +34,9 @@ public class TimerScript : MonoBehaviour
 
     private void Start()
     {
-        Timeleft = timePerTurn;
+        Timertext.color = Player1;
+        InitTime = Timeleft;
+
         setActive();
 
         foreach(Player player in PlayerManager.GetAllPlayers())
@@ -41,7 +49,6 @@ public class TimerScript : MonoBehaviour
 
     private void setActive()
     {
-        Debug.Log("Timer Active");
         TimerOn = true;
     }
 
@@ -55,6 +62,8 @@ public class TimerScript : MonoBehaviour
         // timerDebuffsPerPlayer[nextPlayer] = 1 -> set one lamp on, one lamp off
         // timerDebuffsPerPlayer[nextPlayer] = 2 -> set both lamps off
         lampAnimator.SetInteger("Actions", GameplayManager.maxActionsPerRound - timerDebuffsPerPlayer[nextPlayer]);
+
+        changeTextColor();
     }
 
     private void Update()
@@ -79,6 +88,19 @@ public class TimerScript : MonoBehaviour
             }
         }
     }
+
+    private void changeTextColor()
+    {
+        if (Timertext.color == Player1)
+        {
+            Timertext.color = Player2;
+        }
+        else
+        {
+            Timertext.color = Player1;
+        }
+    }
+
 
     void updateTimer(float currentTime)
     {

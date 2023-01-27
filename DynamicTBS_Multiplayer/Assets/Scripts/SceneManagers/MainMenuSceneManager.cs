@@ -10,4 +10,9 @@ public class MainMenuSceneManager : MonoBehaviour
     {
         startMenuCanvas.SetActive(true);
     }
+
+    private void Start()
+    {
+        AudioEvents.EnteringMainMenu();
+    }
 }
