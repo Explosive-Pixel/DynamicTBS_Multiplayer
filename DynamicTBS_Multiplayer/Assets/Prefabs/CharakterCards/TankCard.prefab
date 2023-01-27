@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 50676386738987950, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1097004520536020328, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: character
       value: 6
@@ -23,7 +27,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1870058351444059126, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_fontSize
-      value: 1.23
+      value: 1.4
       objectReference: {fileID: 0}
     - target: {fileID: 1870058351444059126, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_fontSizeBase
@@ -32,6 +36,10 @@ PrefabInstance:
     - target: {fileID: 3680486571023874173, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_text
       value: Tank
+      objectReference: {fileID: 0}
+    - target: {fileID: 4012920492818509356, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
+      propertyPath: m_text
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4140319668466607208, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_RootOrder
