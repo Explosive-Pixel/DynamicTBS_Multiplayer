@@ -17,15 +17,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1870058351444059126, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_text
-      value: "Boden ver\xE4ndern\nDie Einheit mit dieser F\xE4higkeit kann in einem
-        Radius von 2 ein begehbares Feld zu einem Loch machen oder umgekehrt. Felder,
-        auf denen gegnerische oder verb\xFCndete Einheiten stehen, k\xF6nnen nur
-        im Radius von 1 ver\xE4ndert werden. Wird unter einer Einheit ein Feld zu
-        einem Loch, stirbt sie sofort.\n\nCooldown: 3"
+      value: 'Change Floor (AA): Change a square from floor to hole or
+
+        from
+        hole to floor in a radius of 2. Occupied floor squares
+
+        can only
+        be changed in a radius of 1, instantly killing the
+
+        occupying unit.
+        CD: 3
+
+        Steady Feet (PA): The floor underneath this unit cannot be
+
+        changed.'
       objectReference: {fileID: 0}
     - target: {fileID: 1870058351444059126, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_fontSize
-      value: 0.92
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 1870058351444059126, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_fontSizeBase
@@ -33,11 +42,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1870058351444059126, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 4278190080
+      value: 4284327625
       objectReference: {fileID: 0}
     - target: {fileID: 3680486571023874173, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_text
       value: Mechanic
+      objectReference: {fileID: 0}
+    - target: {fileID: 4012920492818509356, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
+      propertyPath: m_text
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4140319668466607208, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_RootOrder

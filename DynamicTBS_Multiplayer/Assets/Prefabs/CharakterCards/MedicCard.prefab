@@ -17,15 +17,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1870058351444059126, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_text
-      value: "Heilung\nDie Einheit mit dieser F\xE4higkeit kann mit einer Reichweite
-        von 2 (sternf\xF6rmig) andere Einheiten um 1 Lebenspunkt heilen. Eine Einheit
-        kann nie mehr Lebenspunkte haben, als sie zu Beginn des Spiels hat. Die Einheit
-        mit dieser F\xE4higkeit kann diese nicht auf sich selbst anwenden.\n\nCooldown:
-        3"
+      value: 'Heal (AA): Heals a unit in a star pattern in range 2 for 1
+
+        health
+        (not above their starting health; path to target must
+
+        be free).
+        The healed unit gets a movement bonus of +1 for
+
+        their next move
+        action, whenever it may occur. CD: 3
+
+        Adrenalin (PA): If this unit
+        takes damage their cooldown is
+
+        set to 0.'
       objectReference: {fileID: 0}
     - target: {fileID: 1870058351444059126, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_fontSize
-      value: 0.89
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 1870058351444059126, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_fontSizeBase
@@ -33,7 +43,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3680486571023874173, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_text
-      value: Medic
+      value: Doc
+      objectReference: {fileID: 0}
+    - target: {fileID: 4012920492818509356, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
+      propertyPath: m_text
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4140319668466607208, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_RootOrder

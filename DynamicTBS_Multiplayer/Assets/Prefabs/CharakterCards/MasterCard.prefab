@@ -17,16 +17,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1870058351444059126, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_text
-      value: "Kontrolle \xFCbernehmen\nAuf Zielfeld aktivieren, um Spiel zu gewinnen.\n\nCooldown:
-        0"
+      value: 'Take Control (AA): Activate on goal square to win the game.
+
+        CD:
+        0
+
+        Influence Aura (PA): As long as an opposing unit is on a
+
+        square
+        next to this one in a star pattern, they gain 1
+
+        influence point
+        each turn. If a unit gained 3 influence points
+
+        it switches sides.
+        Influence points can only be reset by
+
+        switching sides.'
+      objectReference: {fileID: 0}
+    - target: {fileID: 1870058351444059126, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
+      propertyPath: m_fontSize
+      value: 1.05
       objectReference: {fileID: 0}
     - target: {fileID: 3680486571023874173, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_text
-      value: Master
+      value: Captain
+      objectReference: {fileID: 0}
+    - target: {fileID: 3680486571023874173, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
+      propertyPath: m_fontStyle
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 3989270982990444734, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_text
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4012920492818509356, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
+      propertyPath: m_text
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4140319668466607208, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_RootOrder
@@ -75,6 +102,12 @@ PrefabInstance:
     - target: {fileID: 7595483612379790350, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_text
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8663362516291059666, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
+      propertyPath: m_text
+      value: '0
+
+'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}

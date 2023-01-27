@@ -2854,8 +2854,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Timeleft: 90
   TimerOn: 0
-  Player1: {r: 0, g: 0, b: 0, a: 0}
-  Player2: {r: 0, g: 0, b: 0, a: 0}
+  Player1: {r: 0.9607844, g: 0.35686275, b: 0.9058824, a: 1}
+  Player2: {r: 0.22352943, g: 0.53333336, b: 0.9607844, a: 1}
   Timertext: {fileID: 481771721}
 --- !u!114 &481771721
 MonoBehaviour:
@@ -2879,8 +2879,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ff6e33e4fb8e74241a4f5ef000bccf7b, type: 2}
+  m_sharedMaterial: {fileID: 710754681076154506, guid: ff6e33e4fb8e74241a4f5ef000bccf7b, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -6250,7 +6250,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1495660295
 RectTransform:
   m_ObjectHideFlags: 0
