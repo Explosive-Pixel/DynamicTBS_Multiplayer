@@ -8,7 +8,7 @@ public class TimerHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameplayEvents.OnGameplayPhaseStart += activateTimer;
+        //GameplayEvents.OnGameplayPhaseStart += activateTimer;
     }
 
     private void activateTimer()

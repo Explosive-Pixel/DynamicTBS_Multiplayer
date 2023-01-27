@@ -15,10 +15,10 @@ public class DraftTimerScript : MonoBehaviour
 
     private void Start()
     {
-        Timertext.color = Player1;
-        InitTime = Timeleft;
-        setActive();
-        SubscribeEvents();
+        //Timertext.color = Player1;
+        //InitTime = Timeleft;
+        //setActive();
+        //SubscribeEvents();
     }
 
     private void SubscribeEvents()
