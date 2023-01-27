@@ -67,7 +67,6 @@ public class AudioManager : MonoBehaviour
     {
         audioManagerObject = this.gameObject;
         DontDestroyOnLoad(audioManagerObject);
-        PlayMainTheme();
     }
 
     private void PlayMainTheme()
@@ -83,7 +82,7 @@ public class AudioManager : MonoBehaviour
 
     private void StopMainTheme()
     {
-        musicSource.Stop();
+        StartCoroutine(FadeAudio(musicSource, 2f, 0f));
     }
 
     private void PlayAtmo()
@@ -101,15 +100,33 @@ public class AudioManager : MonoBehaviour
         fxSource.PlayOneShot(turnChangeClip);
     }
 
+    private IEnumerator FadeAudio(AudioSource audioSource, float duration, float targetVolume)
+    {
+        float currentTime = 0;
+        float startVolume = audioSource.volume;
+
+        while (currentTime < duration)
+        {
+            currentTime += Time.deltaTime;
+            audioSource.volume = Mathf.Lerp(startVolume, targetVolume, currentTime / duration);
+            yield return null;
+        }
+
+        audioSource.Stop();
+        yield break;
+    }
+
     #region EventsRegion
     private void SubscribeEvents()
     {
+        AudioEvents.OnMainMenuEnter += PlayMainTheme;
         GameplayEvents.OnPlayerTurnEnded += TurnChangeAudio;
         GameEvents.OnGameStart += StopMainTheme;
     }
 
     private void UnsubscribeEvents()
     {
+        AudioEvents.OnMainMenuEnter -= PlayMainTheme;
         GameplayEvents.OnPlayerTurnEnded -= TurnChangeAudio;
         GameEvents.OnGameStart -= StopMainTheme;
     }

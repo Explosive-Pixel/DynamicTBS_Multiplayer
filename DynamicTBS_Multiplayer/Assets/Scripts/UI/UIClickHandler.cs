@@ -63,4 +63,17 @@ public class UIClickHandler : MonoBehaviour
             GameplayEvents.ChangeCharacterSelection(null);
         }
     }
+
+    private void HandleKeyInputs()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GameplayEvents.ChangeCharacterSelection(null);
+        }
+
+        // TODO: Show complete patterns, not just legal moves of...
+        // - Attack while pressing A.
+        // - Active Ability while pressing S (for special).
+        // - Movement while pressing M.
+    }
 }
