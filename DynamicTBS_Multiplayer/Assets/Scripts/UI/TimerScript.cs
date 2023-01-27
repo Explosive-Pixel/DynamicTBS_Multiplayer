@@ -10,12 +10,19 @@ public class TimerScript : MonoBehaviour
     public float Timeleft;
     private float InitTime;
     public bool TimerOn = false;
+    public Color Player1;
+    public Color Player2;
+    private int CounterPlayer1 = 0;
+    private int CounterPlayer2 = 0;
+
+    public GameObject SurrenderComponent;
 
     public TMPro.TMP_Text  Timertext;
 
 
     private void Start()
     {
+        Timertext.color = Player1;
         InitTime = Timeleft;
         setActive();
         SubscribeEvents();
@@ -28,12 +35,12 @@ public class TimerScript : MonoBehaviour
 
     private void setActive()
     {
-        Debug.Log("Timer Active");
         TimerOn = true;
     }
 
     private void resetTimer(Player player)
     {
+        changeTextColor();
         Timeleft = InitTime;
     }
 
@@ -48,11 +55,61 @@ public class TimerScript : MonoBehaviour
             }
             else
             {
+                increaseCounter();
+                checkCounterAmount();
                 SkipAction.Execute();
                 Timeleft = InitTime;
             }
         }
     }
+
+    private void changeTextColor()
+    {
+        if (Timertext.color == Player1)
+        {
+            Timertext.color = Player2;
+        }
+        else
+        {
+            Timertext.color = Player1;
+        }
+    }
+
+    private void increaseCounter()
+    {
+        if (Timertext.color == Player1)
+        {
+            CounterPlayer1 += 1;
+        }
+        else
+        {
+            CounterPlayer2 += 1;
+        }
+    }
+
+    private void checkCounterAmount()
+    {
+        if (Timertext.color == Player1)
+        {
+            if (CounterPlayer1 > 2)
+            {
+                surrender();
+            }
+        }
+        else
+        {
+            if (CounterPlayer2 > 2)
+            {
+                surrender();
+            }
+        }
+    }
+
+    private void surrender()
+    {
+        GameplayEvents.GameIsOver(PlayerManager.GetOtherPlayer(PlayerManager.GetCurrentPlayer()).GetPlayerType(), GameOverCondition.PLAYER_SURRENDERED);
+    }
+
 
     void updateTimer(float currentTime)
     {
