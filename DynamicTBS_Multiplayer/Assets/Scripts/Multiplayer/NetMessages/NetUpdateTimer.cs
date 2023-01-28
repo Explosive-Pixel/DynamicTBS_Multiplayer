@@ -9,7 +9,6 @@ public class NetUpdateTimer : NetMessage
     public float currentTime;
     public int pinkDebuff;
     public int blueDebuff;
-    public int currentPlayerId;
 
     public NetUpdateTimer() // Constructing a message.
     {
@@ -28,7 +27,6 @@ public class NetUpdateTimer : NetMessage
         writer.WriteFloat(currentTime);
         writer.WriteInt(pinkDebuff);
         writer.WriteInt(blueDebuff);
-        writer.WriteInt(currentPlayerId);
     }
 
     public override void Deserialize(DataStreamReader reader)
@@ -36,7 +34,6 @@ public class NetUpdateTimer : NetMessage
         currentTime = reader.ReadFloat();
         pinkDebuff = reader.ReadInt();
         blueDebuff = reader.ReadInt();
-        currentPlayerId = reader.ReadInt();
     }
 
     public override void ReceivedOnClient()

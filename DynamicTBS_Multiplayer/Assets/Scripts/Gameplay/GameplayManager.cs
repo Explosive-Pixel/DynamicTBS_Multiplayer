@@ -75,7 +75,7 @@ public class GameplayManager : MonoBehaviour
 
             if(!actionMetadata.ExecutingPlayer.HasAvailableAction())
             {
-                SkipAction.Execute();
+                GameplayEvents.AbortCurrentPlayerTurn();
             }
         }
     }

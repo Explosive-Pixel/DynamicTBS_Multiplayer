@@ -140,8 +140,7 @@ public class TimerScript : MonoBehaviour
             {
                 currentTime = Timeleft,
                 pinkDebuff = timerDebuffsPerPlayer[PlayerManager.PinkPlayer],
-                blueDebuff = timerDebuffsPerPlayer[PlayerManager.BluePlayer],
-                currentPlayerId = (int)PlayerManager.GetCurrentPlayer().GetPlayerType()
+                blueDebuff = timerDebuffsPerPlayer[PlayerManager.BluePlayer]
             });
         }
     }
