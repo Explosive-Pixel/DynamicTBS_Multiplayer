@@ -15,7 +15,10 @@ public class PlayerManager : MonoBehaviour
     private static Player currentPlayer;
 
     private static Player bluePlayer;
+    public static Player BluePlayer { get { return bluePlayer; } }
+
     private static Player pinkPlayer;
+    public static Player PinkPlayer { get { return pinkPlayer; } }
 
     public static PlayerType GameplayPhaseStartPlayer { get { return gameplayPhaseStartPlayer; } }
 

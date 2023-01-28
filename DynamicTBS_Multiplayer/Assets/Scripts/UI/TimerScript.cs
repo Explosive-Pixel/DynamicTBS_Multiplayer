@@ -32,14 +32,19 @@ public class TimerScript : MonoBehaviour
 
     private bool Paused = false;
 
+    private bool isHost = true;
+
     private void Awake()
     {
         Init();
-        SubscribeEvents();
     }
 
     private void Init()
     {
+        UnsubscribeEvents();
+
+        isHost = GameManager.gameType == GameType.local || (Server.Instance && Server.Instance.IsActive); 
+
         timer.SetActive(false);
         TimerOn = false;
         Paused = false;
@@ -50,11 +55,13 @@ public class TimerScript : MonoBehaviour
         {
             timerDebuffsPerPlayer[player] = 0;
         }
+
+        SubscribeEvents();
     }
 
     private void SetActive()
     {
-        TimerOn = GameManager.gameType == GameType.local || (Server.Instance && Server.Instance.IsActive);
+        TimerOn = true;
         timer.SetActive(true);
         Timertext.color = GetPlayerColor(PlayerManager.GameplayPhaseStartPlayer);
         GameplayEvents.OnPlayerTurnEnded += ResetTimer;
@@ -75,14 +82,12 @@ public class TimerScript : MonoBehaviour
         {
             if (Timeleft > 0)
             {
-                Timeleft -= Time.deltaTime;
-                if (GameManager.gameType == GameType.local)
+                if (isHost)
                 {
-                    UpdateTimer(Timeleft);
-                } else
-                {
+                    Timeleft -= Time.deltaTime;
                     BroadcastTimerData();
                 }
+                UpdateTimer(Timeleft);
             }
             else
             {
@@ -131,18 +136,24 @@ public class TimerScript : MonoBehaviour
             GameplayEvents.GameIsOver(PlayerManager.GetOtherPlayer(currentPlayer).GetPlayerType(), GameOverCondition.PLAYER_TIMEOUT);
         }
 
-        GameplayEvents.ServerActionExecuted(ServerActionType.AbortTurn);
+        GameplayEvents.AbortCurrentPlayerTurn();
+
+        if (GameManager.gameType == GameType.multiplayer && isHost)
+        {
+            GameplayEvents.ServerActionExecuted(ServerActionType.AbortTurn);
+        }
     }
 
     private void BroadcastTimerData()
     {
-        if (Server.Instance && Server.Instance.IsActive)
+        if (GameManager.gameType == GameType.multiplayer && isHost)
         {
             Server.Instance.Broadcast(new NetUpdateTimer()
             {
                 currentTime = Timeleft,
-                currentPlayerDebuff = timerDebuffsPerPlayer[PlayerManager.GetCurrentPlayer()],
-                playerId = (int)PlayerManager.GetCurrentPlayer().GetPlayerType()
+                pinkDebuff = timerDebuffsPerPlayer[PlayerManager.PinkPlayer],
+                blueDebuff = timerDebuffsPerPlayer[PlayerManager.BluePlayer],
+                currentPlayerId = (int)PlayerManager.GetCurrentPlayer().GetPlayerType()
             });
         }
     }
@@ -151,15 +162,9 @@ public class TimerScript : MonoBehaviour
     {
         NetUpdateTimer netUpdateTimer = msg as NetUpdateTimer;
 
-        // TODO: not working!
-        if(netUpdateTimer.currentPlayerDebuff == maxDebuffs)
-        {
-            GameplayEvents.GameIsOver(PlayerManager.GetOtherSide((PlayerType)netUpdateTimer.playerId), GameOverCondition.PLAYER_TIMEOUT);
-        }
-
-        UpdateTimer(netUpdateTimer.currentTime);
-        UpdateLamps(netUpdateTimer.currentPlayerDebuff);
-        ChangeTextColor((PlayerType)netUpdateTimer.playerId);
+        Timeleft = netUpdateTimer.currentTime;
+        timerDebuffsPerPlayer[PlayerManager.PinkPlayer] = netUpdateTimer.pinkDebuff;
+        timerDebuffsPerPlayer[PlayerManager.BluePlayer] = netUpdateTimer.blueDebuff;
     }
 
     private void HandlePause(Player player, UIActionType uIActionType)
@@ -187,16 +192,22 @@ public class TimerScript : MonoBehaviour
     private void SubscribeEvents()
     {
         GameplayEvents.OnGameplayPhaseStart += SetActive;
-        NetUtility.C_UPDATE_TIMER += UpdateTimerInfo;
         GameplayEvents.OnExecuteUIAction += HandlePause;
         GameplayEvents.OnGameOver += ResetAll;
+
+        if(!isHost)
+        {
+            NetUtility.C_UPDATE_TIMER += UpdateTimerInfo;
+        }
     }
     private void UnsubscribeEvents()
     {
         GameplayEvents.OnGameplayPhaseStart -= SetActive;
-        GameplayEvents.OnPlayerTurnEnded -= ResetTimer;
-        NetUtility.C_UPDATE_TIMER -= UpdateTimerInfo;
+        GameplayEvents.OnExecuteUIAction -= HandlePause;
         GameplayEvents.OnGameOver -= ResetAll;
+        GameplayEvents.OnPlayerTurnEnded -= ResetTimer;
+
+        NetUtility.C_UPDATE_TIMER -= UpdateTimerInfo;
     }
 
     #endregion

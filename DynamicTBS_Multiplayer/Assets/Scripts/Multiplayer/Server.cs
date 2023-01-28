@@ -408,6 +408,7 @@ public class Server : MonoBehaviour
             SendToClient(new NetChangeLoadGameStatus(), connection);
             yield return new WaitForSeconds(delay);
 
+            // TODO: Find mechanism if new messages are added to history whilst loading -> use queue?
             foreach (NetMessage msg in messageHistory)
             {
                 SendToClient(msg, connection);

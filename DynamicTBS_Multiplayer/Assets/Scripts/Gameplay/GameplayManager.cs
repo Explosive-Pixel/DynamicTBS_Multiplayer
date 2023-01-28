@@ -92,13 +92,21 @@ public class GameplayManager : MonoBehaviour
         }
     }
 
+    private void AbortTurn()
+    {
+        SetRemainingActions(0);
+        HandleNoRemainingActions();
+    }
+
     private void AbortTurn(ServerActionType serverActionType)
     {
-        if(serverActionType == ServerActionType.AbortTurn)
+        if(GameManager.gameType == GameType.multiplayer)
         {
-            SetRemainingActions(0);
-            HandleNoRemainingActions();
-        }
+            if (serverActionType == ServerActionType.AbortTurn && Client.Instance.IsLoadingGame)
+            {
+                AbortTurn();
+            }
+        } 
     }
 
     public static bool HasGameStarted()
@@ -110,6 +118,7 @@ public class GameplayManager : MonoBehaviour
     {
         GameplayEvents.OnFinishAction += OnActionFinished;
         GameplayEvents.OnPlayerTurnEnded += OnPlayerTurnEnded;
+        GameplayEvents.OnPlayerTurnAborted += AbortTurn;
         GameplayEvents.OnExecuteServerAction += AbortTurn;
         hasGameStarted = true;
     }
@@ -126,6 +135,7 @@ public class GameplayManager : MonoBehaviour
         GameplayEvents.OnGameplayPhaseStart -= SubscribeToGameplayEvents;
         GameplayEvents.OnFinishAction -= OnActionFinished;
         GameplayEvents.OnPlayerTurnEnded -= OnPlayerTurnEnded;
+        GameplayEvents.OnPlayerTurnAborted -= AbortTurn;
         GameplayEvents.OnExecuteServerAction -= AbortTurn;
     }
 
