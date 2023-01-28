@@ -9,7 +9,7 @@ public class TimerScript : MonoBehaviour
 {
     #region Timer config
 
-    private const float timePerTurn = 20;
+    private const float timePerTurn = 90;
     private const float debuffRate = 0.25f;
     private const int maxDebuffs = 3;
 
@@ -111,10 +111,6 @@ public class TimerScript : MonoBehaviour
 
     private void UpdateLamps(int debuffCount)
     {
-        // TODO: if
-        // debuffCount = 0 -> set both lamps on
-        // debuffCount = 1 -> set one lamp on, one lamp off
-        // debuffCount = 2 -> set both lamps off
         lamp1.GetComponent<Animator>().SetInteger("Actions", debuffCount > 0 ? 1 : 0);
         lamp2.GetComponent<Animator>().SetInteger("Actions", debuffCount > 1 ? 1 : 0);
     }
