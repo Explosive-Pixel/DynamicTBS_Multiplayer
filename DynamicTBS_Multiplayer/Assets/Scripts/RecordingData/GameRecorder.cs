@@ -10,7 +10,8 @@ public class GameRecorder : MonoBehaviour
     
     private void Awake()
     {
-       SubscribeEvents();
+       if(GameManager.IsHost())
+        SubscribeEvents();
     }
 
     private void SetPath()

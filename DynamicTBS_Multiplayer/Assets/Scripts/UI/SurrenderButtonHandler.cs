@@ -15,7 +15,7 @@ public class SurrenderButtonHandler : MonoBehaviour
 
     public void Surrender()
     {
-        Player player = GameManager.gameType == GameType.multiplayer ? PlayerManager.GetPlayer(Client.Instance.side) : PlayerManager.GetCurrentPlayer();
+        Player player = PlayerManager.GetCurrentlyExecutingPlayer();
         GameplayEvents.UIActionExecuted(player, UIActionType.Surrender);
     }
 

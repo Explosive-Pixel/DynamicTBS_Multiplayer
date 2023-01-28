@@ -7,111 +7,99 @@ using TMPro;
 
 public class TimerScript : MonoBehaviour
 {
+    #region Timer config
+
+    private const float timePerTurn = 90;
+    private const float debuffRate = 0.25f;
+    private const int maxDebuffs = 3;
+
+    #endregion
+
+    [SerializeField] private GameObject timer;
+    [SerializeField] private GameObject lamp1;
+    [SerializeField] private GameObject lamp2;
+
     public float Timeleft;
-    private float InitTime;
     public bool TimerOn = false;
     public Color Player1;
     public Color Player2;
-    private int CounterPlayer1 = 0;
-    private int CounterPlayer2 = 0;
 
-    public GameObject SurrenderComponent;
+    public TMPro.TMP_Text Timertext;
 
-    public TMPro.TMP_Text  Timertext;
+    private readonly Dictionary<Player, int> timerDebuffsPerPlayer = new Dictionary<Player, int>();
 
-
-    private void Start()
+    private void Awake()
     {
-        Timertext.color = Player1;
-        InitTime = Timeleft;
-        setActive();
+        Init();
+    }
+
+    private void Init()
+    {
+        UnsubscribeEvents();
+
+        timer.SetActive(false);
+        TimerOn = false;
+
+        Timeleft = timePerTurn;
+
+        foreach (Player player in PlayerManager.GetAllPlayers())
+        {
+            timerDebuffsPerPlayer[player] = 0;
+        }
+
         SubscribeEvents();
     }
 
-    private void SubscribeEvents()
-    {
-        GameplayEvents.OnPlayerTurnEnded += resetTimer;
-    }
-
-    private void setActive()
+    private void SetActive()
     {
         TimerOn = true;
+        timer.SetActive(true);
+        Timertext.color = GetPlayerColor(PlayerManager.GameplayPhaseStartPlayer);
+        GameplayEvents.OnPlayerTurnEnded += ResetTimer;
     }
 
-    private void resetTimer(Player player)
+    private void ResetTimer(Player player)
     {
-        changeTextColor();
-        Timeleft = InitTime;
+        Player nextPlayer = PlayerManager.GetOtherPlayer(player);
+        Timeleft = timePerTurn * Mathf.Pow(1 - debuffRate, timerDebuffsPerPlayer[nextPlayer]);
+
+        UpdateLamps(timerDebuffsPerPlayer[nextPlayer]);
+        ChangeTextColor(nextPlayer.GetPlayerType());
     }
 
     private void Update()
     {
-        if (TimerOn)
+        if (TimerOn && !GameplayManager.gameIsPaused)
         {
             if (Timeleft > 0)
             {
-                Timeleft -= Time.deltaTime;
-                updateTimer(Timeleft);
+                if (GameManager.IsHost())
+                {
+                    Timeleft -= Time.deltaTime;
+                    BroadcastTimerData();
+                }
+                UpdateTimer(Timeleft);
             }
             else
             {
-                increaseCounter();
-                checkCounterAmount();
-                SkipAction.Execute();
-                Timeleft = InitTime;
+                DrawConsequences();
             }
         }
     }
 
-    private void changeTextColor()
+    private void ChangeTextColor(PlayerType side)
     {
-        if (Timertext.color == Player1)
-        {
-            Timertext.color = Player2;
-        }
-        else
-        {
-            Timertext.color = Player1;
-        }
+        Timertext.color = GetPlayerColor(side);
     }
 
-    private void increaseCounter()
+    private Color GetPlayerColor(PlayerType side)
     {
-        if (Timertext.color == Player1)
-        {
-            CounterPlayer1 += 1;
-        }
-        else
-        {
-            CounterPlayer2 += 1;
-        }
+        if (side == PlayerType.blue)
+            return Player1;
+        return Player2;
     }
 
-    private void checkCounterAmount()
-    {
-        if (Timertext.color == Player1)
-        {
-            if (CounterPlayer1 > 2)
-            {
-                surrender();
-            }
-        }
-        else
-        {
-            if (CounterPlayer2 > 2)
-            {
-                surrender();
-            }
-        }
-    }
-
-    private void surrender()
-    {
-        GameplayEvents.GameIsOver(PlayerManager.GetOtherPlayer(PlayerManager.GetCurrentPlayer()).GetPlayerType(), GameOverCondition.PLAYER_SURRENDERED);
-    }
-
-
-    void updateTimer(float currentTime)
+    private void UpdateTimer(float currentTime)
     {
         currentTime += 1;
 
@@ -119,5 +107,83 @@ public class TimerScript : MonoBehaviour
         float seconds = Mathf.FloorToInt(currentTime % 60);
 
         Timertext.text = string.Format("{0:00} : {1:00}", minutes, seconds);
+    }
+
+    private void UpdateLamps(int debuffCount)
+    {
+        lamp1.GetComponent<Animator>().SetInteger("Actions", debuffCount > 0 ? 1 : 0);
+        lamp2.GetComponent<Animator>().SetInteger("Actions", debuffCount > 1 ? 1 : 0);
+    }
+
+    private void DrawConsequences()
+    {
+        Player currentPlayer = PlayerManager.GetCurrentPlayer();
+        timerDebuffsPerPlayer[currentPlayer] += 1;
+        if (timerDebuffsPerPlayer[currentPlayer] == maxDebuffs)
+        {
+            GameplayEvents.GameIsOver(PlayerManager.GetOtherPlayer(currentPlayer).GetPlayerType(), GameOverCondition.PLAYER_TIMEOUT);
+        }
+
+        GameplayEvents.AbortCurrentPlayerTurn();
+
+        if (GameManager.IsMultiplayerHost())
+        {
+            GameplayEvents.ServerActionExecuted(ServerActionType.AbortTurn);
+        }
+    }
+
+    private void BroadcastTimerData()
+    {
+        if (GameManager.IsMultiplayerHost())
+        {
+            Server.Instance.Broadcast(new NetUpdateTimer()
+            {
+                currentTime = Timeleft,
+                pinkDebuff = timerDebuffsPerPlayer[PlayerManager.PinkPlayer],
+                blueDebuff = timerDebuffsPerPlayer[PlayerManager.BluePlayer]
+            });
+        }
+    }
+
+    private void UpdateTimerInfo(NetMessage msg)
+    {
+        NetUpdateTimer netUpdateTimer = msg as NetUpdateTimer;
+
+        Timeleft = netUpdateTimer.currentTime;
+        timerDebuffsPerPlayer[PlayerManager.PinkPlayer] = netUpdateTimer.pinkDebuff;
+        timerDebuffsPerPlayer[PlayerManager.BluePlayer] = netUpdateTimer.blueDebuff;
+    }
+
+    private void ResetAll(PlayerType? winner, GameOverCondition gameOverCondition)
+    {
+        Init();
+    }
+
+    #region EventsRegion
+
+    private void SubscribeEvents()
+    {
+        GameplayEvents.OnGameplayPhaseStart += SetActive;
+        GameplayEvents.OnGameOver += ResetAll;
+
+        if(!GameManager.IsHost())
+        {
+            NetUtility.C_UPDATE_TIMER += UpdateTimerInfo;
+        }
+    }
+    private void UnsubscribeEvents()
+    {
+        GameplayEvents.OnGameplayPhaseStart -= SetActive;
+        GameplayEvents.OnGameOver -= ResetAll;
+        GameplayEvents.OnPlayerTurnEnded -= ResetTimer;
+
+        NetUtility.C_UPDATE_TIMER -= UpdateTimerInfo;
+    }
+
+    #endregion
+
+    private void OnDestroy()
+    {
+        UnsubscribeEvents();
     }
 }

@@ -454,7 +454,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d88d01d307373a438d654e983207327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 380034114}
 --- !u!114 &32580857
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4325,6 +4324,7 @@ GameObject:
   - component: {fileID: 610466861}
   - component: {fileID: 610466863}
   - component: {fileID: 610466862}
+  - component: {fileID: 610466864}
   m_Layer: 5
   m_Name: Lamp1
   m_TagString: Untagged
@@ -4390,6 +4390,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 610466860}
   m_CullTransparentMesh: 1
+--- !u!95 &610466864
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 610466860}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 71aeb738b8fd83647966d14fb02e6992, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &610611231
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5102,6 +5122,7 @@ MonoBehaviour:
   gameplayCanvas: {fileID: 32580846}
   gameOverCanvas: {fileID: 212387994}
   gameplayObjectsObject: {fileID: 471011730}
+  pauseCanvas: {fileID: 285260679}
   playAgainButton: {fileID: 899053606}
 --- !u!4 &891951932
 Transform:
@@ -9287,11 +9308,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bef33b741b518024ba8aea29f92a9fec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timer: {fileID: 1957609758}
+  lamp1: {fileID: 610466860}
+  lamp2: {fileID: 380034110}
   Timeleft: 90
   TimerOn: 0
   Player1: {r: 0.22352943, g: 0.53333336, b: 0.9607844, a: 1}
   Player2: {r: 0.9607844, g: 0.35686275, b: 0.9058824, a: 1}
-  SurrenderComponent: {fileID: 32580846}
   Timertext: {fileID: 1819619958}
 --- !u!114 &1819619958
 MonoBehaviour:
@@ -9934,7 +9957,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1957609759
 RectTransform:
   m_ObjectHideFlags: 0

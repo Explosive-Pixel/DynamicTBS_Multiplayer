@@ -65,6 +65,11 @@ public class ServerMessageHandler : MonoBehaviour
         Server.Instance.Broadcast(netExecuteUIAction);
     }
 
+    private void BroadcastExecuteServerAction(ServerActionType serverActionType)
+    {
+        Server.Instance.Broadcast(new NetExecuteServerAction() { serverActionType = (int)serverActionType });
+    }
+
     private void SwapAdmin(PlayerType? winner, GameOverCondition endGameCondition)
     {
         Server.Instance.SwapAdmin();
@@ -81,6 +86,7 @@ public class ServerMessageHandler : MonoBehaviour
         NetUtility.S_PERFORM_ACTION += OnPeformActionServer;
         NetUtility.S_EXECUTE_UIACTION += OnExecuteUIActionServer;
 
+        GameplayEvents.OnExecuteServerAction += BroadcastExecuteServerAction;
         GameplayEvents.OnGameOver += SwapAdmin;
     }
 
@@ -92,6 +98,7 @@ public class ServerMessageHandler : MonoBehaviour
         NetUtility.S_PERFORM_ACTION -= OnPeformActionServer;
         NetUtility.S_EXECUTE_UIACTION -= OnExecuteUIActionServer;
 
+        GameplayEvents.OnExecuteServerAction -= BroadcastExecuteServerAction;
         GameplayEvents.OnGameOver -= SwapAdmin;
     }
 

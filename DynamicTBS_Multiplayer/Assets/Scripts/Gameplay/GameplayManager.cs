@@ -6,7 +6,7 @@ public class GameplayManager : MonoBehaviour
 {
     #region Gameplay Config
 
-    private const int maxActionsPerRound = 2;
+    public const int maxActionsPerRound = 2;
 
     #endregion
 
@@ -16,7 +16,7 @@ public class GameplayManager : MonoBehaviour
 
     private static bool hasGameStarted;
 
-    public Animator anim;
+    public static bool gameIsPaused;
 
     private void Awake()
     {
@@ -24,6 +24,7 @@ public class GameplayManager : MonoBehaviour
         SubscribeEvents();
         ResetStates();
         hasGameStarted = false;
+        gameIsPaused = false;
         ActionRegistry.RemoveAll();
     }
 
@@ -41,6 +42,15 @@ public class GameplayManager : MonoBehaviour
         return true;
     }
 
+    private void ToggleGameIsPaused(Player player, UIActionType uIActionType)
+    {
+        if(uIActionType == UIActionType.PauseGame || uIActionType == UIActionType.UnpauseGame)
+        {
+            gameIsPaused = uIActionType == UIActionType.PauseGame;
+            GameplayEvents.PauseGame(gameIsPaused);
+        }
+    }
+
     private void ResetStates() 
     {
         SetRemainingActions(maxActionsPerRound);
@@ -49,12 +59,10 @@ public class GameplayManager : MonoBehaviour
 
     private void OnActionFinished(ActionMetadata actionMetadata) 
     {
-        SetRemainingActions(remainingActions - 1);
-        anim.SetInteger("Actions", remainingActions);
-        if (remainingActions == 0)
+        SetRemainingActions(remainingActions - actionMetadata.ActionCount);
+        if (remainingActions <= 0)
         {
-            PlayerManager.NextPlayer();
-            ResetStates();
+            HandleNoRemainingActions();
         } else if(actionMetadata.CharacterInAction != null)
         {
             if(actionsPerCharacterPerTurn.ContainsKey(actionMetadata.CharacterInAction))
@@ -67,7 +75,7 @@ public class GameplayManager : MonoBehaviour
 
             if(!actionMetadata.ExecutingPlayer.HasAvailableAction())
             {
-                SkipAction.Execute();
+                GameplayEvents.AbortCurrentPlayerTurn();
             }
         }
     }
@@ -76,6 +84,12 @@ public class GameplayManager : MonoBehaviour
     {
         remainingActions = newRemainingActions;
         GameplayEvents.RemainingActionsChanged();
+    }
+
+    private void HandleNoRemainingActions()
+    {
+        PlayerManager.NextPlayer();
+        ResetStates();
     }
 
     private void OnPlayerTurnEnded(Player player)
@@ -90,6 +104,23 @@ public class GameplayManager : MonoBehaviour
         }
     }
 
+    private void AbortTurn()
+    {
+        SetRemainingActions(0);
+        HandleNoRemainingActions();
+    }
+
+    private void AbortTurn(ServerActionType serverActionType)
+    {
+        if(GameManager.gameType == GameType.multiplayer)
+        {
+            if (serverActionType == ServerActionType.AbortTurn && Client.Instance.IsLoadingGame)
+            {
+                AbortTurn();
+            }
+        } 
+    }
+
     public static bool HasGameStarted()
     {
         return hasGameStarted;
@@ -99,6 +130,9 @@ public class GameplayManager : MonoBehaviour
     {
         GameplayEvents.OnFinishAction += OnActionFinished;
         GameplayEvents.OnPlayerTurnEnded += OnPlayerTurnEnded;
+        GameplayEvents.OnPlayerTurnAborted += AbortTurn;
+        GameplayEvents.OnExecuteServerAction += AbortTurn;
+        GameplayEvents.OnExecuteUIAction += ToggleGameIsPaused;
         hasGameStarted = true;
     }
 
@@ -114,6 +148,9 @@ public class GameplayManager : MonoBehaviour
         GameplayEvents.OnGameplayPhaseStart -= SubscribeToGameplayEvents;
         GameplayEvents.OnFinishAction -= OnActionFinished;
         GameplayEvents.OnPlayerTurnEnded -= OnPlayerTurnEnded;
+        GameplayEvents.OnPlayerTurnAborted -= AbortTurn;
+        GameplayEvents.OnExecuteServerAction -= AbortTurn;
+        GameplayEvents.OnExecuteUIAction -= ToggleGameIsPaused;
     }
 
     #endregion
