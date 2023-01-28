@@ -9,6 +9,7 @@ public class GameSceneManager : MonoBehaviour
     [SerializeField] private GameObject gameplayCanvas;
     [SerializeField] private GameObject gameOverCanvas;
     [SerializeField] private GameObject gameplayObjectsObject;
+    [SerializeField] private GameObject pauseCanvas;
 
     [SerializeField] private Button playAgainButton;
 
@@ -30,6 +31,8 @@ public class GameSceneManager : MonoBehaviour
         {
             playAgainButton.gameObject.SetActive(false);
         }
+
+        pauseCanvas.SetActive(false);
     }
 
     private void Start()
@@ -69,6 +72,11 @@ public class GameSceneManager : MonoBehaviour
             else
                 gameObject.SetActive(false);
         }
+    }
+
+    private void TogglePauseCanvas(bool paused)
+    {
+        pauseCanvas.SetActive(paused);
     }
 
     #region ScreenChangeRegion
@@ -117,12 +125,14 @@ public class GameSceneManager : MonoBehaviour
     {
         DraftEvents.OnEndDraft += GoToGameplayScreen;
         GameplayEvents.OnGameOver += GoToGameOverScreen;
+        GameplayEvents.OnGamePause += TogglePauseCanvas;
     }
 
     private void UnsubscribeEvents()
     {
         DraftEvents.OnEndDraft -= GoToGameplayScreen;
         GameplayEvents.OnGameOver -= GoToGameOverScreen;
+        GameplayEvents.OnGamePause -= TogglePauseCanvas;
     }
 
     private void OnDestroy()

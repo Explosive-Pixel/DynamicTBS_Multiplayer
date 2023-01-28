@@ -409,9 +409,11 @@ public class Server : MonoBehaviour
             yield return new WaitForSeconds(delay);
 
             // TODO: Find mechanism if new messages are added to history whilst loading -> use queue?
-            foreach (NetMessage msg in messageHistory)
+            int i = 0;
+            while(i < messageHistory.Count)
             {
-                SendToClient(msg, connection);
+                SendToClient(messageHistory[i], connection);
+                i++;
                 yield return new WaitForSeconds(delay);
             }
 

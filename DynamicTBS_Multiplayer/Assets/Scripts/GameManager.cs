@@ -13,4 +13,14 @@ public class GameManager : MonoBehaviour
         SpriteManager.LoadSprites();
         PrefabManager.LoadPrefabs();
     }
+    
+    public static bool IsHost()
+    {
+        return gameType == GameType.local || (Server.Instance && Server.Instance.IsActive);
+    }
+
+    public static bool IsMultiplayerHost()
+    {
+        return gameType == GameType.multiplayer && IsHost();
+    }
 }

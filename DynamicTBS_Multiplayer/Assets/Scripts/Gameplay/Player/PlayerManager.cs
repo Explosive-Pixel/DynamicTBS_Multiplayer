@@ -36,6 +36,11 @@ public class PlayerManager : MonoBehaviour
         return new List<Player>() { bluePlayer, pinkPlayer };
     }
 
+    public static Player GetCurrentlyExecutingPlayer()
+    {
+        return GameManager.gameType == GameType.multiplayer ? GetPlayer(Client.Instance.side) : GetCurrentPlayer();
+    }
+
     public static Player GetOtherPlayer(Player player)
     {
         if (player == bluePlayer)

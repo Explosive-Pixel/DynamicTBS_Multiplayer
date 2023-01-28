@@ -15,11 +15,9 @@ public class TimerScript : MonoBehaviour
 
     #endregion
 
-    [SerializeField]
-    private Animator lampAnimator;
-
-    [SerializeField]
-    private GameObject timer;
+    [SerializeField] private GameObject timer;
+    [SerializeField] private GameObject lamp1;
+    [SerializeField] private GameObject lamp2;
 
     public float Timeleft;
     public bool TimerOn = false;
@@ -30,10 +28,6 @@ public class TimerScript : MonoBehaviour
 
     private readonly Dictionary<Player, int> timerDebuffsPerPlayer = new Dictionary<Player, int>();
 
-    private bool Paused = false;
-
-    private bool isHost = true;
-
     private void Awake()
     {
         Init();
@@ -43,11 +37,8 @@ public class TimerScript : MonoBehaviour
     {
         UnsubscribeEvents();
 
-        isHost = GameManager.gameType == GameType.local || (Server.Instance && Server.Instance.IsActive); 
-
         timer.SetActive(false);
         TimerOn = false;
-        Paused = false;
 
         Timeleft = timePerTurn;
 
@@ -78,11 +69,11 @@ public class TimerScript : MonoBehaviour
 
     private void Update()
     {
-        if (TimerOn && !Paused)
+        if (TimerOn && !GameplayManager.gameIsPaused)
         {
             if (Timeleft > 0)
             {
-                if (isHost)
+                if (GameManager.IsHost())
                 {
                     Timeleft -= Time.deltaTime;
                     BroadcastTimerData();
@@ -124,7 +115,8 @@ public class TimerScript : MonoBehaviour
         // debuffCount = 0 -> set both lamps on
         // debuffCount = 1 -> set one lamp on, one lamp off
         // debuffCount = 2 -> set both lamps off
-        lampAnimator.SetInteger("Actions", GameplayManager.maxActionsPerRound - debuffCount);
+        lamp1.GetComponent<Animator>().SetInteger("Actions", debuffCount > 0 ? 1 : 0);
+        lamp2.GetComponent<Animator>().SetInteger("Actions", debuffCount > 1 ? 1 : 0);
     }
 
     private void DrawConsequences()
@@ -138,7 +130,7 @@ public class TimerScript : MonoBehaviour
 
         GameplayEvents.AbortCurrentPlayerTurn();
 
-        if (GameManager.gameType == GameType.multiplayer && isHost)
+        if (GameManager.IsMultiplayerHost())
         {
             GameplayEvents.ServerActionExecuted(ServerActionType.AbortTurn);
         }
@@ -146,7 +138,7 @@ public class TimerScript : MonoBehaviour
 
     private void BroadcastTimerData()
     {
-        if (GameManager.gameType == GameType.multiplayer && isHost)
+        if (GameManager.IsMultiplayerHost())
         {
             Server.Instance.Broadcast(new NetUpdateTimer()
             {
@@ -167,21 +159,6 @@ public class TimerScript : MonoBehaviour
         timerDebuffsPerPlayer[PlayerManager.BluePlayer] = netUpdateTimer.blueDebuff;
     }
 
-    private void HandlePause(Player player, UIActionType uIActionType)
-    {
-        if (TimerOn)
-        {
-            if (uIActionType == UIActionType.PauseGame)
-            {
-                Paused = true;
-            }
-            else if (uIActionType == UIActionType.UnpauseGame)
-            {
-                Paused = false;
-            }
-        }
-    }
-
     private void ResetAll(PlayerType? winner, GameOverCondition gameOverCondition)
     {
         Init();
@@ -192,10 +169,9 @@ public class TimerScript : MonoBehaviour
     private void SubscribeEvents()
     {
         GameplayEvents.OnGameplayPhaseStart += SetActive;
-        GameplayEvents.OnExecuteUIAction += HandlePause;
         GameplayEvents.OnGameOver += ResetAll;
 
-        if(!isHost)
+        if(!GameManager.IsHost())
         {
             NetUtility.C_UPDATE_TIMER += UpdateTimerInfo;
         }
@@ -203,7 +179,6 @@ public class TimerScript : MonoBehaviour
     private void UnsubscribeEvents()
     {
         GameplayEvents.OnGameplayPhaseStart -= SetActive;
-        GameplayEvents.OnExecuteUIAction -= HandlePause;
         GameplayEvents.OnGameOver -= ResetAll;
         GameplayEvents.OnPlayerTurnEnded -= ResetTimer;
 

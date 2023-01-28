@@ -20,22 +20,22 @@ public class DrawButtonHandler : MonoBehaviour
 
     public void OfferDraw()
     {
-        FireUIActionExecutedEvenet(UIActionType.OfferDraw);
+        FireUIActionExecutedEvent(UIActionType.OfferDraw);
     }
 
     public void AcceptDraw()
     {
-        FireUIActionExecutedEvenet(UIActionType.AcceptDraw);
+        FireUIActionExecutedEvent(UIActionType.AcceptDraw);
     }
 
     public void DeclineDraw()
     {
-        FireUIActionExecutedEvenet(UIActionType.DeclineDraw);
+        FireUIActionExecutedEvent(UIActionType.DeclineDraw);
     }
 
-    private void FireUIActionExecutedEvenet(UIActionType uIActionType)
+    private void FireUIActionExecutedEvent(UIActionType uIActionType)
     {
-        Player player = GameManager.gameType == GameType.multiplayer ? PlayerManager.GetPlayer(Client.Instance.side) : PlayerManager.GetCurrentPlayer();
+        Player player = PlayerManager.GetCurrentlyExecutingPlayer();
         GameplayEvents.UIActionExecuted(player, uIActionType);
     }
 

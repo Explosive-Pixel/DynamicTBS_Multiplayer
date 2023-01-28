@@ -16,12 +16,15 @@ public class GameplayManager : MonoBehaviour
 
     private static bool hasGameStarted;
 
+    public static bool gameIsPaused;
+
     private void Awake()
     {
         UnsubscribeEvents();
         SubscribeEvents();
         ResetStates();
         hasGameStarted = false;
+        gameIsPaused = false;
         ActionRegistry.RemoveAll();
     }
 
@@ -37,6 +40,15 @@ public class GameplayManager : MonoBehaviour
             return false;
         }
         return true;
+    }
+
+    private void ToggleGameIsPaused(Player player, UIActionType uIActionType)
+    {
+        if(uIActionType == UIActionType.PauseGame || uIActionType == UIActionType.UnpauseGame)
+        {
+            gameIsPaused = uIActionType == UIActionType.PauseGame;
+            GameplayEvents.PauseGame(gameIsPaused);
+        }
     }
 
     private void ResetStates() 
@@ -120,6 +132,7 @@ public class GameplayManager : MonoBehaviour
         GameplayEvents.OnPlayerTurnEnded += OnPlayerTurnEnded;
         GameplayEvents.OnPlayerTurnAborted += AbortTurn;
         GameplayEvents.OnExecuteServerAction += AbortTurn;
+        GameplayEvents.OnExecuteUIAction += ToggleGameIsPaused;
         hasGameStarted = true;
     }
 
@@ -137,6 +150,7 @@ public class GameplayManager : MonoBehaviour
         GameplayEvents.OnPlayerTurnEnded -= OnPlayerTurnEnded;
         GameplayEvents.OnPlayerTurnAborted -= AbortTurn;
         GameplayEvents.OnExecuteServerAction -= AbortTurn;
+        GameplayEvents.OnExecuteUIAction -= ToggleGameIsPaused;
     }
 
     #endregion

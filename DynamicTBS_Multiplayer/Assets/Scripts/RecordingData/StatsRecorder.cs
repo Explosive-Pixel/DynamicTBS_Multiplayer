@@ -20,10 +20,13 @@ public class StatsRecorder : MonoBehaviour
     
     private void Awake()
     {
-        SubscribeEvents();
-        string directory = Application.dataPath + "/Resources/GameRecords";
-        Directory.CreateDirectory(directory);
-        filePath = directory + "/SaveStats.json"; //TODO: Saving to a remote file online
+        if (GameManager.IsHost())
+        {
+            SubscribeEvents();
+            string directory = Application.dataPath + "/Resources/GameRecords";
+            Directory.CreateDirectory(directory);
+            filePath = directory + "/SaveStats.json"; //TODO: Saving to a remote file online
+        }
     }
     
     // Load old save stats from file and store in variables.

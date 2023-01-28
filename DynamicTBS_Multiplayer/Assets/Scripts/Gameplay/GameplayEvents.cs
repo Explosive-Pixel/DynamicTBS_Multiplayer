@@ -32,6 +32,9 @@ public static class GameplayEvents
     public delegate void ExecuteServerAction(ServerActionType serverActionType);
     public static event ExecuteServerAction OnExecuteServerAction;
 
+    public delegate void GamePaused(bool paused);
+    public static event GamePaused OnGamePause;
+
     public static void StartGameplayPhase()
     {
         if (OnGameplayPhaseStart != null)
@@ -92,5 +95,13 @@ public static class GameplayEvents
     {
         if (OnExecuteServerAction != null)
             OnExecuteServerAction(serverActionType);
+    }
+
+    public static void PauseGame(bool paused)
+    {
+        if(OnGamePause != null)
+        {
+            OnGamePause(paused);
+        }
     }
 }
