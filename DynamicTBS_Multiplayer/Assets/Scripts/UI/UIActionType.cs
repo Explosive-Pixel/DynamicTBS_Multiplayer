@@ -7,5 +7,7 @@ public enum UIActionType
     Surrender = 1,
     OfferDraw = 2,
     AcceptDraw = 3,
-    DeclineDraw = 4
+    DeclineDraw = 4,
+    PauseGame = 5,
+    UnpauseGame = 6
 }

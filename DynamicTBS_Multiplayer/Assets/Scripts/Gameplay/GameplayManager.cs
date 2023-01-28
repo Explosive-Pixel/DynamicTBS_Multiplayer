@@ -47,11 +47,10 @@ public class GameplayManager : MonoBehaviour
 
     private void OnActionFinished(ActionMetadata actionMetadata) 
     {
-        SetRemainingActions(remainingActions - 1);
-        if (remainingActions == 0)
+        SetRemainingActions(remainingActions - actionMetadata.ActionCount);
+        if (remainingActions <= 0)
         {
-            PlayerManager.NextPlayer();
-            ResetStates();
+            HandleNoRemainingActions();
         } else if(actionMetadata.CharacterInAction != null)
         {
             if(actionsPerCharacterPerTurn.ContainsKey(actionMetadata.CharacterInAction))
@@ -75,6 +74,12 @@ public class GameplayManager : MonoBehaviour
         GameplayEvents.RemainingActionsChanged();
     }
 
+    private void HandleNoRemainingActions()
+    {
+        PlayerManager.NextPlayer();
+        ResetStates();
+    }
+
     private void OnPlayerTurnEnded(Player player)
     {
         // Check if other player can perform any action (move/attack/ActiveAbility) -> if not, player wins
@@ -87,14 +92,12 @@ public class GameplayManager : MonoBehaviour
         }
     }
 
-    private void AbortTurn()
+    private void AbortTurn(ServerActionType serverActionType)
     {
-        int actionsToSkip = remainingActions;
-        Debug.Log("Skipping " + remainingActions + " actions");
-        while(actionsToSkip > 0)
+        if(serverActionType == ServerActionType.AbortTurn)
         {
-            SkipAction.Execute();
-            actionsToSkip--;
+            SetRemainingActions(0);
+            HandleNoRemainingActions();
         }
     }
 
@@ -107,7 +110,7 @@ public class GameplayManager : MonoBehaviour
     {
         GameplayEvents.OnFinishAction += OnActionFinished;
         GameplayEvents.OnPlayerTurnEnded += OnPlayerTurnEnded;
-        GameplayEvents.OnPlayerTurnAborted += AbortTurn;
+        GameplayEvents.OnExecuteServerAction += AbortTurn;
         hasGameStarted = true;
     }
 
@@ -123,7 +126,7 @@ public class GameplayManager : MonoBehaviour
         GameplayEvents.OnGameplayPhaseStart -= SubscribeToGameplayEvents;
         GameplayEvents.OnFinishAction -= OnActionFinished;
         GameplayEvents.OnPlayerTurnEnded -= OnPlayerTurnEnded;
-        GameplayEvents.OnPlayerTurnAborted -= AbortTurn;
+        GameplayEvents.OnExecuteServerAction -= AbortTurn;
     }
 
     #endregion

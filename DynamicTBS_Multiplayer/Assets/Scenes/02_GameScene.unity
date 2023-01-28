@@ -3730,7 +3730,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &636575735
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7778,11 +7778,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lampAnimator: {fileID: 380034114}
+  timer: {fileID: 1957609758}
   Timeleft: 90
   TimerOn: 0
   Player1: {r: 0.22352943, g: 0.53333336, b: 0.9607844, a: 1}
   Player2: {r: 0.9607844, g: 0.35686275, b: 0.9058824, a: 1}
-  SurrenderComponent: {fileID: 32580846}
   Timertext: {fileID: 1819619958}
 --- !u!114 &1819619958
 MonoBehaviour:
@@ -8345,7 +8345,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1957609759
 RectTransform:
   m_ObjectHideFlags: 0

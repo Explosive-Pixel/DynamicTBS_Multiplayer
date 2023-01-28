@@ -29,6 +29,9 @@ public static class GameplayEvents
     public delegate void ExecuteUIAction(Player player, UIActionType uIActionType);
     public static event ExecuteUIAction OnExecuteUIAction;
 
+    public delegate void ExecuteServerAction(ServerActionType serverActionType);
+    public static event ExecuteServerAction OnExecuteServerAction;
+
     public static void StartGameplayPhase()
     {
         if (OnGameplayPhaseStart != null)
@@ -83,5 +86,11 @@ public static class GameplayEvents
     {
         if (OnExecuteUIAction != null)
             OnExecuteUIAction(player, uIActionType);
+    }
+
+    public static void ServerActionExecuted(ServerActionType serverActionType)
+    {
+        if (OnExecuteServerAction != null)
+            OnExecuteServerAction(serverActionType);
     }
 }

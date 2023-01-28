@@ -62,6 +62,7 @@ public class ClientMessageHandler : MonoBehaviour
                 characterX = actionMetadata.CharacterInitialPosition != null ? actionMetadata.CharacterInitialPosition.Value.x : 0f,
                 characterY = actionMetadata.CharacterInitialPosition != null ? actionMetadata.CharacterInitialPosition.Value.y : 0f,
                 actionType = (int)actionMetadata.ExecutedActionType,
+                actionCount = actionMetadata.ActionCount,
                 hasDestination = actionMetadata.ActionDestinationPosition != null,
                 destinationX = actionMetadata.ActionDestinationPosition != null ? actionMetadata.ActionDestinationPosition.Value.x : 0f,
                 destinationY = actionMetadata.ActionDestinationPosition != null ? actionMetadata.ActionDestinationPosition.Value.y : 0f,
@@ -81,7 +82,7 @@ public class ClientMessageHandler : MonoBehaviour
             
             if(netPerformAction.actionType == (int)ActionType.Skip)
             {
-                SkipAction.Execute();
+                SkipAction.Execute(netPerformAction.actionCount);
                 return;
             }
 
@@ -128,6 +129,17 @@ public class ClientMessageHandler : MonoBehaviour
         }
     }
 
+    private void OnExecuteServerAction(NetMessage msg)
+    {
+        NetExecuteServerAction netExecuteServerAction = msg as NetExecuteServerAction;
+
+        ServerActionType serverActionType = (ServerActionType)netExecuteServerAction.serverActionType;
+        if(!Server.Instance || (Server.Instance && !Server.Instance.IsActive))
+        {
+            GameplayEvents.ServerActionExecuted(serverActionType);
+        }
+    }
+
     #region EventsRegion
 
     private void SubscribeEvents()
@@ -143,6 +155,8 @@ public class ClientMessageHandler : MonoBehaviour
 
         GameplayEvents.OnExecuteUIAction += SendExecuteUIActionMessage;
         NetUtility.C_EXECUTE_UIACTION += OnExecuteUIAction;
+
+        NetUtility.C_EXECUTE_SERVER_ACTION += OnExecuteServerAction;
     }
 
     private void UnsubscribeEvents()
@@ -158,6 +172,8 @@ public class ClientMessageHandler : MonoBehaviour
 
         GameplayEvents.OnExecuteUIAction -= SendExecuteUIActionMessage;
         NetUtility.C_EXECUTE_UIACTION -= OnExecuteUIAction;
+
+        NetUtility.C_EXECUTE_SERVER_ACTION -= OnExecuteServerAction;
     }
 
     #endregion
