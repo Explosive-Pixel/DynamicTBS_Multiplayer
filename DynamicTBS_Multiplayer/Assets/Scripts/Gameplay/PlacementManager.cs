@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
+using System.Linq;
 
 public class PlacementManager : MonoBehaviour
 {
@@ -86,6 +88,20 @@ public class PlacementManager : MonoBehaviour
             pinkPlacementTurnOverlay.transform.position = oldPinkOverlayPosition;
             bluePlacementTurnOverlay.transform.position = oldBlueOverlayPosition;
         }    
+    }
+
+    public static void RandomPlacement(Player side)
+    {
+        List<Character> charactersOfPlayer = CharacterHandler.GetAllLivingCharacters()
+                .FindAll(character => character.isClickable && character.GetSide() == side);
+        if(charactersOfPlayer.Count > 0)
+        {
+            Character randomCharacter = charactersOfPlayer[0];
+            ActionUtils.InstantiateAllActionPositions(randomCharacter);
+            List<GameObject> placementPositions = ActionRegistry.GetActions().ConvertAll(action => action.ActionDestinations).SelectMany(i => i).ToList();
+            GameObject randomPosition = placementPositions[RandomNumberGenerator.GetInt32(0, placementPositions.Count)];
+            ActionUtils.ExecuteAction(randomPosition);
+        } 
     }
     
     public static void SpawnMasters()

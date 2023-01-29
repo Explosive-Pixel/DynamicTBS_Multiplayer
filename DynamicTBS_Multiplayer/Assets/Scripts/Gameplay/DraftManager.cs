@@ -67,6 +67,12 @@ public class DraftManager : MonoBehaviour
         AdvanceDraftOrder();
     }
 
+    public static void RandomDraft(Player side)
+    {
+        CharacterType randomCharacterType = CharacterFactory.GetRandomCharacterType();
+        DraftCharacter(randomCharacterType, side);
+    }
+
     public static int GetCurrentDraftCount()
     {
         if(draftOrderIndex == 0)

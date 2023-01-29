@@ -132,7 +132,6 @@ public class GameplayManager : MonoBehaviour
         GameplayEvents.OnPlayerTurnEnded += OnPlayerTurnEnded;
         GameplayEvents.OnPlayerTurnAborted += AbortTurn;
         GameplayEvents.OnExecuteServerAction += AbortTurn;
-        GameplayEvents.OnExecuteUIAction += ToggleGameIsPaused;
         hasGameStarted = true;
     }
 
@@ -141,6 +140,7 @@ public class GameplayManager : MonoBehaviour
     private void SubscribeEvents()
     {
         GameplayEvents.OnGameplayPhaseStart += SubscribeToGameplayEvents;
+        GameplayEvents.OnExecuteUIAction += ToggleGameIsPaused;
     }
 
     private void UnsubscribeEvents()
