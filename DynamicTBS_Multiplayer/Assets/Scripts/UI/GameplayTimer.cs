@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class TimerScript : MonoBehaviour
+public class GameplayTimer : MonoBehaviour
 {
     #region Timer config
 
