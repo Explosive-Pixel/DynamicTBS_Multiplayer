@@ -88,6 +88,16 @@ public class CharacterHandler : MonoBehaviour
         characters.ForEach(c => c.isClickable = true);
     }
 
+    private void HighlightCharacter(Character character)
+    {
+        GetAllLivingCharacters().ForEach(c => c.Highlight(false));
+
+        if(character != null)
+        {
+            character.Highlight(true);
+        }
+    }
+
     #region EventsRegion
 
     private void SubscribeEvents()
@@ -96,6 +106,7 @@ public class CharacterHandler : MonoBehaviour
         DraftEvents.OnEndDraft += DeliverCharacterList;
         GameplayEvents.OnGameplayPhaseStart += PrepareCharacters;
         GameplayEvents.OnFinishAction += SetActiveAbilityOnCooldown;
+        GameplayEvents.OnCharacterSelectionChange += HighlightCharacter;
         CharacterEvents.OnCharacterDeath += UpdateCharactersAfterCharacterDeath;
     }
 
@@ -105,6 +116,7 @@ public class CharacterHandler : MonoBehaviour
         DraftEvents.OnEndDraft -= DeliverCharacterList;
         GameplayEvents.OnGameplayPhaseStart -= PrepareCharacters;
         GameplayEvents.OnFinishAction -= SetActiveAbilityOnCooldown;
+        GameplayEvents.OnCharacterSelectionChange -= HighlightCharacter;
         CharacterEvents.OnCharacterDeath -= UpdateCharactersAfterCharacterDeath;
     }
 
