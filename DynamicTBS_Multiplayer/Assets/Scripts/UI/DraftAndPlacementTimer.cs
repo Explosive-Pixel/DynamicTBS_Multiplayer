@@ -6,7 +6,7 @@ public class DraftAndPlacementTimer : MonoBehaviour
 {
     #region Timer config
 
-    private const float totalTimePerPlayer = 120;
+    private const float totalTimePerPlayer = 0;
     private readonly NoTimeLeftConsequence noTimeLeftConsequenceDraft = (player) => DraftManager.RandomDraft(player);
     private readonly NoTimeLeftConsequence noTimeLeftConsequencePlacement = (player) => PlacementManager.RandomPlacement(player);
 
@@ -41,20 +41,20 @@ public class DraftAndPlacementTimer : MonoBehaviour
         TimerOn = false;
 
         noTimeLeftConsequence = isDraftTimer ? noTimeLeftConsequenceDraft : noTimeLeftConsequencePlacement;
-
-        foreach (Player player in PlayerManager.GetAllPlayers())
-        {
-            timeleftPerPlayer[player] = totalTimePerPlayer;
-        }
-
         SubscribeEvents();
     }
 
     private void SetActive()
     {
+        foreach (Player player in PlayerManager.GetAllPlayers())
+        {
+            timeleftPerPlayer[player] = totalTimePerPlayer;
+        }
+
         TimerOn = true;
         timer.SetActive(true);
-        Timertext.color = GetPlayerColor(PlayerManager.GameplayPhaseStartPlayer);
+        PlayerType startPlayer = isDraftTimer ? PlayerManager.DraftPhaseStartPlayer : PlayerManager.PlacementPhaseStartPlayer; 
+        Timertext.color = GetPlayerColor(startPlayer);
         GameplayEvents.OnPlayerTurnEnded += ResetTimer;
     }
 
@@ -152,6 +152,8 @@ public class DraftAndPlacementTimer : MonoBehaviour
     private void UnsubscribeEvents()
     {
         DraftEvents.OnStartDraft -= SetActive;
+        DraftEvents.OnEndDraft -= Init;
+        DraftEvents.OnEndDraft -= SetActive;
         GameplayEvents.OnGameplayPhaseStart -= Init;
         GameplayEvents.OnPlayerTurnEnded -= ResetTimer;
         NetUtility.C_UPDATE_TIMER -= UpdateTimerInfo;

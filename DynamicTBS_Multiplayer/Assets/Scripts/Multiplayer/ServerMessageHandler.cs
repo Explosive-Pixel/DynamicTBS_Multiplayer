@@ -14,6 +14,7 @@ public class ServerMessageHandler : MonoBehaviour
     {
         NetWelcome netWelcome = msg as NetWelcome;
 
+        bool isAlreadyRegisteredPlayer = Server.Instance.IsRegisteredPlayer(cnn);
         if (Server.Instance.RegisterClient(cnn, (ClientType)netWelcome.Role))
         {
             Debug.Log("Welcome Server role: " + netWelcome.Role + ", assigned Team: " + netWelcome.AssignedTeam);
@@ -35,7 +36,10 @@ public class ServerMessageHandler : MonoBehaviour
                 Server.Instance.SendToClient(netWelcome, cnn);
             }
 
-            StartCoroutine(Server.Instance.SendGameState(cnn));
+            if(!isAlreadyRegisteredPlayer)
+            {
+                StartCoroutine(Server.Instance.SendGameState(cnn));
+            }
         }
     }
 

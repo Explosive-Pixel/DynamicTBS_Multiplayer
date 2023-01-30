@@ -37,5 +37,6 @@ public class cardhandleScript : MonoBehaviour
     {
         GameplayEvents.OnCharacterSelectionChange -= SetActive;
         GameplayEvents.OnGameplayPhaseStart -= ActivateCardHandling;
+        GameplayEvents.OnGameOver -= Deactivate;
     }
 }
