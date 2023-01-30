@@ -86,8 +86,12 @@ public abstract class Character //: MonoBehaviour
         //TODO: in script in Prefab setzen
         for (int i = 0; i < this.characterGameObject.transform.childCount; i++)
         {
-            this.characterGameObject.transform.GetChild(i).GetComponent<Animator>().SetInteger("leben", this.hitPoints);
-            this.characterGameObject.transform.GetChild(i).GetComponent<Animator>().SetInteger("cooldown", 0);
+            Transform child = this.characterGameObject.transform.GetChild(i);
+            if(child.TryGetComponent<Animator>(out var animator))
+            {
+                animator.SetInteger("leben", this.hitPoints);
+                animator.SetInteger("cooldown", 0);
+            }
         }
 
         GameplayEvents.OnGameplayPhaseStart += ApplyPassiveAbility;
@@ -162,6 +166,11 @@ public abstract class Character //: MonoBehaviour
                 GameplayEvents.OnPlayerTurnEnded -= ReduceActiveAbiliyCooldown;
             }
         }
+    }
+
+    public void Highlight(bool highlight)
+    {
+        this.characterGameObject.transform.GetChild(2).gameObject.SetActive(highlight);
     }
 
     public bool IsActiveAbilityOnCooldown()
