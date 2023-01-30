@@ -17,7 +17,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1870058351444059126, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_text
-      value: 'Take Control (AA): Activate on goal square to win the game.
+      value: '<b>Take Control</b> (AA): Activate on goal square to win the game.
 
         CD:
         0
@@ -25,19 +25,23 @@ PrefabInstance:
         Influence Aura (PA): As long as an opposing unit is on a
 
         square
-        next to this one in a star pattern, they gain 1
+        next to this one in a <i>star pattern</i>, they gain <b>1</b>
 
-        influence point
-        each turn. If a unit gained 3 influence points
+        influence
+        point each turn. If a unit gained <b>3</b> influence points
 
-        it switches sides.
-        Influence points can only be reset by
+        it switches
+        sides. Influence points can only be reset by
 
         switching sides.'
       objectReference: {fileID: 0}
     - target: {fileID: 1870058351444059126, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_fontSize
-      value: 1.05
+      value: 1.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 1870058351444059126, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
+      propertyPath: m_fontStyle
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3680486571023874173, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_text
