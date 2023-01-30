@@ -11,6 +11,7 @@ public class NetPerformAction : NetMessage
     public float characterX;
     public float characterY;
     public int actionType;
+    public int actionCount;
     public bool hasDestination;
     public float destinationX;
     public float destinationY;
@@ -35,6 +36,7 @@ public class NetPerformAction : NetMessage
         writer.WriteFloat(characterX);
         writer.WriteFloat(characterY);
         writer.WriteInt(actionType);
+        writer.WriteInt(actionCount);
         writer.WriteInt(toInt(hasDestination));
         writer.WriteFloat(destinationX);
         writer.WriteFloat(destinationY);
@@ -48,6 +50,7 @@ public class NetPerformAction : NetMessage
         characterX = reader.ReadFloat();
         characterY = reader.ReadFloat();
         actionType = reader.ReadInt();
+        actionCount = reader.ReadInt();
         hasDestination = toBool(reader.ReadInt());
         destinationX = reader.ReadFloat();
         destinationY = reader.ReadFloat();

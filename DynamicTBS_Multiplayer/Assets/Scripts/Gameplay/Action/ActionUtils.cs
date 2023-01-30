@@ -62,20 +62,7 @@ public class ActionUtils : MonoBehaviour
             GameObject hit = UIUtils.FindGameObjectByRay(action.ActionDestinations, ray);
             if (hit != null)
             {
-                Character characterInAction = action.CharacterInAction;
-                Vector3 initialPosition = characterInAction.GetCharacterGameObject().transform.position;
-                Vector3 actionDestinationPosition = hit.transform.position;
-
-                action.ExecuteAction(hit);
-
-                GameplayEvents.ActionFinished(new ActionMetadata
-                {
-                    ExecutingPlayer = characterInAction.GetSide(),
-                    ExecutedActionType = action.ActionType,
-                    CharacterInAction = characterInAction,
-                    CharacterInitialPosition = initialPosition,
-                    ActionDestinationPosition = actionDestinationPosition
-                });
+                ExecuteAction(action, hit);
                 actionExecuted = true;
             }
             else
@@ -83,5 +70,34 @@ public class ActionUtils : MonoBehaviour
         }
 
         return actionExecuted;
+    }
+
+    public static void ExecuteAction(GameObject actionDestination)
+    {
+        foreach (IAction action in ActionRegistry.GetActions())
+        {
+            if(action.ActionDestinations.Contains(actionDestination))
+            {
+                ExecuteAction(action, actionDestination);
+            }
+        }
+    }
+
+    private static void ExecuteAction(IAction action, GameObject actionDestination)
+    {
+        Character characterInAction = action.CharacterInAction;
+        Vector3 initialPosition = characterInAction.GetCharacterGameObject().transform.position;
+        Vector3 actionDestinationPosition = actionDestination.transform.position;
+
+        action.ExecuteAction(actionDestination);
+
+        GameplayEvents.ActionFinished(new ActionMetadata
+        {
+            ExecutingPlayer = characterInAction.GetSide(),
+            ExecutedActionType = action.ActionType,
+            CharacterInAction = characterInAction,
+            CharacterInitialPosition = initialPosition,
+            ActionDestinationPosition = actionDestinationPosition
+        });
     }
 }

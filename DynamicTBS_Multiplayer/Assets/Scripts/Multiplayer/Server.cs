@@ -29,6 +29,7 @@ public class Server : MonoBehaviour
         public bool IsAdmin = false;
     }
 
+    public bool IsActive { get { return isActive;  } }
     public int PlayerCount { get { return isActive ? players.Length : 0; } }
 
     private NetworkDriver driver;
@@ -386,7 +387,7 @@ public class Server : MonoBehaviour
             messageHistory.Clear();
         }
 
-        if(msg.GetType() != typeof(NetMetadata))
+        if(msg.GetType() != typeof(NetMetadata) && msg.GetType() != typeof(NetUpdateTimer))
         {
             messageHistory.Add(msg);
         }
@@ -407,9 +408,12 @@ public class Server : MonoBehaviour
             SendToClient(new NetChangeLoadGameStatus(), connection);
             yield return new WaitForSeconds(delay);
 
-            foreach (NetMessage msg in messageHistory)
+            // TODO: Find mechanism if new messages are added to history whilst loading -> use queue?
+            int i = 0;
+            while(i < messageHistory.Count)
             {
-                SendToClient(msg, connection);
+                SendToClient(messageHistory[i], connection);
+                i++;
                 yield return new WaitForSeconds(delay);
             }
 

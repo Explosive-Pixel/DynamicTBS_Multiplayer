@@ -18,7 +18,8 @@ public enum GameOverCondition
     MASTER_DIED,
     PLAYER_SURRENDERED,
     NO_AVAILABLE_ACTION,
-    DRAW_ACCEPTED
+    DRAW_ACCEPTED,
+    PLAYER_TIMEOUT
 }
 
 static class GameOverConditionMethods
@@ -37,6 +38,8 @@ static class GameOverConditionMethods
                 return "Player " + PlayerManager.GetOtherSide(winner.Value) + " has no available actions.";
             case GameOverCondition.DRAW_ACCEPTED:
                 return "The players have agreed on a draw.";
+            case GameOverCondition.PLAYER_TIMEOUT:
+                return "Player " + PlayerManager.GetOtherSide(winner.Value) + " took too much time.";
             default:
                 return "";
         }

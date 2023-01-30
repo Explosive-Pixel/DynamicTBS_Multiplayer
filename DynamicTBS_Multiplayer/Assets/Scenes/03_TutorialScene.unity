@@ -182,7 +182,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 3999b4e58faa089429d29dcbb17736da, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
@@ -197,11 +197,11 @@ MonoBehaviour:
   m_Text: 'MECHANIC
 
 
-    Move Range: 1
+    Speed: 1
 
-    Attack Range: 1
+    Health: 2
 
-    Hit Points: 2'
+    Range: 1'
 --- !u!222 &6032474
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -347,7 +347,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 3999b4e58faa089429d29dcbb17736da, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
@@ -362,11 +362,11 @@ MonoBehaviour:
   m_Text: 'RUNNER
 
 
-    Move Range: 2
+    Speed: 2
 
-    Attack Range: 1
+    Health: 1
 
-    Hit Points: 1'
+    Range: 1'
 --- !u!222 &39944126
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -410,8 +410,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -680, y: 0}
-  m_SizeDelta: {x: 500, y: 700}
+  m_AnchoredPosition: {x: -580, y: 0}
+  m_SizeDelta: {x: 700, y: 700}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &54707825
 MonoBehaviour:
@@ -434,7 +434,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 3999b4e58faa089429d29dcbb17736da, type: 3}
     m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
@@ -446,55 +446,21 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'RULES
-
-
-    1. Goal:
-
-    To win, you have to either...
-
-    - move your
-    own Master unit on the goal tile (green tile) before your opponent does.
-
-    -
-    eliminate the oppnent''s Master unit before they eliminate yours.
-
-
-    2. Procedure:
-
-    The
-    game is divided into 3 phases:
-
-    #1: Draft - You assemble your team.
-
-    #2:
-    Placement - You place your units on the unit start squares (marked by an x).
-
-    #3:
-    Fight - In this phase each player has two actions per turn. One action can be
-    forefeit each turn. Two actions can be used on the same unit, but a unit cannot
-    repeat any type of action during the same turn (e.g. a unit cannot walk or attack
-    twice in one turn).
-
-
-    4. Movement:
-
-    All units move 1 square at a time
-    in a cross pattern (vertical and horizontal), if not otherwise specified.
-
-
-    5.
-    Attacks:
-
-    All units attack in a star pattern (vertical, horizontal and diagonal).
-    The range of a unit is defined by its range stat.
-
-
-    6. Abilities:
-
-    Every
-    unit has an active ability wich can be used as an action and a passive ability
-    which triggers based on its specifications.'
+  m_Text: "Rules\r\nGoal\r\nTo win the game players have to either be the first to
+    maneuver their Captain to the goal square in the middle of the board and use
+    their active ability, or eliminate the opposing Captain.\r\nIf neither side has
+    a chance to win a draw can be offered.\r\n\r\nPhases\r\nThe game is organized
+    in 3 phases: draft phase (choosing your team), placement phase (placing your
+    units) and fight phase (fighting for the goal square). \r\n\r\nDraft Phase\r\nBoth
+    sides choose their units in a predetermined succession (3-3-1-2-2-2-1). Each
+    type of unit can be chosen multiple times. Both sides choose 7 units in total.
+    Both sides also get 1 Captain each.\r\n\r\nPlacement Phase\r\nBoth sides place
+    their units in a predetermined succession (1-2-2-2-1-3-3). Units can only be
+    placed on the squares marked with crosses in their respective team colors. Once
+    all units are placed, the Captains spawn on the squares marked with stars and
+    the fight phase begins\r\n\r\nFight Phase\r\nIn this phase actions are performed
+    until one of the win conditions is met or players agree upon a draw. Blue has
+    the first move.\r\n"
 --- !u!222 &54707826
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -761,7 +727,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 3999b4e58faa089429d29dcbb17736da, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
@@ -776,11 +742,11 @@ MonoBehaviour:
   m_Text: 'SHOOTER
 
 
-    Move Range: 1
+    Speed: 1
 
-    Attack Range: 2
+    Health: 2
 
-    Hit Points: 2'
+    Range: 2'
 --- !u!222 &313670454
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1008,7 +974,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 3999b4e58faa089429d29dcbb17736da, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
@@ -1020,12 +986,16 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Active Ability: POWERSHOT - Deals 1 damage to all allied and opposing
-    units in one direction (cross pattern) and only stops at active "Block" ability.
-    Deals 1 damage to self. Cooldown: 3
+  m_Text: 'Powershot (AA): Deals 1 damage to all units in a direction in a cross
+    pattern and to itself. Can only be stopped by an active Block ability.
 
-    Passive Ability: EXPLOSION - If this
-    unit dies it explodes and deals 1 damage to all squares in a radius of 1.'
+    CD:
+    3
+
+    Explosion (PA): If this unit dies it explodes, dealing 1 damage to all
+    units in a radius of 1.
+
+'
 --- !u!222 &455541582
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1169,7 +1139,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 3999b4e58faa089429d29dcbb17736da, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
@@ -1181,13 +1151,10 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Active Ability: HEAL - Can heal an allied unit up to 2 squares away (star
-    pattern) for 1 hit point. A unit cannot have more hit points than what it started
-    with. This ability cannot target this unit. Cooldown: 3
-
-    Passive Ability:
-    ADRENALIN - If this unit takes damage, the cooldown of its active ability is
-    set to 0.'
+  m_Text: "Heal (AA): Heals a unit in a star pattern in range 2 for 1 health (not
+    above their starting health; path to target must be free). The healed unit gets
+    a movement bonus of +1 for their next move action, whenever it may occur. CD:
+    3\r\nAdrenalin (PA): If this unit takes damage their cooldown is set to 0. \r"
 --- !u!222 &531259610
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1400,7 +1367,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 3999b4e58faa089429d29dcbb17736da, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
@@ -1412,13 +1379,12 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Active Ability: BLOCK - This unit blocks damage from all directions for
-    2 turns. During this time it cannot attack or move. Cooldown: 3
-
-    Passive
-    Ability: PULL DAMAGE - If an allied unit on a horizontally or vertically adjacent
-    square takes damage, this unit will take the damage instead, except if it is
-    another Tank.'
+  m_Text: "Block (AA): Blocks all damage for 2 turns. While this ability is active,
+    this unit cannot move or attack and its passive ability is suspended. CD: 3\r\nPull
+    Damage (PA): If an allied unit is on a square next to this one in a cross pattern
+    this unit will take all damage for them. Does not work on other Tanks. If two
+    Tanks are next to a different type of unit and that unit takes damage, both Tanks
+    take the damage for them. \r"
 --- !u!222 &689875963
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1486,7 +1452,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 3999b4e58faa089429d29dcbb17736da, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
@@ -1501,11 +1467,11 @@ MonoBehaviour:
   m_Text: 'TANK
 
 
-    Move Range: 1
+    Speed: 1
 
-    Attack Range: 1
+    Health: 4
 
-    Hit Points: 4'
+    Range: 1'
 --- !u!222 &720795214
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1573,7 +1539,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 3999b4e58faa089429d29dcbb17736da, type: 3}
     m_FontSize: 25
     m_FontStyle: 1
     m_BestFit: 0
@@ -1773,7 +1739,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 3999b4e58faa089429d29dcbb17736da, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
@@ -1785,13 +1751,10 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Active Ability: CHANGE FLOOR - Change an unoccupied square in a radius
-    of 2 from floor to hole or the other way around. Occupied squares can only be
-    changed in a radius of 1. If an occupied square is changed, the occupying unit
-    dies immediately. Cooldown: 3
-
-    Passive Ability: STEADY STANCE - The floor
-    square this unit is standing on cannot be changed.'
+  m_Text: "Change Floor (AA): Change a square from floor to hole or from hole to
+    floor in a radius of 2. Occupied floor squares can only be changed in a radius
+    of 1, instantly killing the occupying unit. CD: 3\r\nSteady Feet (PA): The floor
+    underneath this unit cannot be changed.\r"
 --- !u!222 &993253478
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1940,7 +1903,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -780, y: 400}
+  m_AnchoredPosition: {x: -780, y: 450}
   m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1131676029
@@ -1964,7 +1927,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 3999b4e58faa089429d29dcbb17736da, type: 3}
     m_FontSize: 50
     m_FontStyle: 1
     m_BestFit: 0
@@ -2044,7 +2007,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 3999b4e58faa089429d29dcbb17736da, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
@@ -2056,14 +2019,14 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'MASTER
+  m_Text: 'CAPTAIN
 
 
-    Move Range: 1
+    Speed: 1
 
-    Attack Range: 0
+    Health: 3
 
-    Hit Points: 3'
+    Range: 0'
 --- !u!222 &1163124290
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2322,7 +2285,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 3999b4e58faa089429d29dcbb17736da, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
@@ -2334,14 +2297,14 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Active Ability: TAKE CONTROL - Activate on goal square to win the game.
-    Cooldown: 0
+  m_Text: 'Take Control (AA): Activate on goal square to win the game. CD: 0
 
-    Passive Ability: INFLUENCE AURA - As long as an opposing unit
-    is on a square next to this one, it gains 1 Influence Point per turn. If a unit
-    has 3 Influence Points, it switches sides to this Master. Influence Points can''t
-    be reset. This ability does not influence abilites, cooldowns or hit points of
-    the influenced unit.'
+    Influence
+    Aura (PA): As long as an opposing unit is on a square next to this one in a star
+    pattern, they gain 1 influence point each turn. If a unit gained 3 influence
+    points it switches sides. Influence points can only be reset by switching sides.
+
+'
 --- !u!222 &1552854990
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2409,7 +2372,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 3999b4e58faa089429d29dcbb17736da, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
@@ -2421,12 +2384,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Active Ability: JUMP - This unit moves 3 squares in one direction (star
-    pattern) and jumps over holes and units. Has to land on an empty floor square.
-    Cooldown: 2
-
-    Passive Ability: HIGH PERFORMANCE - This unit can move in a
-    star pattern and deals 2 damage each time it attacks.'
+  m_Text: "Jump (AA): Jumps 3 squares in a star pattern over units and holes. Has
+    to land on an empty floor square. CD: 2\r\nHigh Performance (PA): This unit is
+    able to move in a star pattern and deals 2 damage with each attack.\r"
 --- !u!222 &1648359714
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2570,7 +2530,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 3999b4e58faa089429d29dcbb17736da, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
@@ -2582,14 +2542,14 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'MEDIC
+  m_Text: 'DOC
 
 
-    Move Range: 1
+    Speed: 1
 
-    Attack Range: 1
+    Health: 2
 
-    Hit Points: 2'
+    Range: 1'
 --- !u!222 &1856683976
 CanvasRenderer:
   m_ObjectHideFlags: 0

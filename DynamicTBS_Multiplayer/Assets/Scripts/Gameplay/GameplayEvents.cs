@@ -23,8 +23,17 @@ public static class GameplayEvents
     public delegate void NextPlayer(Player player);
     public static event NextPlayer OnPlayerTurnEnded;
 
+    public delegate void AbortTurn();
+    public static event AbortTurn OnPlayerTurnAborted;
+
     public delegate void ExecuteUIAction(Player player, UIActionType uIActionType);
     public static event ExecuteUIAction OnExecuteUIAction;
+
+    public delegate void ExecuteServerAction(ServerActionType serverActionType);
+    public static event ExecuteServerAction OnExecuteServerAction;
+
+    public delegate void GamePaused(bool paused);
+    public static event GamePaused OnGamePause;
 
     public static void StartGameplayPhase()
     {
@@ -70,9 +79,29 @@ public static class GameplayEvents
             OnPlayerTurnEnded(player);
     }
 
+    public static void AbortCurrentPlayerTurn()
+    {
+        if (OnPlayerTurnAborted != null)
+            OnPlayerTurnAborted();
+    }
+
     public static void UIActionExecuted(Player player, UIActionType uIActionType)
     {
         if (OnExecuteUIAction != null)
             OnExecuteUIAction(player, uIActionType);
+    }
+
+    public static void ServerActionExecuted(ServerActionType serverActionType)
+    {
+        if (OnExecuteServerAction != null)
+            OnExecuteServerAction(serverActionType);
+    }
+
+    public static void PauseGame(bool paused)
+    {
+        if(OnGamePause != null)
+        {
+            OnGamePause(paused);
+        }
     }
 }

@@ -15,7 +15,10 @@ public class PlayerManager : MonoBehaviour
     private static Player currentPlayer;
 
     private static Player bluePlayer;
+    public static Player BluePlayer { get { return bluePlayer; } }
+
     private static Player pinkPlayer;
+    public static Player PinkPlayer { get { return pinkPlayer; } }
 
     public static PlayerType GameplayPhaseStartPlayer { get { return gameplayPhaseStartPlayer; } }
 
@@ -26,6 +29,16 @@ public class PlayerManager : MonoBehaviour
         SubscribeEvents();
 
         currentPlayer = GetPlayer(draftPhaseStartPlayer);
+    }
+
+    public static List<Player> GetAllPlayers()
+    {
+        return new List<Player>() { bluePlayer, pinkPlayer };
+    }
+
+    public static Player GetCurrentlyExecutingPlayer()
+    {
+        return GameManager.gameType == GameType.multiplayer ? GetPlayer(Client.Instance.side) : GetCurrentPlayer();
     }
 
     public static Player GetOtherPlayer(Player player)

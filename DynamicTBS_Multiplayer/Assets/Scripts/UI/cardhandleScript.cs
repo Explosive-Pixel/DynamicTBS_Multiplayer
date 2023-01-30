@@ -14,7 +14,7 @@ public class cardhandleScript : MonoBehaviour
     }
 
     /// <summary>method <c>setActive</c> aktiviert Kind nach character in cardClass.</summary>
-    public void setActive(Character character)
+    public void SetActive(Character character)
     {
         foreach (Transform card in transform)
         {
@@ -22,14 +22,20 @@ public class cardhandleScript : MonoBehaviour
         }
     }
 
+    private void Deactivate(PlayerType? winner, GameOverCondition gameOverCondition)
+    {
+        SetActive(null);
+    }
+
     private void ActivateCardHandling()
     {
-        GameplayEvents.OnCharacterSelectionChange += setActive;
+        GameplayEvents.OnCharacterSelectionChange += SetActive;
+        GameplayEvents.OnGameOver += Deactivate;
     }
 
     private void OnDestroy()
     {
-        GameplayEvents.OnCharacterSelectionChange -= setActive;
+        GameplayEvents.OnCharacterSelectionChange -= SetActive;
         GameplayEvents.OnGameplayPhaseStart -= ActivateCardHandling;
     }
 }

@@ -10,8 +10,18 @@ public class UIClickHandler : MonoBehaviour
 
     private void Update()
     {
-        // In multiplayer mode only listen to clicks of current player
-        if (GameManager.gameType == GameType.multiplayer && (Client.Instance.role != ClientType.player || Client.Instance.side != PlayerManager.GetCurrentPlayer().GetPlayerType()))
+        // In multiplayer mode do not listen to clicks of spectators
+        if (GameManager.gameType == GameType.multiplayer && Client.Instance.role != ClientType.player)
+            return;
+
+        // Pause Game
+        if (Input.GetKeyDown("space"))
+        {
+            GameplayEvents.UIActionExecuted(PlayerManager.GetCurrentlyExecutingPlayer(), GameplayManager.gameIsPaused ? UIActionType.UnpauseGame : UIActionType.PauseGame);
+        }
+
+        // In multiplayer mode from here only listen to clicks of current player
+        if (GameManager.gameType == GameType.multiplayer && Client.Instance.side != PlayerManager.GetCurrentPlayer().GetPlayerType())
             return;
 
         if (!currentCamera)
@@ -62,5 +72,18 @@ public class UIClickHandler : MonoBehaviour
         {
             GameplayEvents.ChangeCharacterSelection(null);
         }
+    }
+
+    private void HandleKeyInputs()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GameplayEvents.ChangeCharacterSelection(null);
+        }
+
+        // TODO: Show complete patterns, not just legal moves of...
+        // - Attack while pressing A.
+        // - Active Ability while pressing S (for special).
+        // - Movement while pressing M.
     }
 }

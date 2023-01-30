@@ -13,7 +13,9 @@ public enum OperationCode
     PERFORM_ACTION = 5,
     EXECUTE_UIACTION = 6,
     CONNECTION_FORBIDDEN = 7,
-    METADATA = 8
+    METADATA = 8,
+    UPDATE_TIMER = 9,
+    EXECUTE_SERVER_ACTION = 10
 }
 
 public static class NetUtility
@@ -57,6 +59,14 @@ public static class NetUtility
                 Debug.Log("Client: Reading message METADATA");
                 msg = new NetMetadata(stream);
                 break;
+            case OperationCode.UPDATE_TIMER:
+                Debug.Log("Client: Reading message UPDATE_TIMER");
+                msg = new NetUpdateTimer(stream);
+                break;
+            case OperationCode.EXECUTE_SERVER_ACTION:
+                Debug.Log("Client: Reading message EXECUTE_SERVER_ACTION");
+                msg = new NetExecuteServerAction(stream);
+                break;
             default:
                 Debug.LogError("Message received had no operation code.");
                 break;
@@ -79,6 +89,8 @@ public static class NetUtility
     public static Action<NetMessage> C_EXECUTE_UIACTION;
     public static Action<NetMessage> C_CONNECTION_FORBIDDEN;
     public static Action<NetMessage> C_METADATA;
+    public static Action<NetMessage> C_UPDATE_TIMER;
+    public static Action<NetMessage> C_EXECUTE_SERVER_ACTION;
 
     // Server side messages.
     public static Action<NetMessage, NetworkConnection> S_CHANGE_LOAD_GAME_STATUS;
@@ -89,6 +101,8 @@ public static class NetUtility
     public static Action<NetMessage, NetworkConnection> S_EXECUTE_UIACTION;
     public static Action<NetMessage, NetworkConnection> S_CONNECTION_FORBIDDEN;
     public static Action<NetMessage, NetworkConnection> S_METADATA;
+    public static Action<NetMessage, NetworkConnection> S_UPDATE_TIMER;
+    public static Action<NetMessage, NetworkConnection> S_EXECUTE_SERVER_ACTION;
 
     #endregion
 }
