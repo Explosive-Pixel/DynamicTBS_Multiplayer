@@ -6,7 +6,7 @@ public class DraftAndPlacementTimer : MonoBehaviour
 {
     #region Timer config
 
-    private const float totalTimePerPlayer = 0;
+    private const float totalTimePerPlayer = 300;
     private readonly NoTimeLeftConsequence noTimeLeftConsequenceDraft = (player) => DraftManager.RandomDraft(player);
     private readonly NoTimeLeftConsequence noTimeLeftConsequencePlacement = (player) => PlacementManager.RandomPlacement(player);
 
