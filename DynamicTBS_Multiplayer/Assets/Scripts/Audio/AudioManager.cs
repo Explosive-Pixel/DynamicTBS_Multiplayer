@@ -69,6 +69,14 @@ public class AudioManager : MonoBehaviour
         DontDestroyOnLoad(audioManagerObject);
     }
 
+    #region UIAudio
+    private void ButtonPressAudio()
+    {
+
+    }
+    #endregion
+
+    #region MusicAndAtmo
     private void PlayMainTheme()
     {
         if (!musicSource.isPlaying)
@@ -95,10 +103,82 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    private void StopAtmo(PlayerType? winner, GameOverCondition endGameCondition)
+    {
+        StartCoroutine(FadeAudio(atmoSource, 2f, 0f));
+    }
+    #endregion
+
+    #region GameplayAudio
     private void TurnChangeAudio(Player player)
     {
         fxSource.PlayOneShot(turnChangeClip);
     }
+    #endregion
+
+    #region CharacterAudio
+    private void MovementAudio()
+    {
+
+    }
+
+    private void TankAttackAudio()
+    {
+
+    }
+
+    private void ShooterAttackAudio()
+    {
+
+    }
+
+    private void RunnerAttackAudio()
+    {
+
+    }
+
+    private void MechanicAttackAudio()
+    {
+
+    }
+
+    private void MedicAttackAudio()
+    {
+
+    }
+    #endregion
+
+    #region AbilityAudio
+    private void BlockAudio()
+    {
+
+    }
+
+    private void PowershotAudio()
+    {
+
+    }
+
+    private void ExplosionAudio()
+    {
+
+    }
+
+    private void JumpAudio()
+    {
+
+    }
+
+    private void ChangeFloorAudio()
+    {
+
+    }
+
+    private void HealAudio()
+    {
+
+    }
+    #endregion
 
     private IEnumerator FadeAudio(AudioSource audioSource, float duration, float targetVolume)
     {
@@ -122,6 +202,9 @@ public class AudioManager : MonoBehaviour
         AudioEvents.OnMainMenuEnter += PlayMainTheme;
         GameplayEvents.OnPlayerTurnEnded += TurnChangeAudio;
         GameEvents.OnGameStart += StopMainTheme;
+        GameEvents.OnGameStart += PlayAtmo;
+        GameplayEvents.OnRestartGame += PlayAtmo;
+        GameplayEvents.OnGameOver += StopAtmo;
     }
 
     private void UnsubscribeEvents()
@@ -129,6 +212,9 @@ public class AudioManager : MonoBehaviour
         AudioEvents.OnMainMenuEnter -= PlayMainTheme;
         GameplayEvents.OnPlayerTurnEnded -= TurnChangeAudio;
         GameEvents.OnGameStart -= StopMainTheme;
+        GameEvents.OnGameStart -= PlayAtmo;
+        GameplayEvents.OnRestartGame -= PlayAtmo;
+        GameplayEvents.OnGameOver -= StopAtmo;
     }
 
     private void OnDestroy()
