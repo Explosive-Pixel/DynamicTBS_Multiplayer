@@ -15,7 +15,7 @@ public class UIClickHandler : MonoBehaviour
             return;
 
         // Pause Game
-        if (Input.GetKeyDown("space"))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             GameplayEvents.UIActionExecuted(PlayerManager.GetCurrentlyExecutingPlayer(), GameplayManager.gameIsPaused ? UIActionType.UnpauseGame : UIActionType.PauseGame);
         }
@@ -76,14 +76,34 @@ public class UIClickHandler : MonoBehaviour
 
     private void HandleKeyInputs()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Mouse1)) // Left mouse button.
         {
-            GameplayEvents.ChangeCharacterSelection(null);
+            // Unselect currently selected character.
         }
 
-        // TODO: Show complete patterns, not just legal moves of...
-        // - Attack while pressing A.
-        // - Active Ability while pressing S (for special).
-        // - Movement while pressing M.
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            // Same function as pressing the "Use Active Ability" button.
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            // Show settings menu.
+        }
+
+        if (Input.GetKey(KeyCode.Alpha1))
+        {
+            // Show complete movement pattern, not just legal moves.
+        }
+
+        if (Input.GetKey(KeyCode.Alpha2))
+        {
+            // Show complete attack pattern, not just legal moves.
+        }
+
+        if (Input.GetKey(KeyCode.Alpha3))
+        {
+            // Show complete active ability pattern, not just legal moves.
+        }
     }
 }
