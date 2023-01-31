@@ -137,6 +137,8 @@ public class AudioManager : MonoBehaviour
         }
         if (actionType == ActionType.ActiveAbility)
         {
+            if (character.GetActiveAbility().GetType() == typeof(TakeControlAA))
+                fxSource.PlayOneShot(takeControlClip);
             if (character.GetActiveAbility().GetType() == typeof(BlockAA))
                 fxSource.PlayOneShot(blockClip);
             if (character.GetActiveAbility().GetType() == typeof(PowershotAA))
@@ -154,6 +156,27 @@ public class AudioManager : MonoBehaviour
     private void TurnChangeAudio(Player player)
     {
         fxSource.PlayOneShot(turnChangeClip);
+    }
+
+    private void UnitDraftAudio()
+    {
+        fxSource.PlayOneShot(unitDraftedClip);
+    }
+
+    private void UnitPlacementAudio(Character character)
+    {
+        fxSource.PlayOneShot(unitPlacedClip);
+
+        if (character.GetCharacterType() == CharacterType.TankChar)
+            fxSource.PlayOneShot(tankVoicelineClip);
+        if (character.GetCharacterType() == CharacterType.ShooterChar)
+            fxSource.PlayOneShot(shooterVoicelineClip);
+        if (character.GetCharacterType() == CharacterType.RunnerChar)
+            fxSource.PlayOneShot(runnerVoicelineClip);
+        if (character.GetCharacterType() == CharacterType.MechanicChar)
+            fxSource.PlayOneShot(mechanicVoicelineClip);
+        if (character.GetCharacterType() == CharacterType.MedicChar)
+            fxSource.PlayOneShot(medicVoicelineClip);
     }
     #endregion
 
@@ -198,6 +221,8 @@ public class AudioManager : MonoBehaviour
         AudioEvents.OnAdrenalin += AdrenalinAudio;
         AudioEvents.OnExplode += ExplosionAudio;
         GameplayEvents.OnFinishAction += ActionAudio;
+        AudioEvents.OnUnitDrafted += UnitDraftAudio;
+        PlacementEvents.OnPlaceCharacter += UnitPlacementAudio;
     }
 
     private void UnsubscribeEvents()
@@ -212,6 +237,8 @@ public class AudioManager : MonoBehaviour
         AudioEvents.OnAdrenalin -= AdrenalinAudio;
         AudioEvents.OnExplode -= ExplosionAudio;
         GameplayEvents.OnFinishAction -= ActionAudio;
+        AudioEvents.OnUnitDrafted -= UnitDraftAudio;
+        PlacementEvents.OnPlaceCharacter += UnitPlacementAudio;
     }
 
     private void OnDestroy()
