@@ -26,6 +26,7 @@ public class AdrenalinPA : IPassiveAbility
 
         if (character == owner)
         {
+            AudioEvents.AdrenalinRelease();
             owner.activeAbilityCooldown = 0;
         }
     }

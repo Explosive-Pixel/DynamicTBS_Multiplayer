@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour
 {
@@ -22,19 +23,18 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip turnChangeClip;
     [SerializeField] private AudioClip unitDraftedClip;
     [SerializeField] private AudioClip unitPlacedClip;
-    [SerializeField] private AudioClip moveClip; // hat idealerweise auch einen pro Einheit, aber erstmal egal
+    [SerializeField] private AudioClip moveClip;
     [SerializeField] private AudioClip tankAttackClip;
     [SerializeField] private AudioClip shooterAttackClip;
     [SerializeField] private AudioClip runnerDoubleAttackClip;
     [SerializeField] private AudioClip mechanicAttackClip;
-    [SerializeField] private AudioClip docAttackClip;
-    [SerializeField] private AudioClip takeDamageClip; // erstmal nur einen, nicht als hit oder voice, sondern als lebenspunkte verlieren
+    [SerializeField] private AudioClip medicAttackClip;
+    [SerializeField] private AudioClip takeDamageClip;
     [SerializeField] private AudioClip takeControlClip;
     [SerializeField] private AudioClip blockClip;
     [SerializeField] private AudioClip powershotClip;
     [SerializeField] private AudioClip jumpClip;
-    [SerializeField] private AudioClip changeFloorToHoleClip;
-    [SerializeField] private AudioClip changeHoleToFloorClip;
+    [SerializeField] private AudioClip changeFloorClip;
     [SerializeField] private AudioClip healClip;
     [SerializeField] private AudioClip explosionClip;
     [SerializeField] private AudioClip adrenalinClip;
@@ -72,7 +72,8 @@ public class AudioManager : MonoBehaviour
     #region UIAudio
     private void ButtonPressAudio()
     {
-
+        fxSource.PlayOneShot(buttonPressClip);
+        Debug.Log("ButtonPress");
     }
     #endregion
 
@@ -83,7 +84,7 @@ public class AudioManager : MonoBehaviour
         {
             musicSource.clip = mainThemeClip;
             musicSource.loop = true;
-            musicSource.volume = 0.5f;
+            musicSource.volume = 0.3f;
             musicSource.Play();
         }
     }
@@ -109,6 +110,46 @@ public class AudioManager : MonoBehaviour
     }
     #endregion
 
+    private void ActionAudio(ActionMetadata actionMetadata)
+    {
+        ActionType actionType = actionMetadata.ExecutedActionType;
+        Character character = actionMetadata.CharacterInAction;
+
+        if (character == null)
+            return;
+
+        if (actionType == ActionType.Move)
+        {
+            fxSource.PlayOneShot(moveClip);
+        }
+        if (actionType == ActionType.Attack)
+        {
+            if (character.GetCharacterType() == CharacterType.TankChar)
+                fxSource.PlayOneShot(tankAttackClip);
+            if (character.GetCharacterType() == CharacterType.ShooterChar)
+                fxSource.PlayOneShot(shooterAttackClip);
+            if (character.GetCharacterType() == CharacterType.RunnerChar)
+                fxSource.PlayOneShot(runnerDoubleAttackClip);
+            if (character.GetCharacterType() == CharacterType.MechanicChar)
+                fxSource.PlayOneShot(mechanicAttackClip);
+            if (character.GetCharacterType() == CharacterType.MedicChar)
+                fxSource.PlayOneShot(medicAttackClip);
+        }
+        if (actionType == ActionType.ActiveAbility)
+        {
+            if (character.GetActiveAbility().GetType() == typeof(BlockAA))
+                fxSource.PlayOneShot(blockClip);
+            if (character.GetActiveAbility().GetType() == typeof(PowershotAA))
+                fxSource.PlayOneShot(powershotClip);
+            if (character.GetActiveAbility().GetType() == typeof(JumpAA))
+                fxSource.PlayOneShot(jumpClip);
+            if (character.GetActiveAbility().GetType() == typeof(ChangeFloorAA))
+                fxSource.PlayOneShot(changeFloorClip);
+            if (character.GetActiveAbility().GetType() == typeof(HealAA))
+                fxSource.PlayOneShot(healClip);
+        }
+    }
+
     #region GameplayAudio
     private void TurnChangeAudio(Player player)
     {
@@ -116,67 +157,15 @@ public class AudioManager : MonoBehaviour
     }
     #endregion
 
-    #region CharacterAudio
-    private void MovementAudio()
-    {
-
-    }
-
-    private void TankAttackAudio()
-    {
-
-    }
-
-    private void ShooterAttackAudio()
-    {
-
-    }
-
-    private void RunnerAttackAudio()
-    {
-
-    }
-
-    private void MechanicAttackAudio()
-    {
-
-    }
-
-    private void MedicAttackAudio()
-    {
-
-    }
-    #endregion
-
     #region AbilityAudio
-    private void BlockAudio()
-    {
-
-    }
-
-    private void PowershotAudio()
-    {
-
-    }
-
     private void ExplosionAudio()
     {
-
+        fxSource.PlayOneShot(explosionClip);
     }
 
-    private void JumpAudio()
+    private void AdrenalinAudio()
     {
-
-    }
-
-    private void ChangeFloorAudio()
-    {
-
-    }
-
-    private void HealAudio()
-    {
-
+        fxSource.PlayOneShot(adrenalinClip);
     }
     #endregion
 
@@ -205,6 +194,10 @@ public class AudioManager : MonoBehaviour
         GameEvents.OnGameStart += PlayAtmo;
         GameplayEvents.OnRestartGame += PlayAtmo;
         GameplayEvents.OnGameOver += StopAtmo;
+        AudioEvents.OnButtonPress += ButtonPressAudio;
+        AudioEvents.OnAdrenalin += AdrenalinAudio;
+        AudioEvents.OnExplode += ExplosionAudio;
+        GameplayEvents.OnFinishAction += ActionAudio;
     }
 
     private void UnsubscribeEvents()
@@ -215,6 +208,10 @@ public class AudioManager : MonoBehaviour
         GameEvents.OnGameStart -= PlayAtmo;
         GameplayEvents.OnRestartGame -= PlayAtmo;
         GameplayEvents.OnGameOver -= StopAtmo;
+        AudioEvents.OnButtonPress -= ButtonPressAudio;
+        AudioEvents.OnAdrenalin -= AdrenalinAudio;
+        AudioEvents.OnExplode -= ExplosionAudio;
+        GameplayEvents.OnFinishAction -= ActionAudio;
     }
 
     private void OnDestroy()
