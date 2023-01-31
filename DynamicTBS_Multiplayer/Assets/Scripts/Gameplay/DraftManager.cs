@@ -11,20 +11,20 @@ public class DraftManager : MonoBehaviour
     public const int MaxDraftCount = 14;
     public static readonly List<int> draftOrder = new List<int>() {3, 6, 7, 9, 11, 13};
     private static List<Vector3> instantiationPositions = new List<Vector3>() {
-        new Vector3(1f, 3.25f, 0.998f), 
-        new Vector3(2f, 3.25f, 0.998f), 
-        new Vector3(3f, 3.25f, 0.998f), 
-        new Vector3(-1f, 2.3f, 0.998f), 
-        new Vector3(-2f, 2.3f, 0.998f), 
-        new Vector3(-3f, 2.3f, 0.998f), 
-        new Vector3(1f, 1.4f, 0.998f), 
-        new Vector3(-1f, 0.45f, 0.998f), 
-        new Vector3(-2f, 0.45f, 0.998f), 
-        new Vector3(1f, -0.45f, 0.998f), 
-        new Vector3(2f, -0.45f, 0.998f), 
-        new Vector3(-1f, -1.4f, 0.998f), 
-        new Vector3(-2f, -1.4f, 0.998f), 
-        new Vector3(1f, -2.35f, 0.998f) };
+        new Vector3(1f, 2.75f, 0.998f), 
+        new Vector3(2f, 2.75f, 0.998f), 
+        new Vector3(3f, 2.75f, 0.998f), 
+        new Vector3(-1f, 1.8f, 0.998f), 
+        new Vector3(-2f, 1.8f, 0.998f), 
+        new Vector3(-3f, 1.8f, 0.998f), 
+        new Vector3(1f, 0.9f, 0.998f), 
+        new Vector3(-1f, -0.05f, 0.998f), 
+        new Vector3(-2f, -0.05f, 0.998f), 
+        new Vector3(1f, -0.95f, 0.998f), 
+        new Vector3(2f, -0.95f, 0.998f), 
+        new Vector3(-1f, -1.9f, 0.998f), 
+        new Vector3(-2f, -1.9f, 0.998f), 
+        new Vector3(1f, -2.85f, 0.998f) };
 
     #endregion
 

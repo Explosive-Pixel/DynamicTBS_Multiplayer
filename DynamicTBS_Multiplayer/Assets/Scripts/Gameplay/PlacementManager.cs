@@ -12,6 +12,24 @@ public class PlacementManager : MonoBehaviour
     private const int MaxPlacementCount = 14;
     private static readonly List<int> placementOrder = new List<int>() { 1, 3, 5, 7, 8, 11 };
 
+    private List<Vector3> blueSortingPositionsList = new List<Vector3>() { 
+    new Vector3(-7.5f, 1.5f, 1),
+    new Vector3(-7.5f, 0.5f, 1),
+    new Vector3(-7.5f, -0.5f, 1),
+    new Vector3(-7.5f, -1.5f, 1),
+    new Vector3(-6.5f, 1.5f, 1),
+    new Vector3(-6.5f, 0.5f, 1),
+    new Vector3(-6.5f, -0.5f, 1)};
+
+    private List<Vector3> pinkSortingPositionsList = new List<Vector3>() {
+    new Vector3(7.5f, 1.5f, 1),
+    new Vector3(7.5f, 0.5f, 1),
+    new Vector3(7.5f, -0.5f, 1),
+    new Vector3(7.5f, -1.5f, 1),
+    new Vector3(6.5f, 1.5f, 1),
+    new Vector3(6.5f, 0.5f, 1),
+    new Vector3(6.5f, -0.5f, 1)};
+
     #endregion
 
     private static int placementCount;
@@ -32,22 +50,29 @@ public class PlacementManager : MonoBehaviour
 
     private void SortCharacters(List<Character> characters)
     {
-        Vector3 blueStartPosition = new Vector3(-7.5f, 3, 1);
-        Vector3 pinkStartPosition = new Vector3(7.5f, 3, 1);
-        float verticalOffset = 1;
+        List<Character> blueCharacters = new List<Character>();
+        List<Character> pinkCharacters = new List<Character>();
 
         foreach (Character character in characters)
         {
             if (character.GetSide().GetPlayerType() == PlayerType.blue)
             {
-                character.GetCharacterGameObject().transform.position = blueStartPosition;
-                blueStartPosition.y -= verticalOffset;
+                blueCharacters.Add(character);
             }
             else
             {
-                character.GetCharacterGameObject().transform.position = pinkStartPosition;
-                pinkStartPosition.y -= verticalOffset;
+                pinkCharacters.Add(character);
             }
+        }
+
+        for (int i = 0; i < blueCharacters.Count(); i++)
+        {
+            blueCharacters[i].GetCharacterGameObject().transform.position = blueSortingPositionsList[i];
+        }
+
+        for (int i = 0; i < pinkCharacters.Count(); i++)
+        {
+            pinkCharacters[i].GetCharacterGameObject().transform.position = pinkSortingPositionsList[i];
         }
 
         PlacementEvents.StartPlacement();
