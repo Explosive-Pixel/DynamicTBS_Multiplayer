@@ -20,6 +20,8 @@ public class PlayerManager : MonoBehaviour
     private static Player pinkPlayer;
     public static Player PinkPlayer { get { return pinkPlayer; } }
 
+    public static PlayerType DraftPhaseStartPlayer { get { return draftPhaseStartPlayer; } }
+    public static PlayerType PlacementPhaseStartPlayer { get { return placementPhaseStartPlayer; } }
     public static PlayerType GameplayPhaseStartPlayer { get { return gameplayPhaseStartPlayer; } }
 
     private void Awake()

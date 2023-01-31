@@ -28,43 +28,43 @@ public static class NetUtility
         switch (opCode) // Makes server and client able to decode messages when they're being received.
         {
             case OperationCode.CHANGE_LOAD_GAME_STATUS:
-                Debug.Log("Client: Reading message CHANGE_LOAD_GAME_STATUS");
+                // Debug.Log("Client: Reading message CHANGE_LOAD_GAME_STATUS");
                 msg = new NetChangeLoadGameStatus(stream);
                 break;
             case OperationCode.WELCOME:
-                Debug.Log("Client: Reading message WELCOME");
+                // Debug.Log("Client: Reading message WELCOME");
                 msg = new NetWelcome(stream);
                 break;
             case OperationCode.START_GAME:
-                Debug.Log("Client: Reading message START_GAME");
+                // Debug.Log("Client: Reading message START_GAME");
                 msg = new NetStartGame(stream);
                 break;
             case OperationCode.DRAFT_CHARACTER:
-                Debug.Log("Client: Reading message DRAFT_CHARACTER");
+                // Debug.Log("Client: Reading message DRAFT_CHARACTER");
                 msg = new NetDraftCharacter(stream);
                 break;
             case OperationCode.PERFORM_ACTION:
-                Debug.Log("Client: Reading message PERFORM_ACTION");
+                // Debug.Log("Client: Reading message PERFORM_ACTION");
                 msg = new NetPerformAction(stream);
                 break;
             case OperationCode.EXECUTE_UIACTION:
-                Debug.Log("Client: Reading message EXECUTE_UIACTION");
+                // Debug.Log("Client: Reading message EXECUTE_UIACTION");
                 msg = new NetExecuteUIAction(stream);
                 break;
             case OperationCode.CONNECTION_FORBIDDEN:
-                Debug.Log("Client: Reading message CONNECTION_FORBIDDEN");
+                // Debug.Log("Client: Reading message CONNECTION_FORBIDDEN");
                 msg = new NetConnectionForbidden(stream);
                 break;
             case OperationCode.METADATA:
-                Debug.Log("Client: Reading message METADATA");
+                // Debug.Log("Client: Reading message METADATA");
                 msg = new NetMetadata(stream);
                 break;
             case OperationCode.UPDATE_TIMER:
-                Debug.Log("Client: Reading message UPDATE_TIMER");
+                // Debug.Log("Client: Reading message UPDATE_TIMER");
                 msg = new NetUpdateTimer(stream);
                 break;
             case OperationCode.EXECUTE_SERVER_ACTION:
-                Debug.Log("Client: Reading message EXECUTE_SERVER_ACTION");
+                // Debug.Log("Client: Reading message EXECUTE_SERVER_ACTION");
                 msg = new NetExecuteServerAction(stream);
                 break;
             default:

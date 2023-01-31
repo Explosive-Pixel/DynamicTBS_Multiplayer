@@ -88,6 +88,10 @@ public class Server : MonoBehaviour
         SubscribeEvents();
     }
 
+    public bool IsRegisteredPlayer(NetworkConnection cnn)
+    {
+        return players.Contains(cnn);
+    }
 
     public bool RegisterClient(NetworkConnection c, ClientType role)
     {
@@ -403,7 +407,7 @@ public class Server : MonoBehaviour
         if (messageHistory.Count > 0)
         {
             Debug.Log("Sending history to client: " + messageHistory.Count);
-            float delay = 0.02f;
+            float delay = 0.05f;
 
             SendToClient(new NetChangeLoadGameStatus(), connection);
             yield return new WaitForSeconds(delay);
