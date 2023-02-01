@@ -30,16 +30,12 @@ public class MovesDisplay : MonoBehaviour
     private void DisplayMoves(string newMove)
     {
         movesList.Add(newMove);
-        Debug.Log("New Move added");
         displayText.text = "";
-        Debug.Log(displayText.text);
 
         for (int i = movesList.Count - 1; i >= 0; i--)
         {
             displayText.text += movesList[i];
-            Debug.Log(displayText.text);
         }
-        Debug.Log(movesList.ToString());
     }
 
     private void EmptyList(PlayerType? winner, GameOverCondition endGameCondition)
