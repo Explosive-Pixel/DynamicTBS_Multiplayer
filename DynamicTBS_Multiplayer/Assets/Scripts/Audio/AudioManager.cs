@@ -218,11 +218,16 @@ public class AudioManager : MonoBehaviour
         GameplayEvents.OnRestartGame += PlayAtmo;
         GameplayEvents.OnGameOver += StopAtmo;
         AudioEvents.OnButtonPress += ButtonPressAudio;
-        AudioEvents.OnAdrenalin += AdrenalinAudio;
-        AudioEvents.OnExplode += ExplosionAudio;
-        GameplayEvents.OnFinishAction += ActionAudio;
+        GameplayEvents.OnGameplayPhaseStart += SubscribeEventsAfterPlacement;
         AudioEvents.OnUnitDrafted += UnitDraftAudio;
         PlacementEvents.OnPlaceCharacter += UnitPlacementAudio;
+    }
+
+    private void SubscribeEventsAfterPlacement()
+    {
+        GameplayEvents.OnFinishAction += ActionAudio;
+        AudioEvents.OnAdrenalin += AdrenalinAudio;
+        AudioEvents.OnExplode += ExplosionAudio;
     }
 
     private void UnsubscribeEvents()
@@ -236,6 +241,7 @@ public class AudioManager : MonoBehaviour
         AudioEvents.OnButtonPress -= ButtonPressAudio;
         AudioEvents.OnAdrenalin -= AdrenalinAudio;
         AudioEvents.OnExplode -= ExplosionAudio;
+        GameplayEvents.OnGameplayPhaseStart -= SubscribeEventsAfterPlacement;
         GameplayEvents.OnFinishAction -= ActionAudio;
         AudioEvents.OnUnitDrafted -= UnitDraftAudio;
         PlacementEvents.OnPlaceCharacter += UnitPlacementAudio;
