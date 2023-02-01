@@ -63,6 +63,7 @@ public class DraftManager : MonoBehaviour
         characterGameObject.transform.position = instantiationPositions[draftCounter];
 
         DraftEvents.CharacterCreated(character);
+        AudioEvents.UnitDrafted();
 
         AdvanceDraftOrder();
     }
