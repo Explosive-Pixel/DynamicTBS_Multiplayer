@@ -13,22 +13,22 @@ public class PlacementManager : MonoBehaviour
     private static readonly List<int> placementOrder = new List<int>() { 1, 3, 5, 7, 8, 11 };
 
     private List<Vector3> blueSortingPositionsList = new List<Vector3>() { 
-    new Vector3(-7.5f, 1.5f, 1),
     new Vector3(-7.5f, 0.5f, 1),
     new Vector3(-7.5f, -0.5f, 1),
     new Vector3(-7.5f, -1.5f, 1),
-    new Vector3(-6.5f, 1.5f, 1),
+    new Vector3(-7.5f, -2.5f, 1),
     new Vector3(-6.5f, 0.5f, 1),
-    new Vector3(-6.5f, -0.5f, 1)};
+    new Vector3(-6.5f, -0.5f, 1),
+    new Vector3(-6.5f, -1.5f, 1)};
 
     private List<Vector3> pinkSortingPositionsList = new List<Vector3>() {
-    new Vector3(7.5f, 1.5f, 1),
     new Vector3(7.5f, 0.5f, 1),
     new Vector3(7.5f, -0.5f, 1),
     new Vector3(7.5f, -1.5f, 1),
-    new Vector3(6.5f, 1.5f, 1),
+    new Vector3(7.5f, -2.5f, 1),
     new Vector3(6.5f, 0.5f, 1),
-    new Vector3(6.5f, -0.5f, 1)};
+    new Vector3(6.5f, -0.5f, 1),
+    new Vector3(6.5f, -1.5f, 1)};
 
     #endregion
 

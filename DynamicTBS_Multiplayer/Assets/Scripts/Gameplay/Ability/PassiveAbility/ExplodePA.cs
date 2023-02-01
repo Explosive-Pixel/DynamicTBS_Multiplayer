@@ -21,7 +21,6 @@ public class ExplodePA : IPassiveAbility
 
     private void Explode(Character deadCharacter, Vector3 lastPosition)
     {
-        AudioEvents.Exploding();
         if(deadCharacter == owner)
         {
             Tile ownerLastTile = Board.GetTileByPosition(lastPosition);
@@ -33,7 +32,7 @@ public class ExplodePA : IPassiveAbility
                     character.TakeDamage(explodeDamage);
                 }
             }
-
+            AudioEvents.Exploding();
             CharacterEvents.OnCharacterDeath -= Explode;
         }
     }
