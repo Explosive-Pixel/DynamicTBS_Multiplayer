@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class MasterChar : Character
 {
-    public static readonly string name = "Master";
+    public static readonly string name = "Captain";
 
     public MasterChar(Player side) : base(side)
     {
-        this.characterPrefab = GameObject.Instantiate(side.GetPlayerType() == PlayerType.blue ? PrefabManager.BLUE_MASTER_PREFAB : PrefabManager.PINK_MASTER_PREFAB);
         this.characterType = CharacterType.MasterChar;
         this.maxHitPoints = 3;
         this.moveSpeed = 1;
@@ -24,6 +23,11 @@ public class MasterChar : Character
     protected override Sprite CharacterSprite(Player side)
     {
         return side.GetPlayerType() == PlayerType.blue ? SpriteManager.BLUE_MASTER_SPRITE : SpriteManager.PINK_MASTER_SPRITE;
+    }
+
+    protected override GameObject CharacterPrefab(Player side)
+    {
+        return side.GetPlayerType() == PlayerType.blue ? PrefabManager.BLUE_MASTER_PREFAB : PrefabManager.PINK_MASTER_PREFAB;
     }
 
 

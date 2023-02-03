@@ -41,4 +41,29 @@ public class UIUtils : MonoBehaviour
         }
         return false;
     }
+
+    public static GameObject FindChildGameObject(GameObject parent, string childName)
+    {
+        for (int i = 0; i < parent.transform.childCount; i++)
+        {
+            GameObject child = parent.transform.GetChild(i).gameObject;
+            if (child.name == childName)
+            {
+                return child;
+            }
+        }
+
+        return null;
+    }
+
+    public static void UpdateAnimator(Animator animator, int value)
+    {
+        animator.SetInteger(animator.parameters[0].name, value);
+    }
+
+    public static void UpdateAnimatorInChild(GameObject parent, string childName, int value)
+    {
+        Animator animator = FindChildGameObject(parent, childName).GetComponent<Animator>();
+        UpdateAnimator(animator, value);
+    }
 }

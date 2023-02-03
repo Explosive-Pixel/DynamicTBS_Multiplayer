@@ -42,6 +42,7 @@ public class InfluenceAuraPA : IPassiveAbility
                         influencePoints.Add(character, 0);
 
                     influencePoints[character] += 1;
+                    UpdateInfluenceAnimator(character, influencePoints[character]);
 
                     if(influencePoints[character] == maxInfluence)
                     {
@@ -54,8 +55,17 @@ public class InfluenceAuraPA : IPassiveAbility
 
     private void SwapSides(Character character)
     {
+        influencePoints.Remove(character);
+        UpdateInfluenceAnimator(character, 0);
+
         character.side = PlayerManager.GetOtherPlayer(character.side);
-        character.GetCharacterGameObject().GetComponent<SpriteRenderer>().sprite = character.GetCharacterSprite(character.side);
+        GameObject characterSpriteGameObject = UIUtils.FindChildGameObject(character.GetCharacterGameObject(), "CharacterSprite");
+        characterSpriteGameObject.GetComponent<SpriteRenderer>().sprite = character.GetCharacterSprite(character.side);
+    }
+
+    private void UpdateInfluenceAnimator(Character character, int influence)
+    {
+        UIUtils.UpdateAnimatorInChild(character.GetCharacterGameObject(), "MasterTakeoverProgression", influence);
     }
 
     ~InfluenceAuraPA()

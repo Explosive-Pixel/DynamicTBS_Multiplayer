@@ -51,10 +51,10 @@ public class HealAAAction : MonoBehaviour, IAction
         if (tile != null)
         {
             Character characterToHeal = tile.GetCurrentInhabitant();
-            int hitPointsBeforeHeal = characterToHeal.hitPoints;
+            int hitPointsBeforeHeal = characterToHeal.HitPoints;
             characterToHeal.Heal(HealAA.healingPoints);
 
-            if (characterToHeal.hitPoints > hitPointsBeforeHeal)
+            if (characterToHeal.HitPoints > hitPointsBeforeHeal)
             {
                 characterToHeal.moveSpeed += HealAA.moveSpeedBuff;
                 // TODO: Put correct buff sprite onto characterToHeal

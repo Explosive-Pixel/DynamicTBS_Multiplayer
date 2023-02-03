@@ -3,8 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// TODO: Character als Prefab anlegen um in Unity anpassen zu können
-public abstract class Character //: MonoBehaviour
+public abstract class Character
 {
     #region Character default stats Config
 
@@ -16,12 +15,17 @@ public abstract class Character //: MonoBehaviour
     protected CharacterType characterType;
     protected int maxHitPoints;
     protected int attackRange;
-    protected GameObject characterPrefab;
     protected IActiveAbility activeAbility;
     protected IPassiveAbility passiveAbility;
     protected abstract Sprite CharacterSprite(Player side);
+    protected abstract GameObject CharacterPrefab(Player side);
 
-    protected GameObject characterGameObject;
+    protected int hitPoints;
+    protected int activeAbilityCooldown;
+    protected Animator hitPointAnimator;
+    protected Animator cooldownAnimator;
+
+    public GameObject characterGameObject;
 
     #region public properties (can be overwritten by its Active- and Passive abiliy)
 
@@ -48,8 +52,8 @@ public abstract class Character //: MonoBehaviour
     public delegate bool IsDisabled();
     public IsDisabled isDisabled = () => false;
 
-    public int hitPoints;
-    public int activeAbilityCooldown;
+    public int HitPoints { get { return hitPoints; } set { this.hitPoints = value; UpdateHitPointAnimator(); } }
+    public int ActiveAbilityCooldown { get { return activeAbilityCooldown; } set { this.activeAbilityCooldown = value; UpdateCooldownAnimator(); } }
 
     #endregion
 
@@ -60,39 +64,12 @@ public abstract class Character //: MonoBehaviour
 
     protected void Init()
     {
-        //this.characterGameObject = GameObject.Instantiate(characterPrefab) as GameObject;
-        this.characterGameObject = characterPrefab;
-        this.characterGameObject.transform.SetParent(GameObject.Find("GameplayObjects").transform);
-        this.hitPoints = maxHitPoints;
-        this.activeAbilityCooldown = 0;
+        InitCharacterGameObject();
+
+        this.HitPoints = maxHitPoints;
+        this.ActiveAbilityCooldown = 0;
         this.movePattern = defaultMovePattern;
         this.attackDamage = defaultAttackDamage;
-
-
-        //load leben + cooldown prefab -> TODO über entity in unity anpassbar machen
-        //GameObject lebenObject = Resources.Load<GameObject>("Prefabs/CharacterCooldown");
-        //GameObject cooldownObject = Resources.Load<GameObject>("Prefabs/CharacterLeben");
-
-        //TODO: "leben" als String übergeben
-        //spawn Leben Prefab als child und setze animation auf aktuelle lebenspunkte
-        //Instantiate(lebenObject, this.characterGameObject.transform.position, Quaternion.identity, this.characterGameObject.transform);
-
-
-        //TODO: "cooldown" als string übergeben
-        //spawn cooldown Prefab als child und setze animation auf 0
-        //Instantiate(cooldownObject, this.characterGameObject.transform.position, Quaternion.identity, this.characterGameObject.transform);
-
-
-        //TODO: in script in Prefab setzen
-        for (int i = 0; i < this.characterGameObject.transform.childCount; i++)
-        {
-            Transform child = this.characterGameObject.transform.GetChild(i);
-            if(child.TryGetComponent<Animator>(out var animator))
-            {
-                animator.SetInteger("leben", this.hitPoints);
-                animator.SetInteger("cooldown", 0);
-            }
-        }
 
         GameplayEvents.OnGameplayPhaseStart += ApplyPassiveAbility;
     }
@@ -103,6 +80,7 @@ public abstract class Character //: MonoBehaviour
     public int GetAttackRange() { return attackRange; }
     public IPassiveAbility GetPassiveAbility() { return passiveAbility; }
     public Sprite GetCharacterSprite(Player side) { return CharacterSprite(side); }
+    public GameObject GetCharacterPrefab(Player side) { return CharacterPrefab(side); }
 
     public void TakeDamage(int damage) 
     {
@@ -111,13 +89,11 @@ public abstract class Character //: MonoBehaviour
             int actualDamage = netDamage(damage);
             if (isDamageable(damage) && actualDamage > 0)
             {
-                this.hitPoints -= actualDamage;
-                this.characterGameObject.transform.GetChild(0).GetComponent<Animator>().SetInteger("leben", this.hitPoints);
-                Debug.Log("Character " + characterGameObject.name + " now has " + hitPoints + " hit points remaining.");
+                this.HitPoints -= actualDamage;
 
                 CharacterEvents.CharacterTakesDamage(this, actualDamage);
 
-                if (this.hitPoints <= 0)
+                if (this.HitPoints <= 0)
                 {
                     this.Die();
                 }
@@ -130,38 +106,35 @@ public abstract class Character //: MonoBehaviour
     {
         if (!IsDead())
         {
-            this.hitPoints += healPoints;
-            if (this.hitPoints > this.maxHitPoints)
+            this.HitPoints += healPoints;
+            if (this.HitPoints > this.maxHitPoints)
             {
-                this.hitPoints = this.maxHitPoints;
+                this.HitPoints = this.maxHitPoints;
             }
-            this.characterGameObject.transform.GetChild(0).GetComponent<Animator>().SetInteger("leben", this.hitPoints);
-            Debug.Log("Character " + characterGameObject.name + " now has " + hitPoints + " hit points remaining.");
         }
     }
 
     public bool HasFullHP()
     {
-        return this.hitPoints == this.maxHitPoints;
+        return this.HitPoints == this.maxHitPoints;
     }
 
     public void SetActiveAbilityOnCooldown()
     {
         if(!IsDead())
         {
-            activeAbilityCooldown = activeAbility.Cooldown + 1;
-            this.characterGameObject.transform.GetChild(1).GetComponent<Animator>().SetInteger("cooldown", activeAbility.Cooldown);
+            ActiveAbilityCooldown = activeAbility.Cooldown + 1;
+            UIUtils.UpdateAnimator(cooldownAnimator, this.ActiveAbilityCooldown - 1);
             GameplayEvents.OnPlayerTurnEnded += ReduceActiveAbiliyCooldown;
         }
     }
 
     public void ReduceActiveAbilityCooldown()
     {
-        if(activeAbilityCooldown > 0 && !IsDead())
+        if(ActiveAbilityCooldown > 0 && !IsDead())
         {
-            activeAbilityCooldown -= 1;
-            this.characterGameObject.transform.GetChild(1).GetComponent<Animator>().SetInteger("cooldown", activeAbilityCooldown);
-            if(activeAbilityCooldown == 0)
+            ActiveAbilityCooldown -= 1;
+            if(ActiveAbilityCooldown == 0)
             {
                 GameplayEvents.OnPlayerTurnEnded -= ReduceActiveAbiliyCooldown;
             }
@@ -170,12 +143,12 @@ public abstract class Character //: MonoBehaviour
 
     public void Highlight(bool highlight)
     {
-        this.characterGameObject.transform.GetChild(2).gameObject.SetActive(highlight);
+        UIUtils.FindChildGameObject(characterGameObject, "ActiveCharacter Highlight").SetActive(highlight);
     }
 
     public bool IsActiveAbilityOnCooldown()
     {
-        return activeAbilityCooldown > 0;
+        return ActiveAbilityCooldown > 0;
     }
 
     public bool CanPerformActiveAbility()
@@ -223,6 +196,25 @@ public abstract class Character //: MonoBehaviour
     private void ApplyPassiveAbility()
     {
         passiveAbility.Apply();
+    }
+
+    private void UpdateHitPointAnimator()
+    {
+        UIUtils.UpdateAnimator(hitPointAnimator, this.HitPoints);
+    }
+
+    private void UpdateCooldownAnimator()
+    {
+        UIUtils.UpdateAnimator(cooldownAnimator, this.ActiveAbilityCooldown);
+    }
+
+    private void InitCharacterGameObject()
+    {
+        this.characterGameObject = GameObject.Instantiate(this.CharacterPrefab(this.side));
+        this.characterGameObject.transform.SetParent(GameObject.Find("GameplayObjects").transform);
+
+        hitPointAnimator = UIUtils.FindChildGameObject(this.characterGameObject, "Leben").GetComponent<Animator>();
+        cooldownAnimator = UIUtils.FindChildGameObject(this.characterGameObject, "Cooldown").GetComponent<Animator>();
     }
 
     ~Character()
