@@ -65,7 +65,9 @@ public class InfluenceAuraPA : IPassiveAbility
 
     private void UpdateInfluenceAnimator(Character character, int influence)
     {
-        UIUtils.UpdateAnimatorInChild(character.GetCharacterGameObject(), "MasterTakeoverProgression", influence);
+        GameObject child = UIUtils.FindChildGameObject(character.GetCharacterGameObject(), "MasterTakeoverProgression");
+        UIUtils.UpdateAnimator(child.GetComponent<Animator>(), influence);
+        child.SetActive(influence > 0);
     }
 
     ~InfluenceAuraPA()

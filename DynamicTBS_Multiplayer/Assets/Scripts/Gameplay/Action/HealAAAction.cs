@@ -57,8 +57,8 @@ public class HealAAAction : MonoBehaviour, IAction
             if (characterToHeal.HitPoints > hitPointsBeforeHeal)
             {
                 characterToHeal.moveSpeed += HealAA.moveSpeedBuff;
-                // TODO: Put correct buff sprite onto characterToHeal
                 buffedCharacters.Add(characterToHeal);
+                UpdateBufferGameObject(characterToHeal);
             }
         }
 
@@ -88,14 +88,27 @@ public class HealAAAction : MonoBehaviour, IAction
     {
         if(actionMetadata.ExecutedActionType == ActionType.Move)
         {
-            List<Character> buffedCharacter = buffedCharacters.FindAll(c => c == actionMetadata.CharacterInAction);
-            if(buffedCharacter.Count > 0)
+            int bufferCount = BufferCount(actionMetadata.CharacterInAction);
+            if(bufferCount > 0)
             {
-                actionMetadata.CharacterInAction.moveSpeed -= (HealAA.moveSpeedBuff * buffedCharacter.Count);
-                // TODO: Change buff sprite onto actionMetadata.CharacterInAction
+                actionMetadata.CharacterInAction.moveSpeed -= (HealAA.moveSpeedBuff * bufferCount);
                 buffedCharacters = buffedCharacters.FindAll(c => c != actionMetadata.CharacterInAction);
+                UpdateBufferGameObject(actionMetadata.CharacterInAction);
             }
         }
+    }
+
+    private int BufferCount(Character character)
+    {
+        return buffedCharacters.FindAll(c => c == character).Count;
+    }
+
+    private void UpdateBufferGameObject(Character character)
+    {
+        GameObject child = UIUtils.FindChildGameObject(character.GetCharacterGameObject(), "Speedup");
+        int bufferCount = BufferCount(character);
+        child.GetComponent<TMPro.TextMeshPro>().text = "+" + bufferCount.ToString();
+        child.SetActive(bufferCount > 0);
     }
 
     private void OnDestroy()

@@ -127,6 +127,7 @@ public class BlockAA : IActiveAbility
     {
         GameObject blockGameObject = new GameObject();
         blockGameObject.name = "TmpBlockOverlay";
+        blockGameObject.transform.parent = character.GetCharacterGameObject().transform;
 
         Vector3 position = character.GetCharacterGameObject().transform.position;
         Quaternion startRotation = Quaternion.identity;
@@ -156,31 +157,14 @@ public class BlockAA : IActiveAbility
         UnsubscribeEvents();
     }
 
-    private void DestroyBlock(Character character, Vector3 lastPosition)
-    {
-        if(character == this.character)
-        {
-            DestroyBlock();
-        }
-    }
-
-    private void DestroyBlock(PlayerType? winner, GameOverCondition endGameCondition)
-    {
-        DestroyBlock();
-    }
-
     private void SubscribeEvents()
     {
         GameplayEvents.OnPlayerTurnEnded += ReduceBlockCounter;
-        CharacterEvents.OnCharacterDeath += DestroyBlock;
-        GameplayEvents.OnGameOver += DestroyBlock;
     }
 
     private void UnsubscribeEvents()
     {
         GameplayEvents.OnPlayerTurnEnded -= ReduceBlockCounter;
-        CharacterEvents.OnCharacterDeath -= DestroyBlock;
-        GameplayEvents.OnGameOver -= DestroyBlock;
     }
 
     ~BlockAA()

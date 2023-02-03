@@ -60,10 +60,4 @@ public class UIUtils : MonoBehaviour
     {
         animator.SetInteger(animator.parameters[0].name, value);
     }
-
-    public static void UpdateAnimatorInChild(GameObject parent, string childName, int value)
-    {
-        Animator animator = FindChildGameObject(parent, childName).GetComponent<Animator>();
-        UpdateAnimator(animator, value);
-    }
 }

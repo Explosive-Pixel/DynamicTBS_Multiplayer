@@ -25,7 +25,7 @@ public abstract class Character
     protected Animator hitPointAnimator;
     protected Animator cooldownAnimator;
 
-    public GameObject characterGameObject;
+    protected GameObject characterGameObject;
 
     #region public properties (can be overwritten by its Active- and Passive abiliy)
 
