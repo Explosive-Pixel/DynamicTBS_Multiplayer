@@ -18,7 +18,7 @@ public class MovesDisplay : MonoBehaviour
     private void WriteMovesToString(ActionMetadata actionMetadata)
     {
         string newLine = TranslateCharacterName(actionMetadata.CharacterInAction)
-            + " on "
+            + "on "
             + TranslateTilePosition(actionMetadata.CharacterInitialPosition)
             + TranslateActionType(actionMetadata.ExecutedActionType)
             + TranslateTilePosition(actionMetadata.ActionDestinationPosition)

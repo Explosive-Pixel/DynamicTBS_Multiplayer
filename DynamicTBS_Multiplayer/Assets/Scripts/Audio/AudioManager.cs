@@ -158,7 +158,7 @@ public class AudioManager : MonoBehaviour
         fxSource.PlayOneShot(turnChangeClip);
     }
 
-    private void UnitDraftAudio()
+    private void UnitDraftAudio(Character character)
     {
         fxSource.PlayOneShot(unitDraftedClip);
     }
@@ -219,7 +219,7 @@ public class AudioManager : MonoBehaviour
         GameplayEvents.OnGameOver += StopAtmo;
         AudioEvents.OnButtonPress += ButtonPressAudio;
         GameplayEvents.OnGameplayPhaseStart += SubscribeEventsAfterPlacement;
-        AudioEvents.OnUnitDrafted += UnitDraftAudio;
+        DraftEvents.OnCharacterCreated += UnitDraftAudio;
         PlacementEvents.OnPlaceCharacter += UnitPlacementAudio;
     }
 
@@ -243,7 +243,7 @@ public class AudioManager : MonoBehaviour
         AudioEvents.OnExplode -= ExplosionAudio;
         GameplayEvents.OnGameplayPhaseStart -= SubscribeEventsAfterPlacement;
         GameplayEvents.OnFinishAction -= ActionAudio;
-        AudioEvents.OnUnitDrafted -= UnitDraftAudio;
+        DraftEvents.OnCharacterCreated -= UnitDraftAudio;
         PlacementEvents.OnPlaceCharacter += UnitPlacementAudio;
     }
 
