@@ -9,14 +9,10 @@ public class CharacterHandler : MonoBehaviour
 {
     private static readonly List<Character> characters = new List<Character>();
 
-    // Cache to find characters fast, based on their gameobject
-    private static readonly Dictionary<GameObject, Character> charactersByGameObject = new Dictionary<GameObject, Character>();
-
     private void Awake()
     {
         SubscribeEvents();
         characters.Clear();
-        charactersByGameObject.Clear();
     }
 
     public static List<Character> GetAllLivingCharacters()
@@ -26,15 +22,16 @@ public class CharacterHandler : MonoBehaviour
 
     public static Character GetCharacterByGameObject(GameObject characterGameObject)
     {
-        return charactersByGameObject[characterGameObject];
+        return characters.Find(character => character.GetCharacterGameObject() == characterGameObject);
     }
 
     public static Character GetCharacterByPosition(Vector3 position)
     {
-        GameObject gameObject = UIUtils.FindGameObjectByPosition(charactersByGameObject.Keys.ToList(), position);
-        if (gameObject && charactersByGameObject.ContainsKey(gameObject))
+        List<GameObject> characterGameObjects = GetAllLivingCharacters().ConvertAll(character => character.GetCharacterGameObject());
+        GameObject gameObject = UIUtils.FindGameObjectByPosition(characterGameObjects, position);
+        if (gameObject && characterGameObjects.Contains(gameObject))
         {
-            return charactersByGameObject[gameObject];
+            return GetCharacterByGameObject(gameObject);
         }
 
         return null;
@@ -58,7 +55,6 @@ public class CharacterHandler : MonoBehaviour
     private void AddCharacterToList(Character character)
     {
         characters.Add(character);
-        charactersByGameObject.Add(character.GetCharacterGameObject(), character);
     }
 
     private void SetActiveAbilityOnCooldown(ActionMetadata actionMetadata)
@@ -72,10 +68,6 @@ public class CharacterHandler : MonoBehaviour
     private void UpdateCharactersAfterCharacterDeath(Character character, Vector3 position)
     {
         characters.Remove(character);
-        charactersByGameObject.Clear();
-        foreach (Character c in characters) {
-            charactersByGameObject.Add(c.GetCharacterGameObject(), c);
-        }
     }
 
     private void DeliverCharacterList()
