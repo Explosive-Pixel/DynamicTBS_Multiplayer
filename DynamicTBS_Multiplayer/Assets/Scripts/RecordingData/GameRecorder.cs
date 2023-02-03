@@ -36,8 +36,6 @@ public class GameRecorder : MonoBehaviour
             writer.WriteLine(recordLine);
             writer.Close();
         }
-        
-        //Debug.Log(recordLine);
     }
 
     private void RecordDraft(Character character)
@@ -50,8 +48,6 @@ public class GameRecorder : MonoBehaviour
             writer.WriteLine(recordLine);
             writer.Close();
         }
-
-        Debug.Log(recordLine);
     }
 
     private void RecordWinner(PlayerType? winningSide, GameOverCondition endGameCondition)
@@ -64,8 +60,6 @@ public class GameRecorder : MonoBehaviour
             writer.WriteLine(recordLine);
             writer.Close();
         }
-
-        Debug.Log(recordLine);
     }
 
     private string TranslateTilePosition(Vector3? position)

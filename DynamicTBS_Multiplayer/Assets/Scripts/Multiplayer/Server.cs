@@ -378,7 +378,7 @@ public class Server : MonoBehaviour
         {
             if (allConnections[i].IsCreated)
             {
-                Debug.Log($"Server: Sending {msg.Code} to : {allConnections[i].InternalId}");
+                // Debug.Log($"Server: Sending {msg.Code} to : {allConnections[i].InternalId}");
                 SendToClient(msg, allConnections[i]);
             }
         }

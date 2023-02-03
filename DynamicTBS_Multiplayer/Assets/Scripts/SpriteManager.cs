@@ -52,18 +52,18 @@ public class SpriteManager
 
     public static void LoadSprites()
     {
-        BLUE_MASTER_SPRITE = Resources.Load<Sprite>("CharacterSprites/Blue_Master");
-        PINK_MASTER_SPRITE = Resources.Load<Sprite>("CharacterSprites/Pink_Master");
-        BLUE_TANK_SPRITE = Resources.Load<Sprite>("CharacterSprites/Blue_Tank");
-        PINK_TANK_SPRITE = Resources.Load<Sprite>("CharacterSprites/Pink_Tank");
-        BLUE_SHOOTER_SPRITE = Resources.Load<Sprite>("CharacterSprites/Blue_Shooter");
-        PINK_SHOOTER_SPRITE = Resources.Load<Sprite>("CharacterSprites/Pink_Shooter");
-        BLUE_RUNNER_SPRITE = Resources.Load<Sprite>("CharacterSprites/Blue_Runner");
-        PINK_RUNNER_SPRITE = Resources.Load<Sprite>("CharacterSprites/Pink_Runner");
-        BLUE_MECHANIC_SPRITE = Resources.Load<Sprite>("CharacterSprites/Blue_Mechanic");
-        PINK_MECHANIC_SPRITE = Resources.Load<Sprite>("CharacterSprites/Pink_Mechanic");
-        BLUE_MEDIC_SPRITE = Resources.Load<Sprite>("CharacterSprites/Blue_Medic");
-        PINK_MEDIC_SPRITE = Resources.Load<Sprite>("CharacterSprites/Pink_Medic");
+        BLUE_MASTER_SPRITE = Resources.Load<Sprite>("CharacterSprites/Final/Blue_Captain");
+        PINK_MASTER_SPRITE = Resources.Load<Sprite>("CharacterSprites/Final/Pink_Captain");
+        BLUE_TANK_SPRITE = Resources.Load<Sprite>("CharacterSprites/Final/Blue_Tank");
+        PINK_TANK_SPRITE = Resources.Load<Sprite>("CharacterSprites/Final/Pink_Tank");
+        BLUE_SHOOTER_SPRITE = Resources.Load<Sprite>("CharacterSprites/Final/Blue_Shooter");
+        PINK_SHOOTER_SPRITE = Resources.Load<Sprite>("CharacterSprites/Final/Pink_Shooter");
+        BLUE_RUNNER_SPRITE = Resources.Load<Sprite>("CharacterSprites/Final/Blue_Runner");
+        PINK_RUNNER_SPRITE = Resources.Load<Sprite>("CharacterSprites/Final/Pink_Runner");
+        BLUE_MECHANIC_SPRITE = Resources.Load<Sprite>("CharacterSprites/Final/Blue_Mechanic");
+        PINK_MECHANIC_SPRITE = Resources.Load<Sprite>("CharacterSprites/Final/Pink_Mechanic");
+        BLUE_MEDIC_SPRITE = Resources.Load<Sprite>("CharacterSprites/Final/Blue_Doc");
+        PINK_MEDIC_SPRITE = Resources.Load<Sprite>("CharacterSprites/Final/Pink_Doc");
 
         EMPTY_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/v100/Hole");
         EMPTY_TILE_SPRITE_WITH_DEPTH = Resources.Load<Sprite>("TileSprites/v100/HoleWithDepthsFixed");
