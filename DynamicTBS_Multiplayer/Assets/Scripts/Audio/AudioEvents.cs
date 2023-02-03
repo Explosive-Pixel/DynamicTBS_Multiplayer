@@ -11,9 +11,6 @@ public static class AudioEvents
     public delegate void ButtonPress();
     public static event ButtonPress OnButtonPress;
 
-    public delegate void Draft();
-    public static event Draft OnUnitDrafted;
-
     public delegate void Explosion();
     public static event Explosion OnExplode;
 
@@ -30,14 +27,6 @@ public static class AudioEvents
     {
         if (OnButtonPress != null)
             OnButtonPress();
-    }
-
-    public static void UnitDrafted()
-    {
-        if (OnUnitDrafted != null)
-        {
-            OnUnitDrafted();
-        }
     }
 
     public static void Exploding()
