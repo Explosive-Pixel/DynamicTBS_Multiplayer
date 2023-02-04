@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,7 +21,7 @@ public class MovesDisplay : MonoBehaviour
         string newLine = TranslateCharacterName(actionMetadata.CharacterInAction)
             + "on "
             + TranslateTilePosition(actionMetadata.CharacterInitialPosition)
-            + TranslateActionType(actionMetadata.ExecutedActionType)
+            + TranslateActionType(actionMetadata.ExecutedActionType, actionMetadata.CharacterInAction)
             + TranslateTilePosition(actionMetadata.ActionDestinationPosition)
             + "\n";
 
@@ -58,7 +59,7 @@ public class MovesDisplay : MonoBehaviour
         return text;
     }
 
-    private string TranslateActionType(ActionType actiontype)
+    private string TranslateActionType(ActionType actiontype, Character character)
     {
         string text = "";
 
@@ -67,7 +68,20 @@ public class MovesDisplay : MonoBehaviour
         if (actiontype == ActionType.Attack)
             text = " attacked ";
         if (actiontype == ActionType.ActiveAbility)
-            text = " used Active Ability on ";
+        {
+            if (character.GetCharacterType() == CharacterType.MasterChar)
+                text = " used Take Control on ";
+            if (character.GetCharacterType() == CharacterType.TankChar)
+                text = " used Block on ";
+            if (character.GetCharacterType() == CharacterType.ShooterChar)
+                text = " used Powershot on ";
+            if (character.GetCharacterType() == CharacterType.RunnerChar)
+                text = " used Jump on ";
+            if (character.GetCharacterType() == CharacterType.MechanicChar)
+                text = " used Change Floor on ";
+            if (character.GetCharacterType() == CharacterType.MedicChar)
+                text = " used Heal on ";
+        }
         return text;
     }
 
