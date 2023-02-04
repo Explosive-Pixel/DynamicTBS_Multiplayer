@@ -29,4 +29,9 @@ public class JumpAA : IActiveAbility
     {
         return jumpAAAction.CountActionDestinations(character);
     }
+
+    public void ShowActionPattern()
+    {
+        jumpAAAction.ShowActionPattern(character);
+    }
 }

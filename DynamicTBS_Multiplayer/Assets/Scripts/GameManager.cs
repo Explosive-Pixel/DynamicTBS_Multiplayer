@@ -23,4 +23,9 @@ public class GameManager : MonoBehaviour
     {
         return gameType == GameType.multiplayer && IsHost();
     }
+
+    public static bool IsPlayer()
+    {
+        return gameType == GameType.local || Client.Instance.role == ClientType.player;
+    }
 }

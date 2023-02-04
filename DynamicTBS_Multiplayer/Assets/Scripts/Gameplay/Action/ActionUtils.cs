@@ -34,6 +34,7 @@ public class ActionUtils : MonoBehaviour
 
     public static void InstantiateAllActionPositions(Character character)
     {
+        AbortAllActions();
         foreach (IAction action in ActionRegistry.GetActions())
         {
             if (GameplayManager.ActionAvailable(character, action.ActionType) && !character.isDisabled())
@@ -81,6 +82,25 @@ public class ActionUtils : MonoBehaviour
                 ExecuteAction(action, actionDestination);
             }
         }
+    }
+
+    public static void ResetActionDestinations()
+    {
+        AbortAllActions();
+        HideAllActionPatterns();
+    }
+
+    public static void AbortAllActions()
+    {
+        foreach (IAction action in ActionRegistry.GetActions())
+        {
+            action.AbortAction();
+        }
+    }
+
+    public static void HideAllActionPatterns()
+    {
+        ActionRegistry.HideAllActionPatterns();
     }
 
     private static void ExecuteAction(IAction action, GameObject actionDestination)

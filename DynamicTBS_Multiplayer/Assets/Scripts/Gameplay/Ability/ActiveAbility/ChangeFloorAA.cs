@@ -28,4 +28,9 @@ public class ChangeFloorAA : IActiveAbility
     {
         return changeFloorAAAction.CountActionDestinations(character);
     }
+
+    public void ShowActionPattern()
+    {
+        changeFloorAAAction.ShowActionPattern(character);
+    }
 }

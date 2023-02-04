@@ -15,30 +15,39 @@ public class PowershotAAAction : MonoBehaviour, IAction
     private Character characterInAction = null;
     public Character CharacterInAction { get { return characterInAction; } }
 
+    private List<GameObject> patternTargets = new List<GameObject>();
+
+    private void Awake()
+    {
+        GameplayEvents.OnGameplayPhaseStart += Register;
+    }
+
+    public void ShowActionPattern(Character character)
+    {
+        patternTargets = CreateDestinations(character);
+    }
+
+    public void HideActionPattern()
+    {
+        ActionUtils.Clear(patternTargets);
+    }
+
     public int CountActionDestinations(Character character)
     {
-        return 4;
+        Tile tile = Board.GetTileByCharacter(character);
+
+        if(tile.GetRow() > 0 && tile.GetRow() < Board.boardSize - 1 && tile.GetColumn() > 0 && tile.GetColumn() < Board.boardSize - 1)
+            return 4;
+
+        if ((tile.GetRow() == 0 || tile.GetRow() == Board.boardSize - 1) && (tile.GetColumn() == 0 || tile.GetColumn() == Board.boardSize - 1))
+            return 2;
+
+        return 3;
     }
 
     public void CreateActionDestinations(Character character)
     {
-        Tile characterTile = Board.GetTileByCharacter(character);
-
-        powershotTargets = new List<GameObject>();
-
-        for(int i = 0; i < Board.boardSize; i++)
-        {
-            if(i != characterTile.GetColumn())
-            {
-                powershotTargets.Add(ActionUtils.InstantiateActionPosition(Board.FindPosition(characterTile.GetRow(), i), attackCirclePrefab));
-            }
-
-            if(i != characterTile.GetRow())
-            {
-                powershotTargets.Add(ActionUtils.InstantiateActionPosition(Board.FindPosition(i, characterTile.GetColumn()), attackCirclePrefab));
-            }
-        }
-
+        powershotTargets = CreateDestinations(character);
         characterInAction = character;
     }
 
@@ -81,5 +90,37 @@ public class PowershotAAAction : MonoBehaviour, IAction
         ActionUtils.Clear(powershotTargets);
         ActionRegistry.Remove(this);
         characterInAction = null;
+    }
+
+    private List<GameObject> CreateDestinations(Character character)
+    {
+        Tile characterTile = Board.GetTileByCharacter(character);
+
+        List<GameObject> targetList = new List<GameObject>();
+
+        for (int i = 0; i < Board.boardSize; i++)
+        {
+            if (i != characterTile.GetColumn())
+            {
+                targetList.Add(ActionUtils.InstantiateActionPosition(Board.FindPosition(characterTile.GetRow(), i), attackCirclePrefab));
+            }
+
+            if (i != characterTile.GetRow())
+            {
+                targetList.Add(ActionUtils.InstantiateActionPosition(Board.FindPosition(i, characterTile.GetColumn()), attackCirclePrefab));
+            }
+        }
+
+        return targetList;
+    }
+
+    private void Register()
+    {
+        ActionRegistry.RegisterPatternAction(this);
+    }
+
+    private void OnDestroy()
+    {
+        GameplayEvents.OnGameplayPhaseStart -= Register;
     }
 }

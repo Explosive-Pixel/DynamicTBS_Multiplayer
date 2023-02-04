@@ -27,4 +27,9 @@ public class PowershotAA : IActiveAbility
     { 
         return powershotAAAction.CountActionDestinations(character);
     }
+
+    public void ShowActionPattern()
+    {
+        powershotAAAction.ShowActionPattern(character);
+    }
 }

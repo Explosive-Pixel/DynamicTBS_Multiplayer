@@ -16,6 +16,29 @@ public class ChangeFloorAAAction : MonoBehaviour, IAction
     private Character characterInAction = null;
     public Character CharacterInAction { get { return characterInAction; } }
 
+    private List<GameObject> patternTargets = new List<GameObject>();
+
+    private void Awake()
+    {
+        GameplayEvents.OnGameplayPhaseStart += Register;
+    }
+
+    public void ShowActionPattern(Character character)
+    {
+        Tile characterTile = Board.GetTileByPosition(character.GetCharacterGameObject().transform.position);
+        List<Vector3> patternPositions = Board.GetAllTilesWithinRadius(characterTile, ChangeFloorAA.radius).ConvertAll(tile => tile.GetPosition());
+
+        if (patternPositions != null)
+        {
+            patternTargets = ActionUtils.InstantiateActionPositions(patternPositions, changeFloorPrefab);
+        }
+    }
+
+    public void HideActionPattern()
+    {
+        ActionUtils.Clear(patternTargets);
+    }
+
     public int CountActionDestinations(Character character)
     {
         List<Vector3> changeFloorPositions = FindChangeFloorPositions(character);
@@ -86,5 +109,15 @@ public class ChangeFloorAAAction : MonoBehaviour, IAction
             .ConvertAll(tile => tile.GetPosition());
 
         return changeFloorPositions;
+    }
+
+    private void Register()
+    {
+        ActionRegistry.RegisterPatternAction(this);
+    }
+
+    private void OnDestroy()
+    {
+        GameplayEvents.OnGameplayPhaseStart -= Register;
     }
 }

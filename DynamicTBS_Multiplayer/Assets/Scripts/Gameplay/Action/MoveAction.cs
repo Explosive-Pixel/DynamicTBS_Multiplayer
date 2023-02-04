@@ -15,9 +15,27 @@ public class MoveAction : MonoBehaviour, IAction
     private Character characterInAction = null;
     public Character CharacterInAction { get { return characterInAction; } }
 
+    private List<GameObject> patternTargets = new List<GameObject>();
+
     private void Awake()
     {
         PlacementEvents.OnPlacementStart += Register;
+        GameplayEvents.OnGameplayPhaseStart += RegisterPattern;
+    }
+
+    public void ShowActionPattern(Character character)
+    {
+        List<Vector3> patternPositions = FindMovePositions(character, true);
+
+        if (patternPositions != null)
+        {
+            patternTargets = ActionUtils.InstantiateActionPositions(patternPositions, moveCirclePrefab);
+        }
+    }
+
+    public void HideActionPattern()
+    {
+        ActionUtils.Clear(patternTargets);
     }
 
     public int CountActionDestinations(Character character)
@@ -48,8 +66,6 @@ public class MoveAction : MonoBehaviour, IAction
         Vector3 oldPosition = characterInAction.GetCharacterGameObject().transform.position;
         characterInAction.GetCharacterGameObject().transform.position = actionDestination.transform.position;
 
-        //characterInAction.GetCharacterGameObject().transform.position = new Vector3(actionDestination.transform.position.x, actionDestination.transform.position.y + 0.1f, actionDestination.transform.position.z);
-
         Board.UpdateTilesAfterMove(oldPosition, characterInAction);
 
         AbortAction();
@@ -60,7 +76,7 @@ public class MoveAction : MonoBehaviour, IAction
         characterInAction = null; 
     }
 
-    private List<Vector3> FindMovePositions(Character character)
+    private List<Vector3> FindMovePositions(Character character, bool pattern = false)
     {
         if(!GameplayManager.HasGameStarted())
         {
@@ -89,7 +105,7 @@ public class MoveAction : MonoBehaviour, IAction
                 List<Tile> neighbors = Board.GetNeighbors(tile, character.movePattern);
                 foreach (Tile neighbor in neighbors)
                 {
-                    if (!visited.Contains(neighbor) && neighbor.IsAccessible())
+                    if (!visited.Contains(neighbor) && (neighbor.IsAccessible() || pattern))
                     {
                         movePositions.Add(neighbor.GetTileGameObject().transform.position);
                         if (!tileQueueByDistance.ContainsKey(distance + 1))
@@ -115,8 +131,14 @@ public class MoveAction : MonoBehaviour, IAction
         ActionRegistry.Register(this);
     }
 
+    private void RegisterPattern()
+    {
+        ActionRegistry.RegisterPatternAction(this);
+    }
+
     private void OnDestroy()
     {
         PlacementEvents.OnPlacementStart -= Register;
+        GameplayEvents.OnGameplayPhaseStart -= RegisterPattern;
     }
 }

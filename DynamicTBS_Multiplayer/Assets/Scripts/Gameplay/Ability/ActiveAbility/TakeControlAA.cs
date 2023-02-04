@@ -39,6 +39,11 @@ public class TakeControlAA : IActiveAbility
         return 0;
     }
 
+    public void ShowActionPattern()
+    {
+
+    }
+
     private bool Executable()
     {
         Tile tile = Board.GetTileByPosition(character.GetCharacterGameObject().transform.position);

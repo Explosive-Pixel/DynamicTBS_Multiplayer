@@ -15,6 +15,28 @@ public class JumpAAAction : MonoBehaviour, IAction
     private Character characterInAction = null;
     public Character CharacterInAction { get { return characterInAction; } }
 
+    private List<GameObject> patternTargets = new List<GameObject>();
+
+    private void Awake()
+    {
+        GameplayEvents.OnGameplayPhaseStart += Register;
+    }
+
+    public void ShowActionPattern(Character character)
+    {
+        List<Vector3> patternPositions = FindMovePositions(character, true);
+
+        if (patternPositions != null)
+        {
+            patternTargets = ActionUtils.InstantiateActionPositions(patternPositions, jumpPrefab);
+        }
+    }
+
+    public void HideActionPattern()
+    {
+        ActionUtils.Clear(patternTargets);
+    }
+
     public int CountActionDestinations(Character character)
     {
         List<Vector3> movePositions = FindMovePositions(character);
@@ -58,16 +80,26 @@ public class JumpAAAction : MonoBehaviour, IAction
         ActionRegistry.Remove(this);
     }
 
-    private List<Vector3> FindMovePositions(Character character)
+    private List<Vector3> FindMovePositions(Character character, bool pattern = false)
     {
         Tile characterTile = Board.GetTileByPosition(character.GetCharacterGameObject().transform.position);
 
         List<Tile> moveTiles = Board.GetTilesOfDistance(characterTile, JumpAA.movePattern, JumpAA.distance);
 
         List<Vector3> movePositions = moveTiles
-            .FindAll(tile => tile.IsAccessible())
+            .FindAll(tile => tile.IsAccessible() || pattern)
             .ConvertAll(tile => tile.GetPosition());
 
         return movePositions;
+    }
+
+    private void Register()
+    {
+        ActionRegistry.RegisterPatternAction(this);
+    }
+
+    private void OnDestroy()
+    {
+        GameplayEvents.OnGameplayPhaseStart -= Register;
     }
 }

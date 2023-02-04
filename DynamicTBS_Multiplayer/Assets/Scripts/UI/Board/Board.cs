@@ -128,7 +128,7 @@ public class Board : MonoBehaviour
         return tiles;
     }
 
-    public static List<Tile> GetTilesOfClosestCharactersOfSideWithinRadius(Tile center, PlayerType side, int radius)
+    public static List<Tile> GetTilesOfClosestCharactersOfSideInAllStarDirections(Tile center, PlayerType side, int distance)
     {
         var signa = new [] { -1, 0, 1 };
         var directionFinished = new Dictionary<(int, int), bool>();
@@ -144,7 +144,7 @@ public class Board : MonoBehaviour
         List<Tile> positions = new List<Tile>();
 
         int i = 1;
-        while(radius > 0)
+        while(distance > 0)
         {
             foreach (int sig1 in signa)
             {
@@ -166,7 +166,35 @@ public class Board : MonoBehaviour
             }
 
             i++;
-            radius--;
+            distance--;
+        }
+
+        return positions;
+    }
+
+    public static List<Tile> GetTilesInAllStarDirections(Tile center, int distance)
+    {
+        var signa = new[] { -1, 0, 1 };
+
+        List<Tile> positions = new List<Tile>();
+
+        int i = 1;
+        while (distance > 0)
+        {
+            foreach (int sig1 in signa)
+            {
+                foreach (int sig2 in signa)
+                {
+                    Tile currentTile = GetTileByCoordinates(center.GetRow() + sig1 * i, center.GetColumn() + sig2 * i);
+                    if (currentTile != null)
+                    {
+                        positions.Add(currentTile);
+                    }
+                }
+            }
+
+            i++;
+            distance--;
         }
 
         return positions;
