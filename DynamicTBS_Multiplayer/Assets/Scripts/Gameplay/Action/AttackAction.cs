@@ -15,9 +15,27 @@ public class AttackAction : MonoBehaviour, IAction
     private Character characterInAction = null;
     public Character CharacterInAction { get { return characterInAction; } }
 
+    private List<GameObject> patternTargets = new List<GameObject>();
+
     private void Awake()
     {
         GameplayEvents.OnGameplayPhaseStart += Register;
+    }
+
+    public void ShowActionPattern(Character character)
+    {
+        int range = character.GetAttackRange();
+        Tile tile = Board.GetTileByPosition(character.GetCharacterGameObject().transform.position);
+
+        List<Vector3> patternPositions = Board.GetTilesInAllStarDirections(tile, range)
+            .ConvertAll(tile => tile.GetPosition());
+
+        patternTargets = ActionUtils.InstantiateActionPositions(patternPositions, attackCirclePrefab);
+    }
+
+    public void HideActionPattern()
+    {
+        ActionUtils.Clear(patternTargets);
     }
 
     public int CountActionDestinations(Character character)
@@ -68,7 +86,7 @@ public class AttackAction : MonoBehaviour, IAction
 
         PlayerType otherSide = PlayerManager.GetOtherPlayer(character.GetSide()).GetPlayerType();
 
-        List<Vector3> targetPositions = Board.GetTilesOfClosestCharactersOfSideWithinRadius(tile, otherSide, range)
+        List<Vector3> targetPositions = Board.GetTilesOfClosestCharactersOfSideInAllStarDirections(tile, otherSide, range)
             .FindAll(tile => tile.IsOccupied() && tile.GetCurrentInhabitant().isAttackableBy(character))
             .ConvertAll(tile => tile.GetTileGameObject().transform.position);
 
@@ -78,6 +96,7 @@ public class AttackAction : MonoBehaviour, IAction
     private void Register()
     {
         ActionRegistry.Register(this);
+        ActionRegistry.RegisterPatternAction(this);
     }
 
     private void OnDestroy()

@@ -77,6 +77,11 @@ public class PlayerManager : MonoBehaviour
         return GetPlayer(name) == GetCurrentPlayer();
     }
 
+    public static bool ClientIsCurrentPlayer()
+    {
+        return GameManager.gameType == GameType.local || Client.Instance.side == GetCurrentPlayer().GetPlayerType();
+    }
+
     public static Player GetPlayer(string name)
     {
         if(name.ToLower().Contains(PlayerType.blue.ToString()))

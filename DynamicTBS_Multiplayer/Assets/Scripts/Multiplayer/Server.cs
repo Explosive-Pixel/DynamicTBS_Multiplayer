@@ -407,7 +407,7 @@ public class Server : MonoBehaviour
         if (messageHistory.Count > 0)
         {
             Debug.Log("Sending history to client: " + messageHistory.Count);
-            float delay = 0.05f;
+            float delay = 0.1f;
 
             SendToClient(new NetChangeLoadGameStatus(), connection);
             yield return new WaitForSeconds(delay);

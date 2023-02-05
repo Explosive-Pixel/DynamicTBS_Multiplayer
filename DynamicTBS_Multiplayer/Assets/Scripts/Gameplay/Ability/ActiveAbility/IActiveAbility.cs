@@ -8,4 +8,6 @@ public interface IActiveAbility
     void Execute();
 
     int CountActionDestinations();
+
+    void ShowActionPattern();
 }

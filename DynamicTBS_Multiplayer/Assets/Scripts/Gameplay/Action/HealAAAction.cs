@@ -17,9 +17,27 @@ public class HealAAAction : MonoBehaviour, IAction
 
     private List<Character> buffedCharacters = new List<Character>();
 
+    private List<GameObject> patternTargets = new List<GameObject>();
+
     private void Awake()
     {
+        GameplayEvents.OnGameplayPhaseStart += Register;
         GameplayEvents.OnFinishAction += DebuffCharacter;
+    }
+
+    public void ShowActionPattern(Character character)
+    {
+        Tile tile = Board.GetTileByPosition(character.GetCharacterGameObject().transform.position);
+
+        List<Vector3> patternPositions = Board.GetTilesInAllStarDirections(tile, HealAA.range)
+            .ConvertAll(tile => tile.GetPosition());
+
+        patternTargets = ActionUtils.InstantiateActionPositions(patternPositions, healPrefab);
+    }
+
+    public void HideActionPattern()
+    {
+        ActionUtils.Clear(patternTargets);
     }
 
     public int CountActionDestinations(Character character)
@@ -76,7 +94,7 @@ public class HealAAAction : MonoBehaviour, IAction
     {
         Tile characterTile = Board.GetTileByPosition(character.GetCharacterGameObject().transform.position);
 
-        List<Tile> healTiles = Board.GetTilesOfClosestCharactersOfSideWithinRadius(characterTile, character.GetSide().GetPlayerType(), HealAA.range)
+        List<Tile> healTiles = Board.GetTilesOfClosestCharactersOfSideInAllStarDirections(characterTile, character.GetSide().GetPlayerType(), HealAA.range)
             .FindAll(tile => tile.IsOccupied() && tile.GetCurrentInhabitant().isHealableBy(character) && !tile.GetCurrentInhabitant().HasFullHP());
 
         List<Vector3> healPositions = healTiles.ConvertAll(tile => tile.GetPosition());
@@ -111,8 +129,14 @@ public class HealAAAction : MonoBehaviour, IAction
         child.SetActive(bufferCount > 0);
     }
 
+    private void Register()
+    {
+        ActionRegistry.RegisterPatternAction(this);
+    }
+
     private void OnDestroy()
     {
+        GameplayEvents.OnGameplayPhaseStart -= Register;
         GameplayEvents.OnFinishAction -= DebuffCharacter;
     }
 }

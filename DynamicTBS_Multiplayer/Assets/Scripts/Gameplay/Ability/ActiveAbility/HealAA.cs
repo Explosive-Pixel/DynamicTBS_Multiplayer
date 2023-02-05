@@ -30,4 +30,9 @@ public class HealAA : IActiveAbility
     {
         return healAAAction.CountActionDestinations(character);
     }
+
+    public void ShowActionPattern()
+    {
+        healAAAction.ShowActionPattern(character);
+    }
 }

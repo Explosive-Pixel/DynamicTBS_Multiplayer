@@ -90,6 +90,10 @@ public class BlockAA : IActiveAbility
         }
     }
 
+    public void ShowActionPattern()
+    {
+    }
+
     private void ChangeIsAttackableByOfOtherCharacters()
     { 
         foreach(Character c in CharacterHandler.GetAllLivingCharacters())

@@ -5,6 +5,7 @@ using UnityEngine;
 public class ActionRegistry
 {
     private static readonly List<IAction> actions = new List<IAction>();
+    private static readonly List<IAction> patternActions = new List<IAction>();
 
     public static void Register(IAction action)
     {
@@ -31,5 +32,18 @@ public class ActionRegistry
         }
 
         return copy;
+    }
+
+    public static void RegisterPatternAction(IAction action)
+    {
+        patternActions.Add(action);
+    }
+
+    public static void HideAllActionPatterns()
+    {
+        foreach(IAction action in patternActions)
+        {
+            action.HideActionPattern();
+        }
     }
 }
