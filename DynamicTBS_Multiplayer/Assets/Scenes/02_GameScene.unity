@@ -461,6 +461,7 @@ GameObject:
   - component: {fileID: 32580863}
   - component: {fileID: 32580864}
   - component: {fileID: 32580865}
+  - component: {fileID: 32580866}
   m_Layer: 5
   m_Name: GameplayCanvas
   m_TagString: Untagged
@@ -719,6 +720,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movesDisplayObject: {fileID: 739393371}
   displayText: {fileID: 169656567}
+--- !u!114 &32580866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 32580846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dca9ee1e2018bc14b9b1190a5d068a8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blueExplosionPrefab: {fileID: 4990085416062294845, guid: 121d0c0650662d14d9ee2685ed57594f, type: 3}
+  pinkExplosionPrefab: {fileID: 7683812336193704087, guid: 1ac83b8dd0d3246469faf39a77dc9682, type: 3}
+  explosionTime: 1.5
 --- !u!1 &34118702
 GameObject:
   m_ObjectHideFlags: 0
