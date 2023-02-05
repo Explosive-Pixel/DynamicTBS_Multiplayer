@@ -1,23 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpriteManager
-{
-    // Characters
-    public static Sprite BLUE_MASTER_SPRITE;
-    public static Sprite PINK_MASTER_SPRITE;
-    public static Sprite BLUE_TANK_SPRITE;
-    public static Sprite PINK_TANK_SPRITE;
-    public static Sprite BLUE_SHOOTER_SPRITE;
-    public static Sprite PINK_SHOOTER_SPRITE;
-    public static Sprite BLUE_RUNNER_SPRITE;
-    public static Sprite PINK_RUNNER_SPRITE;
-    public static Sprite BLUE_MECHANIC_SPRITE;
-    public static Sprite PINK_MECHANIC_SPRITE;
-    public static Sprite BLUE_MEDIC_SPRITE;
-    public static Sprite PINK_MEDIC_SPRITE;
-    
-    // Tiles
+public class TileSpriteManager
+{   
     public static Sprite EMPTY_TILE_SPRITE;
     public static Sprite EMPTY_TILE_SPRITE_WITH_DEPTH;
     public static Sprite FLOOR_TILE_SPRITE;
@@ -30,41 +15,11 @@ public class SpriteManager
     public static Sprite PINK_MASTER_START_TILE_SPRITE;
     public static Sprite BLUE_MASTER_START_TILE_SPRITE;
     public static Sprite GOAL_TILE_SPRITE;
-    
-    // UI
-    public static Sprite ABILITY_CIRCLE_SPRITE;
-    public static Sprite ATTACK_CIRCLE_SPRITE;
-    public static Sprite MOVE_CIRCLE_SPRITE;
-    public static Sprite ATTACK_ROW_DOWN_SPRITE;
-    public static Sprite ATTACK_ROW_LEFT_SPRITE;
-    public static Sprite ATTACK_ROW_RIGHT_SPRITE;
-    public static Sprite ATTACK_ROW_UP_SPRITE;
-    public static Sprite COOLDOWN_1_SPRITE;
-    public static Sprite COOLDOWN_2_SPRITE;
-    public static Sprite COOLDOWN_3_SPRITE;
-    public static Sprite HP_1_SPRITE;
-    public static Sprite HP_2_SPRITE;
-    public static Sprite HP_3_SPRITE;
-    public static Sprite HP_4_SPRITE;
-    public static Sprite TANK_BLOCK_FRAME_SPRITE;
 
-    private static List<Sprite> floorTileSprites = new List<Sprite>();
+    private static readonly List<Sprite> floorTileSprites = new List<Sprite>();
 
     public static void LoadSprites()
     {
-        BLUE_MASTER_SPRITE = Resources.Load<Sprite>("CharacterSprites/Final/Blue_Captain");
-        PINK_MASTER_SPRITE = Resources.Load<Sprite>("CharacterSprites/Final/Pink_Captain");
-        BLUE_TANK_SPRITE = Resources.Load<Sprite>("CharacterSprites/Final/Blue_Tank");
-        PINK_TANK_SPRITE = Resources.Load<Sprite>("CharacterSprites/Final/Pink_Tank");
-        BLUE_SHOOTER_SPRITE = Resources.Load<Sprite>("CharacterSprites/Final/Blue_Shooter");
-        PINK_SHOOTER_SPRITE = Resources.Load<Sprite>("CharacterSprites/Final/Pink_Shooter");
-        BLUE_RUNNER_SPRITE = Resources.Load<Sprite>("CharacterSprites/Final/Blue_Runner");
-        PINK_RUNNER_SPRITE = Resources.Load<Sprite>("CharacterSprites/Final/Pink_Runner");
-        BLUE_MECHANIC_SPRITE = Resources.Load<Sprite>("CharacterSprites/Final/Blue_Mechanic");
-        PINK_MECHANIC_SPRITE = Resources.Load<Sprite>("CharacterSprites/Final/Pink_Mechanic");
-        BLUE_MEDIC_SPRITE = Resources.Load<Sprite>("CharacterSprites/Final/Blue_Doc");
-        PINK_MEDIC_SPRITE = Resources.Load<Sprite>("CharacterSprites/Final/Pink_Doc");
-
         EMPTY_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/v100/Hole");
         EMPTY_TILE_SPRITE_WITH_DEPTH = Resources.Load<Sprite>("TileSprites/v100/HoleWithDepthsFixed");
         FLOOR_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/v100/FloorTileBase");
@@ -77,22 +32,6 @@ public class SpriteManager
         PINK_MASTER_START_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/v100/Pink_MasterStartTile");
         BLUE_MASTER_START_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/v100/Blue_MasterStartTile");
         GOAL_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/v100/GoalSquare_v3");
-
-        ABILITY_CIRCLE_SPRITE = Resources.Load<Sprite>("UI/AbilityCircle");
-        ATTACK_CIRCLE_SPRITE = Resources.Load<Sprite>("UI/AttackCircle");
-        MOVE_CIRCLE_SPRITE = Resources.Load<Sprite>("UI/MoveCircle");
-        ATTACK_ROW_DOWN_SPRITE = Resources.Load<Sprite>("UI/AttackRowDown");
-        ATTACK_ROW_LEFT_SPRITE = Resources.Load<Sprite>("UI/AttackRowLeft");
-        ATTACK_ROW_RIGHT_SPRITE = Resources.Load<Sprite>("UI/AttackRowRight");
-        ATTACK_ROW_UP_SPRITE = Resources.Load<Sprite>("UI/AttackRowUp");
-        COOLDOWN_1_SPRITE = Resources.Load<Sprite>("UI/Cooldown_1");
-        COOLDOWN_2_SPRITE = Resources.Load<Sprite>("UI/Cooldown_2");
-        COOLDOWN_3_SPRITE = Resources.Load<Sprite>("UI/Cooldown_3");
-        HP_1_SPRITE = Resources.Load<Sprite>("UI/HP_1");
-        HP_2_SPRITE = Resources.Load<Sprite>("UI/HP_2");
-        HP_3_SPRITE = Resources.Load<Sprite>("UI/HP_3");
-        HP_4_SPRITE = Resources.Load<Sprite>("UI/HP_4");
-        TANK_BLOCK_FRAME_SPRITE = Resources.Load<Sprite>("UI/Tank_BlockFrame");
 
         AddSpritesToFloorTileList();
     }

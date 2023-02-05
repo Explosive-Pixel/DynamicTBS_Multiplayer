@@ -19,11 +19,6 @@ public class ShooterChar : Character
         Init();
     }
 
-    protected override Sprite CharacterSprite(Player side)
-    {
-        return side.GetPlayerType() == PlayerType.blue ? SpriteManager.BLUE_SHOOTER_SPRITE : SpriteManager.PINK_SHOOTER_SPRITE;
-    }
-
     protected override GameObject CharacterPrefab(Player side)
     {
         return side.GetPlayerType() == PlayerType.blue ? PrefabManager.BLUE_SHOOTER_PREFAB : PrefabManager.PINK_SHOOTER_PREFAB;

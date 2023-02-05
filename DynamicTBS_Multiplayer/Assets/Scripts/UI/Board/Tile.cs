@@ -23,7 +23,7 @@ public class Tile
         this.type = type;
         this.row = row;
         this.column = column;
-        this.tileSprite = SpriteManager.GetTileSprite(type, side, WithDepth());
+        this.tileSprite = TileSpriteManager.GetTileSprite(type, side, WithDepth());
         this.position = Board.FindPosition(row, column);
         this.currentInhabitant = null;
         this.isChangeable = () => type != TileType.GoalTile;
@@ -75,7 +75,7 @@ public class Tile
     public Tile Transform(TileType newTileType)
     {
         this.type = newTileType;
-        this.tileSprite = SpriteManager.GetTileSprite(newTileType, Board.FindSideOfTile(row), WithDepth());
+        this.tileSprite = TileSpriteManager.GetTileSprite(newTileType, Board.FindSideOfTile(row), WithDepth());
         this.tileGameObject.GetComponent<SpriteRenderer>().sprite = this.tileSprite;
 
         return this;

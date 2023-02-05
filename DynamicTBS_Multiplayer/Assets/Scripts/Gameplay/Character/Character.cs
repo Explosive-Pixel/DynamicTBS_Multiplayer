@@ -17,7 +17,6 @@ public abstract class Character
     protected int attackRange;
     protected IActiveAbility activeAbility;
     protected IPassiveAbility passiveAbility;
-    protected abstract Sprite CharacterSprite(Player side);
     protected abstract GameObject CharacterPrefab(Player side);
 
     protected int hitPoints;
@@ -79,8 +78,13 @@ public abstract class Character
     public int GetMoveSpeed() { return moveSpeed; }
     public int GetAttackRange() { return attackRange; }
     public IPassiveAbility GetPassiveAbility() { return passiveAbility; }
-    public Sprite GetCharacterSprite(Player side) { return CharacterSprite(side); }
     public GameObject GetCharacterPrefab(Player side) { return CharacterPrefab(side); }
+    public Sprite GetCharacterSprite(Player side) 
+    {
+        GameObject prefab = CharacterPrefab(side);
+        GameObject characterSprite = UIUtils.FindChildGameObject(prefab, "CharacterSprite");
+        return characterSprite.GetComponent<SpriteRenderer>().sprite;
+    }
 
     public void TakeDamage(int damage) 
     {

@@ -19,11 +19,6 @@ public class MedicChar : Character
         Init();
     }
 
-    protected override Sprite CharacterSprite(Player side)
-    {
-        return side.GetPlayerType() == PlayerType.blue ? SpriteManager.BLUE_MEDIC_SPRITE : SpriteManager.PINK_MEDIC_SPRITE;
-    }
-
     protected override GameObject CharacterPrefab(Player side)
     {
         return side.GetPlayerType() == PlayerType.blue ? PrefabManager.BLUE_MEDIC_PREFAB : PrefabManager.PINK_MEDIC_PREFAB;

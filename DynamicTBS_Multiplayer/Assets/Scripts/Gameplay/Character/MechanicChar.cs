@@ -19,11 +19,6 @@ public class MechanicChar : Character
         Init();
     }
 
-    protected override Sprite CharacterSprite(Player side)
-    {
-        return side.GetPlayerType() == PlayerType.blue ? SpriteManager.BLUE_MECHANIC_SPRITE : SpriteManager.PINK_MECHANIC_SPRITE;
-    }
-
     protected override GameObject CharacterPrefab(Player side)
     {
         return side.GetPlayerType() == PlayerType.blue ? PrefabManager.BLUE_MECHANIC_PREFAB : PrefabManager.PINK_MECHANIC_PREFAB;

@@ -19,11 +19,6 @@ public class RunnerChar : Character
         Init();
     }
 
-    protected override Sprite CharacterSprite(Player side)
-    {
-        return side.GetPlayerType() == PlayerType.blue ? SpriteManager.BLUE_RUNNER_SPRITE : SpriteManager.PINK_RUNNER_SPRITE;
-    }
-
     protected override GameObject CharacterPrefab(Player side)
     {
         return side.GetPlayerType() == PlayerType.blue ? PrefabManager.BLUE_RUNNER_PREFAB : PrefabManager.PINK_RUNNER_PREFAB;
