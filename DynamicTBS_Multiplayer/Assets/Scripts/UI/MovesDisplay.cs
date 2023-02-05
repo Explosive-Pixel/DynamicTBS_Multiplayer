@@ -20,22 +20,23 @@ public class MovesDisplay : MonoBehaviour
 
     private void WriteMovesToString(ActionMetadata actionMetadata)
     {
-        string newLine = "";
+        string newLine = GetMoveCountString() + ": ";
 
         if (actionMetadata.ExecutedActionType == ActionType.Skip)
         {
-            newLine = TranslatePlayerSide(actionMetadata.CharacterInAction.GetSide().GetPlayerType()) + "ended their turn";
+            newLine += TranslatePlayerSide(actionMetadata.ExecutingPlayer.GetPlayerType()) + "ended their turn";
         }
         else
         {
-            newLine = TranslateCharacterName(actionMetadata.CharacterInAction)
+            newLine += TranslateCharacterName(actionMetadata.CharacterInAction)
             + "on "
             + TranslateTilePosition(actionMetadata.CharacterInitialPosition)
             + TranslateActionType(actionMetadata.ExecutedActionType, actionMetadata.CharacterInAction)
-            + TranslateTilePosition(actionMetadata.ActionDestinationPosition)
-            + "\n";
+            + TranslateTilePosition(actionMetadata.ActionDestinationPosition);
         }
-        
+
+        newLine += "\n";
+
         DisplayMoves(newLine);
     }
 
@@ -57,11 +58,13 @@ public class MovesDisplay : MonoBehaviour
 
     private string GetMoveCountString()
     {
-        string text = "";
+        int counter = (actionCount / (GameplayManager.maxActionsPerRound * 2)) + 1;
+        PlayerType player = actionCount % (GameplayManager.maxActionsPerRound * 2) <= 1 ? PlayerManager.GameplayPhaseStartPlayer : PlayerManager.GetOtherSide(PlayerManager.GameplayPhaseStartPlayer);
+        char addition = (char)((actionCount % GameplayManager.maxActionsPerRound) + 65);
+
+        string text = TranslatePlayerSide(player) + " " + counter.ToString() + addition;
+
         actionCount += 1;
-
-
-
         return text;
     }
 
