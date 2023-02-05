@@ -5,7 +5,7 @@ using UnityEngine;
 public class InfluenceAuraPA : IPassiveAbility
 {
     private static int maxInfluence = 3;
-    private static PatternType influenceAuraPatternType = PatternType.Cross;
+    private static PatternType influenceAuraPatternType = PatternType.Star;
 
     private Character owner;
 

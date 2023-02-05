@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,8 @@ public class MovesDisplay : MonoBehaviour
     [SerializeField] private Text displayText;
     private List<string> movesList = new List<string>();
 
+    private int actionCount = 0;
+
     private void Awake()
     {
         SubscribeEvents();
@@ -17,13 +20,22 @@ public class MovesDisplay : MonoBehaviour
 
     private void WriteMovesToString(ActionMetadata actionMetadata)
     {
-        string newLine = TranslateCharacterName(actionMetadata.CharacterInAction)
+        string newLine = "";
+
+        if (actionMetadata.ExecutedActionType == ActionType.Skip)
+        {
+            newLine = TranslatePlayerSide(actionMetadata.CharacterInAction.GetSide().GetPlayerType()) + "ended their turn";
+        }
+        else
+        {
+            newLine = TranslateCharacterName(actionMetadata.CharacterInAction)
             + "on "
             + TranslateTilePosition(actionMetadata.CharacterInitialPosition)
-            + TranslateActionType(actionMetadata.ExecutedActionType)
+            + TranslateActionType(actionMetadata.ExecutedActionType, actionMetadata.CharacterInAction)
             + TranslateTilePosition(actionMetadata.ActionDestinationPosition)
             + "\n";
-
+        }
+        
         DisplayMoves(newLine);
     }
 
@@ -43,6 +55,16 @@ public class MovesDisplay : MonoBehaviour
         movesList.Clear();
     }
 
+    private string GetMoveCountString()
+    {
+        string text = "";
+        actionCount += 1;
+
+
+
+        return text;
+    }
+
     private string TranslateTilePosition(Vector3? position)
     {
         string text = "";
@@ -58,7 +80,7 @@ public class MovesDisplay : MonoBehaviour
         return text;
     }
 
-    private string TranslateActionType(ActionType actiontype)
+    private string TranslateActionType(ActionType actiontype, Character character)
     {
         string text = "";
 
@@ -67,7 +89,20 @@ public class MovesDisplay : MonoBehaviour
         if (actiontype == ActionType.Attack)
             text = " attacked ";
         if (actiontype == ActionType.ActiveAbility)
-            text = " used Active Ability on ";
+        {
+            if (character.GetCharacterType() == CharacterType.MasterChar)
+                text = " used Take Control on ";
+            if (character.GetCharacterType() == CharacterType.TankChar)
+                text = " used Block on ";
+            if (character.GetCharacterType() == CharacterType.ShooterChar)
+                text = " used Powershot on ";
+            if (character.GetCharacterType() == CharacterType.RunnerChar)
+                text = " used Jump on ";
+            if (character.GetCharacterType() == CharacterType.MechanicChar)
+                text = " used Change Floor on ";
+            if (character.GetCharacterType() == CharacterType.MedicChar)
+                text = " used Heal on ";
+        }
         return text;
     }
 
@@ -90,6 +125,22 @@ public class MovesDisplay : MonoBehaviour
             if (character.GetCharacterType() == CharacterType.MedicChar)
                 text = "Doc ";
         }
+        return text;
+    }
+
+    private string TranslatePlayerSide(PlayerType playerType)
+    {
+        string text = "";
+        
+        if (playerType == PlayerType.blue)
+        {
+            text = "Blue ";
+        }
+        else
+        {
+            text = "Pink ";
+        }
+
         return text;
     }
 

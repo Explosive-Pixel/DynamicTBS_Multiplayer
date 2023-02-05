@@ -98,9 +98,9 @@ public class AudioManager : MonoBehaviour
     {
         if (!atmoSource.isPlaying)
         {
-            atmoSource.clip = atmoClip;
-            atmoSource.loop = true;
-            atmoSource.Play();
+            //atmoSource.clip = atmoClip;
+            //atmoSource.loop = true;
+            //atmoSource.Play();
         }
     }
 
@@ -167,16 +167,16 @@ public class AudioManager : MonoBehaviour
     {
         fxSource.PlayOneShot(unitPlacedClip);
 
-        if (character.GetCharacterType() == CharacterType.TankChar)
-            fxSource.PlayOneShot(tankVoicelineClip);
-        if (character.GetCharacterType() == CharacterType.ShooterChar)
-            fxSource.PlayOneShot(shooterVoicelineClip);
-        if (character.GetCharacterType() == CharacterType.RunnerChar)
-            fxSource.PlayOneShot(runnerVoicelineClip);
-        if (character.GetCharacterType() == CharacterType.MechanicChar)
-            fxSource.PlayOneShot(mechanicVoicelineClip);
-        if (character.GetCharacterType() == CharacterType.MedicChar)
-            fxSource.PlayOneShot(medicVoicelineClip);
+        //if (character.GetCharacterType() == CharacterType.TankChar)
+        //    fxSource.PlayOneShot(tankVoicelineClip);
+        //if (character.GetCharacterType() == CharacterType.ShooterChar)
+        //    fxSource.PlayOneShot(shooterVoicelineClip);
+        //if (character.GetCharacterType() == CharacterType.RunnerChar)
+        //    fxSource.PlayOneShot(runnerVoicelineClip);
+        //if (character.GetCharacterType() == CharacterType.MechanicChar)
+        //    fxSource.PlayOneShot(mechanicVoicelineClip);
+        //if (character.GetCharacterType() == CharacterType.MedicChar)
+        //    fxSource.PlayOneShot(medicVoicelineClip);
     }
     #endregion
 
