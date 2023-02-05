@@ -178,11 +178,17 @@ public class UIClickHandler : MonoBehaviour
         GameplayEvents.ChangeCharacterSelection(null);
     }
 
+    private void UnselectCharacter(ActionMetadata actionMetadata)
+    {
+        UnselectCharacter();
+    }
+
     #region EventSubscriptions
 
     private void SubscribeEvents()
     {
         GameplayEvents.OnCharacterSelectionChange += ChangeCharacterSelection;
+        GameplayEvents.OnFinishAction += UnselectCharacter;
         GameplayEvents.OnPlayerTurnAborted += UnselectCharacter;
     }
 
@@ -190,6 +196,7 @@ public class UIClickHandler : MonoBehaviour
     {
         GameplayEvents.OnCharacterSelectionChange -= ChangeCharacterSelection;
         GameplayEvents.OnPlayerTurnAborted -= UnselectCharacter;
+        GameplayEvents.OnFinishAction -= UnselectCharacter;
     }
 
     #endregion
