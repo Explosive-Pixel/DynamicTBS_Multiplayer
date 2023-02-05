@@ -7,6 +7,7 @@ public class ExplosionUIEffect : MonoBehaviour
     [SerializeField] private GameObject blueExplosionPrefab;
     [SerializeField] private GameObject pinkExplosionPrefab;
     [SerializeField] private float explosionTime;
+    [SerializeField] private float yOffset;
 
     private void Awake()
     {
@@ -15,16 +16,18 @@ public class ExplosionUIEffect : MonoBehaviour
 
     private void InstantiatePrefab(Character character, Vector3 lastPosition)
     {
+        Vector3 instantiationPosition = lastPosition + new Vector3(0f, yOffset, 0f);
+
         if (character.GetPassiveAbility().GetType() == typeof(ExplodePA))
         {
             if (character.GetSide().GetPlayerType() == PlayerType.blue)
             {
-                GameObject newBlueExplosion = Instantiate(blueExplosionPrefab, lastPosition, character.GetCharacterGameObject().transform.rotation);
+                GameObject newBlueExplosion = Instantiate(blueExplosionPrefab, instantiationPosition, character.GetCharacterGameObject().transform.rotation);
                 StartCoroutine(ExplosionCoroutine(newBlueExplosion, explosionTime));
             }
             else
             {
-                GameObject newPinkExplosion = Instantiate(pinkExplosionPrefab, lastPosition, character.GetCharacterGameObject().transform.rotation);
+                GameObject newPinkExplosion = Instantiate(pinkExplosionPrefab, instantiationPosition, character.GetCharacterGameObject().transform.rotation);
                 StartCoroutine(ExplosionCoroutine(newPinkExplosion, explosionTime));
             }
         }
