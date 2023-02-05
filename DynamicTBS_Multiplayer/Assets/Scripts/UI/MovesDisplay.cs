@@ -10,6 +10,8 @@ public class MovesDisplay : MonoBehaviour
     [SerializeField] private Text displayText;
     private List<string> movesList = new List<string>();
 
+    private int actionCount = 0;
+
     private void Awake()
     {
         SubscribeEvents();
@@ -18,13 +20,22 @@ public class MovesDisplay : MonoBehaviour
 
     private void WriteMovesToString(ActionMetadata actionMetadata)
     {
-        string newLine = TranslateCharacterName(actionMetadata.CharacterInAction)
+        string newLine = "";
+
+        if (actionMetadata.ExecutedActionType == ActionType.Skip)
+        {
+            newLine = "";
+        }
+        else
+        {
+            newLine = TranslateCharacterName(actionMetadata.CharacterInAction)
             + "on "
             + TranslateTilePosition(actionMetadata.CharacterInitialPosition)
             + TranslateActionType(actionMetadata.ExecutedActionType, actionMetadata.CharacterInAction)
             + TranslateTilePosition(actionMetadata.ActionDestinationPosition)
             + "\n";
-
+        }
+        
         DisplayMoves(newLine);
     }
 
@@ -42,6 +53,16 @@ public class MovesDisplay : MonoBehaviour
     private void EmptyList(PlayerType? winner, GameOverCondition endGameCondition)
     {
         movesList.Clear();
+    }
+
+    private string GetMoveCountString()
+    {
+        string text = "";
+        actionCount += 1;
+
+
+
+        return text;
     }
 
     private string TranslateTilePosition(Vector3? position)

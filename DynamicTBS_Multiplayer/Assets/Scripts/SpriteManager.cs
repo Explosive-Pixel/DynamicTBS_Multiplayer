@@ -76,7 +76,7 @@ public class SpriteManager
         BLUE_START_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/v100/Blue_StartTile");
         PINK_MASTER_START_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/v100/Pink_MasterStartTile");
         BLUE_MASTER_START_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/v100/Blue_MasterStartTile");
-        GOAL_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/v100/Goal_Dark");
+        GOAL_TILE_SPRITE = Resources.Load<Sprite>("TileSprites/v100/GoalSquare_v3");
 
         ABILITY_CIRCLE_SPRITE = Resources.Load<Sprite>("UI/AbilityCircle");
         ATTACK_CIRCLE_SPRITE = Resources.Load<Sprite>("UI/AttackCircle");
