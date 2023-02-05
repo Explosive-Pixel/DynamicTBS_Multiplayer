@@ -10,7 +10,6 @@ public class BlockAA : IActiveAbility
 
     private Character character;
     private int currentBlockCount = 0;
-    private GameObject blockGameObject = null;
 
     private bool firstExecution = true;
 
@@ -65,7 +64,7 @@ public class BlockAA : IActiveAbility
     public void ActivateBlock()
     {
         currentBlockCount = blockingRounds + 1;
-        blockGameObject = CreateBlockGameObject();
+        ToggleBlock(true);
         SubscribeEvents();
         GameplayEvents.ActionFinished(new ActionMetadata
         {
@@ -85,7 +84,9 @@ public class BlockAA : IActiveAbility
 
             if (currentBlockCount == 0)
             {
-                DestroyBlock();
+                currentBlockCount = 0;
+                ToggleBlock(false);
+                UnsubscribeEvents();
             }
         }
     }
@@ -127,22 +128,9 @@ public class BlockAA : IActiveAbility
         }
     }
 
-    private GameObject CreateBlockGameObject()
+    private void ToggleBlock(bool active)
     {
-        GameObject blockGameObject = new GameObject();
-        blockGameObject.name = "TmpBlockOverlay";
-        blockGameObject.transform.parent = character.GetCharacterGameObject().transform;
-
-        Vector3 position = character.GetCharacterGameObject().transform.position;
-        Quaternion startRotation = Quaternion.identity;
-
-        SpriteRenderer spriteRenderer = blockGameObject.AddComponent<SpriteRenderer>();
-        spriteRenderer.sprite = SpriteManager.TANK_BLOCK_FRAME_SPRITE;
-        blockGameObject.transform.position = new Vector3(position.x, position.y, position.z - 0.1f);
-        blockGameObject.transform.rotation = startRotation;
-        blockGameObject.AddComponent<BoxCollider>();
-
-        return blockGameObject;
+        UIUtils.FindChildGameObject(character.GetCharacterGameObject(), "Block").SetActive(active);
     }
 
     private void ReduceBlockCounter(Player player)
@@ -151,14 +139,6 @@ public class BlockAA : IActiveAbility
         {
             ReduceBlockCount();
         }
-    }
-
-    private void DestroyBlock()
-    {
-        GameObject.Destroy(blockGameObject);
-        blockGameObject = null;
-        currentBlockCount = 0;
-        UnsubscribeEvents();
     }
 
     private void SubscribeEvents()

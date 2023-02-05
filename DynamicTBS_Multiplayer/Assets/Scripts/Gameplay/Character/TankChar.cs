@@ -19,11 +19,6 @@ public class TankChar : Character
         Init();
     }
 
-    protected override Sprite CharacterSprite(Player side)
-    {
-        return side.GetPlayerType() == PlayerType.blue ? SpriteManager.BLUE_TANK_SPRITE : SpriteManager.PINK_TANK_SPRITE;
-    }
-
     protected override GameObject CharacterPrefab(Player side)
     {
         return side.GetPlayerType() == PlayerType.blue ? PrefabManager.BLUE_TANK_PREFAB : PrefabManager.PINK_TANK_PREFAB;

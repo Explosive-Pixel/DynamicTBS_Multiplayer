@@ -15,14 +15,8 @@ public class MasterChar : Character
 
         this.activeAbility = new TakeControlAA(this);
         this.passiveAbility = new InfluenceAuraPA(this);
-
         
         Init();
-    }
-
-    protected override Sprite CharacterSprite(Player side)
-    {
-        return side.GetPlayerType() == PlayerType.blue ? SpriteManager.BLUE_MASTER_SPRITE : SpriteManager.PINK_MASTER_SPRITE;
     }
 
     protected override GameObject CharacterPrefab(Player side)

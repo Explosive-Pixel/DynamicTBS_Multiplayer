@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        SpriteManager.LoadSprites();
+        TileSpriteManager.LoadSprites();
         PrefabManager.LoadPrefabs();
     }
     
