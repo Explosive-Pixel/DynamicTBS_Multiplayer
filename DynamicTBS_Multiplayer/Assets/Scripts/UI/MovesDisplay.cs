@@ -24,7 +24,7 @@ public class MovesDisplay : MonoBehaviour
 
         if (actionMetadata.ExecutedActionType == ActionType.Skip)
         {
-            newLine = "";
+            newLine = TranslatePlayerSide(actionMetadata.CharacterInAction.GetSide().GetPlayerType()) + "ended their turn";
         }
         else
         {
@@ -125,6 +125,22 @@ public class MovesDisplay : MonoBehaviour
             if (character.GetCharacterType() == CharacterType.MedicChar)
                 text = "Doc ";
         }
+        return text;
+    }
+
+    private string TranslatePlayerSide(PlayerType playerType)
+    {
+        string text = "";
+        
+        if (playerType == PlayerType.blue)
+        {
+            text = "Blue ";
+        }
+        else
+        {
+            text = "Pink ";
+        }
+
         return text;
     }
 
