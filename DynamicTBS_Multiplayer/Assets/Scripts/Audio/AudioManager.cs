@@ -82,11 +82,12 @@ public class AudioManager : MonoBehaviour
             instance = this;
         }
         #endregion
-        SubscribeEvents();
+        
     }
 
     private void Start()
     {
+        SubscribeEvents();
         audioManagerObject = this.gameObject;
         DontDestroyOnLoad(audioManagerObject);
         SetClipsLists();
