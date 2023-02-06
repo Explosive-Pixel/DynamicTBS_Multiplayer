@@ -54,6 +54,7 @@ public class GameSceneManager : MonoBehaviour
                 canvas.SetActive(false);
             }
         }
+        AudioEvents.PressingButton();
     }
 
     private void SetCanvasList()

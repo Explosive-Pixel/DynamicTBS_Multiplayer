@@ -48,43 +48,45 @@ public class LoreSceneManager : MonoBehaviour
         }
     }
 
-    public void GoToMainMenu()
-    {
-        // TODO: Load main menu scene
-    }
-
     public void GoToChapter1Canvas()
     {
         GoToCanvas(chapter1Canvas);
+        AudioEvents.PressingButton();
     }
 
     public void GoToChapter2Canvas()
     {
         GoToCanvas(chapter2Canvas);
+        AudioEvents.PressingButton();
     }
 
     public void GoToChapter3Canvas()
     {
         GoToCanvas(chapter3Canvas);
+        AudioEvents.PressingButton();
     }
 
     public void GoToChapter4Canvas()
     {
         GoToCanvas(chapter4Canvas);
+        AudioEvents.PressingButton();
     }
 
     public void GoToChapter5Canvas()
     {
         GoToCanvas(chapter5Canvas);
+        AudioEvents.PressingButton();
     }
 
     public void GoToChapter6Canvas()
     {
         GoToCanvas(chapter6Canvas);
+        AudioEvents.PressingButton();
     }
 
     public void GoToChapter7Canvas()
     {
         GoToCanvas(chapter7Canvas);
+        AudioEvents.PressingButton();
     }
 }

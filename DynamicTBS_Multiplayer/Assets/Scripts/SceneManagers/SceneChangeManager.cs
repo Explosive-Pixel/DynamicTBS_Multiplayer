@@ -20,31 +20,37 @@ public class SceneChangeManager : MonoBehaviour
     public void LoadMainMenuScene()
     {
         LoadSceneOnButtonPress(0);
+        AudioEvents.PressingButton();
     }
 
     public void LoadOnlineMenuScene()
     {
         LoadSceneOnButtonPress(1);
+        AudioEvents.PressingButton();
     }
 
     public void LoadGameScene()
     {
         LoadSceneOnButtonPress(2);
+        AudioEvents.PressingButton();
     }
 
     public void LoadTutorialScene()
     {
         LoadSceneOnButtonPress(3);
+        AudioEvents.PressingButton();
     }
 
     public void LoadLoreScene()
     {
         LoadSceneOnButtonPress(4);
+        AudioEvents.PressingButton();
     }
 
     public void LoadCreditsScene()
     {
         LoadSceneOnButtonPress(5);
+        AudioEvents.PressingButton();
     }
 
     public void QuitGame()
@@ -104,12 +110,14 @@ public class SceneChangeManager : MonoBehaviour
 
     private void SubscribeEvents()
     {
+        GameEvents.OnGameBoot += LoadSettings;
         GameEvents.OnGameStart += LoadGameScene;
     }
 
     private void UnsubscribeEvents()
     {
         GameEvents.OnGameStart -= LoadGameScene;
+        GameEvents.OnGameBoot -= LoadSettings;
     }
 
     private void OnDestroy()

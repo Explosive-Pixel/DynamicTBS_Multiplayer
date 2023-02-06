@@ -51,6 +51,7 @@ public class OnlineMenuSceneManager : MonoBehaviour
     public void GoToOnlineMenu()
     {
         HandleMenus(onlineMenuCanvas);
+        AudioEvents.PressingButton();
     }
 
     private void OnDestroy()
