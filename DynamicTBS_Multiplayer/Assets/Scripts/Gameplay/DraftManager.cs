@@ -51,6 +51,8 @@ public class DraftManager : MonoBehaviour
         Enum.TryParse(buttonName.Split("_")[0], out CharacterType characterType);
 
         DraftCharacter(characterType, PlayerManager.GetCurrentPlayer());
+
+        AudioEvents.PressingButton();
     }
 
     public static void DraftCharacter(CharacterType type, Player side)

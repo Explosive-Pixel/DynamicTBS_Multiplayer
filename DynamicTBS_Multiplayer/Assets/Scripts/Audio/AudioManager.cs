@@ -13,6 +13,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource atmoSource;
     [SerializeField] private AudioSource fxSource;
 
+    private List<AudioClip> moveClipsList = new List<AudioClip>();
+
     #region ClipsRegion
     // Music & Atmo
     [SerializeField] private AudioClip mainThemeClip;
@@ -23,7 +25,9 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip turnChangeClip;
     [SerializeField] private AudioClip unitDraftedClip;
     [SerializeField] private AudioClip unitPlacedClip;
-    [SerializeField] private AudioClip moveClip;
+    [SerializeField] private AudioClip moveClip1;
+    [SerializeField] private AudioClip moveClip2;
+    [SerializeField] private AudioClip moveClip3;
     [SerializeField] private AudioClip tankAttackClip;
     [SerializeField] private AudioClip shooterAttackClip;
     [SerializeField] private AudioClip runnerDoubleAttackClip;
@@ -67,6 +71,12 @@ public class AudioManager : MonoBehaviour
     {
         audioManagerObject = this.gameObject;
         DontDestroyOnLoad(audioManagerObject);
+        if (moveClipsList.Count == 0)
+        {
+            moveClipsList.Add(moveClip1);
+            moveClipsList.Add(moveClip2);
+            moveClipsList.Add(moveClip3);
+        }
     }
 
     #region UIAudio
@@ -98,9 +108,9 @@ public class AudioManager : MonoBehaviour
     {
         if (!atmoSource.isPlaying)
         {
-            //atmoSource.clip = atmoClip;
-            //atmoSource.loop = true;
-            //atmoSource.Play();
+            atmoSource.clip = atmoClip;
+            atmoSource.loop = true;
+            atmoSource.Play();
         }
     }
 
@@ -120,7 +130,9 @@ public class AudioManager : MonoBehaviour
 
         if (actionType == ActionType.Move)
         {
-            fxSource.PlayOneShot(moveClip);
+            int rnd;
+            rnd = Random.Range(0, moveClipsList.Count);
+            fxSource.PlayOneShot(moveClipsList[rnd]);
         }
         if (actionType == ActionType.Attack)
         {

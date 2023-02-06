@@ -24,6 +24,7 @@ public class SettingsManager : MonoBehaviour
             Destroy(this.gameObject);
         else
             instance = this;
+        GameEvents.GameHasBooted();
     }
 
     private void Start()
@@ -73,5 +74,6 @@ public class SettingsManager : MonoBehaviour
             toggleObjects.SetActive(true);
         else
             toggleObjects.SetActive(false);
+        AudioEvents.PressingButton();
     }
 }
