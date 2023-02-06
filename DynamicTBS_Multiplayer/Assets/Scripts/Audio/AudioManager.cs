@@ -14,6 +14,12 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource fxSource;
 
     private List<AudioClip> moveClipsList = new List<AudioClip>();
+    private List<AudioClip> masterVoiceClipsList = new List<AudioClip>();
+    private List<AudioClip> tankVoiceClipsList = new List<AudioClip>();
+    private List<AudioClip> shooterVoiceClipsList = new List<AudioClip>();
+    private List<AudioClip> runnerVoiceClipsList = new List<AudioClip>();
+    private List<AudioClip> mechanicVoiceClipsList = new List<AudioClip>();
+    private List<AudioClip> medicVoiceClipsList = new List<AudioClip>();
 
     #region ClipsRegion
     // Music & Atmo
@@ -44,12 +50,24 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip adrenalinClip;
     
     // Voicelines
-    [SerializeField] private AudioClip masterVoicelineClip;
-    [SerializeField] private AudioClip tankVoicelineClip;
-    [SerializeField] private AudioClip shooterVoicelineClip;
-    [SerializeField] private AudioClip runnerVoicelineClip;
-    [SerializeField] private AudioClip mechanicVoicelineClip;
-    [SerializeField] private AudioClip medicVoicelineClip;
+    [SerializeField] private AudioClip masterVoicelineClip1;
+    [SerializeField] private AudioClip masterVoicelineClip2;
+    [SerializeField] private AudioClip masterVoicelineClip3;
+    [SerializeField] private AudioClip tankVoicelineClip1;
+    [SerializeField] private AudioClip tankVoicelineClip2;
+    [SerializeField] private AudioClip tankVoicelineClip3;
+    [SerializeField] private AudioClip shooterVoicelineClip1;
+    [SerializeField] private AudioClip shooterVoicelineClip2;
+    [SerializeField] private AudioClip shooterVoicelineClip3;
+    [SerializeField] private AudioClip runnerVoicelineClip1;
+    [SerializeField] private AudioClip runnerVoicelineClip2;
+    [SerializeField] private AudioClip runnerVoicelineClip3;
+    [SerializeField] private AudioClip mechanicVoicelineClip1;
+    [SerializeField] private AudioClip mechanicVoicelineClip2;
+    [SerializeField] private AudioClip mechanicVoicelineClip3;
+    [SerializeField] private AudioClip medicVoicelineClip1;
+    [SerializeField] private AudioClip medicVoicelineClip2;
+    [SerializeField] private AudioClip medicVoicelineClip3;
     #endregion
 
     private void Awake()
@@ -71,11 +89,52 @@ public class AudioManager : MonoBehaviour
     {
         audioManagerObject = this.gameObject;
         DontDestroyOnLoad(audioManagerObject);
+        SetClipsLists();
+    }
+
+    private void SetClipsLists()
+    {
         if (moveClipsList.Count == 0)
         {
             moveClipsList.Add(moveClip1);
             moveClipsList.Add(moveClip2);
             moveClipsList.Add(moveClip3);
+        }
+        if (masterVoiceClipsList.Count == 0)
+        {
+            masterVoiceClipsList.Add(masterVoicelineClip1);
+            masterVoiceClipsList.Add(masterVoicelineClip2);
+            masterVoiceClipsList.Add(masterVoicelineClip3);
+        }
+        if (tankVoiceClipsList.Count == 0)
+        {
+            tankVoiceClipsList.Add(tankVoicelineClip1);
+            tankVoiceClipsList.Add(tankVoicelineClip2);
+            tankVoiceClipsList.Add(tankVoicelineClip3);
+        }
+        if (shooterVoiceClipsList.Count == 0)
+        {
+            shooterVoiceClipsList.Add(shooterVoicelineClip1);
+            shooterVoiceClipsList.Add(shooterVoicelineClip2);
+            shooterVoiceClipsList.Add(shooterVoicelineClip3);
+        }
+        if (runnerVoiceClipsList.Count == 0)
+        {
+            runnerVoiceClipsList.Add(runnerVoicelineClip1);
+            runnerVoiceClipsList.Add(runnerVoicelineClip2);
+            runnerVoiceClipsList.Add(runnerVoicelineClip3);
+        }
+        if (mechanicVoiceClipsList.Count == 0)
+        {
+            mechanicVoiceClipsList.Add(mechanicVoicelineClip1);
+            mechanicVoiceClipsList.Add(mechanicVoicelineClip2);
+            mechanicVoiceClipsList.Add(mechanicVoicelineClip3);
+        }
+        if (medicVoiceClipsList.Count == 0)
+        {
+            medicVoiceClipsList.Add(medicVoicelineClip1);
+            medicVoiceClipsList.Add(medicVoicelineClip2);
+            medicVoiceClipsList.Add(medicVoicelineClip3);
         }
     }
 
@@ -83,7 +142,6 @@ public class AudioManager : MonoBehaviour
     private void ButtonPressAudio()
     {
         fxSource.PlayOneShot(buttonPressClip);
-        Debug.Log("ButtonPress");
     }
     #endregion
 
@@ -179,16 +237,31 @@ public class AudioManager : MonoBehaviour
     {
         fxSource.PlayOneShot(unitPlacedClip);
 
-        //if (character.GetCharacterType() == CharacterType.TankChar)
-        //    fxSource.PlayOneShot(tankVoicelineClip);
-        //if (character.GetCharacterType() == CharacterType.ShooterChar)
-        //    fxSource.PlayOneShot(shooterVoicelineClip);
-        //if (character.GetCharacterType() == CharacterType.RunnerChar)
-        //    fxSource.PlayOneShot(runnerVoicelineClip);
-        //if (character.GetCharacterType() == CharacterType.MechanicChar)
-        //    fxSource.PlayOneShot(mechanicVoicelineClip);
-        //if (character.GetCharacterType() == CharacterType.MedicChar)
-        //    fxSource.PlayOneShot(medicVoicelineClip);
+        if (character.GetCharacterType() == CharacterType.TankChar)
+        {
+            int rnd = Random.Range(0, tankVoiceClipsList.Count);
+            fxSource.PlayOneShot(tankVoiceClipsList[rnd]);
+        }   
+        if (character.GetCharacterType() == CharacterType.ShooterChar)
+        {
+            int rnd = Random.Range(0, shooterVoiceClipsList.Count);
+            fxSource.PlayOneShot(shooterVoiceClipsList[rnd]);
+        }
+        if (character.GetCharacterType() == CharacterType.RunnerChar)
+        {
+            int rnd = Random.Range(0, runnerVoiceClipsList.Count);
+            fxSource.PlayOneShot(runnerVoiceClipsList[rnd]);
+        }
+        if (character.GetCharacterType() == CharacterType.MechanicChar)
+        {
+            int rnd = Random.Range(0, mechanicVoiceClipsList.Count);
+            fxSource.PlayOneShot(mechanicVoiceClipsList[rnd]);
+        }
+        if (character.GetCharacterType() == CharacterType.MedicChar)
+        {
+            int rnd = Random.Range(0, medicVoiceClipsList.Count);
+            fxSource.PlayOneShot(medicVoiceClipsList[rnd]);
+        }
     }
     #endregion
 
@@ -224,15 +297,22 @@ public class AudioManager : MonoBehaviour
     private void SubscribeEvents()
     {
         AudioEvents.OnMainMenuEnter += PlayMainTheme;
-        GameplayEvents.OnPlayerTurnEnded += TurnChangeAudio;
         GameEvents.OnGameStart += StopMainTheme;
         GameEvents.OnGameStart += PlayAtmo;
-        GameplayEvents.OnRestartGame += PlayAtmo;
-        GameplayEvents.OnGameOver += StopAtmo;
         AudioEvents.OnButtonPress += ButtonPressAudio;
+
+        GameEvents.OnGameStart += SubscribeEventsOnDraftStart;
         GameplayEvents.OnGameplayPhaseStart += SubscribeEventsAfterPlacement;
+        AudioEvents.OnMainMenuEnter += UnsubscribeEventsOnReturnToMenu;
+    }
+
+    private void SubscribeEventsOnDraftStart()
+    {
         DraftEvents.OnCharacterCreated += UnitDraftAudio;
         PlacementEvents.OnPlaceCharacter += UnitPlacementAudio;
+        GameplayEvents.OnPlayerTurnEnded += TurnChangeAudio;
+        GameplayEvents.OnRestartGame += PlayAtmo;
+        GameplayEvents.OnGameOver += StopAtmo;
     }
 
     private void SubscribeEventsAfterPlacement()
@@ -242,21 +322,28 @@ public class AudioManager : MonoBehaviour
         AudioEvents.OnExplode += ExplosionAudio;
     }
 
+    private void UnsubscribeEventsOnReturnToMenu()
+    {
+        GameplayEvents.OnFinishAction -= ActionAudio;
+        AudioEvents.OnAdrenalin -= AdrenalinAudio;
+        AudioEvents.OnExplode -= ExplosionAudio;
+        DraftEvents.OnCharacterCreated -= UnitDraftAudio;
+        PlacementEvents.OnPlaceCharacter -= UnitPlacementAudio;
+        GameplayEvents.OnPlayerTurnEnded -= TurnChangeAudio;
+        GameplayEvents.OnRestartGame -= PlayAtmo;
+        GameplayEvents.OnGameOver -= StopAtmo;
+    }
+
     private void UnsubscribeEvents()
     {
         AudioEvents.OnMainMenuEnter -= PlayMainTheme;
-        GameplayEvents.OnPlayerTurnEnded -= TurnChangeAudio;
         GameEvents.OnGameStart -= StopMainTheme;
         GameEvents.OnGameStart -= PlayAtmo;
-        GameplayEvents.OnRestartGame -= PlayAtmo;
-        GameplayEvents.OnGameOver -= StopAtmo;
         AudioEvents.OnButtonPress -= ButtonPressAudio;
-        AudioEvents.OnAdrenalin -= AdrenalinAudio;
-        AudioEvents.OnExplode -= ExplosionAudio;
+
+        GameEvents.OnGameStart -= SubscribeEventsOnDraftStart;
         GameplayEvents.OnGameplayPhaseStart -= SubscribeEventsAfterPlacement;
-        GameplayEvents.OnFinishAction -= ActionAudio;
-        DraftEvents.OnCharacterCreated -= UnitDraftAudio;
-        PlacementEvents.OnPlaceCharacter += UnitPlacementAudio;
+        AudioEvents.OnMainMenuEnter -= UnsubscribeEventsOnReturnToMenu;
     }
 
     private void OnDestroy()
