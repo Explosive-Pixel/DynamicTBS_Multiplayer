@@ -75,7 +75,7 @@ public class GameplayManager : MonoBehaviour
 
             if(!actionMetadata.ExecutingPlayer.HasAvailableAction())
             {
-                GameplayEvents.AbortCurrentPlayerTurn();
+                GameplayEvents.AbortCurrentPlayerTurn(remainingActions, AbortTurnCondition.NO_AVAILABLE_ACTION);
             }
         }
     }
@@ -108,6 +108,11 @@ public class GameplayManager : MonoBehaviour
     {
         SetRemainingActions(0);
         HandleNoRemainingActions();
+    }
+
+    private void AbortTurn(int remainingActions, AbortTurnCondition abortTurnCondition)
+    {
+        AbortTurn();
     }
 
     private void AbortTurn(ServerActionType serverActionType)

@@ -58,6 +58,7 @@ public class UIUtils : MonoBehaviour
 
     public static void UpdateAnimator(Animator animator, int value)
     {
-        animator.SetInteger(animator.parameters[0].name, value);
+        if(animator != null)
+            animator.SetInteger(animator.parameters[0].name, value);
     }
 }

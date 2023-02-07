@@ -14,10 +14,14 @@ public class ActiveAbilityButtonHandler : MonoBehaviour
 
     public void ExecuteActiveAbility()
     {
-        currentCharacter.GetActiveAbility().Execute();
-        // Please remember to call this after every execution (in AAHandler classes): GameplayEvents.ActionFinished(actionMetadata);
+        if (currentCharacter != null && currentCharacter.CanPerformActiveAbility())
+        {
+            currentCharacter.GetActiveAbility().Execute();
+            // Please remember to call this after every execution (in AAHandler classes): GameplayEvents.ActionFinished(actionMetadata);
+            GameplayEvents.StartExecuteActiveAbility(currentCharacter);
 
-        activeAbilityButton.interactable = false;
+            activeAbilityButton.interactable = false;
+        }
     }
 
     private void ChangeButtonVisibility(Character character)

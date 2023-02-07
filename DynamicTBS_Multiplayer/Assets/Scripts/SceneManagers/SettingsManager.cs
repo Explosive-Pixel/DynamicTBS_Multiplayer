@@ -34,6 +34,14 @@ public class SettingsManager : MonoBehaviour
         toggleObjects.SetActive(false);
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            ToggleSettings();
+        }
+    }
+
     public void SetMainVolume(float volume)
     {
         audioMixer.SetFloat("MainVolume", volume);

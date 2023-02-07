@@ -11,6 +11,9 @@ public static class GameplayEvents
     public delegate void FinishAction(ActionMetadata actionMetadata);
     public static event FinishAction OnFinishAction;
 
+    public delegate void ExecuteActiveAbility(Character character);
+    public static event ExecuteActiveAbility OnExecuteActiveAbility;
+
     public delegate void ChangeRemainingActions();
     public static event ChangeRemainingActions OnChangeRemainingActions;
 
@@ -23,7 +26,7 @@ public static class GameplayEvents
     public delegate void NextPlayer(Player player);
     public static event NextPlayer OnPlayerTurnEnded;
 
-    public delegate void AbortTurn();
+    public delegate void AbortTurn(int remainingActions, AbortTurnCondition abortTurnCondition);
     public static event AbortTurn OnPlayerTurnAborted;
 
     public delegate void ExecuteUIAction(Player player, UIActionType uIActionType);
@@ -53,6 +56,12 @@ public static class GameplayEvents
             OnFinishAction(actionMetadata);
     }
 
+    public static void StartExecuteActiveAbility(Character character)
+    {
+        if (OnExecuteActiveAbility != null)
+            OnExecuteActiveAbility(character);
+    }
+
     public static void RemainingActionsChanged()
     {
         if (OnChangeRemainingActions != null)
@@ -79,10 +88,10 @@ public static class GameplayEvents
             OnPlayerTurnEnded(player);
     }
 
-    public static void AbortCurrentPlayerTurn()
+    public static void AbortCurrentPlayerTurn(int remainingActions, AbortTurnCondition abortTurnCondition)
     {
         if (OnPlayerTurnAborted != null)
-            OnPlayerTurnAborted();
+            OnPlayerTurnAborted(remainingActions, abortTurnCondition);
     }
 
     public static void UIActionExecuted(Player player, UIActionType uIActionType)
