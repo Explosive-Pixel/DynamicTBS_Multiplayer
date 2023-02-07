@@ -7340,6 +7340,7 @@ GameObject:
   - component: {fileID: 1149377219}
   - component: {fileID: 1149377220}
   - component: {fileID: 1149377221}
+  - component: {fileID: 1149377222}
   m_Layer: 0
   m_Name: ActionRegistry
   m_TagString: Untagged
@@ -7440,6 +7441,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackCirclePrefab: {fileID: 2364727012911892448, guid: 8e644992083b090478414b1e0573c85c, type: 3}
+--- !u!114 &1149377222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1149377214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f482775e8598534e95a5ed94d74eff4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blockActionPrefab: {fileID: 8423276495478319710, guid: c1ffae3fcbec7f5488d93a6083ef3733, type: 3}
 --- !u!1 &1200873586
 GameObject:
   m_ObjectHideFlags: 0

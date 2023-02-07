@@ -8,6 +8,8 @@ public class BlockAA : IActiveAbility
 
     public int Cooldown { get { return 3; } }
 
+    private BlockAAAction blockAAAction;
+
     private Character character;
     private int currentBlockCount = 0;
 
@@ -16,6 +18,7 @@ public class BlockAA : IActiveAbility
     public BlockAA(Character character)
     {
         this.character = character;
+        blockAAAction = GameObject.Find("ActionRegistry").GetComponent<BlockAAAction>();
 
         var defaultIsAttackableBy = character.isAttackableBy;
         character.isAttackableBy = (attacker) => {
@@ -38,22 +41,13 @@ public class BlockAA : IActiveAbility
     }
     public void Execute() 
     {
-        if (firstExecution)
-        {
-            ChangeIsAttackableByOfOtherCharacters();
-            firstExecution = false;
-        }
-        ActivateBlock();
+        blockAAAction.CreateActionDestinations(character);
+        ActionRegistry.Register(blockAAAction);
     }
 
     public int CountActionDestinations()
     {
-        return 1;
-    }
-
-    public Character GetCharacter()
-    {
-        return character;
+        return blockAAAction.CountActionDestinations(character);
     }
 
     public bool IsBlocking()
@@ -63,17 +57,23 @@ public class BlockAA : IActiveAbility
 
     public void ActivateBlock()
     {
+        if (firstExecution)
+        {
+            ChangeIsAttackableByOfOtherCharacters();
+            firstExecution = false;
+        }
+
         currentBlockCount = blockingRounds + 1;
-        ToggleBlock(true);
+        ToggleBlockPrefab(true);
         SubscribeEvents();
-        GameplayEvents.ActionFinished(new ActionMetadata
+       /* GameplayEvents.ActionFinished(new ActionMetadata
         {
             ExecutingPlayer = character.GetSide(),
             ExecutedActionType = ActionType.ActiveAbility,
             CharacterInAction = character,
             CharacterInitialPosition = character.GetCharacterGameObject().transform.position,
             ActionDestinationPosition = null
-        });
+        });*/
     }
 
     public void ReduceBlockCount()
@@ -85,7 +85,7 @@ public class BlockAA : IActiveAbility
             if (currentBlockCount == 0)
             {
                 currentBlockCount = 0;
-                ToggleBlock(false);
+                ToggleBlockPrefab(false);
                 UnsubscribeEvents();
             }
         }
@@ -93,6 +93,7 @@ public class BlockAA : IActiveAbility
 
     public void ShowActionPattern()
     {
+        blockAAAction.ShowActionPattern(character);
     }
 
     private void ChangeIsAttackableByOfOtherCharacters()
@@ -128,7 +129,7 @@ public class BlockAA : IActiveAbility
         }
     }
 
-    private void ToggleBlock(bool active)
+    private void ToggleBlockPrefab(bool active)
     {
         UIUtils.FindChildGameObject(character.GetCharacterGameObject(), "Block").SetActive(active);
     }
