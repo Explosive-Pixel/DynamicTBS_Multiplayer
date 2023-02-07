@@ -105,7 +105,7 @@ public class UIClickHandler : MonoBehaviour
         // Same function as pressing the "Use Active Ability" button.
         if (Input.GetKeyDown(KeyCode.A))
         {
-            if (currentCharacter != null)
+            if (currentCharacter != null && !currentCharacter.IsActiveAbilityOnCooldown())
             {
                 ActionUtils.ResetActionDestinations();
                 if(activeAbilityExecutionStarted)
