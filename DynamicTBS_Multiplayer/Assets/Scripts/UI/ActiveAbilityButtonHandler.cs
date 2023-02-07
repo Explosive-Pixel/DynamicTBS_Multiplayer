@@ -16,6 +16,7 @@ public class ActiveAbilityButtonHandler : MonoBehaviour
     {
         currentCharacter.GetActiveAbility().Execute();
         // Please remember to call this after every execution (in AAHandler classes): GameplayEvents.ActionFinished(actionMetadata);
+        GameplayEvents.StartExecuteActiveAbility(currentCharacter);
 
         activeAbilityButton.interactable = false;
     }

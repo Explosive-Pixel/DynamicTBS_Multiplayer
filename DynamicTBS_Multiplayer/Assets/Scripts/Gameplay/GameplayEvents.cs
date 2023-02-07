@@ -11,6 +11,9 @@ public static class GameplayEvents
     public delegate void FinishAction(ActionMetadata actionMetadata);
     public static event FinishAction OnFinishAction;
 
+    public delegate void ExecuteActiveAbility(Character character);
+    public static event ExecuteActiveAbility OnExecuteActiveAbility;
+
     public delegate void ChangeRemainingActions();
     public static event ChangeRemainingActions OnChangeRemainingActions;
 
@@ -51,6 +54,12 @@ public static class GameplayEvents
     {
         if (OnFinishAction != null)
             OnFinishAction(actionMetadata);
+    }
+
+    public static void StartExecuteActiveAbility(Character character)
+    {
+        if (OnExecuteActiveAbility != null)
+            OnExecuteActiveAbility(character);
     }
 
     public static void RemainingActionsChanged()
