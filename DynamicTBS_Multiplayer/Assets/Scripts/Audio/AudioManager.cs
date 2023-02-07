@@ -21,6 +21,8 @@ public class AudioManager : MonoBehaviour
     private List<AudioClip> mechanicVoiceClipsList = new List<AudioClip>();
     private List<AudioClip> medicVoiceClipsList = new List<AudioClip>();
 
+    private bool subscriptionsActive;
+
     #region ClipsRegion
     // Music & Atmo
     [SerializeField] private AudioClip mainThemeClip;
@@ -82,7 +84,7 @@ public class AudioManager : MonoBehaviour
             instance = this;
         }
         #endregion
-        
+        subscriptionsActive = false;
     }
 
     private void Start()
@@ -309,18 +311,25 @@ public class AudioManager : MonoBehaviour
 
     private void SubscribeEventsOnDraftStart()
     {
-        DraftEvents.OnCharacterCreated += UnitDraftAudio;
-        PlacementEvents.OnPlaceCharacter += UnitPlacementAudio;
-        GameplayEvents.OnPlayerTurnEnded += TurnChangeAudio;
-        GameplayEvents.OnRestartGame += PlayAtmo;
-        GameplayEvents.OnGameOver += StopAtmo;
+        if (!subscriptionsActive)
+        {
+            DraftEvents.OnCharacterCreated += UnitDraftAudio;
+            PlacementEvents.OnPlaceCharacter += UnitPlacementAudio;
+            GameplayEvents.OnPlayerTurnEnded += TurnChangeAudio;
+            GameplayEvents.OnRestartGame += PlayAtmo;
+            GameplayEvents.OnGameOver += StopAtmo;
+        }
     }
 
     private void SubscribeEventsAfterPlacement()
     {
-        GameplayEvents.OnFinishAction += ActionAudio;
-        AudioEvents.OnAdrenalin += AdrenalinAudio;
-        AudioEvents.OnExplode += ExplosionAudio;
+        if (!subscriptionsActive)
+        {
+            GameplayEvents.OnFinishAction += ActionAudio;
+            AudioEvents.OnAdrenalin += AdrenalinAudio;
+            AudioEvents.OnExplode += ExplosionAudio;
+            subscriptionsActive = true;
+        }
     }
 
     private void UnsubscribeEventsOnReturnToMenu()
@@ -333,6 +342,7 @@ public class AudioManager : MonoBehaviour
         GameplayEvents.OnPlayerTurnEnded -= TurnChangeAudio;
         GameplayEvents.OnRestartGame -= PlayAtmo;
         GameplayEvents.OnGameOver -= StopAtmo;
+        subscriptionsActive = false;
     }
 
     private void UnsubscribeEvents()
