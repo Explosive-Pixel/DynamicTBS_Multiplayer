@@ -204,12 +204,14 @@ public abstract class Character
 
     private void UpdateHitPointAnimator()
     {
-        UIUtils.UpdateAnimator(hitPointAnimator, this.HitPoints);
+        if(!IsDead())
+            UIUtils.UpdateAnimator(hitPointAnimator, this.HitPoints);
     }
 
     private void UpdateCooldownAnimator()
     {
-        UIUtils.UpdateAnimator(cooldownAnimator, this.ActiveAbilityCooldown);
+        if (!IsDead())
+            UIUtils.UpdateAnimator(cooldownAnimator, this.ActiveAbilityCooldown);
     }
 
     private void InitCharacterGameObject()

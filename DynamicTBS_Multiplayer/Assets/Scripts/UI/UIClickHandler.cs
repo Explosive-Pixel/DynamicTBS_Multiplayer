@@ -183,6 +183,11 @@ public class UIClickHandler : MonoBehaviour
         UnselectCharacter();
     }
 
+    private void UnselectCharacter(int remainingActions, AbortTurnCondition abortTurnCondition)
+    {
+        UnselectCharacter();
+    }
+
     #region EventSubscriptions
 
     private void SubscribeEvents()

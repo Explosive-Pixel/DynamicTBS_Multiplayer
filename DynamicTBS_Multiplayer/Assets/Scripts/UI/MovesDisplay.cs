@@ -40,6 +40,25 @@ public class MovesDisplay : MonoBehaviour
         DisplayMoves(newLine);
     }
 
+    private void WriteAbortTurnToString(int remainingActions, AbortTurnCondition abortTurnCondition)
+    {
+        PlayerType player = GetPlayerTypeByActionCount();
+        string newLine = TranslatePlayerSide(player).Trim() + "'s turn was aborted since " + player + " ";
+        if(abortTurnCondition == AbortTurnCondition.NO_AVAILABLE_ACTION)
+        {
+            newLine += "had no more available action.";
+        } else if(abortTurnCondition == AbortTurnCondition.PLAYER_TIMEOUT)
+        {
+            newLine += "ran out of time.";
+        }
+
+        newLine += "\n";
+
+        actionCount += remainingActions;
+
+        DisplayMoves(newLine);
+    }
+
     private void DisplayMoves(string newMove)
     {
         movesList.Add(newMove);
@@ -59,13 +78,18 @@ public class MovesDisplay : MonoBehaviour
     private string GetMoveCountString()
     {
         int counter = (actionCount / (GameplayManager.maxActionsPerRound * 2)) + 1;
-        PlayerType player = actionCount % (GameplayManager.maxActionsPerRound * 2) <= 1 ? PlayerManager.GameplayPhaseStartPlayer : PlayerManager.GetOtherSide(PlayerManager.GameplayPhaseStartPlayer);
+        PlayerType player = GetPlayerTypeByActionCount();
         char addition = (char)((actionCount % GameplayManager.maxActionsPerRound) + 65);
 
         string text = TranslatePlayerSide(player) + " " + counter.ToString() + addition;
 
         actionCount += 1;
         return text;
+    }
+
+    private PlayerType GetPlayerTypeByActionCount()
+    {
+        return actionCount % (GameplayManager.maxActionsPerRound * 2) <= 1 ? PlayerManager.GameplayPhaseStartPlayer : PlayerManager.GetOtherSide(PlayerManager.GameplayPhaseStartPlayer);
     }
 
     private string TranslateTilePosition(Vector3? position)
@@ -161,6 +185,7 @@ public class MovesDisplay : MonoBehaviour
     private void ActivateRecordingSubscription()
     {
         GameplayEvents.OnFinishAction += WriteMovesToString;
+        GameplayEvents.OnPlayerTurnAborted += WriteAbortTurnToString;
     }
     #endregion
 
@@ -182,6 +207,7 @@ public class MovesDisplay : MonoBehaviour
         GameplayEvents.OnGameOver -= DeactivateMovesDisplay;
         GameplayEvents.OnGameOver -= EmptyList;
         GameplayEvents.OnFinishAction -= WriteMovesToString;
+        GameplayEvents.OnPlayerTurnAborted -= WriteAbortTurnToString;
     }
 
     private void OnDestroy()

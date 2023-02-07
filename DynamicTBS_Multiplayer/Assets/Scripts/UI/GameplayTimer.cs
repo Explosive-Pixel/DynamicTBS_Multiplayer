@@ -124,7 +124,7 @@ public class GameplayTimer : MonoBehaviour
             GameplayEvents.GameIsOver(PlayerManager.GetOtherPlayer(currentPlayer).GetPlayerType(), GameOverCondition.PLAYER_TIMEOUT);
         }
 
-        GameplayEvents.AbortCurrentPlayerTurn();
+        GameplayEvents.AbortCurrentPlayerTurn(GameplayManager.GetRemainingActions(), AbortTurnCondition.PLAYER_TIMEOUT);
 
         if (GameManager.IsMultiplayerHost())
         {
