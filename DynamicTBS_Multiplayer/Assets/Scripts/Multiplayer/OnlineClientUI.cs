@@ -12,6 +12,8 @@ public class OnlineClientUI : MonoBehaviour
     [SerializeField] private Button selectBlueButton;
     [SerializeField] private Text connectedPlayers;
 
+    [SerializeField] private Button mainMenuButton;
+
     private bool sideSelected = false;
     private int connectedPlayersCount = 0;
 
@@ -69,9 +71,7 @@ public class OnlineClientUI : MonoBehaviour
                 if (!Client.Instance.isAdmin)
                 {
                     clientInfoText.text += "\nWaiting for other player to start the game ...";
-                    selectPinkButton.gameObject.SetActive(false);
-                    selectBlueButton.gameObject.SetActive(false);
-                    startGameButton.gameObject.SetActive(false);
+                    HideAllButtons();
                 }
                 else
                 {
@@ -83,30 +83,42 @@ public class OnlineClientUI : MonoBehaviour
                     else
                     {
                         clientInfoText.text += "and start the game.";
+
+                        if(sideSelected)
+                        {
+                            startGameButton.gameObject.SetActive(true);
+                        }
                     }
 
                     selectPinkButton.gameObject.SetActive(true);
                     selectBlueButton.gameObject.SetActive(true);
                 }
-            }
-            else if (Client.Instance.IsActive)
+            } else
             {
-                clientInfoText.text = "Trying to connect to host ...";
-            }
-            else
-            {
-                clientInfoText.text = "Could not connect to host. Please try again.";
+                if (Client.Instance.IsActive)
+                {
+                    clientInfoText.text = "Trying to connect to host ...";
+                }
+                else
+                {
+                    clientInfoText.text = "Could not connect to host. Please try again.";
+                }
+                HideAllButtons();
             }
 
             connectedPlayers.text = "Connected players: " + connectedPlayersCount;
-            if (connectedPlayersCount == 2 && sideSelected)
-            {
-                startGameButton.gameObject.SetActive(true);
-            }
         } else
         {
             clientInfoText.text = "The Server refused the connection since there are already two players in the game.\nIf you just disconnected and are trying to reconnect, please try again in a few seconds.";
+            HideAllButtons();
         }
+    }
+
+    private void HideAllButtons()
+    {
+        selectPinkButton.gameObject.SetActive(false);
+        selectBlueButton.gameObject.SetActive(false);
+        startGameButton.gameObject.SetActive(false);
     }
 
     private void HideCanvas(NetMessage msg)
@@ -125,9 +137,12 @@ public class OnlineClientUI : MonoBehaviour
         sideSelected = false;
         selectPinkButton.interactable = true;
         selectBlueButton.interactable = true;
-        selectPinkButton.gameObject.SetActive(false);
-        selectBlueButton.gameObject.SetActive(false);
-        startGameButton.gameObject.SetActive(false);
+        HideAllButtons();
+    }
+
+    private void SetMainMenuListener()
+    {
+        mainMenuButton.onClick.AddListener(GameObject.Find("SceneChangeManager").GetComponent<SceneChangeManager>().LoadMainMenuScene);
     }
 
     private void SubscribeEvents()
@@ -135,6 +150,7 @@ public class OnlineClientUI : MonoBehaviour
         NetUtility.C_METADATA += UpdatePlayerCount;
         NetUtility.C_START_GAME += HideCanvas;
         GameplayEvents.OnRestartGame += ShowCanvas;
+        GameplayEvents.OnGameplayPhaseStart += SetMainMenuListener;
     }
 
     private void OnDestroy()
@@ -142,5 +158,6 @@ public class OnlineClientUI : MonoBehaviour
         NetUtility.C_METADATA -= UpdatePlayerCount;
         NetUtility.C_START_GAME -= HideCanvas;
         GameplayEvents.OnRestartGame -= ShowCanvas;
+        GameplayEvents.OnGameplayPhaseStart -= SetMainMenuListener;
     }
 }

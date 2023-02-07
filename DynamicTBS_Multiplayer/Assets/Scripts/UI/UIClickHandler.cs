@@ -73,15 +73,7 @@ public class UIClickHandler : MonoBehaviour
 
     private void HandleKeyInputsAnyClient()
     {
-        // Toggle settings menu.
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            GameObject settingsMenu = GameObject.Find("SettingsCanvas");
-            if (settingsMenu != null)
-            {
-                settingsMenu.GetComponent<SettingsManager>().ToggleSettings();
-            }
-        }
+        
     }
 
     private void HandleKeyInputsAnyPlayer()
