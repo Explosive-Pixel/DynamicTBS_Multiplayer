@@ -133,6 +133,7 @@ public class PlacementManager : MonoBehaviour
     {
         SpawnMaster(PlayerType.blue);
         SpawnMaster(PlayerType.pink);
+        AudioEvents.SpawningMasters();
     }
 
     public static int GetCurrentPlacementCount()

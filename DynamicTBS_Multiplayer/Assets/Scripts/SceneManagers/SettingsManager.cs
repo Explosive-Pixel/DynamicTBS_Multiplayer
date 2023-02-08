@@ -16,6 +16,7 @@ public class SettingsManager : MonoBehaviour
     public static float currentMusicVolume;
     public static float currentAtmoVolume;
     public static float currentFXVolume;
+    public static float currentVoiceVolume;
     public static int currentFullscreenSetting;
 
     private void Awake()
@@ -64,6 +65,12 @@ public class SettingsManager : MonoBehaviour
     {
         audioMixer.SetFloat("FXVolume", volume);
         currentFXVolume = volume;
+    }
+
+    public void SetVoiceVolume(float volume)
+    {
+        audioMixer.SetFloat("VoiceVolume", volume);
+        currentVoiceVolume = volume;
     }
 
     public void SetFullscreen(bool isFullscreen)
