@@ -245,35 +245,57 @@ public class AudioManager : MonoBehaviour
 
         if (character.GetCharacterType() == CharacterType.TankChar)
         {
-            int rnd = Random.Range(0, tankVoiceClipsList.Count);
-            voiceSource.PlayOneShot(tankVoiceClipsList[rnd]);
-        }   
+            voiceSource.PlayOneShot(tankVoicelineClip3);
+        }
         if (character.GetCharacterType() == CharacterType.ShooterChar)
         {
-            int rnd = Random.Range(0, shooterVoiceClipsList.Count);
-            voiceSource.PlayOneShot(shooterVoiceClipsList[rnd]);
+            voiceSource.PlayOneShot(shooterVoicelineClip2);
         }
         if (character.GetCharacterType() == CharacterType.RunnerChar)
         {
-            int rnd = Random.Range(0, runnerVoiceClipsList.Count);
-            voiceSource.PlayOneShot(runnerVoiceClipsList[rnd]);
+            voiceSource.PlayOneShot(runnerVoicelineClip3);
         }
         if (character.GetCharacterType() == CharacterType.MechanicChar)
         {
-            int rnd = Random.Range(0, mechanicVoiceClipsList.Count);
-            voiceSource.PlayOneShot(mechanicVoiceClipsList[rnd]);
+            voiceSource.PlayOneShot(mechanicVoicelineClip1);
         }
         if (character.GetCharacterType() == CharacterType.MedicChar)
         {
-            int rnd = Random.Range(0, medicVoiceClipsList.Count);
-            voiceSource.PlayOneShot(medicVoiceClipsList[rnd]);
+            voiceSource.PlayOneShot(medicVoicelineClip1);
         }
+
+        //if (character.GetCharacterType() == CharacterType.TankChar)
+        //{
+        //    int rnd = Random.Range(0, tankVoiceClipsList.Count);
+        //    voiceSource.PlayOneShot(tankVoiceClipsList[rnd]);
+        //}   
+        //if (character.GetCharacterType() == CharacterType.ShooterChar)
+        //{
+        //    int rnd = Random.Range(0, shooterVoiceClipsList.Count);
+        //    voiceSource.PlayOneShot(shooterVoiceClipsList[rnd]);
+        //}
+        //if (character.GetCharacterType() == CharacterType.RunnerChar)
+        //{
+        //    int rnd = Random.Range(0, runnerVoiceClipsList.Count);
+        //    voiceSource.PlayOneShot(runnerVoiceClipsList[rnd]);
+        //}
+        //if (character.GetCharacterType() == CharacterType.MechanicChar)
+        //{
+        //    int rnd = Random.Range(0, mechanicVoiceClipsList.Count);
+        //    voiceSource.PlayOneShot(mechanicVoiceClipsList[rnd]);
+        //}
+        //if (character.GetCharacterType() == CharacterType.MedicChar)
+        //{
+        //    int rnd = Random.Range(0, medicVoiceClipsList.Count);
+        //    voiceSource.PlayOneShot(medicVoiceClipsList[rnd]);
+        //}
     }
 
     private void MasterSpawnAudio()
     {
-        int rnd = Random.Range(0, masterVoiceClipsList.Count);
-        voiceSource.PlayOneShot(masterVoiceClipsList[rnd]);
+        voiceSource.PlayOneShot(masterVoicelineClip2);
+        //int rnd = Random.Range(0, masterVoiceClipsList.Count);
+        //voiceSource.PlayOneShot(masterVoiceClipsList[rnd]);
     }
 
     private void LowTimeAudio()
