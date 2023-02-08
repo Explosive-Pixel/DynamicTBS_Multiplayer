@@ -62,7 +62,7 @@ public static class AudioEvents
             OnTimeLow();
     }
 
-    public static void TimeRunningOut()
+    public static void TimeRanOut()
     {
         if (OnTimeout != null)
             OnTimeout();
