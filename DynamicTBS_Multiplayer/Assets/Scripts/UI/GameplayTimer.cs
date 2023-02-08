@@ -82,6 +82,7 @@ public class GameplayTimer : MonoBehaviour
             }
             else
             {
+                AudioEvents.TimeRanOut();
                 DrawConsequences();
             }
         }

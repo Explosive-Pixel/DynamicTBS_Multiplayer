@@ -80,6 +80,7 @@ public class DraftAndPlacementTimer : MonoBehaviour
             }
             else
             {
+                AudioEvents.TimeRanOut();
                 if(player == PlayerManager.GetCurrentlyExecutingPlayer())
                 {
                     noTimeLeftConsequence(player);
