@@ -99,6 +99,7 @@ public class Tile
 
         SpriteRenderer spriteRenderer = tile.AddComponent<SpriteRenderer>();
         spriteRenderer.sprite = this.tileSprite;
+        spriteRenderer.sortingOrder = -2;
         tile.transform.position = position;
         tile.transform.rotation = startRotation;
 
