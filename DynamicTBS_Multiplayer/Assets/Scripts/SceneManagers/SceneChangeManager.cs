@@ -65,6 +65,7 @@ public class SceneChangeManager : MonoBehaviour
         PlayerPrefs.SetFloat("MusicVolumeSetting", SettingsManager.currentMusicVolume);
         PlayerPrefs.SetFloat("AtmoVolumeSetting", SettingsManager.currentAtmoVolume);
         PlayerPrefs.SetFloat("FXVolumeSetting", SettingsManager.currentFXVolume);
+        PlayerPrefs.SetFloat("VoiceVolumeSetting", SettingsManager.currentVoiceVolume);
         PlayerPrefs.SetInt("FullscreenSetting", SettingsManager.currentFullscreenSetting);
     }
 
@@ -78,6 +79,8 @@ public class SceneChangeManager : MonoBehaviour
             SettingsManager.currentAtmoVolume = PlayerPrefs.GetFloat("AtmoVolumeSetting");
         if (PlayerPrefs.HasKey("FXVolumeSetting"))
             SettingsManager.currentFXVolume = PlayerPrefs.GetFloat("FXVolumeSetting");
+        if (PlayerPrefs.HasKey("VoiceVolumeSetting"))
+            SettingsManager.currentVoiceVolume = PlayerPrefs.GetFloat("VoiceVolumeSetting");
         if (PlayerPrefs.HasKey("FullscreenSetting"))
             SettingsManager.currentFullscreenSetting = PlayerPrefs.GetInt("FullscreenSetting");
     }

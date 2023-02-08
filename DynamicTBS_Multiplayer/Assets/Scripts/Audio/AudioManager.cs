@@ -12,6 +12,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource musicSource;
     [SerializeField] private AudioSource atmoSource;
     [SerializeField] private AudioSource fxSource;
+    [SerializeField] private AudioSource voiceSource;
 
     private List<AudioClip> moveClipsList = new List<AudioClip>();
     private List<AudioClip> masterVoiceClipsList = new List<AudioClip>();
@@ -50,6 +51,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip healClip;
     [SerializeField] private AudioClip explosionClip;
     [SerializeField] private AudioClip adrenalinClip;
+    [SerializeField] private AudioClip lastTenSeconds;
+    [SerializeField] private AudioClip timeRanOut;
     
     // Voicelines
     [SerializeField] private AudioClip masterVoicelineClip1;
@@ -243,28 +246,44 @@ public class AudioManager : MonoBehaviour
         if (character.GetCharacterType() == CharacterType.TankChar)
         {
             int rnd = Random.Range(0, tankVoiceClipsList.Count);
-            fxSource.PlayOneShot(tankVoiceClipsList[rnd]);
+            voiceSource.PlayOneShot(tankVoiceClipsList[rnd]);
         }   
         if (character.GetCharacterType() == CharacterType.ShooterChar)
         {
             int rnd = Random.Range(0, shooterVoiceClipsList.Count);
-            fxSource.PlayOneShot(shooterVoiceClipsList[rnd]);
+            voiceSource.PlayOneShot(shooterVoiceClipsList[rnd]);
         }
         if (character.GetCharacterType() == CharacterType.RunnerChar)
         {
             int rnd = Random.Range(0, runnerVoiceClipsList.Count);
-            fxSource.PlayOneShot(runnerVoiceClipsList[rnd]);
+            voiceSource.PlayOneShot(runnerVoiceClipsList[rnd]);
         }
         if (character.GetCharacterType() == CharacterType.MechanicChar)
         {
             int rnd = Random.Range(0, mechanicVoiceClipsList.Count);
-            fxSource.PlayOneShot(mechanicVoiceClipsList[rnd]);
+            voiceSource.PlayOneShot(mechanicVoiceClipsList[rnd]);
         }
         if (character.GetCharacterType() == CharacterType.MedicChar)
         {
             int rnd = Random.Range(0, medicVoiceClipsList.Count);
-            fxSource.PlayOneShot(medicVoiceClipsList[rnd]);
+            voiceSource.PlayOneShot(medicVoiceClipsList[rnd]);
         }
+    }
+
+    private void MasterSpawnAudio()
+    {
+        int rnd = Random.Range(0, masterVoiceClipsList.Count);
+        voiceSource.PlayOneShot(masterVoiceClipsList[rnd]);
+    }
+
+    private void LowTimeAudio()
+    {
+        fxSource.PlayOneShot(lastTenSeconds);
+    }
+
+    private void TimeoutAudio()
+    {
+        fxSource.PlayOneShot(timeRanOut);
     }
     #endregion
 
@@ -318,6 +337,9 @@ public class AudioManager : MonoBehaviour
             GameplayEvents.OnPlayerTurnEnded += TurnChangeAudio;
             GameplayEvents.OnRestartGame += PlayAtmo;
             GameplayEvents.OnGameOver += StopAtmo;
+            AudioEvents.OnSpawnMasters += MasterSpawnAudio;
+            AudioEvents.OnTimeLow += LowTimeAudio;
+            AudioEvents.OnTimeout += TimeoutAudio;
         }
     }
 
@@ -342,6 +364,9 @@ public class AudioManager : MonoBehaviour
         GameplayEvents.OnPlayerTurnEnded -= TurnChangeAudio;
         GameplayEvents.OnRestartGame -= PlayAtmo;
         GameplayEvents.OnGameOver -= StopAtmo;
+        AudioEvents.OnSpawnMasters -= MasterSpawnAudio;
+        AudioEvents.OnTimeLow -= LowTimeAudio;
+        AudioEvents.OnTimeout -= TimeoutAudio;
         subscriptionsActive = false;
     }
 
