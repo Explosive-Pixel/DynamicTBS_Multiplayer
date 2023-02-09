@@ -66,14 +66,6 @@ public class BlockAA : IActiveAbility
         currentBlockCount = blockingRounds + 1;
         ToggleBlockPrefab(true);
         SubscribeEvents();
-       /* GameplayEvents.ActionFinished(new ActionMetadata
-        {
-            ExecutingPlayer = character.GetSide(),
-            ExecutedActionType = ActionType.ActiveAbility,
-            CharacterInAction = character,
-            CharacterInitialPosition = character.GetCharacterGameObject().transform.position,
-            ActionDestinationPosition = null
-        });*/
     }
 
     public void ReduceBlockCount()

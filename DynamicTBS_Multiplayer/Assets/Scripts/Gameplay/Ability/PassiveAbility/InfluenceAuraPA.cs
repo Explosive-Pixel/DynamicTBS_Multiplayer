@@ -58,16 +58,27 @@ public class InfluenceAuraPA : IPassiveAbility
         influencePoints.Remove(character);
         UpdateInfluenceAnimator(character, 0);
 
-        character.side = PlayerManager.GetOtherPlayer(character.side);
-        GameObject characterSpriteGameObject = UIUtils.FindChildGameObject(character.GetCharacterGameObject(), "CharacterSprite");
-        characterSpriteGameObject.GetComponent<SpriteRenderer>().sprite = character.GetCharacterSprite(character.side);
+        if (!character.IsDead())
+        {
+            character.side = PlayerManager.GetOtherPlayer(character.side);
+
+            // Change all sprites from childs to sprites of childs of prefab of other side
+            GameObject newPrefab = character.GetCharacterPrefab(character.side);
+            for(int i = 0; i < character.GetCharacterGameObject().transform.childCount; i++)
+            {
+                GameObject child = character.GetCharacterGameObject().transform.GetChild(i).gameObject;
+                if(child.TryGetComponent<SpriteRenderer>(out var spriteRenderer))
+                {
+                    spriteRenderer.sprite = newPrefab.transform.GetChild(i).gameObject.GetComponent<SpriteRenderer>().sprite;
+                }
+            }
+        }
     }
 
     private void UpdateInfluenceAnimator(Character character, int influence)
     {
         GameObject child = UIUtils.FindChildGameObject(character.GetCharacterGameObject(), "MasterTakeoverProgression");
         UIUtils.UpdateAnimator(child.GetComponent<Animator>(), influence);
-        child.SetActive(influence > 0);
     }
 
     ~InfluenceAuraPA()
