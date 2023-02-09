@@ -6245,6 +6245,7 @@ GameObject:
   - component: {fileID: 2068364711}
   - component: {fileID: 2068364710}
   - component: {fileID: 2068364709}
+  - component: {fileID: 2068364712}
   m_Layer: 5
   m_Name: LocalGameButton
   m_TagString: Untagged
@@ -6317,9 +6318,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 405094485}
-        m_TargetAssemblyTypeName: SceneChangeManager, Assembly-CSharp
-        m_MethodName: LoadGameScene
+      - m_Target: {fileID: 2068364712}
+        m_TargetAssemblyTypeName: LocalGameButtonHandler, Assembly-CSharp
+        m_MethodName: StartLocalGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6367,6 +6368,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2068364707}
   m_CullTransparentMesh: 1
+--- !u!114 &2068364712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2068364707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68683c0ae64d96f47a1e41b4b207e98e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2085422244
 GameObject:
   m_ObjectHideFlags: 0
