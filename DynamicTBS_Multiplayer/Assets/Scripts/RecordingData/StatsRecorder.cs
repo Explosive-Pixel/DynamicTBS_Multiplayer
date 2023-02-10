@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -23,32 +24,57 @@ public class StatsRecorder : MonoBehaviour
         if (GameManager.IsHost())
         {
             SubscribeEvents();
-            string directory = Application.dataPath + "/Resources/GameRecords";
-            Directory.CreateDirectory(directory);
-            filePath = directory + "/SaveStats.json"; //TODO: Saving to a remote file online
+
+            try 
+            { 
+                string directory = Application.dataPath + "/Resources/GameRecords";
+                Directory.CreateDirectory(directory);
+                filePath = directory + "/SaveStats.json"; //TODO: Saving to a remote file online
+            }
+            catch (Exception ex)
+            {
+                Debug.Log("Cannot record stats: " + ex.ToString());
+                filePath = null;
+                UnsubscribeEvents();
+            }
         }
     }
     
     // Load old save stats from file and store in variables.
     private void LoadStats()
     {
-        if (File.Exists(filePath))
+        if (filePath != null)
         {
-            string loadString = File.ReadAllText(filePath);
-            recordableStats = JsonUtility.FromJson<RecordableStats>(loadString);
+            if (File.Exists(filePath))
+            {
+                string loadString = File.ReadAllText(filePath);
+                recordableStats = JsonUtility.FromJson<RecordableStats>(loadString);
+            }
+            else
+            {
+                recordableStats = new RecordableStats();
+                SaveStats();
+            }
+            IncreaseGameNumber();
         }
-        else
-        {
-            recordableStats = new RecordableStats();
-            SaveStats();
-        }
-        IncreaseGameNumber();
     }
 
     private void SaveStats()
     {
-        string saveString = JsonUtility.ToJson(recordableStats);
-        File.WriteAllText(filePath, saveString);
+        if (filePath != null)
+        {
+            try
+            {
+                string saveString = JsonUtility.ToJson(recordableStats);
+                File.WriteAllText(filePath, saveString);
+            }
+            catch (Exception ex)
+            {
+                Debug.Log("Cannot record game: " + ex.ToString());
+                filePath = null;
+                UnsubscribeEvents();
+            }
+        }
     }
 
     private void IncreaseGameNumber()
