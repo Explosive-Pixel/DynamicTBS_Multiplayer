@@ -16,10 +16,18 @@ public class GameRecorder : MonoBehaviour
 
     private void SetPath()
     {
-        filename = "GameRecord_" + DateTime.Now.ToString("dd-MM-yyyy_HH-mm-ss");
-        string directory = Application.dataPath + "/Resources/GameRecords";
-        Directory.CreateDirectory(directory);
-        path = directory + "/" + filename + ".txt"; 
+        try
+        {
+            filename = "GameRecord_" + DateTime.Now.ToString("dd-MM-yyyy_HH-mm-ss");
+            string directory = Application.dataPath + "/Resources/GameRecords";
+            Directory.CreateDirectory(directory);
+            path = directory + "/" + filename + ".txt";
+        } catch(Exception ex)
+        {
+            Debug.Log("Cannot record game: " + ex.ToString());
+            path = null;
+            UnsubscribeEvents();
+        }
     }
 
     private void RecordMove(ActionMetadata actionMetadata)
@@ -30,36 +38,21 @@ public class GameRecorder : MonoBehaviour
             recordLine = "\nCharacter: " + actionMetadata.CharacterInAction.ToString() + "\nOriginal position: " + TranslateTilePosition(actionMetadata.CharacterInitialPosition) + "\nTarget position: " + TranslateTilePosition(actionMetadata.ActionDestinationPosition) + "\n";
         }
 
-        if (path != null)
-        {
-            StreamWriter writer = new StreamWriter(path, true);
-            writer.WriteLine(recordLine);
-            writer.Close();
-        }
+        RecordLine(recordLine);
     }
 
     private void RecordDraft(Character character)
     {
         string recordLine = "Player " + character.GetSide().GetPlayerType().ToString() + " drafted " + character.ToString();
 
-        if (path != null)
-        {
-            StreamWriter writer = new StreamWriter(path, true);
-            writer.WriteLine(recordLine);
-            writer.Close();
-        }
+        RecordLine(recordLine);
     }
 
     private void RecordWinner(PlayerType? winningSide, GameOverCondition endGameCondition)
     {
         string recordLine = winningSide != null ? "Player " + winningSide.ToString() + " won." : "No player won the match.";
 
-        if (path != null)
-        {
-            StreamWriter writer = new StreamWriter(path, true);
-            writer.WriteLine(recordLine);
-            writer.Close();
-        }
+        RecordLine(recordLine);
     }
 
     private string TranslateTilePosition(Vector3? position)
@@ -76,6 +69,25 @@ public class GameRecorder : MonoBehaviour
         }
         
         return text;
+    }
+
+    private void RecordLine(String recordLine)
+    {
+        if (path != null)
+        {
+            try
+            {
+                StreamWriter writer = new StreamWriter(path, true);
+                writer.WriteLine(recordLine);
+                writer.Close();
+            }
+            catch (Exception ex)
+            {
+                Debug.Log("Cannot record game: " + ex.ToString());
+                path = null;
+                UnsubscribeEvents();
+            }
+        }
     }
 
     #region EventsRegion
