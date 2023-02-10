@@ -70,7 +70,7 @@ public class StatsRecorder : MonoBehaviour
             }
             catch (Exception ex)
             {
-                Debug.Log("Cannot record game: " + ex.ToString());
+                Debug.Log("Cannot save stats: " + ex.ToString());
                 filePath = null;
                 UnsubscribeEvents();
             }
