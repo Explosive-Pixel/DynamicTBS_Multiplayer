@@ -56,6 +56,11 @@ public class GameplayTimer : MonoBehaviour
         timer.SetActive(true);
         Timertext.color = GetPlayerColor(PlayerManager.GameplayPhaseStartPlayer);
         GameplayEvents.OnPlayerTurnEnded += ResetTimer;
+
+        if (!GameManager.IsHost())
+        {
+            NetUtility.C_UPDATE_TIMER += UpdateTimerInfo;
+        }
     }
 
     private void ResetTimer(Player player)
@@ -166,11 +171,6 @@ public class GameplayTimer : MonoBehaviour
     {
         GameplayEvents.OnGameplayPhaseStart += SetActive;
         GameplayEvents.OnGameOver += ResetAll;
-
-        if(!GameManager.IsHost())
-        {
-            NetUtility.C_UPDATE_TIMER += UpdateTimerInfo;
-        }
     }
     private void UnsubscribeEvents()
     {

@@ -107,11 +107,11 @@ public class PlacementManager : MonoBehaviour
         if (placementCount >= MaxPlacementCount)
         {
             SpawnMasters();
-            GameplayEvents.StartGameplayPhase();
             pinkPlacementTurnOverlay.SetActive(false);
             bluePlacementTurnOverlay.SetActive(false);
             pinkPlacementTurnOverlay.transform.position = oldPinkOverlayPosition;
             bluePlacementTurnOverlay.transform.position = oldBlueOverlayPosition;
+            GameplayEvents.StartGameplayPhase();
         }    
     }
 
