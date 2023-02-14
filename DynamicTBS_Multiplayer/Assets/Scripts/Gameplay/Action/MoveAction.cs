@@ -107,7 +107,11 @@ public class MoveAction : MonoBehaviour, IAction
                 {
                     if (!visited.Contains(neighbor) && (neighbor.IsAccessible() || pattern))
                     {
-                        movePositions.Add(neighbor.GetTileGameObject().transform.position);
+                        Vector3 position = neighbor.GetTileGameObject().transform.position;
+                        if (!movePositions.Contains(position))
+                        {
+                            movePositions.Add(position);
+                        }
                         if (!tileQueueByDistance.ContainsKey(distance + 1))
                         {
                             tileQueueByDistance[distance + 1] = new Queue<Tile>();

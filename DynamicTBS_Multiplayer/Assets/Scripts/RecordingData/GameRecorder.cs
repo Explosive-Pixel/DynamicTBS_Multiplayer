@@ -83,7 +83,7 @@ public class GameRecorder : MonoBehaviour
             }
             catch (Exception ex)
             {
-                Debug.Log("Cannot record game: " + ex.ToString());
+                Debug.Log("Cannot record game line: " + ex.ToString());
                 path = null;
                 UnsubscribeEvents();
             }

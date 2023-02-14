@@ -107,11 +107,11 @@ public class PlacementManager : MonoBehaviour
         if (placementCount >= MaxPlacementCount)
         {
             SpawnMasters();
-            GameplayEvents.StartGameplayPhase();
             pinkPlacementTurnOverlay.SetActive(false);
             bluePlacementTurnOverlay.SetActive(false);
             pinkPlacementTurnOverlay.transform.position = oldPinkOverlayPosition;
             bluePlacementTurnOverlay.transform.position = oldBlueOverlayPosition;
+            GameplayEvents.StartGameplayPhase();
         }    
     }
 
@@ -155,7 +155,7 @@ public class PlacementManager : MonoBehaviour
 
         Tile masterSpawnTile = Board.FindMasterStartTile(playerType);
         Vector3 position = masterSpawnTile.GetPosition();
-        master.GetCharacterGameObject().transform.position = new Vector3(position.x, position.y, 0.998f);
+        master.GetCharacterGameObject().transform.position = new Vector3(position.x, position.y, 1f);
         masterSpawnTile.SetCurrentInhabitant(master);
         DraftEvents.CharacterCreated(master);
         PlacementEvents.CharacterPlaced(master);

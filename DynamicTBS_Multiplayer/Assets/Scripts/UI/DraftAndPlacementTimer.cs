@@ -141,7 +141,7 @@ public class DraftAndPlacementTimer : MonoBehaviour
         else
         {
             DraftEvents.OnEndDraft += SetActive;
-            GameplayEvents.OnGameplayPhaseStart += Init;
+            AudioEvents.OnSpawnMasters += Init;
         }
 
         if (!GameManager.IsHost())
@@ -155,7 +155,7 @@ public class DraftAndPlacementTimer : MonoBehaviour
         DraftEvents.OnStartDraft -= SetActive;
         DraftEvents.OnEndDraft -= Init;
         DraftEvents.OnEndDraft -= SetActive;
-        GameplayEvents.OnGameplayPhaseStart -= Init;
+        AudioEvents.OnSpawnMasters -= Init;
         GameplayEvents.OnPlayerTurnEnded -= ResetTimer;
         NetUtility.C_UPDATE_TIMER -= UpdateTimerInfo;
     }

@@ -29,7 +29,7 @@ public class StandardDraft : MonoBehaviour
         {
             Tile startTile = Board.FindStartTiles(character.GetSide().GetPlayerType())[0];
             Vector3 position = startTile.GetPosition();
-            character.GetCharacterGameObject().transform.position = new Vector3(position.x, position.y, 0.997f);
+            character.GetCharacterGameObject().transform.position = new Vector3(position.x, position.y, 1f);
             startTile.SetCurrentInhabitant(character);
             PlacementEvents.CharacterPlaced(character);
         }

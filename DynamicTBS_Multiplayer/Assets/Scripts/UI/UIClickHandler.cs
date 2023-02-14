@@ -125,19 +125,19 @@ public class UIClickHandler : MonoBehaviour
         }
 
         // Show complete movement pattern, not just legal moves.
-        if (Input.GetKey(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             ShowActionPattern(ActionType.Move);
         }
 
         // Show complete attack pattern, not just legal moves.
-        if (Input.GetKey(KeyCode.Alpha2))
+        if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             ShowActionPattern(ActionType.Attack);
         }
 
         // Show complete active ability pattern, not just legal moves.
-        if (Input.GetKey(KeyCode.Alpha3))
+        if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             if(currentCharacter != null)
             {
