@@ -9,7 +9,7 @@ public class GameplayTimer : MonoBehaviour
 {
     #region Timer config
 
-    private const float timePerTurn = 80;
+    private const float timePerTurn = 90;
     private const float debuffRate = 0.25f;
     private const int maxDebuffs = 3;
 
