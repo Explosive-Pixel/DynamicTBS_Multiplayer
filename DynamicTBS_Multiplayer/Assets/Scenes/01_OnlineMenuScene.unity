@@ -4139,8 +4139,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 70}
-  m_SizeDelta: {x: 1000, y: 80}
+  m_AnchoredPosition: {x: 0, y: 80}
+  m_SizeDelta: {x: 1000, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2060925868
 MonoBehaviour:
@@ -4175,8 +4175,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Enter the IP address you want to connect to, then connect as your chosen
-    role.
+  m_Text: 'Enter the IP address you want to connect to, then connect as your chosen
+    role. Note: Currently only works if both computers are in the same local network.'
 --- !u!222 &2060925869
 CanvasRenderer:
   m_ObjectHideFlags: 0
