@@ -41,6 +41,9 @@ public class PlacementManager : MonoBehaviour
     private Vector3 oldBlueOverlayPosition = new Vector3(-10, 0, 1.1f);
     private Vector3 newOverlayPosition = new Vector3(0, 0, 1.1f);
 
+    [SerializeField]
+    private Board board;
+
     private void Awake()
     {
         SubscribeEvents();
@@ -129,7 +132,7 @@ public class PlacementManager : MonoBehaviour
         } 
     }
     
-    public static void SpawnMasters()
+    public void SpawnMasters()
     {
         SpawnMaster(PlayerType.blue);
         SpawnMaster(PlayerType.pink);
@@ -149,11 +152,11 @@ public class PlacementManager : MonoBehaviour
         return placementOrder[placementOrderIndex] - placementOrder[placementOrderIndex - 1];
     }
 
-    private static void SpawnMaster(PlayerType playerType) 
+    private void SpawnMaster(PlayerType playerType) 
     {
         Character master = CharacterFactory.CreateCharacter(CharacterType.MasterChar, PlayerManager.GetPlayer(playerType));
 
-        Tile masterSpawnTile = Board.FindMasterStartTile(playerType);
+        Tile masterSpawnTile = board.FindMasterStartTile(playerType);
         Vector3 position = masterSpawnTile.GetPosition();
         master.GetCharacterGameObject().transform.position = new Vector3(position.x, position.y, 1f);
         masterSpawnTile.SetCurrentInhabitant(master);

@@ -15,20 +15,8 @@ public class Board : MonoBehaviour
 
     private const float tileSize = 1f;
 
-    public TileType[][] tilePositionEditor;
-
-    private static readonly TileType[,] tilePositions = new TileType[boardSize, boardSize]
-    {
-        { TileType.FloorTile, TileType.MasterStartTile, TileType.FloorTile, TileType.FloorTile, TileType.FloorTile, TileType.FloorTile, TileType.FloorTile, TileType.FloorTile, TileType.FloorTile },
-        { TileType.EmptyTile, TileType.EmptyTile, TileType.FloorTile, TileType.StartTile, TileType.EmptyTile, TileType.StartTile, TileType.FloorTile, TileType.EmptyTile, TileType.EmptyTile },
-        { TileType.StartTile, TileType.FloorTile, TileType.FloorTile, TileType.EmptyTile, TileType.StartTile, TileType.EmptyTile, TileType.FloorTile, TileType.FloorTile, TileType.StartTile },
-        { TileType.FloorTile, TileType.EmptyTile, TileType.StartTile, TileType.FloorTile, TileType.EmptyTile, TileType.FloorTile, TileType.StartTile, TileType.EmptyTile, TileType.FloorTile },
-        { TileType.FloorTile, TileType.EmptyTile, TileType.EmptyTile, TileType.FloorTile, TileType.GoalTile, TileType.FloorTile, TileType.EmptyTile, TileType.EmptyTile, TileType.FloorTile },
-        { TileType.FloorTile, TileType.EmptyTile, TileType.StartTile, TileType.FloorTile, TileType.EmptyTile, TileType.FloorTile, TileType.StartTile, TileType.EmptyTile, TileType.FloorTile },
-        { TileType.StartTile, TileType.FloorTile, TileType.FloorTile, TileType.EmptyTile, TileType.StartTile, TileType.EmptyTile, TileType.FloorTile, TileType.FloorTile, TileType.StartTile },
-        { TileType.EmptyTile, TileType.EmptyTile, TileType.FloorTile, TileType.StartTile, TileType.EmptyTile, TileType.StartTile, TileType.FloorTile, TileType.EmptyTile, TileType.EmptyTile },
-        { TileType.FloorTile, TileType.FloorTile, TileType.FloorTile, TileType.FloorTile, TileType.FloorTile, TileType.FloorTile, TileType.FloorTile, TileType.MasterStartTile, TileType.FloorTile }
-    };
+    [SerializeField]
+    private TileMap boardDesign;
 
     #endregion
 
@@ -247,7 +235,7 @@ public class Board : MonoBehaviour
         return GetTilesOfDistance(tile, patternType, 1);
     }
 
-    public static List<Tile> FindStartTiles(PlayerType playerType) 
+    public List<Tile> FindStartTiles(PlayerType playerType) 
     {
         List<Tile> startTiles = new List<Tile>();
         int startRow = FindStartRow(playerType);
@@ -258,7 +246,7 @@ public class Board : MonoBehaviour
         {
             for (int column = 0; column < boardSize; column++)
             {
-                if (tilePositions[row, column] == TileType.StartTile)
+                if (boardDesign[row, column] == TileType.StartTile)
                 {
                     Tile tile = GetTileByCoordinates(row, column);
 
@@ -273,7 +261,7 @@ public class Board : MonoBehaviour
         return startTiles;
     }
 
-    public static Tile FindMasterStartTile(PlayerType playerType) 
+    public Tile FindMasterStartTile(PlayerType playerType) 
     {
         int startRow = FindStartRow(playerType);
         int endRow = FindEndRow(playerType);
@@ -283,7 +271,7 @@ public class Board : MonoBehaviour
         {
             for (int column = 0; column < boardSize; column++)
             {
-                if (tilePositions[row, column] == TileType.MasterStartTile)
+                if (boardDesign[row, column] == TileType.MasterStartTile)
                 {
                     return GetTileByCoordinates(row, column);
                 }
@@ -320,7 +308,7 @@ public class Board : MonoBehaviour
         {
             for (int column = 0; column < boardSize; column++)
             {
-                Tile tile = new Tile(tilePositions[row, column], FindSideOfTile(row), row, column);
+                Tile tile = new Tile(boardDesign[row, column], FindSideOfTile(row), row, column);
                 tiles.Add(tile);
                 tilesByGameObject.Add(tile.GetTileGameObject(), tile);
             }

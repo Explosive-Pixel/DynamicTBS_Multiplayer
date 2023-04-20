@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class StandardDraft : MonoBehaviour
 {
-    public void PerformStandardDraft()
+   /* public void PerformStandardDraft()
     {
         List<Character> characters = new List<Character>();
 
@@ -45,5 +45,5 @@ public class StandardDraft : MonoBehaviour
      
         DraftEvents.CharacterCreated(character);
         return character;
-    }
+    }*/
 }

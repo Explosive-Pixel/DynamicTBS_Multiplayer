@@ -7,6 +7,9 @@ public class MoveAction : MonoBehaviour, IAction
     [SerializeField]
     private GameObject moveCirclePrefab;
 
+    [SerializeField]
+    private Board board;
+
     public ActionType ActionType { get { return ActionType.Move; } }
 
     private List<GameObject> moveDestinations = new List<GameObject>();
@@ -16,9 +19,10 @@ public class MoveAction : MonoBehaviour, IAction
     public Character CharacterInAction { get { return characterInAction; } }
 
     private List<GameObject> patternTargets = new List<GameObject>();
-
+    
     private void Awake()
     {
+
         PlacementEvents.OnPlacementStart += Register;
         GameplayEvents.OnGameplayPhaseStart += RegisterPattern;
     }
@@ -80,7 +84,7 @@ public class MoveAction : MonoBehaviour, IAction
     {
         if(!GameplayManager.HasGameStarted())
         {
-            return Board.FindStartTiles(character.GetSide().GetPlayerType()).ConvertAll(tile => tile.GetPosition());
+            return board.FindStartTiles(character.GetSide().GetPlayerType()).ConvertAll(tile => tile.GetPosition());
         }
 
         Tile currentTile = Board.GetTileByCharacter(character);
