@@ -77,7 +77,7 @@ public class PowershotAAAction : MonoBehaviour, IAction
 
         foreach (Tile tile in hitCharacterTiles)
         {
-            if (tile.GetCurrentInhabitant().isAttackableBy(characterInAction))
+            if (tile.GetCurrentInhabitant() != null && tile.GetCurrentInhabitant().isAttackableBy(characterInAction))
                 tile.GetCurrentInhabitant().TakeDamage(PowershotAA.powershotDamage);
         }
         characterInAction.TakeDamage(PowershotAA.selfDamage);
