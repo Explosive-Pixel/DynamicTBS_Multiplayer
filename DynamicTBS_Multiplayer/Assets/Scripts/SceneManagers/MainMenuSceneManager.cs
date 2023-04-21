@@ -5,7 +5,7 @@ using UnityEngine;
 public class MainMenuSceneManager : MonoBehaviour
 {
     [SerializeField] private GameObject startMenuCanvas;
-    [SerializeField] private GameObject playOptions;
+    [SerializeField] private GameObject mapMenu;
     [SerializeField] private GameObject infoOptions;
 
     private void Awake()
@@ -18,12 +18,14 @@ public class MainMenuSceneManager : MonoBehaviour
         AudioEvents.EnteringMainMenu();
     }
 
-    public void TogglePlayOptions()
+    public void ToggleMapMenu()
     {
-        if (playOptions.activeSelf == true)
-            playOptions.SetActive(false);
+        if (mapMenu.activeSelf == true)
+            mapMenu.SetActive(false);
         else
-            playOptions.SetActive(true);
+            mapMenu.SetActive(true);
+
+        AudioEvents.PressingButton();
     }
 
     public void ToggleInfoOptions()
@@ -32,5 +34,7 @@ public class MainMenuSceneManager : MonoBehaviour
             infoOptions.SetActive(false);
         else
             infoOptions.SetActive(true);
+
+        AudioEvents.PressingButton();
     }
 }

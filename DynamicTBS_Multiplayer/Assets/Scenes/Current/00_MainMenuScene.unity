@@ -222,7 +222,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1613078001}
         m_TargetAssemblyTypeName: MainMenuSceneManager, Assembly-CSharp
-        m_MethodName: TogglePlayOptions
+        m_MethodName: ToggleMapMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1086,7 +1086,7 @@ RectTransform:
   - {fileID: 1783662478}
   - {fileID: 1426653585}
   m_Father: {fileID: 457787470}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2007,6 +2007,7 @@ RectTransform:
   - {fileID: 1002515401}
   - {fileID: 1101681002}
   - {fileID: 26983663}
+  - {fileID: 783983079}
   - {fileID: 1717282226}
   - {fileID: 708405137}
   - {fileID: 257304851}
@@ -2090,7 +2091,7 @@ RectTransform:
   m_Children:
   - {fileID: 1641005003}
   m_Father: {fileID: 785470299}
-  m_RootOrder: 6
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2427,7 +2428,7 @@ RectTransform:
   m_Children:
   - {fileID: 1952025313}
   m_Father: {fileID: 785470299}
-  m_RootOrder: 4
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3325,7 +3326,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: HEAVY FLANK
+  m_Text: ARROWS
 --- !u!222 &665362577
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3685,7 +3686,7 @@ RectTransform:
   m_Children:
   - {fileID: 1031134625}
   m_Father: {fileID: 457787470}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3870,6 +3871,46 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &783983078
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 783983079}
+  m_Layer: 5
+  m_Name: MapMenu
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &783983079
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 783983078}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1991921896}
+  - {fileID: 1031275207}
+  - {fileID: 1842909090}
+  - {fileID: 1441407738}
+  m_Father: {fileID: 457787470}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &785470298
 GameObject:
   m_ObjectHideFlags: 0
@@ -3899,13 +3940,9 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1396839879}
-  - {fileID: 1991921896}
-  - {fileID: 1031275207}
-  - {fileID: 1842909090}
   - {fileID: 565782780}
   - {fileID: 1752451532}
   - {fileID: 465158554}
-  - {fileID: 1441407738}
   - {fileID: 947412629}
   m_Father: {fileID: 1717282226}
   m_RootOrder: 3
@@ -4525,7 +4562,7 @@ RectTransform:
   m_Children:
   - {fileID: 975291913}
   m_Father: {fileID: 785470299}
-  m_RootOrder: 8
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5124,7 +5161,7 @@ GameObject:
   - component: {fileID: 1031275209}
   - component: {fileID: 1031275208}
   m_Layer: 5
-  m_Name: Arrows7Button
+  m_Name: Tactical7Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5143,13 +5180,13 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1441662577}
-  m_Father: {fileID: 785470299}
-  m_RootOrder: 2
+  m_Father: {fileID: 783983079}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -270, y: 100}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 778, y: -320}
+  m_SizeDelta: {x: 300, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1031275208
 MonoBehaviour:
@@ -5207,9 +5244,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1031275208}
-        m_TargetAssemblyTypeName: LocalGameButtonHandler, Assembly-CSharp
-        m_MethodName: StartLocalGame
+      - m_Target: {fileID: 405094485}
+        m_TargetAssemblyTypeName: SceneChangeManager, Assembly-CSharp
+        m_MethodName: LoadTacticalGameScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5484,7 +5521,7 @@ RectTransform:
   m_Children:
   - {fileID: 801662738}
   m_Father: {fileID: 457787470}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -7405,13 +7442,13 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1955625590}
-  m_Father: {fileID: 785470299}
-  m_RootOrder: 7
+  m_Father: {fileID: 783983079}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -270, y: 45}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 778, y: -200}
+  m_SizeDelta: {x: 300, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1441407739
 MonoBehaviour:
@@ -7469,9 +7506,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1441407739}
-        m_TargetAssemblyTypeName: LocalGameButtonHandler, Assembly-CSharp
-        m_MethodName: StartLocalGame
+      - m_Target: {fileID: 405094485}
+        m_TargetAssemblyTypeName: SceneChangeManager, Assembly-CSharp
+        m_MethodName: LoadLabyrinthGameScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7590,7 +7627,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: ARROWS
+  m_Text: TACTICAL
 --- !u!222 &1441662579
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8014,7 +8051,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: CLASSIC
+  m_Text: EXPLOSIVE
 --- !u!222 &1605794106
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8090,7 +8127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startMenuCanvas: {fileID: 457787466}
-  playOptions: {fileID: 1717282225}
+  mapMenu: {fileID: 783983078}
   infoOptions: {fileID: 257304850}
 --- !u!4 &1613078002
 Transform:
@@ -8538,7 +8575,7 @@ RectTransform:
   - {fileID: 502760836}
   - {fileID: 1129914319}
   m_Father: {fileID: 457787470}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -8617,7 +8654,7 @@ RectTransform:
   m_Children:
   - {fileID: 1821197130}
   m_Father: {fileID: 785470299}
-  m_RootOrder: 5
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -9034,7 +9071,7 @@ GameObject:
   - component: {fileID: 1842909092}
   - component: {fileID: 1842909091}
   m_Layer: 5
-  m_Name: HeavyFlank7Button
+  m_Name: Arrows7Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9053,13 +9090,13 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 665362575}
-  m_Father: {fileID: 785470299}
-  m_RootOrder: 3
+  m_Father: {fileID: 783983079}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -65, y: 100}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 778, y: -260}
+  m_SizeDelta: {x: 300, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1842909091
 MonoBehaviour:
@@ -9117,9 +9154,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1842909091}
-        m_TargetAssemblyTypeName: LocalGameButtonHandler, Assembly-CSharp
-        m_MethodName: StartLocalGame
+      - m_Target: {fileID: 405094485}
+        m_TargetAssemblyTypeName: SceneChangeManager, Assembly-CSharp
+        m_MethodName: LoadArrowsGameScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9700,7 +9737,7 @@ GameObject:
   - component: {fileID: 1991921898}
   - component: {fileID: 1991921897}
   m_Layer: 5
-  m_Name: Classic7Button
+  m_Name: Explosive7Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9719,13 +9756,13 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1605794104}
-  m_Father: {fileID: 785470299}
-  m_RootOrder: 1
+  m_Father: {fileID: 783983079}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -475, y: 100}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 778, y: -380}
+  m_SizeDelta: {x: 300, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1991921897
 MonoBehaviour:
@@ -9783,9 +9820,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1991921897}
-        m_TargetAssemblyTypeName: LocalGameButtonHandler, Assembly-CSharp
-        m_MethodName: StartLocalGame
+      - m_Target: {fileID: 405094485}
+        m_TargetAssemblyTypeName: SceneChangeManager, Assembly-CSharp
+        m_MethodName: LoadExplosiveGameScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
