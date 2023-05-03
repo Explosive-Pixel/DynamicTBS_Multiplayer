@@ -5,12 +5,14 @@ using UnityEngine;
 public class MainMenuSceneManager : MonoBehaviour
 {
     [SerializeField] private GameObject startMenuCanvas;
-    [SerializeField] private GameObject mapMenu;
+    [SerializeField] private GameObject localGameSetupCanvas;
+    [SerializeField] private GameObject playOptionsMenu;
     [SerializeField] private GameObject infoOptions;
-
+    
     private void Awake()
     {
         startMenuCanvas.SetActive(true);
+        localGameSetupCanvas.SetActive(false);
     }
 
     private void Start()
@@ -18,12 +20,12 @@ public class MainMenuSceneManager : MonoBehaviour
         AudioEvents.EnteringMainMenu();
     }
 
-    public void ToggleMapMenu()
+    public void TogglePlayOptionsMenu()
     {
-        if (mapMenu.activeSelf == true)
-            mapMenu.SetActive(false);
+        if (playOptionsMenu.activeSelf == true)
+            playOptionsMenu.SetActive(false);
         else
-            mapMenu.SetActive(true);
+            playOptionsMenu.SetActive(true);
 
         AudioEvents.PressingButton();
     }
@@ -36,5 +38,17 @@ public class MainMenuSceneManager : MonoBehaviour
             infoOptions.SetActive(true);
 
         AudioEvents.PressingButton();
+    }
+
+    public void SwitchToLocalGameSetup()
+    {
+        localGameSetupCanvas.SetActive(true);
+        startMenuCanvas.SetActive(false);
+    }
+
+    public void SwitchToStartMenu()
+    {
+        localGameSetupCanvas.SetActive(false);
+        startMenuCanvas.SetActive(true);
     }
 }

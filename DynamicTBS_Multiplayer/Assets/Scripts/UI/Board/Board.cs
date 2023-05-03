@@ -15,8 +15,7 @@ public class Board : MonoBehaviour
 
     private const float tileSize = 1f;
 
-    [SerializeField]
-    private TileMap boardDesign;
+    [SerializeField] private TileMap boardDesign;
 
     #endregion
 
