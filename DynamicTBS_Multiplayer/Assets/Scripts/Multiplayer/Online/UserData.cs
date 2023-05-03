@@ -11,6 +11,12 @@ public class UserData
     private ClientType role;
     public ClientType Role { get { return role; } }
 
+    public UserData(string name, ClientType role)
+    {
+        this.name = name;
+        this.role = role;
+    }
+
     public void Serialize(ref DataStreamWriter writer)
     {
         writer.WriteFixedString32(name);
@@ -19,10 +25,9 @@ public class UserData
 
     public static UserData Deserialize(DataStreamReader reader)
     {
-        return new UserData
-        {
-            name = reader.ReadFixedString32().ToString(),
-            role = (ClientType)reader.ReadInt()
-        };
+        return new UserData(
+            reader.ReadFixedString32().ToString(),
+            (ClientType)reader.ReadInt()
+        );
     }
 }

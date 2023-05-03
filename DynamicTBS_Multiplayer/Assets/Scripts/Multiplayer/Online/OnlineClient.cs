@@ -14,6 +14,8 @@ public enum ConnectionStatus
 
 public class OnlineClient : MonoBehaviour
 {
+    private GameObject onlineGameManagerObject;
+
     #region SingletonImplementation
 
     public static OnlineClient Instance { set; get; }
@@ -22,6 +24,8 @@ public class OnlineClient : MonoBehaviour
     {
         Instance = this;
         Shutdown();
+        onlineGameManagerObject = this.gameObject;
+        DontDestroyOnLoad(onlineGameManagerObject);
     }
 
     #endregion
@@ -34,7 +38,8 @@ public class OnlineClient : MonoBehaviour
     public Action connectionDropped;
 
     private bool isActive = false;
-    public ConnectionStatus connectionStatus = ConnectionStatus.UNCONNECTED;
+    private ConnectionStatus connectionStatus = ConnectionStatus.UNCONNECTED;
+    public ConnectionStatus ConnectionStatus { get { return connectionStatus; } set { connectionStatus = value; } }
 
     private bool isLoadingGame = false;
 
@@ -47,8 +52,10 @@ public class OnlineClient : MonoBehaviour
     private PlayerType side;
     public PlayerType Side { get { return side; } }
 
-    public int playerCount = 0;
-    public int spectatorCount = 0;
+    private int playerCount = 0;
+    public int PlayerCount { get { return playerCount; } set { playerCount = value; } }
+    private int spectatorCount = 0;
+    public int SpectatorCount { get { return spectatorCount; } set { spectatorCount = value; } }
 
     public void Init(string ip, ushort port, UserData userData, LobbyId lobbyId)
     {

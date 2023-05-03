@@ -38,8 +38,8 @@ public class MsgMetadata : OnlineMessage
     {
         OnlineClient.Instance.SendToServer(this); // Sends message back to keep both sides alive.
 
-        OnlineClient.Instance.playerCount = playerCount;
-        OnlineClient.Instance.spectatorCount = spectatorCount;
+        OnlineClient.Instance.PlayerCount = playerCount;
+        OnlineClient.Instance.SpectatorCount = spectatorCount;
     }
 
     public override void ReceivedOnServer(NetworkConnection cnn)
