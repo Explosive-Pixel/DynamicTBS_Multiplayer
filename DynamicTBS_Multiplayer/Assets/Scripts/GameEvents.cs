@@ -2,13 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class GameEvents 
+public static class GameEvents
 {
     public delegate void GamePhase();
     public static event GamePhase OnGameStart;
-
-    public delegate void BoardLayoutSelection(int i);
-    public static event BoardLayoutSelection OnBoardLayoutSelected;
 
     public delegate void LoadGame(bool isLoading);
     public static event LoadGame OnGameIsLoading;
@@ -20,12 +17,6 @@ public static class GameEvents
     {
         if (OnGameStart != null)
             OnGameStart();
-    }
-
-    public static void SelectBoardLayout(int i)
-    {
-        if (OnBoardLayoutSelected != null)
-            OnBoardLayoutSelected(i);
     }
 
     public static void IsGameLoading(bool isLoading)
