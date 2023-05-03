@@ -57,14 +57,14 @@ public class OnlineClientMessageSender : MonoBehaviour
     {
         DraftEvents.OnCharacterCreated += SendDraftCharacterMessage;
         GameplayEvents.OnFinishAction += SendPerformActionMessage;
-        GameplayEvents.OnExecuteUIAction += SendUIActionMessage;
+        //GameplayEvents.OnExecuteUIAction += SendUIActionMessage;
     }
 
     private void UnsubscribeEvents()
     {
         DraftEvents.OnCharacterCreated -= SendDraftCharacterMessage;
         GameplayEvents.OnFinishAction -= SendPerformActionMessage;
-        GameplayEvents.OnExecuteUIAction -= SendUIActionMessage;
+        //GameplayEvents.OnExecuteUIAction -= SendUIActionMessage;
     }
 
     #endregion

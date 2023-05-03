@@ -135,7 +135,6 @@ GameObject:
   - component: {fileID: 26983667}
   - component: {fileID: 26983666}
   - component: {fileID: 26983665}
-  - component: {fileID: 26983664}
   m_Layer: 5
   m_Name: PlayButton
   m_TagString: Untagged
@@ -164,18 +163,6 @@ RectTransform:
   m_AnchoredPosition: {x: 778, y: -465}
   m_SizeDelta: {x: 300, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &26983664
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 26983662}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68683c0ae64d96f47a1e41b4b207e98e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &26983665
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2876,7 +2863,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1924273985}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: OnlineClientUI, Assembly-CSharp
         m_MethodName: OnSelectPink
         m_Mode: 1
@@ -4802,7 +4789,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1924273985}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: OnlineClientUI, Assembly-CSharp
         m_MethodName: OnStartGame
         m_Mode: 1
@@ -7543,7 +7530,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1924273985}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: OnlineClientUI, Assembly-CSharp
         m_MethodName: OnSelectPink
         m_Mode: 1
@@ -8382,7 +8369,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1924273985}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: OnlineClientUI, Assembly-CSharp
         m_MethodName: OnSelectPink
         m_Mode: 1
@@ -8672,7 +8659,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1924273985}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: OnlineClientUI, Assembly-CSharp
         m_MethodName: OnSelectPink
         m_Mode: 1
@@ -8853,7 +8840,6 @@ GameObject:
   - component: {fileID: 1924273988}
   - component: {fileID: 1924273987}
   - component: {fileID: 1924273986}
-  - component: {fileID: 1924273985}
   - component: {fileID: 1924273984}
   m_Layer: 5
   m_Name: LocalGameSetupCanvas
@@ -8870,24 +8856,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1924273983}
   m_CullTransparentMesh: 1
---- !u!114 &1924273985
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1924273983}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c43a245a312b224c896163b7d0370b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  clientInfoText: {fileID: 1125303155}
-  startGameButton: {fileID: 937475001}
-  selectPinkButton: {fileID: 0}
-  selectBlueButton: {fileID: 0}
-  connectedPlayers: {fileID: 0}
-  mainMenuButton: {fileID: 230111249}
 --- !u!114 &1924273986
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9330,7 +9298,6 @@ GameObject:
   - component: {fileID: 2068364711}
   - component: {fileID: 2068364710}
   - component: {fileID: 2068364709}
-  - component: {fileID: 2068364712}
   m_Layer: 5
   m_Name: LocalGameButton
   m_TagString: Untagged
@@ -9453,18 +9420,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2068364707}
   m_CullTransparentMesh: 1
---- !u!114 &2068364712
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2068364707}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68683c0ae64d96f47a1e41b4b207e98e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2085422244
 GameObject:
   m_ObjectHideFlags: 0

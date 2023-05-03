@@ -15,7 +15,13 @@ public class Board : MonoBehaviour
 
     private const float tileSize = 1f;
 
-    [SerializeField] private TileMap boardDesign;
+    // [SerializeField] private TileMap boardDesign;
+
+    [SerializeField] private TileMap[] boardDesigns;
+
+    public static int boardDesignIndex = 0;
+
+    private TileMap BoardDesign { get { return boardDesigns[boardDesignIndex]; } }
 
     #endregion
 
@@ -245,7 +251,7 @@ public class Board : MonoBehaviour
         {
             for (int column = 0; column < boardSize; column++)
             {
-                if (boardDesign[row, column] == TileType.StartTile)
+                if (BoardDesign[row, column] == TileType.StartTile)
                 {
                     Tile tile = GetTileByCoordinates(row, column);
 
@@ -270,7 +276,7 @@ public class Board : MonoBehaviour
         {
             for (int column = 0; column < boardSize; column++)
             {
-                if (boardDesign[row, column] == TileType.MasterStartTile)
+                if (BoardDesign[row, column] == TileType.MasterStartTile)
                 {
                     return GetTileByCoordinates(row, column);
                 }
@@ -307,7 +313,7 @@ public class Board : MonoBehaviour
         {
             for (int column = 0; column < boardSize; column++)
             {
-                Tile tile = new Tile(boardDesign[row, column], FindSideOfTile(row), row, column);
+                Tile tile = new Tile(BoardDesign[row, column], FindSideOfTile(row), row, column);
                 tiles.Add(tile);
                 tilesByGameObject.Add(tile.GetTileGameObject(), tile);
             }
