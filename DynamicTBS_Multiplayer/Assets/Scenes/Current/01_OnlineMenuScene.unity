@@ -2695,7 +2695,6 @@ GameObject:
   - component: {fileID: 954437389}
   - component: {fileID: 954437388}
   - component: {fileID: 954437387}
-  - component: {fileID: 954437386}
   m_Layer: 5
   m_Name: OnlineMetadataCanvas
   m_TagString: Untagged
@@ -2703,23 +2702,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &954437386
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 954437385}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f87dc8a0f5b7d404784434df519115ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  server: {fileID: 1316232588}
-  client: {fileID: 1316232589}
-  addressInput: {fileID: 0}
-  onlineMenuCanvas: {fileID: 954437385}
-  onlineClientCanvas: {fileID: 2057763761}
 --- !u!114 &954437387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2894,7 +2876,7 @@ GameObject:
   - component: {fileID: 975854610}
   - component: {fileID: 975854609}
   - component: {fileID: 975854608}
-  - component: {fileID: 975854607}
+  - component: {fileID: 975854612}
   m_Layer: 5
   m_Name: OnlineMenuCanvas
   m_TagString: Untagged
@@ -2902,23 +2884,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &975854607
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 975854606}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f87dc8a0f5b7d404784434df519115ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  server: {fileID: 1316232588}
-  client: {fileID: 1316232589}
-  addressInput: {fileID: 157189375}
-  onlineMenuCanvas: {fileID: 975854606}
-  onlineClientCanvas: {fileID: 2057763761}
 --- !u!114 &975854608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3008,6 +2973,23 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &975854612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 975854606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7cab306c488c004b9b4ed2b4f26106b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  client: {fileID: 1316232591}
+  userName: {fileID: 157189375}
+  lobbyNameOrId: {fileID: 992222381}
+  spectatorToggle: {fileID: 1489946253}
+  lobbyCanvas: {fileID: 2057763761}
 --- !u!1 &992222379
 GameObject:
   m_ObjectHideFlags: 0
@@ -3656,8 +3638,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1316232590}
-  - component: {fileID: 1316232589}
-  - component: {fileID: 1316232588}
+  - component: {fileID: 1316232591}
   m_Layer: 0
   m_Name: OnlineGameManager
   m_TagString: Untagged
@@ -3665,33 +3646,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1316232588
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1316232587}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e85d67f65ca918c4886ab1a7d431d31d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1316232589
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1316232587}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd93577a5e507044db71762f79e4ada8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  role: 0
-  side: 0
-  isAdmin: 0
 --- !u!4 &1316232590
 Transform:
   m_ObjectHideFlags: 0
@@ -3707,6 +3661,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1316232591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1316232587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b23c71e990211dd46bcbf0d38d5b9c4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1344535524
 GameObject:
   m_ObjectHideFlags: 0
@@ -4836,9 +4802,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 975854607}
-        m_TargetAssemblyTypeName: OnlineUI, Assembly-CSharp
-        m_MethodName: BackToMainMenuButton
+      - m_Target: {fileID: 975854612}
+        m_TargetAssemblyTypeName: OnlineMenuCanvasHandler, Assembly-CSharp
+        m_MethodName: BackToMainMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5650,13 +5616,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 975854607}
-        m_TargetAssemblyTypeName: OnlineUI, Assembly-CSharp
-        m_MethodName: OnlineHostAsSpectatorButton
+      - m_Target: {fileID: 1766192255}
+        m_TargetAssemblyTypeName: OnlineMenuCanvasHandler, Assembly-CSharp
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -6459,9 +6425,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 975854607}
-        m_TargetAssemblyTypeName: OnlineUI, Assembly-CSharp
-        m_MethodName: OnlineHostAsPlayerButton
+      - m_Target: {fileID: 975854612}
+        m_TargetAssemblyTypeName: OnlineMenuCanvasHandler, Assembly-CSharp
+        m_MethodName: CreateLobby
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

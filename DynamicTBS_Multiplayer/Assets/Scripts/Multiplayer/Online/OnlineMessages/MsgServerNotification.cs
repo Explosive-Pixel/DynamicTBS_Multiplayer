@@ -42,10 +42,10 @@ public class MsgServerNotification : OnlineMessage
         switch(serverNotification)
         {
             case ServerNotification.LOBBY_NOT_FOUND:
-                OnlineClient.Instance.connectionStatus = ConnectionStatus.LOBBY_NOT_FOUND;
+                OnlineClient.Instance.ConnectionStatus = ConnectionStatus.LOBBY_NOT_FOUND;
                 break;
             case ServerNotification.CONNECTION_FORBIDDEN_FULL_LOBBY:
-                OnlineClient.Instance.connectionStatus = ConnectionStatus.CONNECTION_DECLINED;
+                OnlineClient.Instance.ConnectionStatus = ConnectionStatus.CONNECTION_DECLINED;
                 break;
             case ServerNotification.TOGGLE_LOAD_GAME_STATUS:
                 OnlineClient.Instance.ToggleIsLoadingGame();
