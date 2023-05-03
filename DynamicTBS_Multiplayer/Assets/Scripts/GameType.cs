@@ -5,5 +5,6 @@ using UnityEngine;
 public enum GameType
 {
     local,
-    multiplayer
+    multiplayer,
+    online
 }
