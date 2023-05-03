@@ -11,8 +11,6 @@ public class SceneChangeManager : MonoBehaviour
     // 4: Lore Scene
     // 5: Credits Scene
 
-    private int gameplaySceneNumber;
-
     // TODO: Put saving and loading PlayerPrefs and the Quit-Option in separate class which doesn't destroy on load.
     private void Awake()
     {
@@ -33,35 +31,7 @@ public class SceneChangeManager : MonoBehaviour
 
     public void LoadGameScene()
     {
-        LoadSceneOnButtonPress(gameplaySceneNumber);
-        //AudioEvents.PressingButton();
-    }
-
-    public void LoadExplosiveGameScene()
-    {
-        gameplaySceneNumber = 2;
-        GameEvents.StartGame();
-        AudioEvents.PressingButton();
-    }
-
-    public void LoadTacticalGameScene()
-    {
-        gameplaySceneNumber = 3;
-        GameEvents.StartGame();
-        AudioEvents.PressingButton();
-    }
-
-    public void LoadArrowsGameScene()
-    {
-        gameplaySceneNumber = 4;
-        GameEvents.StartGame();
-        AudioEvents.PressingButton();
-    }
-
-    public void LoadLabyrinthGameScene()
-    {
-        gameplaySceneNumber = 5;
-        GameEvents.StartGame();
+        LoadSceneOnButtonPress(2);
         AudioEvents.PressingButton();
     }
 
