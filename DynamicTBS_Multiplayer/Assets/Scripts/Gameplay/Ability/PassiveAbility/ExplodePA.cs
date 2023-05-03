@@ -26,10 +26,13 @@ public class ExplodePA : IPassiveAbility
             Tile ownerLastTile = Board.GetTileByPosition(lastPosition);
             foreach(Character character in CharacterHandler.GetAllLivingCharacters())
             {
-                Tile neightborTile = Board.GetTileByPosition(character.GetCharacterGameObject().transform.position);
-                if(Board.Neighbors(ownerLastTile, neightborTile, explodePatternType))
+                if (character.GetCharacterGameObject() != null)
                 {
-                    character.TakeDamage(explodeDamage);
+                    Tile neighborTile = Board.GetTileByPosition(character.GetCharacterGameObject().transform.position);
+                    if (Board.Neighbors(ownerLastTile, neighborTile, explodePatternType))
+                    {
+                        character.TakeDamage(explodeDamage);
+                    }
                 }
             }
             AudioEvents.Exploding();
