@@ -42,11 +42,11 @@ public class GameplayManager : MonoBehaviour
         return true;
     }
 
-    private void ToggleGameIsPaused(Player player, UIActionType uIActionType)
+    private void ToggleGameIsPaused(Player player, UIAction uIAction)
     {
-        if(uIActionType == UIActionType.PauseGame || uIActionType == UIActionType.UnpauseGame)
+        if(uIAction == UIAction.PAUSE_GAME || uIAction == UIAction.UNPAUSE_GAME)
         {
-            gameIsPaused = uIActionType == UIActionType.PauseGame;
+            gameIsPaused = uIAction == UIAction.PAUSE_GAME;
             GameplayEvents.PauseGame(gameIsPaused);
         }
     }

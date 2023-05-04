@@ -125,7 +125,7 @@ public class ClientMessageHandler : MonoBehaviour
         UIActionType uIActionType = (UIActionType)netExecuteUIAction.uiActionType;
         if (Client.Instance.ShouldReadMessage(playerType))
         {
-            GameplayEvents.UIActionExecuted(PlayerManager.GetPlayer(playerType), uIActionType);
+            //GameplayEvents.UIActionExecuted(PlayerManager.GetPlayer(playerType), uIActionType);
         }
     }
 
@@ -153,7 +153,7 @@ public class ClientMessageHandler : MonoBehaviour
         GameplayEvents.OnFinishAction += SendPerformActionMessage;
         NetUtility.C_PERFORM_ACTION += OnPerformAction;
 
-        GameplayEvents.OnExecuteUIAction += SendExecuteUIActionMessage;
+        //GameplayEvents.OnExecuteUIAction += SendExecuteUIActionMessage;
         NetUtility.C_EXECUTE_UIACTION += OnExecuteUIAction;
 
         NetUtility.C_EXECUTE_SERVER_ACTION += OnExecuteServerAction;
@@ -170,7 +170,7 @@ public class ClientMessageHandler : MonoBehaviour
         GameplayEvents.OnFinishAction -= SendPerformActionMessage;
         NetUtility.C_PERFORM_ACTION -= OnPerformAction;
 
-        GameplayEvents.OnExecuteUIAction -= SendExecuteUIActionMessage;
+        //GameplayEvents.OnExecuteUIAction -= SendExecuteUIActionMessage;
         NetUtility.C_EXECUTE_UIACTION -= OnExecuteUIAction;
 
         NetUtility.C_EXECUTE_SERVER_ACTION -= OnExecuteServerAction;

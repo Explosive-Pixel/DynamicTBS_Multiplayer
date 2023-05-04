@@ -135,6 +135,12 @@ public class OnlineClient : MonoBehaviour
         GameEvents.IsGameLoading(isLoadingGame);
     }
 
+    public void StartGame()
+    {
+        GameManager.gameType = GameType.online;
+        GameEvents.StartGame();
+    }
+
     private void CheckAlive()
     {
         if (!connection.IsCreated && isActive) // If no connections is created, but client is active, something went wrong.

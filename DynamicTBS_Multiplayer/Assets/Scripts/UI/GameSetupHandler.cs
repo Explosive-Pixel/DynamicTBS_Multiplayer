@@ -29,8 +29,6 @@ public class GameSetupHandler : MonoBehaviour
         mapSetup.GetComponentsInChildren<Button>().ToList().ForEach(button => button.interactable = true);
         button.interactable = false;
         mapSelected = true;
-
-        UIEvents.MapSelected();
     }
 
     public void SetActive(bool active)

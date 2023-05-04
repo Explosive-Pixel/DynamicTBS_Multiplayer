@@ -20,28 +20,28 @@ public class DrawButtonHandler : MonoBehaviour
 
     public void OfferDraw()
     {
-        FireUIActionExecutedEvent(UIActionType.OfferDraw);
+        FireUIActionExecutedEvent(UIAction.OFFER_DRAW);
     }
 
     public void AcceptDraw()
     {
-        FireUIActionExecutedEvent(UIActionType.AcceptDraw);
+        FireUIActionExecutedEvent(UIAction.ACCEPT_DRAW);
     }
 
     public void DeclineDraw()
     {
-        FireUIActionExecutedEvent(UIActionType.DeclineDraw);
+        FireUIActionExecutedEvent(UIAction.DECLINE_DRAW);
     }
 
-    private void FireUIActionExecutedEvent(UIActionType uIActionType)
+    private void FireUIActionExecutedEvent(UIAction uIAction)
     {
         Player player = PlayerManager.GetCurrentlyExecutingPlayer();
-        GameplayEvents.UIActionExecuted(player, uIActionType);
+        GameplayEvents.UIActionExecuted(player, uIAction);
     }
 
-    private void OnDrawButtonClicked(Player player, UIActionType uIActionType)
+    private void OnDrawButtonClicked(Player player, UIAction uIAction)
     {
-        if(uIActionType == UIActionType.OfferDraw)
+        if(uIAction == UIAction.OFFER_DRAW)
         {
             offerDrawButton.interactable = false;
             if (!(GameManager.gameType == GameType.multiplayer && Client.Instance.side == player.GetPlayerType()))
@@ -49,10 +49,10 @@ public class DrawButtonHandler : MonoBehaviour
                 SetActive(answerDrawBox, true);
             }
         }
-        else if(uIActionType == UIActionType.AcceptDraw)
+        else if(uIAction == UIAction.ACCEPT_DRAW)
         {
             GameplayEvents.GameIsOver(null, GameOverCondition.DRAW_ACCEPTED);
-        } else if(uIActionType == UIActionType.DeclineDraw)
+        } else if(uIAction == UIAction.DECLINE_DRAW)
         {
             offerDrawButton.interactable = true;
             SetActive(answerDrawBox, false);
@@ -66,7 +66,7 @@ public class DrawButtonHandler : MonoBehaviour
 
     private void SetActive(GameObject gameObject, bool active)
     {
-        if (GameManager.gameType == GameType.multiplayer && Client.Instance.role == ClientType.spectator)
+        if (!GameManager.IsPlayer())
         {
             gameObject.SetActive(false);
         }

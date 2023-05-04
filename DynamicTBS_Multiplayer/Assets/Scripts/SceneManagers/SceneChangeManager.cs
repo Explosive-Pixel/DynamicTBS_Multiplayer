@@ -19,37 +19,37 @@ public class SceneChangeManager : MonoBehaviour
 
     public void LoadMainMenuScene()
     {
-        LoadSceneOnButtonPress(0);
+        LoadSceneOnButtonPress(1);
         AudioEvents.PressingButton();
     }
 
     public void LoadOnlineMenuScene()
     {
-        LoadSceneOnButtonPress(1);
+        LoadSceneOnButtonPress(2);
         AudioEvents.PressingButton();
     }
 
     public void LoadGameScene()
     {
-        LoadSceneOnButtonPress(2);
+        LoadSceneOnButtonPress(3);
         AudioEvents.PressingButton();
     }
 
     public void LoadTutorialScene()
     {
-        LoadSceneOnButtonPress(6);
+        LoadSceneOnButtonPress(4);
         AudioEvents.PressingButton();
     }
 
     public void LoadLoreScene()
     {
-        LoadSceneOnButtonPress(7);
+        LoadSceneOnButtonPress(5);
         AudioEvents.PressingButton();
     }
 
     public void LoadCreditsScene()
     {
-        LoadSceneOnButtonPress(8);
+        LoadSceneOnButtonPress(6);
         AudioEvents.PressingButton();
     }
 

@@ -143,6 +143,7 @@ public class OnlineLobbyCanvasHandler : MonoBehaviour
             {
                 uiAction = UIAction.START_GAME
             });
+            OnlineClient.Instance.StartGame();
         }
     }
 
