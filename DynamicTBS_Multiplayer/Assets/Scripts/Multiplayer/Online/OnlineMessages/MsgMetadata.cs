@@ -29,7 +29,7 @@ public class MsgMetadata : OnlineMessage
 
     public override void Deserialize(DataStreamReader reader)
     {
-        base.Deserialize(reader);
+        LobbyId = reader.ReadInt();
         playerCount = reader.ReadInt();
         spectatorCount = reader.ReadInt();
     }

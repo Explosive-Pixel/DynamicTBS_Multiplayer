@@ -9,5 +9,6 @@ public class OnlineServerMenu : MonoBehaviour
     private void Awake()
     {
         server.Init(8007);
+        Debug.Log("Server Initialized");
     }
 }

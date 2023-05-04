@@ -29,10 +29,9 @@ public class MsgPerformAction : OnlineMessage
     {
         base.Serialize(ref writer, lobbyId);
         writer.WriteByte((byte)playerId);
-        writer.WriteByte((byte)Code);
         writer.WriteFloat(characterX);
         writer.WriteFloat(characterY);
-        writer.WriteByte((byte)actionType);
+        writer.WriteInt((int)actionType);
         writer.WriteInt(actionCount);
         writer.WriteByte(ToByte(hasDestination));
         writer.WriteFloat(destinationX);
@@ -41,11 +40,11 @@ public class MsgPerformAction : OnlineMessage
 
     public override void Deserialize(DataStreamReader reader)
     {
-        base.Deserialize(reader);
+        LobbyId = reader.ReadInt();
         playerId = (PlayerType)reader.ReadByte();
         characterX = reader.ReadFloat();
         characterY = reader.ReadFloat();
-        actionType = (ActionType)reader.ReadByte();
+        actionType = (ActionType)reader.ReadInt();
         actionCount = reader.ReadInt();
         hasDestination = ToBool(reader.ReadByte());
         destinationX = reader.ReadFloat();

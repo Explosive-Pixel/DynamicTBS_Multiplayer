@@ -28,7 +28,7 @@ public class MsgSyncTimer : OnlineMessage
 
     public override void Deserialize(DataStreamReader reader)
     {
-        base.Deserialize(reader);
+        LobbyId = reader.ReadInt();
         playerId = (PlayerType)reader.ReadByte();
         characterType = (CharacterType)reader.ReadByte();
     }

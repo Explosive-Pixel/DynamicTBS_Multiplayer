@@ -134,12 +134,7 @@ public class OnlineLobbyCanvasHandler : MonoBehaviour
     {
         if (AllSelected)
         {
-            OnlineClient.Instance.SendToServer(new MsgUpdateClient
-            {
-                isAdmin = OnlineClient.Instance.IsAdmin,
-                side = selectedSide,
-                boardDesignIndex = Board.boardDesignIndex
-            });
+            OnlineClient.Instance.ChooseGameSetup(selectedSide, Board.boardDesignIndex);
 
             OnlineClient.Instance.SendToServer(new MsgUIAction
             {
@@ -157,7 +152,7 @@ public class OnlineLobbyCanvasHandler : MonoBehaviour
 
         if(active)
         {
-            startGameButton.interactable = AllSelected;
+            startGameButton.interactable = AllSelected && OnlineClient.Instance.PlayerCount == 2;
         }
     }
 }

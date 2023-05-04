@@ -11,7 +11,7 @@ public class Lobby
     public LobbyId Id { get { return id; } }
     public int ShortId { get { return id.Id; } }
 
-    public bool IsActive { get { return connections.Count > 1; } }
+    public bool IsActive { get { return connections.Count > 0; } }
 
     private List<OnlineConnection> connections = new List<OnlineConnection>();
     public List<NetworkConnection> Connections { get { return connections.ConvertAll(cnn => cnn.NetworkConnection); } }

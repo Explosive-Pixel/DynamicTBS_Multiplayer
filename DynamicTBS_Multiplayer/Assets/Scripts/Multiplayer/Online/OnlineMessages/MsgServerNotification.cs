@@ -33,7 +33,7 @@ public class MsgServerNotification : OnlineMessage
 
     public override void Deserialize(DataStreamReader reader)
     {
-        base.Deserialize(reader);
+        LobbyId = reader.ReadInt();
         serverNotification = (ServerNotification)reader.ReadByte();
     }
 

@@ -13,7 +13,6 @@ public class OnlineServer : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        Shutdown();
     }
 
     #endregion
@@ -24,7 +23,8 @@ public class OnlineServer : MonoBehaviour
 
     private int lobbyIdCounter = 0;
 
-    private List<NetworkConnection> AllConnections { get { return lobbies.ConvertAll(lobby => lobby.Connections).SelectMany(cnn => cnn).ToList(); } }
+    //private List<NetworkConnection> AllConnections { get { return lobbies.ConvertAll(lobby => lobby.Connections).SelectMany(cnn => cnn).ToList(); } }
+    private List<NetworkConnection> AllConnections = new List<NetworkConnection>();
 
     private bool isActive = false;
 
@@ -112,7 +112,10 @@ public class OnlineServer : MonoBehaviour
 
     public void JoinLobby(LobbyId lobbyId, NetworkConnection cnn, UserData userData)
     {
+        Debug.Log("Looking for Lobby with id: " + lobbyId.FullId);
         Lobby lobby = FindLobby(lobbyId);
+
+        Debug.Log("Found lobby: " + lobby.ToString());
 
         if(lobby == null)
         {
@@ -150,17 +153,20 @@ public class OnlineServer : MonoBehaviour
 
     private Lobby FindLobby(LobbyId lobbyId)
     {
-        return lobbies.Find(l => l.Id == lobbyId);
+        return lobbies.Find(l => l.Id.FullId == lobbyId.FullId);
     }
 
     private void WelcomeClient(Lobby lobby, OnlineConnection connection)
     {
         MsgWelcomeClient msg = new MsgWelcomeClient
         {
+            lobbyName = lobby.Id.Name,
             isAdmin = connection.IsAdmin
         };
 
         SendToClient(msg, connection.NetworkConnection, lobby.ShortId);
+
+        BroadcastMetadata(lobby);
 
         StartCoroutine(SendGameState(connection.NetworkConnection, lobby));
     }
@@ -202,22 +208,18 @@ public class OnlineServer : MonoBehaviour
         while ((c = driver.Accept()) != default(NetworkConnection)) // Checks if a client tries to connect who's not the default connection.
         {
             Debug.Log("New client connected: " + c.ToString());
+            AllConnections.Add(c);
         }
     }
 
     private void UpdateMessagePump()
     {
-        lobbies.ForEach(lobby => UpdateMessagePump(lobby));
-    }
-
-    private void UpdateMessagePump(Lobby lobby)
-    {
         try
         {
             DataStreamReader stream; // Reads incoming messages.
-            for (int i = 0; i < lobby.Connections.Count; i++)
+            for (int i = 0; i < AllConnections.Count; i++)
             {
-                NetworkConnection cnn = lobby.Connections[i];
+                NetworkConnection cnn = AllConnections[i];
                 NetworkEvent.Type cmd;
                 // There are 4 types of network events:
                 // Empty = nothing was sent.
@@ -234,7 +236,8 @@ public class OnlineServer : MonoBehaviour
                     else if (cmd == NetworkEvent.Type.Disconnect)
                     {
                         Debug.Log("Client disconnected from server: " + cnn.ToString());
-                        lobby.RemoveConnection(cnn);
+                        AllConnections.Remove(cnn);
+                        lobbies.ForEach(lobby => lobby.RemoveConnection(cnn));
                         connectionDropped?.Invoke();
                     }
                 }

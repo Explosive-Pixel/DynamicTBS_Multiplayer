@@ -33,7 +33,7 @@ public class GameSetupHandler : MonoBehaviour
 
     public void SetActive(bool active)
     {
-        timeSetup.SetActive(active);
+        // timeSetup.SetActive(active);
         mapSetup.SetActive(active);
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,7 +27,7 @@ public class UserData
     public static UserData Deserialize(DataStreamReader reader)
     {
         return new UserData(
-            reader.ReadFixedString32().ToString(),
+            reader.ReadFixedString32().Value,
             (ClientType)reader.ReadInt()
         );
     }

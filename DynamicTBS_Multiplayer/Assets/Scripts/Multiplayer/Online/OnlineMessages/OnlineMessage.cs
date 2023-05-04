@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,5 +31,5 @@ public class OnlineMessage
     }
 
     public static byte ToByte(bool value) { return value == false ? (byte)0 : (byte)1; }
-    public static bool ToBool(byte value) { return value != 0; }
+    public static bool ToBool(byte value) { return value == 1; }
 }

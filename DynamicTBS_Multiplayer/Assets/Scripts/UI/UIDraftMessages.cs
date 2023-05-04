@@ -35,15 +35,15 @@ public class UIDraftMessages : MonoBehaviour
         draftMessageText.text += ".";
 
         playerInfoText.text = "";
-        if (GameManager.gameType == GameType.multiplayer)
+        if (GameManager.gameType == GameType.online)
         {
-            if (Client.Instance.role == ClientType.spectator)
+            if (OnlineClient.Instance.UserData.Role == ClientType.spectator)
             {
                 playerInfoText.text = "";
             }
             else
             {
-                playerInfoText.text = "You are player " + Client.Instance.side + ".";
+                playerInfoText.text = "You are player " + OnlineClient.Instance.Side + ".";
             }
         }
 

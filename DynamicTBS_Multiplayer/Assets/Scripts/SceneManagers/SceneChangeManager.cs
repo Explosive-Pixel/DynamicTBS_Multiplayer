@@ -6,13 +6,12 @@ using System.Linq;
 
 public enum Scene
 {
-    SERVER = 0,
-    MAIN_MENU = 1,
-    ONLINE_MENU = 2,
-    GAME = 3,
-    TUTORIAL = 4,
-    LORE = 5,
-    CREDITS = 6
+    MAIN_MENU = 0,
+    ONLINE_MENU = 1,
+    GAME = 2,
+    TUTORIAL = 3,
+    LORE = 4,
+    CREDITS = 5
 }
 
 public class SceneChangeManager : MonoBehaviour
