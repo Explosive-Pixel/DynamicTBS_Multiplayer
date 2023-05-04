@@ -17,6 +17,8 @@ public class OnlineLobbyCanvasHandler : MonoBehaviour
 
     [SerializeField] private GameSetupHandler gameSetupHandler;
 
+    [SerializeField] private GameObject onlineMetadataCanvas;
+
     private PlayerType selectedSide;
     private bool sideSelected = false;
     

@@ -201,6 +201,7 @@ public class OnlineClient : MonoBehaviour
             driver.Dispose();
             isActive = false;
             connectionStatus = ConnectionStatus.UNCONNECTED;
+            Destroy(this.gameObject);
         }
     }
 
