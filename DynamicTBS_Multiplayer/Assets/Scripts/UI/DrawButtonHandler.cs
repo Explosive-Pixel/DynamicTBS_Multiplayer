@@ -44,7 +44,7 @@ public class DrawButtonHandler : MonoBehaviour
         if(uIAction == UIAction.OFFER_DRAW)
         {
             offerDrawButton.interactable = false;
-            if (!(GameManager.gameType == GameType.multiplayer && Client.Instance.side == player.GetPlayerType()))
+            if (!(GameManager.gameType == GameType.online && OnlineClient.Instance.Side == player.GetPlayerType()))
             {
                 SetActive(answerDrawBox, true);
             }

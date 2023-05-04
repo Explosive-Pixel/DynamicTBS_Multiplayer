@@ -21,6 +21,9 @@ public class Lobby
     private List<OnlineMessage> messageHistory = new List<OnlineMessage>();
     public List<OnlineMessage> MessageHistory { get { return messageHistory; } }
 
+    private int boardDesignIndex = 0;
+    public int BoardDesignIndex { get { return boardDesignIndex; } }
+
     public Lobby(LobbyId id, OnlineConnection connection)
     {
         this.id = id;
@@ -74,6 +77,7 @@ public class Lobby
         if (cnn != null)
         {
             cnn.Side = chosenSide;
+            this.boardDesignIndex = boardDesignIndex;
 
             OnlineConnection other = FindOtherPlayer(cnn);
             if (other != null)
@@ -95,7 +99,18 @@ public class Lobby
         if(Players.Count == 2)
         {
             Players.ForEach(player => player.IsAdmin = !player.IsAdmin);
+            UpdateAdmins();
         }
+    }
+
+    private void UpdateAdmins()
+    {
+        Players.ForEach(player => OnlineServer.Instance.SendToClient(new MsgUpdateClient
+        {
+            isAdmin = player.IsAdmin,
+            side = player.Side.Value,
+            boardDesignIndex = boardDesignIndex
+        }, player.NetworkConnection, ShortId));
     }
 
     public void ArchiveMessage(OnlineMessage msg)

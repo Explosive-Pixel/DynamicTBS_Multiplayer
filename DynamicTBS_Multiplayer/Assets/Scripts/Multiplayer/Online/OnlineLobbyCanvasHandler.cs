@@ -26,7 +26,8 @@ public class OnlineLobbyCanvasHandler : MonoBehaviour
 
     private void Awake()
     {
-        SetActive(false);
+        DontDestroyOnLoad(this.gameObject);
+        ResetCanvas();
     }
 
     private void Update()
@@ -154,5 +155,44 @@ public class OnlineLobbyCanvasHandler : MonoBehaviour
         {
             startGameButton.interactable = AllSelected && OnlineClient.Instance.PlayerCount == 2;
         }
+    }
+
+    private void ShowCanvas()
+    {
+        ResetCanvas();
+        gameObject.SetActive(true);
+    }
+
+    private void HideCanvas()
+    {
+        gameObject.SetActive(false);
+    }
+
+    private void ResetCanvas()
+    {
+        UnsubscribeEvents();
+        sideSelected = false;
+        selectBlueButton.interactable = true;
+        selectPinkButton.interactable = true;
+        gameSetupHandler.ResetCanvas();
+        SetActive(false);
+        SubscribeEvents();
+    }
+
+    private void SubscribeEvents()
+    {
+        GameEvents.OnGameStart += HideCanvas;
+        GameplayEvents.OnRestartGame += ShowCanvas;
+    }
+
+    private void UnsubscribeEvents()
+    {
+        GameEvents.OnGameStart -= HideCanvas;
+        GameplayEvents.OnRestartGame -= ShowCanvas;
+    }
+
+    private void OnDestroy()
+    {
+        UnsubscribeEvents();
     }
 }

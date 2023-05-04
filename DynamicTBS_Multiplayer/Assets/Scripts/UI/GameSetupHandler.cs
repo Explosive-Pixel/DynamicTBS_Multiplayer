@@ -36,4 +36,10 @@ public class GameSetupHandler : MonoBehaviour
         // timeSetup.SetActive(active);
         mapSetup.SetActive(active);
     }
+
+    public void ResetCanvas()
+    {
+        mapSelected = false;
+        mapSetup.GetComponentsInChildren<Button>().ToList().ForEach(button => button.interactable = true);
+    }
 }

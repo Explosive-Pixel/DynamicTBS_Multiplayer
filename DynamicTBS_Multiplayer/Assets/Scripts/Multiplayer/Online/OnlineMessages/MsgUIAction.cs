@@ -67,5 +67,8 @@ public class MsgUIAction : OnlineMessage
     public override void ReceivedOnServer(NetworkConnection cnn)
     {
         OnlineServer.Instance.Broadcast(this, LobbyId);
+
+        if(uiAction == UIAction.START_GAME)
+            OnlineServer.Instance.SwapAdmin(LobbyId);
     }
 }

@@ -112,10 +112,7 @@ public class OnlineServer : MonoBehaviour
 
     public void JoinLobby(LobbyId lobbyId, NetworkConnection cnn, UserData userData)
     {
-        Debug.Log("Looking for Lobby with id: " + lobbyId.FullId);
         Lobby lobby = FindLobby(lobbyId);
-
-        Debug.Log("Found lobby: " + lobby.ToString());
 
         if(lobby == null)
         {
@@ -139,6 +136,12 @@ public class OnlineServer : MonoBehaviour
         }
 
         WelcomeClient(lobby, connection);
+    }
+
+    public void SwapAdmin(int lobbyId)
+    {
+        Lobby lobby = FindLobby(lobbyId);
+        lobby.SwapAdmin();
     }
 
     public void AssignSides(int lobbyId, NetworkConnection cnn, PlayerType chosenSide, int boardDesignIndex)
