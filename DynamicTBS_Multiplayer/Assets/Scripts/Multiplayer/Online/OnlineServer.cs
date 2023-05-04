@@ -138,10 +138,10 @@ public class OnlineServer : MonoBehaviour
         WelcomeClient(lobby, connection);
     }
 
-    public void AssignSides(int lobbyId, NetworkConnection cnn, PlayerType chosenSide)
+    public void AssignSides(int lobbyId, NetworkConnection cnn, PlayerType chosenSide, int boardDesignIndex)
     {
         Lobby lobby = FindLobby(lobbyId);
-        lobby.AssignSides(cnn, chosenSide);
+        lobby.AssignSides(cnn, chosenSide, boardDesignIndex);
     }
     private Lobby FindLobby(int lobbyId)
     {

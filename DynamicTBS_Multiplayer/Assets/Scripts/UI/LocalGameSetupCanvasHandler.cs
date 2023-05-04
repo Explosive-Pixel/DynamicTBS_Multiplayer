@@ -6,29 +6,17 @@ using System.Linq;
 
 public class LocalGameSetupCanvasHandler : MonoBehaviour
 {
-    [SerializeField] private GameObject timeSetup;
-    [SerializeField] private GameObject mapSetup;
+    [SerializeField] private Button startGameButton;
 
-    private void Awake()
+    [SerializeField] private GameSetupHandler gameSetupHandler;
+
+    private void Update()
     {
-        Button[] maps = mapSetup.GetComponentsInChildren<Button>();
-        for(int i = 0; i < maps.Length; i++)
-        {
-            Button button = maps[i];
-            int index = i;
-            button.onClick.AddListener(() => ChooseBoardDesign(button, index));
-        }
+        startGameButton.interactable = gameSetupHandler.AllSelected;
     }
-
-    public void ChooseBoardDesign(Button button, int index)
-    {
-        Board.boardDesignIndex = index;
-        mapSetup.GetComponentsInChildren<Button>().ToList().ForEach(button => button.interactable = true);
-        button.interactable = false;
-    }
-
     public void StartLocalGame()
     {
-        GameEvents.StartGame();
+        if(gameSetupHandler.AllSelected)
+            GameEvents.StartGame();
     }
 }

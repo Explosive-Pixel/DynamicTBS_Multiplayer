@@ -1001,9 +1001,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2057763762}
-        m_TargetAssemblyTypeName: OnlineClientUI, Assembly-CSharp
-        m_MethodName: OnSelectBlue
+      - m_Target: {fileID: 2057763769}
+        m_TargetAssemblyTypeName: OnlineLobbyCanvasHandler, Assembly-CSharp
+        m_MethodName: SelectBlue
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1135,7 +1135,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2057763762}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: OnlineClientUI, Assembly-CSharp
         m_MethodName: OnSelectPink
         m_Mode: 1
@@ -1269,7 +1269,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2057763762}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: OnlineClientUI, Assembly-CSharp
         m_MethodName: OnSelectPink
         m_Mode: 1
@@ -1581,8 +1581,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -700, y: 0}
-  m_SizeDelta: {x: 500, y: 300}
+  m_AnchoredPosition: {x: 633, y: 400}
+  m_SizeDelta: {x: 515.645, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &537048773
 MonoBehaviour:
@@ -1617,7 +1617,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: LobbyName-Number
+  m_Text: 
 --- !u!222 &537048774
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2128,7 +2128,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2057763762}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: OnlineClientUI, Assembly-CSharp
         m_MethodName: OnSelectPink
         m_Mode: 1
@@ -2262,9 +2262,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2057763762}
-        m_TargetAssemblyTypeName: OnlineClientUI, Assembly-CSharp
-        m_MethodName: OnStartGame
+      - m_Target: {fileID: 2057763769}
+        m_TargetAssemblyTypeName: OnlineLobbyCanvasHandler, Assembly-CSharp
+        m_MethodName: StartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4668,7 +4668,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2057763762}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: OnlineClientUI, Assembly-CSharp
         m_MethodName: OnSelectPink
         m_Mode: 1
@@ -5830,9 +5830,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2057763762}
-        m_TargetAssemblyTypeName: OnlineClientUI, Assembly-CSharp
-        m_MethodName: OnSelectPink
+      - m_Target: {fileID: 2057763769}
+        m_TargetAssemblyTypeName: OnlineLobbyCanvasHandler, Assembly-CSharp
+        m_MethodName: SelectPink
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5976,8 +5976,9 @@ GameObject:
   - component: {fileID: 2057763765}
   - component: {fileID: 2057763764}
   - component: {fileID: 2057763763}
-  - component: {fileID: 2057763762}
   - component: {fileID: 2057763768}
+  - component: {fileID: 2057763770}
+  - component: {fileID: 2057763769}
   m_Layer: 5
   m_Name: OnlineLobbyCanvas
   m_TagString: Untagged
@@ -5985,24 +5986,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2057763762
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2057763761}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c43a245a312b224c896163b7d0370b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  clientInfoText: {fileID: 966693895}
-  startGameButton: {fileID: 826859609}
-  selectPinkButton: {fileID: 1950754942}
-  selectBlueButton: {fileID: 373667314}
-  connectedPlayers: {fileID: 172897242}
-  mainMenuButton: {fileID: 1489544015}
 --- !u!114 &2057763763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6101,6 +6084,39 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2057763761}
   m_CullTransparentMesh: 1
+--- !u!114 &2057763769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2057763761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaabd78a55642fa498ee91a0aee2f523, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lobbyFullId: {fileID: 537048773}
+  clientInfoText: {fileID: 966693895}
+  sideSetup: {fileID: 1792609186}
+  selectPinkButton: {fileID: 1950754942}
+  selectBlueButton: {fileID: 373667314}
+  startGameButton: {fileID: 826859609}
+  gameSetupHandler: {fileID: 2057763770}
+--- !u!114 &2057763770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2057763761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39db9fb2503b16940883be692b2854c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeSetup: {fileID: 243754604}
+  mapSetup: {fileID: 1228494964}
 --- !u!1 &2060925866
 GameObject:
   m_ObjectHideFlags: 0

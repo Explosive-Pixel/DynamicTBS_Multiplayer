@@ -9,7 +9,8 @@ public enum ConnectionStatus
     UNCONNECTED = 0,
     CONNECTED = 1,
     LOBBY_NOT_FOUND = 2,
-    CONNECTION_DECLINED = 3
+    CONNECTION_DECLINED = 3,
+    ATTEMPT_CONNECTION = 4
 }
 
 public class OnlineClient : MonoBehaviour
@@ -68,6 +69,7 @@ public class OnlineClient : MonoBehaviour
         NetworkEndPoint endPoint = NetworkEndPoint.Parse(ip, port); // Specific endpoint for connection.
 
         connection = driver.Connect(endPoint); // Connecting based on the endpoint that was just created.
+        connectionStatus = ConnectionStatus.ATTEMPT_CONNECTION;
         Debug.Log("Client: Attempting to connect to server on " + endPoint.Address);
 
         isActive = true;

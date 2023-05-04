@@ -68,7 +68,7 @@ public class Lobby
         return false;
     }
 
-    public void AssignSides(NetworkConnection networkConnection, PlayerType chosenSide)
+    public void AssignSides(NetworkConnection networkConnection, PlayerType chosenSide, int boardDesignIndex)
     {
         OnlineConnection cnn = FindOnlineConnection(networkConnection);
         if (cnn != null)
@@ -82,7 +82,8 @@ public class Lobby
                 OnlineServer.Instance.SendToClient(new MsgUpdateClient
                 {
                     isAdmin = other.IsAdmin,
-                    side = other.Side.Value
+                    side = other.Side.Value,
+                    boardDesignIndex = boardDesignIndex
                 }, other.NetworkConnection, ShortId);
             }
         }
