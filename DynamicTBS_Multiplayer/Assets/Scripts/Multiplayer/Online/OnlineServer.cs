@@ -121,6 +121,7 @@ public class OnlineServer : MonoBehaviour
             {
                 serverNotification = ServerNotification.LOBBY_NOT_FOUND
             }, cnn, lobby.ShortId);
+            return;
         }
 
         OnlineConnection connection = new OnlineConnection(cnn, userData);
@@ -133,6 +134,7 @@ public class OnlineServer : MonoBehaviour
             {
                 serverNotification = ServerNotification.CONNECTION_FORBIDDEN_FULL_LOBBY
             }, cnn, lobby.ShortId);
+            return;
         }
 
         WelcomeClient(lobby, connection);
@@ -178,6 +180,8 @@ public class OnlineServer : MonoBehaviour
     {
         if (lobby.MessageHistory.Count > 0)
         {
+            lobby.UpdateConnectionAfterReconnect(cnn);
+
             Debug.Log("Sending history to client: " + lobby.MessageHistory.Count);
             float delay = 0.1f;
 

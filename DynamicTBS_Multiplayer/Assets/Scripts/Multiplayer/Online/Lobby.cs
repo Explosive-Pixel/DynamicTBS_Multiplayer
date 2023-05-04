@@ -21,7 +21,7 @@ public class Lobby
     private List<OnlineMessage> messageHistory = new List<OnlineMessage>();
     public List<OnlineMessage> MessageHistory { get { return messageHistory; } }
 
-    private int boardDesignIndex = 0;
+    private int boardDesignIndex = -1;
     public int BoardDesignIndex { get { return boardDesignIndex; } }
 
     public Lobby(LobbyId id, OnlineConnection connection)
@@ -59,16 +59,36 @@ public class Lobby
 
         if(cnn != null)
         {
-            if(cnn.IsAdmin)
+           /* if(cnn.IsAdmin)
             {
                 SwapAdmin();
-            }
+            } */
 
             connections.Remove(cnn);
             return true;
         }
 
         return false;
+    }
+
+    public void UpdateConnectionAfterReconnect(NetworkConnection networkConnection)
+    {
+        OnlineConnection cnn = FindOnlineConnection(networkConnection);
+        if (cnn != null)
+        {
+            OnlineConnection other = FindOtherPlayer(cnn);
+            if(other != null && other.Side != null && boardDesignIndex != -1)
+            {
+                cnn.Side = PlayerManager.GetOtherSide(other.Side.Value);
+                cnn.IsAdmin = !other.IsAdmin;
+                OnlineServer.Instance.SendToClient(new MsgUpdateClient
+                {
+                    isAdmin = cnn.IsAdmin,
+                    side = cnn.Side.Value,
+                    boardDesignIndex = boardDesignIndex
+                }, networkConnection, ShortId);
+            }
+        }
     }
 
     public void AssignSides(NetworkConnection networkConnection, PlayerType chosenSide, int boardDesignIndex)

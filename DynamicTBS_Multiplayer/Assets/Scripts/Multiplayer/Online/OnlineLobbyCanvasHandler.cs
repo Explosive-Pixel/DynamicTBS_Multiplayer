@@ -64,6 +64,9 @@ public class OnlineLobbyCanvasHandler : MonoBehaviour
     {
         SetActive(OnlineClient.Instance.IsAdmin);
 
+        if (OnlineClient.Instance.LobbyId == null)
+            return;
+
         lobbyFullId.text = OnlineClient.Instance.LobbyId.FullId;
 
         clientInfoText.text = "You are connected!\n";
