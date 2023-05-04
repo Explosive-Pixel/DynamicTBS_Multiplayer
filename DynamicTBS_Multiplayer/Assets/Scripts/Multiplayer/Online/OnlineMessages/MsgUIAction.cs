@@ -53,11 +53,23 @@ public class MsgUIAction : OnlineMessage
         if (OnlineClient.Instance.ShouldReadMessage(playerId))
         {
             //GameplayEvents.UIActionExecuted(PlayerManager.GetPlayer(playerId), uiAction);
+            switch(uiAction)
+            {
+                case UIAction.START_GAME:
+                    StartGame();
+                    break;
+            }
         }
     }
 
     public override void ReceivedOnServer(NetworkConnection cnn)
     {
         OnlineServer.Instance.Broadcast(this, LobbyId);
+    }
+
+    private void StartGame()
+    {
+        GameManager.gameType = GameType.online;
+        GameEvents.StartGame();
     }
 }
