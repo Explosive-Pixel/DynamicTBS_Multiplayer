@@ -17,6 +17,8 @@ public class OnlineLobbyCanvasHandler : MonoBehaviour
 
     [SerializeField] private GameSetupHandler gameSetupHandler;
 
+    [SerializeField] private GameObject onlineMetadataCanvas;
+
     private PlayerType selectedSide;
     private bool sideSelected = false;
     
@@ -24,7 +26,8 @@ public class OnlineLobbyCanvasHandler : MonoBehaviour
 
     private void Awake()
     {
-        SetActive(false);
+        DontDestroyOnLoad(this.gameObject);
+        ResetCanvas();
     }
 
     private void Update()
@@ -60,6 +63,9 @@ public class OnlineLobbyCanvasHandler : MonoBehaviour
     private void PrintConnectedInfo()
     {
         SetActive(OnlineClient.Instance.IsAdmin);
+
+        if (OnlineClient.Instance.LobbyId == null)
+            return;
 
         lobbyFullId.text = OnlineClient.Instance.LobbyId.FullId;
 
@@ -132,17 +138,13 @@ public class OnlineLobbyCanvasHandler : MonoBehaviour
     {
         if (AllSelected)
         {
-            OnlineClient.Instance.SendToServer(new MsgUpdateClient
-            {
-                isAdmin = OnlineClient.Instance.IsAdmin,
-                side = selectedSide,
-                boardDesignIndex = Board.boardDesignIndex
-            });
+            OnlineClient.Instance.ChooseGameSetup(selectedSide, Board.boardDesignIndex);
 
             OnlineClient.Instance.SendToServer(new MsgUIAction
             {
                 uiAction = UIAction.START_GAME
             });
+            OnlineClient.Instance.StartGame();
         }
     }
 
@@ -154,7 +156,46 @@ public class OnlineLobbyCanvasHandler : MonoBehaviour
 
         if(active)
         {
-            startGameButton.interactable = AllSelected;
+            startGameButton.interactable = AllSelected && OnlineClient.Instance.PlayerCount == 2;
         }
+    }
+
+    private void ShowCanvas()
+    {
+        ResetCanvas();
+        gameObject.SetActive(true);
+    }
+
+    private void HideCanvas()
+    {
+        gameObject.SetActive(false);
+    }
+
+    private void ResetCanvas()
+    {
+        UnsubscribeEvents();
+        sideSelected = false;
+        selectBlueButton.interactable = true;
+        selectPinkButton.interactable = true;
+        gameSetupHandler.ResetCanvas();
+        SetActive(false);
+        SubscribeEvents();
+    }
+
+    private void SubscribeEvents()
+    {
+        GameEvents.OnGameStart += HideCanvas;
+        GameplayEvents.OnRestartGame += ShowCanvas;
+    }
+
+    private void UnsubscribeEvents()
+    {
+        GameEvents.OnGameStart -= HideCanvas;
+        GameplayEvents.OnRestartGame -= ShowCanvas;
+    }
+
+    private void OnDestroy()
+    {
+        UnsubscribeEvents();
     }
 }

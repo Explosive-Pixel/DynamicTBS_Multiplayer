@@ -43,7 +43,7 @@ public class MsgUIAction : OnlineMessage
 
     public override void Deserialize(DataStreamReader reader)
     {
-        base.Deserialize(reader);
+        LobbyId = reader.ReadInt();
         playerId = (PlayerType)reader.ReadByte();
         uiAction = (UIAction)reader.ReadByte();
     }
@@ -52,11 +52,13 @@ public class MsgUIAction : OnlineMessage
     {
         if (OnlineClient.Instance.ShouldReadMessage(playerId))
         {
-            //GameplayEvents.UIActionExecuted(PlayerManager.GetPlayer(playerId), uiAction);
             switch(uiAction)
             {
                 case UIAction.START_GAME:
-                    StartGame();
+                    OnlineClient.Instance.StartGame();
+                    break;
+                default:
+                    GameplayEvents.UIActionExecuted(PlayerManager.GetPlayer(playerId), uiAction);
                     break;
             }
         }
@@ -65,11 +67,8 @@ public class MsgUIAction : OnlineMessage
     public override void ReceivedOnServer(NetworkConnection cnn)
     {
         OnlineServer.Instance.Broadcast(this, LobbyId);
-    }
 
-    private void StartGame()
-    {
-        GameManager.gameType = GameType.online;
-        GameEvents.StartGame();
+        if(uiAction == UIAction.START_GAME)
+            OnlineServer.Instance.SwapAdmin(LobbyId);
     }
 }

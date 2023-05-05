@@ -28,13 +28,13 @@ public class MsgServerNotification : OnlineMessage
     public override void Serialize(ref DataStreamWriter writer, int lobbyId)
     {
         base.Serialize(ref writer, lobbyId);
-        writer.WriteByte((byte)serverNotification);
+        writer.WriteInt((int)serverNotification);
     }
 
     public override void Deserialize(DataStreamReader reader)
     {
-        base.Deserialize(reader);
-        serverNotification = (ServerNotification)reader.ReadByte();
+        LobbyId = reader.ReadInt();
+        serverNotification = (ServerNotification)reader.ReadInt();
     }
 
     public override void ReceivedOnClient()

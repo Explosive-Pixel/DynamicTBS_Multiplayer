@@ -12,6 +12,7 @@ public class OnlineMenuCanvasHandler : MonoBehaviour
     [SerializeField] private Toggle spectatorToggle;
 
     [SerializeField] private GameObject lobbyCanvas;
+    [SerializeField] private GameObject onlineMetadataCanvas;
 
     public void CreateLobby()
     {
@@ -30,10 +31,5 @@ public class OnlineMenuCanvasHandler : MonoBehaviour
 
         lobbyCanvas.SetActive(true);
         this.gameObject.SetActive(false);
-    }
-
-    public void BackToMainMenu()
-    {
-        client.Shutdown();
     }
 }

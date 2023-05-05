@@ -1,16 +1,21 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Linq;
+
+public enum Scene
+{
+    MAIN_MENU = 0,
+    ONLINE_MENU = 1,
+    GAME = 2,
+    TUTORIAL = 3,
+    LORE = 4,
+    CREDITS = 5
+}
 
 public class SceneChangeManager : MonoBehaviour
 {
-    // Scene order is as follows:
-    // 0: Main Menu
-    // 1: Online Menu
-    // 2: Game Scene (Draft/Placement/Fight/GameOver)
-    // 3: Tutorial Scene
-    // 4: Lore Scene
-    // 5: Credits Scene
-
     // TODO: Put saving and loading PlayerPrefs and the Quit-Option in separate class which doesn't destroy on load.
     private void Awake()
     {
@@ -19,38 +24,32 @@ public class SceneChangeManager : MonoBehaviour
 
     public void LoadMainMenuScene()
     {
-        LoadSceneOnButtonPress(0);
-        AudioEvents.PressingButton();
+        LoadSceneOnButtonPress(Scene.MAIN_MENU);
     }
 
     public void LoadOnlineMenuScene()
     {
-        LoadSceneOnButtonPress(1);
-        AudioEvents.PressingButton();
+        LoadSceneOnButtonPress(Scene.ONLINE_MENU);
     }
 
     public void LoadGameScene()
     {
-        LoadSceneOnButtonPress(2);
-        AudioEvents.PressingButton();
+        LoadSceneOnButtonPress(Scene.GAME);
     }
 
     public void LoadTutorialScene()
     {
-        LoadSceneOnButtonPress(6);
-        AudioEvents.PressingButton();
+        LoadSceneOnButtonPress(Scene.TUTORIAL);
     }
 
     public void LoadLoreScene()
     {
-        LoadSceneOnButtonPress(7);
-        AudioEvents.PressingButton();
+        LoadSceneOnButtonPress(Scene.LORE);
     }
 
     public void LoadCreditsScene()
     {
-        LoadSceneOnButtonPress(8);
-        AudioEvents.PressingButton();
+        LoadSceneOnButtonPress(Scene.CREDITS);
     }
 
     public void QuitGame()
@@ -85,27 +84,17 @@ public class SceneChangeManager : MonoBehaviour
             SettingsManager.currentFullscreenSetting = PlayerPrefs.GetInt("FullscreenSetting");
     }
 
-    private void LoadSceneOnButtonPress(int sceneNumber)
+    private void LoadSceneOnButtonPress(Scene scene)
     {
+        AudioEvents.PressingButton();
+
+        int sceneNumber = (int)scene;
         SceneManager.LoadScene(sceneNumber, LoadSceneMode.Single);
 
         // Shut down Server and Client if it is not the online menu or game scene
-        if(sceneNumber != 1 && sceneNumber != 2)
+        if(scene != Scene.ONLINE_MENU && scene != Scene.GAME)
         {
-            DestroyManually("OnlineGameManager");
-            DestroyManually("OnlineClientCanvas");
-            DestroyManually("OnlineMetadataCanvas");
-            DestroyManually("OnlineMenuSceneManager");
-            DestroyManually("OnlineLoadingScreenCanvas");
-        }
-    }
-
-    private void DestroyManually(string gameObjectName)
-    {
-        GameObject go = GameObject.Find(gameObjectName);
-        if(go)
-        {
-            Destroy(go);
+            GameObject.FindGameObjectsWithTag("DestroyInMainMenu").ToList().ForEach(go => Destroy(go));
         }
     }
 

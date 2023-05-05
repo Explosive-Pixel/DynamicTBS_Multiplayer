@@ -83,7 +83,7 @@ public class UIClickHandler : MonoBehaviour
         // Pause Game
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            GameplayEvents.UIActionExecuted(PlayerManager.GetCurrentlyExecutingPlayer(), GameplayManager.gameIsPaused ? UIActionType.UnpauseGame : UIActionType.PauseGame);
+            GameplayEvents.UIActionExecuted(PlayerManager.GetCurrentlyExecutingPlayer(), GameplayManager.gameIsPaused ? UIAction.UNPAUSE_GAME : UIAction.PAUSE_GAME);
         }
     }
 

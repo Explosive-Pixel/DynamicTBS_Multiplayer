@@ -5,9 +5,9 @@ using Unity.Networking.Transport;
 
 public class MsgJoinLobby : OnlineMessage
 {
+    public bool create; // Indicates whether a lobby should be created 
     public string lobbyName;
     public UserData userData;
-    public bool create; // Indicates whether a lobby should be created 
 
     public MsgJoinLobby() // Constructing a message.
     {
@@ -23,17 +23,17 @@ public class MsgJoinLobby : OnlineMessage
     public override void Serialize(ref DataStreamWriter writer, int lobbyId)
     {
         base.Serialize(ref writer, lobbyId);
+        writer.WriteByte(ToByte(create));
         writer.WriteFixedString32(lobbyName);
         userData.Serialize(ref writer);
-        writer.WriteByte(ToByte(create));
     }
 
     public override void Deserialize(DataStreamReader reader)
     {
-        base.Deserialize(reader);
-        lobbyName = reader.ReadFixedString32().ToString();
-        userData = UserData.Deserialize(reader);
+        LobbyId = reader.ReadInt();
         create = ToBool(reader.ReadByte());
+        lobbyName = reader.ReadFixedString32().Value;
+        userData = UserData.Deserialize(reader);
     }
 
     public override void ReceivedOnClient()

@@ -28,14 +28,14 @@ public class MsgDraftCharacter : OnlineMessage
 
     public override void Deserialize(DataStreamReader reader)
     {
-        base.Deserialize(reader);
+        LobbyId = reader.ReadInt();
         playerId = (PlayerType)reader.ReadByte();
         characterType = (CharacterType)reader.ReadByte();
     }
 
     public override void ReceivedOnClient()
     {
-        if (Client.Instance.ShouldReadMessage(playerId))
+        if (OnlineClient.Instance.ShouldReadMessage(playerId))
         {
             DraftManager.DraftCharacter(characterType, PlayerManager.GetPlayer(playerId));
         }

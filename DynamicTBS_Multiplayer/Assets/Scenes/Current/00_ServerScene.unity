@@ -132,6 +132,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 285975170}
+  - component: {fileID: 285975172}
+  - component: {fileID: 285975171}
   m_Layer: 0
   m_Name: ServerLogic
   m_TagString: Untagged
@@ -154,6 +156,31 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &285975171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 285975169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d5c625c84a22b14dbf23540f192aff7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  server: {fileID: 285975172}
+--- !u!114 &285975172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 285975169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf5418aa099590947bd3afbd1f695172, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &689546537
 GameObject:
   m_ObjectHideFlags: 0

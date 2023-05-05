@@ -26,6 +26,6 @@ public class GameManager : MonoBehaviour
 
     public static bool IsPlayer()
     {
-        return gameType == GameType.local || Client.Instance.role == ClientType.player;
+        return gameType == GameType.local || (gameType == GameType.online && OnlineClient.Instance.UserData.Role == ClientType.player);
     }
 }

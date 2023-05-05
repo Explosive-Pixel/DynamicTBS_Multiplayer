@@ -28,7 +28,7 @@ public class MsgWelcomeClient : OnlineMessage
 
     public override void Deserialize(DataStreamReader reader)
     {
-        base.Deserialize(reader);
+        LobbyId = reader.ReadInt();
         lobbyName = reader.ReadFixedString32().ToString();
         isAdmin = ToBool(reader.ReadByte());
     }

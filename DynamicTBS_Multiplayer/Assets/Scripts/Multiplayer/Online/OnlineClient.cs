@@ -109,13 +109,14 @@ public class OnlineClient : MonoBehaviour
         this.side = side;
     }
 
-    public void ChooseSide(PlayerType side)
+    public void ChooseGameSetup(PlayerType side, int boardDesignIndex)
     {
         this.side = side;
         SendToServer(new MsgUpdateClient
         {
             isAdmin = isAdmin,
-            side = side
+            side = side,
+            boardDesignIndex = boardDesignIndex
         });
     }
 
@@ -123,9 +124,9 @@ public class OnlineClient : MonoBehaviour
     {
         SendToServer(new MsgJoinLobby
         {
+            create = lobbyId.IsNewLobby,
             lobbyName = lobbyId.Name,
-            userData = userData,
-            create = lobbyId.IsNewLobby
+            userData = userData
         });
     }
 
@@ -133,6 +134,12 @@ public class OnlineClient : MonoBehaviour
     {
         isLoadingGame = !isLoadingGame;
         GameEvents.IsGameLoading(isLoadingGame);
+    }
+
+    public void StartGame()
+    {
+        GameManager.gameType = GameType.online;
+        GameEvents.StartGame();
     }
 
     private void CheckAlive()
@@ -195,6 +202,7 @@ public class OnlineClient : MonoBehaviour
             driver.Dispose();
             isActive = false;
             connectionStatus = ConnectionStatus.UNCONNECTED;
+            Destroy(this.gameObject);
         }
     }
 

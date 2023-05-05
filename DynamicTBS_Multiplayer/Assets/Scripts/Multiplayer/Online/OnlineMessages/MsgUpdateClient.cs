@@ -30,7 +30,7 @@ public class MsgUpdateClient : OnlineMessage
 
     public override void Deserialize(DataStreamReader reader)
     {
-        base.Deserialize(reader);
+        LobbyId = reader.ReadInt();
         isAdmin = ToBool(reader.ReadByte());
         side = (PlayerType)reader.ReadByte();
         boardDesignIndex = reader.ReadInt();

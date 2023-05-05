@@ -45,7 +45,7 @@ public class DraftManager : MonoBehaviour
 
         if (!PlayerManager.IsCurrentPlayer(buttonName)) return;
 
-        if (GameManager.gameType == GameType.multiplayer && Client.Instance.side != PlayerManager.GetCurrentPlayer().GetPlayerType())
+        if (!PlayerManager.ClientIsCurrentPlayer())
             return;
 
         Enum.TryParse(buttonName.Split("_")[0], out CharacterType characterType);
