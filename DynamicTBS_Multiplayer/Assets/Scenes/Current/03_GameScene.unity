@@ -460,6 +460,7 @@ GameObject:
   - component: {fileID: 32580862}
   - component: {fileID: 32580863}
   - component: {fileID: 32580867}
+  - component: {fileID: 32580868}
   - component: {fileID: 32580865}
   - component: {fileID: 32580866}
   m_Layer: 5
@@ -747,6 +748,28 @@ MonoBehaviour:
   color_blue: {r: 0.23137255, g: 0.5568628, b: 1, a: 1}
   color_pink: {r: 1, g: 0.37254903, b: 0.94509804, a: 1}
   Timertext: {fileID: 13552160}
+  lamp1: {fileID: 0}
+  lamp2: {fileID: 0}
+--- !u!114 &32580868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 32580846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7eef4b62013ae514d8142d06cc6faa8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timer: {fileID: 1957609758}
+  timerType: 1
+  gamePhase: 2
+  color_blue: {r: 0.23137255, g: 0.5568628, b: 1, a: 1}
+  color_pink: {r: 1, g: 0.37254903, b: 0.94509804, a: 1}
+  Timertext: {fileID: 1819619958}
+  lamp1: {fileID: 610466860}
+  lamp2: {fileID: 380034110}
 --- !u!1 &34118702
 GameObject:
   m_ObjectHideFlags: 0
@@ -2144,6 +2167,8 @@ MonoBehaviour:
   color_blue: {r: 0.23137255, g: 0.5568628, b: 1, a: 1}
   color_pink: {r: 1, g: 0.37254903, b: 0.94509804, a: 1}
   Timertext: {fileID: 1049865635}
+  lamp1: {fileID: 0}
+  lamp2: {fileID: 0}
 --- !u!1 &236407952
 GameObject:
   m_ObjectHideFlags: 0
@@ -11375,7 +11400,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1957609759
 RectTransform:
   m_ObjectHideFlags: 0
