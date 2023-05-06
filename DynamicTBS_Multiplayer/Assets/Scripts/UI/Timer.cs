@@ -14,7 +14,7 @@ public class Timer : MonoBehaviour
 
     private static readonly Dictionary<TimerType, float> totalTime = new Dictionary<TimerType, float>()
     {
-        { TimerType.DRAFT_AND_PLACEMENT, 300 },
+        { TimerType.DRAFT_AND_PLACEMENT, 2 },
         { TimerType.GAMEPLAY, 90 }
     };
 
@@ -47,18 +47,18 @@ public class Timer : MonoBehaviour
 
     private void Awake()
     {
-        colorPerPlayer[PlayerType.blue] = color_blue;
         colorPerPlayer[PlayerType.pink] = color_pink;
+        colorPerPlayer[PlayerType.blue] = color_blue;
 
         SubscribeEvents();
-
-        SetActive(GamePhase.DRAFT);
     }
 
     private void SetInactive()
     {
         timer.SetActive(false);
         isActive = false;
+
+        GameplayEvents.OnPlayerTurnEnded -= ResetTimer;
     }
 
     private void Update()
@@ -84,6 +84,9 @@ public class Timer : MonoBehaviour
 
     private void SetActive(GamePhase gamePhase)
     {
+        if (this.gamePhase != gamePhase)
+            return;
+
         timerType = gamePhase == GamePhase.GAMEPLAY ? TimerType.GAMEPLAY : TimerType.DRAFT_AND_PLACEMENT;
 
         foreach (Player player in PlayerManager.GetAllPlayers())
@@ -110,8 +113,7 @@ public class Timer : MonoBehaviour
 
     private void ResetTimer(Player player)
     {
-        Player nextPlayer = PlayerManager.GetOtherPlayer(player);
-        ChangeTextColor(nextPlayer.GetPlayerType());
+        ChangeTextColor(PlayerManager.GetOtherSide(player.GetPlayerType()));
     }
 
     private void ChangeTextColor(PlayerType side)
@@ -121,7 +123,8 @@ public class Timer : MonoBehaviour
 
     private void SetInactive(GamePhase gamePhase)
     {
-        SetInactive();
+        if(this.gamePhase == gamePhase)
+            SetInactive();
     }
 
     private void SubscribeEvents()
@@ -134,6 +137,7 @@ public class Timer : MonoBehaviour
     {
         GameEvents.OnGamePhaseStart -= SetActive;
         GameEvents.OnGamePhaseEnd -= SetInactive;
+        GameplayEvents.OnPlayerTurnEnded -= ResetTimer;
     }
 
     private void OnDestroy()

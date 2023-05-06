@@ -33,7 +33,6 @@ public class GameManager : MonoBehaviour
     public static void ChangeGamePhase(GamePhase newGamePhase)
     {
         gamePhase = newGamePhase;
-        Debug.Log("Starting Game phase: " + newGamePhase);
         GameEvents.StartGamePhase(gamePhase);
     }
 }

@@ -35,7 +35,10 @@ public class DraftManager : MonoBehaviour
     {
         draftCounter = 0;
         draftOrderIndex = 0;
+    }
 
+    private void Start()
+    {
         GameManager.ChangeGamePhase(GamePhase.DRAFT);
     }
 

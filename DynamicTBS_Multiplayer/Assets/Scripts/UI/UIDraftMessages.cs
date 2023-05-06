@@ -11,7 +11,7 @@ public class UIDraftMessages : MonoBehaviour
     [SerializeField] private GameObject pinkDraftOverlay;
     [SerializeField] private GameObject blueDraftOverlay;
 
-    private void Awake()
+    private void Start()
     {
         Init();
     }
@@ -47,16 +47,8 @@ public class UIDraftMessages : MonoBehaviour
             }
         }
 
-        if (pinkDraftOverlay.activeSelf == true)
-        {
-            pinkDraftOverlay.SetActive(false);
-            blueDraftOverlay.SetActive(true);
-        }
-        else
-        {
-            pinkDraftOverlay.SetActive(true);
-            blueDraftOverlay.SetActive(false);
-        }
+        pinkDraftOverlay.SetActive(!pinkDraftOverlay.activeSelf);
+        blueDraftOverlay.SetActive(pinkDraftOverlay.activeSelf);
     }
 
     private void OnDestroy()

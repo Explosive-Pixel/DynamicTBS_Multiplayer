@@ -66,10 +66,7 @@ public class GameSceneManager : MonoBehaviour
     {
         foreach (GameObject gameObject in canvasList)
         {
-            if (gameObject == menuCanvas)
-                menuCanvas.SetActive(true);
-            else
-                gameObject.SetActive(false);
+            gameObject.SetActive(gameObject == menuCanvas);
         }
     }
 
