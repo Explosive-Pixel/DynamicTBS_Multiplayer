@@ -28,14 +28,14 @@ public class Timer : MonoBehaviour
 
     private static readonly Dictionary<TimerType, float> totalTime = new Dictionary<TimerType, float>()
     {
-        { TimerType.DRAFT_AND_PLACEMENT, 2 },
+        { TimerType.DRAFT_AND_PLACEMENT, 300 },
         { TimerType.GAMEPLAY, 90 }
     };
 
     public static Dictionary<TimerType, float> TotalTime { get { return totalTime; } }
 
-    private const float debuffRate = 0.25f;
-    private const int maxDebuffs = 3;
+    public const float debuffRate = 0.25f;
+    public const int maxDebuffs = 3;
 
     #endregion
 
@@ -68,6 +68,8 @@ public class Timer : MonoBehaviour
         isActive = false;
 
         GameplayEvents.OnPlayerTurnEnded -= ResetTimer;
+        GameplayEvents.OnTimerUpdate -= UpdateData;
+        GameplayEvents.OnTimerTimeout -= DrawNoTimeLeftConsequences;
     }
 
     private void Update()
@@ -79,15 +81,17 @@ public class Timer : MonoBehaviour
         PlayerType side = player.GetPlayerType();
         if (playerStats[side].timeLeft > 0)
         {
+           // if(GameManager.gameType == GameType.local)
+           // {
             playerStats[side].timeLeft -= Time.deltaTime;
+            //}
             UpdateTime(playerStats[side].timeLeft);
         }
         else
         {
-            AudioEvents.TimeRanOut();
-            if (player == PlayerManager.GetCurrentlyExecutingPlayer())
+            if (GameManager.gameType == GameType.local)
             {
-                DrawNoTimeLeftConsequences(gamePhase, player);
+                GameplayEvents.TimerTimedOut(gamePhase, player.GetPlayerType(), playerStats[side].debuff);
             }
         }
     }
@@ -106,7 +110,19 @@ public class Timer : MonoBehaviour
         timer.SetActive(true);
         ChangeTextColor(PlayerManager.StartPlayer[gamePhase]);
 
-        GameplayEvents.OnPlayerTurnEnded += ResetTimer;
+        GameplayEvents.OnTimerUpdate += UpdateData;
+        GameplayEvents.OnTimerTimeout += DrawNoTimeLeftConsequences;
+
+        if (timerType == TimerType.GAMEPLAY)
+            GameplayEvents.OnPlayerTurnEnded += ResetTimer;
+    }
+
+    private void UpdateData(float pinkTimeLeft, float blueTimeLeft, int pinkDebuff, int blueDebuff)
+    {
+        playerStats[PlayerType.pink].timeLeft = pinkTimeLeft;
+        playerStats[PlayerType.blue].timeLeft = blueTimeLeft;
+        playerStats[PlayerType.pink].debuff = pinkDebuff;
+        playerStats[PlayerType.blue].debuff = blueDebuff;
     }
 
     private void UpdateTime(float currentTime)
@@ -117,6 +133,8 @@ public class Timer : MonoBehaviour
         float seconds = Mathf.FloorToInt(currentTime % 60);
 
         Timertext.text = string.Format("{0:00} : {1:00}", minutes, seconds);
+
+        ChangeTextColor(PlayerManager.GetCurrentPlayer().GetPlayerType());
     }
 
     private void UpdateLamps(int debuffCount)
@@ -131,14 +149,9 @@ public class Timer : MonoBehaviour
     private void ResetTimer(Player player)
     {
         PlayerType nextPlayer = PlayerManager.GetOtherSide(player.GetPlayerType());
+        UpdateLamps(playerStats[nextPlayer].debuff);
 
-        if (timerType == TimerType.GAMEPLAY)
-        {
-            playerStats[nextPlayer].timeLeft = totalTime[timerType] * Mathf.Pow(1 - debuffRate, playerStats[nextPlayer].debuff);
-            UpdateLamps(playerStats[nextPlayer].debuff);
-        }
-
-        ChangeTextColor(nextPlayer);
+        playerStats[nextPlayer].timeLeft = totalTime[timerType] * Mathf.Pow(1 - debuffRate, playerStats[nextPlayer].debuff);
     }
 
     private void ChangeTextColor(PlayerType side)
@@ -146,8 +159,11 @@ public class Timer : MonoBehaviour
         Timertext.color = playerStats[side].color;
     }
 
-    private void DrawNoTimeLeftConsequences(GamePhase gamePhase, Player player)
+    private void DrawNoTimeLeftConsequences(GamePhase gamePhase, PlayerType playerType, int currentPlayerDebuff)
     {
+        playerStats[playerType].timeLeft = 0;
+        AudioEvents.TimeRanOut();
+        Player player = PlayerManager.GetPlayer(playerType);
         switch(gamePhase)
         {
             case GamePhase.DRAFT:
@@ -157,37 +173,43 @@ public class Timer : MonoBehaviour
                 DrawNoTimeLeftConsequences_Placement(player);
                 break;
             case GamePhase.GAMEPLAY:
-                DrawNoTimeLeftConsequences_Gameplay(player);
+                DrawNoTimeLeftConsequences_Gameplay(player, currentPlayerDebuff);
                 break;
         }
     }
 
     private void DrawNoTimeLeftConsequences_Draft(Player player)
     {
+        if (GameManager.gameType == GameType.online && (OnlineClient.Instance.Side != player.GetPlayerType() || OnlineClient.Instance.IsLoadingGame))
+            return;
+
         DraftManager.RandomDraft(player);
     }
 
     private void DrawNoTimeLeftConsequences_Placement(Player player)
     {
+        if (GameManager.gameType == GameType.online && (OnlineClient.Instance.Side != player.GetPlayerType() || OnlineClient.Instance.IsLoadingGame))
+            return;
+
         PlacementManager.RandomPlacement(player);
     }
 
-    private void DrawNoTimeLeftConsequences_Gameplay(Player player)
+    private void DrawNoTimeLeftConsequences_Gameplay(Player player, int currentPlayerDebuff)
     {
         PlayerType side = player.GetPlayerType();
 
-        playerStats[side].debuff += 1;
-        if (playerStats[side].debuff == maxDebuffs)
+        if(GameManager.gameType == GameType.local)
+            playerStats[side].debuff += 1;
+
+        int debuff = GameManager.gameType == GameType.local ? playerStats[side].debuff : currentPlayerDebuff;
+
+        playerStats[side].debuff = debuff;
+        if (debuff == maxDebuffs)
         {
             GameplayEvents.GameIsOver(PlayerManager.GetOtherSide(side), GameOverCondition.PLAYER_TIMEOUT);
         }
 
         GameplayEvents.AbortCurrentPlayerTurn(GameplayManager.GetRemainingActions(), AbortTurnCondition.PLAYER_TIMEOUT);
-
-       /* if (GameManager.IsMultiplayerHost())
-        {
-            GameplayEvents.ServerActionExecuted(ServerActionType.AbortTurn);
-        } */
     }
 
     private void SetInactive(GamePhase gamePhase)
@@ -207,6 +229,8 @@ public class Timer : MonoBehaviour
         GameEvents.OnGamePhaseStart -= SetActive;
         GameEvents.OnGamePhaseEnd -= SetInactive;
         GameplayEvents.OnPlayerTurnEnded -= ResetTimer;
+        GameplayEvents.OnTimerUpdate -= UpdateData;
+        GameplayEvents.OnTimerTimeout -= DrawNoTimeLeftConsequences;
     }
 
     private void OnDestroy()

@@ -40,6 +40,12 @@ public static class GameplayEvents
     public delegate void GamePaused(bool paused);
     public static event GamePaused OnGamePause;
 
+    public delegate void TimerUpdate(float pinkTimeLeft, float blueTimeLeft, int pinkDebuff, int blueDebuff);
+    public static event TimerUpdate OnTimerUpdate;
+
+    public delegate void TimerTimeout(GamePhase gamePhase, PlayerType currentPlayer, int currentPlayerTimerDebuff);
+    public static event TimerTimeout OnTimerTimeout;
+
     public static void RestartGameplay()
     {
         if (OnRestartGame != null)
@@ -69,6 +75,7 @@ public static class GameplayEvents
         if (OnGameOver != null) 
         {
             GameEvents.EndGamePhase(GamePhase.GAMEPLAY);
+            GameManager.ChangeGamePhase(GamePhase.NONE);
             OnGameOver(winner, endGameCondition);
         }
     }
@@ -115,5 +122,17 @@ public static class GameplayEvents
         {
             OnGamePause(paused);
         }
+    }
+
+    public static void UpdateTimer(float pinkTimeLeft, float blueTimeLeft, int pinkDebuff, int blueDebuff)
+    {
+        if (OnTimerUpdate != null)
+            OnTimerUpdate(pinkTimeLeft, blueTimeLeft, pinkDebuff, blueDebuff);
+    }
+
+    public static void TimerTimedOut(GamePhase gamePhase, PlayerType currentPlayer, int currentPlayerTimerDebuff)
+    {
+        if (OnTimerTimeout != null)
+            OnTimerTimeout(gamePhase, currentPlayer, currentPlayerTimerDebuff);
     }
 }

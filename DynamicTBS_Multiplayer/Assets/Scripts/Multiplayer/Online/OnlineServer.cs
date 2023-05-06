@@ -151,15 +151,6 @@ public class OnlineServer : MonoBehaviour
         Lobby lobby = FindLobby(lobbyId);
         lobby.AssignSides(cnn, chosenSide, boardDesignIndex);
     }
-    private Lobby FindLobby(int lobbyId)
-    {
-        return lobbies.Find(l => l.ShortId == lobbyId);
-    }
-
-    private Lobby FindLobby(LobbyId lobbyId)
-    {
-        return lobbies.Find(l => l.Id.FullId == lobbyId.FullId);
-    }
 
     public void UpdateGameInfo(int lobbyId, PlayerType currentPlayer, GamePhase gamePhase)
     {
@@ -174,7 +165,7 @@ public class OnlineServer : MonoBehaviour
 
         if(uiAction == UIAction.UNPAUSE_GAME)
         {
-            StartCoroutine(UpdateTimer(lobby));
+            StartTimer(lobby);
         }
     }
 
@@ -198,15 +189,30 @@ public class OnlineServer : MonoBehaviour
         Lobby lobby = FindLobby(lobbyId);
         lobby.InitTimer(draftAndPlacementTime, gameplayTime);
 
-        StartCoroutine(UpdateTimer(lobby));
+        StartTimer(lobby);
     }
 
-    IEnumerator UpdateTimer(Lobby lobby)
+    private void StartTimer(Lobby lobby)
     {
-        while (!lobby.GameIsPaused)
+        StartCoroutine(UpdateTimer(lobby));
+        StartCoroutine(SendTimerUpdate(lobby));
+    }
+
+    private IEnumerator UpdateTimer(Lobby lobby)
+    {
+        while (!lobby.GameIsPaused && lobby.CurrentGamePhase != GamePhase.NONE)
         {
-            yield return new WaitForSeconds(1);
             lobby.UpdateTimer();
+            yield return new WaitForSeconds(1);
+        }
+    }
+
+    private IEnumerator SendTimerUpdate(Lobby lobby)
+    {
+        while (!lobby.GameIsPaused && lobby.CurrentGamePhase != GamePhase.NONE)
+        {
+            lobby.SendTimerUpdate();
+            yield return new WaitForSeconds(5);
         }
     }
 
@@ -230,6 +236,8 @@ public class OnlineServer : MonoBehaviour
                 i++;
                 yield return new WaitForSeconds(delay);
             }
+
+            lobby.UpdateTimer();
 
             ToggleSendGameState(cnn, lobby);
         }
@@ -278,7 +286,14 @@ public class OnlineServer : MonoBehaviour
                     {
                         Debug.Log("Client disconnected from server: " + cnn.ToString());
                         AllConnections.Remove(cnn);
-                        lobbies.ForEach(lobby => lobby.RemoveConnection(cnn));
+
+                        Lobby lobby = FindLobby(cnn);
+                        if(lobby != null)
+                        {
+                            lobby.RemoveConnection(cnn);
+                            BroadcastMetadata(lobby);
+                        }
+
                         connectionDropped?.Invoke();
                     }
                 }
@@ -328,6 +343,21 @@ public class OnlineServer : MonoBehaviour
             lobbies.Clear();
             isActive = false;
         }
+    }
+
+    private Lobby FindLobby(int lobbyId)
+    {
+        return lobbies.Find(l => l.ShortId == lobbyId);
+    }
+
+    private Lobby FindLobby(LobbyId lobbyId)
+    {
+        return lobbies.Find(l => l.Id.FullId == lobbyId.FullId);
+    }
+
+    private Lobby FindLobby(NetworkConnection cnn)
+    {
+        return lobbies.Find(l => l.HostsConnection(cnn));
     }
 
     private void OnDestroy() // Shutting down server on destroy.

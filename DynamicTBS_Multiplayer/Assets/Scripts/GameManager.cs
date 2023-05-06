@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameType gameType = GameType.local;
-    public static GamePhase gamePhase = GamePhase.DRAFT;
+    public static GamePhase gamePhase = GamePhase.NONE;
 
     private void Awake()
     {

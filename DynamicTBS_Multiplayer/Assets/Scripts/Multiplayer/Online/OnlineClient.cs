@@ -43,6 +43,7 @@ public class OnlineClient : MonoBehaviour
     public ConnectionStatus ConnectionStatus { get { return connectionStatus; } set { connectionStatus = value; } }
 
     private bool isLoadingGame = false;
+    public bool IsLoadingGame { get { return isLoadingGame; } }
 
     private LobbyId lobbyId;
     public LobbyId LobbyId { get { return lobbyId; } }

@@ -7,7 +7,6 @@ public class MsgSyncTimer : OnlineMessage
 {
     public float pinkTimeLeft;
     public float blueTimeLeft;
-    public PlayerType currentPlayer;
     public int pinkDebuff;
     public int blueDebuff;
 
@@ -27,7 +26,6 @@ public class MsgSyncTimer : OnlineMessage
         base.Serialize(ref writer, lobbyId);
         writer.WriteFloat(pinkTimeLeft);
         writer.WriteFloat(blueTimeLeft);
-        writer.WriteByte((byte)currentPlayer);
         writer.WriteInt(pinkDebuff);
         writer.WriteInt(blueDebuff);
     }
@@ -37,14 +35,13 @@ public class MsgSyncTimer : OnlineMessage
         LobbyId = reader.ReadInt();
         pinkTimeLeft = reader.ReadFloat();
         blueTimeLeft = reader.ReadFloat();
-        currentPlayer = (PlayerType)reader.ReadByte();
         pinkDebuff = reader.ReadInt();
         blueDebuff = reader.ReadInt();
     }
 
     public override void ReceivedOnClient()
     {
-        
+        GameplayEvents.UpdateTimer(pinkTimeLeft, blueTimeLeft, pinkDebuff, blueDebuff);
     }
 
     public override void ReceivedOnServer(NetworkConnection cnn)

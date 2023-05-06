@@ -7,7 +7,8 @@ public enum GamePhase
 {
     DRAFT,
     PLACEMENT,
-    GAMEPLAY
+    GAMEPLAY,
+    NONE
 }
 
 public class MsgUpdateServer : OnlineMessage

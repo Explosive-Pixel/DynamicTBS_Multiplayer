@@ -7,12 +7,16 @@ public enum ServerNotification
 {
     LOBBY_NOT_FOUND = 1,
     CONNECTION_FORBIDDEN_FULL_LOBBY = 2,
-    TOGGLE_LOAD_GAME_STATUS = 3
+    TOGGLE_LOAD_GAME_STATUS = 3,
+    TIMEOUT = 4
 }
 
 public class MsgServerNotification : OnlineMessage
 {
     public ServerNotification serverNotification;
+    public GamePhase gamePhase;
+    public PlayerType currentPlayer;
+    public int currentPlayerTimerDebuff;
 
     public MsgServerNotification() // Constructing a message.
     {
@@ -29,12 +33,18 @@ public class MsgServerNotification : OnlineMessage
     {
         base.Serialize(ref writer, lobbyId);
         writer.WriteInt((int)serverNotification);
+        writer.WriteInt((int)gamePhase);
+        writer.WriteInt((int)currentPlayer);
+        writer.WriteInt(currentPlayerTimerDebuff);
     }
 
     public override void Deserialize(DataStreamReader reader)
     {
         LobbyId = reader.ReadInt();
         serverNotification = (ServerNotification)reader.ReadInt();
+        gamePhase = (GamePhase)reader.ReadInt();
+        currentPlayer = (PlayerType)reader.ReadInt();
+        currentPlayerTimerDebuff = reader.ReadInt();
     }
 
     public override void ReceivedOnClient()
@@ -49,6 +59,9 @@ public class MsgServerNotification : OnlineMessage
                 break;
             case ServerNotification.TOGGLE_LOAD_GAME_STATUS:
                 OnlineClient.Instance.ToggleIsLoadingGame();
+                break;
+            case ServerNotification.TIMEOUT:
+                GameplayEvents.TimerTimedOut(gamePhase, currentPlayer, currentPlayerTimerDebuff);
                 break;
         }
     }

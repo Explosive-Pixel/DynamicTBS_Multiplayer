@@ -111,6 +111,9 @@ public class PlayerManager : MonoBehaviour
 
     private void SetStartPlayer(GamePhase gamePhase)
     {
+        if (gamePhase == GamePhase.NONE)
+            return;
+
         currentPlayer = GetPlayer(startPlayer[gamePhase]);
 
         if(gamePhase == GamePhase.GAMEPLAY)

@@ -29,11 +29,18 @@ public class Lobby
     private bool gameIsPaused = false;
     public bool GameIsPaused { get { return gameIsPaused; } }
 
+    public GamePhase CurrentGamePhase { get { return timer == null ? GamePhase.NONE : timer.CurrentGamePhase; } }
+
     public Lobby(LobbyId id, OnlineConnection connection)
     {
         this.id = id;
 
         AddConnection(connection);
+    }
+
+    public bool HostsConnection(NetworkConnection cnn)
+    {
+        return Connections.Contains(cnn);
     }
 
     public void PauseGame(UIAction uiAction)
@@ -53,7 +60,12 @@ public class Lobby
 
     public void UpdateTimer()
     {
-        timer.UpdateTime();
+        timer.UpdateTime(ShortId);
+    }
+
+    public void SendTimerUpdate()
+    {
+        timer.BroadcastTimerInfo(ShortId);
     }
 
     public bool AddConnection(OnlineConnection connection)
@@ -165,7 +177,7 @@ public class Lobby
             messageHistory.Clear();
         }
 
-        if (msg.GetType() != typeof(MsgMetadata))
+        if (msg.GetType() != typeof(MsgMetadata) && msg.GetType() != typeof(MsgSyncTimer))
         {
             messageHistory.Add(msg);
         }
