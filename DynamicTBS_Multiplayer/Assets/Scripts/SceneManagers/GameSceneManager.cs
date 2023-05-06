@@ -82,7 +82,6 @@ public class GameSceneManager : MonoBehaviour
     private void GoToDraftScreen()
     {
         HandleMenus(draftCanvas);
-        GameManager.ChangeGamePhase(GamePhase.DRAFT);
     }
 
     private void GoToGameplayScreen(GamePhase gamePhase)

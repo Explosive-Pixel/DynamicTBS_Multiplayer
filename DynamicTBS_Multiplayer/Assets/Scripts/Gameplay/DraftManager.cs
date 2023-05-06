@@ -35,6 +35,8 @@ public class DraftManager : MonoBehaviour
     {
         draftCounter = 0;
         draftOrderIndex = 0;
+
+        GameManager.ChangeGamePhase(GamePhase.DRAFT);
     }
 
     public void CreateCharacter()

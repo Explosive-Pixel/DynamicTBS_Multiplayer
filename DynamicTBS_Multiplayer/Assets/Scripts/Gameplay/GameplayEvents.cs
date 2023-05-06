@@ -68,6 +68,7 @@ public static class GameplayEvents
     {
         if (OnGameOver != null) 
         {
+            GameEvents.EndGamePhase(GamePhase.GAMEPLAY);
             OnGameOver(winner, endGameCondition);
         }
     }

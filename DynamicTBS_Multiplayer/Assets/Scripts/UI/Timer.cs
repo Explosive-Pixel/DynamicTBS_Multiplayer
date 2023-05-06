@@ -35,30 +35,51 @@ public class Timer : MonoBehaviour
     public TimerType timerType;
     public GamePhase gamePhase;
 
-    public bool TimerOn = false;
     public Color color_blue;
     public Color color_pink;
-
     public TMPro.TMP_Text Timertext;
 
     private readonly Dictionary<Player, float> timeleftPerPlayer = new Dictionary<Player, float>();
     private readonly Dictionary<PlayerType, Color> colorPerPlayer = new Dictionary<PlayerType, Color>();
 
+    private bool isActive = false;
+    private bool IsActive { get { return isActive && !GameplayManager.gameIsPaused; } }
+
     private void Awake()
     {
-        Init();
-    }
-
-    private void Init()
-    {
-        UnsubscribeEvents();
-
-        timer.SetActive(false);
-        TimerOn = false;
         colorPerPlayer[PlayerType.blue] = color_blue;
         colorPerPlayer[PlayerType.pink] = color_pink;
 
         SubscribeEvents();
+
+        SetActive(GamePhase.DRAFT);
+    }
+
+    private void SetInactive()
+    {
+        timer.SetActive(false);
+        isActive = false;
+    }
+
+    private void Update()
+    {
+        if (!IsActive)
+            return;
+
+        Player player = PlayerManager.GetCurrentPlayer();
+        if (timeleftPerPlayer[player] > 0)
+        {
+            timeleftPerPlayer[player] -= Time.deltaTime;
+            UpdateTime(timeleftPerPlayer[player]);
+        }
+        else
+        {
+            AudioEvents.TimeRanOut();
+            if (player == PlayerManager.GetCurrentlyExecutingPlayer())
+            {
+                noTimeLeftConsequences[gamePhase](player);
+            }
+        }
     }
 
     private void SetActive(GamePhase gamePhase)
@@ -70,11 +91,21 @@ public class Timer : MonoBehaviour
             timeleftPerPlayer[player] = totalTime[timerType];
         }
 
-        TimerOn = true;
+        isActive = true;
         timer.SetActive(true);
         ChangeTextColor(PlayerManager.StartPlayer[gamePhase]);
 
         GameplayEvents.OnPlayerTurnEnded += ResetTimer;
+    }
+
+    private void UpdateTime(float currentTime)
+    {
+        currentTime += 1;
+
+        float minutes = Mathf.FloorToInt(currentTime / 60);
+        float seconds = Mathf.FloorToInt(currentTime % 60);
+
+        Timertext.text = string.Format("{0:00} : {1:00}", minutes, seconds);
     }
 
     private void ResetTimer(Player player)
@@ -88,15 +119,21 @@ public class Timer : MonoBehaviour
         Timertext.color = colorPerPlayer[side];
     }
 
+    private void SetInactive(GamePhase gamePhase)
+    {
+        SetInactive();
+    }
+
     private void SubscribeEvents()
     {
         GameEvents.OnGamePhaseStart += SetActive;
+        GameEvents.OnGamePhaseEnd += SetInactive;
     }
 
     private void UnsubscribeEvents()
     {
-        AudioEvents.OnSpawnMasters -= Init;
         GameEvents.OnGamePhaseStart -= SetActive;
+        GameEvents.OnGamePhaseEnd -= SetInactive;
     }
 
     private void OnDestroy()
