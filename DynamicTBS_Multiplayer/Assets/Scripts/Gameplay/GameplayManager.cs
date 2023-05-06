@@ -131,8 +131,13 @@ public class GameplayManager : MonoBehaviour
         return hasGameStarted;
     }
 
-    private void SubscribeToGameplayEvents()
+    private void SubscribeToGameplayEvents(GamePhase gamePhase)
     {
+        if (gamePhase != GamePhase.PLACEMENT)
+            return;
+
+        GameManager.ChangeGamePhase(GamePhase.GAMEPLAY);
+
         GameplayEvents.OnFinishAction += OnActionFinished;
         GameplayEvents.OnPlayerTurnEnded += OnPlayerTurnEnded;
         GameplayEvents.OnPlayerTurnAborted += AbortTurn;
@@ -144,13 +149,13 @@ public class GameplayManager : MonoBehaviour
 
     private void SubscribeEvents()
     {
-        GameplayEvents.OnGameplayPhaseStart += SubscribeToGameplayEvents;
+        GameEvents.OnGamePhaseEnd += SubscribeToGameplayEvents;
         GameplayEvents.OnExecuteUIAction += ToggleGameIsPaused;
     }
 
     private void UnsubscribeEvents()
     {
-        GameplayEvents.OnGameplayPhaseStart -= SubscribeToGameplayEvents;
+        GameEvents.OnGamePhaseEnd -= SubscribeToGameplayEvents;
         GameplayEvents.OnFinishAction -= OnActionFinished;
         GameplayEvents.OnPlayerTurnEnded -= OnPlayerTurnEnded;
         GameplayEvents.OnPlayerTurnAborted -= AbortTurn;

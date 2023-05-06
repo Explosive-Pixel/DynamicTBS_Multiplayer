@@ -5,17 +5,12 @@ using Unity.Networking.Transport;
 
 public enum UIAction
 {
-    START_GAME = 1,
-    PAUSE_GAME = 2,
-    UNPAUSE_GAME = 3,
-    OFFER_DRAW = 4,
-    ACCEPT_DRAW = 5,
-    DECLINE_DRAW = 6,
-    SURRENDER = 7,
-    OFFER_REMATCH = 8,
-    ACCEPT_REMATCH = 9,
-    DECLINE_REMATCH = 10,
-    SKIP_TURN = 11
+    PAUSE_GAME = 1,
+    UNPAUSE_GAME = 2,
+    OFFER_DRAW = 3,
+    ACCEPT_DRAW = 4,
+    DECLINE_DRAW = 5,
+    SURRENDER = 6
 }
 
 public class MsgUIAction : OnlineMessage
@@ -52,15 +47,7 @@ public class MsgUIAction : OnlineMessage
     {
         if (OnlineClient.Instance.ShouldReadMessage(playerId))
         {
-            switch(uiAction)
-            {
-                case UIAction.START_GAME:
-                    OnlineClient.Instance.StartGame();
-                    break;
-                default:
-                    GameplayEvents.UIActionExecuted(PlayerManager.GetPlayer(playerId), uiAction);
-                    break;
-            }
+            GameplayEvents.UIActionExecuted(PlayerManager.GetPlayer(playerId), uiAction);
         }
     }
 
@@ -68,7 +55,9 @@ public class MsgUIAction : OnlineMessage
     {
         OnlineServer.Instance.Broadcast(this, LobbyId);
 
-        if(uiAction == UIAction.START_GAME)
-            OnlineServer.Instance.SwapAdmin(LobbyId);
+        if (uiAction == UIAction.PAUSE_GAME || uiAction == UIAction.UNPAUSE_GAME)
+        {
+            OnlineServer.Instance.PauseGame(LobbyId, uiAction);
+        }
     }
 }

@@ -5,7 +5,6 @@ using UnityEngine;
 public static class GameplayEvents
 {
     public delegate void GameplayPhase();
-    public static event GameplayPhase OnGameplayPhaseStart;
     public static event GameplayPhase OnRestartGame;
 
     public delegate void FinishAction(ActionMetadata actionMetadata);
@@ -26,6 +25,9 @@ public static class GameplayEvents
     public delegate void NextPlayer(Player player);
     public static event NextPlayer OnPlayerTurnEnded;
 
+    public delegate void UpdatePlayer(PlayerType currentPlayer);
+    public static event UpdatePlayer OnCurrentPlayerChanged;
+
     public delegate void AbortTurn(int remainingActions, AbortTurnCondition abortTurnCondition);
     public static event AbortTurn OnPlayerTurnAborted;
 
@@ -37,12 +39,6 @@ public static class GameplayEvents
 
     public delegate void GamePaused(bool paused);
     public static event GamePaused OnGamePause;
-
-    public static void StartGameplayPhase()
-    {
-        if (OnGameplayPhaseStart != null)
-            OnGameplayPhaseStart();
-    }
 
     public static void RestartGameplay()
     {
@@ -86,6 +82,12 @@ public static class GameplayEvents
     {
         if (OnPlayerTurnEnded != null)
             OnPlayerTurnEnded(player);
+    }
+
+    public static void ChangeCurrentPlayer(PlayerType playerType)
+    {
+        if (OnCurrentPlayerChanged != null)
+            OnCurrentPlayerChanged(playerType);
     }
 
     public static void AbortCurrentPlayerTurn(int remainingActions, AbortTurnCondition abortTurnCondition)

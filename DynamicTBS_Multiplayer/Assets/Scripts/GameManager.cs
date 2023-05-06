@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameType gameType = GameType.local;
+    public static GamePhase gamePhase = GamePhase.DRAFT;
 
     private void Awake()
     {
@@ -27,5 +28,11 @@ public class GameManager : MonoBehaviour
     public static bool IsPlayer()
     {
         return gameType == GameType.local || (gameType == GameType.online && OnlineClient.Instance.UserData.Role == ClientType.player);
+    }
+
+    public static void ChangeGamePhase(GamePhase newGamePhase)
+    {
+        gamePhase = newGamePhase;
+        GameEvents.StartGamePhase(gamePhase);
     }
 }

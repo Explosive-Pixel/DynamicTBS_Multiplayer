@@ -10,6 +10,8 @@ public class GameplayTimer : MonoBehaviour
     #region Timer config
 
     private const float timePerTurn = 90;
+    public static float DefaultTimePerTurn { get { return timePerTurn; } }
+
     private const float debuffRate = 0.25f;
     private const int maxDebuffs = 3;
 
@@ -54,7 +56,7 @@ public class GameplayTimer : MonoBehaviour
     {
         TimerOn = true;
         timer.SetActive(true);
-        Timertext.color = GetPlayerColor(PlayerManager.GameplayPhaseStartPlayer);
+       // Timertext.color = GetPlayerColor(PlayerManager.GameplayPhaseStartPlayer);
         GameplayEvents.OnPlayerTurnEnded += ResetTimer;
 
         if (!GameManager.IsHost())
@@ -169,12 +171,12 @@ public class GameplayTimer : MonoBehaviour
 
     private void SubscribeEvents()
     {
-        GameplayEvents.OnGameplayPhaseStart += SetActive;
+       // GameplayEvents.OnGameplayPhaseStart += SetActive;
         GameplayEvents.OnGameOver += ResetAll;
     }
     private void UnsubscribeEvents()
     {
-        GameplayEvents.OnGameplayPhaseStart -= SetActive;
+        //GameplayEvents.OnGameplayPhaseStart -= SetActive;
         GameplayEvents.OnGameOver -= ResetAll;
         GameplayEvents.OnPlayerTurnEnded -= ResetTimer;
 

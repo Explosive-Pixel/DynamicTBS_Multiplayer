@@ -13,6 +13,8 @@ public class Lobby
 
     public bool IsActive { get { return connections.Count > 0; } }
 
+    private LobbyTimer timer;
+
     private List<OnlineConnection> connections = new List<OnlineConnection>();
     public List<NetworkConnection> Connections { get { return connections.ConvertAll(cnn => cnn.NetworkConnection); } }
     public List<OnlineConnection> Players { get { return connections.FindAll(cnn => cnn.Role == ClientType.player); } }
@@ -24,11 +26,34 @@ public class Lobby
     private int boardDesignIndex = -1;
     public int BoardDesignIndex { get { return boardDesignIndex; } }
 
+    private bool gameIsPaused = false;
+    public bool GameIsPaused { get { return gameIsPaused; } }
+
     public Lobby(LobbyId id, OnlineConnection connection)
     {
         this.id = id;
 
         AddConnection(connection);
+    }
+
+    public void PauseGame(UIAction uiAction)
+    {
+        gameIsPaused = uiAction == UIAction.PAUSE_GAME;
+    }
+
+    public void InitTimer(float draftAndPlacementTime, float gameplayTime)
+    {
+        timer = new LobbyTimer(draftAndPlacementTime, gameplayTime);
+    }
+
+    public void UpdateGameInfo(PlayerType currentPlayer, GamePhase gamePhase)
+    {
+        timer.UpdateGameInfo(currentPlayer, gamePhase);
+    }
+
+    public void UpdateTimer()
+    {
+        timer.UpdateTime();
     }
 
     public bool AddConnection(OnlineConnection connection)
@@ -135,11 +160,9 @@ public class Lobby
 
     public void ArchiveMessage(OnlineMessage msg)
     {
-        if (msg.GetType() == typeof(MsgUIAction))
+        if (msg.GetType() == typeof(MsgStartGame))
         {
-            UIAction uiAction = ((MsgUIAction)msg).uiAction;
-            if (uiAction == UIAction.START_GAME)
-                messageHistory.Clear();
+            messageHistory.Clear();
         }
 
         if (msg.GetType() != typeof(MsgMetadata))

@@ -89,7 +89,7 @@ public class MovesDisplay : MonoBehaviour
 
     private PlayerType GetPlayerTypeByActionCount()
     {
-        return actionCount % (GameplayManager.maxActionsPerRound * 2) <= 1 ? PlayerManager.GameplayPhaseStartPlayer : PlayerManager.GetOtherSide(PlayerManager.GameplayPhaseStartPlayer);
+        return actionCount % (GameplayManager.maxActionsPerRound * 2) <= 1 ? PlayerManager.StartPlayer[GamePhase.GAMEPLAY] : PlayerManager.GetOtherSide(PlayerManager.StartPlayer[GamePhase.GAMEPLAY]);
     }
 
     private string TranslateTilePosition(Vector3? position)
@@ -171,6 +171,15 @@ public class MovesDisplay : MonoBehaviour
         return text;
     }
 
+    private void OnGameplayPhaseStarts(GamePhase gamePhase)
+    {
+        if(gamePhase == GamePhase.GAMEPLAY)
+        {
+            ActivateMovesDisplay();
+            ActivateRecordingSubscription();
+        }
+    }
+
     #region ActivationRegion
     private void ActivateMovesDisplay()
     {
@@ -192,8 +201,7 @@ public class MovesDisplay : MonoBehaviour
     #region EventsRegion
     private void SubscribeEvents()
     {
-        GameplayEvents.OnGameplayPhaseStart += ActivateMovesDisplay;
-        GameplayEvents.OnGameplayPhaseStart += ActivateRecordingSubscription;
+        GameEvents.OnGamePhaseStart += OnGameplayPhaseStarts;
         GameplayEvents.OnRestartGame += ActivateMovesDisplay;
         GameplayEvents.OnGameOver += EmptyList;
         GameplayEvents.OnGameOver += DeactivateMovesDisplay;
@@ -201,8 +209,7 @@ public class MovesDisplay : MonoBehaviour
 
     private void UnsubscribeEvents()
     {
-        GameplayEvents.OnGameplayPhaseStart -= ActivateMovesDisplay;
-        GameplayEvents.OnGameplayPhaseStart -= ActivateRecordingSubscription;
+        GameEvents.OnGamePhaseStart -= OnGameplayPhaseStarts;
         GameplayEvents.OnRestartGame -= ActivateMovesDisplay;
         GameplayEvents.OnGameOver -= DeactivateMovesDisplay;
         GameplayEvents.OnGameOver -= EmptyList;

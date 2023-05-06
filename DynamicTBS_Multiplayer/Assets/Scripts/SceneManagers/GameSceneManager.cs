@@ -82,13 +82,16 @@ public class GameSceneManager : MonoBehaviour
     private void GoToDraftScreen()
     {
         HandleMenus(draftCanvas);
-        DraftEvents.StartDraft();
+        GameManager.ChangeGamePhase(GamePhase.DRAFT);
     }
 
-    private void GoToGameplayScreen()
+    private void GoToGameplayScreen(GamePhase gamePhase)
     {
-        HandleMenus(gameplayCanvas);
-        gameplayObjectsObject.SetActive(true);
+        if(gamePhase == GamePhase.DRAFT)
+        {
+            HandleMenus(gameplayCanvas);
+            gameplayObjectsObject.SetActive(true);
+        }
     }
 
     private void GoToGameOverScreen(PlayerType? winner, GameOverCondition endGameCondition)
@@ -122,14 +125,14 @@ public class GameSceneManager : MonoBehaviour
 
     private void SubscribeEvents()
     {
-        DraftEvents.OnEndDraft += GoToGameplayScreen;
+        GameEvents.OnGamePhaseEnd += GoToGameplayScreen;
         GameplayEvents.OnGameOver += GoToGameOverScreen;
         GameplayEvents.OnGamePause += TogglePauseCanvas;
     }
 
     private void UnsubscribeEvents()
     {
-        DraftEvents.OnEndDraft -= GoToGameplayScreen;
+        GameEvents.OnGamePhaseEnd -= GoToGameplayScreen;
         GameplayEvents.OnGameOver -= GoToGameOverScreen;
         GameplayEvents.OnGamePause -= TogglePauseCanvas;
     }

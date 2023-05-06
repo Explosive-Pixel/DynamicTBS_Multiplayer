@@ -9,6 +9,8 @@ public class CharacterHandler : MonoBehaviour
 {
     private static readonly List<Character> characters = new List<Character>();
 
+    public static List<Character> Characters { get { return characters; } }
+
     private void Awake()
     {
         SubscribeEvents();
@@ -70,14 +72,10 @@ public class CharacterHandler : MonoBehaviour
         characters.Remove(character);
     }
 
-    private void DeliverCharacterList()
+    private void PrepareCharacters(GamePhase gamePhase)
     {
-        DraftEvents.DeliverCharacterList(characters);
-    }
-
-    private void PrepareCharacters()
-    {
-        characters.ForEach(c => c.isClickable = true);
+        if(gamePhase == GamePhase.GAMEPLAY)
+            characters.ForEach(c => c.isClickable = true);
     }
 
     private void HighlightCharacter(Character character)
@@ -95,8 +93,7 @@ public class CharacterHandler : MonoBehaviour
     private void SubscribeEvents()
     {
         DraftEvents.OnCharacterCreated += AddCharacterToList;
-        DraftEvents.OnEndDraft += DeliverCharacterList;
-        GameplayEvents.OnGameplayPhaseStart += PrepareCharacters;
+        GameEvents.OnGamePhaseStart += PrepareCharacters;
         GameplayEvents.OnFinishAction += SetActiveAbilityOnCooldown;
         GameplayEvents.OnCharacterSelectionChange += HighlightCharacter;
         CharacterEvents.OnCharacterDeath += UpdateCharactersAfterCharacterDeath;
@@ -105,8 +102,7 @@ public class CharacterHandler : MonoBehaviour
     private void UnsubscribeEvents()
     {
         DraftEvents.OnCharacterCreated -= AddCharacterToList;
-        DraftEvents.OnEndDraft -= DeliverCharacterList;
-        GameplayEvents.OnGameplayPhaseStart -= PrepareCharacters;
+        GameEvents.OnGamePhaseStart -= PrepareCharacters;
         GameplayEvents.OnFinishAction -= SetActiveAbilityOnCooldown;
         GameplayEvents.OnCharacterSelectionChange -= HighlightCharacter;
         CharacterEvents.OnCharacterDeath -= UpdateCharactersAfterCharacterDeath;

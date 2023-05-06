@@ -5,8 +5,11 @@ using Unity.Networking.Transport;
 
 public class MsgSyncTimer : OnlineMessage
 {
-    public PlayerType playerId;
-    public CharacterType characterType;
+    public float pinkTimeLeft;
+    public float blueTimeLeft;
+    public PlayerType currentPlayer;
+    public int pinkDebuff;
+    public int blueDebuff;
 
     public MsgSyncTimer() // Constructing a message.
     {
@@ -22,27 +25,29 @@ public class MsgSyncTimer : OnlineMessage
     public override void Serialize(ref DataStreamWriter writer, int lobbyId)
     {
         base.Serialize(ref writer, lobbyId);
-        writer.WriteByte((byte)playerId);
-        writer.WriteByte((byte)characterType);
+        writer.WriteFloat(pinkTimeLeft);
+        writer.WriteFloat(blueTimeLeft);
+        writer.WriteByte((byte)currentPlayer);
+        writer.WriteInt(pinkDebuff);
+        writer.WriteInt(blueDebuff);
     }
 
     public override void Deserialize(DataStreamReader reader)
     {
         LobbyId = reader.ReadInt();
-        playerId = (PlayerType)reader.ReadByte();
-        characterType = (CharacterType)reader.ReadByte();
+        pinkTimeLeft = reader.ReadFloat();
+        blueTimeLeft = reader.ReadFloat();
+        currentPlayer = (PlayerType)reader.ReadByte();
+        pinkDebuff = reader.ReadInt();
+        blueDebuff = reader.ReadInt();
     }
 
     public override void ReceivedOnClient()
     {
-        if (Client.Instance.ShouldReadMessage(playerId))
-        {
-            DraftManager.DraftCharacter(characterType, PlayerManager.GetPlayer(playerId));
-        }
+        
     }
 
     public override void ReceivedOnServer(NetworkConnection cnn)
     {
-        OnlineServer.Instance.Broadcast(this, LobbyId);
     }
 }

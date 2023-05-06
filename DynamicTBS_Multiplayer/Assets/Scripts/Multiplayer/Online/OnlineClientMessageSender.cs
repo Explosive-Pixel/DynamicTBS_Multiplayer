@@ -51,6 +51,18 @@ public class OnlineClientMessageSender : MonoBehaviour
         }
     }
 
+    private void SendUpdateServerMessage(PlayerType currentPlayer)
+    {
+        if(OnlineClient.Instance.IsAdmin)
+        {
+            OnlineClient.Instance.SendToServer(new MsgUpdateServer
+            {
+                currentPlayer = currentPlayer,
+                gamePhase = GameManager.gamePhase
+            });
+        }
+    }
+
     #region EventsRegion
 
     private void SubscribeEvents()
@@ -58,6 +70,7 @@ public class OnlineClientMessageSender : MonoBehaviour
         DraftEvents.OnCharacterCreated += SendDraftCharacterMessage;
         GameplayEvents.OnFinishAction += SendPerformActionMessage;
         GameplayEvents.OnExecuteUIAction += SendUIActionMessage;
+        GameplayEvents.OnCurrentPlayerChanged += SendUpdateServerMessage;
     }
 
     private void UnsubscribeEvents()
@@ -65,6 +78,7 @@ public class OnlineClientMessageSender : MonoBehaviour
         DraftEvents.OnCharacterCreated -= SendDraftCharacterMessage;
         GameplayEvents.OnFinishAction -= SendPerformActionMessage;
         GameplayEvents.OnExecuteUIAction -= SendUIActionMessage;
+        GameplayEvents.OnCurrentPlayerChanged -= SendUpdateServerMessage;
     }
 
     #endregion

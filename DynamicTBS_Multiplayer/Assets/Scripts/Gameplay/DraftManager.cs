@@ -107,6 +107,6 @@ public class DraftManager : MonoBehaviour
 
     private static void DraftCompleted()
     {
-        DraftEvents.EndDraft();
+        GameEvents.EndGamePhase(GamePhase.DRAFT);
     }
 }

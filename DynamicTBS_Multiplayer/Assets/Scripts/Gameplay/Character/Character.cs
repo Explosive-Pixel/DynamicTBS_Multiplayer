@@ -70,7 +70,7 @@ public abstract class Character
         this.movePattern = defaultMovePattern;
         this.attackDamage = defaultAttackDamage;
 
-        GameplayEvents.OnGameplayPhaseStart += ApplyPassiveAbility;
+        GameEvents.OnGamePhaseStart += ApplyPassiveAbility;
     }
 
     public GameObject GetCharacterGameObject() { return characterGameObject; }
@@ -197,9 +197,10 @@ public abstract class Character
         }
     }
 
-    private void ApplyPassiveAbility()
+    private void ApplyPassiveAbility(GamePhase gamePhase)
     {
-        passiveAbility.Apply();
+        if(gamePhase == GamePhase.GAMEPLAY)
+            passiveAbility.Apply();
     }
 
     private void UpdateHitPointAnimator()
@@ -225,7 +226,7 @@ public abstract class Character
 
     ~Character()
     {
-        GameplayEvents.OnGameplayPhaseStart -= ApplyPassiveAbility;
+        GameEvents.OnGamePhaseStart -= ApplyPassiveAbility;
         GameplayEvents.OnPlayerTurnEnded -= ReduceActiveAbiliyCooldown;
     }
 }

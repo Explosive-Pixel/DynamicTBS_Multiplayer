@@ -51,12 +51,15 @@ public class PlacementManager : MonoBehaviour
         placementOrderIndex = 0;
     }
 
-    private void SortCharacters(List<Character> characters)
+    private void SortCharacters(GamePhase gamePhase)
     {
+        if (gamePhase != GamePhase.DRAFT)
+            return;
+
         List<Character> blueCharacters = new List<Character>();
         List<Character> pinkCharacters = new List<Character>();
 
-        foreach (Character character in characters)
+        foreach (Character character in CharacterHandler.Characters)
         {
             if (character.GetSide().GetPlayerType() == PlayerType.blue)
             {
@@ -78,7 +81,8 @@ public class PlacementManager : MonoBehaviour
             pinkCharacters[i].GetCharacterGameObject().transform.position = pinkSortingPositionsList[i];
         }
 
-        PlacementEvents.StartPlacement();
+        GameManager.ChangeGamePhase(GamePhase.PLACEMENT);
+
         pinkPlacementTurnOverlay.transform.position = newOverlayPosition;
         bluePlacementTurnOverlay.transform.position = newOverlayPosition;
         pinkPlacementTurnOverlay.SetActive(true);
@@ -114,7 +118,8 @@ public class PlacementManager : MonoBehaviour
             bluePlacementTurnOverlay.SetActive(false);
             pinkPlacementTurnOverlay.transform.position = oldPinkOverlayPosition;
             bluePlacementTurnOverlay.transform.position = oldBlueOverlayPosition;
-            GameplayEvents.StartGameplayPhase();
+
+            PlacementCompleted();
         }    
     }
 
@@ -164,20 +169,24 @@ public class PlacementManager : MonoBehaviour
         PlacementEvents.CharacterPlaced(master);
     }
 
+    private void PlacementCompleted()
+    {
+        GameEvents.EndGamePhase(GamePhase.PLACEMENT);
+        UnsubscribeEvents();
+    }
+
     #region EventsRegion
 
     private void SubscribeEvents()
     {
         GameplayEvents.OnFinishAction += AdvancePlacementOrder;
-        DraftEvents.OnDeliverCharacterList += SortCharacters;
-        GameplayEvents.OnGameplayPhaseStart += UnsubscribeEvents;
+        GameEvents.OnGamePhaseEnd += SortCharacters;
     }
 
     private void UnsubscribeEvents()
     {
         GameplayEvents.OnFinishAction -= AdvancePlacementOrder;
-        DraftEvents.OnDeliverCharacterList -= SortCharacters;
-        GameplayEvents.OnGameplayPhaseStart -= UnsubscribeEvents;
+        GameEvents.OnGamePhaseEnd -= SortCharacters;
     }
 
     #endregion

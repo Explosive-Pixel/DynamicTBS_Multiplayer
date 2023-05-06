@@ -150,7 +150,7 @@ public class OnlineClientUI : MonoBehaviour
         NetUtility.C_METADATA += UpdatePlayerCount;
         NetUtility.C_START_GAME += HideCanvas;
         GameplayEvents.OnRestartGame += ShowCanvas;
-        GameplayEvents.OnGameplayPhaseStart += SetMainMenuListener;
+        //GameplayEvents.OnGameplayPhaseStart += SetMainMenuListener;
     }
 
     private void OnDestroy()
@@ -158,6 +158,6 @@ public class OnlineClientUI : MonoBehaviour
         NetUtility.C_METADATA -= UpdatePlayerCount;
         NetUtility.C_START_GAME -= HideCanvas;
         GameplayEvents.OnRestartGame -= ShowCanvas;
-        GameplayEvents.OnGameplayPhaseStart -= SetMainMenuListener;
+       // GameplayEvents.OnGameplayPhaseStart -= SetMainMenuListener;
     }
 }

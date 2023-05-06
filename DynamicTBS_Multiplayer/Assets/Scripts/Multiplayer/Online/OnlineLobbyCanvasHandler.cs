@@ -140,11 +140,11 @@ public class OnlineLobbyCanvasHandler : MonoBehaviour
         {
             OnlineClient.Instance.ChooseGameSetup(selectedSide, Board.boardDesignIndex);
 
-            OnlineClient.Instance.SendToServer(new MsgUIAction
+            OnlineClient.Instance.SendToServer(new MsgStartGame
             {
-                uiAction = UIAction.START_GAME
+                draftAndPlacementTime = Timer.TotalTime[TimerType.DRAFT_AND_PLACEMENT],
+                gameplayTime = Timer.TotalTime[TimerType.GAMEPLAY]
             });
-            OnlineClient.Instance.StartGame();
         }
     }
 

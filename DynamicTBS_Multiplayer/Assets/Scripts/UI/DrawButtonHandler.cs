@@ -59,9 +59,10 @@ public class DrawButtonHandler : MonoBehaviour
         }
     }
 
-    private void SetOfferDrawButtonActive()
+    private void SetOfferDrawButtonActive(GamePhase gamePhase)
     {
-        SetActive(offerDrawButton.gameObject, true);
+        if(gamePhase == GamePhase.GAMEPLAY)
+            SetActive(offerDrawButton.gameObject, true);
     }
 
     private void SetActive(GameObject gameObject, bool active)
@@ -80,13 +81,13 @@ public class DrawButtonHandler : MonoBehaviour
 
     private void SubscribeEvents()
     {
-        GameplayEvents.OnGameplayPhaseStart += SetOfferDrawButtonActive;
+        GameEvents.OnGamePhaseStart += SetOfferDrawButtonActive;
         GameplayEvents.OnExecuteUIAction += OnDrawButtonClicked;
     }
 
     private void UnsubscribeEvents()
     {
-        GameplayEvents.OnGameplayPhaseStart -= SetOfferDrawButtonActive;
+        GameEvents.OnGamePhaseStart -= SetOfferDrawButtonActive;
         GameplayEvents.OnExecuteUIAction -= OnDrawButtonClicked;
     }
 

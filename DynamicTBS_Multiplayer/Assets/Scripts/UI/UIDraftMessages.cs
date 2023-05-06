@@ -13,7 +13,15 @@ public class UIDraftMessages : MonoBehaviour
 
     private void Awake()
     {
-        DraftEvents.OnStartDraft += Init;
+        GameEvents.OnGamePhaseStart += Init;
+    }
+
+    private void Init(GamePhase gamePhase)
+    {
+        if(gamePhase == GamePhase.DRAFT)
+        {
+            Init();
+        }
     }
 
     private void Init()
@@ -61,7 +69,7 @@ public class UIDraftMessages : MonoBehaviour
 
     private void OnDestroy()
     {
-        DraftEvents.OnStartDraft -= Init;
+        GameEvents.OnGamePhaseStart -= Init;
         DraftEvents.OnDraftMessageTextChange -= DisplayDraftMessages;
     }
 }

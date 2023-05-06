@@ -307,8 +307,11 @@ public class Board : MonoBehaviour
         return side == PlayerType.blue ? (boardSize - 1) : (boardSize / 2 - 1);
     }
 
-    private void CreateBoard()
+    private void CreateBoard(GamePhase gamePhase)
     {
+        if (gamePhase != GamePhase.DRAFT)
+            return;
+
         for (int row = 0; row < boardSize; row++)
         {
             for (int column = 0; column < boardSize; column++)
@@ -343,14 +346,14 @@ public class Board : MonoBehaviour
 
     private void SubscribeEvents()
     {
-        DraftEvents.OnEndDraft += CreateBoard;
+        GameEvents.OnGamePhaseEnd += CreateBoard;
         PlacementEvents.OnPlaceCharacter += TransformTileToFloorTile;
         CharacterEvents.OnCharacterDeath += UpdateTileAfterCharacterDeath;
     }
 
     private void UnsubscribeEvents()
     {
-        DraftEvents.OnEndDraft -= CreateBoard;
+        GameEvents.OnGamePhaseEnd -= CreateBoard;
         PlacementEvents.OnPlaceCharacter -= TransformTileToFloorTile;
         CharacterEvents.OnCharacterDeath -= UpdateTileAfterCharacterDeath;
     }

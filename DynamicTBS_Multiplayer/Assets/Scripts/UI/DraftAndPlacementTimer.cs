@@ -7,6 +7,8 @@ public class DraftAndPlacementTimer : MonoBehaviour
     #region Timer config
 
     private const float totalTimePerPlayer = 300;
+    public static float DefaultTotalTimePerPlayer { get { return totalTimePerPlayer; } }
+
     private readonly NoTimeLeftConsequence noTimeLeftConsequenceDraft = (player) => DraftManager.RandomDraft(player);
     private readonly NoTimeLeftConsequence noTimeLeftConsequencePlacement = (player) => PlacementManager.RandomPlacement(player);
 
@@ -53,8 +55,8 @@ public class DraftAndPlacementTimer : MonoBehaviour
 
         TimerOn = true;
         timer.SetActive(true);
-        PlayerType startPlayer = isDraftTimer ? PlayerManager.DraftPhaseStartPlayer : PlayerManager.PlacementPhaseStartPlayer; 
-        Timertext.color = GetPlayerColor(startPlayer);
+       // PlayerType startPlayer = isDraftTimer ? PlayerManager.DraftPhaseStartPlayer : PlayerManager.PlacementPhaseStartPlayer; 
+        //Timertext.color = GetPlayerColor(startPlayer);
         GameplayEvents.OnPlayerTurnEnded += ResetTimer;
     }
 
@@ -133,7 +135,7 @@ public class DraftAndPlacementTimer : MonoBehaviour
 
     private void SubscribeEvents()
     {
-        if (isDraftTimer)
+       /* if (isDraftTimer)
         {
             DraftEvents.OnStartDraft += SetActive;
             DraftEvents.OnEndDraft += Init;
@@ -142,7 +144,7 @@ public class DraftAndPlacementTimer : MonoBehaviour
         {
             DraftEvents.OnEndDraft += SetActive;
             AudioEvents.OnSpawnMasters += Init;
-        }
+        }*/
 
         if (!GameManager.IsHost())
         {
@@ -152,9 +154,9 @@ public class DraftAndPlacementTimer : MonoBehaviour
 
     private void UnsubscribeEvents()
     {
-        DraftEvents.OnStartDraft -= SetActive;
+       /* DraftEvents.OnStartDraft -= SetActive;
         DraftEvents.OnEndDraft -= Init;
-        DraftEvents.OnEndDraft -= SetActive;
+        DraftEvents.OnEndDraft -= SetActive;*/
         AudioEvents.OnSpawnMasters -= Init;
         GameplayEvents.OnPlayerTurnEnded -= ResetTimer;
         NetUtility.C_UPDATE_TIMER -= UpdateTimerInfo;

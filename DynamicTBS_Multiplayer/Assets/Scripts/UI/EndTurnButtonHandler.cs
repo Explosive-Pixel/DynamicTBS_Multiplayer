@@ -44,9 +44,12 @@ public class EndTurnButtonHandler : MonoBehaviour
         }
     }
 
-    private void SetActive()
+    private void SetActive(GamePhase gamePhase)
     {
-        if (GameManager.gameType == GameType.multiplayer && PlayerManager.GameplayPhaseStartPlayer != OnlineClient.Instance.Side)
+        if (gamePhase != GamePhase.GAMEPLAY)
+            return;
+
+        if (GameManager.gameType == GameType.online && PlayerManager.StartPlayer[GamePhase.GAMEPLAY] != OnlineClient.Instance.Side)
         {
             ChangeButtonVisibility(false);
         }
@@ -62,12 +65,12 @@ public class EndTurnButtonHandler : MonoBehaviour
 
     private void SubscribeEvents()
     {
-        GameplayEvents.OnGameplayPhaseStart += SetActive;
+        GameEvents.OnGamePhaseStart += SetActive;
     }
 
     private void UnsubscribeEvents()
     {
-        GameplayEvents.OnGameplayPhaseStart -= SetActive;
+        GameEvents.OnGamePhaseStart -= SetActive;
         GameplayEvents.OnChangeRemainingActions -= ChangeButtonInteractability;
     }
 

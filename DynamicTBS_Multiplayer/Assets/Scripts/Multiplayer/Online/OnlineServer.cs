@@ -161,6 +161,23 @@ public class OnlineServer : MonoBehaviour
         return lobbies.Find(l => l.Id.FullId == lobbyId.FullId);
     }
 
+    public void UpdateGameInfo(int lobbyId, PlayerType currentPlayer, GamePhase gamePhase)
+    {
+        Lobby lobby = FindLobby(lobbyId);
+        lobby.UpdateGameInfo(currentPlayer, gamePhase);
+    }
+
+    public void PauseGame(int lobbyId, UIAction uiAction)
+    {
+        Lobby lobby = FindLobby(lobbyId);
+        lobby.PauseGame(uiAction);
+
+        if(uiAction == UIAction.UNPAUSE_GAME)
+        {
+            StartCoroutine(UpdateTimer(lobby));
+        }
+    }
+
     private void WelcomeClient(Lobby lobby, OnlineConnection connection)
     {
         MsgWelcomeClient msg = new MsgWelcomeClient
@@ -174,6 +191,23 @@ public class OnlineServer : MonoBehaviour
         BroadcastMetadata(lobby);
 
         StartCoroutine(SendGameState(connection.NetworkConnection, lobby));
+    }
+
+    public void StartGame(int lobbyId, float draftAndPlacementTime, float gameplayTime)
+    {
+        Lobby lobby = FindLobby(lobbyId);
+        lobby.InitTimer(draftAndPlacementTime, gameplayTime);
+
+        StartCoroutine(UpdateTimer(lobby));
+    }
+
+    IEnumerator UpdateTimer(Lobby lobby)
+    {
+        while (!lobby.GameIsPaused)
+        {
+            yield return new WaitForSeconds(1);
+            lobby.UpdateTimer();
+        }
     }
 
     private IEnumerator SendGameState(NetworkConnection cnn, Lobby lobby)

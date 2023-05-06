@@ -34,8 +34,11 @@ public class ActionsCounterHandler : MonoBehaviour
         pinkActionsCounter.SetActive(active);
     }
 
-    private void SetActive()
+    private void SetActive(GamePhase gamePhase)
     {
+        if (gamePhase != GamePhase.GAMEPLAY)
+            return;
+
         ChangeVisibility(true);
         GameplayEvents.OnChangeRemainingActions += UpdateActionsCounter;
     }
@@ -44,12 +47,12 @@ public class ActionsCounterHandler : MonoBehaviour
 
     private void SubscribeEvents()
     {
-        GameplayEvents.OnGameplayPhaseStart += SetActive;
+        GameEvents.OnGamePhaseStart += SetActive;
     }
 
     private void UnsubscribeEvents()
     {
-        GameplayEvents.OnGameplayPhaseStart -= SetActive;
+        GameEvents.OnGamePhaseStart -= SetActive;
         GameplayEvents.OnChangeRemainingActions -= UpdateActionsCounter;
     }
 

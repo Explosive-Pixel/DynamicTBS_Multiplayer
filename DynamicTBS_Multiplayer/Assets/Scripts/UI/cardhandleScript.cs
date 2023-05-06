@@ -10,7 +10,7 @@ public class cardhandleScript : MonoBehaviour
 
     private void Awake()
     {
-        GameplayEvents.OnGameplayPhaseStart += ActivateCardHandling;
+        GameEvents.OnGamePhaseStart += ActivateCardHandling;
     }
 
     /// <summary>method <c>setActive</c> aktiviert Kind nach character in cardClass.</summary>
@@ -27,8 +27,11 @@ public class cardhandleScript : MonoBehaviour
         SetActive(null);
     }
 
-    private void ActivateCardHandling()
+    private void ActivateCardHandling(GamePhase gamePhase)
     {
+        if (gamePhase != GamePhase.GAMEPLAY)
+            return;
+
         GameplayEvents.OnCharacterSelectionChange += SetActive;
         GameplayEvents.OnGameOver += Deactivate;
     }
@@ -36,7 +39,7 @@ public class cardhandleScript : MonoBehaviour
     private void OnDestroy()
     {
         GameplayEvents.OnCharacterSelectionChange -= SetActive;
-        GameplayEvents.OnGameplayPhaseStart -= ActivateCardHandling;
+        GameEvents.OnGamePhaseStart -= ActivateCardHandling;
         GameplayEvents.OnGameOver -= Deactivate;
     }
 }
