@@ -10,12 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v2
-    - name: Download Unity
-      run: |
-        curl -o Unity.tar.xz https://download.unity3d.com/download_unity/2021.3.6f1/LinuxEditorInstaller/Unity-2021.3.6f1.tar.xz
-        mkdir -p /opt/Unity
-        tar xf Unity.tar.xz -C /opt/Unity
+      uses: actions/checkout@v2.5.2
+    - name: Setup Unity
+      uses: game-ci/setup-unity@v1
+      with:
+        unityVersion: 2021.3.6f1
     - name: Cache Unity modules
       uses: actions/cache@v2
       with:
