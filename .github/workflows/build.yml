@@ -33,7 +33,7 @@ jobs:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with:
           unityVersion: 2021.3.6f1
-          projectPath: skyrats
+          projectPath: ./
           buildMethod: BuildScript.PerformAllBuildsWindows
       # Upload
       - uses: actions/upload-artifact@v2
