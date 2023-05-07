@@ -214,7 +214,6 @@ GameObject:
   - component: {fileID: 13552158}
   - component: {fileID: 13552161}
   - component: {fileID: 13552160}
-  - component: {fileID: 13552159}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -242,24 +241,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0.0000019073, y: -17}
   m_SizeDelta: {x: 72.1302, y: 37.1302}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &13552159
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 13552157}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea5c9ca0c69c6e04fa2974b9ff98cbdf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timer: {fileID: 540940235}
-  isDraftTimer: 0
-  TimerOn: 0
-  Player1: {r: 0.22352941, g: 0.53333336, b: 0.9607843, a: 1}
-  Player2: {r: 0.9607843, g: 0.35686275, b: 0.90588236, a: 1}
-  Timertext: {fileID: 13552160}
 --- !u!114 &13552160
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7005,7 +6986,6 @@ GameObject:
   - component: {fileID: 1049865633}
   - component: {fileID: 1049865636}
   - component: {fileID: 1049865635}
-  - component: {fileID: 1049865634}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -7033,24 +7013,6 @@ RectTransform:
   m_AnchoredPosition: {x: -0.000007748604, y: -14.3}
   m_SizeDelta: {x: 50, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1049865634
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1049865632}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea5c9ca0c69c6e04fa2974b9ff98cbdf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timer: {fileID: 216720525}
-  isDraftTimer: 1
-  TimerOn: 0
-  Player1: {r: 0.22352941, g: 0.53333336, b: 0.9607843, a: 1}
-  Player2: {r: 0.9607843, g: 0.35686275, b: 0.90588236, a: 1}
-  Timertext: {fileID: 1049865635}
 --- !u!114 &1049865635
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10671,7 +10633,6 @@ GameObject:
   - component: {fileID: 1819619956}
   - component: {fileID: 1819619959}
   - component: {fileID: 1819619958}
-  - component: {fileID: 1819619957}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -10699,26 +10660,6 @@ RectTransform:
   m_AnchoredPosition: {x: -0.3358, y: -16.030304}
   m_SizeDelta: {x: 72.0578, y: 38.8606}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1819619957
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819619955}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bef33b741b518024ba8aea29f92a9fec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timer: {fileID: 1957609758}
-  lamp1: {fileID: 610466860}
-  lamp2: {fileID: 380034110}
-  Timeleft: 90
-  TimerOn: 0
-  Player1: {r: 0.22352943, g: 0.53333336, b: 0.9607844, a: 1}
-  Player2: {r: 0.9607844, g: 0.35686275, b: 0.9058824, a: 1}
-  Timertext: {fileID: 1819619958}
 --- !u!114 &1819619958
 MonoBehaviour:
   m_ObjectHideFlags: 0

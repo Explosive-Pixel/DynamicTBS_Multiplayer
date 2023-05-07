@@ -130,6 +130,8 @@ public class OnlineLobbyCanvasHandler : MonoBehaviour
 
     private void SelectSide(PlayerType side)
     {
+        AudioEvents.PressingButton();
+
         selectedSide = side;
         sideSelected = true;
     }

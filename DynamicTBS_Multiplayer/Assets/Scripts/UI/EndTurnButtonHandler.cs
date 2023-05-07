@@ -38,7 +38,7 @@ public class EndTurnButtonHandler : MonoBehaviour
 
     private void ChangeButtonVisibilityOnMultiplayer()
     {
-        if (GameManager.gameType == GameType.online)
+        if (GameManager.gameType == GameType.ONLINE)
         {
             ChangeButtonVisibility(PlayerManager.GetCurrentPlayer().GetPlayerType() == OnlineClient.Instance.Side);
         }
@@ -49,7 +49,7 @@ public class EndTurnButtonHandler : MonoBehaviour
         if (gamePhase != GamePhase.GAMEPLAY)
             return;
 
-        if (GameManager.gameType == GameType.online && PlayerManager.StartPlayer[GamePhase.GAMEPLAY] != OnlineClient.Instance.Side)
+        if (GameManager.gameType == GameType.ONLINE && PlayerManager.StartPlayer[GamePhase.GAMEPLAY] != OnlineClient.Instance.Side)
         {
             ChangeButtonVisibility(false);
         }

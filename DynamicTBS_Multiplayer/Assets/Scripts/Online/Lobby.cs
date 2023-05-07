@@ -17,8 +17,8 @@ public class Lobby
 
     private List<OnlineConnection> connections = new List<OnlineConnection>();
     public List<NetworkConnection> Connections { get { return connections.ConvertAll(cnn => cnn.NetworkConnection); } }
-    public List<OnlineConnection> Players { get { return connections.FindAll(cnn => cnn.Role == ClientType.player); } }
-    public List<OnlineConnection> Spectators { get { return connections.FindAll(cnn => cnn.Role == ClientType.spectator); } }
+    public List<OnlineConnection> Players { get { return connections.FindAll(cnn => cnn.Role == ClientType.PLAYER); } }
+    public List<OnlineConnection> Spectators { get { return connections.FindAll(cnn => cnn.Role == ClientType.SPECTATOR); } }
 
     private List<OnlineMessage> messageHistory = new List<OnlineMessage>();
     public List<OnlineMessage> MessageHistory { get { return messageHistory; } }
@@ -70,7 +70,7 @@ public class Lobby
 
     public bool AddConnection(OnlineConnection connection)
     {
-        if(connection.Role == ClientType.player && Players.Count == 2)
+        if(connection.Role == ClientType.PLAYER && Players.Count == 2)
         {
             return false;
         }

@@ -41,7 +41,7 @@ public class PlayerManager : MonoBehaviour
 
     public static Player GetCurrentlyExecutingPlayer()
     {
-        return GameManager.gameType == GameType.online ? GetPlayer(OnlineClient.Instance.Side) : GetCurrentPlayer();
+        return GameManager.gameType == GameType.ONLINE ? GetPlayer(OnlineClient.Instance.Side) : GetCurrentPlayer();
     }
 
     public static Player GetOtherPlayer(Player player)
@@ -81,7 +81,7 @@ public class PlayerManager : MonoBehaviour
 
     public static bool ClientIsCurrentPlayer()
     {
-        return GameManager.gameType == GameType.local || OnlineClient.Instance.Side == GetCurrentPlayer().GetPlayerType();
+        return GameManager.gameType == GameType.LOCAL || OnlineClient.Instance.Side == GetCurrentPlayer().GetPlayerType();
     }
 
     public static Player GetPlayer(string name)

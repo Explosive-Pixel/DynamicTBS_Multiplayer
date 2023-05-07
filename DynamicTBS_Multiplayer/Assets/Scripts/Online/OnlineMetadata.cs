@@ -41,7 +41,8 @@ public class OnlineMetadata : MonoBehaviour
 
     private void PrintMetadata()
     {
-        infoText.text = "Connected players: " + OnlineClient.Instance.PlayerCount;
+        infoText.text = "Lobby ID: " + OnlineClient.Instance.LobbyId.FullId;
+        infoText.text += "\nConnected players: " + OnlineClient.Instance.PlayerCount;
         if (OnlineClient.Instance.SpectatorCount > 0)
         {
             infoText.text += "\nSpectators: " + OnlineClient.Instance.SpectatorCount;

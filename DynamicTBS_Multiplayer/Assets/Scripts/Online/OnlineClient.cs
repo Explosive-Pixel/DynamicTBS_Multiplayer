@@ -4,6 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Networking.Transport;
 
+public enum ClientType
+{
+    PLAYER = 1,
+    SPECTATOR = 2
+}
+
 public enum ConnectionStatus
 {
     UNCONNECTED = 0,
@@ -139,7 +145,7 @@ public class OnlineClient : MonoBehaviour
 
     public void StartGame()
     {
-        GameManager.gameType = GameType.online;
+        GameManager.gameType = GameType.ONLINE;
         GameEvents.StartGame();
     }
 

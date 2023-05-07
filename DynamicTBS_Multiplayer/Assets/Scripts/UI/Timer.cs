@@ -89,7 +89,7 @@ public class Timer : MonoBehaviour
         }
         else
         {
-            if (GameManager.gameType == GameType.local)
+            if (GameManager.gameType == GameType.LOCAL)
             {
                 GameplayEvents.TimerTimedOut(gamePhase, player.GetPlayerType(), playerStats[side].debuff);
             }
@@ -180,7 +180,7 @@ public class Timer : MonoBehaviour
 
     private void DrawNoTimeLeftConsequences_Draft(Player player)
     {
-        if (GameManager.gameType == GameType.online && (OnlineClient.Instance.Side != player.GetPlayerType() || OnlineClient.Instance.IsLoadingGame))
+        if (GameManager.gameType == GameType.ONLINE && (OnlineClient.Instance.Side != player.GetPlayerType() || OnlineClient.Instance.IsLoadingGame))
             return;
 
         DraftManager.RandomDraft(player);
@@ -188,7 +188,7 @@ public class Timer : MonoBehaviour
 
     private void DrawNoTimeLeftConsequences_Placement(Player player)
     {
-        if (GameManager.gameType == GameType.online && (OnlineClient.Instance.Side != player.GetPlayerType() || OnlineClient.Instance.IsLoadingGame))
+        if (GameManager.gameType == GameType.ONLINE && (OnlineClient.Instance.Side != player.GetPlayerType() || OnlineClient.Instance.IsLoadingGame))
             return;
 
         PlacementManager.RandomPlacement(player);
@@ -198,10 +198,10 @@ public class Timer : MonoBehaviour
     {
         PlayerType side = player.GetPlayerType();
 
-        if(GameManager.gameType == GameType.local)
+        if(GameManager.gameType == GameType.LOCAL)
             playerStats[side].debuff += 1;
 
-        int debuff = GameManager.gameType == GameType.local ? playerStats[side].debuff : currentPlayerDebuff;
+        int debuff = GameManager.gameType == GameType.LOCAL ? playerStats[side].debuff : currentPlayerDebuff;
 
         playerStats[side].debuff = debuff;
         if (debuff == maxDebuffs)

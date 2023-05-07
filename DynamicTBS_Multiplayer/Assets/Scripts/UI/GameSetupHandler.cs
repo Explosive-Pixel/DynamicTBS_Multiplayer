@@ -25,6 +25,8 @@ public class GameSetupHandler : MonoBehaviour
 
     public void ChooseBoardDesign(Button button, int index)
     {
+        AudioEvents.PressingButton();
+
         Board.boardDesignIndex = index;
         mapSetup.GetComponentsInChildren<Button>().ToList().ForEach(button => button.interactable = true);
         button.interactable = false;

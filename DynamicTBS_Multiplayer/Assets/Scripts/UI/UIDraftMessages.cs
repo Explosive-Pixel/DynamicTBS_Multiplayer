@@ -35,9 +35,9 @@ public class UIDraftMessages : MonoBehaviour
         draftMessageText.text += ".";
 
         playerInfoText.text = "";
-        if (GameManager.gameType == GameType.online)
+        if (GameManager.gameType == GameType.ONLINE)
         {
-            if (OnlineClient.Instance.UserData.Role == ClientType.spectator)
+            if (OnlineClient.Instance.UserData.Role == ClientType.SPECTATOR)
             {
                 playerInfoText.text = "";
             }

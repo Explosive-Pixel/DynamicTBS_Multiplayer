@@ -27,6 +27,7 @@ public class OnlineServer : MonoBehaviour
     private List<NetworkConnection> AllConnections = new List<NetworkConnection>();
 
     private bool isActive = false;
+    public bool IsActive { get { return isActive; } }
 
     private const float KeepAliveTickRate = 20f; // Constant tick rate, so connection won't time out.
     private float lastKeepAlive = 0f; // Timestamp for last connection.

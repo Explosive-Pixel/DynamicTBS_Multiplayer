@@ -40,7 +40,7 @@ public class GameSceneManager : MonoBehaviour
 
     public void PlayAgain()
     {
-        if (GameManager.gameType == GameType.local)
+        if (GameManager.gameType == GameType.LOCAL)
         {
             GameEvents.StartGame();
         }
