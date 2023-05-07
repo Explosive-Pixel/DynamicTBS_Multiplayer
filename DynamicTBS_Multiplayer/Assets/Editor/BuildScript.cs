@@ -19,7 +19,7 @@ public static class BuildScript
         Linux
     }
 
-    static string[] scenePaths = { "Assets/Scenes/Current/00_ServerScene.unity", "Assets/Scenes/Current/01_MainMenuScene.unity", "Assets/Scenes/Current/02_OnlineMenuScene.unity", "Assets/Scenes/Current/03_GameScene.unity", "Assets/Scenes/Current/04_TutorialScene.unity", "Assets/Scenes/Current/05_LoreScene.unity", "Assets/Scenes/Current/06_CreditsScene.unity" };
+    static string[] scenePaths = { "Assets/Scenes/00_ServerScene.unity", "Assets/Scenes/01_MainMenuScene.unity", "Assets/Scenes/02_OnlineMenuScene.unity", "Assets/Scenes/03_GameScene.unity", "Assets/Scenes/04_TutorialScene.unity", "Assets/Scenes/05_LoreScene.unity", "Assets/Scenes/06_CreditsScene.unity" };
 
     public static string[] ConfigureScenes(BuildType buildType)
     {
