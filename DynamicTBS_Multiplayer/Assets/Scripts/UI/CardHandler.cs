@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class cardhandleScript : MonoBehaviour
+public class CardHandler : MonoBehaviour
 {
     //notwendig um in UI zu deaktivieren
     private void Start(){}
@@ -18,7 +18,7 @@ public class cardhandleScript : MonoBehaviour
     {
         foreach (Transform card in transform)
         {
-            card.gameObject.SetActive((character != null ? character.GetCharacterType() : null) == card.gameObject.GetComponent<cardClass>().character);
+            card.gameObject.SetActive((character != null ? character.GetCharacterType() : null) == card.gameObject.GetComponent<CardClass>().character);
         }
     }
 
