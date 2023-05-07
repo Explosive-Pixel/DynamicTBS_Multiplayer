@@ -8,16 +8,22 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout the code
+    - name: Checkout Repository
       uses: actions/checkout@v2
-      
-    - name: Setup Unity
-      uses: game-ci/unity-setup@v1
+    - name: Install Unity
+      uses: actions/setup-unity@v1
       with:
-        unityVersion: 2021.3.6f1
-
+        unity-version: "2021.3.6f1"
+        modules: "all"
+    - name: Cache Unity modules
+      uses: actions/cache@v2
+      with:
+        path: "/opt/Unity/Editor/Data/PlaybackEngines"
+        key: "${{ runner.os }}-unity-${{ hashFiles('**/ProjectSettings/ProjectVersion.txt') }}-${{ hashFiles('**/Packages/packages-lock.json') }}"
+        restore-keys: |
+          ${{ runner.os }}-unity-${{ hashFiles('**/ProjectSettings/ProjectVersion.txt') }}-
+          ${{ runner.os }}-unity-
     - name: Build Unity project
       run: |
-        /opt/unity/Editor/Unity -projectPath ./ -batchmode -executeMethod BuildScript.PerformBuild -quit
+        /opt/Unity/Editor/Unity -projectPath ./ -batchmode -quit -executeMethod BuildScript.PerformBuild
