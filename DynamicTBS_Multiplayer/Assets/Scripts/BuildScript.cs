@@ -32,7 +32,7 @@ public static class BuildScript
 
     public static void PerformClientBuild()
     {
-        PerformBuild(BuildType.Client)
+        PerformBuild(BuildType.Client);
     }
 
     private static void PerformBuild(BuildType buildType)
