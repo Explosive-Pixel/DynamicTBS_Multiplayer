@@ -18,7 +18,7 @@ public class CardHandler : MonoBehaviour
     {
         foreach (Transform card in transform)
         {
-            card.gameObject.SetActive((character != null ? character.GetCharacterType() : null) == card.gameObject.GetComponent<CardClass>().character);
+            card.gameObject.SetActive((character != null ? character.GetCharacterType() : null) == card.gameObject.GetComponent<CharacterClass>().character);
         }
     }
 
