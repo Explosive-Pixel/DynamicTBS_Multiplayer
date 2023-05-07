@@ -98,13 +98,22 @@ public static class BuildScript
     private static void PerformBuild(BuildType buildType, Platform platform)
     {
         Debug.Log("Performing build: " + buildType);
-        string buildPath = "Builds/" + platform.ToString() + "/" + buildType.ToString() +"/Skyrats.exe";
+        string buildPath = "Builds/" + platform.ToString() + "/" + buildType.ToString() +"/Skyrats";
 
         BuildTarget buildTarget = BuildTarget.StandaloneWindows64;
-        if (platform == Platform.Mac)
+        if (platform == Platform.Windows)
+        {
+            buildTarget = BuildTarget.StandaloneWindows64;
+            buildPath += ".exe";
+        } else if (platform == Platform.Mac)
+        {
             buildTarget = BuildTarget.StandaloneOSX;
-        else if (platform == Platform.Linux)
+            buildPath += ".app";
+        } else if (platform == Platform.Linux)
+        {
             buildTarget = BuildTarget.StandaloneLinux64;
+            buildPath += ".x86_64";
+        }
 
         BuildReport report = BuildPipeline.BuildPlayer(ConfigureScenes(buildType), buildPath, buildTarget, BuildOptions.None);
 

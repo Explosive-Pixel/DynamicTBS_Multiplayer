@@ -27,7 +27,7 @@ public class OnlineMenuCanvasHandler : MonoBehaviour
     private void JoinLobby(LobbyId lobbyId)
     {
         UserData userData = new UserData(userName.text, spectatorToggle.isOn ? ClientType.SPECTATOR : ClientType.PLAYER);
-        client.Init("127.0.0.1", 8007, userData, lobbyId);
+        client.Init(ConfigManager.Instance.IpAdress, ConfigManager.Instance.Port, userData, lobbyId);
 
         lobbyCanvas.SetActive(true);
         this.gameObject.SetActive(false);
