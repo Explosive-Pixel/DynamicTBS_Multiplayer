@@ -26,4 +26,4 @@ jobs:
           ${{ runner.os }}-unity-
     - name: Build Unity project
       run: |
-        /opt/Unity/Editor/Unity -projectPath ./ -batchmode -quit -executeMethod BuildScript.PerformBuild
+        /opt/Unity/Editor/Unity -projectPath ./ -batchmode -quit -executeMethod BuildScript.PerformClientBuild
