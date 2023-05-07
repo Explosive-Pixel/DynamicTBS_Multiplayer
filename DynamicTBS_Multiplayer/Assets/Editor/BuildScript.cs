@@ -102,7 +102,7 @@ public static class BuildScript
 
         BuildTarget buildTarget = BuildTarget.StandaloneWindows64;
         if (platform == Platform.Mac)
-            buildTarget = BuildTarget.iOS;
+            buildTarget = BuildTarget.StandaloneOSX;
         else if (platform == Platform.Linux)
             buildTarget = BuildTarget.StandaloneLinux64;
 
