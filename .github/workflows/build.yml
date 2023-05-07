@@ -22,12 +22,15 @@ jobs:
       - uses: actions/cache@v2
         with:
           path: Library
-          key: Library      # Build
+          key: Library      
+      # Build
       - name: Build project
         uses: game-ci/unity-builder@v2
         env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}     
-       # Output
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        with:
+          unityVersion: 2021.3.6f1
+      # Output
       - name: Build Unity project
         run: |
          /opt/unity/Editor/Unity -projectPath ./ -batchmode -executeMethod BuildScript.PerformAllBuildsWindows -quit
