@@ -11,11 +11,11 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v2
-    - name: Install Unity
-      uses: actions/setup-unity@v1
-      with:
-        unity-version: "2021.3.6f1"
-        modules: "all"
+    - name: Download Unity
+      run: |
+        curl -o Unity.tar.xz https://download.unity3d.com/download_unity/2021.3.6f1/LinuxEditorInstaller/Unity-2021.3.6f1.tar.xz
+        mkdir -p /opt/Unity
+        tar xf Unity.tar.xz -C /opt/Unity
     - name: Cache Unity modules
       uses: actions/cache@v2
       with:
