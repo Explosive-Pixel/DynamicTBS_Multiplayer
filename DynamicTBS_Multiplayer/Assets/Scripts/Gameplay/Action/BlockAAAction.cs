@@ -19,7 +19,7 @@ public class BlockAAAction : MonoBehaviour, IAction
 
     private void Awake()
     {
-        GameplayEvents.OnGameplayPhaseStart += Register;
+        GameEvents.OnGamePhaseStart += Register;
     }
 
     public void ShowActionPattern(Character character)
@@ -63,13 +63,16 @@ public class BlockAAAction : MonoBehaviour, IAction
         characterInAction = null;
     }
 
-    private void Register()
+    private void Register(GamePhase gamePhase)
     {
+        if (gamePhase != GamePhase.GAMEPLAY)
+            return;
+
         ActionRegistry.RegisterPatternAction(this);
     }
 
     private void OnDestroy()
     {
-        GameplayEvents.OnGameplayPhaseStart -= Register;
+        GameEvents.OnGamePhaseStart -= Register;
     }
 }

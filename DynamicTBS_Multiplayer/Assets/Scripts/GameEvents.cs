@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using UnityEditor;
 
 public static class GameEvents
 {
-    public delegate void GamePhase();
-    public static event GamePhase OnGameStart;
+    public delegate void GameStart();
+    public static event GameStart OnGameStart;
+
+    public delegate void ChangeGamePhase(GamePhase gamePhase);
+    public static event ChangeGamePhase OnGamePhaseStart;
+    public static event ChangeGamePhase OnGamePhaseEnd;
 
     public delegate void LoadGame(bool isLoading);
     public static event LoadGame OnGameIsLoading;
@@ -17,6 +21,18 @@ public static class GameEvents
     {
         if (OnGameStart != null)
             OnGameStart();
+    }
+
+    public static void StartGamePhase(GamePhase gamePhase)
+    {
+        if (OnGamePhaseStart != null)
+            OnGamePhaseStart(gamePhase);
+    }
+
+    public static void EndGamePhase(GamePhase gamePhase)
+    {
+        if (OnGamePhaseEnd != null)
+            OnGamePhaseEnd(gamePhase);
     }
 
     public static void IsGameLoading(bool isLoading)

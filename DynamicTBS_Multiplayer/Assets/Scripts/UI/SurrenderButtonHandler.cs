@@ -37,22 +37,23 @@ public class SurrenderButtonHandler : MonoBehaviour
         }
     }
 
-    private void SetActive()
+    private void SetActive(GamePhase gamePhase)
     {
-        ChangeButtonVisibility(true);
+        if(gamePhase == GamePhase.GAMEPLAY)
+            ChangeButtonVisibility(true);
     }
 
     #region EventsRegion
 
     private void SubscribeEvents()
     {
-        GameplayEvents.OnGameplayPhaseStart += SetActive;
+        GameEvents.OnGamePhaseStart += SetActive;
         GameplayEvents.OnExecuteUIAction += OnSurrenderClicked;
     }
 
     private void UnsubscribeEvents()
     {
-        GameplayEvents.OnGameplayPhaseStart -= SetActive;
+        GameEvents.OnGamePhaseStart -= SetActive;
         GameplayEvents.OnExecuteUIAction -= OnSurrenderClicked;
     }
 

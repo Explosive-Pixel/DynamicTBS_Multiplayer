@@ -41,9 +41,9 @@ public class StatsRecorder : MonoBehaviour
     }
     
     // Load old save stats from file and store in variables.
-    private void LoadStats()
+    private void LoadStats(GamePhase gamePhase)
     {
-        if (filePath != null)
+        if (gamePhase == GamePhase.DRAFT && filePath != null)
         {
             if (File.Exists(filePath))
             {
@@ -321,7 +321,7 @@ public class StatsRecorder : MonoBehaviour
 
     private void SubscribeEvents()
     {
-        DraftEvents.OnStartDraft += LoadStats;
+        GameEvents.OnGamePhaseStart += LoadStats;
         //DraftEvents.OnDeliverCharacterList += IncreaseUnitInDraftCount;
         //DraftEvents.OnDeliverCharacterList += IncreaseUniqueDraftCombinationCount;
         GameplayEvents.OnGameOver += RedordWin;
@@ -329,7 +329,7 @@ public class StatsRecorder : MonoBehaviour
 
     private void UnsubscribeEvents()
     {
-        DraftEvents.OnStartDraft -= LoadStats;
+        GameEvents.OnGamePhaseStart -= LoadStats;
         //DraftEvents.OnDeliverCharacterList -= IncreaseUnitInDraftCount;
         //DraftEvents.OnDeliverCharacterList -= IncreaseUniqueDraftCombinationCount;
         GameplayEvents.OnGameOver -= RedordWin;

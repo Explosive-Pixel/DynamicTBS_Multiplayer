@@ -37,6 +37,11 @@ public class DraftManager : MonoBehaviour
         draftOrderIndex = 0;
     }
 
+    private void Start()
+    {
+        GameManager.ChangeGamePhase(GamePhase.DRAFT);
+    }
+
     public void CreateCharacter()
     {
         if (draftCounter >= MaxDraftCount) return;
@@ -107,6 +112,6 @@ public class DraftManager : MonoBehaviour
 
     private static void DraftCompleted()
     {
-        DraftEvents.EndDraft();
+        GameEvents.EndGamePhase(GamePhase.DRAFT);
     }
 }

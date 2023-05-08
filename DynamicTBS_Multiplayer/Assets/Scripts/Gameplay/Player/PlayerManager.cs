@@ -6,9 +6,12 @@ public class PlayerManager : MonoBehaviour
 {
     #region Player Config
 
-    private const PlayerType draftPhaseStartPlayer = PlayerType.pink;
-    private const PlayerType placementPhaseStartPlayer = PlayerType.pink;
-    private const PlayerType gameplayPhaseStartPlayer = PlayerType.blue;
+    private static readonly Dictionary<GamePhase, PlayerType> startPlayer = new Dictionary<GamePhase, PlayerType>()
+    {
+        { GamePhase.DRAFT, PlayerType.pink },
+        { GamePhase.PLACEMENT, PlayerType.pink },
+        { GamePhase.GAMEPLAY, PlayerType.blue }
+    };
 
     #endregion
 
@@ -20,9 +23,7 @@ public class PlayerManager : MonoBehaviour
     private static Player pinkPlayer;
     public static Player PinkPlayer { get { return pinkPlayer; } }
 
-    public static PlayerType DraftPhaseStartPlayer { get { return draftPhaseStartPlayer; } }
-    public static PlayerType PlacementPhaseStartPlayer { get { return placementPhaseStartPlayer; } }
-    public static PlayerType GameplayPhaseStartPlayer { get { return gameplayPhaseStartPlayer; } }
+    public static Dictionary<GamePhase, PlayerType> StartPlayer { get { return startPlayer; } }
 
     private void Awake()
     {
@@ -30,7 +31,7 @@ public class PlayerManager : MonoBehaviour
         pinkPlayer = new Player(PlayerType.pink);
         SubscribeEvents();
 
-        currentPlayer = GetPlayer(draftPhaseStartPlayer);
+        currentPlayer = GetPlayer(startPlayer[GamePhase.DRAFT]);
     }
 
     public static List<Player> GetAllPlayers()
@@ -40,7 +41,7 @@ public class PlayerManager : MonoBehaviour
 
     public static Player GetCurrentlyExecutingPlayer()
     {
-        return GameManager.gameType == GameType.online ? GetPlayer(OnlineClient.Instance.Side) : GetCurrentPlayer();
+        return GameManager.gameType == GameType.ONLINE ? GetPlayer(OnlineClient.Instance.Side) : GetCurrentPlayer();
     }
 
     public static Player GetOtherPlayer(Player player)
@@ -65,6 +66,7 @@ public class PlayerManager : MonoBehaviour
         GameplayEvents.EndPlayerTurn(currentPlayer);
 
         currentPlayer = GetOtherPlayer(currentPlayer);
+        CurrentPlayerChanged();
     }
 
     public static Player GetCurrentPlayer()
@@ -79,7 +81,7 @@ public class PlayerManager : MonoBehaviour
 
     public static bool ClientIsCurrentPlayer()
     {
-        return GameManager.gameType == GameType.local || OnlineClient.Instance.Side == GetCurrentPlayer().GetPlayerType();
+        return GameManager.gameType == GameType.LOCAL || OnlineClient.Instance.Side == GetCurrentPlayer().GetPlayerType();
     }
 
     public static Player GetPlayer(string name)
@@ -107,30 +109,36 @@ public class PlayerManager : MonoBehaviour
         pinkPlayer.ResetRoundCounter();
     }
 
-    private void SetPlacementPhaseStartPlayer()
+    private void SetStartPlayer(GamePhase gamePhase)
     {
-        currentPlayer = GetPlayer(placementPhaseStartPlayer);
+        if (gamePhase == GamePhase.NONE)
+            return;
+
+        currentPlayer = GetPlayer(startPlayer[gamePhase]);
+
+        if(gamePhase == GamePhase.GAMEPLAY)
+        {
+            ResetRoundCounters();
+        }
+
+        CurrentPlayerChanged();
     }
 
-    private void SetGameplayPhaseStartPlayer()
+    private static void CurrentPlayerChanged()
     {
-        currentPlayer = GetPlayer(gameplayPhaseStartPlayer);
+        GameplayEvents.ChangeCurrentPlayer(currentPlayer.GetPlayerType());
     }
 
     #region EventSubscriptions
 
     private void SubscribeEvents()
     {
-        DraftEvents.OnEndDraft += SetPlacementPhaseStartPlayer;
-        GameplayEvents.OnGameplayPhaseStart += ResetRoundCounters;
-        GameplayEvents.OnGameplayPhaseStart += SetGameplayPhaseStartPlayer;
+        GameEvents.OnGamePhaseStart += SetStartPlayer;
     }
 
     private void UnsubscribeEvents()
     {
-        DraftEvents.OnEndDraft -= SetPlacementPhaseStartPlayer;
-        GameplayEvents.OnGameplayPhaseStart -= ResetRoundCounters;
-        GameplayEvents.OnGameplayPhaseStart -= SetGameplayPhaseStartPlayer;
+        GameEvents.OnGamePhaseStart -= SetStartPlayer;
     }
 
     #endregion

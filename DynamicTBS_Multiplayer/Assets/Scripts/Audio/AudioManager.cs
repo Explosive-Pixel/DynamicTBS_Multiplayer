@@ -324,7 +324,7 @@ public class AudioManager : MonoBehaviour
         AudioEvents.OnButtonPress += ButtonPressAudio;
 
         GameEvents.OnGameStart += SubscribeEventsOnDraftStart;
-        GameplayEvents.OnGameplayPhaseStart += SubscribeEventsAfterPlacement;
+        GameEvents.OnGamePhaseEnd += SubscribeEventsAfterPlacement;
         AudioEvents.OnMainMenuEnter += UnsubscribeEventsOnReturnToMenu;
     }
 
@@ -343,9 +343,9 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    private void SubscribeEventsAfterPlacement()
+    private void SubscribeEventsAfterPlacement(GamePhase gamePhase)
     {
-        if (!subscriptionsActive)
+        if (!subscriptionsActive && gamePhase == GamePhase.PLACEMENT)
         {
             GameplayEvents.OnFinishAction += ActionAudio;
             AudioEvents.OnAdrenalin += AdrenalinAudio;
@@ -378,7 +378,7 @@ public class AudioManager : MonoBehaviour
         AudioEvents.OnButtonPress -= ButtonPressAudio;
 
         GameEvents.OnGameStart -= SubscribeEventsOnDraftStart;
-        GameplayEvents.OnGameplayPhaseStart -= SubscribeEventsAfterPlacement;
+        GameEvents.OnGamePhaseEnd -= SubscribeEventsAfterPlacement;
         AudioEvents.OnMainMenuEnter -= UnsubscribeEventsOnReturnToMenu;
     }
 

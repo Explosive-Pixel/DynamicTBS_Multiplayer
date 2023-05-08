@@ -4,9 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+public enum GameType
+{
+    LOCAL,
+    ONLINE
+}
 public class GameManager : MonoBehaviour
 {
-    public static GameType gameType = GameType.local;
+    public static GameType gameType = GameType.LOCAL;
+    public static GamePhase gamePhase = GamePhase.NONE;
 
     private void Awake()
     {
@@ -16,16 +22,17 @@ public class GameManager : MonoBehaviour
     
     public static bool IsHost()
     {
-        return gameType == GameType.local || (Server.Instance && Server.Instance.IsActive);
-    }
-
-    public static bool IsMultiplayerHost()
-    {
-        return gameType == GameType.multiplayer && IsHost();
+        return gameType == GameType.LOCAL || (OnlineServer.Instance && OnlineServer.Instance.IsActive);
     }
 
     public static bool IsPlayer()
     {
-        return gameType == GameType.local || (gameType == GameType.online && OnlineClient.Instance.UserData.Role == ClientType.player);
+        return gameType == GameType.LOCAL || (gameType == GameType.ONLINE && OnlineClient.Instance.UserData.Role == ClientType.PLAYER);
+    }
+
+    public static void ChangeGamePhase(GamePhase newGamePhase)
+    {
+        gamePhase = newGamePhase;
+        GameEvents.StartGamePhase(gamePhase);
     }
 }

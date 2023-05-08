@@ -1,0 +1,42 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - online
+
+jobs:
+  build:
+    name: Build Project
+    runs-on: ubuntu-latest
+    # This stops builds that are in-progress once a new commit comes in
+    concurrency: 
+      group: unity-build
+      cancel-in-progress: true
+    steps:
+      # Checkout
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          lfs: true
+      # Cache
+      - uses: actions/cache@v2
+        with:
+          path: DynamicTBS_Multiplayer/Library
+          key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-
+      # Build
+      - name: Build project
+        uses: game-ci/unity-builder@v2
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        with:
+          unityVersion: 2021.3.6f1
+          projectPath: DynamicTBS_Multiplayer
+          buildMethod: BuildScript.PerformAllBuildsWindows
+      # Upload
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Build
+          path: DynamicTBS_Multiplayer/Builds

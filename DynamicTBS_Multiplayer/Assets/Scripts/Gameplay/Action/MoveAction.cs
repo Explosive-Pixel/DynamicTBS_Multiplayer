@@ -22,9 +22,7 @@ public class MoveAction : MonoBehaviour, IAction
     
     private void Awake()
     {
-
-        PlacementEvents.OnPlacementStart += Register;
-        GameplayEvents.OnGameplayPhaseStart += RegisterPattern;
+        GameEvents.OnGamePhaseStart += Register;
     }
 
     public void ShowActionPattern(Character character)
@@ -134,19 +132,17 @@ public class MoveAction : MonoBehaviour, IAction
         return movePositions;
     }
 
-    private void Register()
+    private void Register(GamePhase gamePhase)
     {
-        ActionRegistry.Register(this);
-    }
+        if(gamePhase == GamePhase.PLACEMENT)
+            ActionRegistry.Register(this);
 
-    private void RegisterPattern()
-    {
-        ActionRegistry.RegisterPatternAction(this);
+        if(gamePhase == GamePhase.GAMEPLAY)
+            ActionRegistry.RegisterPatternAction(this);
     }
 
     private void OnDestroy()
     {
-        PlacementEvents.OnPlacementStart -= Register;
-        GameplayEvents.OnGameplayPhaseStart -= RegisterPattern;
+        GameEvents.OnGamePhaseStart -= Register;
     }
 }

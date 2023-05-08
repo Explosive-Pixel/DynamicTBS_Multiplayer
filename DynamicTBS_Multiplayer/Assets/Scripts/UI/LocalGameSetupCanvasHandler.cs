@@ -17,6 +17,8 @@ public class LocalGameSetupCanvasHandler : MonoBehaviour
     public void StartLocalGame()
     {
         if(gameSetupHandler.AllSelected)
+        {
             GameEvents.StartGame();
+        }   
     }
 }

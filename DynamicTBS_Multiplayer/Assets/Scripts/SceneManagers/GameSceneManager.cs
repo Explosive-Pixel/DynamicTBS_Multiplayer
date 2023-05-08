@@ -40,7 +40,7 @@ public class GameSceneManager : MonoBehaviour
 
     public void PlayAgain()
     {
-        if (GameManager.gameType == GameType.local)
+        if (GameManager.gameType == GameType.LOCAL)
         {
             GameEvents.StartGame();
         }
@@ -66,10 +66,7 @@ public class GameSceneManager : MonoBehaviour
     {
         foreach (GameObject gameObject in canvasList)
         {
-            if (gameObject == menuCanvas)
-                menuCanvas.SetActive(true);
-            else
-                gameObject.SetActive(false);
+            gameObject.SetActive(gameObject == menuCanvas);
         }
     }
 
@@ -82,13 +79,15 @@ public class GameSceneManager : MonoBehaviour
     private void GoToDraftScreen()
     {
         HandleMenus(draftCanvas);
-        DraftEvents.StartDraft();
     }
 
-    private void GoToGameplayScreen()
+    private void GoToGameplayScreen(GamePhase gamePhase)
     {
-        HandleMenus(gameplayCanvas);
-        gameplayObjectsObject.SetActive(true);
+        if(gamePhase == GamePhase.DRAFT)
+        {
+            HandleMenus(gameplayCanvas);
+            gameplayObjectsObject.SetActive(true);
+        }
     }
 
     private void GoToGameOverScreen(PlayerType? winner, GameOverCondition endGameCondition)
@@ -122,14 +121,14 @@ public class GameSceneManager : MonoBehaviour
 
     private void SubscribeEvents()
     {
-        DraftEvents.OnEndDraft += GoToGameplayScreen;
+        GameEvents.OnGamePhaseEnd += GoToGameplayScreen;
         GameplayEvents.OnGameOver += GoToGameOverScreen;
         GameplayEvents.OnGamePause += TogglePauseCanvas;
     }
 
     private void UnsubscribeEvents()
     {
-        DraftEvents.OnEndDraft -= GoToGameplayScreen;
+        GameEvents.OnGamePhaseEnd -= GoToGameplayScreen;
         GameplayEvents.OnGameOver -= GoToGameOverScreen;
         GameplayEvents.OnGamePause -= TogglePauseCanvas;
     }

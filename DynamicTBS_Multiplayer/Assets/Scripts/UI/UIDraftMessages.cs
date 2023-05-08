@@ -11,9 +11,9 @@ public class UIDraftMessages : MonoBehaviour
     [SerializeField] private GameObject pinkDraftOverlay;
     [SerializeField] private GameObject blueDraftOverlay;
 
-    private void Awake()
+    private void Start()
     {
-        DraftEvents.OnStartDraft += Init;
+        Init();
     }
 
     private void Init()
@@ -35,9 +35,9 @@ public class UIDraftMessages : MonoBehaviour
         draftMessageText.text += ".";
 
         playerInfoText.text = "";
-        if (GameManager.gameType == GameType.online)
+        if (GameManager.gameType == GameType.ONLINE)
         {
-            if (OnlineClient.Instance.UserData.Role == ClientType.spectator)
+            if (OnlineClient.Instance.UserData.Role == ClientType.SPECTATOR)
             {
                 playerInfoText.text = "";
             }
@@ -47,21 +47,12 @@ public class UIDraftMessages : MonoBehaviour
             }
         }
 
-        if (pinkDraftOverlay.activeSelf == true)
-        {
-            pinkDraftOverlay.SetActive(false);
-            blueDraftOverlay.SetActive(true);
-        }
-        else
-        {
-            pinkDraftOverlay.SetActive(true);
-            blueDraftOverlay.SetActive(false);
-        }
+        pinkDraftOverlay.SetActive(!pinkDraftOverlay.activeSelf);
+        blueDraftOverlay.SetActive(pinkDraftOverlay.activeSelf);
     }
 
     private void OnDestroy()
     {
-        DraftEvents.OnStartDraft -= Init;
         DraftEvents.OnDraftMessageTextChange -= DisplayDraftMessages;
     }
 }

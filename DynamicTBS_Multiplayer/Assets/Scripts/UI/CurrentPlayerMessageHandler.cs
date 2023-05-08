@@ -9,8 +9,7 @@ public class CurrentPlayerMessageHandler : MonoBehaviour
 
     private void Awake()
     {
-        PlacementEvents.OnPlacementStart += OnPlacementStart;
-        GameplayEvents.OnGameplayPhaseStart += OnGameplayPhaseStart;
+        GameEvents.OnGamePhaseStart += OnGamePhaseStart;
     }
 
     private void DisplayPlacementMessages()
@@ -29,24 +28,24 @@ public class CurrentPlayerMessageHandler : MonoBehaviour
         placementMessageText.text = "It's " + PlayerManager.GetOtherPlayer(player).GetPlayerType() + "'s turn.";
     }
 
-    private void OnPlacementStart()
+    private void OnGamePhaseStart(GamePhase gamePhase)
     {
-        PlacementEvents.OnPlacementMessageChange += DisplayPlacementMessages;
-        DisplayPlacementMessages();
-    }
-
-    private void OnGameplayPhaseStart()
-    {
-        PlacementEvents.OnPlacementMessageChange -= DisplayPlacementMessages;
-        GameplayEvents.OnPlayerTurnEnded += DisplayTurnMessages;
-        DisplayTurnMessages(PlayerManager.GetCurrentPlayer());
+        if(gamePhase == GamePhase.PLACEMENT)
+        {
+            PlacementEvents.OnPlacementMessageChange += DisplayPlacementMessages;
+            DisplayPlacementMessages();
+        } else if(gamePhase == GamePhase.GAMEPLAY)
+        {
+            PlacementEvents.OnPlacementMessageChange -= DisplayPlacementMessages;
+            GameplayEvents.OnPlayerTurnEnded += DisplayTurnMessages;
+            DisplayTurnMessages(PlayerManager.GetCurrentPlayer());
+        }
     }
 
     private void OnDestroy()
     {
-        PlacementEvents.OnPlacementStart -= OnPlacementStart;
+        GameEvents.OnGamePhaseStart -= OnGamePhaseStart;
         PlacementEvents.OnPlacementMessageChange -= DisplayPlacementMessages;
-        GameplayEvents.OnGameplayPhaseStart -= OnGameplayPhaseStart;
         GameplayEvents.OnPlayerTurnEnded -= DisplayTurnMessages;
     }
 }

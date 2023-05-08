@@ -5,7 +5,6 @@ using UnityEngine;
 public static class GameplayEvents
 {
     public delegate void GameplayPhase();
-    public static event GameplayPhase OnGameplayPhaseStart;
     public static event GameplayPhase OnRestartGame;
 
     public delegate void FinishAction(ActionMetadata actionMetadata);
@@ -26,23 +25,23 @@ public static class GameplayEvents
     public delegate void NextPlayer(Player player);
     public static event NextPlayer OnPlayerTurnEnded;
 
+    public delegate void UpdatePlayer(PlayerType currentPlayer);
+    public static event UpdatePlayer OnCurrentPlayerChanged;
+
     public delegate void AbortTurn(int remainingActions, AbortTurnCondition abortTurnCondition);
     public static event AbortTurn OnPlayerTurnAborted;
 
     public delegate void ExecuteUIAction(Player player, UIAction uIAction);
     public static event ExecuteUIAction OnExecuteUIAction;
 
-    public delegate void ExecuteServerAction(ServerActionType serverActionType);
-    public static event ExecuteServerAction OnExecuteServerAction;
-
     public delegate void GamePaused(bool paused);
     public static event GamePaused OnGamePause;
 
-    public static void StartGameplayPhase()
-    {
-        if (OnGameplayPhaseStart != null)
-            OnGameplayPhaseStart();
-    }
+    public delegate void TimerUpdate(float pinkTimeLeft, float blueTimeLeft, int pinkDebuff, int blueDebuff);
+    public static event TimerUpdate OnTimerUpdate;
+
+    public delegate void TimerTimeout(GamePhase gamePhase, PlayerType currentPlayer, int currentPlayerTimerDebuff);
+    public static event TimerTimeout OnTimerTimeout;
 
     public static void RestartGameplay()
     {
@@ -72,6 +71,8 @@ public static class GameplayEvents
     {
         if (OnGameOver != null) 
         {
+            GameEvents.EndGamePhase(GamePhase.GAMEPLAY);
+            GameManager.ChangeGamePhase(GamePhase.NONE);
             OnGameOver(winner, endGameCondition);
         }
     }
@@ -88,6 +89,12 @@ public static class GameplayEvents
             OnPlayerTurnEnded(player);
     }
 
+    public static void ChangeCurrentPlayer(PlayerType playerType)
+    {
+        if (OnCurrentPlayerChanged != null)
+            OnCurrentPlayerChanged(playerType);
+    }
+
     public static void AbortCurrentPlayerTurn(int remainingActions, AbortTurnCondition abortTurnCondition)
     {
         if (OnPlayerTurnAborted != null)
@@ -100,17 +107,23 @@ public static class GameplayEvents
             OnExecuteUIAction(player, uIAction);
     }
 
-    public static void ServerActionExecuted(ServerActionType serverActionType)
-    {
-        if (OnExecuteServerAction != null)
-            OnExecuteServerAction(serverActionType);
-    }
-
     public static void PauseGame(bool paused)
     {
         if(OnGamePause != null)
         {
             OnGamePause(paused);
         }
+    }
+
+    public static void UpdateTimer(float pinkTimeLeft, float blueTimeLeft, int pinkDebuff, int blueDebuff)
+    {
+        if (OnTimerUpdate != null)
+            OnTimerUpdate(pinkTimeLeft, blueTimeLeft, pinkDebuff, blueDebuff);
+    }
+
+    public static void TimerTimedOut(GamePhase gamePhase, PlayerType currentPlayer, int currentPlayerTimerDebuff)
+    {
+        if (OnTimerTimeout != null)
+            OnTimerTimeout(gamePhase, currentPlayer, currentPlayerTimerDebuff);
     }
 }

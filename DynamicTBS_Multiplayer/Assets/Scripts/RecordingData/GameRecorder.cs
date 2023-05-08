@@ -14,19 +14,23 @@ public class GameRecorder : MonoBehaviour
         SubscribeEvents();
     }
 
-    private void SetPath()
+    private void SetPath(GamePhase gamePhase)
     {
-        try
+        if(gamePhase == GamePhase.DRAFT)
         {
-            filename = "GameRecord_" + DateTime.Now.ToString("dd-MM-yyyy_HH-mm-ss");
-            string directory = Application.dataPath + "/Resources/GameRecords";
-            Directory.CreateDirectory(directory);
-            path = directory + "/" + filename + ".txt";
-        } catch(Exception ex)
-        {
-            Debug.Log("Cannot record game: " + ex.ToString());
-            path = null;
-            UnsubscribeEvents();
+            try
+            {
+                filename = "GameRecord_" + DateTime.Now.ToString("dd-MM-yyyy_HH-mm-ss");
+                string directory = Application.dataPath + "/Resources/GameRecords";
+                Directory.CreateDirectory(directory);
+                path = directory + "/" + filename + ".txt";
+            }
+            catch (Exception ex)
+            {
+                Debug.Log("Cannot record game: " + ex.ToString());
+                path = null;
+                UnsubscribeEvents();
+            }
         }
     }
 
@@ -94,7 +98,7 @@ public class GameRecorder : MonoBehaviour
 
     private void SubscribeEvents()
     {
-        DraftEvents.OnStartDraft += SetPath;
+        GameEvents.OnGamePhaseStart += SetPath;
         DraftEvents.OnCharacterCreated += RecordDraft;
         GameplayEvents.OnFinishAction += RecordMove;
         GameplayEvents.OnGameOver += RecordWinner;
@@ -102,7 +106,7 @@ public class GameRecorder : MonoBehaviour
 
     private void UnsubscribeEvents()
     {
-        DraftEvents.OnStartDraft -= SetPath;
+        GameEvents.OnGamePhaseStart -= SetPath;
         DraftEvents.OnCharacterCreated -= RecordDraft;
         GameplayEvents.OnFinishAction -= RecordMove;
         GameplayEvents.OnGameOver -= RecordWinner;

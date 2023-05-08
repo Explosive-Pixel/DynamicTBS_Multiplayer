@@ -44,7 +44,7 @@ public class DrawButtonHandler : MonoBehaviour
         if(uIAction == UIAction.OFFER_DRAW)
         {
             offerDrawButton.interactable = false;
-            if (!(GameManager.gameType == GameType.online && OnlineClient.Instance.Side == player.GetPlayerType()))
+            if (!(GameManager.gameType == GameType.ONLINE && OnlineClient.Instance.Side == player.GetPlayerType()))
             {
                 SetActive(answerDrawBox, true);
             }
@@ -59,9 +59,10 @@ public class DrawButtonHandler : MonoBehaviour
         }
     }
 
-    private void SetOfferDrawButtonActive()
+    private void SetOfferDrawButtonActive(GamePhase gamePhase)
     {
-        SetActive(offerDrawButton.gameObject, true);
+        if(gamePhase == GamePhase.GAMEPLAY)
+            SetActive(offerDrawButton.gameObject, true);
     }
 
     private void SetActive(GameObject gameObject, bool active)
@@ -80,13 +81,13 @@ public class DrawButtonHandler : MonoBehaviour
 
     private void SubscribeEvents()
     {
-        GameplayEvents.OnGameplayPhaseStart += SetOfferDrawButtonActive;
+        GameEvents.OnGamePhaseStart += SetOfferDrawButtonActive;
         GameplayEvents.OnExecuteUIAction += OnDrawButtonClicked;
     }
 
     private void UnsubscribeEvents()
     {
-        GameplayEvents.OnGameplayPhaseStart -= SetOfferDrawButtonActive;
+        GameEvents.OnGamePhaseStart -= SetOfferDrawButtonActive;
         GameplayEvents.OnExecuteUIAction -= OnDrawButtonClicked;
     }
 

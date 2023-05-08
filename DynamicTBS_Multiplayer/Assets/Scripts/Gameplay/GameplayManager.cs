@@ -115,28 +115,21 @@ public class GameplayManager : MonoBehaviour
         AbortTurn();
     }
 
-    private void AbortTurn(ServerActionType serverActionType)
-    {
-        if(GameManager.gameType == GameType.multiplayer)
-        {
-            if (serverActionType == ServerActionType.AbortTurn && Client.Instance.IsLoadingGame)
-            {
-                AbortTurn();
-            }
-        } 
-    }
-
     public static bool HasGameStarted()
     {
         return hasGameStarted;
     }
 
-    private void SubscribeToGameplayEvents()
+    private void SubscribeToGameplayEvents(GamePhase gamePhase)
     {
+        if (gamePhase != GamePhase.PLACEMENT)
+            return;
+
+        GameManager.ChangeGamePhase(GamePhase.GAMEPLAY);
+
         GameplayEvents.OnFinishAction += OnActionFinished;
         GameplayEvents.OnPlayerTurnEnded += OnPlayerTurnEnded;
         GameplayEvents.OnPlayerTurnAborted += AbortTurn;
-        GameplayEvents.OnExecuteServerAction += AbortTurn;
         hasGameStarted = true;
     }
 
@@ -144,17 +137,16 @@ public class GameplayManager : MonoBehaviour
 
     private void SubscribeEvents()
     {
-        GameplayEvents.OnGameplayPhaseStart += SubscribeToGameplayEvents;
+        GameEvents.OnGamePhaseEnd += SubscribeToGameplayEvents;
         GameplayEvents.OnExecuteUIAction += ToggleGameIsPaused;
     }
 
     private void UnsubscribeEvents()
     {
-        GameplayEvents.OnGameplayPhaseStart -= SubscribeToGameplayEvents;
+        GameEvents.OnGamePhaseEnd -= SubscribeToGameplayEvents;
         GameplayEvents.OnFinishAction -= OnActionFinished;
         GameplayEvents.OnPlayerTurnEnded -= OnPlayerTurnEnded;
         GameplayEvents.OnPlayerTurnAborted -= AbortTurn;
-        GameplayEvents.OnExecuteServerAction -= AbortTurn;
         GameplayEvents.OnExecuteUIAction -= ToggleGameIsPaused;
     }
 

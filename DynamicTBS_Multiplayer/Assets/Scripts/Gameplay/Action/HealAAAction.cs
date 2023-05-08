@@ -21,7 +21,7 @@ public class HealAAAction : MonoBehaviour, IAction
 
     private void Awake()
     {
-        GameplayEvents.OnGameplayPhaseStart += Register;
+        GameEvents.OnGamePhaseStart += Register;
         GameplayEvents.OnFinishAction += DebuffCharacter;
     }
 
@@ -129,14 +129,17 @@ public class HealAAAction : MonoBehaviour, IAction
         child.SetActive(bufferCount > 0);
     }
 
-    private void Register()
+    private void Register(GamePhase gamePhase)
     {
+        if (gamePhase != GamePhase.GAMEPLAY)
+            return;
+
         ActionRegistry.RegisterPatternAction(this);
     }
 
     private void OnDestroy()
     {
-        GameplayEvents.OnGameplayPhaseStart -= Register;
+        GameEvents.OnGamePhaseStart -= Register;
         GameplayEvents.OnFinishAction -= DebuffCharacter;
     }
 }
