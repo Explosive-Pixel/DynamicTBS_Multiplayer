@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Networking.Transport;
 using System.Linq;
+using System.Net;
 
 public class OnlineServer : MonoBehaviour
 {
@@ -20,11 +21,13 @@ public class OnlineServer : MonoBehaviour
     private NetworkDriver driver;
 
     private List<Lobby> lobbies = new List<Lobby>();
+    public int LobbyCount { get { return lobbies.Count; } }
 
     private int lobbyIdCounter = 0;
 
     //private List<NetworkConnection> AllConnections { get { return lobbies.ConvertAll(lobby => lobby.Connections).SelectMany(cnn => cnn).ToList(); } }
     private List<NetworkConnection> AllConnections = new List<NetworkConnection>();
+    public int ConnectionCount { get { return AllConnections.Count; } }
 
     private bool isActive = false;
     public bool IsActive { get { return isActive; } }
@@ -33,6 +36,9 @@ public class OnlineServer : MonoBehaviour
     private float lastKeepAlive = 0f; // Timestamp for last connection.
 
     private Action connectionDropped;
+
+    private string ip;
+    public string IP { get { return ip; } }
 
     public void Init(ushort port) // Initiation method.
     {
@@ -48,7 +54,10 @@ public class OnlineServer : MonoBehaviour
         else
         {
             driver.Listen(); // Makes server listen to clients.
-            Debug.Log("Server: Currently listening on port " + endPoint.Port);
+            Debug.Log("Server: Currently listening to port " + endPoint.Port);
+
+            using WebClient client = new WebClient();
+            ip = client.DownloadString("https://api.ipify.org");
         }
 
         isActive = true;
