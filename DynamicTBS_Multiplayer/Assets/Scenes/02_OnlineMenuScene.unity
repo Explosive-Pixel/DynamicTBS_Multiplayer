@@ -309,7 +309,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 9.1204}
   m_SizeDelta: {x: 400, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &157189377
@@ -2990,6 +2990,8 @@ MonoBehaviour:
   userName: {fileID: 157189375}
   lobbyNameOrId: {fileID: 992222381}
   spectatorToggle: {fileID: 1489946253}
+  createLobbyButton: {fileID: 2124520454}
+  joinLobbyButton: {fileID: 1942127442}
   lobbyCanvas: {fileID: 2057763761}
   onlineMetadataCanvas: {fileID: 954437385}
 --- !u!1 &992222379
@@ -3030,7 +3032,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -75}
+  m_AnchoredPosition: {x: 0.000061035, y: -63}
   m_SizeDelta: {x: 400, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &992222381
@@ -4228,7 +4230,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -130}
+  m_AnchoredPosition: {x: 0.000061035, y: -125}
   m_SizeDelta: {x: 400, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1489946253
@@ -5346,7 +5348,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Enter Player Name...
+  m_Text: Enter Gamertag ...
 --- !u!222 &1905117695
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5446,7 +5448,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Enter Lobby ID...
+  m_Text: Enter Lobby Name or ID ...
 --- !u!222 &1919317689
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6156,8 +6158,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 80}
-  m_SizeDelta: {x: 1000, y: 100}
+  m_AnchoredPosition: {x: 0.000030518, y: 118}
+  m_SizeDelta: {x: 1137.7207, y: 167.7593}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2060925868
 MonoBehaviour:
@@ -6192,7 +6194,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Enter your player name and the ID of the lobby you want to set up or join.
+  m_Text: "Enter your gamertag\nand \n- either a lobby name (if you want to set up
+    a new lobby) \n- or a lobby ID of the form <name>#<number> (if you want to join
+    a lobby):"
 --- !u!222 &2060925869
 CanvasRenderer:
   m_ObjectHideFlags: 0

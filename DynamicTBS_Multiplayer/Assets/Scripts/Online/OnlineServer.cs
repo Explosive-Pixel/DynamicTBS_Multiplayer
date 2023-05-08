@@ -121,7 +121,8 @@ public class OnlineServer : MonoBehaviour
             SendToClient(new MsgServerNotification
             {
                 serverNotification = ServerNotification.LOBBY_NOT_FOUND
-            }, cnn, lobby.ShortId);
+            }, cnn, 0);
+            DisconnectClient(cnn);
             return;
         }
 
@@ -135,6 +136,7 @@ public class OnlineServer : MonoBehaviour
             {
                 serverNotification = ServerNotification.CONNECTION_FORBIDDEN_FULL_LOBBY
             }, cnn, lobby.ShortId);
+            DisconnectClient(cnn);
             return;
         }
 
@@ -286,16 +288,7 @@ public class OnlineServer : MonoBehaviour
                     else if (cmd == NetworkEvent.Type.Disconnect)
                     {
                         Debug.Log("Client disconnected from server: " + cnn.ToString());
-                        AllConnections.Remove(cnn);
-
-                        Lobby lobby = FindLobby(cnn);
-                        if(lobby != null)
-                        {
-                            lobby.RemoveConnection(cnn);
-                            BroadcastMetadata(lobby);
-                        }
-
-                        connectionDropped?.Invoke();
+                        DisconnectClient(cnn);
                     }
                 }
             }
@@ -322,6 +315,20 @@ public class OnlineServer : MonoBehaviour
             playerCount = lobby.Players.Count,
             spectatorCount = lobby.Spectators.Count 
         }, lobby);
+    }
+
+    private void DisconnectClient(NetworkConnection cnn)
+    {
+        AllConnections.Remove(cnn);
+
+        Lobby lobby = FindLobby(cnn);
+        if (lobby != null)
+        {
+            lobby.RemoveConnection(cnn);
+            BroadcastMetadata(lobby);
+        }
+
+        connectionDropped?.Invoke();
     }
 
     private void CleanUpConnections()

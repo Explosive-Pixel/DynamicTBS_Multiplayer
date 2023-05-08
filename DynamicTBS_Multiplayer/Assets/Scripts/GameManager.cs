@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 public enum GameType
 {
     LOCAL,
-    multiplayer,
     ONLINE
 }
 public class GameManager : MonoBehaviour
@@ -24,11 +23,6 @@ public class GameManager : MonoBehaviour
     public static bool IsHost()
     {
         return gameType == GameType.LOCAL || (OnlineServer.Instance && OnlineServer.Instance.IsActive);
-    }
-
-    public static bool IsMultiplayerHost()
-    {
-        return gameType == GameType.multiplayer && IsHost();
     }
 
     public static bool IsPlayer()

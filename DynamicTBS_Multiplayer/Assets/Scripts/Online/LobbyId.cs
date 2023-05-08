@@ -46,6 +46,9 @@ public class LobbyId
 
     public static LobbyId FromFullId(string fullId)
     {
+        if (!fullId.Contains("#") || fullId.Split("#").Length > 2)
+            return null;
+
         try
         {
             string name = fullId.Split("#")[0];

@@ -37,6 +37,7 @@ public class MsgWelcomeClient : OnlineMessage
     {
         LobbyId lobbyId = new LobbyId(LobbyId, lobbyName);
         OnlineClient.Instance.UpdateClient(lobbyId, isAdmin, OnlineClient.Instance.Side);
+        OnlineClient.Instance.ConnectionStatus = ConnectionStatus.IN_LOBBY;
     }
 
     public override void ReceivedOnServer(NetworkConnection cnn)

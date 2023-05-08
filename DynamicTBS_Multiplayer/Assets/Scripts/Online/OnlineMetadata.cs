@@ -23,12 +23,15 @@ public class OnlineMetadata : MonoBehaviour
 
         switch(OnlineClient.Instance.ConnectionStatus)
         {
-            case ConnectionStatus.CONNECTED:
+            case ConnectionStatus.IN_LOBBY:
                 PrintMetadata();
+                break;
+            case ConnectionStatus.CONNECTED:
+                infoText.text = "You are connected to server. Trying to join lobby ...";
                 break;
             case ConnectionStatus.CONNECTION_DECLINED:
             case ConnectionStatus.LOBBY_NOT_FOUND:
-                infoText.text = "Unable to connect to server.";
+                infoText.text = "The server refused the connection.";
                 break;
             case ConnectionStatus.UNCONNECTED:
                 infoText.text = "Unable to reconnect to server.";

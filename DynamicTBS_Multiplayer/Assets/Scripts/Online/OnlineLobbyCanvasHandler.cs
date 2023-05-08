@@ -57,10 +57,13 @@ public class OnlineLobbyCanvasHandler : MonoBehaviour
             case ConnectionStatus.ATTEMPT_CONNECTION:
                 PrintAttemptToConnectInfo();
                 break;
+            case ConnectionStatus.IN_LOBBY:
+                PrintInLobbyInfo();
+                break;
         }
     }
 
-    private void PrintConnectedInfo()
+    private void PrintInLobbyInfo()
     {
         SetActive(OnlineClient.Instance.IsAdmin);
 
@@ -84,6 +87,13 @@ public class OnlineLobbyCanvasHandler : MonoBehaviour
         {
             clientInfoText.text += "\nWaiting for other player to start the game ...";
         }
+    }
+
+    private void PrintConnectedInfo()
+    {
+        SetActive(false);
+
+        clientInfoText.text = "You are connected to the server!\nTrying to join lobby ...";
     }
 
     private void PrintConnectionDeclinedInfo()

@@ -16,7 +16,8 @@ public enum ConnectionStatus
     CONNECTED = 1,
     LOBBY_NOT_FOUND = 2,
     CONNECTION_DECLINED = 3,
-    ATTEMPT_CONNECTION = 4
+    ATTEMPT_CONNECTION = 4,
+    IN_LOBBY = 5
 }
 
 public class OnlineClient : MonoBehaviour
