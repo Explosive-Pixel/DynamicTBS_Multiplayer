@@ -20,11 +20,6 @@ public class GameManager : MonoBehaviour
         PrefabManager.LoadPrefabs();
     }
     
-    public static bool IsHost()
-    {
-        return gameType == GameType.LOCAL || (OnlineServer.Instance && OnlineServer.Instance.IsActive);
-    }
-
     public static bool IsPlayer()
     {
         return gameType == GameType.LOCAL || (gameType == GameType.ONLINE && OnlineClient.Instance.UserData.Role == ClientType.PLAYER);
