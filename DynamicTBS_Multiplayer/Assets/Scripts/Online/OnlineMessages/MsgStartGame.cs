@@ -43,7 +43,6 @@ public class MsgStartGame : OnlineMessage
         OnlineServer.Instance.Broadcast(this, LobbyId);
 
         OnlineServer.Instance.StartGame(LobbyId, draftAndPlacementTime, gameplayTime);
-        OnlineServer.Instance.SwapAdmin(LobbyId);
 
         base.ReceivedOnServer(cnn);
     }
