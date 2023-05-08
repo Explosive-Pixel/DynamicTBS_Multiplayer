@@ -1,4 +1,5 @@
 using System;
+using Unity.Collections;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,7 +28,7 @@ public class OnlineMessage
 
     public virtual void ReceivedOnServer(NetworkConnection cnn) // Called when message is received on server side, with identifier from whom it was sent.
     {
-
+        ServerEvents.ReceiveMessage(this);
     }
 
     public static byte ToByte(bool value) { return value == false ? (byte)0 : (byte)1; }

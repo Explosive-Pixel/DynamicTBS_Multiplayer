@@ -362,7 +362,7 @@ public class OnlineServer : MonoBehaviour
         }
     }
 
-    private Lobby FindLobby(int lobbyId)
+    public Lobby FindLobby(int lobbyId)
     {
         return lobbies.Find(l => l.ShortId == lobbyId);
     }

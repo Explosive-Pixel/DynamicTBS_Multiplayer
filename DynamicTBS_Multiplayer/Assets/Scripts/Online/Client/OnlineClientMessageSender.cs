@@ -63,6 +63,24 @@ public class OnlineClientMessageSender : MonoBehaviour
         }
     }
 
+    private void SendGameOverMessage(PlayerType? winner, GameOverCondition endGameCondition)
+    {
+        if (OnlineClient.Instance.IsAdmin)
+        {
+            MsgGameOver msg = new MsgGameOver
+            {
+                isDraw = winner == null
+            };
+
+            if(winner != null)
+            {
+                msg.winner = winner.Value;
+            }
+
+            OnlineClient.Instance.SendToServer(msg);
+        }
+    }
+
     #region EventsRegion
 
     private void SubscribeEvents()
@@ -71,6 +89,7 @@ public class OnlineClientMessageSender : MonoBehaviour
         GameplayEvents.OnFinishAction += SendPerformActionMessage;
         GameplayEvents.OnExecuteUIAction += SendUIActionMessage;
         GameplayEvents.OnCurrentPlayerChanged += SendUpdateServerMessage;
+        GameplayEvents.OnGameOver += SendGameOverMessage;
     }
 
     private void UnsubscribeEvents()
@@ -79,6 +98,7 @@ public class OnlineClientMessageSender : MonoBehaviour
         GameplayEvents.OnFinishAction -= SendPerformActionMessage;
         GameplayEvents.OnExecuteUIAction -= SendUIActionMessage;
         GameplayEvents.OnCurrentPlayerChanged -= SendUpdateServerMessage;
+        GameplayEvents.OnGameOver -= SendGameOverMessage;
     }
 
     #endregion

@@ -172,7 +172,7 @@ public class Lobby
 
     public void ArchiveMessage(OnlineMessage msg)
     {
-        if (msg.GetType() == typeof(MsgStartGame))
+        if (msg.GetType() == typeof(MsgGameOver))
         {
             messageHistory.Clear();
         }
