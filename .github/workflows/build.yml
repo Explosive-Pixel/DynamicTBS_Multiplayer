@@ -26,7 +26,7 @@ jobs:
           key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
           restore-keys: |
             Library-
-      # Build
+      # Build Windows
       - name: Build project for windows
         uses: game-ci/unity-builder@v2
         env:
@@ -35,7 +35,7 @@ jobs:
           unityVersion: 2021.3.6f1
           projectPath: DynamicTBS_Multiplayer
           buildMethod: BuildScript.PerformAllBuildsWindows
-      # Upload
+      # Upload Windows
       - name: Upload Windows Client Build
         uses: actions/upload-artifact@v2
         with:
@@ -46,7 +46,27 @@ jobs:
         with:
           name: ServerBuild_Windows
           path: DynamicTBS_Multiplayer/Builds/Windows/Server
-      # Build
+      # Build Linux
+      - name: Build project for linux
+        uses: game-ci/unity-builder@v2
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        with:
+          unityVersion: 2021.3.6f1
+          projectPath: DynamicTBS_Multiplayer
+          buildMethod: BuildScript.PerformAllBuildsLinux
+      # Upload Linux
+      - name: Upload Linux Client Build
+        uses: actions/upload-artifact@v2
+        with:
+          name: ClientBuild_Linux
+          path: DynamicTBS_Multiplayer/Builds/Linux/Client
+      - name: Upload Linux Server Build
+        uses: actions/upload-artifact@v2
+        with:
+          name: ServerBuild_Linux
+          path: DynamicTBS_Multiplayer/Builds/Linux/Server
+      # Build Mac
       - name: Build project for mac
         uses: game-ci/unity-builder@v2
         env:
@@ -55,7 +75,7 @@ jobs:
           unityVersion: 2021.3.6f1
           projectPath: DynamicTBS_Multiplayer
           buildMethod: BuildScript.PerformAllBuildsMac
-      # Upload
+      # Upload Mac
       - name: Upload Mac Client Build
         uses: actions/upload-artifact@v2
         with:
