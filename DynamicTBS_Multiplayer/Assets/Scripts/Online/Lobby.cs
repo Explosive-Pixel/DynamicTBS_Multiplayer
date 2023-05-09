@@ -23,8 +23,11 @@ public class Lobby
     private List<OnlineMessage> messageHistory = new List<OnlineMessage>();
     public List<OnlineMessage> MessageHistory { get { return messageHistory; } }
 
-    private int boardDesignIndex = -1;
-    public int BoardDesignIndex { get { return boardDesignIndex; } }
+    private MapType selectedMap;
+    public MapType SelectedMap { get { return selectedMap; } }
+
+    private readonly Dictionary<PlayerType, List<CharacterType>> draft = new Dictionary<PlayerType, List<CharacterType>>();
+    public Dictionary<PlayerType, List<CharacterType>> Draft { get { return draft; } }
 
     private bool gameIsPaused = false;
     public bool GameIsPaused { get { return gameIsPaused; } }
@@ -48,8 +51,11 @@ public class Lobby
         gameIsPaused = uiAction == UIAction.PAUSE_GAME;
     }
 
-    public void InitTimer(float draftAndPlacementTime, float gameplayTime)
+    public void StartGame(float draftAndPlacementTime, float gameplayTime, MapType selectedMap)
     {
+        draft.Clear();
+
+        this.selectedMap = selectedMap;
         timer = new LobbyTimer(draftAndPlacementTime, gameplayTime);
     }
 
@@ -108,44 +114,18 @@ public class Lobby
         return false;
     }
 
-    public void UpdateConnectionAfterReconnect(NetworkConnection networkConnection)
-    {
-        OnlineConnection cnn = FindOnlineConnection(networkConnection);
-        if (cnn != null)
-        {
-            OnlineConnection other = FindOtherPlayer(cnn);
-            if(other != null && other.Side != null && boardDesignIndex != -1)
-            {
-                cnn.Side = PlayerManager.GetOtherSide(other.Side.Value);
-                cnn.IsAdmin = !other.IsAdmin;
-                OnlineServer.Instance.SendToClient(new MsgUpdateClient
-                {
-                    isAdmin = cnn.IsAdmin,
-                    side = cnn.Side.Value,
-                    boardDesignIndex = boardDesignIndex
-                }, networkConnection, ShortId);
-            }
-        }
-    }
-
-    public void AssignSides(NetworkConnection networkConnection, PlayerType chosenSide, int boardDesignIndex)
+    public void AssignSides(NetworkConnection networkConnection, PlayerType chosenSide)
     {
         OnlineConnection cnn = FindOnlineConnection(networkConnection);
         if (cnn != null)
         {
             cnn.Side = chosenSide;
-            this.boardDesignIndex = boardDesignIndex;
 
             OnlineConnection other = FindOtherPlayer(cnn);
             if (other != null)
             {
                 other.Side = PlayerManager.GetOtherSide(chosenSide);
-                OnlineServer.Instance.SendToClient(new MsgUpdateClient
-                {
-                    isAdmin = other.IsAdmin,
-                    side = other.Side.Value,
-                    boardDesignIndex = boardDesignIndex
-                }, other.NetworkConnection, ShortId);
+                UpdatePlayer(other);
             }
         }
     }
@@ -156,18 +136,45 @@ public class Lobby
         if(Players.Count == 2)
         {
             Players.ForEach(player => player.IsAdmin = !player.IsAdmin);
-            UpdateAdmins();
+            UpdatePlayers();
         }
     }
 
-    private void UpdateAdmins()
+    public void UpdateConnectionAfterReconnect(NetworkConnection networkConnection)
     {
-        Players.ForEach(player => OnlineServer.Instance.SendToClient(new MsgUpdateClient
+        OnlineConnection cnn = FindOnlineConnection(networkConnection);
+        if(cnn != null)
+        {
+            OnlineConnection other = FindOtherPlayer(cnn);
+            if(other != null && other.Side != null)
+            {
+                cnn.Side = PlayerManager.GetOtherSide(other.Side.Value);
+                cnn.IsAdmin = !other.IsAdmin;
+                UpdatePlayer(cnn);
+            }
+        }
+    }
+
+    private void UpdatePlayers()
+    {
+        Players.ForEach(player => UpdatePlayer(player));
+    }
+
+    private void UpdatePlayer(OnlineConnection player)
+    {
+        OnlineServer.Instance.SendToClient(new MsgUpdateClient
         {
             isAdmin = player.IsAdmin,
-            side = player.Side.Value,
-            boardDesignIndex = boardDesignIndex
-        }, player.NetworkConnection, ShortId));
+            side = player.Side.Value
+        }, player.NetworkConnection, ShortId);
+    }
+
+    public void ArchiveCharacterDraft(PlayerType player, CharacterType character)
+    {
+        if (!draft.ContainsKey(player))
+            draft[player] = new List<CharacterType>();
+
+        draft[player].Add(character);
     }
 
     public void ArchiveMessage(OnlineMessage msg)

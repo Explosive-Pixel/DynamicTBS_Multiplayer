@@ -117,14 +117,13 @@ public class OnlineClient : MonoBehaviour
         this.side = side;
     }
 
-    public void ChooseGameSetup(PlayerType side, int boardDesignIndex)
+    public void ChooseSide(PlayerType side)
     {
         this.side = side;
         SendToServer(new MsgUpdateClient
         {
             isAdmin = isAdmin,
-            side = side,
-            boardDesignIndex = boardDesignIndex
+            side = side
         });
     }
 
@@ -144,9 +143,12 @@ public class OnlineClient : MonoBehaviour
         GameEvents.IsGameLoading(isLoadingGame);
     }
 
-    public void StartGame()
+    public void StartGame(float draftAndPlacementTime, float gameplayTime, MapType selectedMap)
     {
+        Board.selectedMap = selectedMap;
+        Timer.InitTime(draftAndPlacementTime, gameplayTime);
         GameManager.gameType = GameType.ONLINE;
+
         GameEvents.StartGame();
     }
 

@@ -6,7 +6,10 @@ using UnityEngine;
 [System.Serializable]
 public class TileMap
 {
+    [SerializeField] private MapType name;
     [SerializeField] private List<TileType> tiles = new List<TileType>(new TileType[Board.boardSize*Board.boardSize]);
+
+    public MapType MapType { get { return name; } }
 
     public TileMap()
     {

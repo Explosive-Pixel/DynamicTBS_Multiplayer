@@ -150,12 +150,13 @@ public class OnlineLobbyCanvasHandler : MonoBehaviour
     {
         if (AllSelected)
         {
-            OnlineClient.Instance.ChooseGameSetup(selectedSide, Board.boardDesignIndex);
+            OnlineClient.Instance.ChooseSide(selectedSide);
 
             OnlineClient.Instance.SendToServer(new MsgStartGame
             {
                 draftAndPlacementTime = Timer.TotalTime[TimerType.DRAFT_AND_PLACEMENT],
-                gameplayTime = Timer.TotalTime[TimerType.GAMEPLAY]
+                gameplayTime = Timer.TotalTime[TimerType.GAMEPLAY],
+                selectedMap = Board.selectedMap
             });
         }
     }

@@ -6,6 +6,14 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Linq;
 
+public enum MapType
+{
+    EXPLOSIVE = 0,
+    BONES = 1,
+    ARROWS = 2,
+    LABYRINTH = 3
+}
+
 public class Board : MonoBehaviour
 {
     #region Board Config
@@ -15,13 +23,13 @@ public class Board : MonoBehaviour
 
     private const float tileSize = 1f;
 
-    // [SerializeField] private TileMap boardDesign;
-
     [SerializeField] private TileMap[] boardDesigns;
 
-    public static int boardDesignIndex = 0;
+    // public static int boardDesignIndex = 0;
 
-    private TileMap BoardDesign { get { return boardDesigns[boardDesignIndex]; } }
+    public static MapType selectedMap = MapType.EXPLOSIVE;
+
+    private TileMap BoardDesign { get { return boardDesigns.ToList().Find(tileMap => tileMap.MapType == selectedMap); } }
 
     #endregion
 

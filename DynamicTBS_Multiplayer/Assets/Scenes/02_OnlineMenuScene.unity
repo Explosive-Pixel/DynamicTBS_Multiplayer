@@ -1277,6 +1277,7 @@ GameObject:
   - component: {fileID: 387471496}
   - component: {fileID: 387471495}
   - component: {fileID: 387471494}
+  - component: {fileID: 387471497}
   m_Layer: 5
   m_Name: BonesMapButton
   m_TagString: Untagged
@@ -1399,6 +1400,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 387471492}
   m_CullTransparentMesh: 1
+--- !u!114 &387471497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 387471492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6472236e8bbdeaa4886f6259d6010f8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapType: 1
 --- !u!1 &410149710
 GameObject:
   m_ObjectHideFlags: 0
@@ -1411,6 +1425,7 @@ GameObject:
   - component: {fileID: 410149714}
   - component: {fileID: 410149713}
   - component: {fileID: 410149712}
+  - component: {fileID: 410149715}
   m_Layer: 5
   m_Name: ArrowsMapButton
   m_TagString: Untagged
@@ -1533,6 +1548,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 410149710}
   m_CullTransparentMesh: 1
+--- !u!114 &410149715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 410149710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6472236e8bbdeaa4886f6259d6010f8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapType: 2
 --- !u!1 &537048771
 GameObject:
   m_ObjectHideFlags: 0
@@ -2029,6 +2057,7 @@ GameObject:
   - component: {fileID: 777269960}
   - component: {fileID: 777269959}
   - component: {fileID: 777269958}
+  - component: {fileID: 777269961}
   m_Layer: 5
   m_Name: ExplosiveMapButton
   m_TagString: Untagged
@@ -2151,6 +2180,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 777269956}
   m_CullTransparentMesh: 1
+--- !u!114 &777269961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 777269956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6472236e8bbdeaa4886f6259d6010f8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapType: 0
 --- !u!1 &826859607
 GameObject:
   m_ObjectHideFlags: 0
@@ -4481,6 +4523,7 @@ GameObject:
   - component: {fileID: 1583017951}
   - component: {fileID: 1583017950}
   - component: {fileID: 1583017949}
+  - component: {fileID: 1583017952}
   m_Layer: 5
   m_Name: LabyrinthMapButton
   m_TagString: Untagged
@@ -4603,6 +4646,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1583017947}
   m_CullTransparentMesh: 1
+--- !u!114 &1583017952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1583017947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6472236e8bbdeaa4886f6259d6010f8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapType: 3
 --- !u!1 &1595597646
 GameObject:
   m_ObjectHideFlags: 0

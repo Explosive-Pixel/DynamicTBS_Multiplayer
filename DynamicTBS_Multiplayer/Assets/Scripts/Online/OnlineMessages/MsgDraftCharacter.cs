@@ -44,5 +44,7 @@ public class MsgDraftCharacter : OnlineMessage
     public override void ReceivedOnServer(NetworkConnection cnn)
     {
         OnlineServer.Instance.Broadcast(this, LobbyId);
+
+        OnlineServer.Instance.ArchiveCharacterDraft(this);
     }
 }

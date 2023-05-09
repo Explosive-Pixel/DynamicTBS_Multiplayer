@@ -18,16 +18,16 @@ public class GameSetupHandler : MonoBehaviour
         for (int i = 0; i < maps.Length; i++)
         {
             Button button = maps[i];
-            int index = i;
-            button.onClick.AddListener(() => ChooseBoardDesign(button, index));
+            MapType mapType = button.GetComponent<MapClass>().mapType;
+            button.onClick.AddListener(() => ChooseBoardDesign(button, mapType));
         }
     }
 
-    public void ChooseBoardDesign(Button button, int index)
+    public void ChooseBoardDesign(Button button, MapType mapType)
     {
         AudioEvents.PressingButton();
 
-        Board.boardDesignIndex = index;
+        Board.selectedMap = mapType;
         mapSetup.GetComponentsInChildren<Button>().ToList().ForEach(button => button.interactable = true);
         button.interactable = false;
         mapSelected = true;

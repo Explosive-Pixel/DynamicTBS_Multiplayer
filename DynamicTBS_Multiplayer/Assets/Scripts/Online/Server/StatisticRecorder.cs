@@ -4,6 +4,7 @@ using UnityEngine;
 using Newtonsoft.Json;
 using System;
 using System.IO;
+using System.Linq;
 
 public class StatisticRecorder : MonoBehaviour
 {
@@ -20,24 +21,35 @@ public class StatisticRecorder : MonoBehaviour
 
     #endregion
 
+    private string directory;
+    private string filePath;
+    private Statistics stats;
+    public Statistics Stats { get { return stats; } }
+
+    #region Helper Classes
+
     [Serializable]
     public class Statistics
     {
         public int gamesTotal = 0;
         public List<MapStatistics> mapStatistics = new List<MapStatistics>();
+        public List<CharacterStatistics> characterStatistics = new List<CharacterStatistics>();
+
+        public List<MapStatistics> MapStatistics { get { return mapStatistics.OrderBy(ms => ms.map).ToList(); } }
+        public List<CharacterStatistics> CharacterStatistics { get { return characterStatistics.OrderBy(cs => cs.draftTotal).ThenByDescending(cs => cs.character).ToList(); } }
     }
 
     [Serializable]
     public class MapStatistics
     {
-        public int boardDesignIndex;
+        public MapType map;
         public int gamesTotal = 0;
         public int drawGamesTotal = 0;
         public List<WinnerCount> winsTotalPerPlayer = new List<WinnerCount>();
 
-        public MapStatistics(int boardDesignIndex)
+        public MapStatistics(MapType map)
         {
-            this.boardDesignIndex = boardDesignIndex;
+            this.map = map;
         }
     }
 
@@ -53,17 +65,26 @@ public class StatisticRecorder : MonoBehaviour
         }
     }
 
-    private string filePath;
-    private Statistics stats;
-
-    public Statistics Stats { get { return stats; } }
-
-    public MapStatistics GetMapStatistics(int boardDesignIndex)
+    [Serializable]
+    public class CharacterStatistics
     {
-        MapStatistics mapStatistics = stats.mapStatistics.Find(ms => ms.boardDesignIndex == boardDesignIndex);
+        public CharacterType character;
+        public int draftTotal; // number between 0 and <number of characters in one team>
+        public int count = 0;
+
+        public CharacterStatistics(CharacterType character, int draftTotal)
+        {
+            this.character = character;
+            this.draftTotal = draftTotal;
+        }
+    }
+
+    public MapStatistics GetMapStatistics(MapType map)
+    {
+        MapStatistics mapStatistics = stats.mapStatistics.Find(ms => ms.map == map);
         if(mapStatistics == null)
         {
-            mapStatistics = new MapStatistics(boardDesignIndex);
+            mapStatistics = new MapStatistics(map);
             stats.mapStatistics.Add(mapStatistics);
         }
         return mapStatistics;
@@ -81,13 +102,27 @@ public class StatisticRecorder : MonoBehaviour
         return winnerCount;
     }
 
+    public CharacterStatistics GetCharacterStatistics(CharacterType character, int draftTotal)
+    {
+        CharacterStatistics characterStatistics = stats.characterStatistics.Find(cs => cs.character == character && cs.draftTotal == draftTotal);
+        if(characterStatistics == null)
+        {
+            characterStatistics = new CharacterStatistics(character, draftTotal);
+            stats.characterStatistics.Add(characterStatistics);
+        }
+
+        return characterStatistics;
+    }
+
+    #endregion
+
     private void Init()
     {
         SubscribeEvents();
 
         try
         {
-            string directory = Application.dataPath + "/Resources/GameStatistics";
+            directory = Application.dataPath + "/Resources/GameStatistics";
             Directory.CreateDirectory(directory);
             filePath = directory + "/Statistics.json";
 
@@ -103,27 +138,26 @@ public class StatisticRecorder : MonoBehaviour
 
     private void RecordMessage(OnlineMessage msg)
     {
-        if(msg.GetType() == typeof(MsgStartGame)) 
+        if(msg.GetType() == typeof(MsgGameOver))
         {
-            RecordStartGame((MsgStartGame)msg);
-        } else if(msg.GetType() == typeof(MsgGameOver))
-        {
-            RecordGameOver((MsgGameOver)msg);
+            RecordGameStats((MsgGameOver)msg);
+            ExportToCSV();
         }
     }
 
-    private void RecordStartGame(MsgStartGame msg)
-    {
-        
-    }
-
-    private void RecordGameOver(MsgGameOver msg)
+    private void RecordGameStats(MsgGameOver msg)
     {
         stats.gamesTotal++;
 
         Lobby lobby = OnlineServer.Instance.FindLobby(msg.LobbyId);
 
-        MapStatistics mapStats = GetMapStatistics(lobby.BoardDesignIndex);
+        RecordMapStatistics(msg, lobby);
+        RecordCharacterStatistics(lobby);
+    }
+
+    private void RecordMapStatistics(MsgGameOver msg, Lobby lobby)
+    {
+        MapStatistics mapStats = GetMapStatistics(lobby.SelectedMap);
         mapStats.gamesTotal++;
 
         if (msg.isDraw)
@@ -133,6 +167,164 @@ public class StatisticRecorder : MonoBehaviour
         }
 
         GetWinnerCount(mapStats, msg.winner).count++;
+    }
+
+    private void RecordCharacterStatistics(Lobby lobby)
+    {
+        foreach(KeyValuePair<PlayerType, List<CharacterType>> draftByPlayer in lobby.Draft)
+        {
+            List<CharacterType> distinctDraftedCharacters = draftByPlayer.Value.Distinct().ToList();
+            foreach(CharacterType character in distinctDraftedCharacters)
+            {
+                GetCharacterStatistics(character, draftByPlayer.Value.Count(c => c == character)).count++;
+            }
+        }
+    }
+
+    private void ExportToCSV()
+    {
+        if (directory == null)
+            return;
+
+        string path = directory + "/statistics.csv";
+
+        using (StreamWriter writer = new StreamWriter(path))
+        {
+            writer.WriteLine("SKYRATS STATISTICS");
+            writer.WriteLine(DateTime.Now.ToString("dddd, dd MMMM yyyy HH:mm:ss"));
+            writer.WriteLine();
+            writer.WriteLine();
+
+            ExportMapStatisticsToCSV(writer);
+            writer.WriteLine();
+            ExportUnitStatisticsToCSV(writer);
+            writer.WriteLine();
+        }      
+    }
+
+    private void ExportMapStatisticsToCSV(StreamWriter writer)
+    {
+        writer.WriteLine("I. GAME");
+        writer.WriteLine();
+        writer.WriteLine("Games total;" + stats.gamesTotal);
+
+        writer.WriteLine();
+        string header = ";Map played;Map played (in %)";
+        GetPlayerTypes().ForEach(playerType => header += ";" + playerType + " wins on map");
+        GetPlayerTypes().ForEach(playerType => header += ";" + playerType + " wins on map (in %)");
+        writer.WriteLine(header);
+
+        foreach (MapType map in GetMapTypes())
+        {
+            var mapStatistics = GetMapStatistics(map);
+            string line = "Games on " + map + ";" + mapStatistics.gamesTotal + ";" + ToPercent(mapStatistics.gamesTotal, stats.gamesTotal);
+            GetPlayerTypes().ForEach(playerType => line += ";" + GetWinnerCount(mapStatistics, playerType).count);
+            GetPlayerTypes().ForEach(playerType => line += ";" + ToPercent(GetWinnerCount(mapStatistics, playerType).count, mapStatistics.gamesTotal));
+            writer.WriteLine(line);
+        }
+
+        writer.WriteLine();
+        writer.WriteLine(";Wins;Wins (in %)");
+        foreach (PlayerType playerType in GetPlayerTypes())
+        {
+            int winsTotal = GetMapTypes().Sum(mt => GetWinnerCount(GetMapStatistics(mt), playerType).count);
+            writer.WriteLine(playerType + " wins;" + winsTotal + ";" + ToPercent(winsTotal, stats.gamesTotal));
+        }
+
+        writer.WriteLine();
+    }
+
+    private void ExportUnitStatisticsToCSV(StreamWriter writer)
+    {
+        writer.WriteLine("II. UNITS");
+        writer.WriteLine();
+
+        string header = "Number x of occurences in a draft / Unit";
+        GetCharacterTypes().ForEach(c => header += ";" + c);
+        header += ";Total number of units that occured x times in a draft; Total number of units that occured x times in a draft (in %)";
+        writer.WriteLine(header);
+
+        int total = GetDraftNumbers().Sum(x => GetCharacterTypes().Sum(c => GetCharacterStatistics(c, x).count));
+        foreach (int x in GetDraftNumbers())
+        {
+            string line = x.ToString();
+            GetCharacterTypes().ForEach(c => line += ";" + GetCharacterStatistics(c, x).count);
+            int x_total = GetCharacterTypes().Sum(c => GetCharacterStatistics(c, x).count);
+            line += ";" + x_total + ";" + ToPercent(x_total, total);
+            writer.WriteLine(line);
+        }
+
+        string new_header = ";";
+        GetCharacterTypes().ForEach(c => new_header += ";");
+        writer.WriteLine(new_header + "Total number of drafted characters");
+
+        string total_line = "Total number of occurences in all drafts / Unit";
+        string total_line_percent = "Total number of occurences in all drafts / Unit (in %)";
+        int total_drafts = 0;
+        foreach (var c in GetCharacterTypes())
+        {
+            int c_total = GetDraftNumbers().Sum(x => x*GetCharacterStatistics(c, x).count);
+            total_drafts += c_total;
+            total_line += ";" + c_total;
+            total_line_percent += ";" + ToPercent(c_total, total);
+        }
+        total_line += ";" + total_drafts;
+        writer.WriteLine(total_line);
+        writer.WriteLine(total_line_percent);
+
+        writer.WriteLine();
+    }
+
+    private List<PlayerType> GetPlayerTypes()
+    {
+        var playerTypes = new List<PlayerType>();
+        foreach(PlayerType playerType in Enum.GetValues(typeof(PlayerType)))
+        {
+            playerTypes.Add(playerType);
+        }
+        return playerTypes;
+    }
+
+    private List<MapType> GetMapTypes()
+    {
+        var mapTypes = new List<MapType>();
+        foreach (MapType mapType in Enum.GetValues(typeof(MapType)))
+        {
+            mapTypes.Add(mapType);
+        }
+        return mapTypes;
+    }
+
+    private List<CharacterType> GetCharacterTypes()
+    {
+        var characterTypes = new List<CharacterType>();
+        foreach(CharacterType characterType in Enum.GetValues(typeof(CharacterType)))
+        {
+            if (characterType == CharacterType.MasterChar)
+                continue;
+
+            characterTypes.Add(characterType);
+        }
+        return characterTypes;
+    }
+
+    private List<int> GetDraftNumbers()
+    {
+        var draftNumbers = new List<int>();
+        for (int x = 0; x <= DraftManager.MaxDraftCount / 2; x++)
+        {
+            draftNumbers.Add(x);
+        }
+        return draftNumbers;
+    }
+
+    private string ToPercent(int nominator, int denominator)
+    {
+        if (nominator == 0 && denominator == 0)
+            return "-";
+
+        double value = denominator == 0 ? 0 : ((double)nominator / (double)denominator);
+        return String.Format("{0:0.0%}", value);
     }
 
     private void LoadStats()
@@ -161,6 +353,8 @@ public class StatisticRecorder : MonoBehaviour
         {
             string saveString = JsonUtility.ToJson(stats);
             File.WriteAllText(filePath, saveString);
+
+            ExportToCSV();
         }
         catch (Exception ex)
         {

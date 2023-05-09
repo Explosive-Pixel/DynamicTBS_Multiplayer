@@ -14,8 +14,7 @@ public class ServerCanvasHandler : MonoBehaviour
 
     [SerializeField] private Text statistics;
     
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (!OnlineServer.Instance)
             return;
@@ -35,21 +34,35 @@ public class ServerCanvasHandler : MonoBehaviour
 
         statistics.text = "Statistics:\nTotal number of games: " + StatisticRecorder.Instance.Stats.gamesTotal;
 
-        foreach(var mapStatistics in StatisticRecorder.Instance.Stats.mapStatistics)
+        UpdateMapStatistics();
+        UpdateCharacterStatistics();
+    }
+
+    private void UpdateMapStatistics()
+    {
+        foreach (var mapStatistics in StatisticRecorder.Instance.Stats.MapStatistics)
         {
-            statistics.text += "\nTotal number of games on map " + mapStatistics.boardDesignIndex + ": " + mapStatistics.gamesTotal;
+            statistics.text += "\nTotal number of games on map " + mapStatistics.map + ": " + mapStatistics.gamesTotal;
         }
 
-        statistics.text += "\n\n";
+        statistics.text += "\n";
 
-        foreach (var mapStatistics in StatisticRecorder.Instance.Stats.mapStatistics)
+        foreach (var mapStatistics in StatisticRecorder.Instance.Stats.MapStatistics)
         {
-            statistics.text += "\nTotal number of draws on map " + mapStatistics.boardDesignIndex + ": " + mapStatistics.drawGamesTotal;
-            foreach(var winnerCount in mapStatistics.winsTotalPerPlayer)
+            statistics.text += "\nTotal number of draws on map " + mapStatistics.map + ": " + mapStatistics.drawGamesTotal;
+            foreach (var winnerCount in mapStatistics.winsTotalPerPlayer)
             {
-                statistics.text += "\nTotal number of wins of player " + winnerCount.winner + " on map " + mapStatistics.boardDesignIndex + ": " + winnerCount.count;
+                statistics.text += "\nTotal number of wins of player " + winnerCount.winner + " on map " + mapStatistics.map + ": " + winnerCount.count;
             }
             statistics.text += "\n";
+        }
+    }
+
+    private void UpdateCharacterStatistics()
+    {
+        foreach(var characterStatistics in StatisticRecorder.Instance.Stats.CharacterStatistics)
+        {
+            statistics.text += "\nTotal number of drafts where chracter " + characterStatistics.character + " has been drafted " + characterStatistics.draftTotal + " times: " + characterStatistics.count;
         }
     }
 }

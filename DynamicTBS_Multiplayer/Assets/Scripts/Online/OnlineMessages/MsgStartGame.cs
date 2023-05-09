@@ -7,6 +7,7 @@ public class MsgStartGame : OnlineMessage
 {
     public float draftAndPlacementTime;
     public float gameplayTime;
+    public MapType selectedMap;
 
     public MsgStartGame() // Constructing a message.
     {
@@ -24,6 +25,7 @@ public class MsgStartGame : OnlineMessage
         base.Serialize(ref writer, lobbyId);
         writer.WriteFloat(draftAndPlacementTime);
         writer.WriteFloat(gameplayTime);
+        writer.WriteByte((byte)selectedMap);
     }
 
     public override void Deserialize(DataStreamReader reader)
@@ -31,19 +33,18 @@ public class MsgStartGame : OnlineMessage
         LobbyId = reader.ReadInt();
         draftAndPlacementTime = reader.ReadFloat();
         gameplayTime = reader.ReadFloat();
+        selectedMap = (MapType)reader.ReadByte();
     }
 
     public override void ReceivedOnClient()
     {
-        OnlineClient.Instance.StartGame();
+        OnlineClient.Instance.StartGame(draftAndPlacementTime, gameplayTime, selectedMap);
     }
 
     public override void ReceivedOnServer(NetworkConnection cnn)
     {
         OnlineServer.Instance.Broadcast(this, LobbyId);
 
-        OnlineServer.Instance.StartGame(LobbyId, draftAndPlacementTime, gameplayTime);
-
-        base.ReceivedOnServer(cnn);
+        OnlineServer.Instance.StartGame(LobbyId, draftAndPlacementTime, gameplayTime, selectedMap);
     }
 }

@@ -62,6 +62,12 @@ public class Timer : MonoBehaviour
         SubscribeEvents();
     }
 
+    public static void InitTime(float draftAndPlacementTime, float gameplayTime)
+    {
+        totalTime[TimerType.DRAFT_AND_PLACEMENT] = draftAndPlacementTime;
+        totalTime[TimerType.GAMEPLAY] = gameplayTime;
+    }
+
     private void SetInactive()
     {
         timer.SetActive(false);

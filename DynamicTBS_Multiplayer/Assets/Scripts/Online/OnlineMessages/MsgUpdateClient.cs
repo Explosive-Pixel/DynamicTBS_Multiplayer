@@ -39,11 +39,10 @@ public class MsgUpdateClient : OnlineMessage
     public override void ReceivedOnClient()
     {
         OnlineClient.Instance.UpdateClient(OnlineClient.Instance.LobbyId, isAdmin, side);
-        Board.boardDesignIndex = boardDesignIndex;
     }
 
     public override void ReceivedOnServer(NetworkConnection cnn)
     {
-        OnlineServer.Instance.AssignSides(LobbyId, cnn, side, boardDesignIndex);
+        OnlineServer.Instance.AssignSides(LobbyId, cnn, side);
     }
 }

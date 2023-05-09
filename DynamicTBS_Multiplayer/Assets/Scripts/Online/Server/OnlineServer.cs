@@ -158,10 +158,10 @@ public class OnlineServer : MonoBehaviour
         lobby.SwapAdmin();
     }
 
-    public void AssignSides(int lobbyId, NetworkConnection cnn, PlayerType chosenSide, int boardDesignIndex)
+    public void AssignSides(int lobbyId, NetworkConnection cnn, PlayerType chosenSide)
     {
         Lobby lobby = FindLobby(lobbyId);
-        lobby.AssignSides(cnn, chosenSide, boardDesignIndex);
+        lobby.AssignSides(cnn, chosenSide);
     }
 
     public void UpdateGameInfo(int lobbyId, PlayerType currentPlayer, GamePhase gamePhase)
@@ -196,10 +196,10 @@ public class OnlineServer : MonoBehaviour
         StartCoroutine(SendGameState(connection.NetworkConnection, lobby));
     }
 
-    public void StartGame(int lobbyId, float draftAndPlacementTime, float gameplayTime)
+    public void StartGame(int lobbyId, float draftAndPlacementTime, float gameplayTime, MapType selectedMap)
     {
         Lobby lobby = FindLobby(lobbyId);
-        lobby.InitTimer(draftAndPlacementTime, gameplayTime);
+        lobby.StartGame(draftAndPlacementTime, gameplayTime, selectedMap);
 
         StartTimer(lobby);
     }
@@ -208,6 +208,12 @@ public class OnlineServer : MonoBehaviour
     {
         StartCoroutine(UpdateTimer(lobby));
         StartCoroutine(SendTimerUpdate(lobby));
+    }
+
+    public void ArchiveCharacterDraft(MsgDraftCharacter msg)
+    {
+        Lobby lobby = FindLobby(msg.LobbyId);
+        lobby.ArchiveCharacterDraft(msg.playerId, msg.characterType);
     }
 
     private IEnumerator UpdateTimer(Lobby lobby)
