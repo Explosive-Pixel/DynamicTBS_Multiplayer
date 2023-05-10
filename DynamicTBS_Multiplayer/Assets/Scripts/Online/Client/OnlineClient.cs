@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Networking.Transport;
+using System.Net;
+using System.Net.Sockets;
 
 public enum ClientType
 {
@@ -68,13 +70,15 @@ public class OnlineClient : MonoBehaviour
 
     public void Init(string ip, ushort port, UserData userData, LobbyId lobbyId)
     {
-        this.ip = ip;
+        this.ip = ResolveIp(ip);
+        Debug.Log("Resolved IP is " + this.ip);
+
         this.port = port;
         this.userData = userData;
         this.lobbyId = lobbyId;
 
         driver = NetworkDriver.Create();
-        NetworkEndPoint endPoint = NetworkEndPoint.Parse(ip, port); // Specific endpoint for connection.
+        NetworkEndPoint endPoint = NetworkEndPoint.Parse(this.ip, port); // Specific endpoint for connection.
 
         connection = driver.Connect(endPoint); // Connecting based on the endpoint that was just created.
         connectionStatus = ConnectionStatus.ATTEMPT_CONNECTION;
@@ -219,5 +223,40 @@ public class OnlineClient : MonoBehaviour
     private void OnDestroy()
     {
         Shutdown();
+    }
+
+    private string ResolveIp(string givenIp)
+    {
+        if (IPAddress.TryParse(givenIp, out IPAddress ip))
+        {
+            if (ip.AddressFamily == AddressFamily.InterNetwork)
+            {
+                return givenIp; // input is a valid IPv4 address
+            }
+        }
+        try
+        {
+            IPAddress[] addresses = Dns.GetHostAddresses(givenIp);
+            if (addresses.Length > 0)
+            {
+                foreach (IPAddress address in addresses)
+                {
+                    if (address.AddressFamily == AddressFamily.InterNetwork)
+                    {
+                        return address.ToString(); // input is a valid host address and this is the resolved ip address
+                    }
+                }
+            }
+            else
+            {
+                Debug.LogError("Failed to resolve URL.");
+            }
+        }
+        catch (SocketException)
+        {
+            Debug.LogError("Failed to resolve URL."); // exception means input is not a valid host address
+        }
+
+        return null;
     }
 }
