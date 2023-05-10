@@ -14,8 +14,11 @@ public class LobbyTimer
 
     #endregion
 
-    private float draftAndPlacementTime;
-    private float gameplayTime;
+    private TimerSetupType timerSetup;
+    public TimerSetupType TimerSetup { get { return timerSetup; } }
+
+    private float DraftAndPlacementTime { get { return Timer.GetTimeSetup(timerSetup)[TimerType.DRAFT_AND_PLACEMENT]; } }
+    private float GameplayTime { get { return Timer.GetTimeSetup(timerSetup)[TimerType.GAMEPLAY]; } }
 
     private PlayerType currentPlayer = PlayerManager.StartPlayer[GamePhase.DRAFT];
     private Dictionary<PlayerType, PlayerTime> timePerPlayer = new Dictionary<PlayerType, PlayerTime>();
@@ -25,13 +28,12 @@ public class LobbyTimer
 
     public GamePhase CurrentGamePhase { get { return currentGamePhase; } }
 
-    public LobbyTimer(float draftAndPlacementTime, float gameplayTime)
+    public LobbyTimer(TimerSetupType timerSetup)
     {
-        this.draftAndPlacementTime = draftAndPlacementTime;
-        this.gameplayTime = gameplayTime;
+        this.timerSetup = timerSetup;
 
-        timePerPlayer.Add(PlayerType.pink, new PlayerTime { timeLeft = draftAndPlacementTime });
-        timePerPlayer.Add(PlayerType.blue, new PlayerTime { timeLeft = draftAndPlacementTime });
+        timePerPlayer.Add(PlayerType.pink, new PlayerTime { timeLeft = DraftAndPlacementTime });
+        timePerPlayer.Add(PlayerType.blue, new PlayerTime { timeLeft = DraftAndPlacementTime });
     }
 
     public void UpdateGameInfo(PlayerType currentPlayer, GamePhase gamePhase)
@@ -42,7 +44,7 @@ public class LobbyTimer
         if (currentGamePhase != gamePhase)
         {
             this.currentGamePhase = gamePhase;
-            float newTime = currentTimerType == TimerType.GAMEPLAY ? gameplayTime : draftAndPlacementTime;
+            float newTime = currentTimerType == TimerType.GAMEPLAY ? GameplayTime : DraftAndPlacementTime;
 
             timePerPlayer[PlayerType.pink].timeLeft = newTime;
             timePerPlayer[PlayerType.blue].timeLeft = newTime;
@@ -50,7 +52,7 @@ public class LobbyTimer
 
         if(gamePhase == GamePhase.GAMEPLAY)
         {
-            timePerPlayer[currentPlayer].timeLeft = gameplayTime * Mathf.Pow(1 - Timer.debuffRate, timePerPlayer[currentPlayer].debuff);
+            timePerPlayer[currentPlayer].timeLeft = GameplayTime * Mathf.Pow(1 - Timer.debuffRate, timePerPlayer[currentPlayer].debuff);
         }
     }
 

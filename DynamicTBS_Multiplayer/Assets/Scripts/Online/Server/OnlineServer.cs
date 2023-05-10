@@ -196,10 +196,10 @@ public class OnlineServer : MonoBehaviour
         StartCoroutine(SendGameState(connection.NetworkConnection, lobby));
     }
 
-    public void StartGame(int lobbyId, float draftAndPlacementTime, float gameplayTime, MapType selectedMap)
+    public void StartGame(int lobbyId, TimerSetupType timerSetup, MapType selectedMap)
     {
         Lobby lobby = FindLobby(lobbyId);
-        lobby.StartGame(draftAndPlacementTime, gameplayTime, selectedMap);
+        lobby.StartGame(timerSetup, selectedMap);
 
         StartTimer(lobby);
     }

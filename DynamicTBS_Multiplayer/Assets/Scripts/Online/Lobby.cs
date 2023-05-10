@@ -14,6 +14,7 @@ public class Lobby
     public bool IsActive { get { return connections.Count > 0; } }
 
     private LobbyTimer timer;
+    public LobbyTimer Timer { get { return timer; } }
 
     private List<OnlineConnection> connections = new List<OnlineConnection>();
     public List<NetworkConnection> Connections { get { return connections.ConvertAll(cnn => cnn.NetworkConnection); } }
@@ -51,12 +52,12 @@ public class Lobby
         gameIsPaused = uiAction == UIAction.PAUSE_GAME;
     }
 
-    public void StartGame(float draftAndPlacementTime, float gameplayTime, MapType selectedMap)
+    public void StartGame(TimerSetupType timerSetup, MapType selectedMap)
     {
         draft.Clear();
 
         this.selectedMap = selectedMap;
-        timer = new LobbyTimer(draftAndPlacementTime, gameplayTime);
+        timer = new LobbyTimer(timerSetup);
     }
 
     public void UpdateGameInfo(PlayerType currentPlayer, GamePhase gamePhase)

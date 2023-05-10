@@ -35,9 +35,6 @@ public class StatisticRecorder : MonoBehaviour
         public List<MapStatistics> mapStatistics = new List<MapStatistics>();
         public List<CharacterStatistics> characterStatistics = new List<CharacterStatistics>();
         public List<DraftStatistics> draftStatistics = new List<DraftStatistics>();
-
-        public List<MapStatistics> MapStatistics { get { return mapStatistics.OrderBy(ms => ms.map).ToList(); } }
-        public List<CharacterStatistics> CharacterStatistics { get { return characterStatistics.OrderBy(cs => cs.draftTotal).ThenByDescending(cs => cs.character).ToList(); } }
     }
 
     [Serializable]
@@ -47,6 +44,7 @@ public class StatisticRecorder : MonoBehaviour
         public int gamesTotal = 0;
         public int drawGamesTotal = 0;
         public List<WinnerCount> winsTotalPerPlayer = new List<WinnerCount>();
+        public List<TimerCount> timerCounts = new List<TimerCount>();
 
         public MapStatistics(MapType map)
         {
@@ -63,6 +61,18 @@ public class StatisticRecorder : MonoBehaviour
         public WinnerCount(PlayerType winner)
         {
             this.winner = winner;
+        }
+    }
+
+    [Serializable]
+    public class TimerCount
+    {
+        public TimerSetupType timerSetup;
+        public int count = 0;
+
+        public TimerCount(TimerSetupType timerSetup)
+        {
+            this.timerSetup = timerSetup;
         }
     }
 
@@ -136,6 +146,18 @@ public class StatisticRecorder : MonoBehaviour
         return winnerCount;
     }
 
+    public TimerCount GetTimerCount(MapStatistics mapStatistics, TimerSetupType timerSetup)
+    {
+        TimerCount timerCount = mapStatistics.timerCounts.Find(tc => tc.timerSetup == timerSetup);
+        if(timerCount == null)
+        {
+            timerCount = new TimerCount(timerSetup);
+            mapStatistics.timerCounts.Add(timerCount);
+        }
+
+        return timerCount;
+    }
+
     public CharacterStatistics GetCharacterStatistics(CharacterType character, int draftTotal)
     {
         CharacterStatistics characterStatistics = stats.characterStatistics.Find(cs => cs.character == character && cs.draftTotal == draftTotal);
@@ -194,6 +216,8 @@ public class StatisticRecorder : MonoBehaviour
         }
     }
 
+    #region Recording
+
     private void RecordMessage(OnlineMessage msg)
     {
         if(msg.GetType() == typeof(MsgGameOver))
@@ -226,6 +250,7 @@ public class StatisticRecorder : MonoBehaviour
         }
 
         GetWinnerCount(mapStats, msg.winner).count++;
+        GetTimerCount(mapStats, lobby.Timer.TimerSetup).count++;
     }
 
     private void RecordCharacterStatistics(Lobby lobby)
@@ -254,6 +279,10 @@ public class StatisticRecorder : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region CSV Export
+
     private void ExportToCSV()
     {
         if (directory == null)
@@ -274,6 +303,7 @@ public class StatisticRecorder : MonoBehaviour
             writer.WriteLine();
             ExportDraftStatisticsToCSV(writer);
             writer.WriteLine();
+            ExportTimeStatisticsToCSV(writer);
         }      
     }
 
@@ -377,6 +407,32 @@ public class StatisticRecorder : MonoBehaviour
         writer.WriteLine();
     }
 
+    private void ExportTimeStatisticsToCSV(StreamWriter writer)
+    {
+        writer.WriteLine("IV. Time");
+        writer.WriteLine();
+
+        string header = "Time / Map";
+        GetMapTypes().ForEach(map => header += ";Played on " + map);
+        header += ";Total played;Total played (in %)";
+        writer.WriteLine(header);
+
+        foreach(TimerSetupType timerSetup in GetTimerSetupTypes())
+        {
+            string line = timerSetup.ToString();
+            GetMapTypes().ForEach(map => line += ";" + GetTimerCount(GetMapStatistics(map), timerSetup).count);
+            int total = GetMapTypes().Sum(map => GetTimerCount(GetMapStatistics(map), timerSetup).count);
+            line += ";" + total + ";" + ToPercent(total, stats.gamesTotal);
+            writer.WriteLine(line);
+        }
+
+        writer.WriteLine();
+    }
+
+    #endregion
+
+    #region Helper methods
+
     private List<PlayerType> GetPlayerTypes()
     {
         var playerTypes = new List<PlayerType>();
@@ -395,6 +451,16 @@ public class StatisticRecorder : MonoBehaviour
             mapTypes.Add(mapType);
         }
         return mapTypes;
+    }
+
+    private List<TimerSetupType> GetTimerSetupTypes()
+    {
+        var timerSetupTypes = new List<TimerSetupType>();
+        foreach(TimerSetupType timerSetupType in Enum.GetValues(typeof(TimerSetupType)))
+        {
+            timerSetupTypes.Add(timerSetupType);
+        }
+        return timerSetupTypes;
     }
 
     private List<CharacterType> GetCharacterTypes()
@@ -428,6 +494,8 @@ public class StatisticRecorder : MonoBehaviour
         double value = denominator == 0 ? 0 : ((double)nominator / (double)denominator);
         return String.Format("{0:0.0%}", value);
     }
+
+    #endregion
 
     private void LoadStats()
     {

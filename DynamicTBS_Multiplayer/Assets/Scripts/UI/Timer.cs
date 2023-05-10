@@ -8,6 +8,13 @@ public enum TimerType
     GAMEPLAY
 }
 
+public enum TimerSetupType
+{
+    FAST = 1,
+    STANDARD = 2,
+    SLOW = 3
+}
+
 public class Timer : MonoBehaviour
 {
     private class PlayerInfo
@@ -26,13 +33,41 @@ public class Timer : MonoBehaviour
 
     #region Timer config
 
-    private static readonly Dictionary<TimerType, float> totalTime = new Dictionary<TimerType, float>()
+    private static readonly Dictionary<TimerSetupType, Dictionary<TimerType, float>> timeSetups = new()
     {
-        { TimerType.DRAFT_AND_PLACEMENT, 300 },
-        { TimerType.GAMEPLAY, 90 }
+        { TimerSetupType.FAST,
+            new() {
+                { TimerType.DRAFT_AND_PLACEMENT, 120 },
+                { TimerType.GAMEPLAY, 60 }
+            }
+        },
+        {
+            TimerSetupType.STANDARD,
+            new()
+            {
+                { TimerType.DRAFT_AND_PLACEMENT, 300 },
+                { TimerType.GAMEPLAY, 90 }
+            }
+        },
+        {
+            TimerSetupType.SLOW,
+            new()
+            {
+                { TimerType.DRAFT_AND_PLACEMENT, 420 },
+                { TimerType.GAMEPLAY, 120 }
+            }
+        }
     };
 
-    public static Dictionary<TimerType, float> TotalTime { get { return totalTime; } }
+    public static Dictionary<TimerType, float> GetTimeSetup(TimerSetupType timerSetup)
+    {
+        return timeSetups[timerSetup];
+    }
+
+    private static TimerSetupType timerSetupType = TimerSetupType.STANDARD;
+    public static TimerSetupType TimerSetupType { get { return timerSetupType; } }
+
+    public static Dictionary<TimerType, float> TotalTime { get { return timeSetups[timerSetupType]; } }
 
     public const float debuffRate = 0.25f;
     public const int maxDebuffs = 3;
@@ -62,10 +97,9 @@ public class Timer : MonoBehaviour
         SubscribeEvents();
     }
 
-    public static void InitTime(float draftAndPlacementTime, float gameplayTime)
+    public static void InitTime(TimerSetupType timerSetup)
     {
-        totalTime[TimerType.DRAFT_AND_PLACEMENT] = draftAndPlacementTime;
-        totalTime[TimerType.GAMEPLAY] = gameplayTime;
+        timerSetupType = timerSetup;
     }
 
     private void SetInactive()
@@ -109,8 +143,8 @@ public class Timer : MonoBehaviour
 
         timerType = gamePhase == GamePhase.GAMEPLAY ? TimerType.GAMEPLAY : TimerType.DRAFT_AND_PLACEMENT;
 
-        playerStats[PlayerType.pink] = new PlayerInfo(color_pink, totalTime[timerType]);
-        playerStats[PlayerType.blue] = new PlayerInfo(color_blue, totalTime[timerType]);
+        playerStats[PlayerType.pink] = new PlayerInfo(color_pink, TotalTime[timerType]);
+        playerStats[PlayerType.blue] = new PlayerInfo(color_blue, TotalTime[timerType]);
 
         isActive = true;
         timer.SetActive(true);
@@ -157,7 +191,7 @@ public class Timer : MonoBehaviour
         PlayerType nextPlayer = PlayerManager.GetOtherSide(player.GetPlayerType());
         UpdateLamps(playerStats[nextPlayer].debuff);
 
-        playerStats[nextPlayer].timeLeft = totalTime[timerType] * Mathf.Pow(1 - debuffRate, playerStats[nextPlayer].debuff);
+        playerStats[nextPlayer].timeLeft = TotalTime[timerType] * Mathf.Pow(1 - debuffRate, playerStats[nextPlayer].debuff);
     }
 
     private void ChangeTextColor(PlayerType side)
