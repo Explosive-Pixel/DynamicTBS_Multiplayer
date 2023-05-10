@@ -39,7 +39,7 @@ public class MsgGameOver : OnlineMessage
 
     public override void ReceivedOnServer(NetworkConnection cnn)
     {
-        OnlineServer.Instance.SwapAdmin(LobbyId);
+        OnlineServer.Instance.GameOver(LobbyId);
 
         base.ReceivedOnServer(cnn);
     }

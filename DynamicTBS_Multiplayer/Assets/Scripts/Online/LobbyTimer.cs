@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class LobbyTimer
 {
+    private const float timerUpdateInterval = 1f;
+
     #region Helper classes
     class PlayerTime
     {
@@ -56,12 +58,35 @@ public class LobbyTimer
         }
     }
 
+    private float delta = 0;
     public void UpdateTime(int lobbyId)
     {
         if(timePerPlayer[currentPlayer].timeLeft > 0)
         {
-            timePerPlayer[currentPlayer].timeLeft--;
-        } else
+            timePerPlayer[currentPlayer].timeLeft -= Time.deltaTime;
+        }
+
+        delta += Time.deltaTime;
+        if (delta >= timerUpdateInterval)
+        {
+            BroadcastTimerInfo(lobbyId);
+            delta = 0f;
+        }
+    }
+
+    private void BroadcastTimerInfo(int lobbyId)
+    {
+        if (timePerPlayer[currentPlayer].timeLeft > 0)
+        {
+            OnlineServer.Instance.Broadcast(new MsgSyncTimer
+            {
+                pinkTimeLeft = timePerPlayer[PlayerType.pink].timeLeft,
+                blueTimeLeft = timePerPlayer[PlayerType.blue].timeLeft,
+                pinkDebuff = timePerPlayer[PlayerType.pink].debuff,
+                blueDebuff = timePerPlayer[PlayerType.blue].debuff,
+            }, lobbyId);
+        }
+        else
         {
             if (currentTimerType == TimerType.GAMEPLAY)
             {
@@ -76,18 +101,5 @@ public class LobbyTimer
                 currentPlayerTimerDebuff = timePerPlayer[currentPlayer].debuff
             }, lobbyId);
         }
-
-        BroadcastTimerInfo(lobbyId);
-    }
-
-    public void BroadcastTimerInfo(int lobbyId)
-    {
-        OnlineServer.Instance.Broadcast(new MsgSyncTimer
-        {
-            pinkTimeLeft = timePerPlayer[PlayerType.pink].timeLeft,
-            blueTimeLeft = timePerPlayer[PlayerType.blue].timeLeft,
-            pinkDebuff = timePerPlayer[PlayerType.pink].debuff,
-            blueDebuff = timePerPlayer[PlayerType.blue].debuff,
-        }, lobbyId);
     }
 }

@@ -77,6 +77,8 @@ public class OnlineServer : MonoBehaviour
         AcceptNewConnections(); // Accepts new connections
 
         UpdateMessagePump(); // Check for messages and if server has to reply.
+
+        lobbies.ForEach(lobby => lobby.UpdateTimer()); // Update timer of all lobbies.
     }
 
     public void SendToClient(OnlineMessage msg, NetworkConnection connection, int lobbyId) // Send specific message to specific client.
@@ -152,10 +154,10 @@ public class OnlineServer : MonoBehaviour
         WelcomeClient(lobby, connection);
     }
 
-    public void SwapAdmin(int lobbyId)
+    public void GameOver(int lobbyId)
     {
         Lobby lobby = FindLobby(lobbyId);
-        lobby.SwapAdmin();
+        lobby.GameOver();
     }
 
     public void AssignSides(int lobbyId, NetworkConnection cnn, PlayerType chosenSide)
@@ -174,11 +176,6 @@ public class OnlineServer : MonoBehaviour
     {
         Lobby lobby = FindLobby(lobbyId);
         lobby.PauseGame(uiAction);
-
-        if(uiAction == UIAction.UNPAUSE_GAME)
-        {
-            StartTimer(lobby);
-        }
     }
 
     private void WelcomeClient(Lobby lobby, OnlineConnection connection)
@@ -200,38 +197,12 @@ public class OnlineServer : MonoBehaviour
     {
         Lobby lobby = FindLobby(lobbyId);
         lobby.StartGame(timerSetup, selectedMap);
-
-        StartTimer(lobby);
-    }
-
-    private void StartTimer(Lobby lobby)
-    {
-        StartCoroutine(UpdateTimer(lobby));
-        StartCoroutine(SendTimerUpdate(lobby));
     }
 
     public void ArchiveCharacterDraft(MsgDraftCharacter msg)
     {
         Lobby lobby = FindLobby(msg.LobbyId);
         lobby.ArchiveCharacterDraft(msg.playerId, msg.characterType);
-    }
-
-    private IEnumerator UpdateTimer(Lobby lobby)
-    {
-        while (!lobby.GameIsPaused && lobby.CurrentGamePhase != GamePhase.NONE)
-        {
-            lobby.UpdateTimer();
-            yield return new WaitForSeconds(1);
-        }
-    }
-
-    private IEnumerator SendTimerUpdate(Lobby lobby)
-    {
-        while (!lobby.GameIsPaused && lobby.CurrentGamePhase != GamePhase.NONE)
-        {
-            lobby.SendTimerUpdate();
-            yield return new WaitForSeconds(5);
-        }
     }
 
     private IEnumerator SendGameState(NetworkConnection cnn, Lobby lobby)

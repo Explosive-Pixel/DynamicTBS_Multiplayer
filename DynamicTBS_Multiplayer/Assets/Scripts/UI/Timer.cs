@@ -121,8 +121,8 @@ public class Timer : MonoBehaviour
         PlayerType side = player.GetPlayerType();
         if (playerStats[side].timeLeft > 0)
         {
-           // if(GameManager.gameType == GameType.local)
-           // {
+            //if(GameManager.gameType == GameType.LOCAL)
+            //{
             playerStats[side].timeLeft -= Time.deltaTime;
             //}
             UpdateTime(playerStats[side].timeLeft);

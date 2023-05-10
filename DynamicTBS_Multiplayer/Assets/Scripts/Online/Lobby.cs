@@ -31,7 +31,9 @@ public class Lobby
     public Dictionary<PlayerType, List<CharacterType>> Draft { get { return draft; } }
 
     private bool gameIsPaused = false;
-    public bool GameIsPaused { get { return gameIsPaused; } }
+
+    private bool inGame = false;
+    public bool GameIsRunning { get { return inGame && !gameIsPaused; } }
 
     public GamePhase CurrentGamePhase { get { return timer == null ? GamePhase.NONE : timer.CurrentGamePhase; } }
 
@@ -56,6 +58,7 @@ public class Lobby
     {
         draft.Clear();
 
+        inGame = true;
         this.selectedMap = selectedMap;
         timer = new LobbyTimer(timerSetup);
     }
@@ -67,12 +70,10 @@ public class Lobby
 
     public void UpdateTimer()
     {
-        timer.UpdateTime(ShortId);
-    }
+        if (!GameIsRunning)
+            return;
 
-    public void SendTimerUpdate()
-    {
-        timer.BroadcastTimerInfo(ShortId);
+        timer.UpdateTime(ShortId);
     }
 
     public bool AddConnection(OnlineConnection connection)
@@ -103,11 +104,6 @@ public class Lobby
 
         if(cnn != null)
         {
-           /* if(cnn.IsAdmin)
-            {
-                SwapAdmin();
-            } */
-
             connections.Remove(cnn);
             return true;
         }
@@ -131,8 +127,14 @@ public class Lobby
         }
     }
 
+    public void GameOver()
+    {
+        inGame = false;
+        SwapAdmin();
+    }
+
     // Swaps player which may choose side in next game
-    public void SwapAdmin()
+    private void SwapAdmin()
     {
         if(Players.Count == 2)
         {
