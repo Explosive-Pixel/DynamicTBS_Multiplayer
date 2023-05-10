@@ -154,8 +154,7 @@ public class OnlineLobbyCanvasHandler : MonoBehaviour
 
             OnlineClient.Instance.SendToServer(new MsgStartGame
             {
-                draftAndPlacementTime = Timer.TotalTime[TimerType.DRAFT_AND_PLACEMENT],
-                gameplayTime = Timer.TotalTime[TimerType.GAMEPLAY],
+                timerSetup = Timer.TimerSetupType,
                 selectedMap = Board.selectedMap
             });
         }

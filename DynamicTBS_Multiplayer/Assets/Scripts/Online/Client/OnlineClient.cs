@@ -143,10 +143,10 @@ public class OnlineClient : MonoBehaviour
         GameEvents.IsGameLoading(isLoadingGame);
     }
 
-    public void StartGame(float draftAndPlacementTime, float gameplayTime, MapType selectedMap)
+    public void StartGame(TimerSetupType timerSetup, MapType selectedMap)
     {
         Board.selectedMap = selectedMap;
-        Timer.InitTime(draftAndPlacementTime, gameplayTime);
+        Timer.InitTime(timerSetup);
         GameManager.gameType = GameType.ONLINE;
 
         GameEvents.StartGame();

@@ -215,6 +215,7 @@ GameObject:
   - component: {fileID: 65287736}
   - component: {fileID: 65287735}
   - component: {fileID: 65287734}
+  - component: {fileID: 65287737}
   m_Layer: 5
   m_Name: FastSpeedButton
   m_TagString: Untagged
@@ -337,6 +338,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 65287732}
   m_CullTransparentMesh: 1
+--- !u!114 &65287737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 65287732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41158f12d01b8e14e806a72a71b8c31a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timerSetup: 1
 --- !u!1 &134882270
 GameObject:
   m_ObjectHideFlags: 0
@@ -819,7 +833,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &243754605
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3330,6 +3344,7 @@ GameObject:
   - component: {fileID: 1122578830}
   - component: {fileID: 1122578829}
   - component: {fileID: 1122578828}
+  - component: {fileID: 1122578831}
   m_Layer: 5
   m_Name: SlowSpeedButton
   m_TagString: Untagged
@@ -3452,6 +3467,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1122578826}
   m_CullTransparentMesh: 1
+--- !u!114 &1122578831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122578826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41158f12d01b8e14e806a72a71b8c31a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timerSetup: 3
 --- !u!1 &1165012924
 GameObject:
   m_ObjectHideFlags: 0
@@ -3620,6 +3648,7 @@ GameObject:
   - component: {fileID: 1221027897}
   - component: {fileID: 1221027896}
   - component: {fileID: 1221027895}
+  - component: {fileID: 1221027898}
   m_Layer: 5
   m_Name: StandardSpeedButton
   m_TagString: Untagged
@@ -3742,6 +3771,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1221027893}
   m_CullTransparentMesh: 1
+--- !u!114 &1221027898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1221027893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41158f12d01b8e14e806a72a71b8c31a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timerSetup: 2
 --- !u!1 &1228494964
 GameObject:
   m_ObjectHideFlags: 0
