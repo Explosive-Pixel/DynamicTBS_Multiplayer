@@ -100,7 +100,6 @@ public class DraftManager : MonoBehaviour
         {
             draftOrderIndex++;
             PlayerManager.NextPlayer();
-            DraftEvents.ChangeDraftMessageText();
         }
             
         

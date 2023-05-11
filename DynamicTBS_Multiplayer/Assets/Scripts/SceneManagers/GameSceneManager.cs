@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class GameSceneManager : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class GameSceneManager : MonoBehaviour
     [SerializeField] private GameObject pauseCanvas;
 
     [SerializeField] private Button playAgainButton;
+    [SerializeField] private Button backToLobbyButton;
+    [SerializeField] private List<Button> backToMainMenuButtons;
 
     private List<GameObject> canvasList = new List<GameObject>();
 
@@ -25,10 +28,9 @@ public class GameSceneManager : MonoBehaviour
         SubscribeEvents();
         SetCanvasList();
 
-        if (!GameManager.IsPlayer())
-        {
-            playAgainButton.gameObject.SetActive(false);
-        }
+        playAgainButton.gameObject.SetActive(GameManager.gameType == GameType.LOCAL);
+        backToLobbyButton.gameObject.SetActive(GameManager.gameType == GameType.ONLINE);
+        backToMainMenuButtons.ForEach(button => button.gameObject.SetActive(!GameManager.IsPlayer()));
 
         pauseCanvas.SetActive(false);
     }

@@ -75,7 +75,7 @@ public class OnlineLobbyCanvasHandler : MonoBehaviour
         clientInfoText.text = "You are connected!\n";
         if (OnlineClient.Instance.IsAdmin)
         {
-            clientInfoText.text += "\nPlease choose a map and a team ";
+            clientInfoText.text += "\nPlease choose a time speed, a map and a team ";
             if(OnlineClient.Instance.PlayerCount < 2)
             {
                 clientInfoText.text += "and wait for another player to connect.";
@@ -85,7 +85,20 @@ public class OnlineLobbyCanvasHandler : MonoBehaviour
             }
         } else
         {
-            clientInfoText.text += "\nWaiting for other player to start the game ...";
+            if(OnlineClient.Instance.UserData.Role == ClientType.PLAYER)
+            {
+                clientInfoText.text += "\nWaiting for other player to start the game ...";
+            } else
+            {
+                if (OnlineClient.Instance.PlayerCount < 2)
+                {
+                    clientInfoText.text += "\nWaiting for player(s) to connect ...";
+                }
+                else
+                {
+                    clientInfoText.text += "\nWaiting for player to start the game ...";
+                }
+            }
         }
     }
 
