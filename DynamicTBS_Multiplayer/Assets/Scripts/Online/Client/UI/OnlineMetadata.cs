@@ -34,10 +34,10 @@ public class OnlineMetadata : MonoBehaviour
                 infoText.text = "The server refused the connection.";
                 break;
             case ConnectionStatus.UNCONNECTED:
-                infoText.text = "Unable to reconnect to server.";
+                infoText.text = "Unable to connect to server.";
                 break;
             case ConnectionStatus.ATTEMPT_CONNECTION:
-                infoText.text = "Lost connection to server. Trying to reconnect ...";
+                infoText.text = "No connection to server. Trying to connect ...";
                 break;
         }
     }

@@ -7,7 +7,7 @@ public class MsgUpdateClient : OnlineMessage
 {
     public bool isAdmin;
     public PlayerType side;
-    public int boardDesignIndex;
+    public string opponentName;
 
     public MsgUpdateClient() // Constructing a message.
     {
@@ -25,7 +25,7 @@ public class MsgUpdateClient : OnlineMessage
         base.Serialize(ref writer, lobbyId);
         writer.WriteByte(ToByte(isAdmin));
         writer.WriteByte((byte)side);
-        writer.WriteInt(boardDesignIndex);
+        writer.WriteFixedString32(opponentName);
     }
 
     public override void Deserialize(DataStreamReader reader)
@@ -33,12 +33,12 @@ public class MsgUpdateClient : OnlineMessage
         LobbyId = reader.ReadInt();
         isAdmin = ToBool(reader.ReadByte());
         side = (PlayerType)reader.ReadByte();
-        boardDesignIndex = reader.ReadInt();
+        opponentName = reader.ReadFixedString32().Value;
     }
 
     public override void ReceivedOnClient()
     {
-        OnlineClient.Instance.UpdateClient(OnlineClient.Instance.LobbyId, isAdmin, side);
+        OnlineClient.Instance.UpdateClient(OnlineClient.Instance.LobbyId, isAdmin, side, opponentName);
     }
 
     public override void ReceivedOnServer(NetworkConnection cnn)

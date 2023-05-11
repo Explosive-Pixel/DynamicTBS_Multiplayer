@@ -35,12 +35,6 @@ public class PlacementManager : MonoBehaviour
     private static int placementCount;
     private static int placementOrderIndex;
 
-    [SerializeField] private GameObject pinkPlacementTurnOverlay;
-    [SerializeField] private GameObject bluePlacementTurnOverlay;
-    private Vector3 oldPinkOverlayPosition = new Vector3(10, 0, 1.1f);
-    private Vector3 oldBlueOverlayPosition = new Vector3(-10, 0, 1.1f);
-    private Vector3 newOverlayPosition = new Vector3(0, 0, 1.1f);
-
     [SerializeField]
     private Board board;
 
@@ -49,43 +43,6 @@ public class PlacementManager : MonoBehaviour
         SubscribeEvents();
         placementCount = 0;
         placementOrderIndex = 0;
-    }
-
-    private void SortCharacters(GamePhase gamePhase)
-    {
-        if (gamePhase != GamePhase.DRAFT)
-            return;
-
-        List<Character> blueCharacters = new List<Character>();
-        List<Character> pinkCharacters = new List<Character>();
-
-        foreach (Character character in CharacterHandler.Characters)
-        {
-            if (character.GetSide().GetPlayerType() == PlayerType.blue)
-            {
-                blueCharacters.Add(character);
-            }
-            else
-            {
-                pinkCharacters.Add(character);
-            }
-        }
-
-        for (int i = 0; i < blueCharacters.Count(); i++)
-        {
-            blueCharacters[i].GetCharacterGameObject().transform.position = blueSortingPositionsList[i];
-        }
-
-        for (int i = 0; i < pinkCharacters.Count(); i++)
-        {
-            pinkCharacters[i].GetCharacterGameObject().transform.position = pinkSortingPositionsList[i];
-        }
-
-        GameManager.ChangeGamePhase(GamePhase.PLACEMENT);
-
-        pinkPlacementTurnOverlay.transform.position = newOverlayPosition;
-        bluePlacementTurnOverlay.transform.position = newOverlayPosition;
-        pinkPlacementTurnOverlay.SetActive(true);
     }
 
     private void AdvancePlacementOrder(ActionMetadata actionMetadata)
@@ -98,27 +55,11 @@ public class PlacementManager : MonoBehaviour
         {
             placementOrderIndex++;
             PlayerManager.NextPlayer();
-            PlacementEvents.ChangePlacementMessage();
-            if (pinkPlacementTurnOverlay.activeSelf)
-            {
-                pinkPlacementTurnOverlay.SetActive(false);
-                bluePlacementTurnOverlay.SetActive(true);
-            }
-            else
-            {
-                pinkPlacementTurnOverlay.SetActive(true);
-                bluePlacementTurnOverlay.SetActive(false);
-            }
         }
             
         if (placementCount >= MaxPlacementCount)
         {
             SpawnMasters();
-            pinkPlacementTurnOverlay.SetActive(false);
-            bluePlacementTurnOverlay.SetActive(false);
-            pinkPlacementTurnOverlay.transform.position = oldPinkOverlayPosition;
-            bluePlacementTurnOverlay.transform.position = oldBlueOverlayPosition;
-
             PlacementCompleted();
         }    
     }
@@ -174,6 +115,41 @@ public class PlacementManager : MonoBehaviour
         GameEvents.EndGamePhase(GamePhase.PLACEMENT);
         UnsubscribeEvents();
     }
+
+    #region UI
+    private void SortCharacters(GamePhase gamePhase)
+    {
+        if (gamePhase != GamePhase.DRAFT)
+            return;
+
+        List<Character> blueCharacters = new List<Character>();
+        List<Character> pinkCharacters = new List<Character>();
+
+        foreach (Character character in CharacterHandler.Characters)
+        {
+            if (character.GetSide().GetPlayerType() == PlayerType.blue)
+            {
+                blueCharacters.Add(character);
+            }
+            else
+            {
+                pinkCharacters.Add(character);
+            }
+        }
+
+        for (int i = 0; i < blueCharacters.Count(); i++)
+        {
+            blueCharacters[i].GetCharacterGameObject().transform.position = blueSortingPositionsList[i];
+        }
+
+        for (int i = 0; i < pinkCharacters.Count(); i++)
+        {
+            pinkCharacters[i].GetCharacterGameObject().transform.position = pinkSortingPositionsList[i];
+        }
+
+        GameManager.ChangeGamePhase(GamePhase.PLACEMENT);
+    }
+    #endregion
 
     #region EventsRegion
 

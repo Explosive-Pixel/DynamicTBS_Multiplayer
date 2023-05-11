@@ -202,7 +202,6 @@ public class MovesDisplay : MonoBehaviour
     private void SubscribeEvents()
     {
         GameEvents.OnGamePhaseStart += OnGameplayPhaseStarts;
-        GameplayEvents.OnRestartGame += ActivateMovesDisplay;
         GameplayEvents.OnGameOver += EmptyList;
         GameplayEvents.OnGameOver += DeactivateMovesDisplay;
     }
@@ -210,7 +209,6 @@ public class MovesDisplay : MonoBehaviour
     private void UnsubscribeEvents()
     {
         GameEvents.OnGamePhaseStart -= OnGameplayPhaseStarts;
-        GameplayEvents.OnRestartGame -= ActivateMovesDisplay;
         GameplayEvents.OnGameOver -= DeactivateMovesDisplay;
         GameplayEvents.OnGameOver -= EmptyList;
         GameplayEvents.OnFinishAction -= WriteMovesToString;

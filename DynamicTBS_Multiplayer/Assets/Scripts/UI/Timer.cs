@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.ComponentModel;
 
 public enum TimerType
 {
@@ -10,8 +11,11 @@ public enum TimerType
 
 public enum TimerSetupType
 {
+    [Description("Fast")]
     FAST = 1,
+    [Description("Standard")]
     STANDARD = 2,
+    [Description("Slow")]
     SLOW = 3
 }
 
@@ -121,8 +125,8 @@ public class Timer : MonoBehaviour
         PlayerType side = player.GetPlayerType();
         if (playerStats[side].timeLeft > 0)
         {
-           // if(GameManager.gameType == GameType.local)
-           // {
+            //if(GameManager.gameType == GameType.LOCAL)
+            //{
             playerStats[side].timeLeft -= Time.deltaTime;
             //}
             UpdateTime(playerStats[side].timeLeft);

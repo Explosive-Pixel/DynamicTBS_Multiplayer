@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Networking.Transport;
+using System.Net;
+using System.Net.Sockets;
 
 public enum ClientType
 {
@@ -58,6 +60,7 @@ public class OnlineClient : MonoBehaviour
     public UserData UserData { get { return userData; } }
     private bool isAdmin;
     public bool IsAdmin { get { return isAdmin; } }
+
     private PlayerType side;
     public PlayerType Side { get { return side; } }
 
@@ -66,15 +69,22 @@ public class OnlineClient : MonoBehaviour
     private int spectatorCount = 0;
     public int SpectatorCount { get { return spectatorCount; } set { spectatorCount = value; } }
 
+    private string opponentName;
+    public string OpponentName { get { return opponentName == null ? "" : opponentName; } }
+
+    private Dictionary<PlayerType, string> playerNames = new();
+
     public void Init(string ip, ushort port, UserData userData, LobbyId lobbyId)
     {
-        this.ip = ip;
+        this.ip = ResolveIp(ip);
+        Debug.Log("Resolved IP is " + this.ip);
+
         this.port = port;
         this.userData = userData;
         this.lobbyId = lobbyId;
 
         driver = NetworkDriver.Create();
-        NetworkEndPoint endPoint = NetworkEndPoint.Parse(ip, port); // Specific endpoint for connection.
+        NetworkEndPoint endPoint = NetworkEndPoint.Parse(this.ip, port); // Specific endpoint for connection.
 
         connection = driver.Connect(endPoint); // Connecting based on the endpoint that was just created.
         connectionStatus = ConnectionStatus.ATTEMPT_CONNECTION;
@@ -110,11 +120,26 @@ public class OnlineClient : MonoBehaviour
         return side == playerType && !isLoadingGame;
     }
 
-    public void UpdateClient(LobbyId lobbyId, bool isAdmin, PlayerType side)
+    public void UpdateClient(LobbyId lobbyId, bool isAdmin, PlayerType side, string opponentName)
     {
         this.lobbyId = lobbyId;
         this.isAdmin = isAdmin;
         this.side = side;
+        this.opponentName = opponentName;
+    }
+
+    public string GetPlayerName(PlayerType side)
+    {
+        if (userData.Role == ClientType.SPECTATOR)
+            return playerNames[side];
+
+        return Side == side ? UserData.Name : OpponentName;
+    }
+
+    public void UpdatePlayerNames(string pinkName, string blueName)
+    {
+        playerNames[PlayerType.pink] = pinkName;
+        playerNames[PlayerType.blue] = blueName;
     }
 
     public void ChooseSide(PlayerType side)
@@ -123,7 +148,8 @@ public class OnlineClient : MonoBehaviour
         SendToServer(new MsgUpdateClient
         {
             isAdmin = isAdmin,
-            side = side
+            side = side,
+            opponentName = opponentName
         });
     }
 
@@ -219,5 +245,40 @@ public class OnlineClient : MonoBehaviour
     private void OnDestroy()
     {
         Shutdown();
+    }
+
+    private string ResolveIp(string givenIp)
+    {
+        if (IPAddress.TryParse(givenIp, out IPAddress ip))
+        {
+            if (ip.AddressFamily == AddressFamily.InterNetwork)
+            {
+                return givenIp; // input is a valid IPv4 address
+            }
+        }
+        try
+        {
+            IPAddress[] addresses = Dns.GetHostAddresses(givenIp);
+            if (addresses.Length > 0)
+            {
+                foreach (IPAddress address in addresses)
+                {
+                    if (address.AddressFamily == AddressFamily.InterNetwork)
+                    {
+                        return address.ToString(); // input is a valid host address and this is the resolved ip address
+                    }
+                }
+            }
+            else
+            {
+                Debug.LogError("Failed to resolve URL.");
+            }
+        }
+        catch (SocketException)
+        {
+            Debug.LogError("Failed to resolve URL."); // exception means input is not a valid host address
+        }
+
+        return null;
     }
 }

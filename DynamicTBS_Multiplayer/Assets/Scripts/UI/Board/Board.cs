@@ -5,12 +5,17 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Linq;
+using System.ComponentModel;
 
 public enum MapType
 {
+    [Description("Classic")]
     EXPLOSIVE = 0,
+    [Description("Bones")]
     BONES = 1,
+    [Description("Arrows")]
     ARROWS = 2,
+    [Description("Labyrinth")]
     LABYRINTH = 3
 }
 
@@ -24,8 +29,6 @@ public class Board : MonoBehaviour
     private const float tileSize = 1f;
 
     [SerializeField] private TileMap[] boardDesigns;
-
-    // public static int boardDesignIndex = 0;
 
     public static MapType selectedMap = MapType.EXPLOSIVE;
 
