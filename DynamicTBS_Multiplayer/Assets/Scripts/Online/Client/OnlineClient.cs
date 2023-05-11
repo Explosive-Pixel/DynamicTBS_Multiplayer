@@ -72,6 +72,8 @@ public class OnlineClient : MonoBehaviour
     private string opponentName;
     public string OpponentName { get { return opponentName == null ? "" : opponentName; } }
 
+    private Dictionary<PlayerType, string> playerNames = new();
+
     public void Init(string ip, ushort port, UserData userData, LobbyId lobbyId)
     {
         this.ip = ResolveIp(ip);
@@ -128,7 +130,16 @@ public class OnlineClient : MonoBehaviour
 
     public string GetPlayerName(PlayerType side)
     {
+        if (userData.Role == ClientType.SPECTATOR)
+            return playerNames[side];
+
         return Side == side ? UserData.Name : OpponentName;
+    }
+
+    public void UpdatePlayerNames(string pinkName, string blueName)
+    {
+        playerNames[PlayerType.pink] = pinkName;
+        playerNames[PlayerType.blue] = blueName;
     }
 
     public void ChooseSide(PlayerType side)

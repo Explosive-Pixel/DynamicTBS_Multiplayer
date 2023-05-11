@@ -61,6 +61,8 @@ public class Lobby
         inGame = true;
         this.selectedMap = selectedMap;
         timer = new LobbyTimer(timerSetup);
+
+        BroadcastPlayerNames();
     }
 
     public void UpdateGameInfo(PlayerType currentPlayer, GamePhase gamePhase)
@@ -154,6 +156,7 @@ public class Lobby
                 cnn.Side = PlayerManager.GetOtherSide(other.Side.Value);
                 cnn.IsAdmin = !other.IsAdmin;
                 UpdatePlayers();
+                BroadcastPlayerNames();
             }
         }
     }
@@ -184,6 +187,18 @@ public class Lobby
         }
 
         OnlineServer.Instance.SendToClient(msg, player.NetworkConnection, ShortId);
+    }
+
+    private void BroadcastPlayerNames()
+    {
+        if (Players.Count == 2)
+        {
+            OnlineServer.Instance.Broadcast(new MsgPlayerNames
+            {
+                pinkName = Players.Find(p => p.Side == PlayerType.pink).Name,
+                blueName = Players.Find(p => p.Side == PlayerType.blue).Name
+            }, ShortId);
+        }
     }
 
     public void ArchiveCharacterDraft(PlayerType player, CharacterType character)

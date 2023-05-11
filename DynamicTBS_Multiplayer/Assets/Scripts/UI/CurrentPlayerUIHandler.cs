@@ -34,6 +34,15 @@ public class CurrentPlayerUIHandler : MonoBehaviour
         Init();
     }
 
+    private void Update()
+    {
+        playerNames.text = "";
+        if (GameManager.gameType == GameType.ONLINE)
+        {
+            playerNames.text = OnlineClient.Instance.GetPlayerName(PlayerType.blue) + " vs. " + OnlineClient.Instance.GetPlayerName(PlayerType.pink);
+        }
+    }
+
     private void Init()
     {
         GameplayEvents.OnCurrentPlayerChanged += UpdateMessages;
@@ -52,10 +61,8 @@ public class CurrentPlayerUIHandler : MonoBehaviour
             return;
 
         playerInfoText.text = "";
-        playerNames.text = "";
         if (GameManager.gameType == GameType.ONLINE && OnlineClient.Instance.UserData.Role == ClientType.PLAYER)
         {
-            playerNames.text = OnlineClient.Instance.GetPlayerName(PlayerType.blue) + " vs. " + OnlineClient.Instance.GetPlayerName(PlayerType.pink);
             playerInfoText.text = "You are player " + OnlineClient.Instance.Side + ".";
         }
 
