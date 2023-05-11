@@ -73,6 +73,12 @@ public class OnlineLobbyCanvasHandler : MonoBehaviour
         lobbyFullId.text = OnlineClient.Instance.LobbyId.FullId;
 
         clientInfoText.text = "You are connected!\n";
+
+        if (OnlineClient.Instance.PlayerCount == 2 && OnlineClient.Instance.OpponentName.Length > 0)
+        {
+            clientInfoText.text += "Your opponent is " + OnlineClient.Instance.OpponentName + "!\n";
+        }
+
         if (OnlineClient.Instance.IsAdmin)
         {
             clientInfoText.text += "\nPlease choose a time speed, a map and a team ";
@@ -87,7 +93,7 @@ public class OnlineLobbyCanvasHandler : MonoBehaviour
         {
             if(OnlineClient.Instance.UserData.Role == ClientType.PLAYER)
             {
-                clientInfoText.text += "\nWaiting for other player to start the game ...";
+                clientInfoText.text += "\nWaiting for opponent to start the game ...";
             } else
             {
                 if (OnlineClient.Instance.PlayerCount < 2)

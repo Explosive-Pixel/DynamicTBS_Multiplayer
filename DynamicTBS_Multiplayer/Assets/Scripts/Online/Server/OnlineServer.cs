@@ -189,6 +189,7 @@ public class OnlineServer : MonoBehaviour
         SendToClient(msg, connection.NetworkConnection, lobby.ShortId);
 
         BroadcastMetadata(lobby);
+        lobby.UpdatePlayers();
 
         StartCoroutine(SendGameState(connection.NetworkConnection, lobby));
     }
@@ -209,7 +210,7 @@ public class OnlineServer : MonoBehaviour
     {
         if (lobby.MessageHistory.Count > 0)
         {
-            lobby.UpdateConnectionAfterReconnect(cnn);
+            lobby.UpdateConnectionsAfterReconnect(cnn);
 
             Debug.Log("Sending history to client: " + lobby.MessageHistory.Count);
             float delay = 0.1f;

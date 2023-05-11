@@ -8,6 +8,7 @@ public class CurrentPlayerUIHandler : MonoBehaviour
 {
     [SerializeField] private List<GamePhase> associatedGamePhases;
 
+    [SerializeField] private Text playerNames;
     [SerializeField] private Text playerInfoText;
 
     [SerializeField] private Text draftMessageText;
@@ -51,8 +52,10 @@ public class CurrentPlayerUIHandler : MonoBehaviour
             return;
 
         playerInfoText.text = "";
+        playerNames.text = "";
         if (GameManager.gameType == GameType.ONLINE && OnlineClient.Instance.UserData.Role == ClientType.PLAYER)
         {
+            playerNames.text = OnlineClient.Instance.GetPlayerName(PlayerType.blue) + " vs. " + OnlineClient.Instance.GetPlayerName(PlayerType.pink);
             playerInfoText.text = "You are player " + OnlineClient.Instance.Side + ".";
         }
 

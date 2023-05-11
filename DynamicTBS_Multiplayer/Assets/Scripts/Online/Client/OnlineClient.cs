@@ -60,6 +60,7 @@ public class OnlineClient : MonoBehaviour
     public UserData UserData { get { return userData; } }
     private bool isAdmin;
     public bool IsAdmin { get { return isAdmin; } }
+
     private PlayerType side;
     public PlayerType Side { get { return side; } }
 
@@ -67,6 +68,9 @@ public class OnlineClient : MonoBehaviour
     public int PlayerCount { get { return playerCount; } set { playerCount = value; } }
     private int spectatorCount = 0;
     public int SpectatorCount { get { return spectatorCount; } set { spectatorCount = value; } }
+
+    private string opponentName;
+    public string OpponentName { get { return opponentName == null ? "" : opponentName; } }
 
     public void Init(string ip, ushort port, UserData userData, LobbyId lobbyId)
     {
@@ -114,11 +118,17 @@ public class OnlineClient : MonoBehaviour
         return side == playerType && !isLoadingGame;
     }
 
-    public void UpdateClient(LobbyId lobbyId, bool isAdmin, PlayerType side)
+    public void UpdateClient(LobbyId lobbyId, bool isAdmin, PlayerType side, string opponentName)
     {
         this.lobbyId = lobbyId;
         this.isAdmin = isAdmin;
         this.side = side;
+        this.opponentName = opponentName;
+    }
+
+    public string GetPlayerName(PlayerType side)
+    {
+        return Side == side ? UserData.Name : OpponentName;
     }
 
     public void ChooseSide(PlayerType side)
@@ -127,7 +137,8 @@ public class OnlineClient : MonoBehaviour
         SendToServer(new MsgUpdateClient
         {
             isAdmin = isAdmin,
-            side = side
+            side = side,
+            opponentName = opponentName
         });
     }
 

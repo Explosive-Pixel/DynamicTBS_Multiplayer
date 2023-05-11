@@ -143,7 +143,7 @@ public class Lobby
         }
     }
 
-    public void UpdateConnectionAfterReconnect(NetworkConnection networkConnection)
+    public void UpdateConnectionsAfterReconnect(NetworkConnection networkConnection)
     {
         OnlineConnection cnn = FindOnlineConnection(networkConnection);
         if(cnn != null)
@@ -153,23 +153,37 @@ public class Lobby
             {
                 cnn.Side = PlayerManager.GetOtherSide(other.Side.Value);
                 cnn.IsAdmin = !other.IsAdmin;
-                UpdatePlayer(cnn);
+                UpdatePlayers();
             }
         }
     }
 
-    private void UpdatePlayers()
+    public void UpdatePlayers()
     {
         Players.ForEach(player => UpdatePlayer(player));
     }
 
     private void UpdatePlayer(OnlineConnection player)
     {
-        OnlineServer.Instance.SendToClient(new MsgUpdateClient
+        string opponentName = "";
+        OnlineConnection otherPlayer = FindOtherPlayer(player);
+        if(otherPlayer != null)
+        {
+            opponentName = otherPlayer.Name;
+        }
+
+        MsgUpdateClient msg = new MsgUpdateClient
         {
             isAdmin = player.IsAdmin,
-            side = player.Side.Value
-        }, player.NetworkConnection, ShortId);
+            opponentName = opponentName
+        };
+
+        if(player.Side != null)
+        {
+            msg.side = player.Side.Value;
+        }
+
+        OnlineServer.Instance.SendToClient(msg, player.NetworkConnection, ShortId);
     }
 
     public void ArchiveCharacterDraft(PlayerType player, CharacterType character)
