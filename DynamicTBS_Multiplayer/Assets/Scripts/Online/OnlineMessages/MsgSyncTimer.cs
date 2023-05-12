@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Networking.Transport;
+using System;
 
 public class MsgSyncTimer : OnlineMessage
 {
     public float pinkTimeLeft;
     public float blueTimeLeft;
-    public int pinkDebuff;
-    public int blueDebuff;
+    public DateTime startTimestamp;
 
     public MsgSyncTimer() // Constructing a message.
     {
@@ -26,8 +26,7 @@ public class MsgSyncTimer : OnlineMessage
         base.Serialize(ref writer, lobbyId);
         writer.WriteFloat(pinkTimeLeft);
         writer.WriteFloat(blueTimeLeft);
-        writer.WriteInt(pinkDebuff);
-        writer.WriteInt(blueDebuff);
+        writer.WriteFixedString64(startTimestamp.ToString("yyyy-MM-ddTHH:mm:sszzz"));
     }
 
     public override void Deserialize(DataStreamReader reader)
@@ -35,13 +34,12 @@ public class MsgSyncTimer : OnlineMessage
         LobbyId = reader.ReadInt();
         pinkTimeLeft = reader.ReadFloat();
         blueTimeLeft = reader.ReadFloat();
-        pinkDebuff = reader.ReadInt();
-        blueDebuff = reader.ReadInt();
+        startTimestamp = DateTime.Parse(reader.ReadFixedString64().Value);
     }
 
     public override void ReceivedOnClient()
     {
-        GameplayEvents.UpdateTimer(pinkTimeLeft, blueTimeLeft, pinkDebuff, blueDebuff);
+        GameplayEvents.UpdateTimer(pinkTimeLeft, blueTimeLeft, startTimestamp);
     }
 
     public override void ReceivedOnServer(NetworkConnection cnn)

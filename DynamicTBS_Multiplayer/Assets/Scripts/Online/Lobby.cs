@@ -67,7 +67,7 @@ public class Lobby
 
     public void UpdateGameInfo(PlayerType currentPlayer, GamePhase gamePhase)
     {
-        timer.UpdateGameInfo(currentPlayer, gamePhase);
+        timer.UpdateGameInfo(currentPlayer, gamePhase, ShortId);
     }
 
     public void UpdateTimer()
@@ -76,6 +76,11 @@ public class Lobby
             return;
 
         timer.UpdateTime(ShortId);
+    }
+
+    public void SyncTimer(NetworkConnection cnn)
+    {
+        timer.SyncTimer(ShortId, cnn);
     }
 
     public bool AddConnection(OnlineConnection connection)

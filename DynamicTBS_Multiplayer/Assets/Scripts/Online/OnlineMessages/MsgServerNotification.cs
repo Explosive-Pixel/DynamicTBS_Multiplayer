@@ -16,7 +16,6 @@ public class MsgServerNotification : OnlineMessage
     public ServerNotification serverNotification;
     public GamePhase gamePhase;
     public PlayerType currentPlayer;
-    public int currentPlayerTimerDebuff;
 
     public MsgServerNotification() // Constructing a message.
     {
@@ -35,7 +34,6 @@ public class MsgServerNotification : OnlineMessage
         writer.WriteInt((int)serverNotification);
         writer.WriteInt((int)gamePhase);
         writer.WriteInt((int)currentPlayer);
-        writer.WriteInt(currentPlayerTimerDebuff);
     }
 
     public override void Deserialize(DataStreamReader reader)
@@ -44,7 +42,6 @@ public class MsgServerNotification : OnlineMessage
         serverNotification = (ServerNotification)reader.ReadInt();
         gamePhase = (GamePhase)reader.ReadInt();
         currentPlayer = (PlayerType)reader.ReadInt();
-        currentPlayerTimerDebuff = reader.ReadInt();
     }
 
     public override void ReceivedOnClient()
@@ -61,7 +58,7 @@ public class MsgServerNotification : OnlineMessage
                 OnlineClient.Instance.ToggleIsLoadingGame();
                 break;
             case ServerNotification.TIMEOUT:
-                GameplayEvents.TimerTimedOut(gamePhase, currentPlayer, currentPlayerTimerDebuff);
+                GameplayEvents.TimerTimedOut(gamePhase, currentPlayer);
                 break;
         }
     }

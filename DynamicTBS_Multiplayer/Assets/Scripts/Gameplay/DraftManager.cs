@@ -74,10 +74,33 @@ public class DraftManager : MonoBehaviour
         AdvanceDraftOrder();
     }
 
+    public static void RandomDrafts(Player side)
+    {
+        int i = GetRemainingDraftCount(side);
+        while (i-- > 0)
+        {
+            RandomDraft(side);
+        }
+    }
+
     public static void RandomDraft(Player side)
     {
         CharacterType randomCharacterType = CharacterFactory.GetRandomCharacterType();
         DraftCharacter(randomCharacterType, side);
+    }
+
+    public static int GetRemainingDraftCount(Player currentPlayer)
+    {
+        if(PlayerManager.GetCurrentPlayer() != currentPlayer)
+        {
+            return 0;
+        }
+
+        if (draftOrderIndex == draftOrder.Count)
+        {
+            return MaxDraftCount - draftCounter;
+        }
+        return draftOrder[draftOrderIndex] - draftCounter;
     }
 
     public static int GetCurrentDraftCount()

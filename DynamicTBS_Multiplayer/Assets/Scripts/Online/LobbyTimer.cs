@@ -2,16 +2,18 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Networking.Transport;
 
 public class LobbyTimer
 {
-    private const float timerUpdateInterval = 1f;
-
     #region Helper classes
     class PlayerTime
     {
+        private float startTime;
         public float timeLeft;
         public int debuff = 0;
+
+        public float StartTime { get { return startTime; } set { startTime = value; timeLeft = value; } }
     }
 
     #endregion
@@ -26,68 +28,69 @@ public class LobbyTimer
     private Dictionary<PlayerType, PlayerTime> timePerPlayer = new Dictionary<PlayerType, PlayerTime>();
 
     private TimerType currentTimerType = TimerType.DRAFT_AND_PLACEMENT;
-    private GamePhase currentGamePhase = GamePhase.DRAFT;
+    private GamePhase currentGamePhase = GamePhase.NONE;
 
     public GamePhase CurrentGamePhase { get { return currentGamePhase; } }
+
+    private DateTime startTime;
+    private bool timerRanOff = false;
 
     public LobbyTimer(TimerSetupType timerSetup)
     {
         this.timerSetup = timerSetup;
 
-        timePerPlayer.Add(PlayerType.pink, new PlayerTime { timeLeft = DraftAndPlacementTime });
-        timePerPlayer.Add(PlayerType.blue, new PlayerTime { timeLeft = DraftAndPlacementTime });
+        timePerPlayer.Add(PlayerType.pink, new PlayerTime { StartTime = DraftAndPlacementTime });
+        timePerPlayer.Add(PlayerType.blue, new PlayerTime { StartTime = DraftAndPlacementTime });
     }
 
-    public void UpdateGameInfo(PlayerType currentPlayer, GamePhase gamePhase)
+    public void UpdateGameInfo(PlayerType currentPlayer, GamePhase gamePhase, int lobbyId)
     {
         this.currentPlayer = currentPlayer;
+        timerRanOff = false;
+
         this.currentTimerType = gamePhase == GamePhase.GAMEPLAY ? TimerType.GAMEPLAY : TimerType.DRAFT_AND_PLACEMENT;
 
         if (currentGamePhase != gamePhase)
         {
             this.currentGamePhase = gamePhase;
+
+            if (gamePhase == GamePhase.NONE)
+                return;
+
             float newTime = currentTimerType == TimerType.GAMEPLAY ? GameplayTime : DraftAndPlacementTime;
 
-            timePerPlayer[PlayerType.pink].timeLeft = newTime;
-            timePerPlayer[PlayerType.blue].timeLeft = newTime;
+            timePerPlayer[PlayerType.pink].StartTime = newTime;
+            timePerPlayer[PlayerType.blue].StartTime = newTime;
         }
 
         if(gamePhase == GamePhase.GAMEPLAY)
         {
-            timePerPlayer[currentPlayer].timeLeft = GameplayTime * Mathf.Pow(1 - Timer.debuffRate, timePerPlayer[currentPlayer].debuff);
+            timePerPlayer[currentPlayer].StartTime = GameplayTime * Mathf.Pow(1 - Timer.debuffRate, timePerPlayer[currentPlayer].debuff);
+        } else
+        {
+            PlayerType lastPlayer = PlayerManager.GetOtherSide(currentPlayer);
+            timePerPlayer[lastPlayer].StartTime = timePerPlayer[lastPlayer].timeLeft;
         }
+
+        startTime = TimerUtils.Timestamp();
+        BroadcastTimerInfo(lobbyId);
     }
 
-    private float delta = 0;
     public void UpdateTime(int lobbyId)
-    {
-        if(timePerPlayer[currentPlayer].timeLeft > 0)
-        {
-            timePerPlayer[currentPlayer].timeLeft -= Time.deltaTime;
-        }
-
-        delta += Time.deltaTime;
-        if (delta >= timerUpdateInterval)
-        {
-            BroadcastTimerInfo(lobbyId);
-            delta = 0f;
-        }
-    }
-
-    private void BroadcastTimerInfo(int lobbyId)
     {
         if (timePerPlayer[currentPlayer].timeLeft > 0)
         {
-            OnlineServer.Instance.Broadcast(new MsgSyncTimer
-            {
-                pinkTimeLeft = timePerPlayer[PlayerType.pink].timeLeft,
-                blueTimeLeft = timePerPlayer[PlayerType.blue].timeLeft,
-                pinkDebuff = timePerPlayer[PlayerType.pink].debuff,
-                blueDebuff = timePerPlayer[PlayerType.blue].debuff,
-            }, lobbyId);
+            timerRanOff = false;
+
+            float timePassed = TimerUtils.TimeSince(startTime);
+            timePerPlayer[currentPlayer].timeLeft = timePerPlayer[currentPlayer].StartTime - timePassed;
         }
         else
         {
+            if (timerRanOff)
+                return;
+
+            timerRanOff = true;
             if (currentTimerType == TimerType.GAMEPLAY)
             {
                 timePerPlayer[currentPlayer].debuff++;
@@ -97,9 +100,28 @@ public class LobbyTimer
             {
                 serverNotification = ServerNotification.TIMEOUT,
                 gamePhase = currentGamePhase,
-                currentPlayer = currentPlayer,
-                currentPlayerTimerDebuff = timePerPlayer[currentPlayer].debuff
+                currentPlayer = currentPlayer
             }, lobbyId);
         }
+    }
+
+    public void SyncTimer(int lobbyId, NetworkConnection cnn)
+    {
+        OnlineServer.Instance.SendToClient(WriteMsgSyncTimer(), cnn, lobbyId);
+    }
+
+    private void BroadcastTimerInfo(int lobbyId)
+    {
+        OnlineServer.Instance.Broadcast(WriteMsgSyncTimer(), lobbyId);
+    }
+
+    private MsgSyncTimer WriteMsgSyncTimer()
+    {
+        return new MsgSyncTimer
+        {
+            pinkTimeLeft = timePerPlayer[PlayerType.pink].timeLeft,
+            blueTimeLeft = timePerPlayer[PlayerType.blue].timeLeft,
+            startTimestamp = startTime
+        };
     }
 }

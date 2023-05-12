@@ -227,7 +227,7 @@ public class OnlineServer : MonoBehaviour
                 yield return new WaitForSeconds(delay);
             }
 
-            lobby.UpdateTimer();
+            lobby.SyncTimer(cnn);
 
             ToggleSendGameState(cnn, lobby);
         }
