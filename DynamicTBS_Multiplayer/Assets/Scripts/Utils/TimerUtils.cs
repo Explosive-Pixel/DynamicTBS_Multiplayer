@@ -7,7 +7,7 @@ public static class TimerUtils
 {
     public static DateTime Timestamp()
     {
-        return DateTime.UtcNow;
+        return DateTime.Now;
     }
 
     public static float TimeSince(DateTime startTimestamp)

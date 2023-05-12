@@ -52,6 +52,14 @@ public class Lobby
     public void PauseGame(UIAction uiAction)
     {
         gameIsPaused = uiAction == UIAction.PAUSE_GAME;
+
+        if (gameIsPaused)
+        {
+            timer.Pause();
+            return;
+        }
+
+        timer.UpdateStartTime(ShortId);
     }
 
     public void StartGame(TimerSetupType timerSetup, MapType selectedMap)

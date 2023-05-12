@@ -174,8 +174,8 @@ public class Timer : MonoBehaviour
 
     private void UpdateData(float pinkTimeLeft, float blueTimeLeft, DateTime startTime)
     {
-        playerStats[PlayerType.pink].timeLeft = pinkTimeLeft;
-        playerStats[PlayerType.blue].timeLeft = blueTimeLeft;
+        playerStats[PlayerType.pink].StartTime = pinkTimeLeft;
+        playerStats[PlayerType.blue].StartTime = blueTimeLeft;
 
         this.startTime = startTime;
     }

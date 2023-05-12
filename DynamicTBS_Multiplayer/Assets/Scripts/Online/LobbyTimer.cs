@@ -72,6 +72,17 @@ public class LobbyTimer
             timePerPlayer[lastPlayer].StartTime = timePerPlayer[lastPlayer].timeLeft;
         }
 
+        UpdateStartTime(lobbyId);
+    }
+
+    public void Pause()
+    {
+        timePerPlayer[PlayerType.pink].StartTime = timePerPlayer[PlayerType.pink].timeLeft;
+        timePerPlayer[PlayerType.blue].StartTime = timePerPlayer[PlayerType.blue].timeLeft;
+    }
+
+    public void UpdateStartTime(int lobbyId)
+    {
         startTime = TimerUtils.Timestamp();
         BroadcastTimerInfo(lobbyId);
     }
@@ -119,8 +130,8 @@ public class LobbyTimer
     {
         return new MsgSyncTimer
         {
-            pinkTimeLeft = timePerPlayer[PlayerType.pink].timeLeft,
-            blueTimeLeft = timePerPlayer[PlayerType.blue].timeLeft,
+            pinkTimeLeft = timePerPlayer[PlayerType.pink].StartTime,
+            blueTimeLeft = timePerPlayer[PlayerType.blue].StartTime,
             startTimestamp = startTime
         };
     }
