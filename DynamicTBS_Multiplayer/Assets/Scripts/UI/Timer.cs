@@ -45,8 +45,8 @@ public class Timer : MonoBehaviour
     {
         { TimerSetupType.FAST,
             new() {
-                { TimerType.DRAFT_AND_PLACEMENT, 10 }, //120 },
-                { TimerType.GAMEPLAY, 15 } //60 }
+                { TimerType.DRAFT_AND_PLACEMENT, 120 },
+                { TimerType.GAMEPLAY, 60 }
             }
         },
         {
