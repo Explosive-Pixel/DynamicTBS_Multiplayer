@@ -25,6 +25,8 @@ public class MsgServerNotification : OnlineMessage
     public MsgServerNotification(DataStreamReader reader) // Receiving a message.
     {
         Code = OnlineMessageCode.SERVER_NOTIFICATION;
+        Id = reader.ReadFixedString64().Value;
+        LobbyId = reader.ReadInt();
         Deserialize(reader);
     }
 
@@ -38,7 +40,6 @@ public class MsgServerNotification : OnlineMessage
 
     public override void Deserialize(DataStreamReader reader)
     {
-        LobbyId = reader.ReadInt();
         serverNotification = (ServerNotification)reader.ReadInt();
         gamePhase = (GamePhase)reader.ReadInt();
         currentPlayer = (PlayerType)reader.ReadInt();

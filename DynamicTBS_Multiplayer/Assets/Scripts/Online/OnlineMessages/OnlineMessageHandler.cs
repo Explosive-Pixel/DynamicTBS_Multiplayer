@@ -18,7 +18,8 @@ public enum OnlineMessageCode
     START_GAME = 9,
     UPDATE_SERVER = 10,
     GAME_OVER = 11,
-    PLAYER_NAMES = 12
+    PLAYER_NAMES = 12,
+    ACKNOWLEDGE_MSG = 13
 }
 
 public static class OnlineMessageHandler
@@ -69,14 +70,14 @@ public static class OnlineMessageHandler
             case OnlineMessageCode.PLAYER_NAMES:
                 msg = new MsgPlayerNames(stream);
                 break;
+            case OnlineMessageCode.ACKNOWLEDGE_MSG:
+                msg = new MsgAcknowledgement(stream);
+                break;
             default:
                 Debug.LogError("Message received had no operation code.");
                 break;
         }
 
-        if (server != null)
-            msg.ReceivedOnServer(cnn);
-        else
-            msg.ReceivedOnClient();
+        OnlineMessageEvents.ReceiveMessage(msg, cnn);
     }
 }

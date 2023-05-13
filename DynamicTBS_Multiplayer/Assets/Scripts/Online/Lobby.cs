@@ -22,7 +22,6 @@ public class Lobby
     public List<OnlineConnection> Spectators { get { return connections.FindAll(cnn => cnn.Role == ClientType.SPECTATOR); } }
 
     private List<OnlineMessage> messageHistory = new List<OnlineMessage>();
-    public List<OnlineMessage> MessageHistory { get { return messageHistory; } }
 
     private MapType selectedMap;
     public MapType SelectedMap { get { return selectedMap; } }
@@ -233,6 +232,37 @@ public class Lobby
         {
             messageHistory.Add(msg);
         }
+    }
+
+    public void SendGameState(NetworkConnection cnn)
+    {
+        if (messageHistory.Count > 0)
+        {
+            UpdateConnectionsAfterReconnect(cnn);
+
+            Debug.Log("Sending history to client: " + messageHistory.Count);
+
+            ToggleSendGameState(cnn);
+
+            int i = 0;
+            while (i < messageHistory.Count)
+            {
+                OnlineServer.Instance.SendToClient(messageHistory[i], cnn, ShortId);
+                i++;
+            }
+
+            SyncTimer(cnn);
+
+            ToggleSendGameState(cnn);
+        }
+    }
+
+    private void ToggleSendGameState(NetworkConnection cnn)
+    {
+        OnlineServer.Instance.SendToClient(new MsgServerNotification
+        {
+            serverNotification = ServerNotification.TOGGLE_LOAD_GAME_STATUS
+        }, cnn, ShortId);
     }
 
     public OnlineConnection FindOnlineConnection(NetworkConnection networkConnection)

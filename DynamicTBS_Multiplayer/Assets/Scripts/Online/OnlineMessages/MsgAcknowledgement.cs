@@ -3,19 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Networking.Transport;
 
-public class MsgGameOver : OnlineMessage
+public class MsgAcknowledgement : OnlineMessage
 {
-    public bool isDraw;
-    public PlayerType winner;
+    public string msgId;
 
-    public MsgGameOver() // Constructing a message.
+    public MsgAcknowledgement() // Constructing a message.
     {
-        Code = OnlineMessageCode.GAME_OVER;
+        Code = OnlineMessageCode.ACKNOWLEDGE_MSG;
     }
 
-    public MsgGameOver(DataStreamReader reader) // Receiving a message.
+    public MsgAcknowledgement(DataStreamReader reader) // Receiving a message.
     {
-        Code = OnlineMessageCode.GAME_OVER;
+        Code = OnlineMessageCode.ACKNOWLEDGE_MSG;
         Id = reader.ReadFixedString64().Value;
         LobbyId = reader.ReadInt();
         Deserialize(reader);
@@ -24,14 +23,12 @@ public class MsgGameOver : OnlineMessage
     public override void Serialize(ref DataStreamWriter writer, int lobbyId)
     {
         base.Serialize(ref writer, lobbyId);
-        writer.WriteByte(ToByte(isDraw));
-        writer.WriteByte((byte)winner);
+        writer.WriteFixedString64(msgId);
     }
 
     public override void Deserialize(DataStreamReader reader)
     {
-        isDraw = ToBool(reader.ReadByte());
-        winner = (PlayerType)reader.ReadByte();
+        msgId = reader.ReadFixedString64().Value;
     }
 
     public override void ReceivedOnClient()
@@ -40,8 +37,5 @@ public class MsgGameOver : OnlineMessage
 
     public override void ReceivedOnServer(NetworkConnection cnn)
     {
-        OnlineServer.Instance.GameOver(LobbyId);
-
-        base.ReceivedOnServer(cnn);
     }
 }

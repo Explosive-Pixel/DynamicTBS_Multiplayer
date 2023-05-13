@@ -16,6 +16,8 @@ public class MsgPlayerNames : OnlineMessage
     public MsgPlayerNames(DataStreamReader reader) // Receiving a message.
     {
         Code = OnlineMessageCode.PLAYER_NAMES;
+        Id = reader.ReadFixedString64().Value;
+        LobbyId = reader.ReadInt();
         Deserialize(reader);
     }
 
@@ -28,7 +30,6 @@ public class MsgPlayerNames : OnlineMessage
 
     public override void Deserialize(DataStreamReader reader)
     {
-        LobbyId = reader.ReadInt();
         pinkName = reader.ReadFixedString32().Value;
         blueName = reader.ReadFixedString32().Value;
     }

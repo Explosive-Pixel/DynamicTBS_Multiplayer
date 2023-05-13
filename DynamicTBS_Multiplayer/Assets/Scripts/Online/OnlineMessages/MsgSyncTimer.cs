@@ -18,6 +18,8 @@ public class MsgSyncTimer : OnlineMessage
     public MsgSyncTimer(DataStreamReader reader) // Receiving a message.
     {
         Code = OnlineMessageCode.SYNC_TIMER;
+        Id = reader.ReadFixedString64().Value;
+        LobbyId = reader.ReadInt();
         Deserialize(reader);
     }
 
@@ -31,7 +33,6 @@ public class MsgSyncTimer : OnlineMessage
 
     public override void Deserialize(DataStreamReader reader)
     {
-        LobbyId = reader.ReadInt();
         pinkTimeLeft = reader.ReadFloat();
         blueTimeLeft = reader.ReadFloat();
         startTimestamp = DateTime.Parse(reader.ReadFixedString32().Value);

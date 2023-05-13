@@ -17,6 +17,8 @@ public class MsgMetadata : OnlineMessage
     public MsgMetadata(DataStreamReader reader) // Receiving a message.
     {
         Code = OnlineMessageCode.METADATA;
+        Id = reader.ReadFixedString64().Value;
+        LobbyId = reader.ReadInt();
         Deserialize(reader);
     }
 
@@ -29,7 +31,6 @@ public class MsgMetadata : OnlineMessage
 
     public override void Deserialize(DataStreamReader reader)
     {
-        LobbyId = reader.ReadInt();
         playerCount = reader.ReadInt();
         spectatorCount = reader.ReadInt();
     }
