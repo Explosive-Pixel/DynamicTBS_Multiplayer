@@ -26,7 +26,7 @@ public class MsgSyncTimer : OnlineMessage
         base.Serialize(ref writer, lobbyId);
         writer.WriteFloat(pinkTimeLeft);
         writer.WriteFloat(blueTimeLeft);
-        writer.WriteFixedString64(startTimestamp.ToString("yyyy-MM-ddTHH:mm:sszzz"));
+        writer.WriteFixedString32(startTimestamp.ToString("yyyy-MM-ddTHH:mm:ss.fffff"));
     }
 
     public override void Deserialize(DataStreamReader reader)
@@ -34,7 +34,7 @@ public class MsgSyncTimer : OnlineMessage
         LobbyId = reader.ReadInt();
         pinkTimeLeft = reader.ReadFloat();
         blueTimeLeft = reader.ReadFloat();
-        startTimestamp = DateTime.Parse(reader.ReadFixedString64().Value);
+        startTimestamp = DateTime.Parse(reader.ReadFixedString32().Value);
     }
 
     public override void ReceivedOnClient()

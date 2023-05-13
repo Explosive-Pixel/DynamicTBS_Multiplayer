@@ -137,7 +137,7 @@ public class Timer : MonoBehaviour
             float timePassed = TimerUtils.TimeSince(startTime.Value);
             playerStats[side].timeLeft = playerStats[side].StartTime - timePassed;
 
-            UpdateTime(playerStats[side].timeLeft);
+            PrintTime(playerStats[side].timeLeft);
         }
         else
         {
@@ -180,9 +180,9 @@ public class Timer : MonoBehaviour
         this.startTime = startTime;
     }
 
-    private void UpdateTime(float currentTime)
+    private void PrintTime(float currentTime)
     {
-        currentTime += 1;
+        currentTime = currentTime < 0 ? 0 : currentTime;
 
         float minutes = Mathf.FloorToInt(currentTime / 60);
         float seconds = Mathf.FloorToInt(currentTime % 60);
@@ -220,7 +220,7 @@ public class Timer : MonoBehaviour
             playerStats[lastPlayer].StartTime = playerStats[lastPlayer].timeLeft;
         }
 
-        UpdateTime(playerStats[nextPlayer].timeLeft);
+        PrintTime(playerStats[nextPlayer].timeLeft);
         ChangeTextColor(nextPlayer);
 
         if(GameManager.gameType == GameType.LOCAL)
