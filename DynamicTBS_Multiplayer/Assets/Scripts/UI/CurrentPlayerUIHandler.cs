@@ -55,7 +55,7 @@ public class CurrentPlayerUIHandler : MonoBehaviour
 
     private void UpdateMessages(PlayerType currentPlayer)
     {
-        ChangeOverlay(currentPlayer);
+        // ChangeOverlay(currentPlayer);
 
         if (!associatedGamePhases.Contains(GameManager.gamePhase))
             return;

@@ -21,23 +21,6 @@ public static class BuildScript
 
     static string[] scenePaths = { "Assets/Scenes/00_ServerScene.unity", "Assets/Scenes/01_MainMenuScene.unity", "Assets/Scenes/02_OnlineMenuScene.unity", "Assets/Scenes/03_GameScene.unity", "Assets/Scenes/04_TutorialScene.unity", "Assets/Scenes/05_LoreScene.unity", "Assets/Scenes/06_CreditsScene.unity" };
 
-    public static string[] ConfigureScenes(BuildType buildType)
-    {
-        var scenes = new List<string>();
-        if (buildType == BuildType.Server)
-        {
-            scenes.Add(scenePaths[0]);
-        } else
-        {
-            for (int i = 1; i < scenePaths.Length; i++)
-            {
-                scenes.Add(scenePaths[i]);
-            }
-        }
-
-        return scenes.ToArray();
-    }
-
     [MenuItem("Build/Server Build (Windows)")]
     public static void PerformServerBuildWindows()
     {
@@ -115,6 +98,8 @@ public static class BuildScript
             buildPath += ".x86_64";
         }
 
+        SetPlayerSettings();
+
         BuildReport report = BuildPipeline.BuildPlayer(ConfigureScenes(buildType), buildPath, buildTarget, BuildOptions.None);
 
         // Check if the build succeeded
@@ -124,7 +109,31 @@ public static class BuildScript
         }
         else
         {
-            Debug.LogError(buildType + " Build for platform " + platform + "failed.");
+            Debug.LogError(buildType + " Build for platform " + platform + " failed.");
         }
+    }
+
+    private static void SetPlayerSettings()
+    {
+        PlayerSettings.resizableWindow = true;
+        PlayerSettings.allowFullscreenSwitch = true;
+    }
+
+    private static string[] ConfigureScenes(BuildType buildType)
+    {
+        var scenes = new List<string>();
+        if (buildType == BuildType.Server)
+        {
+            scenes.Add(scenePaths[0]);
+        }
+        else
+        {
+            for (int i = 1; i < scenePaths.Length; i++)
+            {
+                scenes.Add(scenePaths[i]);
+            }
+        }
+
+        return scenes.ToArray();
     }
 }

@@ -88,14 +88,12 @@ public class GameSceneManager : MonoBehaviour
         if(gamePhase == GamePhase.DRAFT)
         {
             HandleMenus(gameplayCanvas);
-            gameplayObjectsObject.SetActive(true);
         }
     }
 
     private void GoToGameOverScreen(PlayerType? winner, GameOverCondition endGameCondition)
     {
         HandleMenus(gameOverCanvas);
-        gameplayObjectsObject.SetActive(false);
         Text gameOverText = gameOverCanvas.GetComponentInChildren<Text>();
         Color backgroundColor = Color.gray;
         if (winner != null)
@@ -115,7 +113,7 @@ public class GameSceneManager : MonoBehaviour
             gameOverText.text = "No player has won the game.";
         }
         gameOverText.text += "\n\n" + endGameCondition.ToText(winner);
-        gameOverCanvas.GetComponent<Image>().color = backgroundColor;
+        gameOverCanvas.GetComponentInChildren<Image>().color = backgroundColor;
     }
     #endregion
 
