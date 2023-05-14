@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.UI;
 
 public class SettingsManager : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class SettingsManager : MonoBehaviour
     private GameObject settingsObject;
 
     [SerializeField] private GameObject toggleObjects;
+    [SerializeField] private Toggle fullscreenToggle;
 
     [SerializeField] private AudioMixer audioMixer;
     public static float currentMainVolume;
@@ -33,6 +35,9 @@ public class SettingsManager : MonoBehaviour
         settingsObject = this.gameObject;
         DontDestroyOnLoad(settingsObject);
         toggleObjects.SetActive(false);
+
+        fullscreenToggle.isOn = Screen.fullScreen;
+        currentFullscreenSetting = Screen.fullScreen ? 1 : 0;
     }
 
     private void Update()
