@@ -228,7 +228,7 @@ public class Lobby
             messageHistory.Clear();
         }
 
-        if (msg.GetType() != typeof(MsgMetadata) && msg.GetType() != typeof(MsgSyncTimer))
+        if (msg.GetType() != typeof(MsgMetadata) && msg.GetType() != typeof(MsgUpdateTimer))
         {
             messageHistory.Add(msg);
         }

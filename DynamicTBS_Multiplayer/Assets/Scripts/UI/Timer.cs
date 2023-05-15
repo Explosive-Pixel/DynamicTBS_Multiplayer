@@ -24,16 +24,16 @@ public class Timer : MonoBehaviour
 {
     private class PlayerInfo
     {
-        private float startTime;
+        private float startTimeLeft;
         public float timeLeft;
         public int debuff;
         public Color color;
 
-        public float StartTime { get { return startTime; } set { startTime = value; timeLeft = value; } }
+        public float StartTimeLeft { get { return startTimeLeft; } set { startTimeLeft = value; timeLeft = value; } }
 
         public PlayerInfo(Color color, float startTime)
         {
-            StartTime = startTime;
+            StartTimeLeft = startTime;
             this.color = color;
             debuff = 0;
         }
@@ -103,6 +103,8 @@ public class Timer : MonoBehaviour
     private DateTime? startTime = null;
     private bool timerRanOff = false;
 
+    private float ServerTimeDiff { get { return GameManager.gameType == GameType.ONLINE && OnlineClient.Instance && OnlineClient.Instance.IsActive ? OnlineClient.Instance.ServerTimeDiff : 0; } }
+
     private void Awake()
     {
         SubscribeEvents();
@@ -134,8 +136,8 @@ public class Timer : MonoBehaviour
         {
             timerRanOff = false;
 
-            float timePassed = TimerUtils.TimeSince(startTime.Value);
-            playerStats[side].timeLeft = playerStats[side].StartTime - timePassed;
+            float timePassed = TimerUtils.TimeSince(startTime.Value) - ServerTimeDiff;
+            playerStats[side].timeLeft = playerStats[side].StartTimeLeft - timePassed;
 
             PrintTime(playerStats[side].timeLeft);
         }
@@ -183,8 +185,8 @@ public class Timer : MonoBehaviour
 
     private void UpdateData(float pinkTimeLeft, float blueTimeLeft, DateTime startTime)
     {
-        playerStats[PlayerType.pink].StartTime = pinkTimeLeft;
-        playerStats[PlayerType.blue].StartTime = blueTimeLeft;
+        playerStats[PlayerType.pink].StartTimeLeft = pinkTimeLeft;
+        playerStats[PlayerType.blue].StartTimeLeft = blueTimeLeft;
 
         this.startTime = startTime;
     }
@@ -222,11 +224,11 @@ public class Timer : MonoBehaviour
         if (timerType == TimerType.GAMEPLAY)
         {
             UpdateLamps(playerStats[nextPlayer].debuff);
-            playerStats[nextPlayer].StartTime = TotalTime[timerType] * Mathf.Pow(1 - debuffRate, playerStats[nextPlayer].debuff);
+            playerStats[nextPlayer].StartTimeLeft = TotalTime[timerType] * Mathf.Pow(1 - debuffRate, playerStats[nextPlayer].debuff);
         } else
         {
             PlayerType lastPlayer = PlayerManager.GetOtherSide(nextPlayer);
-            playerStats[lastPlayer].StartTime = playerStats[lastPlayer].timeLeft;
+            playerStats[lastPlayer].StartTimeLeft = playerStats[lastPlayer].timeLeft;
         }
 
         PrintTime(playerStats[nextPlayer].timeLeft);

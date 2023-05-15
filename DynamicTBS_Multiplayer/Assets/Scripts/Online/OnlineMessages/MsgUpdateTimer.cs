@@ -4,20 +4,20 @@ using UnityEngine;
 using Unity.Networking.Transport;
 using System;
 
-public class MsgSyncTimer : OnlineMessage
+public class MsgUpdateTimer : OnlineMessage
 {
     public float pinkTimeLeft;
     public float blueTimeLeft;
     public DateTime startTimestamp;
 
-    public MsgSyncTimer() // Constructing a message.
+    public MsgUpdateTimer() // Constructing a message.
     {
-        Code = OnlineMessageCode.SYNC_TIMER;
+        Code = OnlineMessageCode.UPDATE_TIMER;
     }
 
-    public MsgSyncTimer(DataStreamReader reader) // Receiving a message.
+    public MsgUpdateTimer(DataStreamReader reader) // Receiving a message.
     {
-        Code = OnlineMessageCode.SYNC_TIMER;
+        Code = OnlineMessageCode.UPDATE_TIMER;
         Id = reader.ReadFixedString64().Value;
         LobbyId = reader.ReadInt();
         Deserialize(reader);

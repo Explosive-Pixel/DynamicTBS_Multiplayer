@@ -126,9 +126,9 @@ public class LobbyTimer
         OnlineServer.Instance.Broadcast(WriteMsgSyncTimer(), lobbyId);
     }
 
-    private MsgSyncTimer WriteMsgSyncTimer()
+    private MsgUpdateTimer WriteMsgSyncTimer()
     {
-        return new MsgSyncTimer
+        return new MsgUpdateTimer
         {
             pinkTimeLeft = timePerPlayer[PlayerType.pink].StartTime,
             blueTimeLeft = timePerPlayer[PlayerType.blue].StartTime,

@@ -116,9 +116,7 @@ public static class BuildScript
     private static void SetPlayerSettings(BuildType buildType)
     {
         PlayerSettings.resizableWindow = true;
-
-        if(buildType == BuildType.Client)
-            PlayerSettings.allowFullscreenSwitch = true;
+        PlayerSettings.allowFullscreenSwitch = buildType == BuildType.Client;
     }
 
     private static string[] ConfigureScenes(BuildType buildType)
