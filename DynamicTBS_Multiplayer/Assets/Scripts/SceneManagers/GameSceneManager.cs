@@ -88,12 +88,14 @@ public class GameSceneManager : MonoBehaviour
         if(gamePhase == GamePhase.DRAFT)
         {
             HandleMenus(gameplayCanvas);
+            gameplayObjectsObject.SetActive(true);
         }
     }
 
     private void GoToGameOverScreen(PlayerType? winner, GameOverCondition endGameCondition)
     {
         HandleMenus(gameOverCanvas);
+        gameplayObjectsObject.SetActive(false);
         Text gameOverText = gameOverCanvas.GetComponentInChildren<Text>();
         Color backgroundColor = Color.gray;
         if (winner != null)

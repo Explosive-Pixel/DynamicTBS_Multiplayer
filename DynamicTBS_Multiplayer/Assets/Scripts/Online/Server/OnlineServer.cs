@@ -27,7 +27,6 @@ public class OnlineServer : MonoBehaviour
 
     private int lobbyIdCounter = 0;
 
-    //private List<NetworkConnection> AllConnections { get { return lobbies.ConvertAll(lobby => lobby.Connections).SelectMany(cnn => cnn).ToList(); } }
     private List<NetworkConnection> AllConnections = new List<NetworkConnection>();
     public int ConnectionCount { get { return AllConnections.Count; } }
 
@@ -60,8 +59,14 @@ public class OnlineServer : MonoBehaviour
             driver.Listen(); // Makes server listen to clients.
             Debug.Log("Server: Currently listening to port " + endPoint.Port);
 
-            using WebClient client = new WebClient();
-            ip = client.DownloadString("https://api.ipify.org");
+            try
+            {
+                using WebClient client = new WebClient();
+                ip = client.DownloadString("https://api.ipify.org");
+            } catch(Exception)
+            {
+                ip = "Unable to find out IP address.";
+            }
         }
 
         messageBroker.Driver = driver;
