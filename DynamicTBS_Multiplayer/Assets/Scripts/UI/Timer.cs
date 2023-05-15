@@ -165,11 +165,20 @@ public class Timer : MonoBehaviour
         GameplayEvents.OnTimerUpdate += UpdateData;
         GameplayEvents.OnTimerTimeout += DrawNoTimeLeftConsequences;
         GameplayEvents.OnPlayerTurnEnded += ResetTimer;
+        GameplayEvents.OnGamePause += OnUnpauseGame;
 
         ResetTimer(PlayerManager.StartPlayer[gamePhase]);
 
         isActive = true;
         timer.SetActive(true);
+    }
+
+    private void OnUnpauseGame(bool paused)
+    {
+        if(!paused)
+        {
+            UpdateData(playerStats[PlayerType.pink].timeLeft, playerStats[PlayerType.blue].timeLeft, TimerUtils.Timestamp());
+        }
     }
 
     private void UpdateData(float pinkTimeLeft, float blueTimeLeft, DateTime startTime)
@@ -300,6 +309,7 @@ public class Timer : MonoBehaviour
         GameplayEvents.OnPlayerTurnEnded -= ResetTimer;
         GameplayEvents.OnTimerUpdate -= UpdateData;
         GameplayEvents.OnTimerTimeout -= DrawNoTimeLeftConsequences;
+        GameplayEvents.OnGamePause -= OnUnpauseGame;
     }
 
     private void OnDestroy()

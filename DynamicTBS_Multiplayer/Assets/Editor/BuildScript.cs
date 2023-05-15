@@ -98,7 +98,7 @@ public static class BuildScript
             buildPath += ".x86_64";
         }
 
-        SetPlayerSettings();
+        SetPlayerSettings(buildType);
 
         BuildReport report = BuildPipeline.BuildPlayer(ConfigureScenes(buildType), buildPath, buildTarget, BuildOptions.None);
 
@@ -113,10 +113,12 @@ public static class BuildScript
         }
     }
 
-    private static void SetPlayerSettings()
+    private static void SetPlayerSettings(BuildType buildType)
     {
         PlayerSettings.resizableWindow = true;
-        PlayerSettings.allowFullscreenSwitch = true;
+
+        if(buildType == BuildType.Client)
+            PlayerSettings.allowFullscreenSwitch = true;
     }
 
     private static string[] ConfigureScenes(BuildType buildType)

@@ -28,14 +28,16 @@ public class MsgSyncTimer : OnlineMessage
         base.Serialize(ref writer, lobbyId);
         writer.WriteFloat(pinkTimeLeft);
         writer.WriteFloat(blueTimeLeft);
-        writer.WriteFixedString32(startTimestamp.ToString("yyyy-MM-ddTHH:mm:ss.fffff"));
+        string time = startTimestamp.ToString("O");
+        writer.WriteFixedString32(time);
     }
 
     public override void Deserialize(DataStreamReader reader)
     {
         pinkTimeLeft = reader.ReadFloat();
         blueTimeLeft = reader.ReadFloat();
-        startTimestamp = DateTime.Parse(reader.ReadFixedString32().Value);
+        string time = reader.ReadFixedString32().Value;
+        startTimestamp = DateTime.Parse(time).ToUniversalTime();
     }
 
     public override void ReceivedOnClient()
