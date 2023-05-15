@@ -14,12 +14,13 @@ public enum OnlineMessageCode
     SERVER_NOTIFICATION = 5,
     DRAFT_CHARACTER = 6,
     PERFORM_ACTION = 7,
-    SYNC_TIMER = 8,
+    UPDATE_TIMER = 8,
     START_GAME = 9,
     UPDATE_SERVER = 10,
     GAME_OVER = 11,
     PLAYER_NAMES = 12,
-    ACKNOWLEDGE_MSG = 13
+    ACKNOWLEDGE_MSG = 13,
+    SYNC_TIME = 14
 }
 
 public static class OnlineMessageHandler
@@ -55,8 +56,8 @@ public static class OnlineMessageHandler
             case OnlineMessageCode.PERFORM_ACTION:
                 msg = new MsgPerformAction(stream);
                 break;
-            case OnlineMessageCode.SYNC_TIMER:
-                msg = new MsgSyncTimer(stream);
+            case OnlineMessageCode.UPDATE_TIMER:
+                msg = new MsgUpdateTimer(stream);
                 break;
             case OnlineMessageCode.START_GAME:
                 msg = new MsgStartGame(stream);
@@ -72,6 +73,9 @@ public static class OnlineMessageHandler
                 break;
             case OnlineMessageCode.ACKNOWLEDGE_MSG:
                 msg = new MsgAcknowledgement(stream);
+                break;
+            case OnlineMessageCode.SYNC_TIME:
+                msg = new MsgSyncTime(stream);
                 break;
             default:
                 Debug.LogError("Message received had no operation code.");

@@ -78,6 +78,9 @@ public class OnlineClient : MonoBehaviour
 
     private Dictionary<PlayerType, string> playerNames = new();
 
+    private float serverTimeDiff = 0;
+    public float ServerTimeDiff { get { return serverTimeDiff; } set { serverTimeDiff = value; } }
+
     #region Networking
     public void Init(string ip, ushort port, UserData userData, LobbyId lobbyId)
     {
@@ -138,6 +141,7 @@ public class OnlineClient : MonoBehaviour
                 {
                     Debug.Log("Client: We're connected!");
                     connectionStatus = ConnectionStatus.CONNECTED;
+                    SyncTimeWithServer();
                     JoinLobby();
                 }
                 else if (cmd == NetworkEvent.Type.Data)
@@ -221,6 +225,11 @@ public class OnlineClient : MonoBehaviour
             side = side,
             opponentName = opponentName
         });
+    }
+
+    private void SyncTimeWithServer()
+    {
+        SendToServer(new MsgSyncTime {});
     }
 
     private void JoinLobby()
