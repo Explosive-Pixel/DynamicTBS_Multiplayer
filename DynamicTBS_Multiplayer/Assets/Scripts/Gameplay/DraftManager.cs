@@ -11,20 +11,20 @@ public class DraftManager : MonoBehaviour
     public const int MaxDraftCount = 14;
     public static readonly List<int> draftOrder = new List<int>() {3, 6, 7, 9, 11, 13};
     private static List<Vector3> instantiationPositions = new List<Vector3>() {
-        new Vector3(1f, 2.75f, 0.998f), 
-        new Vector3(2f, 2.75f, 0.998f), 
-        new Vector3(3f, 2.75f, 0.998f), 
-        new Vector3(-1f, 1.8f, 0.998f), 
-        new Vector3(-2f, 1.8f, 0.998f), 
-        new Vector3(-3f, 1.8f, 0.998f), 
-        new Vector3(1f, 0.9f, 0.998f), 
-        new Vector3(-1f, -0.05f, 0.998f), 
-        new Vector3(-2f, -0.05f, 0.998f), 
-        new Vector3(1f, -0.95f, 0.998f), 
-        new Vector3(2f, -0.95f, 0.998f), 
-        new Vector3(-1f, -1.9f, 0.998f), 
-        new Vector3(-2f, -1.9f, 0.998f), 
-        new Vector3(1f, -2.85f, 0.998f) };
+        new Vector3(1f, 2.75f, 1f), 
+        new Vector3(2f, 2.75f, 1f), 
+        new Vector3(3f, 2.75f, 1f), 
+        new Vector3(-1f, 1.8f, 1f), 
+        new Vector3(-2f, 1.8f, 1f), 
+        new Vector3(-3f, 1.8f, 1f), 
+        new Vector3(1f, 0.9f, 1f), 
+        new Vector3(-1f, -0.05f, 1f), 
+        new Vector3(-2f, -0.05f, 1f), 
+        new Vector3(1f, -0.95f, 1f), 
+        new Vector3(2f, -0.95f, 1f), 
+        new Vector3(-1f, -1.9f, 1f), 
+        new Vector3(-2f, -1.9f, 1f), 
+        new Vector3(1f, -2.85f, 1f) };
 
     #endregion
 
@@ -74,10 +74,33 @@ public class DraftManager : MonoBehaviour
         AdvanceDraftOrder();
     }
 
+    public static void RandomDrafts(Player side)
+    {
+        int i = GetRemainingDraftCount(side);
+        while (i-- > 0)
+        {
+            RandomDraft(side);
+        }
+    }
+
     public static void RandomDraft(Player side)
     {
         CharacterType randomCharacterType = CharacterFactory.GetRandomCharacterType();
         DraftCharacter(randomCharacterType, side);
+    }
+
+    public static int GetRemainingDraftCount(Player currentPlayer)
+    {
+        if(PlayerManager.GetCurrentPlayer() != currentPlayer)
+        {
+            return 0;
+        }
+
+        if (draftOrderIndex == draftOrder.Count)
+        {
+            return MaxDraftCount - draftCounter;
+        }
+        return draftOrder[draftOrderIndex] - draftCounter;
     }
 
     public static int GetCurrentDraftCount()

@@ -17,6 +17,8 @@ public class MsgJoinLobby : OnlineMessage
     public MsgJoinLobby(DataStreamReader reader) // Receiving a message.
     {
         Code = OnlineMessageCode.JOIN_LOBBY;
+        Id = reader.ReadFixedString64().Value;
+        LobbyId = reader.ReadInt();
         Deserialize(reader);
     }
 
@@ -30,7 +32,6 @@ public class MsgJoinLobby : OnlineMessage
 
     public override void Deserialize(DataStreamReader reader)
     {
-        LobbyId = reader.ReadInt();
         create = ToBool(reader.ReadByte());
         lobbyName = reader.ReadFixedString32().Value;
         userData = UserData.Deserialize(reader);

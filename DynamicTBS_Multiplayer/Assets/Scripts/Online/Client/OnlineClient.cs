@@ -24,6 +24,8 @@ public enum ConnectionStatus
 
 public class OnlineClient : MonoBehaviour
 {
+    [SerializeField] private MessageBroker messageBroker;
+
     private GameObject onlineGameManagerObject;
 
     #region SingletonImplementation
@@ -48,6 +50,8 @@ public class OnlineClient : MonoBehaviour
     public Action connectionDropped;
 
     private bool isActive = false;
+    public bool IsActive { get { return isActive; } }
+
     private ConnectionStatus connectionStatus = ConnectionStatus.UNCONNECTED;
     public ConnectionStatus ConnectionStatus { get { return connectionStatus; } set { connectionStatus = value; } }
 
@@ -74,9 +78,10 @@ public class OnlineClient : MonoBehaviour
 
     private Dictionary<PlayerType, string> playerNames = new();
 
+    #region Networking
     public void Init(string ip, ushort port, UserData userData, LobbyId lobbyId)
     {
-        this.ip = ResolveIp(ip);
+        this.ip = IPResolver.ResolveIp(ip);
         Debug.Log("Resolved IP is " + this.ip);
 
         this.port = port;
@@ -89,6 +94,8 @@ public class OnlineClient : MonoBehaviour
         connection = driver.Connect(endPoint); // Connecting based on the endpoint that was just created.
         connectionStatus = ConnectionStatus.ATTEMPT_CONNECTION;
         Debug.Log("Client: Attempting to connect to server on " + endPoint.Address);
+
+        messageBroker.Driver = driver;
 
         isActive = true;
     }
@@ -104,11 +111,74 @@ public class OnlineClient : MonoBehaviour
 
     public void SendToServer(OnlineMessage msg)
     {
-        DataStreamWriter writer;
-        driver.BeginSend(connection, out writer);
-        msg.Serialize(ref writer, lobbyId.Id);
-        driver.EndSend(writer);
+        messageBroker.SendMessage(msg, connection, lobbyId.Id);
     }
+
+    private void CheckAlive()
+    {
+        if (!connection.IsCreated && isActive) // If no connections is created, but client is active, something went wrong.
+        {
+            Debug.Log("Client: Something went wrong. Lost connection to server.");
+            connectionDropped?.Invoke();
+            connectionStatus = ConnectionStatus.UNCONNECTED;
+            Reconnect();
+        }
+    }
+
+    private void UpdateMessagePump()
+    {
+        try
+        {
+            DataStreamReader stream; // Reads incoming messages.
+            NetworkEvent.Type cmd;
+
+            while (connection != null && (cmd = connection.PopEvent(driver, out stream)) != NetworkEvent.Type.Empty)
+            {
+                if (cmd == NetworkEvent.Type.Connect)
+                {
+                    Debug.Log("Client: We're connected!");
+                    connectionStatus = ConnectionStatus.CONNECTED;
+                    JoinLobby();
+                }
+                else if (cmd == NetworkEvent.Type.Data)
+                {
+                    OnlineMessageHandler.HandleData(stream, connection);
+                }
+                else if (cmd == NetworkEvent.Type.Disconnect)
+                {
+                    Debug.Log("Client: Client disconnected from server.");
+                    connectionStatus = ConnectionStatus.UNCONNECTED;
+                    connection = default(NetworkConnection);
+                    connectionDropped?.Invoke();
+                    Shutdown();
+                }
+            }
+        }
+        catch (Exception)
+        {
+            return;
+        }
+    }
+
+    private void Reconnect()
+    {
+        Init(ip, port, userData, lobbyId);
+    }
+
+    public void Shutdown()
+    {
+        if (isActive)
+        {
+            Debug.Log("Shutting down Client.");
+            connection.Disconnect(driver);
+            driver.Dispose();
+            isActive = false;
+            connectionStatus = ConnectionStatus.UNCONNECTED;
+            Destroy(this.gameObject);
+        }
+    }
+
+    #endregion
 
     public bool ShouldReadMessage(PlayerType playerType)
     {
@@ -178,107 +248,8 @@ public class OnlineClient : MonoBehaviour
         GameEvents.StartGame();
     }
 
-    private void CheckAlive()
-    {
-        if (!connection.IsCreated && isActive) // If no connections is created, but client is active, something went wrong.
-        {
-            Debug.Log("Client: Something went wrong. Lost connection to server.");
-            connectionDropped?.Invoke();
-            connectionStatus = ConnectionStatus.UNCONNECTED;
-            Reconnect();
-        }
-    }
-
-    private void UpdateMessagePump()
-    {
-        try
-        {
-            DataStreamReader stream; // Reads incoming messages.
-            NetworkEvent.Type cmd;
-
-            while (connection != null && (cmd = connection.PopEvent(driver, out stream)) != NetworkEvent.Type.Empty)
-            {
-                if (cmd == NetworkEvent.Type.Connect)
-                {
-                    Debug.Log("Client: We're connected!");
-                    connectionStatus = ConnectionStatus.CONNECTED;
-                    JoinLobby();
-                }
-                else if (cmd == NetworkEvent.Type.Data)
-                {
-                    OnlineMessageHandler.HandleData(stream, default(NetworkConnection));
-                }
-                else if (cmd == NetworkEvent.Type.Disconnect)
-                {
-                    Debug.Log("Client: Client disconnected from server.");
-                    connectionStatus = ConnectionStatus.UNCONNECTED;
-                    connection = default(NetworkConnection);
-                    connectionDropped?.Invoke();
-                    Shutdown();
-                }
-            }
-        }
-        catch (Exception)
-        {
-            return;
-        }
-    }
-
-    private void Reconnect()
-    {
-        Init(ip, port, userData, lobbyId);
-    }
-
-    public void Shutdown()
-    {
-        if (isActive)
-        {
-            Debug.Log("Shutting down Client.");
-            connection.Disconnect(driver);
-            driver.Dispose();
-            isActive = false;
-            connectionStatus = ConnectionStatus.UNCONNECTED;
-            Destroy(this.gameObject);
-        }
-    }
-
     private void OnDestroy()
     {
         Shutdown();
-    }
-
-    private string ResolveIp(string givenIp)
-    {
-        if (IPAddress.TryParse(givenIp, out IPAddress ip))
-        {
-            if (ip.AddressFamily == AddressFamily.InterNetwork)
-            {
-                return givenIp; // input is a valid IPv4 address
-            }
-        }
-        try
-        {
-            IPAddress[] addresses = Dns.GetHostAddresses(givenIp);
-            if (addresses.Length > 0)
-            {
-                foreach (IPAddress address in addresses)
-                {
-                    if (address.AddressFamily == AddressFamily.InterNetwork)
-                    {
-                        return address.ToString(); // input is a valid host address and this is the resolved ip address
-                    }
-                }
-            }
-            else
-            {
-                Debug.LogError("Failed to resolve URL.");
-            }
-        }
-        catch (SocketException)
-        {
-            Debug.LogError("Failed to resolve URL."); // exception means input is not a valid host address
-        }
-
-        return null;
     }
 }

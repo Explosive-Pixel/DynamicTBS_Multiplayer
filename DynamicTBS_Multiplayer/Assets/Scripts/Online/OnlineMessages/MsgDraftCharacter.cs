@@ -16,6 +16,8 @@ public class MsgDraftCharacter : OnlineMessage
     public MsgDraftCharacter(DataStreamReader reader) // Receiving a message.
     {
         Code = OnlineMessageCode.DRAFT_CHARACTER;
+        Id = reader.ReadFixedString64().Value;
+        LobbyId = reader.ReadInt();
         Deserialize(reader);
     }
 
@@ -28,7 +30,6 @@ public class MsgDraftCharacter : OnlineMessage
 
     public override void Deserialize(DataStreamReader reader)
     {
-        LobbyId = reader.ReadInt();
         playerId = (PlayerType)reader.ReadByte();
         characterType = (CharacterType)reader.ReadByte();
     }

@@ -24,6 +24,8 @@ public class MsgUpdateServer : OnlineMessage
     public MsgUpdateServer(DataStreamReader reader) // Receiving a message.
     {
         Code = OnlineMessageCode.UPDATE_SERVER;
+        Id = reader.ReadFixedString64().Value;
+        LobbyId = reader.ReadInt();
         Deserialize(reader);
     }
 
@@ -36,7 +38,6 @@ public class MsgUpdateServer : OnlineMessage
 
     public override void Deserialize(DataStreamReader reader)
     {
-        LobbyId = reader.ReadInt();
         currentPlayer = (PlayerType)reader.ReadByte();
         gamePhase = (GamePhase)reader.ReadByte();
     }

@@ -17,6 +17,8 @@ public class MsgUpdateClient : OnlineMessage
     public MsgUpdateClient(DataStreamReader reader) // Receiving a message.
     {
         Code = OnlineMessageCode.UPDATE_CLIENT;
+        Id = reader.ReadFixedString64().Value;
+        LobbyId = reader.ReadInt();
         Deserialize(reader);
     }
 
@@ -30,7 +32,6 @@ public class MsgUpdateClient : OnlineMessage
 
     public override void Deserialize(DataStreamReader reader)
     {
-        LobbyId = reader.ReadInt();
         isAdmin = ToBool(reader.ReadByte());
         side = (PlayerType)reader.ReadByte();
         opponentName = reader.ReadFixedString32().Value;

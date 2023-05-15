@@ -22,6 +22,8 @@ public class MsgPerformAction : OnlineMessage
     public MsgPerformAction(DataStreamReader reader) // Receiving a message.
     {
         Code = OnlineMessageCode.PERFORM_ACTION;
+        Id = reader.ReadFixedString64().Value;
+        LobbyId = reader.ReadInt();
         Deserialize(reader);
     }
 
@@ -40,7 +42,6 @@ public class MsgPerformAction : OnlineMessage
 
     public override void Deserialize(DataStreamReader reader)
     {
-        LobbyId = reader.ReadInt();
         playerId = (PlayerType)reader.ReadByte();
         characterX = reader.ReadFloat();
         characterY = reader.ReadFloat();

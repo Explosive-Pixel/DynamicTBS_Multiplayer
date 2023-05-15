@@ -64,6 +64,15 @@ public class PlacementManager : MonoBehaviour
         }    
     }
 
+    public static void RandomPlacements(Player side)
+    {
+        int i = GetRemainingPlacementCount(side);
+        while (i-- > 0)
+        {
+            RandomPlacement(side);
+        }
+    }
+
     public static void RandomPlacement(Player side)
     {
         List<Character> charactersOfPlayer = CharacterHandler.GetAllLivingCharacters()
@@ -77,12 +86,26 @@ public class PlacementManager : MonoBehaviour
             ActionUtils.ExecuteAction(randomPosition);
         } 
     }
-    
+
     public void SpawnMasters()
     {
         SpawnMaster(PlayerType.blue);
         SpawnMaster(PlayerType.pink);
         AudioEvents.SpawningMasters();
+    }
+
+    public static int GetRemainingPlacementCount(Player currentPlayer)
+    {
+        if (PlayerManager.GetCurrentPlayer() != currentPlayer)
+        {
+            return 0;
+        }
+
+        if (placementOrderIndex == placementOrder.Count)
+        {
+            return MaxPlacementCount - placementCount;
+        }
+        return placementOrder[placementOrderIndex] - placementCount;
     }
 
     public static int GetCurrentPlacementCount()

@@ -18,6 +18,8 @@ public class OnlineServer : MonoBehaviour
 
     #endregion
 
+    [SerializeField] private MessageBroker messageBroker;
+
     private NetworkDriver driver;
 
     private List<Lobby> lobbies = new List<Lobby>();
@@ -40,6 +42,8 @@ public class OnlineServer : MonoBehaviour
     private string ip;
     public string IP { get { return ip; } }
 
+    #region Networking
+
     public void Init(ushort port) // Initiation method.
     {
         driver = NetworkDriver.Create();
@@ -59,6 +63,8 @@ public class OnlineServer : MonoBehaviour
             using WebClient client = new WebClient();
             ip = client.DownloadString("https://api.ipify.org");
         }
+
+        messageBroker.Driver = driver;
 
         isActive = true;
     }
@@ -83,10 +89,7 @@ public class OnlineServer : MonoBehaviour
 
     public void SendToClient(OnlineMessage msg, NetworkConnection connection, int lobbyId) // Send specific message to specific client.
     {
-        DataStreamWriter writer; // Able to write net messages.
-        driver.BeginSend(connection, out writer); // Finds connection and whom to write message to.
-        msg.Serialize(ref writer, lobbyId); // Writes message.
-        driver.EndSend(writer); // Transmits message.
+        messageBroker.SendMessage(msg, connection, lobbyId);
     }
 
     public void Broadcast(OnlineMessage msg, int lobbyId)
@@ -111,6 +114,108 @@ public class OnlineServer : MonoBehaviour
             }
         }
     }
+
+    private void AcceptNewConnections()
+    {
+        NetworkConnection c;
+        while ((c = driver.Accept()) != default(NetworkConnection)) // Checks if a client tries to connect who's not the default connection.
+        {
+            Debug.Log("New client connected: " + c.ToString());
+            AllConnections.Add(c);
+        }
+    }
+
+    private void UpdateMessagePump()
+    {
+        try
+        {
+            DataStreamReader stream; // Reads incoming messages.
+            for (int i = 0; i < AllConnections.Count; i++)
+            {
+                NetworkConnection cnn = AllConnections[i];
+                NetworkEvent.Type cmd;
+                // There are 4 types of network events:
+                // Empty = nothing was sent.
+                // Connect = connection is made.
+                // Data = any net-message sent.
+                // Disconnect = connection is severed.
+
+                while ((cmd = driver.PopEventForConnection(cnn, out stream)) != NetworkEvent.Type.Empty)
+                {
+                    if (cmd == NetworkEvent.Type.Data)
+                    {
+                        OnlineMessageHandler.HandleData(stream, cnn, this);
+                    }
+                    else if (cmd == NetworkEvent.Type.Disconnect)
+                    {
+                        Debug.Log("Client disconnected from server: " + cnn.ToString());
+                        DisconnectClient(cnn);
+                    }
+                }
+            }
+        }
+        catch (Exception)
+        {
+            return;
+        }
+    }
+
+    private void KeepAlive()
+    {
+        if (Time.time - lastKeepAlive > KeepAliveTickRate)
+        {
+            lastKeepAlive = Time.time;
+            lobbies.ForEach(lobby => BroadcastMetadata(lobby));
+        }
+    }
+
+    private void BroadcastMetadata(Lobby lobby)
+    {
+        Broadcast(new MsgMetadata
+        {
+            playerCount = lobby.Players.Count,
+            spectatorCount = lobby.Spectators.Count
+        }, lobby);
+    }
+
+    private void DisconnectClient(NetworkConnection cnn)
+    {
+        AllConnections.Remove(cnn);
+        messageBroker.RemoveConnection(cnn);
+
+        Lobby lobby = FindLobby(cnn);
+        if (lobby != null)
+        {
+            lobby.RemoveConnection(cnn);
+            BroadcastMetadata(lobby);
+        }
+
+        connectionDropped?.Invoke();
+    }
+
+    private void CleanUpConnections()
+    {
+        lobbies.ForEach(lobby => lobby.CleanUpConnections());
+        CleanUpLobbies();
+    }
+
+    private void CleanUpLobbies()
+    {
+        lobbies.RemoveAll(lobby => !lobby.IsActive);
+    }
+
+    public void Shutdown() // For shutting down the server.
+    {
+        if (isActive)
+        {
+            Debug.Log("Shutting down Server.");
+            driver.Dispose();
+            lobbies.Clear();
+            isActive = false;
+        }
+    }
+
+    #endregion
 
     public void CreateLobby(string lobbyName, NetworkConnection cnn, UserData userData)
     {
@@ -191,7 +296,7 @@ public class OnlineServer : MonoBehaviour
         BroadcastMetadata(lobby);
         lobby.UpdatePlayers();
 
-        StartCoroutine(SendGameState(connection.NetworkConnection, lobby));
+        lobby.SendGameState(connection.NetworkConnection);
     }
 
     public void StartGame(int lobbyId, TimerSetupType timerSetup, MapType selectedMap)
@@ -204,140 +309,6 @@ public class OnlineServer : MonoBehaviour
     {
         Lobby lobby = FindLobby(msg.LobbyId);
         lobby.ArchiveCharacterDraft(msg.playerId, msg.characterType);
-    }
-
-    private IEnumerator SendGameState(NetworkConnection cnn, Lobby lobby)
-    {
-        if (lobby.MessageHistory.Count > 0)
-        {
-            lobby.UpdateConnectionsAfterReconnect(cnn);
-
-            Debug.Log("Sending history to client: " + lobby.MessageHistory.Count);
-            float delay = 0.1f;
-
-            ToggleSendGameState(cnn, lobby);
-
-            yield return new WaitForSeconds(delay);
-
-            int i = 0;
-            while (i < lobby.MessageHistory.Count)
-            {
-                SendToClient(lobby.MessageHistory[i], cnn, lobby.ShortId);
-                i++;
-                yield return new WaitForSeconds(delay);
-            }
-
-            lobby.UpdateTimer();
-
-            ToggleSendGameState(cnn, lobby);
-        }
-    }
-
-    private void ToggleSendGameState(NetworkConnection cnn, Lobby lobby)
-    {
-        SendToClient(new MsgServerNotification
-        {
-            serverNotification = ServerNotification.TOGGLE_LOAD_GAME_STATUS
-        }, cnn, lobby.ShortId);
-    }
-
-    private void AcceptNewConnections()
-    {
-        NetworkConnection c;
-        while ((c = driver.Accept()) != default(NetworkConnection)) // Checks if a client tries to connect who's not the default connection.
-        {
-            Debug.Log("New client connected: " + c.ToString());
-            AllConnections.Add(c);
-        }
-    }
-
-    private void UpdateMessagePump()
-    {
-        try
-        {
-            DataStreamReader stream; // Reads incoming messages.
-            for (int i = 0; i < AllConnections.Count; i++)
-            {
-                NetworkConnection cnn = AllConnections[i];
-                NetworkEvent.Type cmd;
-                // There are 4 types of network events:
-                // Empty = nothing was sent.
-                // Connect = connection is made.
-                // Data = any net-message sent.
-                // Disconnect = connection is severed.
-
-                while ((cmd = driver.PopEventForConnection(cnn, out stream)) != NetworkEvent.Type.Empty)
-                {
-                    if (cmd == NetworkEvent.Type.Data)
-                    {
-                        OnlineMessageHandler.HandleData(stream, cnn, this);
-                    }
-                    else if (cmd == NetworkEvent.Type.Disconnect)
-                    {
-                        Debug.Log("Client disconnected from server: " + cnn.ToString());
-                        DisconnectClient(cnn);
-                    }
-                }
-            }
-        }
-        catch (Exception)
-        {
-            return;
-        }
-    }
-
-    private void KeepAlive()
-    {
-        if (Time.time - lastKeepAlive > KeepAliveTickRate)
-        {
-            lastKeepAlive = Time.time;
-            lobbies.ForEach(lobby => BroadcastMetadata(lobby));
-        }
-    }
-
-    private void BroadcastMetadata(Lobby lobby)
-    {
-        Broadcast(new MsgMetadata 
-        { 
-            playerCount = lobby.Players.Count,
-            spectatorCount = lobby.Spectators.Count 
-        }, lobby);
-    }
-
-    private void DisconnectClient(NetworkConnection cnn)
-    {
-        AllConnections.Remove(cnn);
-
-        Lobby lobby = FindLobby(cnn);
-        if (lobby != null)
-        {
-            lobby.RemoveConnection(cnn);
-            BroadcastMetadata(lobby);
-        }
-
-        connectionDropped?.Invoke();
-    }
-
-    private void CleanUpConnections()
-    {
-        lobbies.ForEach(lobby => lobby.CleanUpConnections());
-        CleanUpLobbies();
-    }
-
-    private void CleanUpLobbies()
-    {
-        lobbies.RemoveAll(lobby => !lobby.IsActive);
-    }
-
-    public void Shutdown() // For shutting down the server.
-    {
-        if (isActive)
-        {
-            Debug.Log("Shutting down Server.");
-            driver.Dispose();
-            lobbies.Clear();
-            isActive = false;
-        }
     }
 
     public Lobby FindLobby(int lobbyId)

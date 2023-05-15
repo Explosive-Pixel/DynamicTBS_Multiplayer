@@ -2161,11 +2161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ef498916f4231e4c916379cfeaeef64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aspectRatio: 1.7777778
-  minWidth: 800
-  minHeight: 450
-  maxWidth: 1920
-  maxHeight: 1080
+  targetAspectRatio: 1.7777778
 --- !u!4 &442181169
 Transform:
   m_ObjectHideFlags: 0
@@ -7329,6 +7325,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toggleObjects: {fileID: 73251815}
+  fullscreenToggle: {fileID: 272439586}
   audioMixer: {fileID: 24100000, guid: 543efb771a7967b4486cdbffa5a9d264, type: 2}
 --- !u!114 &1435850032
 MonoBehaviour:

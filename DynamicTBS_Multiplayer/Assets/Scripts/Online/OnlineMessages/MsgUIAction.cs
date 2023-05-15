@@ -26,6 +26,8 @@ public class MsgUIAction : OnlineMessage
     public MsgUIAction(DataStreamReader reader) // Receiving a message.
     {
         Code = OnlineMessageCode.UI_ACTION;
+        Id = reader.ReadFixedString64().Value;
+        LobbyId = reader.ReadInt();
         Deserialize(reader);
     }
 
@@ -38,7 +40,6 @@ public class MsgUIAction : OnlineMessage
 
     public override void Deserialize(DataStreamReader reader)
     {
-        LobbyId = reader.ReadInt();
         playerId = (PlayerType)reader.ReadByte();
         uiAction = (UIAction)reader.ReadByte();
     }

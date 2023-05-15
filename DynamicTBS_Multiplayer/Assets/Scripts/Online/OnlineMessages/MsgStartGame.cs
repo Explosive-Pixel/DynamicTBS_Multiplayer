@@ -16,6 +16,8 @@ public class MsgStartGame : OnlineMessage
     public MsgStartGame(DataStreamReader reader) // Receiving a message.
     {
         Code = OnlineMessageCode.START_GAME;
+        Id = reader.ReadFixedString64().Value;
+        LobbyId = reader.ReadInt();
         Deserialize(reader);
     }
 
@@ -28,7 +30,6 @@ public class MsgStartGame : OnlineMessage
 
     public override void Deserialize(DataStreamReader reader)
     {
-        LobbyId = reader.ReadInt();
         timerSetup = (TimerSetupType)reader.ReadByte();
         selectedMap = (MapType)reader.ReadByte();
     }

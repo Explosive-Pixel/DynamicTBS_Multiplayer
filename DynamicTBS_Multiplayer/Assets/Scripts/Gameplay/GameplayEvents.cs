@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public static class GameplayEvents
 {
@@ -37,10 +38,10 @@ public static class GameplayEvents
     public delegate void GamePaused(bool paused);
     public static event GamePaused OnGamePause;
 
-    public delegate void TimerUpdate(float pinkTimeLeft, float blueTimeLeft, int pinkDebuff, int blueDebuff);
+    public delegate void TimerUpdate(float pinkTimeLeft, float blueTimeLeft, DateTime startTimestamp);
     public static event TimerUpdate OnTimerUpdate;
 
-    public delegate void TimerTimeout(GamePhase gamePhase, PlayerType currentPlayer, int currentPlayerTimerDebuff);
+    public delegate void TimerTimeout(GamePhase gamePhase, PlayerType currentPlayer);
     public static event TimerTimeout OnTimerTimeout;
 
     public static void RestartGameplay()
@@ -115,15 +116,15 @@ public static class GameplayEvents
         }
     }
 
-    public static void UpdateTimer(float pinkTimeLeft, float blueTimeLeft, int pinkDebuff, int blueDebuff)
+    public static void UpdateTimer(float pinkTimeLeft, float blueTimeLeft, DateTime startTimestamp)
     {
         if (OnTimerUpdate != null)
-            OnTimerUpdate(pinkTimeLeft, blueTimeLeft, pinkDebuff, blueDebuff);
+            OnTimerUpdate(pinkTimeLeft, blueTimeLeft, startTimestamp);
     }
 
-    public static void TimerTimedOut(GamePhase gamePhase, PlayerType currentPlayer, int currentPlayerTimerDebuff)
+    public static void TimerTimedOut(GamePhase gamePhase, PlayerType currentPlayer)
     {
         if (OnTimerTimeout != null)
-            OnTimerTimeout(gamePhase, currentPlayer, currentPlayerTimerDebuff);
+            OnTimerTimeout(gamePhase, currentPlayer);
     }
 }
