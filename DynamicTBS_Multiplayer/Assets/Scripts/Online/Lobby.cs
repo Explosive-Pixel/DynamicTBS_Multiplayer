@@ -85,9 +85,9 @@ public class Lobby
         timer.UpdateTime(ShortId);
     }
 
-    public void SyncTimer(NetworkConnection cnn)
+    public void UpdateTimer(NetworkConnection cnn)
     {
-        timer.SyncTimer(ShortId, cnn);
+        timer.UpdateTimer(ShortId, cnn, gameIsPaused);
     }
 
     public bool AddConnection(OnlineConnection connection)
@@ -102,6 +102,11 @@ public class Lobby
         if(Players.Count == 1)
         {
             connection.IsAdmin = true;
+        }
+        else
+        {
+            OnlineConnection otherPlayer = FindOtherPlayer(connection);
+            connection.IsAdmin = !otherPlayer.IsAdmin;
         }
 
         return true;
@@ -144,6 +149,7 @@ public class Lobby
     public void GameOver()
     {
         inGame = false;
+        messageHistory.Clear();
         SwapAdmin();
     }
 
@@ -223,15 +229,10 @@ public class Lobby
 
     public void ArchiveMessage(OnlineMessage msg)
     {
-        if (msg.GetType() == typeof(MsgGameOver))
-        {
-            messageHistory.Clear();
-        }
+        if (msg.GetType() == typeof(MsgMetadata) || msg.GetType() == typeof(MsgUpdateTimer))
+            return;
 
-        if (msg.GetType() != typeof(MsgMetadata) && msg.GetType() != typeof(MsgUpdateTimer))
-        {
-            messageHistory.Add(msg);
-        }
+        messageHistory.Add(msg);
     }
 
     public void SendGameState(NetworkConnection cnn)
@@ -251,7 +252,7 @@ public class Lobby
                 i++;
             }
 
-            SyncTimer(cnn);
+            UpdateTimer(cnn);
 
             ToggleSendGameState(cnn);
         }

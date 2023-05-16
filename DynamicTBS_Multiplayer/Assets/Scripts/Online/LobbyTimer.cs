@@ -116,17 +116,17 @@ public class LobbyTimer
         }
     }
 
-    public void SyncTimer(int lobbyId, NetworkConnection cnn)
+    public void UpdateTimer(int lobbyId, NetworkConnection cnn, bool gameIsPaused)
     {
-        OnlineServer.Instance.SendToClient(WriteMsgSyncTimer(), cnn, lobbyId);
+        OnlineServer.Instance.SendToClient(WriteMsgUpdateTimer(gameIsPaused ? TimerUtils.Timestamp() : startTime), cnn, lobbyId);
     }
 
     private void BroadcastTimerInfo(int lobbyId)
     {
-        OnlineServer.Instance.Broadcast(WriteMsgSyncTimer(), lobbyId);
+        OnlineServer.Instance.Broadcast(WriteMsgUpdateTimer(startTime), lobbyId);
     }
 
-    private MsgUpdateTimer WriteMsgSyncTimer()
+    private MsgUpdateTimer WriteMsgUpdateTimer(DateTime startTime)
     {
         return new MsgUpdateTimer
         {

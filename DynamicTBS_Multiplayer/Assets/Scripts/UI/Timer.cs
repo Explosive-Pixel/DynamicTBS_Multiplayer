@@ -130,6 +130,11 @@ public class Timer : MonoBehaviour
         if (!IsActive)
             return;
 
+        UpdateTimer();
+    }
+
+    private void UpdateTimer()
+    {
         Player player = PlayerManager.GetCurrentPlayer();
         PlayerType side = player.GetPlayerType();
         if (playerStats[side].timeLeft > 0)
@@ -177,6 +182,9 @@ public class Timer : MonoBehaviour
 
     private void OnUnpauseGame(bool paused)
     {
+        if (GameManager.gameType != GameType.LOCAL)
+            return;
+
         if(!paused)
         {
             UpdateData(playerStats[PlayerType.pink].timeLeft, playerStats[PlayerType.blue].timeLeft, TimerUtils.Timestamp());
@@ -189,6 +197,7 @@ public class Timer : MonoBehaviour
         playerStats[PlayerType.blue].StartTimeLeft = blueTimeLeft;
 
         this.startTime = startTime;
+        UpdateTimer();
     }
 
     private void PrintTime(float currentTime)

@@ -17,8 +17,6 @@ public class OnlineMenuSceneManager : MonoBehaviour
         GoToOnlineMenu();
 
         onlineLoadingScreenCanvas.SetActive(false);
-        DontDestroyOnLoad(this);
-        DontDestroyOnLoad(onlineLoadingScreenCanvas);
     }
 
     private void SetCanvasList()

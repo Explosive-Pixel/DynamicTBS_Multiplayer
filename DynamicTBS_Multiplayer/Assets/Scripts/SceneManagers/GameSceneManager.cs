@@ -42,6 +42,8 @@ public class GameSceneManager : MonoBehaviour
 
     public void PlayAgain()
     {
+        AudioEvents.PressingButton();
+
         if (GameManager.gameType == GameType.LOCAL)
         {
             GameEvents.StartGame();
@@ -54,7 +56,6 @@ public class GameSceneManager : MonoBehaviour
                 canvas.SetActive(false);
             }
         }
-        AudioEvents.PressingButton();
     }
 
     private void SetCanvasList()

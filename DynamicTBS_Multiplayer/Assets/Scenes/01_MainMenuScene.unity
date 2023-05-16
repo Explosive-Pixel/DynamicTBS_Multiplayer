@@ -2841,6 +2841,7 @@ GameObject:
   - component: {fileID: 614000701}
   - component: {fileID: 614000700}
   - component: {fileID: 614000699}
+  - component: {fileID: 614000702}
   m_Layer: 5
   m_Name: OnlineGameButton
   m_TagString: Untagged
@@ -2912,19 +2913,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 614000700}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 405094485}
-        m_TargetAssemblyTypeName: SceneChangeManager, Assembly-CSharp
-        m_MethodName: LoadOnlineMenuScene
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &614000700
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2963,6 +2952,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 614000697}
   m_CullTransparentMesh: 1
+--- !u!114 &614000702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 614000697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68e39e6c614f645428b9e9053eecc71f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetScene: 1
 --- !u!1 &622603563
 GameObject:
   m_ObjectHideFlags: 0
@@ -3051,6 +3053,7 @@ GameObject:
   - component: {fileID: 626879533}
   - component: {fileID: 626879532}
   - component: {fileID: 626879531}
+  - component: {fileID: 626879534}
   m_Layer: 5
   m_Name: TutorialButton
   m_TagString: Untagged
@@ -3122,19 +3125,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 626879532}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 405094485}
-        m_TargetAssemblyTypeName: SceneChangeManager, Assembly-CSharp
-        m_MethodName: LoadTutorialScene
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &626879532
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3173,6 +3164,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 626879529}
   m_CullTransparentMesh: 1
+--- !u!114 &626879534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 626879529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68e39e6c614f645428b9e9053eecc71f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetScene: 3
 --- !u!1 &628387993
 GameObject:
   m_ObjectHideFlags: 0
@@ -5290,8 +5294,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 405094485}
-        m_TargetAssemblyTypeName: SceneChangeManager, Assembly-CSharp
+      - m_Target: {fileID: 1435850031}
+        m_TargetAssemblyTypeName: SettingsManager, Assembly-CSharp
         m_MethodName: QuitGame
         m_Mode: 1
         m_Arguments:
@@ -7170,6 +7174,7 @@ GameObject:
   - component: {fileID: 1426653588}
   - component: {fileID: 1426653587}
   - component: {fileID: 1426653586}
+  - component: {fileID: 1426653589}
   m_Layer: 5
   m_Name: CreditsButton
   m_TagString: Untagged
@@ -7241,19 +7246,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1426653587}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 405094485}
-        m_TargetAssemblyTypeName: SceneChangeManager, Assembly-CSharp
-        m_MethodName: LoadCreditsScene
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1426653587
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7292,6 +7285,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1426653584}
   m_CullTransparentMesh: 1
+--- !u!114 &1426653589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1426653584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68e39e6c614f645428b9e9053eecc71f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetScene: 5
 --- !u!1 &1435850030
 GameObject:
   m_ObjectHideFlags: 0
@@ -8111,6 +8117,7 @@ GameObject:
   - component: {fileID: 1783662481}
   - component: {fileID: 1783662480}
   - component: {fileID: 1783662479}
+  - component: {fileID: 1783662482}
   m_Layer: 5
   m_Name: LoreButton
   m_TagString: Untagged
@@ -8182,19 +8189,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1783662480}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 405094485}
-        m_TargetAssemblyTypeName: SceneChangeManager, Assembly-CSharp
-        m_MethodName: LoadLoreScene
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1783662480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8233,6 +8228,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1783662477}
   m_CullTransparentMesh: 1
+--- !u!114 &1783662482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1783662477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68e39e6c614f645428b9e9053eecc71f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetScene: 4
 --- !u!1 &1811466902
 GameObject:
   m_ObjectHideFlags: 0

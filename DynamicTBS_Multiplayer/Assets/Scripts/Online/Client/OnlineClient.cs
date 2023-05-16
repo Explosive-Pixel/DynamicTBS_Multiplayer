@@ -26,7 +26,7 @@ public class OnlineClient : MonoBehaviour
 {
     [SerializeField] private MessageBroker messageBroker;
 
-    private GameObject onlineGameManagerObject;
+   // private GameObject onlineGameManagerObject;
 
     #region SingletonImplementation
 
@@ -36,8 +36,8 @@ public class OnlineClient : MonoBehaviour
     {
         Instance = this;
         Shutdown();
-        onlineGameManagerObject = this.gameObject;
-        DontDestroyOnLoad(onlineGameManagerObject);
+        //onlineGameManagerObject = this.gameObject;
+        //DontDestroyOnLoad(onlineGameManagerObject);
     }
 
     #endregion
@@ -192,6 +192,11 @@ public class OnlineClient : MonoBehaviour
     public bool ShouldSendMessage(PlayerType playerType)
     {
         return side == playerType && !isLoadingGame;
+    }
+
+    public bool AdminShouldSendMessage()
+    {
+        return isAdmin && !isLoadingGame;
     }
 
     public void UpdateClient(LobbyId lobbyId, bool isAdmin, PlayerType side, string opponentName)

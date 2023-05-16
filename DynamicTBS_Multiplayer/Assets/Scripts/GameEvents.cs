@@ -14,9 +14,6 @@ public static class GameEvents
     public delegate void LoadGame(bool isLoading);
     public static event LoadGame OnGameIsLoading;
 
-    public delegate void BootGame();
-    public static event BootGame OnGameBoot;
-
     public static void StartGame()
     {
         if (OnGameStart != null)
@@ -39,11 +36,5 @@ public static class GameEvents
     {
         if (OnGameIsLoading != null)
             OnGameIsLoading(isLoading);
-    }
-
-    public static void GameHasBooted()
-    {
-        if (OnGameBoot != null)
-            OnGameBoot();
     }
 }
