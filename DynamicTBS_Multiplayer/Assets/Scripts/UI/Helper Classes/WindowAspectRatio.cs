@@ -7,7 +7,7 @@ using System.Linq;
 
 public class WindowAspectRatio : MonoBehaviour
 {
-    private GameObject aspectRatioObject;
+    private static WindowAspectRatio Instance { set; get; }
 
     public float targetAspectRatio = 16f / 9f;
     private List<Canvas> canvases;
@@ -17,8 +17,15 @@ public class WindowAspectRatio : MonoBehaviour
 
     private void Awake()
     {
-        aspectRatioObject = this.gameObject;
-        DontDestroyOnLoad(aspectRatioObject);
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
 
         InitCanvases();
         SceneManager.sceneLoaded += OnSceneLoaded;

@@ -26,7 +26,6 @@ public class OnlineLobbyCanvasHandler : MonoBehaviour
 
     private void Awake()
     {
-        DontDestroyOnLoad(this.gameObject);
         ResetCanvas();
     }
 

@@ -53,7 +53,7 @@ public class OnlineClientMessageSender : MonoBehaviour
 
     private void SendUpdateServerMessage(PlayerType currentPlayer)
     {
-        if(OnlineClient.Instance.IsAdmin)
+        if(OnlineClient.Instance.AdminShouldSendMessage())
         {
             OnlineClient.Instance.SendToServer(new MsgUpdateServer
             {
@@ -65,7 +65,7 @@ public class OnlineClientMessageSender : MonoBehaviour
 
     private void SendGameOverMessage(PlayerType? winner, GameOverCondition endGameCondition)
     {
-        if (OnlineClient.Instance.IsAdmin)
+        if (OnlineClient.Instance.AdminShouldSendMessage())
         {
             MsgGameOver msg = new MsgGameOver
             {

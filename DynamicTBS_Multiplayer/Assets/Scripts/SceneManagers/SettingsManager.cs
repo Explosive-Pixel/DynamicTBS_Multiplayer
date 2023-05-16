@@ -27,7 +27,9 @@ public class SettingsManager : MonoBehaviour
             Destroy(this.gameObject);
         else
             instance = this;
-        GameEvents.GameHasBooted();
+
+
+        LoadSettings();
     }
 
     private void Start()
@@ -95,5 +97,37 @@ public class SettingsManager : MonoBehaviour
         else
             toggleObjects.SetActive(false);
         AudioEvents.PressingButton();
+    }
+
+    public void QuitGame()
+    {
+        SaveSettings();
+        Application.Quit();
+    }
+
+    private void SaveSettings()
+    {
+        PlayerPrefs.SetFloat("MainVolumeSetting", SettingsManager.currentMainVolume);
+        PlayerPrefs.SetFloat("MusicVolumeSetting", SettingsManager.currentMusicVolume);
+        PlayerPrefs.SetFloat("AtmoVolumeSetting", SettingsManager.currentAtmoVolume);
+        PlayerPrefs.SetFloat("FXVolumeSetting", SettingsManager.currentFXVolume);
+        PlayerPrefs.SetFloat("VoiceVolumeSetting", SettingsManager.currentVoiceVolume);
+        PlayerPrefs.SetInt("FullscreenSetting", SettingsManager.currentFullscreenSetting);
+    }
+
+    private void LoadSettings()
+    {
+        if (PlayerPrefs.HasKey("MainVolumeSetting"))
+            SettingsManager.currentMainVolume = PlayerPrefs.GetFloat("MainVolumeSetting");
+        if (PlayerPrefs.HasKey("MusicVolumeSetting"))
+            SettingsManager.currentMusicVolume = PlayerPrefs.GetFloat("MusicVolumeSetting");
+        if (PlayerPrefs.HasKey("AtmoVolumeSetting"))
+            SettingsManager.currentAtmoVolume = PlayerPrefs.GetFloat("AtmoVolumeSetting");
+        if (PlayerPrefs.HasKey("FXVolumeSetting"))
+            SettingsManager.currentFXVolume = PlayerPrefs.GetFloat("FXVolumeSetting");
+        if (PlayerPrefs.HasKey("VoiceVolumeSetting"))
+            SettingsManager.currentVoiceVolume = PlayerPrefs.GetFloat("VoiceVolumeSetting");
+        if (PlayerPrefs.HasKey("FullscreenSetting"))
+            SettingsManager.currentFullscreenSetting = PlayerPrefs.GetInt("FullscreenSetting");
     }
 }

@@ -11,8 +11,6 @@ public class OnlineMetadata : MonoBehaviour
 
     private void Awake()
     {
-        DontDestroyOnLoad(multiplayerMetadata);
-
         infoText.text = "";
     }
 

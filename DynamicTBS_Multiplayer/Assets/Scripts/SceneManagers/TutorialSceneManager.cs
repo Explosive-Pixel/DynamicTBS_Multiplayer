@@ -9,7 +9,7 @@ public class TutorialSceneManager : MonoBehaviour
 
     private void Awake()
     {
-        rulesPageCanvas.SetActive(true);
+        GoToRulesPage();
     }
 
     public void GoToCharacterPage()
