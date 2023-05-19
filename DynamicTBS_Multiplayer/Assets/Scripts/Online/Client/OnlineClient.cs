@@ -26,8 +26,6 @@ public class OnlineClient : MonoBehaviour
 {
     [SerializeField] private MessageBroker messageBroker;
 
-   // private GameObject onlineGameManagerObject;
-
     #region SingletonImplementation
 
     public static OnlineClient Instance { set; get; }
@@ -36,8 +34,6 @@ public class OnlineClient : MonoBehaviour
     {
         Instance = this;
         Shutdown();
-        //onlineGameManagerObject = this.gameObject;
-        //DontDestroyOnLoad(onlineGameManagerObject);
     }
 
     #endregion
