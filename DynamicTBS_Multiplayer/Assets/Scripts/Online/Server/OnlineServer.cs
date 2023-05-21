@@ -299,7 +299,9 @@ public class OnlineServer : MonoBehaviour
         SendToClient(msg, connection.NetworkConnection, lobby.ShortId);
 
         BroadcastMetadata(lobby);
-        lobby.UpdatePlayers();
+
+        if(connection.Role == ClientType.PLAYER)
+            lobby.UpdatePlayers();
 
         lobby.SendGameState(connection.NetworkConnection);
     }

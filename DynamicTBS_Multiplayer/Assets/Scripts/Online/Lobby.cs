@@ -99,14 +99,17 @@ public class Lobby
 
         connections.Add(connection);
 
-        if(Players.Count == 1)
+        if(connection.Role == ClientType.PLAYER)
         {
-            connection.IsAdmin = true;
-        }
-        else
-        {
-            OnlineConnection otherPlayer = FindOtherPlayer(connection);
-            connection.IsAdmin = !otherPlayer.IsAdmin;
+            if (Players.Count == 1)
+            {
+                connection.IsAdmin = true;
+            }
+            else
+            {
+                OnlineConnection otherPlayer = FindOtherPlayer(connection);
+                connection.IsAdmin = !otherPlayer.IsAdmin;
+            }
         }
 
         return true;
@@ -166,7 +169,7 @@ public class Lobby
     public void UpdateConnectionsAfterReconnect(NetworkConnection networkConnection)
     {
         OnlineConnection cnn = FindOnlineConnection(networkConnection);
-        if(cnn != null)
+        if(cnn != null && cnn.Role == ClientType.PLAYER)
         {
             OnlineConnection other = FindOtherPlayer(cnn);
             if(other != null && other.Side != null)
