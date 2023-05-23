@@ -11,15 +11,15 @@ public class SettingsManager : MonoBehaviour
     private GameObject settingsObject;
 
     [SerializeField] private GameObject toggleObjects;
+
     [SerializeField] private Toggle fullscreenToggle;
+    [SerializeField] private Slider mainVolumeSlider;
+    [SerializeField] private Slider musicVolumeSlider;
+    [SerializeField] private Slider atmoVolumeSlider;
+    [SerializeField] private Slider fxVolumeSlider;
+    [SerializeField] private Slider voiceVolumeSlider;
 
     [SerializeField] private AudioMixer audioMixer;
-    public static float currentMainVolume;
-    public static float currentMusicVolume;
-    public static float currentAtmoVolume;
-    public static float currentFXVolume;
-    public static float currentVoiceVolume;
-    public static int currentFullscreenSetting;
 
     private void Awake()
     {
@@ -27,7 +27,6 @@ public class SettingsManager : MonoBehaviour
             Destroy(this.gameObject);
         else
             instance = this;
-
 
         LoadSettings();
     }
@@ -37,9 +36,6 @@ public class SettingsManager : MonoBehaviour
         settingsObject = this.gameObject;
         DontDestroyOnLoad(settingsObject);
         toggleObjects.SetActive(false);
-
-        fullscreenToggle.isOn = Screen.fullScreen;
-        currentFullscreenSetting = Screen.fullScreen ? 1 : 0;
     }
 
     private void Update()
@@ -48,46 +44,6 @@ public class SettingsManager : MonoBehaviour
         {
             ToggleSettings();
         }
-    }
-
-    public void SetMainVolume(float volume)
-    {
-        audioMixer.SetFloat("MainVolume", volume);
-        currentMainVolume = volume;
-    }
-
-    public void SetMusicVolume(float volume)
-    {
-        audioMixer.SetFloat("MusicVolume", volume);
-        currentMusicVolume = volume;
-    }
-
-    public void SetAtmoVolume(float volume)
-    {
-        audioMixer.SetFloat("AtmoVolume", volume);
-        currentAtmoVolume = volume;
-    }
-
-    public void SetFXVolume(float volume)
-    {
-        audioMixer.SetFloat("FXVolume", volume);
-        currentFXVolume = volume;
-    }
-
-    public void SetVoiceVolume(float volume)
-    {
-        audioMixer.SetFloat("VoiceVolume", volume);
-        currentVoiceVolume = volume;
-    }
-
-    public void SetFullscreen(bool isFullscreen)
-    {
-        Screen.fullScreen = isFullscreen;
-
-        if (isFullscreen)
-            currentFullscreenSetting = 1;
-        else
-            currentFullscreenSetting = 0;
     }
 
     public void ToggleSettings()
@@ -99,35 +55,78 @@ public class SettingsManager : MonoBehaviour
         AudioEvents.PressingButton();
     }
 
+    public void SetFullscreen(bool isFullscreen)
+    {
+        Screen.fullScreen = isFullscreen;
+        fullscreenToggle.isOn = isFullscreen;
+    }
+
+    public void SetMainVolume(float volume)
+    {
+        audioMixer.SetFloat("MainVolume", volume);
+        mainVolumeSlider.value = volume;
+    }
+
+    public void SetMusicVolume(float volume)
+    {
+        audioMixer.SetFloat("MusicVolume", volume);
+        musicVolumeSlider.value = volume;
+    }
+
+    public void SetAtmoVolume(float volume)
+    {
+        audioMixer.SetFloat("AtmoVolume", volume);
+        atmoVolumeSlider.value = volume;
+    }
+
+    public void SetFXVolume(float volume)
+    {
+        audioMixer.SetFloat("FXVolume", volume);
+        fxVolumeSlider.value = volume;
+    }
+
+    public void SetVoiceVolume(float volume)
+    {
+        audioMixer.SetFloat("VoiceVolume", volume);
+        voiceVolumeSlider.value = volume;
+    }
+
+    private void SaveSettings()
+    {
+        PlayerPrefs.SetInt("FullscreenSetting", fullscreenToggle.isOn ? 1 : 0);
+        PlayerPrefs.SetFloat("MainVolumeSetting", mainVolumeSlider.value);
+        PlayerPrefs.SetFloat("MusicVolumeSetting", musicVolumeSlider.value);
+        PlayerPrefs.SetFloat("AtmoVolumeSetting", atmoVolumeSlider.value);
+        PlayerPrefs.SetFloat("FXVolumeSetting", fxVolumeSlider.value);
+        PlayerPrefs.SetFloat("VoiceVolumeSetting", voiceVolumeSlider.value);
+        
+        PlayerPrefs.Save();
+    }
+
+    private void LoadSettings()
+    {
+        if (PlayerPrefs.HasKey("FullscreenSetting"))
+            SetFullscreen(PlayerPrefs.GetInt("FullscreenSetting") == 1);
+        if (PlayerPrefs.HasKey("MainVolumeSetting"))
+            SetMainVolume(PlayerPrefs.GetFloat("MainVolumeSetting"));
+        if (PlayerPrefs.HasKey("MusicVolumeSetting"))
+            SetMusicVolume(PlayerPrefs.GetFloat("MusicVolumeSetting"));
+        if (PlayerPrefs.HasKey("AtmoVolumeSetting"))
+            SetAtmoVolume(PlayerPrefs.GetFloat("AtmoVolumeSetting"));
+        if (PlayerPrefs.HasKey("FXVolumeSetting"))
+            SetFXVolume(PlayerPrefs.GetFloat("FXVolumeSetting"));
+        if (PlayerPrefs.HasKey("VoiceVolumeSetting"))
+            SetVoiceVolume(PlayerPrefs.GetFloat("VoiceVolumeSetting"));
+    }
+
     public void QuitGame()
     {
         SaveSettings();
         Application.Quit();
     }
 
-    private void SaveSettings()
+    private void OnDestroy()
     {
-        PlayerPrefs.SetFloat("MainVolumeSetting", SettingsManager.currentMainVolume);
-        PlayerPrefs.SetFloat("MusicVolumeSetting", SettingsManager.currentMusicVolume);
-        PlayerPrefs.SetFloat("AtmoVolumeSetting", SettingsManager.currentAtmoVolume);
-        PlayerPrefs.SetFloat("FXVolumeSetting", SettingsManager.currentFXVolume);
-        PlayerPrefs.SetFloat("VoiceVolumeSetting", SettingsManager.currentVoiceVolume);
-        PlayerPrefs.SetInt("FullscreenSetting", SettingsManager.currentFullscreenSetting);
-    }
-
-    private void LoadSettings()
-    {
-        if (PlayerPrefs.HasKey("MainVolumeSetting"))
-            SettingsManager.currentMainVolume = PlayerPrefs.GetFloat("MainVolumeSetting");
-        if (PlayerPrefs.HasKey("MusicVolumeSetting"))
-            SettingsManager.currentMusicVolume = PlayerPrefs.GetFloat("MusicVolumeSetting");
-        if (PlayerPrefs.HasKey("AtmoVolumeSetting"))
-            SettingsManager.currentAtmoVolume = PlayerPrefs.GetFloat("AtmoVolumeSetting");
-        if (PlayerPrefs.HasKey("FXVolumeSetting"))
-            SettingsManager.currentFXVolume = PlayerPrefs.GetFloat("FXVolumeSetting");
-        if (PlayerPrefs.HasKey("VoiceVolumeSetting"))
-            SettingsManager.currentVoiceVolume = PlayerPrefs.GetFloat("VoiceVolumeSetting");
-        if (PlayerPrefs.HasKey("FullscreenSetting"))
-            SettingsManager.currentFullscreenSetting = PlayerPrefs.GetInt("FullscreenSetting");
+        SaveSettings();
     }
 }
