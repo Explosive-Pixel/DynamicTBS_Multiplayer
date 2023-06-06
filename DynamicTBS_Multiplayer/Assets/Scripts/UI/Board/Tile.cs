@@ -94,6 +94,9 @@ public class Tile
 
     public Tile Transform(TileType newTileType)
     {
+        if (!isChangeable())
+            return this;
+
         this.type = newTileType;
         this.tileSprite = TileSpriteManager.GetTileSprite(newTileType, Board.FindSideOfTile(row), WithDepth());
         this.tileGameObject.GetComponent<SpriteRenderer>().sprite = this.tileSprite;
