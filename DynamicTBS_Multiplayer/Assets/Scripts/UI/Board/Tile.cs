@@ -14,6 +14,7 @@ public class Tile
     private GameObject tileGameObject;
     private Sprite tileSprite;
     private Character currentInhabitant;
+    private State state;
 
     public delegate bool IsChangeable();
     public IsChangeable isChangeable;
@@ -28,6 +29,7 @@ public class Tile
         this.currentInhabitant = null;
         this.isChangeable = () => type != TileType.GoalTile;
         this.tileGameObject = CreateTileGameObject();
+        this.state = null;
     }
 
     public int GetRow()
@@ -43,6 +45,24 @@ public class Tile
     public TileType GetTileType()
     {
         return type;
+    }
+
+    public bool IsElectrified()
+    {
+        return state != null && state.GetType() == typeof(ElectrifyAA) && state.IsActive();
+    }
+
+    public void SetState(TileStateType stateType)
+    {
+        this.state = TileStateFactory.Create(stateType, tileGameObject);
+    }
+
+    private void ResetState()
+    {
+        if(state != null)
+            state.Destroy();
+
+        state = null;
     }
 
     public Character GetCurrentInhabitant()
@@ -77,6 +97,15 @@ public class Tile
         this.type = newTileType;
         this.tileSprite = TileSpriteManager.GetTileSprite(newTileType, Board.FindSideOfTile(row), WithDepth());
         this.tileGameObject.GetComponent<SpriteRenderer>().sprite = this.tileSprite;
+
+        ResetState();
+
+        // Adapt depth of tile below
+        Tile tileBelow = Board.GetTileByCoordinates(GetRow() + 1, GetColumn());
+        if (tileBelow != null && tileBelow.GetTileType() == TileType.EmptyTile)
+        {
+            tileBelow.Transform(TileType.EmptyTile);
+        }
 
         return this;
     }

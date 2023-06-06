@@ -27,8 +27,6 @@ public class SettingsManager : MonoBehaviour
             Destroy(this.gameObject);
         else
             instance = this;
-
-        LoadSettings();
     }
 
     private void Start()
@@ -36,6 +34,8 @@ public class SettingsManager : MonoBehaviour
         settingsObject = this.gameObject;
         DontDestroyOnLoad(settingsObject);
         toggleObjects.SetActive(false);
+
+        LoadSettings();
     }
 
     private void Update()

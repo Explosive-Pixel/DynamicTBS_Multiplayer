@@ -73,11 +73,6 @@ public class ChangeFloorAAAction : MonoBehaviour, IAction
             }
 
             tile.Transform(OtherTileType(tile.GetTileType()));
-            Tile tileBelow = Board.GetTileByCoordinates(tile.GetRow() + 1, tile.GetColumn());
-            if(tileBelow != null && tileBelow.GetTileType() == TileType.EmptyTile)
-            {
-                tileBelow.Transform(TileType.EmptyTile);
-            }
         }
 
         AbortAction();

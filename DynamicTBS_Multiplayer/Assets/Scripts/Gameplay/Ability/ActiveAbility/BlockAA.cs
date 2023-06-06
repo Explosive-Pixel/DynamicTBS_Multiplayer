@@ -5,6 +5,9 @@ using UnityEngine;
 public class BlockAA : IActiveAbility
 {
     public static int blockingRounds = 2;
+    
+    public static PatternType pattern = PatternType.Cross;
+    public static int distance = 1;
 
     public int Cooldown { get { return 3; } }
 

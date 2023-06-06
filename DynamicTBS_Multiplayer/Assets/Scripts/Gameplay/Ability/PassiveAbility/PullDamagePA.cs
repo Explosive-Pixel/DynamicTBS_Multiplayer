@@ -28,7 +28,7 @@ public class PullDamagePA : IPassiveAbility
                     return defaultNetDamage(damage);
                 }
 
-                if (owner.isDamageable(damage) && CharacterHandler.AlliedNeighbors(character, owner, pullDamagePatternType))
+                if (!owner.isDisabled() && owner.isDamageable(damage) && CharacterHandler.AlliedNeighbors(character, owner, pullDamagePatternType))
                 {
                     int netDamage = damage - owner.HitPoints;
                     if(netDamage < defaultNetDamage(damage))
