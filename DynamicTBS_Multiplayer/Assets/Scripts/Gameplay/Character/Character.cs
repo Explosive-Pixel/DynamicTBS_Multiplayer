@@ -60,6 +60,7 @@ public abstract class Character
     protected Character(Player side)
     {
         this.side = side;
+        isDisabled = () => IsStunned();
     }
 
     protected void Init()
@@ -70,7 +71,6 @@ public abstract class Character
         this.ActiveAbilityCooldown = 0;
         this.movePattern = defaultMovePattern;
         this.attackDamage = defaultAttackDamage;
-        isDisabled = () => IsStunned();
 
         GameEvents.OnGamePhaseStart += ApplyPassiveAbility;
     }
