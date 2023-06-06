@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BlockAAAction : MonoBehaviour, IAction
+public class ElectrifyAAAction : MonoBehaviour, IAction
 {
     [SerializeField]
-    private GameObject blockActionPrefab;
+    private GameObject electrifyPrefab;
 
-    public ActionType ActionType { get { return ActionType.ActiveAbility;} }
+    public ActionType ActionType { get { return ActionType.ActiveAbility; } }
 
-    private List<GameObject> blockTargets = new List<GameObject>();
-    public List<GameObject> ActionDestinations { get { return blockTargets; } }
+    private List<GameObject> electrifyTargets = new List<GameObject>();
+    public List<GameObject> ActionDestinations { get { return electrifyTargets; } }
 
     private Character characterInAction = null;
     public Character CharacterInAction { get { return characterInAction; } }
@@ -25,11 +25,11 @@ public class BlockAAAction : MonoBehaviour, IAction
     public void ShowActionPattern(Character character)
     {
         Tile characterTile = Board.GetTileByPosition(character.GetCharacterGameObject().transform.position);
-        List<Vector3> patternPositions = Board.GetTilesOfDistance(characterTile, BlockAA.pattern, BlockAA.distance).ConvertAll(tile => tile.GetPosition());
+        List<Vector3> patternPositions = Board.GetAllTilesWithinRadius(characterTile, ElectrifyAA.radius).ConvertAll(tile => tile.GetPosition());
 
         if (patternPositions != null)
         {
-            patternTargets = ActionUtils.InstantiateActionPositions(patternPositions, blockActionPrefab);
+            patternTargets = ActionUtils.InstantiateActionPositions(patternPositions, electrifyPrefab);
         }
     }
 
@@ -40,7 +40,7 @@ public class BlockAAAction : MonoBehaviour, IAction
 
     public int CountActionDestinations(Character character)
     {
-        List<Vector3> floorPositions = FindFloorPositions(character);
+        List<Vector3> floorPositions = FindElectrifyPositions(character);
 
         if (floorPositions != null)
         {
@@ -52,11 +52,11 @@ public class BlockAAAction : MonoBehaviour, IAction
 
     public void CreateActionDestinations(Character character)
     {
-        List<Vector3> floorPositions = FindFloorPositions(character);
+        List<Vector3> floorPositions = FindElectrifyPositions(character);
 
         if (floorPositions != null && floorPositions.Count > 0)
         {
-            blockTargets = ActionUtils.InstantiateActionPositions(floorPositions, blockActionPrefab);
+            electrifyTargets = ActionUtils.InstantiateActionPositions(floorPositions, electrifyPrefab);
             characterInAction = character;
         }
     }
@@ -64,10 +64,14 @@ public class BlockAAAction : MonoBehaviour, IAction
     public void ExecuteAction(GameObject actionDestination)
     {
         Tile tile = Board.GetTileByPosition(actionDestination.transform.position);
-        if(tile != null)
+        if (tile != null)
         {
-            tile.Transform(TileType.EmptyTile);
-            ((BlockAA)characterInAction.GetActiveAbility()).ActivateBlock();
+            if (tile.GetTileType().Equals(TileType.GoalTile))
+            {
+                GameplayEvents.GameIsOver(characterInAction.GetSide().GetPlayerType(), GameOverCondition.MASTER_TOOK_CONTROL);
+            }
+
+            tile.SetState(TileStateType.ELECTRIFIED);
         }
 
         AbortAction();
@@ -75,17 +79,17 @@ public class BlockAAAction : MonoBehaviour, IAction
 
     public void AbortAction()
     {
-        ActionUtils.Clear(blockTargets);
+        ActionUtils.Clear(electrifyTargets);
         ActionRegistry.Remove(this);
         characterInAction = null;
     }
 
-    private List<Vector3> FindFloorPositions(Character character)
+    private List<Vector3> FindElectrifyPositions(Character character)
     {
         Tile characterTile = Board.GetTileByPosition(character.GetCharacterGameObject().transform.position);
 
-        List<Tile> floorTiles = Board.GetTilesOfDistance(characterTile, BlockAA.pattern, BlockAA.distance)
-            .FindAll(tile => tile.isChangeable() && tile.GetTileType() != TileType.EmptyTile && !tile.IsOccupied());
+        List<Tile> floorTiles = Board.GetAllTilesWithinRadius(characterTile, ElectrifyAA.radius)
+            .FindAll(tile => tile.isChangeable() && tile.GetTileType() != TileType.EmptyTile);
 
         List<Vector3> floorPositions = floorTiles.ConvertAll(tile => tile.GetPosition());
 

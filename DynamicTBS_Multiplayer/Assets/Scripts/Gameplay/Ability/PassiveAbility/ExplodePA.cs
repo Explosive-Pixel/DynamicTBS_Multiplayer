@@ -35,6 +35,9 @@ public class ExplodePA : IPassiveAbility
                     }
                 }
             }
+
+            ownerLastTile.Transform(TileType.EmptyTile);
+
             AudioEvents.Exploding();
             CharacterEvents.OnCharacterDeath -= Explode;
         }
