@@ -5,7 +5,7 @@ using UnityEngine;
 public class ElectrifiedState : State
 {
     protected override int Duration { get { return 2; } }
-    protected override Sprite Sprite { get { return TileSpriteManager.BLUE_MASTER_START_TILE_SPRITE; } }
+    protected override Sprite Sprite { get { return Resources.Load<Sprite>("EffectSprites/ElectrifiedTile"); } }
 
     private Tile tile;
     private Character stunnedInhabitant;
