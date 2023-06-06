@@ -21,6 +21,7 @@ public abstract class Character
 
     protected int hitPoints;
     protected int activeAbilityCooldown;
+    protected State state;
     protected Animator hitPointAnimator;
     protected Animator cooldownAnimator;
 
@@ -47,7 +48,7 @@ public abstract class Character
     public delegate int NetDamage(int damage);
     public NetDamage netDamage = (damage) => damage;
 
-    // States whether the character is disabled, i.e. can not perform any action (move/attack/perform active ability)
+    // States whether the character is disabled (stunned), i.e. can not perform any action (move/attack/perform active ability)
     public delegate bool IsDisabled();
     public IsDisabled isDisabled = () => false;
 
@@ -69,6 +70,7 @@ public abstract class Character
         this.ActiveAbilityCooldown = 0;
         this.movePattern = defaultMovePattern;
         this.attackDamage = defaultAttackDamage;
+        isDisabled = () => IsStunned();
 
         GameEvents.OnGamePhaseStart += ApplyPassiveAbility;
     }
@@ -123,6 +125,27 @@ public abstract class Character
         return this.HitPoints == this.maxHitPoints;
     }
 
+    public void SetState(CharacterStateType stateType)
+    {
+        if (IsDead())
+            return;
+
+        this.state = CharacterStateFactory.Create(stateType, characterGameObject);
+    }
+
+    private void ResetState()
+    {
+        if(state != null)
+            state.Destroy();
+
+        state = null;
+    }
+
+    public bool IsStunned()
+    {
+        return state != null && state.GetType() == typeof(StunnedState) && state.IsActive();
+    }
+
     public void SetActiveAbilityOnCooldown()
     {
         if(!IsDead())
@@ -167,6 +190,7 @@ public abstract class Character
 
     public virtual void Die() 
     {
+        ResetState();
         CharacterEvents.CharacterDies(this, characterGameObject.transform.position);
         GameplayEvents.OnPlayerTurnEnded -= ReduceActiveAbiliyCooldown;
         GameObject.Destroy(characterGameObject);

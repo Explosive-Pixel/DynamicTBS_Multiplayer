@@ -13,7 +13,7 @@ public class MasterChar : Character
         this.moveSpeed = 1;
         this.attackRange = 0;
 
-        this.activeAbility = new TakeControlAA(this);
+        this.activeAbility = new ElectrifyAA(this);
         this.passiveAbility = new InfluenceAuraPA(this);
         
         Init();

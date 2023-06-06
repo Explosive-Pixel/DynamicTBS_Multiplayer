@@ -8380,6 +8380,7 @@ GameObject:
   - component: {fileID: 1149377220}
   - component: {fileID: 1149377221}
   - component: {fileID: 1149377222}
+  - component: {fileID: 1149377223}
   m_Layer: 0
   m_Name: ActionRegistry
   m_TagString: Untagged
@@ -8494,6 +8495,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockActionPrefab: {fileID: 8423276495478319710, guid: c1ffae3fcbec7f5488d93a6083ef3733, type: 3}
+--- !u!114 &1149377223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1149377214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9ae34f6dd1996541a79a6b6159c6050, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  electrifyPrefab: {fileID: 8423276495478319710, guid: c1ffae3fcbec7f5488d93a6083ef3733, type: 3}
 --- !u!1 &1165547442
 GameObject:
   m_ObjectHideFlags: 0
