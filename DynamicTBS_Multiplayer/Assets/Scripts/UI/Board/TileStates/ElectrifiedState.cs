@@ -5,7 +5,7 @@ using UnityEngine;
 public class ElectrifiedState : State
 {
     protected override int Duration { get { return 2; } }
-    protected override Sprite Sprite { get { return Resources.Load<Sprite>("EffectSprites/ElectrifiedTile"); } }
+    private static readonly string spritePath = "EffectSprites/ElectrifiedTile";
 
     private Tile tile;
     private Character stunnedInhabitant;
@@ -16,6 +16,11 @@ public class ElectrifiedState : State
 
         StunInhabitant();
         GameplayEvents.OnFinishAction += StunInhabitant;
+    }
+
+    protected override Sprite LoadSprite(GameObject parent)
+    {
+        return Resources.Load<Sprite>(spritePath);
     }
 
     private void StunInhabitant(ActionMetadata actionMetadata)

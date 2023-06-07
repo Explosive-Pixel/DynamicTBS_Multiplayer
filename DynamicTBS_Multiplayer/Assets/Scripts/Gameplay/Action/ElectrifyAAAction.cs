@@ -27,10 +27,12 @@ public class ElectrifyAAAction : MonoBehaviour, IAction
         Tile characterTile = Board.GetTileByPosition(character.GetCharacterGameObject().transform.position);
         List<Vector3> patternPositions = Board.GetAllTilesWithinRadius(characterTile, ElectrifyAA.radius).ConvertAll(tile => tile.GetPosition());
 
-        if (patternPositions != null)
+        if (characterTile.GetTileType() == TileType.GoalTile)
         {
-            patternTargets = ActionUtils.InstantiateActionPositions(patternPositions, electrifyPrefab);
+            patternPositions.Add(characterTile.GetPosition());
         }
+
+        patternTargets = ActionUtils.InstantiateActionPositions(patternPositions, electrifyPrefab);
     }
 
     public void HideActionPattern()
@@ -90,6 +92,11 @@ public class ElectrifyAAAction : MonoBehaviour, IAction
 
         List<Tile> floorTiles = Board.GetAllTilesWithinRadius(characterTile, ElectrifyAA.radius)
             .FindAll(tile => tile.isChangeable() && tile.GetTileType() != TileType.EmptyTile);
+
+        if(characterTile.GetTileType() == TileType.GoalTile)
+        {
+            floorTiles.Add(characterTile);
+        }
 
         List<Vector3> floorPositions = floorTiles.ConvertAll(tile => tile.GetPosition());
 

@@ -7,9 +7,23 @@ public class StunnedState : State
     public const int StunDuration = 1;
 
     protected override int Duration { get { return StunDuration; } }
-    protected override Sprite Sprite { get { return null; } }
+    private static readonly string blueStunSpritePath = "EffectSprites/StunMarker_Blue";
+    private static readonly string pinkStunSpritePath = "EffectSprites/StunMarker_Pink";
 
     public StunnedState(GameObject parent) : base(parent)
     {
+    }
+
+    protected override Sprite LoadSprite(GameObject parent)
+    {
+        Character character = CharacterHandler.GetCharacterByGameObject(parent);
+
+        if (character != null)
+        {
+            string spritePath = character.GetSide().GetPlayerType() == PlayerType.blue ? blueStunSpritePath : pinkStunSpritePath;
+            return Resources.Load<Sprite>(spritePath);
+        }
+
+        return null;
     }
 }
