@@ -15,12 +15,12 @@ public abstract class State
 
         if(this.currentCount > 0)
         {
-            ShowSprite(parent);
+            ShowPrefab(parent);
             GameplayEvents.OnPlayerTurnEnded += ReduceCurrentCount;
         }
     }
 
-    protected virtual Sprite LoadSprite(GameObject parent)
+    protected virtual GameObject LoadPrefab(GameObject parent)
     {
         return null;
     }
@@ -48,21 +48,16 @@ public abstract class State
         GameplayEvents.OnPlayerTurnEnded -= ReduceCurrentCount;
     }
 
-    private void ShowSprite(GameObject parent)
+    private void ShowPrefab(GameObject parent)
     {
-        Sprite sprite = LoadSprite(parent);
+        GameObject statePrefab = LoadPrefab(parent);
 
-        if (sprite != null)
+        if (statePrefab != null)
         {
-            overlay = new GameObject();
-            overlay.name = this.GetType().Name;
-            Quaternion startRotation = Quaternion.identity;
-            SpriteRenderer spriteRenderer = overlay.AddComponent<SpriteRenderer>();
-            spriteRenderer.sprite = sprite;
-            spriteRenderer.sortingOrder = parent.GetComponentInChildren<SpriteRenderer>().sortingOrder;
-            overlay.transform.position = parent.transform.position;
-            overlay.transform.rotation = startRotation;
-            overlay.transform.SetParent(parent.transform);
+            GameObject state = GameObject.Instantiate(statePrefab);
+            state.transform.position = parent.transform.position;
+            state.SetActive(true);
+            state.transform.SetParent(parent.transform);
         }
     }
 

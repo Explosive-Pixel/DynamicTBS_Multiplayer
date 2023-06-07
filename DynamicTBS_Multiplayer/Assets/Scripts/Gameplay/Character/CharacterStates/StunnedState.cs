@@ -7,21 +7,21 @@ public class StunnedState : State
     public const int StunDuration = 1;
 
     protected override int Duration { get { return StunDuration; } }
-    private static readonly string blueStunSpritePath = "EffectSprites/StunMarker_Blue";
-    private static readonly string pinkStunSpritePath = "EffectSprites/StunMarker_Pink";
+    private static readonly string blueStunPrefabPath = "EffectPrefabs/StunMarkerBluePrefab";
+    private static readonly string pinkStunPrefabPath = "EffectPrefabs/StunMarkerPinkPrefab";
 
     public StunnedState(GameObject parent) : base(parent)
     {
     }
 
-    protected override Sprite LoadSprite(GameObject parent)
+    protected override GameObject LoadPrefab(GameObject parent)
     {
         Character character = CharacterHandler.GetCharacterByGameObject(parent);
 
         if (character != null)
         {
-            string spritePath = character.GetSide().GetPlayerType() == PlayerType.blue ? blueStunSpritePath : pinkStunSpritePath;
-            return Resources.Load<Sprite>(spritePath);
+            string prefabPath = character.GetSide().GetPlayerType() == PlayerType.blue ? blueStunPrefabPath : pinkStunPrefabPath;
+            return Resources.Load<GameObject>(prefabPath);
         }
 
         return null;
