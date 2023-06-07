@@ -27,7 +27,7 @@ public class Tile
         this.tileSprite = TileSpriteManager.GetTileSprite(type, side, WithDepth());
         this.position = Board.FindPosition(row, column);
         this.currentInhabitant = null;
-        this.isChangeable = () => type != TileType.GoalTile;
+        this.isChangeable = () => !IsGoal();
         this.tileGameObject = CreateTileGameObject();
         this.state = null;
     }
@@ -77,6 +77,21 @@ public class Tile
         return this.position;
     }
 
+    public bool IsGoal()
+    {
+        return type == TileType.GoalTile;
+    }
+
+    public bool IsHole()
+    {
+        return type == TileType.EmptyTile;
+    }
+
+    public bool IsNormalFloor()
+    {
+        return !IsHole() && !IsGoal();
+    }
+
     public bool IsOccupied()
     {
         return currentInhabitant != null;
@@ -84,7 +99,7 @@ public class Tile
 
     public bool IsAccessible() 
     {
-        return !IsOccupied() && type != TileType.EmptyTile;
+        return !IsOccupied() && !IsHole();
     }
 
     public void SetCurrentInhabitant(Character character)
@@ -105,7 +120,7 @@ public class Tile
 
         // Adapt depth of tile below
         Tile tileBelow = Board.GetTileByCoordinates(GetRow() + 1, GetColumn());
-        if (tileBelow != null && tileBelow.GetTileType() == TileType.EmptyTile)
+        if (tileBelow != null && tileBelow.IsHole())
         {
             tileBelow.Transform(TileType.EmptyTile);
         }
@@ -146,7 +161,7 @@ public class Tile
     {
         bool withDepth = false;
         Tile tileAbove = Board.GetTileByCoordinates(row - 1, column);
-        if (tileAbove != null && tileAbove.GetTileType() != TileType.EmptyTile)
+        if (tileAbove != null && !tileAbove.IsHole())
         {
             withDepth = true;
         }

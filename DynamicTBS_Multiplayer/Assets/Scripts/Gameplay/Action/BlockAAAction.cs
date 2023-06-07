@@ -85,7 +85,7 @@ public class BlockAAAction : MonoBehaviour, IAction
         Tile characterTile = Board.GetTileByPosition(character.GetCharacterGameObject().transform.position);
 
         List<Tile> floorTiles = Board.GetTilesOfDistance(characterTile, BlockAA.pattern, BlockAA.distance)
-            .FindAll(tile => tile.isChangeable() && tile.GetTileType() != TileType.EmptyTile && !tile.IsOccupied());
+            .FindAll(tile => tile.IsNormalFloor() && !tile.IsOccupied());
 
         List<Vector3> floorPositions = floorTiles.ConvertAll(tile => tile.GetPosition());
 

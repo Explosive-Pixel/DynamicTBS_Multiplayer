@@ -54,10 +54,10 @@ public abstract class State
 
         if (statePrefab != null)
         {
-            GameObject state = GameObject.Instantiate(statePrefab);
-            state.transform.position = parent.transform.position;
-            state.SetActive(true);
-            state.transform.SetParent(parent.transform);
+            overlay = GameObject.Instantiate(statePrefab);
+            overlay.transform.position = parent.transform.position;
+            overlay.SetActive(true);
+            overlay.transform.SetParent(parent.transform);
         }
     }
 
