@@ -91,7 +91,7 @@ public class ElectrifyAAAction : MonoBehaviour, IAction
         Tile characterTile = Board.GetTileByPosition(character.GetCharacterGameObject().transform.position);
 
         List<Tile> floorTiles = Board.GetAllTilesWithinRadius(characterTile, ElectrifyAA.radius)
-            .FindAll(tile => tile.isChangeable() && tile.GetTileType() != TileType.EmptyTile);
+            .FindAll(tile => tile.IsNormalFloor());
 
         if(characterTile.GetTileType() == TileType.GoalTile)
         {
