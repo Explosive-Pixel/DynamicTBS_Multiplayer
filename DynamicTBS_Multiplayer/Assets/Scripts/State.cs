@@ -5,7 +5,6 @@ using UnityEngine;
 public abstract class State
 {
     protected abstract int Duration { get; }
-    protected abstract Sprite Sprite { get; }
 
     protected int currentCount = 0;
     protected GameObject overlay;
@@ -19,6 +18,11 @@ public abstract class State
             ShowSprite(parent);
             GameplayEvents.OnPlayerTurnEnded += ReduceCurrentCount;
         }
+    }
+
+    protected virtual Sprite LoadSprite(GameObject parent)
+    {
+        return null;
     }
 
     private void ReduceCurrentCount(Player player)
@@ -46,13 +50,16 @@ public abstract class State
 
     private void ShowSprite(GameObject parent)
     {
-        if (Sprite != null)
+        Sprite sprite = LoadSprite(parent);
+
+        if (sprite != null)
         {
             overlay = new GameObject();
+            overlay.name = this.GetType().Name;
             Quaternion startRotation = Quaternion.identity;
             SpriteRenderer spriteRenderer = overlay.AddComponent<SpriteRenderer>();
-            spriteRenderer.sprite = Sprite;
-            spriteRenderer.sortingOrder = parent.GetComponent<SpriteRenderer>().sortingOrder;
+            spriteRenderer.sprite = sprite;
+            spriteRenderer.sortingOrder = parent.GetComponentInChildren<SpriteRenderer>().sortingOrder;
             overlay.transform.position = parent.transform.position;
             overlay.transform.rotation = startRotation;
             overlay.transform.SetParent(parent.transform);
