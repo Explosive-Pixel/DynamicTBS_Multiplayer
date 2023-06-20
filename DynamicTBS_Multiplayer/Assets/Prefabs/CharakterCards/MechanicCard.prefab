@@ -17,25 +17,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1870058351444059126, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_text
-      value: '<b>Change Floor </b>(AA): Change a square from floor to hole or
-
-        from
-        hole to floor in a <i>radius </i>of <b>2</b>. Occupied floor squares
-
-        can
-        only be changed in a <i>radius</i> of <b>1</b>, instantly killing the
-
-        occupying
-        unit. CD: <b>3</b>
-
-        Steady Feet (PA): The floor underneath this unit
-        cannot be
-
-        changed.'
+      value: "<b>Change Floor </b>(active): Changes a floor square to a hole or the
+        other way around in a <i>radius </i>of <b>2</b>. Occupied squares can only
+        be changed in a <i>radius</i> of <b>1</b>, instantly eliminating the occupying
+        unit. \n<i>CD: <b>3</b></i>\n<b>Alert</b> (passive): This unit always makes
+        sure that the floor underneath it cannot be changed."
       objectReference: {fileID: 0}
     - target: {fileID: 1870058351444059126, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_fontSize
-      value: 1.5
+      value: 1.6
       objectReference: {fileID: 0}
     - target: {fileID: 1870058351444059126, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_fontSizeBase
@@ -43,11 +33,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1870058351444059126, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 4284131014
+      value: 4278190080
       objectReference: {fileID: 0}
     - target: {fileID: 3680486571023874173, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_text
       value: Mechanic
+      objectReference: {fileID: 0}
+    - target: {fileID: 3680486571023874173, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
+      propertyPath: m_fontStyle
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3787709272067247677, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_Sprite

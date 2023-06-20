@@ -121,7 +121,7 @@ public class SettingsManager : MonoBehaviour
 
     public void QuitGame()
     {
-        SaveSettings();
+        //SaveSettings();
         Application.Quit();
     }
 

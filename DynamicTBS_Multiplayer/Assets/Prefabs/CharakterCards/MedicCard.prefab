@@ -21,25 +21,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1870058351444059126, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_text
-      value: '<b>Heal </b>(AA): Heals a unit in a star pattern in <i>range </i><b>2</b>
-        for <b>1</b>
-
-        health (not above their starting health; path to target
-        must
-
-        be free). The healed unit gets a movement bonus of <i>+1 </i>for
-
-        their
-        next move action, whenever it may occur. CD: <b>3</b>
-
-        <b>Adrenalin
-        </b>(PA): If this unit takes damage their cooldown is
-
-        set to <b>0</b>.'
+      value: "<b>Heal </b>(active): Throws a syringe in a <i>star pattern</i> in
+        a range of <b>2</b> to heal a unit for <b>1</b> health. Units may never have
+        more health than they started with. When being healed, a unit receives movement
+        buff of <b>+1 </b> which is gone after their next move action. \n<i>CD: <b>3</b></i>\n<b>Adrenalin</b>(passive):
+        If this unit takes damage, its cooldown is set to <b>0</b>."
       objectReference: {fileID: 0}
     - target: {fileID: 1870058351444059126, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_fontSize
-      value: 1.5
+      value: 1.55
       objectReference: {fileID: 0}
     - target: {fileID: 1870058351444059126, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_fontSizeBase
