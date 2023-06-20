@@ -81,7 +81,7 @@ public static class BuildScript
     private static void PerformBuild(BuildType buildType, Platform platform)
     {
         Debug.Log("Performing build: " + buildType);
-        string buildPath = "Builds/" + platform.ToString() + "/" + buildType.ToString() +"/Skyrats";
+        string buildPath = "Builds/" + platform.ToString() + "/" + buildType.ToString() +"/" + PlayerSettings.productName + "-" + PlayerSettings.bundleVersion;
 
         BuildTarget buildTarget = BuildTarget.StandaloneWindows64;
         if (platform == Platform.Windows)
