@@ -17,25 +17,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1870058351444059126, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_text
-      value: '<b>Powershot </b>(AA): Deals <b>1</b> damage to all units in a direction
-        in
+      value: '<b>Powershot</b> (active): Deals <b>1</b> damage to all units in a
+        direction in a <i>cross pattern</i> as well as to this unit. Can only be
+        stopped by an active Block.
 
-        a <i>cross pattern </i>and to itself. Can only be stopped by
-        an
-
-        active Block ability.
-
-        CD: <b>3</b>
+        <i>CD: <b>3</b></i>
 
         <b>Explosion
-        </b>(PA): If this unit dies it explodes, dealing <b>1</b> damage
-
-        to
-        all units in a <i>radius </i>of <b>1</b>.'
+        </b>(passive): If this unit dies it explodes, dealing <b>1</b> damage to
+        all units in a <i>radius </i>of <b>1</b> and destroying the floor square
+        it occupies.'
       objectReference: {fileID: 0}
     - target: {fileID: 1870058351444059126, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_fontSize
-      value: 1.5
+      value: 1.6
       objectReference: {fileID: 0}
     - target: {fileID: 1870058351444059126, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_fontSizeBase

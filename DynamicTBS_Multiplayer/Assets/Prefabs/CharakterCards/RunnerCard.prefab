@@ -21,16 +21,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1870058351444059126, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_text
-      value: '<b>Jump </b>(AA): Jumps <b>3</b> squares in a <i>star pattern </i>over
-        units and
-
-        holes. Has to land on an empty floor square. CD: <b>2</b>
-
-        <b>High
-        Performance </b>(PA): This unit is able to move in a <i>star
-
-        pattern
-        </i>and deals <b>2 </b>damage with each attack.'
+      value: "<b>Jump</b> (active): Jumps <b>3</b> squares in a <i>star pattern</i>
+        over units and holes. Has to land on an empty floor square. \n<i>CD: <b>2</b></i>\n<b>Blade
+        Dance</b> (passive): This unit moves in a <i>star\npattern</i> and deals
+        <b>2</b> damage with each attack."
       objectReference: {fileID: 0}
     - target: {fileID: 1870058351444059126, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_fontSize

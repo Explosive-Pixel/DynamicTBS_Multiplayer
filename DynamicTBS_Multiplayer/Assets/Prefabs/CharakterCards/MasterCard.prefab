@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 448999090884294630, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
+      propertyPath: m_text
+      value: Range
+      objectReference: {fileID: 0}
     - target: {fileID: 1097004520536020328, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: character
       value: 1
@@ -17,31 +21,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1870058351444059126, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_text
-      value: '<b>Take Control</b> (AA): Activate on goal square to win the game.
-
-        CD:
-        0
-
-        Influence Aura (PA): As long as an opposing unit is on a
-
-        square
-        next to this one in a <i>star pattern</i>, they gain <b>1</b>
-
-        influence
-        point each turn. If a unit gained <b>3</b> influence points
-
-        it switches
-        sides. Influence points can only be reset by
-
-        switching sides.'
+      value: "<b>Electrify</b> (active): This unit electrifies a floor square in
+        a <i>radius</i> of <b>1</b> for <b>2</b> turns. If a unit is on an electrified
+        sqaure, it is stunned (cannot perform actions) for <b>1</b> turn, after which
+        the electrification ends. If the goal square is electrified, this side wins.
+        The goal square can only be electrified while occupying it. \n<i>CD: <b>0</b></i>\n<b>Influence
+        Aura</b> (passive): Each turn an enemy unit is on an adjacent square in a
+        <i>radius</i> of <b>1</b>, they gain <b>1</b> influence point. If a unit
+        reaches <b>3</b> influence points, it switches sides. Influence points can
+        only be reset by switching sides."
       objectReference: {fileID: 0}
     - target: {fileID: 1870058351444059126, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_fontSize
-      value: 1.45
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 1870058351444059126, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_fontStyle
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1870058351444059126, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3680486571023874173, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_text
@@ -49,7 +49,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3680486571023874173, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_fontStyle
-      value: 17
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3787709272067247677, guid: 2f5a5a937b4e5434c94fb39475104585, type: 3}
       propertyPath: m_Sprite
