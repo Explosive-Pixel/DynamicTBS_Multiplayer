@@ -67,12 +67,12 @@ public class ChangeFloorAAAction : MonoBehaviour, IAction
         Tile tile = Board.GetTileByPosition(actionDestination.transform.position);
         if (tile != null)
         {
-            if (tile.IsOccupied())
+            tile.Transform(OtherTileType(tile.GetTileType()));
+
+            if (tile.IsOccupied() && tile.IsHole())
             {
                 tile.GetCurrentInhabitant().Die();
             }
-
-            tile.Transform(OtherTileType(tile.GetTileType()));
         }
 
         AbortAction();

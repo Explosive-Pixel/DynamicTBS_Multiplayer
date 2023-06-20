@@ -18,7 +18,7 @@ public class SteadyStandPA : IPassiveAbility
             var defaultIsChangeable = tile.isChangeable;
             tile.isChangeable = () =>
             {
-                if (tile.IsOccupied() && tile.GetCurrentInhabitant().GetPassiveAbility().GetType() == typeof(SteadyStandPA))
+                if (tile.IsOccupied() && tile.GetCurrentInhabitant().GetPassiveAbility().GetType() == typeof(SteadyStandPA) && !tile.GetCurrentInhabitant().IsStunned())
                 {
                     return false;
                 }
