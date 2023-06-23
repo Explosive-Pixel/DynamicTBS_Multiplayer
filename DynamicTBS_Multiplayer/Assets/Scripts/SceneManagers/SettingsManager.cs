@@ -119,11 +119,11 @@ public class SettingsManager : MonoBehaviour
             SetVoiceVolume(PlayerPrefs.GetFloat("VoiceVolumeSetting"));
     }
 
-    public void QuitGame()
-    {
-        //SaveSettings();
-        Application.Quit();
-    }
+    //public void QuitGame()
+    //{
+    //    //SaveSettings();
+    //    Application.Quit();
+    //}
 
     private void OnDestroy()
     {
