@@ -185,7 +185,7 @@ public abstract class Character
 
     public bool CanPerformAction()
     {
-        return ActionUtils.CountAllActionDestinations(this) > 0 || CanPerformActiveAbility();
+        return !IsStunned() && (ActionUtils.CountAllActionDestinations(this) > 0 || CanPerformActiveAbility());
     }
 
     public virtual void Die() 

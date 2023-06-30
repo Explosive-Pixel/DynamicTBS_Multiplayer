@@ -64,7 +64,7 @@ public class InfluenceAuraPA : IPassiveAbility
 
             // Change all sprites from childs to sprites of childs of prefab of other side
             GameObject newPrefab = character.GetCharacterPrefab(character.side);
-            for(int i = 0; i < character.GetCharacterGameObject().transform.childCount; i++)
+            for(int i = 0; i < newPrefab.transform.childCount; i++)
             {
                 GameObject child = character.GetCharacterGameObject().transform.GetChild(i).gameObject;
                 if(child.TryGetComponent<SpriteRenderer>(out var spriteRenderer))
