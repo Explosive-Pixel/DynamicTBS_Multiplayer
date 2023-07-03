@@ -72,6 +72,7 @@ public class OnlineServer : MonoBehaviour
         messageBroker.Driver = driver;
 
         isActive = true;
+        Telegram.SendMessage("Server is active!");
     }
 
     private void Update()
@@ -196,6 +197,7 @@ public class OnlineServer : MonoBehaviour
         }
 
         connectionDropped?.Invoke();
+        NotifyMetadata("Client disconnected from server.");
     }
 
     private void CleanUpConnections()
@@ -217,12 +219,26 @@ public class OnlineServer : MonoBehaviour
             driver.Dispose();
             lobbies.Clear();
             isActive = false;
+            Telegram.SendMessage("Server shut down!");
         }
     }
 
     #endregion
 
-    public void CreateLobby(string lobbyName, NetworkConnection cnn, UserData userData)
+    public void AddClient(string lobbyName, int LobbyId, NetworkConnection cnn, UserData userData, bool newLobby)
+    {
+        if (newLobby)
+        {
+            CreateLobby(lobbyName, cnn, userData);
+        }
+        else
+        {
+            JoinLobby(new LobbyId(LobbyId, lobbyName), cnn, userData);
+        }
+        NotifyMetadata("New Client incoming!");
+    }
+
+    private void CreateLobby(string lobbyName, NetworkConnection cnn, UserData userData)
     {
         OnlineConnection connection = new OnlineConnection(cnn, userData);
         LobbyId lobbyId = new LobbyId(++lobbyIdCounter, lobbyName);
@@ -232,7 +248,7 @@ public class OnlineServer : MonoBehaviour
         WelcomeClient(lobby, connection);
     }
 
-    public void JoinLobby(LobbyId lobbyId, NetworkConnection cnn, UserData userData)
+    private void JoinLobby(LobbyId lobbyId, NetworkConnection cnn, UserData userData)
     {
         Lobby lobby = FindLobby(lobbyId);
 
@@ -331,6 +347,11 @@ public class OnlineServer : MonoBehaviour
     private Lobby FindLobby(NetworkConnection cnn)
     {
         return lobbies.Find(l => l.HostsConnection(cnn));
+    }
+
+    private void NotifyMetadata(string msg)
+    {
+        Telegram.SendMessage(msg + "\nConnected Clients: " + ConnectionCount + "\nActive Lobbies: " + LobbyCount);
     }
 
     private void OnDestroy() // Shutting down server on destroy.

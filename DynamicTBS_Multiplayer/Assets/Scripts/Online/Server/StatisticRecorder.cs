@@ -19,6 +19,11 @@ public class StatisticRecorder : MonoBehaviour
         Init();
     }
 
+    private void Start()
+    {
+        StartSendDailyCSVReport();
+    }
+
     #endregion
 
     private string directory;
@@ -531,6 +536,41 @@ public class StatisticRecorder : MonoBehaviour
             Debug.LogError("Cannot save stats: " + ex.ToString());
             filePath = null;
             UnsubscribeEvents();
+        }
+    }
+
+    private void StartSendDailyCSVReport()
+    {
+        // Bestimme die gewünschte Uhrzeit für die Ausführung (hier um 10:00 Uhr)
+        int targetHour = 13;
+        int targetMinute = 37;
+        int targetSecond = 0;
+
+        // Berechne die Zeit bis zur nächsten Ausführung
+        System.DateTime now = System.DateTime.Now;
+        System.DateTime nextRunTime = new System.DateTime(now.Year, now.Month, now.Day, targetHour, targetMinute, targetSecond);
+        if (nextRunTime < now)
+        {
+            nextRunTime = nextRunTime.AddDays(1); // Führe die Methode am nächsten Tag aus
+        }
+        float delayInSeconds = (float)(nextRunTime - now).TotalSeconds;
+
+        // Rufe die Methode jeden Tag um die angegebene Uhrzeit auf
+        InvokeRepeating("SendCSVFile", delayInSeconds, 24 * 60 * 60);
+    }
+
+    private void SendCSVFile()
+    {
+        if (directory == null)
+            return;
+
+        string path = directory + "/statistics.csv";
+
+        if (File.Exists(path))
+        {
+            byte[] byteArray = File.ReadAllBytes(path);
+
+            Telegram.SendFile(byteArray, "statistics.csv", "Daily statistics report");
         }
     }
 
