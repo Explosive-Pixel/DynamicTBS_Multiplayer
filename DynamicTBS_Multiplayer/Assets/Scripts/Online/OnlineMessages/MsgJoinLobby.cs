@@ -43,13 +43,6 @@ public class MsgJoinLobby : OnlineMessage
 
     public override void ReceivedOnServer(NetworkConnection cnn)
     {
-        if(create)
-        {
-            OnlineServer.Instance.CreateLobby(lobbyName, cnn, userData);
-        } 
-        else
-        {
-            OnlineServer.Instance.JoinLobby(new LobbyId(LobbyId, lobbyName), cnn, userData);
-        }
+        OnlineServer.Instance.AddClient(lobbyName, LobbyId, cnn, userData, create);
     }
 }
