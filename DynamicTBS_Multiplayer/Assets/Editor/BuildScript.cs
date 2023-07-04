@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEditor;
 using UnityEditor.Build.Reporting;
+using UnityEditor.Callbacks;
 using UnityEngine;
 
 public static class BuildScript
@@ -135,5 +137,27 @@ public static class BuildScript
         }
 
         return scenes.ToArray();
+    }
+
+    [PostProcessBuild]
+    public static void OnPostprocessBuild(BuildTarget target, string pathToBuiltProject)
+    {
+        // Pfade zur Readme-Datei und zum Build-Ordner
+        string readmePath = Path.Combine(Application.dataPath, "readme.txt");
+        string buildFolderPath = Path.GetDirectoryName(pathToBuiltProject);
+
+        // Überprüfe, ob die Readme-Datei existiert
+        if (File.Exists(readmePath))
+        {
+            // Kopiere die Readme-Datei in den Build-Ordner
+            string buildReadmePath = Path.Combine(buildFolderPath, "readme.txt");
+            File.Copy(readmePath, buildReadmePath, true);
+
+            Debug.Log("Readme copied to build folder.");
+        }
+        else
+        {
+            Debug.LogError("Readme file not found.");
+        }
     }
 }
