@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InfluenceAuraPA : IPassiveAbility
+public class InfluenceAuraPA : MonoBehaviour, IPassiveAbility
 {
     private static int maxInfluence = 3;
     private static PatternType influenceAuraPatternType = PatternType.Star;

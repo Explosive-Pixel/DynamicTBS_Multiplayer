@@ -66,7 +66,7 @@ public class BoardNew : MonoBehaviour
 
     private void SubscribeEvents()
     {
-        GameEvents.OnGamePhaseEnd += InitBoard;
+        //GameEvents.OnGamePhaseEnd += InitBoard;
     }
 
     private void UnsubscribeEvents()
