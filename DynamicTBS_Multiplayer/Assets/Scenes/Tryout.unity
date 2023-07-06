@@ -490,6 +490,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ship
       objectReference: {fileID: 0}
+    - target: {fileID: 4369241961276924602, guid: 1cdd30b4e50069749852fa049e3678ff, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6514409538795373003, guid: 1cdd30b4e50069749852fa049e3678ff, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -574,6 +578,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7026735249381124192, guid: 1cdd30b4e50069749852fa049e3678ff, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1cdd30b4e50069749852fa049e3678ff, type: 3}
 --- !u!224 &4324271638026883717 stripped
@@ -581,3 +589,26 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6514409538795373003, guid: 1cdd30b4e50069749852fa049e3678ff, type: 3}
   m_PrefabInstance: {fileID: 4324271638026883716}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &4324271638026883718 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3495140585052642825, guid: 1cdd30b4e50069749852fa049e3678ff, type: 3}
+  m_PrefabInstance: {fileID: 4324271638026883716}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4324271638026883719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4324271638026883718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0e6637dd73fb4bd48440a5f7d0f3621, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maps:
+  - name: 0
+    layout:
+    - tile: {fileID: 0}
+      tileType: 0
+      side: 2
