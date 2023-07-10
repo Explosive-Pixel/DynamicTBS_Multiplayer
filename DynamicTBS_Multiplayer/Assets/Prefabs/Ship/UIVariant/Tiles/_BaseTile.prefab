@@ -544,9 +544,10 @@ GameObject:
   - component: {fileID: 5416211235084964590}
   - component: {fileID: 3805718712176934932}
   - component: {fileID: 400295791616132080}
+  - component: {fileID: 6868967364331008209}
   m_Layer: 5
   m_Name: _BaseTile
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -630,6 +631,26 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6868967364331008209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6841513216034147464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86ffe7e6cb8f34a7ea5b8ab30c8d64c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  row: 0
+  column: 0
+  machineCore: {fileID: 7634147901570714318}
+  unitStart_pink: {fileID: 2818085569493268800}
+  unitStart_blue: {fileID: 272929720294580403}
+  captainStart_pink: {fileID: 5187980947402128860}
+  captainStart_blue: {fileID: 2601891465094804994}
+  electrifyMarker: {fileID: 5450257618161159188}
 --- !u!1 &7634147901570714318
 GameObject:
   m_ObjectHideFlags: 0

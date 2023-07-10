@@ -179,5 +179,43 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0.52
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 9061870549154972373, guid: bc2bba4b9472eb34682304f038d98552, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: bc2bba4b9472eb34682304f038d98552, type: 3}
+--- !u!1 &1261058338705117478 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5687532331230442325, guid: bc2bba4b9472eb34682304f038d98552, type: 3}
+  m_PrefabInstance: {fileID: 6876435217903133299}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3949827328959022679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1261058338705117478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 154f83bd70627a74681d8f8c4968cf8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultAttackDamage: 1
+  prettyName: Captain
+  characterType: 1
+  maxHitPoints: 3
+  moveSpeed: 1
+  attackRange: 0
+  activeAbilityType: 0
+  side: 0
+--- !u!114 &9103764418894061925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1261058338705117478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87cdc699f416fba42a31dcda54a7bdcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -101,3 +101,41 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc2bba4b9472eb34682304f038d98552, type: 3}
+--- !u!1 &2445347844245677516 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5687532331230442325, guid: bc2bba4b9472eb34682304f038d98552, type: 3}
+  m_PrefabInstance: {fileID: 7998870598485661337}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3096373086004653806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2445347844245677516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87cdc699f416fba42a31dcda54a7bdcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4114086049221414414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2445347844245677516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4d15eaf134fac64ca3e4c088a02733b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultAttackDamage: 1
+  prettyName: Runner
+  characterType: 4
+  maxHitPoints: 1
+  moveSpeed: 2
+  attackRange: 1
+  passiveAbility: {fileID: 3096373086004653806}
+  activeAbilityType: 0
+  side: 0
