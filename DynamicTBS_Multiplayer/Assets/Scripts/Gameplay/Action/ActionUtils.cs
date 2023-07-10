@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class ActionUtils : MonoBehaviour
 {
@@ -21,6 +22,22 @@ public class ActionUtils : MonoBehaviour
     {
         prefab.transform.position = new Vector3(position.x, position.y, prefab.transform.position.z);
         return Instantiate(prefab);
+    }
+
+    public static List<GameObject> InstantiateActionPositions(List<GameObject> parents, GameObject prefab)
+    {
+        List<GameObject> actionGameObjects = new List<GameObject>();
+        if (parents.Count > 0)
+        {
+            foreach (GameObject parent in parents)
+            {
+                GameObject newGO = Instantiate(prefab);
+                newGO.transform.parent = parent.transform;
+                newGO.transform.position = parent.transform.position;
+                actionGameObjects.Add(newGO);
+            }
+        }
+        return actionGameObjects;
     }
 
     public static void Clear(List<GameObject> actionGameObjects)

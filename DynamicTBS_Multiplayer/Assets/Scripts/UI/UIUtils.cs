@@ -6,8 +6,13 @@ public class UIUtils : MonoBehaviour
 {
     public static GameObject FindGameObjectByPosition(List<GameObject> destinations, Vector3 position)
     {
-        return destinations.Find(gameObject => gameObject.transform.position.x == position.x && gameObject.transform.position.y == position.y);
+        return destinations.Find(gameObject => HasSamePosition(gameObject, position));
         //return FindGameObjectByRay(destinations, DefaultRay(position));
+    }
+
+    public static bool HasSamePosition(GameObject gameObject, Vector3 position)
+    {
+        return gameObject.transform.position.x == position.x && gameObject.transform.position.y == position.y;
     }
 
     public static Ray DefaultRay(Vector3 position)
