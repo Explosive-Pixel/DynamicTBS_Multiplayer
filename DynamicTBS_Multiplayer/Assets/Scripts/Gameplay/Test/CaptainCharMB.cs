@@ -7,6 +7,6 @@ public class CaptainCharMB : CharacterMB
     public override void Die()
     {
         base.Die();
-        GameplayEvents.GameIsOver(PlayerManager.GetOtherSide(side), GameOverCondition.MASTER_DIED);
+        GameplayEvents.GameIsOver(PlayerManager.GetOtherSide(Side), GameOverCondition.MASTER_DIED);
     }
 }

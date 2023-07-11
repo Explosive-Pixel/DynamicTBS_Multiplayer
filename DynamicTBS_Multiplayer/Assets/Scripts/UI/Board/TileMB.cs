@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class TileMB : MonoBehaviour
 {
-    public int row;
-    public int column;
+    [SerializeField] private int row;
+    [SerializeField] private int column;
 
     public GameObject machineCore;
     public GameObject unitStart_pink;
@@ -14,6 +14,9 @@ public class TileMB : MonoBehaviour
     public GameObject captainStart_pink;
     public GameObject captainStart_blue;
     public GameObject electrifyMarker;
+
+    public int Row { get { return row; } }
+    public int Column { get { return column; } }
 
     private GameObject UnitStart(PlayerType side) { return side == PlayerType.blue ? unitStart_blue : unitStart_pink; }
     private GameObject CaptainStart(PlayerType side) { return side == PlayerType.blue ? captainStart_blue : captainStart_pink; }
@@ -23,8 +26,7 @@ public class TileMB : MonoBehaviour
     private PlayerType side;
     public PlayerType Side { get { return side; } }
 
-    private Character currentInhabitant;
-    public Character CurrentInhabitant { get { return currentInhabitant; } set { currentInhabitant = value; } }
+    public CharacterMB CurrentInhabitant { get { return gameObject.GetComponentInChildren<CharacterMB>(); } }
 
     private State state;
 
@@ -34,7 +36,6 @@ public class TileMB : MonoBehaviour
     public void Init(TileType tileType, PlayerType side)
     {
         this.side = side;
-        this.currentInhabitant = null;
         this.state = null;
 
         Transform(tileType);
@@ -46,7 +47,7 @@ public class TileMB : MonoBehaviour
         this.tileType = tileType;
 
         gameObject.GetComponent<Image>().enabled = tileType != TileType.EmptyTile;
-        machineCore.gameObject.SetActive(tileType == TileType.GoalTile);
+        machineCore.SetActive(tileType == TileType.GoalTile);
         UnitStart(side).SetActive(tileType == TileType.StartTile);
         UnitStart(PlayerManager.GetOtherSide(side)).SetActive(false);
         CaptainStart(side).SetActive(tileType == TileType.MasterStartTile);
@@ -90,7 +91,7 @@ public class TileMB : MonoBehaviour
 
     public bool IsOccupied()
     {
-        return currentInhabitant != null;
+        return CurrentInhabitant != null;
     }
 
     public bool IsAccessible()
@@ -98,29 +99,9 @@ public class TileMB : MonoBehaviour
         return !IsOccupied() && !IsHole();
     }
 
-    private void UpdateCurrentInhabitant(ActionMetadata actionMetadata)
+    private void TransformToFloorTile(CharacterMB character)
     {
-        if (actionMetadata.ExecutedActionType != ActionType.Move || actionMetadata.ActionDestinationPosition == null)
-            return;
-
-        if(UIUtils.HasSamePosition(gameObject, actionMetadata.ActionDestinationPosition.Value))
-        {
-            currentInhabitant = actionMetadata.CharacterInAction;
-        } else if(currentInhabitant == actionMetadata.CharacterInAction)
-        {
-            currentInhabitant = null;
-        }
-    }
-
-    private void UpdateCurrentInhabitantAfterCharacterDeath(Character character, Vector3 position)
-    {
-        if (currentInhabitant == character)
-            currentInhabitant = null;
-    }
-
-    private void TransformToFloorTile(Character character)
-    {
-        if (currentInhabitant == character)
+        if (CurrentInhabitant == character)
             Transform(TileType.FloorTile);
     }
 
@@ -128,16 +109,12 @@ public class TileMB : MonoBehaviour
 
     private void SubscribeEvents()
     {
-        GameplayEvents.OnFinishAction += UpdateCurrentInhabitant;
-        PlacementEvents.OnPlaceCharacter += TransformToFloorTile;
-        CharacterEvents.OnCharacterDeath += UpdateCurrentInhabitantAfterCharacterDeath;
+        //PlacementEvents.OnPlaceCharacter += TransformToFloorTile;
     }
 
     private void UnsubscribeEvents()
     {
-        GameplayEvents.OnFinishAction -= UpdateCurrentInhabitant;
-        PlacementEvents.OnPlaceCharacter -= TransformToFloorTile;
-        CharacterEvents.OnCharacterDeath -= UpdateCurrentInhabitantAfterCharacterDeath;
+        //PlacementEvents.OnPlaceCharacter -= TransformToFloorTile;
     }
 
     #endregion

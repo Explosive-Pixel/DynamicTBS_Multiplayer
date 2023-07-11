@@ -10,13 +10,19 @@ public class CharacterFactoryMB : MonoBehaviour
 
     private GameObject Master(PlayerType side) { return side == PlayerType.blue ? master_blue : master_pink; }
 
-    public GameObject CreateCharacter(CharacterType type, PlayerType side)
+    public CharacterMB CreateCharacter(CharacterType type, PlayerType side)
     {
-        switch(type)
+        GameObject characterGO = null;
+
+        switch (type)
         {
             case CharacterType.MasterChar:
-                return Instantiate(Master(side));
+                characterGO = Instantiate(Master(side));
+                break;
         }
+
+        if (characterGO != null)
+            return characterGO.GetComponent<CharacterMB>();
 
         return null;
     }

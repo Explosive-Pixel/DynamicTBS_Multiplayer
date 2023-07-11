@@ -53,7 +53,7 @@ public class PlayerManager : MonoBehaviour
 
     public static PlayerType GetOtherSide(PlayerType side)
     {
-        if(side == PlayerType.blue)
+        if (side == PlayerType.blue)
         {
             return PlayerType.pink;
         }
@@ -74,6 +74,11 @@ public class PlayerManager : MonoBehaviour
         return currentPlayer;
     }
 
+    public static bool IsCurrentPlayer(PlayerType side)
+    {
+        return side == GetCurrentPlayer().GetPlayerType();
+    }
+
     public static bool IsCurrentPlayer(string name)
     {
         return GetPlayer(name) == GetCurrentPlayer();
@@ -86,10 +91,11 @@ public class PlayerManager : MonoBehaviour
 
     public static Player GetPlayer(string name)
     {
-        if(name.ToLower().Contains(PlayerType.blue.ToString()))
+        if (name.ToLower().Contains(PlayerType.blue.ToString()))
         {
             return bluePlayer;
-        } else if(name.ToLower().Contains(PlayerType.pink.ToString()))
+        }
+        else if (name.ToLower().Contains(PlayerType.pink.ToString()))
         {
             return pinkPlayer;
         }
@@ -103,7 +109,7 @@ public class PlayerManager : MonoBehaviour
         return pinkPlayer;
     }
 
-    private void ResetRoundCounters() 
+    private void ResetRoundCounters()
     {
         bluePlayer.ResetRoundCounter();
         pinkPlayer.ResetRoundCounter();
@@ -116,7 +122,7 @@ public class PlayerManager : MonoBehaviour
 
         currentPlayer = GetPlayer(startPlayer[gamePhase]);
 
-        if(gamePhase == GamePhase.GAMEPLAY)
+        if (gamePhase == GamePhase.GAMEPLAY)
         {
             ResetRoundCounters();
         }

@@ -130,12 +130,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4d15eaf134fac64ca3e4c088a02733b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultAttackDamage: 1
   prettyName: Runner
   characterType: 4
   maxHitPoints: 1
   moveSpeed: 2
   attackRange: 1
-  passiveAbility: {fileID: 3096373086004653806}
-  activeAbilityType: 0
   side: 0
+  hitPointAnimator: {fileID: 8201509305770647740}
+  cooldownAnimator: {fileID: 4102435087325193909}
+  activeHighlight: {fileID: 5137316794560998649}
+--- !u!95 &4102435087325193909 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6336411380225159212, guid: bc2bba4b9472eb34682304f038d98552, type: 3}
+  m_PrefabInstance: {fileID: 7998870598485661337}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5137316794560998649 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2903370447749462624, guid: bc2bba4b9472eb34682304f038d98552, type: 3}
+  m_PrefabInstance: {fileID: 7998870598485661337}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &8201509305770647740 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2220326497007760933, guid: bc2bba4b9472eb34682304f038d98552, type: 3}
+  m_PrefabInstance: {fileID: 7998870598485661337}
+  m_PrefabAsset: {fileID: 0}
