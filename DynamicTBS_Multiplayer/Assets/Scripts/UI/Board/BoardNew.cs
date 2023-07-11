@@ -32,7 +32,7 @@ public class BoardNew : MonoBehaviour
     private static readonly List<GameObject> tileGameObjects = new List<GameObject>();
     public static List<GameObject> TileGameObjects { get { return tileGameObjects; } }
 
-    private static List<TileMB> Tiles { get { return tileGameObjects.ConvertAll(go => go.GetComponent<TileMB>()); } }
+    public static List<TileMB> Tiles { get { return tileGameObjects.ConvertAll(go => go.GetComponent<TileMB>()); } }
     private static int Rows { get { return Tiles.Max(tile => tile.Row); } }
     private static int Columns { get { return Tiles.Max(tile => tile.Column); } }
 
@@ -215,7 +215,7 @@ public class BoardNew : MonoBehaviour
 
     private void SubscribeEvents()
     {
-        //GameEvents.OnGamePhaseEnd += InitBoard;
+        GameEvents.OnGamePhaseEnd += InitBoard;
     }
 
     private void UnsubscribeEvents()

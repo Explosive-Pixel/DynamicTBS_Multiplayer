@@ -11,6 +11,11 @@ public class CharacterManager : MonoBehaviour
         return FindObjectsOfType<CharacterMB>().ToList();
     }
 
+    public static List<CharacterMB> GetAllLivingCharactersOfSide(PlayerType side)
+    {
+        return GetAllLivingCharacters().FindAll(character => character.Side == side);
+    }
+
     public static CharacterMB GetCharacterByPosition(Vector3 position)
     {
         List<GameObject> characterGameObjects = GetAllLivingCharacters().ConvertAll(character => character.gameObject);

@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class DraftButtonHandler : MonoBehaviour
 {
-    [SerializeField] private DraftManager draftManager;
-
     [SerializeField] private CharacterType characterType;
     [SerializeField] private PlayerType side;
 
@@ -18,6 +16,6 @@ public class DraftButtonHandler : MonoBehaviour
         if (!PlayerManager.ClientIsCurrentPlayer())
             return;
 
-        draftManager.DraftCharacter(characterType, side);
+        DraftManager.DraftCharacter(characterType, side);
     }
 }

@@ -7,61 +7,54 @@ using System.Linq;
 
 public class PlacementManager : MonoBehaviour
 {
-    #region Placement Config
+    [SerializeField] private List<Vector3> blueCharacterPositions;
+    [SerializeField] private List<Vector3> pinkCharacterPositions;
+    [SerializeField] private List<int> placementSequence;
 
-    private const int MaxPlacementCount = 14;
-    private static readonly List<int> placementOrder = new List<int>() { 1, 3, 5, 7, 8, 11 };
+    private static readonly List<int> PlacementSequence = new();
+    private static int placementSequenceIndex;
+    private static int currentPlayerPlacementCount;
 
-    private List<Vector3> blueSortingPositionsList = new List<Vector3>() { 
-    new Vector3(-7.5f, -0.5f, 1),
-    new Vector3(-7.5f, -1.5f, 1),
-    new Vector3(-7.5f, -2.5f, 1),
-    new Vector3(-7.5f, -3.5f, 1),
-    new Vector3(-6.5f, -0.5f, 1),
-    new Vector3(-6.5f, -1.5f, 1),
-    new Vector3(-6.5f, -2.5f, 1)};
+    public static int CurrentPlayerTotalPlacementCount { get { return placementSequenceIndex < PlacementSequence.Count ? PlacementSequence[placementSequenceIndex] : 0; } }
+    public static int MaxPlacementCount { get { return PlacementSequence.Sum(); } }
+    private List<Vector3> CharacterPositions(PlayerType side) { return side == PlayerType.blue ? blueCharacterPositions : pinkCharacterPositions; }
 
-    private List<Vector3> pinkSortingPositionsList = new List<Vector3>() {
-    new Vector3(7.5f, 3.5f, 1),
-    new Vector3(7.5f, 2.5f, 1),
-    new Vector3(7.5f, 1.5f, 1),
-    new Vector3(7.5f, 0.5f, 1),
-    new Vector3(6.5f, 3.5f, 1),
-    new Vector3(6.5f, 2.5f, 1),
-    new Vector3(6.5f, 1.5f, 1)};
-
-    #endregion
-
-    private static int placementCount;
-    private static int placementOrderIndex;
-
-    [SerializeField]
-    private Board board;
+    private bool init = false;
 
     private void Awake()
     {
+        if (!init)
+        {
+            PlacementSequence.AddRange(placementSequence);
+
+            init = true;
+        }
+
+        placementSequenceIndex = 0;
+        currentPlayerPlacementCount = 0;
+
         SubscribeEvents();
-        placementCount = 0;
-        placementOrderIndex = 0;
     }
 
     private void AdvancePlacementOrder(ActionMetadata actionMetadata)
     {
         PlacementEvents.CharacterPlaced(actionMetadata.CharacterInAction);
         actionMetadata.CharacterInAction.isClickable = false;
-        placementCount += 1;
-        
-        if (placementOrder.Contains(placementCount))
+
+        currentPlayerPlacementCount++;
+
+        if (currentPlayerPlacementCount == CurrentPlayerTotalPlacementCount)
         {
-            placementOrderIndex++;
+            currentPlayerPlacementCount = 0;
+            placementSequenceIndex++;
             PlayerManager.NextPlayer();
         }
-            
-        if (placementCount >= MaxPlacementCount)
+
+        if (placementSequenceIndex == PlacementSequence.Count)
         {
             SpawnMasters();
             PlacementCompleted();
-        }    
+        }
     }
 
     public static void RandomPlacements(Player side)
@@ -77,14 +70,14 @@ public class PlacementManager : MonoBehaviour
     {
         List<Character> charactersOfPlayer = CharacterHandler.GetAllLivingCharacters()
                 .FindAll(character => character.isClickable && character.GetSide() == side);
-        if(charactersOfPlayer.Count > 0)
+        if (charactersOfPlayer.Count > 0)
         {
             Character randomCharacter = charactersOfPlayer[0];
             ActionUtils.InstantiateAllActionPositions(randomCharacter);
             List<GameObject> placementPositions = ActionRegistry.GetActions().ConvertAll(action => action.ActionDestinations).SelectMany(i => i).ToList();
             GameObject randomPosition = placementPositions[RandomNumberGenerator.GetInt32(0, placementPositions.Count)];
             ActionUtils.ExecuteAction(randomPosition);
-        } 
+        }
     }
 
     public void SpawnMasters()
@@ -101,36 +94,18 @@ public class PlacementManager : MonoBehaviour
             return 0;
         }
 
-        if (placementOrderIndex == placementOrder.Count)
-        {
-            return MaxPlacementCount - placementCount;
-        }
-        return placementOrder[placementOrderIndex] - placementCount;
+        return CurrentPlayerTotalPlacementCount - currentPlayerPlacementCount;
     }
 
-    public static int GetCurrentPlacementCount()
+    private void SpawnMaster(PlayerType playerType)
     {
-        if (placementOrderIndex == 0)
-        {
-            return placementOrder[placementOrderIndex];
-        }
-        else if (placementOrderIndex == placementOrder.Count)
-        {
-            return MaxPlacementCount - placementOrder[placementOrderIndex - 1];
-        }
-        return placementOrder[placementOrderIndex] - placementOrder[placementOrderIndex - 1];
-    }
+        CharacterMB master = CharacterFactoryMB.CreateCharacter(CharacterType.MasterChar, playerType);
+        TileMB masterSpawnTile = BoardNew.Tiles.Find(tile => tile.TileType == TileType.MasterStartTile && tile.Side == playerType);
 
-    private void SpawnMaster(PlayerType playerType) 
-    {
-        Character master = CharacterFactory.CreateCharacter(CharacterType.MasterChar, PlayerManager.GetPlayer(playerType));
+        MoveAction.MoveCharacter(master, masterSpawnTile);
 
-        Tile masterSpawnTile = board.FindMasterStartTile(playerType);
-        Vector3 position = masterSpawnTile.GetPosition();
-        master.GetCharacterGameObject().transform.position = new Vector3(position.x, position.y, 1f);
-        masterSpawnTile.SetCurrentInhabitant(master);
         DraftEvents.CharacterCreated(master);
-        PlacementEvents.CharacterPlaced(master);
+        //PlacementEvents.CharacterPlaced(master);
     }
 
     private void PlacementCompleted()
@@ -140,38 +115,29 @@ public class PlacementManager : MonoBehaviour
     }
 
     #region UI
+
     private void SortCharacters(GamePhase gamePhase)
     {
         if (gamePhase != GamePhase.DRAFT)
             return;
 
-        List<Character> blueCharacters = new List<Character>();
-        List<Character> pinkCharacters = new List<Character>();
-
-        foreach (Character character in CharacterHandler.Characters)
-        {
-            if (character.GetSide().GetPlayerType() == PlayerType.blue)
-            {
-                blueCharacters.Add(character);
-            }
-            else
-            {
-                pinkCharacters.Add(character);
-            }
-        }
-
-        for (int i = 0; i < blueCharacters.Count(); i++)
-        {
-            blueCharacters[i].GetCharacterGameObject().transform.position = blueSortingPositionsList[i];
-        }
-
-        for (int i = 0; i < pinkCharacters.Count(); i++)
-        {
-            pinkCharacters[i].GetCharacterGameObject().transform.position = pinkSortingPositionsList[i];
-        }
+        SortCharactersOfSide(PlayerType.blue);
+        SortCharactersOfSide(PlayerType.pink);
 
         GameManager.ChangeGamePhase(GamePhase.PLACEMENT);
     }
+
+    private void SortCharactersOfSide(PlayerType side)
+    {
+        List<CharacterMB> characters = CharacterManager.GetAllLivingCharactersOfSide(side);
+        List<Vector3> positions = CharacterPositions(side);
+
+        for (int i = 0; i < characters.Count(); i++)
+        {
+            characters[i].gameObject.transform.position = positions[i];
+        }
+    }
+
     #endregion
 
     #region EventsRegion

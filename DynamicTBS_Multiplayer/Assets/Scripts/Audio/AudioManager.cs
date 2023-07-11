@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
-    
+
     private GameObject audioManagerObject;
 
     [SerializeField] private AudioSource musicSource;
@@ -53,7 +53,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip adrenalinClip;
     [SerializeField] private AudioClip lastTenSeconds;
     [SerializeField] private AudioClip timeRanOut;
-    
+
     // Voicelines
     [SerializeField] private AudioClip masterVoicelineClip1;
     [SerializeField] private AudioClip masterVoicelineClip2;
@@ -234,7 +234,7 @@ public class AudioManager : MonoBehaviour
         fxSource.PlayOneShot(turnChangeClip);
     }
 
-    private void UnitDraftAudio(Character character)
+    private void UnitDraftAudio(CharacterMB character)
     {
         fxSource.PlayOneShot(unitDraftedClip);
     }

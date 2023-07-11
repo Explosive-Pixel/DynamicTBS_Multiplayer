@@ -9,14 +9,14 @@ public class OnlineClientMessageSender : MonoBehaviour
         SubscribeEvents();
     }
 
-    private void SendDraftCharacterMessage(Character character)
+    private void SendDraftCharacterMessage(CharacterMB character)
     {
-        if (OnlineClient.Instance.ShouldSendMessage(character.GetSide().GetPlayerType()) && character.GetCharacterType() != CharacterType.MasterChar)
+        if (OnlineClient.Instance.ShouldSendMessage(character.Side) && character.CharacterType != CharacterType.MasterChar)
         {
             OnlineClient.Instance.SendToServer(new MsgDraftCharacter
             {
-                playerId = character.GetSide().GetPlayerType(),
-                characterType = character.GetCharacterType()
+                playerId = character.Side,
+                characterType = character.CharacterType
             });
         }
     }
@@ -25,7 +25,7 @@ public class OnlineClientMessageSender : MonoBehaviour
     {
         if (OnlineClient.Instance.ShouldSendMessage(actionMetadata.ExecutingPlayer.GetPlayerType()))
         {
-            OnlineClient.Instance.SendToServer(new MsgPerformAction 
+            OnlineClient.Instance.SendToServer(new MsgPerformAction
             {
                 playerId = actionMetadata.ExecutingPlayer.GetPlayerType(),
                 characterX = actionMetadata.CharacterInitialPosition != null ? actionMetadata.CharacterInitialPosition.Value.x : 0f,
@@ -43,7 +43,7 @@ public class OnlineClientMessageSender : MonoBehaviour
     {
         if (OnlineClient.Instance.ShouldSendMessage(player.GetPlayerType()))
         {
-            OnlineClient.Instance.SendToServer(new MsgUIAction 
+            OnlineClient.Instance.SendToServer(new MsgUIAction
             {
                 playerId = player.GetPlayerType(),
                 uiAction = uiAction
@@ -53,7 +53,7 @@ public class OnlineClientMessageSender : MonoBehaviour
 
     private void SendUpdateServerMessage(PlayerType currentPlayer)
     {
-        if(OnlineClient.Instance.AdminShouldSendMessage())
+        if (OnlineClient.Instance.AdminShouldSendMessage())
         {
             OnlineClient.Instance.SendToServer(new MsgUpdateServer
             {
@@ -72,7 +72,7 @@ public class OnlineClientMessageSender : MonoBehaviour
                 isDraw = winner == null
             };
 
-            if(winner != null)
+            if (winner != null)
             {
                 msg.winner = winner.Value;
             }

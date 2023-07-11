@@ -63,7 +63,7 @@ public class ActionUtils : MonoBehaviour
     {
         int actionDestinationCount = 0;
 
-        foreach(IAction action in ActionRegistry.GetActions())
+        foreach (IAction action in ActionRegistry.GetActions())
         {
             if (GameplayManager.ActionAvailable(character, action.ActionType))
                 actionDestinationCount += action.CountActionDestinations(character);
@@ -94,7 +94,7 @@ public class ActionUtils : MonoBehaviour
     {
         foreach (IAction action in ActionRegistry.GetActions())
         {
-            if(action.ActionDestinations.Contains(actionDestination))
+            if (action.ActionDestinations.Contains(actionDestination))
             {
                 ExecuteAction(action, actionDestination);
             }

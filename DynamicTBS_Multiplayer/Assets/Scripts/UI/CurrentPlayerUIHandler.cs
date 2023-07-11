@@ -47,7 +47,7 @@ public class CurrentPlayerUIHandler : MonoBehaviour
     {
         GameplayEvents.OnCurrentPlayerChanged += UpdateMessages;
 
-        if(PlayerManager.GetCurrentPlayer() != null)
+        if (PlayerManager.GetCurrentPlayer() != null)
         {
             UpdateMessages(PlayerManager.GetCurrentPlayer().GetPlayerType());
         }
@@ -82,7 +82,7 @@ public class CurrentPlayerUIHandler : MonoBehaviour
 
     private void DisplayDraftMessages(PlayerType currentPlayer)
     {
-        int count = DraftManager.GetCurrentDraftCount();
+        int count = DraftManager.CurrentPlayerTotalDraftCount;
         draftMessageText.text = currentPlayer + " selects " + count + " unit";
         if (count > 1)
         {
@@ -95,7 +95,7 @@ public class CurrentPlayerUIHandler : MonoBehaviour
 
     private void DisplayPlacementMessages(PlayerType currentPlayer)
     {
-        int count = PlacementManager.GetCurrentPlacementCount();
+        int count = PlacementManager.CurrentPlayerTotalPlacementCount;
         placementMessageText.text = currentPlayer + " places " + count + " unit";
         if (count > 1)
         {

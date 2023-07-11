@@ -13,7 +13,6 @@ public class TileMB : MonoBehaviour
     public GameObject unitStart_blue;
     public GameObject captainStart_pink;
     public GameObject captainStart_blue;
-    public GameObject electrifyMarker;
 
     public int Row { get { return row; } }
     public int Column { get { return column; } }
@@ -46,7 +45,7 @@ public class TileMB : MonoBehaviour
     {
         this.tileType = tileType;
 
-        gameObject.GetComponent<Image>().enabled = tileType != TileType.EmptyTile;
+        gameObject.GetComponent<SpriteRenderer>().enabled = tileType != TileType.EmptyTile;
         machineCore.SetActive(tileType == TileType.GoalTile);
         UnitStart(side).SetActive(tileType == TileType.StartTile);
         UnitStart(PlayerManager.GetOtherSide(side)).SetActive(false);

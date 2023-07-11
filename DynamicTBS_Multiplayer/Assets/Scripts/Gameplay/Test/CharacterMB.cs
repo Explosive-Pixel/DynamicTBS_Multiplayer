@@ -37,9 +37,11 @@ public class CharacterMB : MonoBehaviour
     public delegate bool IsDisabled();
     public IsDisabled isDisabled = () => false;
 
+    public CharacterType CharacterType { get { return characterType; } }
     public PlayerType Side { get { return side; } }
     public int HitPoints { get { return hitPoints; } set { this.hitPoints = value; UpdateHitPointAnimator(); } }
     public int ActiveAbilityCooldown { get { return activeAbilityCooldown; } set { this.activeAbilityCooldown = value; UpdateCooldownAnimator(); } }
+    public bool IsClickable { get { return isClickable; } set { isClickable = value; } }
 
     private void Awake()
     {

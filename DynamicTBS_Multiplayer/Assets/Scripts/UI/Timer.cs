@@ -83,7 +83,6 @@ public class Timer : MonoBehaviour
     #endregion
 
     [SerializeField] private GameObject timer;
-    [SerializeField] private DraftManager draftManager;
 
     public TimerType timerType;
     public GamePhase gamePhase;
@@ -278,7 +277,7 @@ public class Timer : MonoBehaviour
         if (GameManager.gameType == GameType.ONLINE && (OnlineClient.Instance.Side != playerType || OnlineClient.Instance.IsLoadingGame))
             return;
 
-        draftManager.RandomDrafts(playerType);
+        DraftManager.RandomDrafts(playerType);
     }
 
     private void DrawNoTimeLeftConsequences_Placement(PlayerType playerType)

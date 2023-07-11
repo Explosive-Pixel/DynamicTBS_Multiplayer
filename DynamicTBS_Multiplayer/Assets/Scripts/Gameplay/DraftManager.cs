@@ -3,44 +3,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System.Linq;
 
 public class DraftManager : MonoBehaviour
 {
-    #region Draft Config
-
-    public const int MaxDraftCount = 14;
-    //public static readonly List<int> draftOrder = new List<int>() { 3, 6, 7, 9, 11, 13 };
-    private static List<Vector3> instantiationPositions = new List<Vector3>() {
-        new Vector3(1f, 2.75f, 1f),
-        new Vector3(2f, 2.75f, 1f),
-        new Vector3(3f, 2.75f, 1f),
-        new Vector3(-1f, 1.8f, 1f),
-        new Vector3(-2f, 1.8f, 1f),
-        new Vector3(-3f, 1.8f, 1f),
-        new Vector3(1f, 0.9f, 1f),
-        new Vector3(-1f, -0.05f, 1f),
-        new Vector3(-2f, -0.05f, 1f),
-        new Vector3(1f, -0.95f, 1f),
-        new Vector3(2f, -0.95f, 1f),
-        new Vector3(-1f, -1.9f, 1f),
-        new Vector3(-2f, -1.9f, 1f),
-        new Vector3(1f, -2.85f, 1f) };
-
-    #endregion
-
-    [SerializeField] private int maxDraftCount;
-    [SerializeField] private List<int> draftOrder;
+    [SerializeField] private List<int> draftSequence;
     [SerializeField] private List<Vector3> spawnPositions;
 
-    [SerializeField] private CharacterFactoryMB characterFactory;
-
+    private static readonly List<int> DraftSequence = new();
     private static int draftCounter;
-    private static int draftOrderIndex;
+    private static int draftSequenceIndex;
+    private static int currentPlayerDraftCount;
+    private static readonly List<Vector3> SpawnPositions = new();
+
+    public static int CurrentPlayerTotalDraftCount { get { return draftSequenceIndex < DraftSequence.Count ? DraftSequence[draftSequenceIndex] : 0; } }
+    public static int MaxDraftCount { get { return DraftSequence.Sum(); } }
+
+    private bool init = false;
 
     private void Awake()
     {
+        if (!init)
+        {
+            DraftSequence.AddRange(draftSequence);
+            SpawnPositions.AddRange(spawnPositions);
+
+            init = true;
+        }
+
         draftCounter = 0;
-        draftOrderIndex = 0;
+        draftSequenceIndex = 0;
+        currentPlayerDraftCount = 0;
     }
 
     private void Start()
@@ -48,37 +41,19 @@ public class DraftManager : MonoBehaviour
         GameManager.ChangeGamePhase(GamePhase.DRAFT);
     }
 
-    /* public void CreateCharacter()
-     {
-         if (draftCounter >= MaxDraftCount) return;
-
-         string buttonName = EventSystem.current.currentSelectedGameObject.name;
-
-         if (!PlayerManager.IsCurrentPlayer(buttonName)) return;
-
-         if (!PlayerManager.ClientIsCurrentPlayer())
-             return;
-
-         Enum.TryParse(buttonName.Split("_")[0], out CharacterType characterType);
-
-         DraftCharacter(characterType, PlayerManager.GetCurrentPlayer());
-
-         AudioEvents.PressingButton();
-     }*/
-
-    public void DraftCharacter(CharacterType type, PlayerType side)
+    public static void DraftCharacter(CharacterType type, PlayerType side)
     {
-        if (draftCounter >= MaxDraftCount) return;
+        if (CurrentPlayerTotalDraftCount == 0) return;
 
-        CharacterMB character = characterFactory.CreateCharacter(type, side);
-        character.gameObject.transform.position = instantiationPositions[draftCounter];
+        CharacterMB character = CharacterFactoryMB.CreateCharacter(type, side);
+        character.gameObject.transform.position = SpawnPositions[draftCounter];
 
         DraftEvents.CharacterCreated(character);
 
         AdvanceDraftOrder();
     }
 
-    public void RandomDrafts(PlayerType side)
+    public static void RandomDrafts(PlayerType side)
     {
         int i = GetRemainingDraftCount(side);
         while (i-- > 0)
@@ -87,57 +62,42 @@ public class DraftManager : MonoBehaviour
         }
     }
 
-    public void RandomDraft(PlayerType side)
+    public static void RandomDraft(PlayerType side)
     {
         CharacterType randomCharacterType = CharacterFactory.GetRandomCharacterType();
         DraftCharacter(randomCharacterType, side);
     }
 
-    public int GetRemainingDraftCount(PlayerType currentPlayer)
+    public static int GetRemainingDraftCount(PlayerType currentPlayer)
     {
         if (PlayerManager.GetCurrentPlayer().GetPlayerType() != currentPlayer)
         {
             return 0;
         }
 
-        if (draftOrderIndex == draftOrder.Count)
-        {
-            return MaxDraftCount - draftCounter;
-        }
-        return draftOrder[draftOrderIndex] - draftCounter;
+        return CurrentPlayerTotalDraftCount - currentPlayerDraftCount;
     }
 
-    public int GetCurrentDraftCount()
+    private static void AdvanceDraftOrder()
     {
-        if (draftOrderIndex == 0)
-        {
-            return draftOrder[draftOrderIndex];
-        }
-        else if (draftOrderIndex == draftOrder.Count)
-        {
-            return MaxDraftCount - draftOrder[draftOrderIndex - 1];
-        }
-        return draftOrder[draftOrderIndex] - draftOrder[draftOrderIndex - 1];
-    }
+        draftCounter++;
+        currentPlayerDraftCount++;
 
-    private void AdvanceDraftOrder()
-    {
-        draftCounter += 1;
-
-        if (draftOrder.Contains(draftCounter))
+        if (currentPlayerDraftCount == CurrentPlayerTotalDraftCount)
         {
-            draftOrderIndex++;
+            currentPlayerDraftCount = 0;
+            draftSequenceIndex++;
             PlayerManager.NextPlayer();
         }
 
 
-        if (draftCounter >= MaxDraftCount)
+        if (draftSequenceIndex == DraftSequence.Count)
         {
             DraftCompleted();
         }
     }
 
-    private void DraftCompleted()
+    private static void DraftCompleted()
     {
         GameEvents.EndGamePhase(GamePhase.DRAFT);
     }

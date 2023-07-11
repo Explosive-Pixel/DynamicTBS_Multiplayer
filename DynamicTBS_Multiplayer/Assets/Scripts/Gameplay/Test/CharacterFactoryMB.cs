@@ -8,18 +8,20 @@ public class CharacterFactoryMB : MonoBehaviour
     [SerializeField] private GameObject master_blue;
     [SerializeField] private GameObject master_pink;
 
-    private GameObject Master(PlayerType side) { return side == PlayerType.blue ? master_blue : master_pink; }
+    [SerializeField] private GameObject runner_blue;
+    [SerializeField] private GameObject runner_pink;
 
-    public CharacterMB CreateCharacter(CharacterType type, PlayerType side)
+    private static readonly Dictionary<CharacterType, Dictionary<PlayerType, GameObject>> characters = new();
+
+    private void Awake()
     {
-        GameObject characterGO = null;
+        characters.Add(CharacterType.MasterChar, new() { { PlayerType.blue, master_blue }, { PlayerType.pink, master_pink } });
+        characters.Add(CharacterType.RunnerChar, new() { { PlayerType.blue, runner_blue }, { PlayerType.pink, runner_pink } });
+    }
 
-        switch (type)
-        {
-            case CharacterType.MasterChar:
-                characterGO = Instantiate(Master(side));
-                break;
-        }
+    public static CharacterMB CreateCharacter(CharacterType type, PlayerType side)
+    {
+        GameObject characterGO = Instantiate(characters[type][side]);
 
         if (characterGO != null)
             return characterGO.GetComponent<CharacterMB>();

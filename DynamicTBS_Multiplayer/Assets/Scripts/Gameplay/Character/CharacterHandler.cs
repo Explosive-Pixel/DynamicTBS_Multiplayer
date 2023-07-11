@@ -92,7 +92,7 @@ public class CharacterHandler : MonoBehaviour
 
     private void SubscribeEvents()
     {
-        DraftEvents.OnCharacterCreated += AddCharacterToList;
+        //DraftEvents.OnCharacterCreated += AddCharacterToList;
         GameEvents.OnGamePhaseStart += PrepareCharacters;
         GameplayEvents.OnFinishAction += SetActiveAbilityOnCooldown;
         GameplayEvents.OnCharacterSelectionChange += HighlightCharacter;
@@ -101,7 +101,7 @@ public class CharacterHandler : MonoBehaviour
 
     private void UnsubscribeEvents()
     {
-        DraftEvents.OnCharacterCreated -= AddCharacterToList;
+        //DraftEvents.OnCharacterCreated -= AddCharacterToList;
         GameEvents.OnGamePhaseStart -= PrepareCharacters;
         GameplayEvents.OnFinishAction -= SetActiveAbilityOnCooldown;
         GameplayEvents.OnCharacterSelectionChange -= HighlightCharacter;
