@@ -16,11 +16,11 @@ public class StunnedState : State
 
     protected override GameObject LoadPrefab(GameObject parent)
     {
-        Character character = CharacterHandler.GetCharacterByGameObject(parent);
+        CharacterMB character = parent.GetComponent<CharacterMB>();
 
         if (character != null)
         {
-            string prefabPath = character.GetSide().GetPlayerType() == PlayerType.blue ? blueStunPrefabPath : pinkStunPrefabPath;
+            string prefabPath = character.Side == PlayerType.blue ? blueStunPrefabPath : pinkStunPrefabPath;
             return Resources.Load<GameObject>(prefabPath);
         }
 

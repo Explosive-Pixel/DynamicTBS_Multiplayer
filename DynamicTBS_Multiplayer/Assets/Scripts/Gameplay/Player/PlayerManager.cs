@@ -1,34 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class PlayerManager : MonoBehaviour
 {
-    #region Player Config
-
-    private static readonly Dictionary<GamePhase, PlayerType> startPlayer = new Dictionary<GamePhase, PlayerType>()
-    {
-        { GamePhase.DRAFT, PlayerType.pink },
-        { GamePhase.PLACEMENT, PlayerType.pink },
-        { GamePhase.GAMEPLAY, PlayerType.blue }
-    };
-
-    #endregion
+    [SerializeField] private PlayerType draftStartPlayer;
+    [SerializeField] private PlayerType placementStartPlayer;
+    [SerializeField] private PlayerType gameplayStartPlayer;
 
     private static Player currentPlayer;
 
-    private static Player bluePlayer;
-    public static Player BluePlayer { get { return bluePlayer; } }
-
-    private static Player pinkPlayer;
-    public static Player PinkPlayer { get { return pinkPlayer; } }
-
+    private static Dictionary<GamePhase, PlayerType> startPlayer;
     public static Dictionary<GamePhase, PlayerType> StartPlayer { get { return startPlayer; } }
+
+    private static readonly Dictionary<PlayerType, Player> players = new();
 
     private void Awake()
     {
-        bluePlayer = new Player(PlayerType.blue);
-        pinkPlayer = new Player(PlayerType.pink);
+        startPlayer = new Dictionary<GamePhase, PlayerType>()
+        {
+            { GamePhase.DRAFT, draftStartPlayer },
+            { GamePhase.PLACEMENT, placementStartPlayer },
+            { GamePhase.GAMEPLAY, gameplayStartPlayer }
+        };
+
+        players.Add(PlayerType.blue, new Player(PlayerType.blue));
+        players.Add(PlayerType.pink, new Player(PlayerType.pink));
         SubscribeEvents();
 
         currentPlayer = GetPlayer(startPlayer[GamePhase.DRAFT]);
@@ -36,7 +34,7 @@ public class PlayerManager : MonoBehaviour
 
     public static List<Player> GetAllPlayers()
     {
-        return new List<Player>() { bluePlayer, pinkPlayer };
+        return players.Values.ToList();
     }
 
     public static Player GetCurrentlyExecutingPlayer()
@@ -46,9 +44,9 @@ public class PlayerManager : MonoBehaviour
 
     public static Player GetOtherPlayer(Player player)
     {
-        if (player == bluePlayer)
-            return pinkPlayer;
-        return bluePlayer;
+        if (player == players[PlayerType.blue])
+            return players[PlayerType.pink];
+        return players[PlayerType.blue];
     }
 
     public static PlayerType GetOtherSide(PlayerType side)
@@ -79,40 +77,19 @@ public class PlayerManager : MonoBehaviour
         return side == GetCurrentPlayer().GetPlayerType();
     }
 
-    public static bool IsCurrentPlayer(string name)
-    {
-        return GetPlayer(name) == GetCurrentPlayer();
-    }
-
     public static bool ClientIsCurrentPlayer()
     {
         return GameManager.gameType == GameType.LOCAL || OnlineClient.Instance.Side == GetCurrentPlayer().GetPlayerType();
     }
 
-    public static Player GetPlayer(string name)
+    public static Player GetPlayer(PlayerType side)
     {
-        if (name.ToLower().Contains(PlayerType.blue.ToString()))
-        {
-            return bluePlayer;
-        }
-        else if (name.ToLower().Contains(PlayerType.pink.ToString()))
-        {
-            return pinkPlayer;
-        }
-        return null;
-    }
-
-    public static Player GetPlayer(PlayerType playerType)
-    {
-        if (playerType == PlayerType.blue)
-            return bluePlayer;
-        return pinkPlayer;
+        return players[side];
     }
 
     private void ResetRoundCounters()
     {
-        bluePlayer.ResetRoundCounter();
-        pinkPlayer.ResetRoundCounter();
+        GetAllPlayers().ForEach(player => player.ResetRoundCounter());
     }
 
     private void SetStartPlayer(GamePhase gamePhase)

@@ -2,19 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChangeFloorAA : IActiveAbility
+public class ChangeFloorAA : MonoBehaviour, IActiveAbility
 {
-    public static int radius = 2;
-    public static int radiusWithInhabitants = 1;
+    [SerializeField] private int aaCooldown;
+    [SerializeField] private int changeFloorRadius; // 2
+    [SerializeField] private int changeFloorRadiusWithInhabitants; // 1
 
-    public int Cooldown { get { return 3; } }
+    public static int radius;
+    public static int radiusWithInhabitants;
+
+    public int Cooldown { get { return aaCooldown; } }
     private ChangeFloorAAAction changeFloorAAAction;
 
-    Character character;
+    CharacterMB character;
 
-    public ChangeFloorAA(Character character)
+    private void Awake()
     {
-        this.character = character;
+        radius = changeFloorRadius;
+        radiusWithInhabitants = changeFloorRadiusWithInhabitants;
+
+        this.character = gameObject.GetComponent<CharacterMB>();
         changeFloorAAAction = GameObject.Find("ActionRegistry").GetComponent<ChangeFloorAAAction>();
     }
 

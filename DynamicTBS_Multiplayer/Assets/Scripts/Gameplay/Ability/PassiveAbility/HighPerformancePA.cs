@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class HighPerformancePA : IPassiveAbility
+public class HighPerformancePA : MonoBehaviour, IPassiveAbility
 {
-    private Character owner;
+    private CharacterMB owner;
 
-    public HighPerformancePA(Character character)
+    private void Awake()
     {
-        owner = character;
+        owner = gameObject.GetComponent<CharacterMB>();
     }
 
-    public void Apply() 
+    public void Apply()
     {
-        owner.attackDamage *= 2;
-        owner.movePattern = PatternType.Star;
+        owner.AttackDamage *= 2;
+        owner.MovePattern = PatternType.Star;
     }
 }

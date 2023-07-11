@@ -187,7 +187,7 @@ public class AudioManager : MonoBehaviour
     private void ActionAudio(ActionMetadata actionMetadata)
     {
         ActionType actionType = actionMetadata.ExecutedActionType;
-        Character character = actionMetadata.CharacterInAction;
+        CharacterMB character = actionMetadata.CharacterInAction;
 
         if (character == null)
             return;
@@ -200,30 +200,30 @@ public class AudioManager : MonoBehaviour
         }
         if (actionType == ActionType.Attack)
         {
-            if (character.GetCharacterType() == CharacterType.TankChar)
+            if (character.CharacterType == CharacterType.TankChar)
                 fxSource.PlayOneShot(tankAttackClip);
-            if (character.GetCharacterType() == CharacterType.ShooterChar)
+            if (character.CharacterType == CharacterType.ShooterChar)
                 fxSource.PlayOneShot(shooterAttackClip);
-            if (character.GetCharacterType() == CharacterType.RunnerChar)
+            if (character.CharacterType == CharacterType.RunnerChar)
                 fxSource.PlayOneShot(runnerDoubleAttackClip);
-            if (character.GetCharacterType() == CharacterType.MechanicChar)
+            if (character.CharacterType == CharacterType.MechanicChar)
                 fxSource.PlayOneShot(mechanicAttackClip);
-            if (character.GetCharacterType() == CharacterType.MedicChar)
+            if (character.CharacterType == CharacterType.MedicChar)
                 fxSource.PlayOneShot(medicAttackClip);
         }
         if (actionType == ActionType.ActiveAbility)
         {
-            if (character.GetActiveAbility().GetType() == typeof(TakeControlAA))
+            if (character.ActiveAbility.GetType() == typeof(TakeControlAA))
                 fxSource.PlayOneShot(takeControlClip);
-            if (character.GetActiveAbility().GetType() == typeof(BlockAA))
+            if (character.ActiveAbility.GetType() == typeof(BlockAA))
                 fxSource.PlayOneShot(blockClip);
-            if (character.GetActiveAbility().GetType() == typeof(PowershotAA))
+            if (character.ActiveAbility.GetType() == typeof(PowershotAA))
                 fxSource.PlayOneShot(powershotClip);
-            if (character.GetActiveAbility().GetType() == typeof(JumpAA))
+            if (character.ActiveAbility.GetType() == typeof(JumpAA))
                 fxSource.PlayOneShot(jumpClip);
-            if (character.GetActiveAbility().GetType() == typeof(ChangeFloorAA))
+            if (character.ActiveAbility.GetType() == typeof(ChangeFloorAA))
                 fxSource.PlayOneShot(changeFloorClip);
-            if (character.GetActiveAbility().GetType() == typeof(HealAA))
+            if (character.ActiveAbility.GetType() == typeof(HealAA))
                 fxSource.PlayOneShot(healClip);
         }
     }
@@ -239,31 +239,31 @@ public class AudioManager : MonoBehaviour
         fxSource.PlayOneShot(unitDraftedClip);
     }
 
-    private void UnitPlacementAudio(Character character)
+    private void UnitPlacementAudio(CharacterMB character)
     {
         fxSource.PlayOneShot(unitPlacedClip);
 
-        if (character.GetCharacterType() == CharacterType.TankChar)
+        if (character.CharacterType == CharacterType.TankChar)
         {
             int rnd = Random.Range(0, tankVoiceClipsList.Count);
             voiceSource.PlayOneShot(tankVoiceClipsList[rnd]);
         }
-        if (character.GetCharacterType() == CharacterType.ShooterChar)
+        if (character.CharacterType == CharacterType.ShooterChar)
         {
             int rnd = Random.Range(0, shooterVoiceClipsList.Count);
             voiceSource.PlayOneShot(shooterVoiceClipsList[rnd]);
         }
-        if (character.GetCharacterType() == CharacterType.RunnerChar)
+        if (character.CharacterType == CharacterType.RunnerChar)
         {
             int rnd = Random.Range(0, runnerVoiceClipsList.Count);
             voiceSource.PlayOneShot(runnerVoiceClipsList[rnd]);
         }
-        if (character.GetCharacterType() == CharacterType.MechanicChar)
+        if (character.CharacterType == CharacterType.MechanicChar)
         {
             int rnd = Random.Range(0, mechanicVoiceClipsList.Count);
             voiceSource.PlayOneShot(mechanicVoiceClipsList[rnd]);
         }
-        if (character.GetCharacterType() == CharacterType.MedicChar)
+        if (character.CharacterType == CharacterType.MedicChar)
         {
             int rnd = Random.Range(0, medicVoiceClipsList.Count);
             voiceSource.PlayOneShot(medicVoiceClipsList[rnd]);

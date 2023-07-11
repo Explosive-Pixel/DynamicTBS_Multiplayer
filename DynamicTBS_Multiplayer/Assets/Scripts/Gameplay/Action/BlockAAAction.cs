@@ -4,28 +4,27 @@ using UnityEngine;
 
 public class BlockAAAction : MonoBehaviour, IAction
 {
-    [SerializeField]
-    private GameObject blockActionPrefab;
+    [SerializeField] private GameObject blockActionPrefab;
 
-    public ActionType ActionType { get { return ActionType.ActiveAbility;} }
+    public ActionType ActionType { get { return ActionType.ActiveAbility; } }
 
-    private List<GameObject> blockTargets = new List<GameObject>();
+    private List<GameObject> blockTargets = new();
     public List<GameObject> ActionDestinations { get { return blockTargets; } }
 
-    private Character characterInAction = null;
-    public Character CharacterInAction { get { return characterInAction; } }
+    private CharacterMB characterInAction = null;
+    public CharacterMB CharacterInAction { get { return characterInAction; } }
 
-    private List<GameObject> patternTargets = new List<GameObject>();
+    private List<GameObject> patternTargets = new();
 
     private void Awake()
     {
         GameEvents.OnGamePhaseStart += Register;
     }
 
-    public void ShowActionPattern(Character character)
+    public void ShowActionPattern(CharacterMB character)
     {
-        Tile characterTile = Board.GetTileByPosition(character.GetCharacterGameObject().transform.position);
-        List<Vector3> patternPositions = Board.GetTilesOfDistance(characterTile, BlockAA.pattern, BlockAA.distance).ConvertAll(tile => tile.GetPosition());
+        TileMB characterTile = BoardNew.GetTileByCharacter(character);
+        List<Vector3> patternPositions = BoardNew.GetTilesOfDistance(characterTile, BlockAA.pattern, BlockAA.distance).ConvertAll(tile => tile.gameObject.transform.position);
 
         if (patternPositions != null)
         {
@@ -38,7 +37,7 @@ public class BlockAAAction : MonoBehaviour, IAction
         ActionUtils.Clear(patternTargets);
     }
 
-    public int CountActionDestinations(Character character)
+    public int CountActionDestinations(CharacterMB character)
     {
         List<Vector3> floorPositions = FindFloorPositions(character);
 
@@ -50,7 +49,7 @@ public class BlockAAAction : MonoBehaviour, IAction
         return 0;
     }
 
-    public void CreateActionDestinations(Character character)
+    public void CreateActionDestinations(CharacterMB character)
     {
         List<Vector3> floorPositions = FindFloorPositions(character);
 
@@ -63,11 +62,11 @@ public class BlockAAAction : MonoBehaviour, IAction
 
     public void ExecuteAction(GameObject actionDestination)
     {
-        Tile tile = Board.GetTileByPosition(actionDestination.transform.position);
-        if(tile != null)
+        TileMB tile = BoardNew.GetTileByPosition(actionDestination.transform.position);
+        if (tile != null)
         {
             tile.Transform(TileType.EmptyTile);
-            ((BlockAA)characterInAction.GetActiveAbility()).ActivateBlock();
+            ((BlockAA)characterInAction.ActiveAbility).ActivateBlock();
         }
 
         AbortAction();
@@ -80,14 +79,14 @@ public class BlockAAAction : MonoBehaviour, IAction
         characterInAction = null;
     }
 
-    private List<Vector3> FindFloorPositions(Character character)
+    private List<Vector3> FindFloorPositions(CharacterMB character)
     {
-        Tile characterTile = Board.GetTileByPosition(character.GetCharacterGameObject().transform.position);
+        TileMB characterTile = BoardNew.GetTileByCharacter(character);
 
-        List<Tile> floorTiles = Board.GetTilesOfDistance(characterTile, BlockAA.pattern, BlockAA.distance)
+        List<TileMB> floorTiles = BoardNew.GetTilesOfDistance(characterTile, BlockAA.pattern, BlockAA.distance)
             .FindAll(tile => tile.IsNormalFloor() && !tile.IsOccupied());
 
-        List<Vector3> floorPositions = floorTiles.ConvertAll(tile => tile.GetPosition());
+        List<Vector3> floorPositions = floorTiles.ConvertAll(tile => tile.gameObject.transform.position);
 
         return floorPositions;
     }

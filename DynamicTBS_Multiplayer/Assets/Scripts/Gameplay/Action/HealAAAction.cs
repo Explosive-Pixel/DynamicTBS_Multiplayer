@@ -4,20 +4,19 @@ using UnityEngine;
 
 public class HealAAAction : MonoBehaviour, IAction
 {
-    [SerializeField]
-    private GameObject healPrefab;
+    [SerializeField] private GameObject healPrefab;
 
     public ActionType ActionType { get { return ActionType.ActiveAbility; } }
 
-    private List<GameObject> healTargets = new List<GameObject>();
+    private List<GameObject> healTargets = new();
     public List<GameObject> ActionDestinations { get { return healTargets; } }
 
-    private Character characterInAction = null;
-    public Character CharacterInAction { get { return characterInAction; } }
+    private CharacterMB characterInAction = null;
+    public CharacterMB CharacterInAction { get { return characterInAction; } }
 
-    private List<Character> buffedCharacters = new List<Character>();
+    private List<CharacterMB> buffedCharacters = new();
 
-    private List<GameObject> patternTargets = new List<GameObject>();
+    private List<GameObject> patternTargets = new();
 
     private void Awake()
     {
@@ -25,12 +24,12 @@ public class HealAAAction : MonoBehaviour, IAction
         GameplayEvents.OnFinishAction += DebuffCharacter;
     }
 
-    public void ShowActionPattern(Character character)
+    public void ShowActionPattern(CharacterMB character)
     {
-        Tile tile = Board.GetTileByPosition(character.GetCharacterGameObject().transform.position);
+        TileMB tile = BoardNew.GetTileByCharacter(character);
 
-        List<Vector3> patternPositions = Board.GetTilesInAllStarDirections(tile, HealAA.range)
-            .ConvertAll(tile => tile.GetPosition());
+        List<Vector3> patternPositions = BoardNew.GetTilesInAllStarDirections(tile, HealAA.range)
+            .ConvertAll(tile => tile.gameObject.transform.position);
 
         patternTargets = ActionUtils.InstantiateActionPositions(patternPositions, healPrefab);
     }
@@ -40,7 +39,7 @@ public class HealAAAction : MonoBehaviour, IAction
         ActionUtils.Clear(patternTargets);
     }
 
-    public int CountActionDestinations(Character character)
+    public int CountActionDestinations(CharacterMB character)
     {
         List<Vector3> healPositions = FindHealPositions(character);
 
@@ -52,11 +51,11 @@ public class HealAAAction : MonoBehaviour, IAction
         return 0;
     }
 
-    public void CreateActionDestinations(Character character)
+    public void CreateActionDestinations(CharacterMB character)
     {
         List<Vector3> healPositions = FindHealPositions(character);
 
-        if(healPositions != null && healPositions.Count > 0)
+        if (healPositions != null && healPositions.Count > 0)
         {
             healTargets = ActionUtils.InstantiateActionPositions(healPositions, healPrefab);
             characterInAction = character;
@@ -65,16 +64,16 @@ public class HealAAAction : MonoBehaviour, IAction
 
     public void ExecuteAction(GameObject actionDestination)
     {
-        Tile tile = Board.GetTileByPosition(actionDestination.transform.position);
+        TileMB tile = BoardNew.GetTileByPosition(actionDestination.transform.position);
         if (tile != null)
         {
-            Character characterToHeal = tile.GetCurrentInhabitant();
+            CharacterMB characterToHeal = tile.CurrentInhabitant;
             int hitPointsBeforeHeal = characterToHeal.HitPoints;
             characterToHeal.Heal(HealAA.healingPoints);
 
             if (characterToHeal.HitPoints > hitPointsBeforeHeal)
             {
-                characterToHeal.moveSpeed += HealAA.moveSpeedBuff;
+                characterToHeal.MoveSpeed += HealAA.moveSpeedBuff;
                 buffedCharacters.Add(characterToHeal);
                 UpdateBufferGameObject(characterToHeal);
             }
@@ -90,40 +89,41 @@ public class HealAAAction : MonoBehaviour, IAction
         characterInAction = null;
     }
 
-    private List<Vector3> FindHealPositions(Character character)
+    private List<Vector3> FindHealPositions(CharacterMB character)
     {
-        Tile characterTile = Board.GetTileByPosition(character.GetCharacterGameObject().transform.position);
+        TileMB characterTile = BoardNew.GetTileByCharacter(character);
 
-        List<Tile> healTiles = Board.GetTilesOfClosestCharactersOfSideInAllStarDirections(characterTile, character.GetSide().GetPlayerType(), HealAA.range)
-            .FindAll(tile => tile.IsOccupied() && tile.GetCurrentInhabitant().isHealableBy(character) && !tile.GetCurrentInhabitant().HasFullHP());
+        List<TileMB> healTiles = BoardNew.GetTilesOfClosestCharactersOfSideInAllStarDirections(characterTile, character.Side, HealAA.range)
+            .FindAll(tile => tile.IsOccupied() && tile.CurrentInhabitant.isHealableBy(character) && !tile.CurrentInhabitant.HasFullHP());
 
-        List<Vector3> healPositions = healTiles.ConvertAll(tile => tile.GetPosition());
+        List<Vector3> healPositions = healTiles.ConvertAll(tile => tile.gameObject.transform.position);
 
         return healPositions;
     }
 
     private void DebuffCharacter(ActionMetadata actionMetadata)
     {
-        if(actionMetadata.ExecutedActionType == ActionType.Move)
+        if (actionMetadata.ExecutedActionType == ActionType.Move)
         {
             int bufferCount = BufferCount(actionMetadata.CharacterInAction);
-            if(bufferCount > 0)
+            if (bufferCount > 0)
             {
-                actionMetadata.CharacterInAction.moveSpeed -= (HealAA.moveSpeedBuff * bufferCount);
+                actionMetadata.CharacterInAction.MoveSpeed -= (HealAA.moveSpeedBuff * bufferCount);
                 buffedCharacters = buffedCharacters.FindAll(c => c != actionMetadata.CharacterInAction);
                 UpdateBufferGameObject(actionMetadata.CharacterInAction);
             }
         }
     }
 
-    private int BufferCount(Character character)
+    private int BufferCount(CharacterMB character)
     {
         return buffedCharacters.FindAll(c => c == character).Count;
     }
 
-    private void UpdateBufferGameObject(Character character)
+    private void UpdateBufferGameObject(CharacterMB character)
     {
-        GameObject child = UIUtils.FindChildGameObject(character.GetCharacterGameObject(), "Speedup");
+        // TODO: Make nicer (not hard coded)
+        GameObject child = UIUtils.FindChildGameObject(character.gameObject, "Speedup");
         int bufferCount = BufferCount(character);
         child.GetComponent<TMPro.TextMeshPro>().text = "+" + bufferCount.ToString();
         child.SetActive(bufferCount > 0);

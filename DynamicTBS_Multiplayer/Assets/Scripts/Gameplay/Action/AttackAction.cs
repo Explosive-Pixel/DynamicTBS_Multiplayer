@@ -4,31 +4,36 @@ using UnityEngine;
 
 public class AttackAction : MonoBehaviour, IAction
 {
-    [SerializeField]
-    private GameObject attackCirclePrefab;
+    [SerializeField] private GameObject attackCirclePrefab;
+
+    [SerializeField] private int attackDamage;
 
     public ActionType ActionType { get { return ActionType.Attack; } }
 
-    private List<GameObject> targets = new List<GameObject>();
+    private List<GameObject> targets = new();
     public List<GameObject> ActionDestinations { get { return targets; } }
 
-    private Character characterInAction = null;
-    public Character CharacterInAction { get { return characterInAction; } }
+    private CharacterMB characterInAction = null;
+    public CharacterMB CharacterInAction { get { return characterInAction; } }
 
-    private List<GameObject> patternTargets = new List<GameObject>();
+    private List<GameObject> patternTargets = new();
+
+    public static int AttackDamage;
 
     private void Awake()
     {
+        AttackDamage = attackDamage;
+
         GameEvents.OnGamePhaseStart += Register;
     }
 
-    public void ShowActionPattern(Character character)
+    public void ShowActionPattern(CharacterMB character)
     {
-        int range = character.GetAttackRange();
-        Tile tile = Board.GetTileByPosition(character.GetCharacterGameObject().transform.position);
+        int range = character.AttackRange;
+        TileMB tile = BoardNew.GetTileByCharacter(character);
 
-        List<Vector3> patternPositions = Board.GetTilesInAllStarDirections(tile, range)
-            .ConvertAll(tile => tile.GetPosition());
+        List<Vector3> patternPositions = BoardNew.GetTilesInAllStarDirections(tile, range)
+            .ConvertAll(tile => tile.gameObject.transform.position);
 
         patternTargets = ActionUtils.InstantiateActionPositions(patternPositions, attackCirclePrefab);
     }
@@ -38,7 +43,7 @@ public class AttackAction : MonoBehaviour, IAction
         ActionUtils.Clear(patternTargets);
     }
 
-    public int CountActionDestinations(Character character)
+    public int CountActionDestinations(CharacterMB character)
     {
         List<Vector3> targetPositions = FindTargetPositions(character);
 
@@ -50,11 +55,11 @@ public class AttackAction : MonoBehaviour, IAction
         return 0;
     }
 
-    public void CreateActionDestinations(Character character)
+    public void CreateActionDestinations(CharacterMB character)
     {
         List<Vector3> targetPositions = FindTargetPositions(character);
 
-        if(targetPositions != null && targetPositions.Count > 0)
+        if (targetPositions != null && targetPositions.Count > 0)
         {
             characterInAction = character;
             targets = ActionUtils.InstantiateActionPositions(targetPositions, attackCirclePrefab);
@@ -63,11 +68,11 @@ public class AttackAction : MonoBehaviour, IAction
 
     public void ExecuteAction(GameObject actionDestination)
     {
-        Tile tile = Board.GetTileByPosition(actionDestination.transform.position);
+        TileMB tile = BoardNew.GetTileByPosition(actionDestination.transform.position);
         if (tile != null)
         {
-            Character characterToAttack = tile.GetCurrentInhabitant();
-            characterToAttack.TakeDamage(characterInAction.attackDamage);
+            CharacterMB characterToAttack = tile.CurrentInhabitant;
+            characterToAttack.TakeDamage(attackDamage);
         }
 
         AbortAction();
@@ -79,20 +84,20 @@ public class AttackAction : MonoBehaviour, IAction
         characterInAction = null;
     }
 
-    private List<Vector3> FindTargetPositions(Character character)
+    private List<Vector3> FindTargetPositions(CharacterMB character)
     {
-        int range = character.GetAttackRange();
-        Tile tile = Board.GetTileByPosition(character.GetCharacterGameObject().transform.position);
+        int range = character.AttackRange;
+        TileMB tile = BoardNew.GetTileByPosition(character.gameObject.transform.position);
 
-        PlayerType otherSide = PlayerManager.GetOtherPlayer(character.GetSide()).GetPlayerType();
+        PlayerType otherSide = PlayerManager.GetOtherSide(character.Side);
 
-        List<Vector3> targetPositions = Board.GetTilesOfClosestCharactersOfSideInAllStarDirections(tile, otherSide, range)
-            .FindAll(tile => tile.IsOccupied() && tile.GetCurrentInhabitant().isAttackableBy(character))
-            .ConvertAll(tile => tile.GetTileGameObject().transform.position);
+        List<Vector3> targetPositions = BoardNew.GetTilesOfClosestCharactersOfSideInAllStarDirections(tile, otherSide, range)
+            .FindAll(tile => tile.IsOccupied() && tile.CurrentInhabitant.isAttackableBy(character))
+            .ConvertAll(tile => tile.gameObject.transform.position);
 
         return targetPositions;
     }
-    
+
     private void Register(GamePhase gamePhase)
     {
         if (gamePhase != GamePhase.GAMEPLAY)

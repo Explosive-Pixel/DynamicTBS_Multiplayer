@@ -33,8 +33,8 @@ public class BoardNew : MonoBehaviour
     public static List<GameObject> TileGameObjects { get { return tileGameObjects; } }
 
     public static List<TileMB> Tiles { get { return tileGameObjects.ConvertAll(go => go.GetComponent<TileMB>()); } }
-    private static int Rows { get { return Tiles.Max(tile => tile.Row); } }
-    private static int Columns { get { return Tiles.Max(tile => tile.Column); } }
+    public static int Rows { get { return Tiles.Max(tile => tile.Row); } }
+    public static int Columns { get { return Tiles.Max(tile => tile.Column); } }
 
     private void Awake()
     {

@@ -44,10 +44,11 @@ public class MovesDisplay : MonoBehaviour
     {
         PlayerType player = GetPlayerTypeByActionCount();
         string newLine = TranslatePlayerSide(player).Trim() + "'s turn was aborted since " + player + " ";
-        if(abortTurnCondition == AbortTurnCondition.NO_AVAILABLE_ACTION)
+        if (abortTurnCondition == AbortTurnCondition.NO_AVAILABLE_ACTION)
         {
             newLine += "had no more available action.";
-        } else if(abortTurnCondition == AbortTurnCondition.PLAYER_TIMEOUT)
+        }
+        else if (abortTurnCondition == AbortTurnCondition.PLAYER_TIMEOUT)
         {
             newLine += "ran out of time.";
         }
@@ -77,9 +78,9 @@ public class MovesDisplay : MonoBehaviour
 
     private string GetMoveCountString()
     {
-        int counter = (actionCount / (GameplayManager.maxActionsPerRound * 2)) + 1;
+        int counter = (actionCount / (GameplayManager.MaxActionsPerRound * 2)) + 1;
         PlayerType player = GetPlayerTypeByActionCount();
-        char addition = (char)((actionCount % GameplayManager.maxActionsPerRound) + 65);
+        char addition = (char)((actionCount % GameplayManager.MaxActionsPerRound) + 65);
 
         string text = TranslatePlayerSide(player) + " " + counter.ToString() + addition;
 
@@ -89,7 +90,7 @@ public class MovesDisplay : MonoBehaviour
 
     private PlayerType GetPlayerTypeByActionCount()
     {
-        return actionCount % (GameplayManager.maxActionsPerRound * 2) <= 1 ? PlayerManager.StartPlayer[GamePhase.GAMEPLAY] : PlayerManager.GetOtherSide(PlayerManager.StartPlayer[GamePhase.GAMEPLAY]);
+        return actionCount % (GameplayManager.MaxActionsPerRound * 2) <= 1 ? PlayerManager.StartPlayer[GamePhase.GAMEPLAY] : PlayerManager.GetOtherSide(PlayerManager.StartPlayer[GamePhase.GAMEPLAY]);
     }
 
     private string TranslateTilePosition(Vector3? position)
@@ -158,7 +159,7 @@ public class MovesDisplay : MonoBehaviour
     private string TranslatePlayerSide(PlayerType playerType)
     {
         string text = "";
-        
+
         if (playerType == PlayerType.blue)
         {
             text = "Blue ";
@@ -173,7 +174,7 @@ public class MovesDisplay : MonoBehaviour
 
     private void OnGameplayPhaseStarts(GamePhase gamePhase)
     {
-        if(gamePhase == GamePhase.GAMEPLAY)
+        if (gamePhase == GamePhase.GAMEPLAY)
         {
             ActivateMovesDisplay();
             ActivateRecordingSubscription();

@@ -2,25 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealAA : IActiveAbility
+public class HealAA : MonoBehaviour, IActiveAbility
 {
-    public static int range = 2;
-    public static int healingPoints = 1;
-    public static int moveSpeedBuff = 1;
+    [SerializeField] private int aaCooldown; // 3
+    [SerializeField] private int healRange; // 2
+    [SerializeField] private int healPoints; // 1
+    [SerializeField] private int moveSpeedBuffer; // 1
 
-    public int Cooldown { get { return 3; } }
+    public static int range;
+    public static int healingPoints;
+    public static int moveSpeedBuff;
+
+    public int Cooldown { get { return aaCooldown; } }
 
     private HealAAAction healAAAction;
 
-    Character character;
+    CharacterMB character;
 
-    public HealAA(Character character)
+    private void Awake()
     {
-        this.character = character;
+        range = healRange;
+        healingPoints = healPoints;
+        moveSpeedBuff = moveSpeedBuffer;
+
+        this.character = gameObject.GetComponent<CharacterMB>();
         healAAAction = GameObject.Find("ActionRegistry").GetComponent<HealAAAction>();
     }
 
-    public void Execute() 
+    public void Execute()
     {
         healAAAction.CreateActionDestinations(character);
         ActionRegistry.Register(healAAAction);

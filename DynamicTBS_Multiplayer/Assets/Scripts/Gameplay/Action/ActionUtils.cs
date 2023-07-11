@@ -26,7 +26,7 @@ public class ActionUtils : MonoBehaviour
 
     public static List<GameObject> InstantiateActionPositions(List<GameObject> parents, GameObject prefab)
     {
-        List<GameObject> actionGameObjects = new List<GameObject>();
+        List<GameObject> actionGameObjects = new();
         if (parents.Count > 0)
         {
             foreach (GameObject parent in parents)
@@ -49,7 +49,7 @@ public class ActionUtils : MonoBehaviour
         actionGameObjects.Clear();
     }
 
-    public static void InstantiateAllActionPositions(Character character)
+    public static void InstantiateAllActionPositions(CharacterMB character)
     {
         AbortAllActions();
         foreach (IAction action in ActionRegistry.GetActions())
@@ -59,7 +59,7 @@ public class ActionUtils : MonoBehaviour
         }
     }
 
-    public static int CountAllActionDestinations(Character character)
+    public static int CountAllActionDestinations(CharacterMB character)
     {
         int actionDestinationCount = 0;
 
@@ -122,15 +122,15 @@ public class ActionUtils : MonoBehaviour
 
     private static void ExecuteAction(IAction action, GameObject actionDestination)
     {
-        Character characterInAction = action.CharacterInAction;
-        Vector3 initialPosition = characterInAction.GetCharacterGameObject().transform.position;
+        CharacterMB characterInAction = action.CharacterInAction;
+        Vector3 initialPosition = characterInAction.gameObject.transform.position;
         Vector3 actionDestinationPosition = actionDestination.transform.position;
 
         action.ExecuteAction(actionDestination);
 
         GameplayEvents.ActionFinished(new ActionMetadata
         {
-            ExecutingPlayer = characterInAction.GetSide(),
+            ExecutingPlayer = characterInAction.Side,
             ExecutedActionType = action.ActionType,
             CharacterInAction = characterInAction,
             CharacterInitialPosition = initialPosition,

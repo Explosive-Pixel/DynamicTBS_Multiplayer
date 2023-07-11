@@ -4,25 +4,24 @@ using UnityEngine;
 
 public class JumpAAAction : MonoBehaviour, IAction
 {
-    [SerializeField]
-    private GameObject jumpPrefab;
+    [SerializeField] private GameObject jumpPrefab;
 
     public ActionType ActionType { get { return ActionType.ActiveAbility; } }
 
-    private List<GameObject> jumpTargets = new List<GameObject>();
+    private List<GameObject> jumpTargets = new();
     public List<GameObject> ActionDestinations { get { return jumpTargets; } }
 
-    private Character characterInAction = null;
-    public Character CharacterInAction { get { return characterInAction; } }
+    private CharacterMB characterInAction = null;
+    public CharacterMB CharacterInAction { get { return characterInAction; } }
 
-    private List<GameObject> patternTargets = new List<GameObject>();
+    private List<GameObject> patternTargets = new();
 
     private void Awake()
     {
         GameEvents.OnGamePhaseStart += Register;
     }
 
-    public void ShowActionPattern(Character character)
+    public void ShowActionPattern(CharacterMB character)
     {
         List<Vector3> patternPositions = FindMovePositions(character, true);
 
@@ -37,7 +36,7 @@ public class JumpAAAction : MonoBehaviour, IAction
         ActionUtils.Clear(patternTargets);
     }
 
-    public int CountActionDestinations(Character character)
+    public int CountActionDestinations(CharacterMB character)
     {
         List<Vector3> movePositions = FindMovePositions(character);
 
@@ -49,7 +48,7 @@ public class JumpAAAction : MonoBehaviour, IAction
         return 0;
     }
 
-    public void CreateActionDestinations(Character character)
+    public void CreateActionDestinations(CharacterMB character)
     {
         List<Vector3> movePositions = FindMovePositions(character);
 
@@ -62,12 +61,10 @@ public class JumpAAAction : MonoBehaviour, IAction
 
     public void ExecuteAction(GameObject actionDestination)
     {
-        Tile tile = Board.GetTileByPosition(actionDestination.transform.position);
+        TileMB tile = BoardNew.GetTileByPosition(actionDestination.transform.position);
         if (tile != null)
         {
-            Vector3 oldPosition = characterInAction.GetCharacterGameObject().transform.position;
-            characterInAction.GetCharacterGameObject().transform.position = actionDestination.transform.position;
-            Board.UpdateTilesAfterMove(oldPosition, characterInAction);
+            MoveAction.MoveCharacter(characterInAction, tile);
         }
 
         AbortAction();
@@ -80,15 +77,15 @@ public class JumpAAAction : MonoBehaviour, IAction
         ActionRegistry.Remove(this);
     }
 
-    private List<Vector3> FindMovePositions(Character character, bool pattern = false)
+    private List<Vector3> FindMovePositions(CharacterMB character, bool pattern = false)
     {
-        Tile characterTile = Board.GetTileByPosition(character.GetCharacterGameObject().transform.position);
+        TileMB characterTile = BoardNew.GetTileByCharacter(character);
 
-        List<Tile> moveTiles = Board.GetTilesOfDistance(characterTile, JumpAA.movePattern, JumpAA.distance);
+        List<TileMB> moveTiles = BoardNew.GetTilesOfDistance(characterTile, JumpAA.movePattern, JumpAA.distance);
 
         List<Vector3> movePositions = moveTiles
             .FindAll(tile => tile.IsAccessible() || pattern)
-            .ConvertAll(tile => tile.GetPosition());
+            .ConvertAll(tile => tile.gameObject.transform.position);
 
         return movePositions;
     }

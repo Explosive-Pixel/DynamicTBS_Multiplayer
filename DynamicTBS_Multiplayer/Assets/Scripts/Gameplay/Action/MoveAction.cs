@@ -4,24 +4,26 @@ using UnityEngine;
 
 public class MoveAction : MonoBehaviour, IAction
 {
-    [SerializeField]
-    private GameObject moveCirclePrefab;
+    [SerializeField] private GameObject moveCirclePrefab;
 
-    [SerializeField]
-    private Board board;
+    [SerializeField] private PatternType movePattern;
 
     public ActionType ActionType { get { return ActionType.Move; } }
 
-    private List<GameObject> moveDestinations = new List<GameObject>();
+    private List<GameObject> moveDestinations = new();
     public List<GameObject> ActionDestinations { get { return moveDestinations; } }
 
-    private Character characterInAction = null;
-    public Character CharacterInAction { get { return characterInAction; } }
+    private CharacterMB characterInAction = null;
+    public CharacterMB CharacterInAction { get { return characterInAction; } }
 
-    private List<GameObject> patternTargets = new List<GameObject>();
+    private List<GameObject> patternTargets = new();
+
+    public static PatternType MovePattern;
 
     private void Awake()
     {
+        MovePattern = movePattern;
+
         GameEvents.OnGamePhaseStart += Register;
     }
 
@@ -31,7 +33,7 @@ public class MoveAction : MonoBehaviour, IAction
         character.gameObject.transform.position = tile.gameObject.transform.position;
     }
 
-    public void ShowActionPattern(Character character)
+    public void ShowActionPattern(CharacterMB character)
     {
         List<Vector3> patternPositions = FindMovePositions(character, true);
 
@@ -46,7 +48,7 @@ public class MoveAction : MonoBehaviour, IAction
         ActionUtils.Clear(patternTargets);
     }
 
-    public int CountActionDestinations(Character character)
+    public int CountActionDestinations(CharacterMB character)
     {
         List<Vector3> movePositions = FindMovePositions(character);
 
@@ -58,32 +60,20 @@ public class MoveAction : MonoBehaviour, IAction
         return 0;
     }
 
-    public void CreateActionDestinations(Character character)
+    public void CreateActionDestinations(CharacterMB character)
     {
-        //List<Vector3> movePositions = FindMovePositions(character);
+        List<Vector3> movePositions = FindMovePositions(character);
 
-        //if(movePositions != null)
-        //{
-        //moveDestinations = ActionUtils.InstantiateActionPositions(movePositions, moveCirclePrefab);
-        //moveDestinations = ActionUtils.InstantiateActionPositions(FindAccessibleStartPositions(character.side.GetPlayerType()), moveCirclePrefab);
-        moveDestinations = ActionUtils.InstantiateActionPositions(board.FindStartTiles(character.GetSide().GetPlayerType()).ConvertAll(tile => tile.GetTileGameObject()), moveCirclePrefab);
-        characterInAction = character;
-        //}
+        if (movePositions != null)
+        {
+            moveDestinations = ActionUtils.InstantiateActionPositions(movePositions, moveCirclePrefab);
+            characterInAction = character;
+        }
     }
 
     public void ExecuteAction(GameObject actionDestination)
     {
-        //Vector3 oldPosition = characterInAction.GetCharacterGameObject().transform.position;
-        characterInAction.GetCharacterGameObject().transform.SetParent(actionDestination.transform.parent);
-        characterInAction.GetCharacterGameObject().transform.position = actionDestination.transform.position;
-        // MoveCharacter(characterInAction, actionDestination.gameobject.parent.GetComponent<TileMB>());
-
-        // Board.UpdateTilesAfterMove(oldPosition, characterInAction);
-        GameObject tileGO = actionDestination.transform.parent.gameObject;
-        CharacterMB character = tileGO.GetComponentInChildren<CharacterMB>();
-        Debug.Log(character);
-        IPassiveAbility passiveAbility = character.gameObject.GetComponent<IPassiveAbility>();
-        Debug.Log(passiveAbility);
+        MoveCharacter(characterInAction, BoardNew.GetTileByPosition(actionDestination.transform.position));
 
         AbortAction();
     }
@@ -94,48 +84,45 @@ public class MoveAction : MonoBehaviour, IAction
         characterInAction = null;
     }
 
-    private List<Vector3> FindMovePositions(Character character, bool pattern = false)
+    private List<Vector3> FindMovePositions(CharacterMB character, bool pattern = false)
     {
-        if (!GameplayManager.HasGameStarted())
+        if (!GameplayManager.HasGameStarted)
         {
-            //return board.FindStartTiles(character.GetSide().GetPlayerType()).ConvertAll(tile => tile.GetPosition());
-            //List<Vector3> start = FindAccessibleStartPositions(character.GetSide().GetPlayerType());
-            //Debug.Log(start.Count);
-            //return start;
+            return FindAccessibleStartPositions(character.Side);
         }
 
-        Tile currentTile = Board.GetTileByCharacter(character);
+        TileMB currentTile = BoardNew.GetTileByCharacter(character);
 
         if (currentTile == null) return null;
 
         List<Vector3> movePositions = new List<Vector3>();
 
-        int range = character.GetMoveSpeed();
-        Dictionary<int, Queue<Tile>> tileQueueByDistance = new Dictionary<int, Queue<Tile>>();
+        int range = character.MoveSpeed;
+        Dictionary<int, Queue<TileMB>> tileQueueByDistance = new();
         int distance = 0;
-        tileQueueByDistance[distance] = new Queue<Tile>();
+        tileQueueByDistance[distance] = new Queue<TileMB>();
         tileQueueByDistance[distance].Enqueue(currentTile);
-        List<Tile> visited = new List<Tile>();
+        List<TileMB> visited = new();
         while (distance <= range && tileQueueByDistance.ContainsKey(distance) && tileQueueByDistance[distance].Count > 0)
         {
-            Tile tile = tileQueueByDistance[distance].Dequeue();
+            TileMB tile = tileQueueByDistance[distance].Dequeue();
             visited.Add(tile);
 
             if (distance + 1 <= range)
             {
-                List<Tile> neighbors = Board.GetNeighbors(tile, character.movePattern);
-                foreach (Tile neighbor in neighbors)
+                List<TileMB> neighbors = BoardNew.GetTilesOfDistance(tile, movePattern, 1);
+                foreach (TileMB neighbor in neighbors)
                 {
                     if (!visited.Contains(neighbor) && (neighbor.IsAccessible() || pattern))
                     {
-                        Vector3 position = neighbor.GetTileGameObject().transform.position;
+                        Vector3 position = neighbor.gameObject.transform.position;
                         if (!movePositions.Contains(position))
                         {
                             movePositions.Add(position);
                         }
                         if (!tileQueueByDistance.ContainsKey(distance + 1))
                         {
-                            tileQueueByDistance[distance + 1] = new Queue<Tile>();
+                            tileQueueByDistance[distance + 1] = new();
                         }
                         tileQueueByDistance[distance + 1].Enqueue(neighbor);
                     }
@@ -151,11 +138,11 @@ public class MoveAction : MonoBehaviour, IAction
         return movePositions;
     }
 
-    private List<GameObject> FindAccessibleStartPositions(PlayerType side)
+    private List<Vector3> FindAccessibleStartPositions(PlayerType side)
     {
         List<GameObject> tiles = BoardNew.TileGameObjects;
         return BoardNew.Tiles.FindAll(tile => tile.Side == side && tile.TileType == TileType.StartTile && tile.IsAccessible())
-            .ConvertAll(tile => tile.gameObject);
+            .ConvertAll(tile => tile.gameObject.transform.position);
     }
 
     private void Register(GamePhase gamePhase)

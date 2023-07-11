@@ -4,22 +4,22 @@ using UnityEngine;
 
 public class GameplayManager : MonoBehaviour
 {
-    #region Gameplay Config
-
-    public const int maxActionsPerRound = 2;
-
-    #endregion
+    [SerializeField] private int maxActionsPerRound;
+    [SerializeField] private int minActionsPerRound;
 
     private static int remainingActions;
 
-    private static Dictionary<Character, List<ActionType>> actionsPerCharacterPerTurn = new Dictionary<Character, List<ActionType>>();
+    private static readonly Dictionary<CharacterMB, List<ActionType>> actionsPerCharacterPerTurn = new();
 
     private static bool hasGameStarted;
-
+    public static bool HasGameStarted { get { return hasGameStarted; } }
     public static bool gameIsPaused;
+    public static int MaxActionsPerRound;
 
     private void Awake()
     {
+        MaxActionsPerRound = maxActionsPerRound;
+
         UnsubscribeEvents();
         SubscribeEvents();
         ResetStates();
@@ -28,55 +28,49 @@ public class GameplayManager : MonoBehaviour
         ActionRegistry.RemoveAll();
     }
 
-    public static int GetRemainingActions()
-    {
-        return remainingActions;
-    }
-
-    public static bool ActionAvailable(Character character, ActionType actionType)
-    {
-        if(actionsPerCharacterPerTurn.ContainsKey(character) && actionsPerCharacterPerTurn[character].Contains(actionType))
-        {
-            return false;
-        }
-        return true;
-    }
-
     private void ToggleGameIsPaused(Player player, UIAction uIAction)
     {
-        if(uIAction == UIAction.PAUSE_GAME || uIAction == UIAction.UNPAUSE_GAME)
+        if (uIAction == UIAction.PAUSE_GAME || uIAction == UIAction.UNPAUSE_GAME)
         {
             gameIsPaused = uIAction == UIAction.PAUSE_GAME;
             GameplayEvents.PauseGame(gameIsPaused);
         }
     }
 
-    private void ResetStates() 
+    public static int GetRemainingActions()
     {
-        SetRemainingActions(maxActionsPerRound);
-        actionsPerCharacterPerTurn.Clear();
+        return remainingActions;
     }
 
-    private void OnActionFinished(ActionMetadata actionMetadata) 
+    public static bool ActionAvailable(CharacterMB character, ActionType actionType)
+    {
+        if (actionsPerCharacterPerTurn.ContainsKey(character) && actionsPerCharacterPerTurn[character].Contains(actionType))
+        {
+            return false;
+        }
+        return true;
+    }
+
+    private void OnActionFinished(ActionMetadata actionMetadata)
     {
         SetRemainingActions(remainingActions - actionMetadata.ActionCount);
         if (remainingActions <= 0)
         {
             HandleNoRemainingActions();
-        } else if(actionMetadata.CharacterInAction != null)
+        }
+        else if (actionMetadata.CharacterInAction != null)
         {
-            if(actionsPerCharacterPerTurn.ContainsKey(actionMetadata.CharacterInAction))
+            if (actionsPerCharacterPerTurn.ContainsKey(actionMetadata.CharacterInAction))
             {
                 actionsPerCharacterPerTurn[actionMetadata.CharacterInAction].Add(actionMetadata.ExecutedActionType);
-            } else
+            }
+            else
             {
                 actionsPerCharacterPerTurn.Add(actionMetadata.CharacterInAction, new List<ActionType>() { actionMetadata.ExecutedActionType });
             }
 
-            if(!actionMetadata.ExecutingPlayer.HasAvailableAction())
-            {
-                GameplayEvents.AbortCurrentPlayerTurn(remainingActions, AbortTurnCondition.NO_AVAILABLE_ACTION);
-            }
+            // Check if player can perform any further actions (move/attack/ActiveAbility)
+            CheckAvailableActions(actionMetadata.ExecutingPlayer.GetPlayerType());
         }
     }
 
@@ -92,16 +86,40 @@ public class GameplayManager : MonoBehaviour
         ResetStates();
     }
 
+    private void CheckAvailableActions(PlayerType player)
+    {
+        if (!HasAvailableAction(player))
+        {
+            if (maxActionsPerRound - remainingActions <= minActionsPerRound)
+            {
+                GameplayEvents.AbortCurrentPlayerTurn(remainingActions, AbortTurnCondition.NO_AVAILABLE_ACTION);
+            }
+            else
+            {
+                GameplayEvents.GameIsOver(player, GameOverCondition.NO_AVAILABLE_ACTION);
+            }
+        }
+    }
+
+    private bool HasAvailableAction(PlayerType player)
+    {
+        List<CharacterMB> characters = CharacterManager.GetAllLivingCharactersOfSide(player);
+
+        foreach (CharacterMB character in characters)
+        {
+            if (character.CanPerformAction())
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     private void OnPlayerTurnEnded(Player player)
     {
         // Check if other player can perform any action (move/attack/ActiveAbility) -> if not, player wins
-        Player otherPlayer = PlayerManager.GetOtherPlayer(player);
-
-        if (!otherPlayer.HasAvailableAction())
-        {
-            Debug.Log("Player " + otherPlayer.GetPlayerType() + " lost because player can not perform any action this turn.");
-            GameplayEvents.GameIsOver(player.GetPlayerType(), GameOverCondition.NO_AVAILABLE_ACTION);
-        }
+        CheckAvailableActions(PlayerManager.GetOtherSide(player.GetPlayerType()));
     }
 
     private void AbortTurn()
@@ -115,9 +133,10 @@ public class GameplayManager : MonoBehaviour
         AbortTurn();
     }
 
-    public static bool HasGameStarted()
+    private void ResetStates()
     {
-        return hasGameStarted;
+        SetRemainingActions(maxActionsPerRound);
+        actionsPerCharacterPerTurn.Clear();
     }
 
     private void SubscribeToGameplayEvents(GamePhase gamePhase)

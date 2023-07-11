@@ -2,29 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BlockAA : IActiveAbility
+public class BlockAA : MonoBehaviour, IActiveAbility
 {
-    public static int blockingRounds = 2;
-    
-    public static PatternType pattern = PatternType.Cross;
-    public static int distance = 1;
+    [SerializeField] private int aaDistance; // 1
+    [SerializeField] private PatternType aaPattern; // PatternType.Cross
+    [SerializeField] private int aaCooldown; // 3
+    [SerializeField] private int blockDurationInRounds; // 2
 
-    public int Cooldown { get { return 3; } }
+    public static PatternType pattern;
+    public static int distance;
+    public static int blockingRounds;
+
+    public int Cooldown { get { return aaCooldown; } } // 3
 
     private BlockAAAction blockAAAction;
 
-    private Character character;
+    private CharacterMB character;
     private int currentBlockCount = 0;
 
     private bool firstExecution = true;
 
-    public BlockAA(Character character)
+    private void Awake()
     {
-        this.character = character;
+        distance = aaDistance;
+        pattern = aaPattern;
+        blockingRounds = blockDurationInRounds;
+
+        this.character = gameObject.GetComponent<CharacterMB>();
         blockAAAction = GameObject.Find("ActionRegistry").GetComponent<BlockAAAction>();
 
         var defaultIsAttackableBy = character.isAttackableBy;
-        character.isAttackableBy = (attacker) => {
+        character.isAttackableBy = (attacker) =>
+        {
             if (IsBlocking()) return false;
             return defaultIsAttackableBy(character);
         };
@@ -36,13 +45,15 @@ public class BlockAA : IActiveAbility
             return defaultIsDisabled();
         };
 
-         var defaultIsDamageable = character.isDamageable;
-         character.isDamageable = (damage) => {
-             if (IsBlocking()) return false;
-             return defaultIsDamageable(damage);
-         };
+        var defaultIsDamageable = character.isDamageable;
+        character.isDamageable = (damage) =>
+        {
+            if (IsBlocking()) return false;
+            return defaultIsDamageable(damage);
+        };
     }
-    public void Execute() 
+
+    public void Execute()
     {
         blockAAAction.CreateActionDestinations(character);
         ActionRegistry.Register(blockAAAction);
@@ -92,29 +103,29 @@ public class BlockAA : IActiveAbility
     }
 
     private void ChangeIsAttackableByOfOtherCharacters()
-    { 
-        foreach(Character c in CharacterHandler.GetAllLivingCharacters())
+    {
+        foreach (CharacterMB c in CharacterManager.GetAllLivingCharacters())
         {
             var cDefaultIsAttackableBy = c.isAttackableBy;
             c.isAttackableBy = (attacker) =>
                 {
                     if (currentBlockCount > 0 && attacker != character)
                     {
-                        Tile attackerTile = Board.GetTileByCharacter(attacker);
-                        Tile cTile = Board.GetTileByCharacter(c);
-                        Tile characterTile = Board.GetTileByCharacter(character);
-                        if(attackerTile.GetRow() == cTile.GetRow() && cTile.GetRow() == characterTile.GetRow())
+                        TileMB attackerTile = BoardNew.GetTileByCharacter(attacker);
+                        TileMB cTile = BoardNew.GetTileByCharacter(c);
+                        TileMB characterTile = BoardNew.GetTileByCharacter(character);
+                        if (attackerTile.Row == cTile.Row && cTile.Row == characterTile.Row)
                         {
-                            if (attackerTile.GetColumn() < characterTile.GetColumn() && characterTile.GetColumn() < cTile.GetColumn())
+                            if (attackerTile.Column < characterTile.Column && characterTile.Column < cTile.Column)
                                 return false;
-                            else if (attackerTile.GetColumn() > characterTile.GetColumn() && characterTile.GetColumn() > cTile.GetColumn())
+                            else if (attackerTile.Column > characterTile.Column && characterTile.Column > cTile.Column)
                                 return false;
                         }
-                        else if (attackerTile.GetColumn() == cTile.GetColumn() && cTile.GetColumn() == characterTile.GetColumn())
+                        else if (attackerTile.Column == cTile.Column && cTile.Column == characterTile.Column)
                         {
-                            if (attackerTile.GetRow() < characterTile.GetRow() && characterTile.GetRow() < cTile.GetRow())
+                            if (attackerTile.Row < characterTile.Row && characterTile.Row < cTile.Row)
                                 return false;
-                            else if (attackerTile.GetRow() > characterTile.GetRow() && characterTile.GetRow() > cTile.GetRow())
+                            else if (attackerTile.Row > characterTile.Row && characterTile.Row > cTile.Row)
                                 return false;
                         }
 
@@ -126,12 +137,13 @@ public class BlockAA : IActiveAbility
 
     private void ToggleBlockPrefab(bool active)
     {
-        UIUtils.FindChildGameObject(character.GetCharacterGameObject(), "Block").SetActive(active);
+        // TODO
+        UIUtils.FindChildGameObject(character.gameObject, "Block").SetActive(active);
     }
 
-    private void ReduceBlockCounter(Player player)
+    private void ReduceBlockCounter(PlayerType player)
     {
-        if (character.GetSide() == player)
+        if (character.Side == player)
         {
             ReduceBlockCount();
         }
@@ -147,7 +159,7 @@ public class BlockAA : IActiveAbility
         GameplayEvents.OnPlayerTurnEnded -= ReduceBlockCounter;
     }
 
-    ~BlockAA()
+    private void OnDestroy()
     {
         UnsubscribeEvents();
     }

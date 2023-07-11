@@ -2,20 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JumpAA : IActiveAbility
+public class JumpAA : MonoBehaviour, IActiveAbility
 {
-    public static PatternType movePattern = PatternType.Star;
-    public static int distance = 3;
+    [SerializeField] private int aaCooldown; // 2
+    [SerializeField] private PatternType jumpPattern; // Star
+    [SerializeField] private int jumpDistance; // 3
 
-    public int Cooldown { get { return 2; } }
+    public static PatternType movePattern;
+    public static int distance;
+
+    public int Cooldown { get { return aaCooldown; } }
 
     private JumpAAAction jumpAAAction;
 
-    Character character;
+    CharacterMB character;
 
-    public JumpAA(Character character)
+    private void Awake()
     {
-        this.character = character;
+        movePattern = jumpPattern;
+        distance = jumpDistance;
+
+        this.character = gameObject.GetComponent<CharacterMB>();
         jumpAAAction = GameObject.Find("ActionRegistry").GetComponent<JumpAAAction>();
     }
 
