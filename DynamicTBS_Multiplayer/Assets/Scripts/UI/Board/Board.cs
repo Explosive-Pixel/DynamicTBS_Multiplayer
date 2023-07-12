@@ -1,11 +1,24 @@
-/*using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
 using System.Linq;
 using System.ComponentModel;
+
+[Serializable]
+public class TileDefinition
+{
+    public GameObject tile;
+    public TileType tileType;
+    public PlayerType side;
+}
+
+[Serializable]
+public class Map
+{
+    public MapType name;
+    public List<TileDefinition> layout;
+}
 
 public enum MapType
 {
@@ -21,113 +34,112 @@ public enum MapType
 
 public class Board : MonoBehaviour
 {
-    #region Board Config
+    public List<Map> maps = new();
 
-    public const int boardSize = 9;
-    public const float startTranslation = 4f;
+    public static MapType selectedMapType = MapType.EXPLOSIVE;
+    private Map SelectedMap { get { return maps.Find(map => map.name == selectedMapType); } }
 
-    private const float tileSize = 1f;
+    private static List<GameObject> tileGameObjects = new();
+    public static List<GameObject> TileGameObjects { get { return tileGameObjects; } }
 
-    [SerializeField] private TileMap[] boardDesigns;
-
-    public static MapType selectedMap = MapType.EXPLOSIVE;
-
-    private TileMap BoardDesign { get { return boardDesigns.ToList().Find(tileMap => tileMap.MapType == selectedMap); } }
-
-    #endregion
-
-    private static readonly List<Tile> tiles = new List<Tile>();
-
-    // Cache to find tiles fast, based on their gameobject
-    private static readonly Dictionary<GameObject, Tile> tilesByGameObject = new Dictionary<GameObject, Tile>();
+    public static List<Tile> Tiles = new();
+    public static int Rows { get { return Tiles.Max(tile => tile.Row); } }
+    public static int Columns { get { return Tiles.Max(tile => tile.Column); } }
 
     private void Awake()
     {
+        tileGameObjects.Clear();
+        Tiles.Clear();
+
         UnsubscribeEvents();
         SubscribeEvents();
-        tiles.Clear();
-        tilesByGameObject.Clear();
+        gameObject.SetActive(false);
+        tileGameObjects.Clear();
     }
 
-    public static Vector3 FindPosition(int row, int column)
+    private void InitBoard(GamePhase gamePhase)
     {
-        return new Vector3(column * tileSize - startTranslation, -(row * tileSize - startTranslation), 1);
+        if (gamePhase != GamePhase.DRAFT)
+            return;
+
+        foreach (TileDefinition tileDefinition in SelectedMap.layout)
+        {
+            Tile tile = tileDefinition.tile.GetComponent<Tile>();
+            tile.Init(tileDefinition.tileType, tileDefinition.side);
+        }
+
+        Tiles = gameObject.GetComponentsInChildren<Tile>().ToList();
+        tileGameObjects = Tiles.ConvertAll(tile => tile.gameObject);
+
+        gameObject.SetActive(true);
     }
 
-    public static List<Tile> GetAllTiles()
+    public static Tile GetTileByPosition(Vector3 position)
     {
-        return tiles;
+        GameObject tileGO = UIUtils.FindGameObjectByPosition(tileGameObjects, position);
+
+        if (tileGO != null)
+            return tileGO.GetComponent<Tile>();
+
+        return null;
     }
 
-    public static Tile GetTileByGameObject(GameObject gameObject)
+    public static Tile GetTileByCoordinates(int row, int column)
     {
-        return tilesByGameObject[gameObject];
+        Tile test = Tiles.Find(t => t.Row == row && t.Column == column);
+        return test;
     }
 
     public static Tile GetTileByCharacter(Character character)
     {
-        if(character.GetCharacterGameObject() != null)
-            return GetTileByPosition(character.GetCharacterGameObject().transform.position);
-        return null;
-    }
-
-    public static Tile GetTileByPosition(Vector3 position) 
-    {
-        GameObject gameObject = UIUtils.FindGameObjectByPosition(tilesByGameObject.Keys.ToList(), position);
-
-        if (gameObject && tilesByGameObject.ContainsKey(gameObject))
-        {
-            return tilesByGameObject.GetValueOrDefault(gameObject);
-        }
-
-        return null;
+        return Tiles.Find(tile => tile.CurrentInhabitant == character);
     }
 
     public static bool Neighbors(Tile tile1, Tile tile2, PatternType patternType)
     {
-        bool crossNeighbors = (tile1.GetRow() == tile2.GetRow() && Math.Abs(tile1.GetColumn() - tile2.GetColumn()) == 1) || (tile1.GetColumn() == tile2.GetColumn() && Math.Abs(tile1.GetRow() - tile2.GetRow()) == 1);
+        bool crossNeighbors = (tile1.Row == tile2.Row && Math.Abs(tile1.Column - tile2.Column) == 1) || (tile1.Column == tile2.Column && Math.Abs(tile1.Row - tile2.Row) == 1);
 
         if (patternType == PatternType.Cross)
             return crossNeighbors;
 
-        return (crossNeighbors || (Math.Abs(tile1.GetColumn() - tile2.GetColumn()) == 1) && (Math.Abs(tile1.GetRow() - tile2.GetRow()) == 1));
+        return (crossNeighbors || (Math.Abs(tile1.Column - tile2.Column) == 1) && (Math.Abs(tile1.Row - tile2.Row) == 1));
     }
 
     public static List<Tile> GetTilesOfDistance(Tile tile, PatternType patternType, int distance)
     {
         var tiles = (new[] {
-                GetTileByCoordinates(tile.GetRow() - distance, tile.GetColumn()),
-                GetTileByCoordinates(tile.GetRow() + distance, tile.GetColumn()),
-                GetTileByCoordinates(tile.GetRow(), tile.GetColumn() - distance),
-                GetTileByCoordinates(tile.GetRow(), tile.GetColumn() + distance)
+                GetTileByCoordinates(tile.Row - distance, tile.Column),
+                GetTileByCoordinates(tile.Row + distance, tile.Column),
+                GetTileByCoordinates(tile.Row, tile.Column - distance),
+                GetTileByCoordinates(tile.Row, tile.Column + distance)
             }
         );
-        
-        if(patternType == PatternType.Star)
+
+        if (patternType == PatternType.Star)
         {
             tiles = tiles.Union(new[] {
-                GetTileByCoordinates(tile.GetRow() - distance, tile.GetColumn() - distance),
-                GetTileByCoordinates(tile.GetRow() + distance, tile.GetColumn() + distance),
-                GetTileByCoordinates(tile.GetRow() + distance, tile.GetColumn() - distance),
-                GetTileByCoordinates(tile.GetRow() - distance, tile.GetColumn() + distance)
+                GetTileByCoordinates(tile.Row - distance, tile.Column - distance),
+                GetTileByCoordinates(tile.Row + distance, tile.Column + distance),
+                GetTileByCoordinates(tile.Row + distance, tile.Column - distance),
+                GetTileByCoordinates(tile.Row - distance, tile.Column + distance)
             }).ToArray();
         }
-        
+
         return tiles.Where(tile => tile != null).ToList();
     }
 
     public static List<Tile> GetAllTilesWithinRadius(Tile center, int radius)
     {
-        List<Tile> tiles = new List<Tile>();
+        List<Tile> tiles = new();
         void add(Tile tile) { if (tile != null) tiles.Add(tile); }
 
-        for (int i = -radius; i <= radius; i++) 
+        for (int i = -radius; i <= radius; i++)
         {
-            for (int j = -radius; j <= radius; j++) 
+            for (int j = -radius; j <= radius; j++)
             {
                 if (i == 0 && j == 0) continue;
 
-                add(GetTileByCoordinates(center.GetRow() + i, center.GetColumn() + j));
+                add(GetTileByCoordinates(center.Row + i, center.Column + j));
             }
         }
 
@@ -136,32 +148,32 @@ public class Board : MonoBehaviour
 
     public static List<Tile> GetTilesOfClosestCharactersOfSideInAllStarDirections(Tile center, PlayerType side, int distance)
     {
-        var signa = new [] { -1, 0, 1 };
+        var signa = new[] { -1, 0, 1 };
         var directionFinished = new Dictionary<(int, int), bool>();
 
-        foreach(int sig1 in signa)
+        foreach (int sig1 in signa)
         {
-            foreach(int sig2 in signa)
+            foreach (int sig2 in signa)
             {
                 directionFinished.Add((sig1, sig2), false);
             }
         }
 
-        List<Tile> positions = new List<Tile>();
+        List<Tile> positions = new();
 
         int i = 1;
-        while(distance > 0)
+        while (distance > 0)
         {
             foreach (int sig1 in signa)
             {
                 foreach (int sig2 in signa)
                 {
-                    if(!directionFinished[(sig1, sig2)])
+                    if (!directionFinished[(sig1, sig2)])
                     {
-                        Tile currentTile = GetTileByCoordinates(center.GetRow() + sig1*i, center.GetColumn() + sig2*i);
+                        Tile currentTile = GetTileByCoordinates(center.Row + sig1 * i, center.Column + sig2 * i);
                         if (currentTile != null && currentTile.IsOccupied())
                         {
-                            if(currentTile.GetCurrentInhabitant().GetSide().GetPlayerType() == side)
+                            if (currentTile.CurrentInhabitant.Side == side)
                             {
                                 positions.Add(currentTile);
                             }
@@ -182,7 +194,7 @@ public class Board : MonoBehaviour
     {
         var signa = new[] { -1, 0, 1 };
 
-        List<Tile> positions = new List<Tile>();
+        List<Tile> positions = new();
 
         int i = 1;
         while (distance > 0)
@@ -191,7 +203,7 @@ public class Board : MonoBehaviour
             {
                 foreach (int sig2 in signa)
                 {
-                    Tile currentTile = GetTileByCoordinates(center.GetRow() + sig1 * i, center.GetColumn() + sig2 * i);
+                    Tile currentTile = GetTileByCoordinates(center.Row + sig1 * i, center.Column + sig2 * i);
                     if (currentTile != null)
                     {
                         positions.Add(currentTile);
@@ -208,11 +220,12 @@ public class Board : MonoBehaviour
 
     public static List<Tile> GetAllOccupiedTilesInOneDirection(Tile startTile, Vector3 direction)
     {
-        List<Tile> occupiedTiles = new List<Tile>();
+        List<Tile> occupiedTiles = new();
 
-        for(int i = 1; i < boardSize; i++)
+        for (int i = 1; i <= Math.Max(Rows, Columns); i++)
         {
-            Tile tile = GetTileByCoordinates(startTile.GetRow() - (i * (int)direction.y), startTile.GetColumn() + (i * (int)direction.x));
+            // TODO: Probably has to be reworked
+            Tile tile = GetTileByCoordinates(startTile.Row - (i * (int)direction.y), startTile.Column + (i * (int)direction.x));
             if (tile == null) break;
             if (tile.IsOccupied()) occupiedTiles.Add(tile);
         }
@@ -220,159 +233,22 @@ public class Board : MonoBehaviour
         return occupiedTiles;
     }
 
-    public static void UpdateTilesAfterMove(Vector3 previousTile, Character character)
-    {
-        Tile tile = GetTileByPosition(previousTile);
-
-        if (tile != null)
-        {
-            tile.SetCurrentInhabitant(null);
-        }
-
-        tile = GetTileByCharacter(character);
-
-        if (tile != null)
-        {
-            tile.SetCurrentInhabitant(character);
-        }
-    }
-
-    public static Tile GetTileByCoordinates(int row, int column)
-    {
-        if (row < 0 || row >= boardSize || column < 0 || column >= boardSize) {
-            return null;
-        }
-
-        return tiles.Find(t => t.GetRow() == row && t.GetColumn() == column);
-    }
-
-    public static List<Tile> GetNeighbors(Tile tile, PatternType patternType) 
-    {
-        return GetTilesOfDistance(tile, patternType, 1);
-    }
-
-    public List<Tile> FindStartTiles(PlayerType playerType) 
-    {
-        List<Tile> startTiles = new List<Tile>();
-        int startRow = FindStartRow(playerType);
-        int endRow = FindEndRow(playerType);
-
-        int row = startRow;
-        while (row <= endRow)
-        {
-            for (int column = 0; column < boardSize; column++)
-            {
-                if (BoardDesign[row, column] == TileType.StartTile)
-                {
-                    Tile tile = GetTileByCoordinates(row, column);
-
-                    if (!tile.IsOccupied())
-                        startTiles.Add(tile);
-                }
-            }
-
-            row++;
-        }
-
-        return startTiles;
-    }
-
-    public Tile FindMasterStartTile(PlayerType playerType) 
-    {
-        int startRow = FindStartRow(playerType);
-        int endRow = FindEndRow(playerType);
-
-        int row = startRow;
-        while (row <= endRow)
-        {
-            for (int column = 0; column < boardSize; column++)
-            {
-                if (BoardDesign[row, column] == TileType.MasterStartTile)
-                {
-                    return GetTileByCoordinates(row, column);
-                }
-            }
-
-            row++;
-        }
-
-        return null;
-    }
-
-    public static PlayerType FindSideOfTile(int row)
-    {
-        if(row >= (boardSize / 2 + 1))
-        {
-            return PlayerType.blue;
-        }
-        return PlayerType.pink;
-    }
-
-    private static int FindStartRow(PlayerType side) 
-    {
-        return side == PlayerType.blue ? (boardSize / 2 + 1) : 0;
-    }
-
-    private static int FindEndRow(PlayerType side)
-    {
-        return side == PlayerType.blue ? (boardSize - 1) : (boardSize / 2 - 1);
-    }
-
-    private void CreateBoard(GamePhase gamePhase)
-    {
-        if (gamePhase != GamePhase.DRAFT)
-            return;
-
-        for (int row = 0; row < boardSize; row++)
-        {
-            for (int column = 0; column < boardSize; column++)
-            {
-                Tile tile = new Tile(BoardDesign[row, column], FindSideOfTile(row), row, column);
-                tiles.Add(tile);
-                tilesByGameObject.Add(tile.GetTileGameObject(), tile);
-            }
-        }
-    }
-
-    private void UpdateTileAfterCharacterDeath(Character character, Vector3 position)
-    {
-        Tile tile = GetTileByPosition(position);
-
-        if (tile != null)
-        {
-            tile.SetCurrentInhabitant(null);
-        }
-    }
-
-    private void TransformTileToFloorTile(Character character)
-    {
-        Tile tile = GetTileByPosition(character.GetCharacterGameObject().transform.position);
-        if(tile != null)
-        {
-            tile.Transform(TileType.FloorTile);
-        }
-    }
-
     #region EventSubscriptions
 
     private void SubscribeEvents()
     {
-        GameEvents.OnGamePhaseEnd += CreateBoard;
-        PlacementEvents.OnPlaceCharacter += TransformTileToFloorTile;
-        CharacterEvents.OnCharacterDeath += UpdateTileAfterCharacterDeath;
+        GameEvents.OnGamePhaseEnd += InitBoard;
     }
 
     private void UnsubscribeEvents()
     {
-        GameEvents.OnGamePhaseEnd -= CreateBoard;
-        PlacementEvents.OnPlaceCharacter -= TransformTileToFloorTile;
-        CharacterEvents.OnCharacterDeath -= UpdateTileAfterCharacterDeath;
+        GameEvents.OnGamePhaseEnd -= InitBoard;
     }
 
     #endregion
-    
+
     private void OnDestroy()
     {
         UnsubscribeEvents();
     }
-}*/
+}

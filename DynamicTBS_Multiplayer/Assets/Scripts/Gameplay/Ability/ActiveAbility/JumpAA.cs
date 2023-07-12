@@ -15,14 +15,14 @@ public class JumpAA : MonoBehaviour, IActiveAbility
 
     private JumpAAAction jumpAAAction;
 
-    CharacterMB character;
+    Character character;
 
     private void Awake()
     {
         movePattern = jumpPattern;
         distance = jumpDistance;
 
-        this.character = gameObject.GetComponent<CharacterMB>();
+        this.character = gameObject.GetComponent<Character>();
         jumpAAAction = GameObject.Find("ActionRegistry").GetComponent<JumpAAAction>();
     }
 

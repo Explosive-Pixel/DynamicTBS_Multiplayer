@@ -14,14 +14,14 @@ public class PowershotAA : MonoBehaviour, IActiveAbility
 
     private PowershotAAAction powershotAAAction;
 
-    CharacterMB character;
+    Character character;
 
     private void Awake()
     {
         damage = powershotDamage;
         selfDamage = powershotSelfDamage;
 
-        this.character = gameObject.GetComponent<CharacterMB>();
+        this.character = gameObject.GetComponent<Character>();
         powershotAAAction = GameObject.Find("ActionRegistry").GetComponent<PowershotAAAction>();
     }
 

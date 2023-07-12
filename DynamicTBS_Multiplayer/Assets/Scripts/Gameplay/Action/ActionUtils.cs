@@ -49,7 +49,7 @@ public class ActionUtils : MonoBehaviour
         actionGameObjects.Clear();
     }
 
-    public static void InstantiateAllActionPositions(CharacterMB character)
+    public static void InstantiateAllActionPositions(Character character)
     {
         AbortAllActions();
         foreach (IAction action in ActionRegistry.GetActions())
@@ -59,7 +59,7 @@ public class ActionUtils : MonoBehaviour
         }
     }
 
-    public static int CountAllActionDestinations(CharacterMB character)
+    public static int CountAllActionDestinations(Character character)
     {
         int actionDestinationCount = 0;
 
@@ -122,7 +122,7 @@ public class ActionUtils : MonoBehaviour
 
     private static void ExecuteAction(IAction action, GameObject actionDestination)
     {
-        CharacterMB characterInAction = action.CharacterInAction;
+        Character characterInAction = action.CharacterInAction;
         Vector3 initialPosition = characterInAction.gameObject.transform.position;
         Vector3 actionDestinationPosition = actionDestination.transform.position;
 

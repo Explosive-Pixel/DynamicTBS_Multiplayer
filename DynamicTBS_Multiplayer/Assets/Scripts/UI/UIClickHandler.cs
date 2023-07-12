@@ -7,7 +7,7 @@ public class UIClickHandler : MonoBehaviour
 {
     private Camera currentCamera;
 
-    private CharacterMB currentCharacter = null;
+    private Character currentCharacter = null;
     private bool activeAbilityExecutionStarted = false;
 
     private void Awake()
@@ -64,7 +64,7 @@ public class UIClickHandler : MonoBehaviour
                 return;
             }
 
-            CharacterMB character = characterGameObject.GetComponent<CharacterMB>();
+            Character character = characterGameObject.GetComponent<Character>();
             GameplayEvents.ChangeCharacterSelection(character);
             ActionUtils.InstantiateAllActionPositions(character);
 
@@ -112,7 +112,7 @@ public class UIClickHandler : MonoBehaviour
                 ActionUtils.ResetActionDestinations();
                 if (activeAbilityExecutionStarted)
                 {
-                    CharacterMB character = currentCharacter;
+                    Character character = currentCharacter;
                     UnselectCharacter();
                     SelectCharacter(character);
                 }
@@ -170,7 +170,7 @@ public class UIClickHandler : MonoBehaviour
         }
     }
 
-    private void SelectCharacter(CharacterMB character)
+    private void SelectCharacter(Character character)
     {
         if (character != null)
         {
@@ -178,12 +178,12 @@ public class UIClickHandler : MonoBehaviour
         }
     }
 
-    private void SetActiveAbilityStarted(CharacterMB character)
+    private void SetActiveAbilityStarted(Character character)
     {
         activeAbilityExecutionStarted = true;
     }
 
-    private void ChangeCharacterSelection(CharacterMB character)
+    private void ChangeCharacterSelection(Character character)
     {
         ActionUtils.ResetActionDestinations();
         activeAbilityExecutionStarted = false;

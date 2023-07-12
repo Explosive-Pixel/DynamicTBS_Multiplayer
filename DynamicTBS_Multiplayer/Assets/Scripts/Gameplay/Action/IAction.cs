@@ -6,15 +6,15 @@ public interface IAction
 {
     ActionType ActionType { get; }
     List<GameObject> ActionDestinations { get; }
-    CharacterMB CharacterInAction { get; }
+    Character CharacterInAction { get; }
 
-    void ShowActionPattern(CharacterMB character);
+    void ShowActionPattern(Character character);
 
     void HideActionPattern();
 
-    int CountActionDestinations(CharacterMB character);
+    int CountActionDestinations(Character character);
 
-    void CreateActionDestinations(CharacterMB character);
+    void CreateActionDestinations(Character character);
 
     void ExecuteAction(GameObject actionDestination);
 

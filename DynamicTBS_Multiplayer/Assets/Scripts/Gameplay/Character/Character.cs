@@ -1,40 +1,29 @@
-/*using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
-public abstract class Character
+public class Character : MonoBehaviour
 {
-    #region Character default stats Config
+    [SerializeField] private string prettyName;
+    [SerializeField] private int maxHitPoints;
+    [SerializeField] private int moveSpeed;
+    [SerializeField] private int attackRange;
+    [SerializeField] private PlayerType side;
 
-    protected const PatternType defaultMovePattern = PatternType.Cross;
-    protected const int defaultAttackDamage = 1;
-
-    #endregion
+    [SerializeField] private Animator hitPointAnimator;
+    [SerializeField] private Animator cooldownAnimator;
+    [SerializeField] private GameObject activeHighlight;
 
     protected CharacterType characterType;
-    protected int maxHitPoints;
-    protected int attackRange;
-    protected IActiveAbility activeAbility;
-    protected IPassiveAbility passiveAbility;
-    protected abstract GameObject CharacterPrefab(Player side);
 
-    protected int hitPoints;
-    protected int activeAbilityCooldown;
-    protected State state;
-    protected Animator hitPointAnimator;
-    protected Animator cooldownAnimator;
+    private int attackDamage = AttackAction.AttackDamage;
+    private PatternType movePattern = MoveAction.MovePattern;
 
-    protected GameObject characterGameObject;
-
-    #region public properties (can be overwritten by its Active- and Passive abiliy)
-
-    public Player side;
-    public PatternType movePattern;
-    public int attackDamage;
-    public int moveSpeed;
-
-    public bool isClickable = true;
+    private bool isClickable = false;
+    private int hitPoints;
+    private int activeAbilityCooldown;
+    private State state;
 
     // States whether the character can be targeted by another character to get attacked/healed
     public delegate bool IsTargetable(Character attacker);
@@ -52,90 +41,69 @@ public abstract class Character
     public delegate bool IsDisabled();
     public IsDisabled isDisabled = () => false;
 
-    public int HitPoints { get { return hitPoints; } set { this.hitPoints = value; UpdateHitPointAnimator(); } }
-    public int ActiveAbilityCooldown { get { return activeAbilityCooldown; } set { this.activeAbilityCooldown = value; UpdateCooldownAnimator(); } }
+    public string PrettyName { get { return prettyName; } }
+    public CharacterType CharacterType { get { return characterType; } }
+    public PlayerType Side { get { return side; } set { side = value; } }
+    public int MoveSpeed { get { return moveSpeed; } set { moveSpeed = value; } }
+    public int AttackRange { get { return attackRange; } }
+    public int AttackDamage { get { return attackDamage; } set { attackDamage = value; } }
+    public PatternType MovePattern { get { return movePattern; } set { movePattern = value; } }
+    public IActiveAbility ActiveAbility;
+    public IPassiveAbility PassiveAbility;
+    public int HitPoints { get { return hitPoints; } set { hitPoints = value; UpdateHitPointAnimator(); } }
+    public int ActiveAbilityCooldown { get { return activeAbilityCooldown; } set { activeAbilityCooldown = value; UpdateCooldownAnimator(); } }
+    public bool IsClickable { get { return isClickable; } set { isClickable = value; } }
 
-    #endregion
-
-    protected Character(Player side)
+    private void Awake()
     {
-        this.side = side;
-        isDisabled = () => IsStunned();
+        HitPoints = maxHitPoints;
+        ActiveAbilityCooldown = 0;
+
+        ActiveAbility = gameObject.GetComponent<IActiveAbility>();
+        PassiveAbility = gameObject.GetComponent<IPassiveAbility>();
+
+        SubscribeEvents();
     }
 
-    protected void Init()
+    public void TakeDamage(int damage)
     {
-        InitCharacterGameObject();
-
-        this.HitPoints = maxHitPoints;
-        this.ActiveAbilityCooldown = 0;
-        this.movePattern = defaultMovePattern;
-        this.attackDamage = defaultAttackDamage;
-
-        GameEvents.OnGamePhaseStart += ApplyPassiveAbility;
-    }
-
-    public GameObject GetCharacterGameObject() { return characterGameObject; }
-    public CharacterType GetCharacterType() { return characterType; }
-    public int GetMoveSpeed() { return moveSpeed; }
-    public int GetAttackRange() { return attackRange; }
-    public IPassiveAbility GetPassiveAbility() { return passiveAbility; }
-    public GameObject GetCharacterPrefab(Player side) { return CharacterPrefab(side); }
-    public Sprite GetCharacterSprite(Player side) 
-    {
-        GameObject prefab = CharacterPrefab(side);
-        GameObject characterSprite = UIUtils.FindChildGameObject(prefab, "CharacterSprite");
-        return characterSprite.GetComponent<SpriteRenderer>().sprite;
-    }
-
-    public void TakeDamage(int damage) 
-    {
-        if (!IsDead())
+        int actualDamage = netDamage(damage);
+        if (isDamageable(damage) && actualDamage > 0)
         {
-            int actualDamage = netDamage(damage);
-            if (isDamageable(damage) && actualDamage > 0)
+            HitPoints -= actualDamage;
+
+            CharacterEvents.CharacterTakesDamage(this, actualDamage);
+
+            if (HitPoints <= 0)
             {
-                this.HitPoints -= actualDamage;
-
-                CharacterEvents.CharacterTakesDamage(this, actualDamage);
-
-                if (this.HitPoints <= 0)
-                {
-                    this.Die();
-                }
+                Die();
             }
-            CharacterEvents.CharacterReceivesDamage(this, damage);
         }
+        CharacterEvents.CharacterReceivesDamage(this, damage);
     }
 
-    public void Heal(int healPoints) 
+    public void Heal(int healPoints)
     {
-        if (!IsDead())
+        this.HitPoints += healPoints;
+        if (HitPoints > maxHitPoints)
         {
-            this.HitPoints += healPoints;
-            if (this.HitPoints > this.maxHitPoints)
-            {
-                this.HitPoints = this.maxHitPoints;
-            }
+            HitPoints = maxHitPoints;
         }
     }
 
     public bool HasFullHP()
     {
-        return this.HitPoints == this.maxHitPoints;
+        return HitPoints == maxHitPoints;
     }
 
     public void SetState(CharacterStateType stateType)
     {
-        if (IsDead())
-            return;
-
-        this.state = CharacterStateFactory.Create(stateType, characterGameObject);
+        state = CharacterStateFactory.Create(stateType, gameObject);
     }
 
     private void ResetState()
     {
-        if(state != null)
+        if (state != null)
             state.Destroy();
 
         state = null;
@@ -146,31 +114,9 @@ public abstract class Character
         return state != null && state.GetType() == typeof(StunnedState) && state.IsActive();
     }
 
-    public void SetActiveAbilityOnCooldown()
+    public virtual void Die()
     {
-        if(!IsDead())
-        {
-            ActiveAbilityCooldown = activeAbility.Cooldown + 1;
-            UIUtils.UpdateAnimator(cooldownAnimator, this.ActiveAbilityCooldown - 1);
-            GameplayEvents.OnPlayerTurnEnded += ReduceActiveAbiliyCooldown;
-        }
-    }
-
-    public void ReduceActiveAbilityCooldown()
-    {
-        if(ActiveAbilityCooldown > 0 && !IsDead())
-        {
-            ActiveAbilityCooldown -= 1;
-            if(ActiveAbilityCooldown == 0)
-            {
-                GameplayEvents.OnPlayerTurnEnded -= ReduceActiveAbiliyCooldown;
-            }
-        }
-    }
-
-    public void Highlight(bool highlight)
-    {
-        UIUtils.FindChildGameObject(characterGameObject, "ActiveCharacter Highlight").SetActive(highlight);
+        Destroy(gameObject);
     }
 
     public bool IsActiveAbilityOnCooldown()
@@ -180,7 +126,8 @@ public abstract class Character
 
     public bool CanPerformActiveAbility()
     {
-        return !IsActiveAbilityOnCooldown() && activeAbility.CountActionDestinations() > 0; 
+        Debug.Log("Active Ability: " + ActiveAbility);
+        return !IsActiveAbilityOnCooldown() && ActiveAbility.CountActionDestinations() > 0;
     }
 
     public bool CanPerformAction()
@@ -188,69 +135,95 @@ public abstract class Character
         return !IsStunned() && (ActionUtils.CountAllActionDestinations(this) > 0 || CanPerformActiveAbility());
     }
 
-    public virtual void Die() 
+    public void SetActiveAbilityOnCooldown()
     {
-        ResetState();
-        CharacterEvents.CharacterDies(this, characterGameObject.transform.position);
-        GameplayEvents.OnPlayerTurnEnded -= ReduceActiveAbiliyCooldown;
-        GameObject.Destroy(characterGameObject);
-        characterGameObject = null;
-        GameplayEvents.OnPlayerTurnEnded -= ReduceActiveAbiliyCooldown;
+        ActiveAbilityCooldown = ActiveAbility.Cooldown + 1;
+        UIUtils.UpdateAnimator(cooldownAnimator, ActiveAbilityCooldown - 1);
+        GameplayEvents.OnPlayerTurnEnded += ReduceActiveAbiliyCooldown;
     }
 
-    public bool IsDead()
+    public void ReduceActiveAbilityCooldown()
     {
-        return characterGameObject == null;
+        if (ActiveAbilityCooldown > 0)
+        {
+            ActiveAbilityCooldown -= 1;
+            if (ActiveAbilityCooldown == 0)
+            {
+                GameplayEvents.OnPlayerTurnEnded -= ReduceActiveAbiliyCooldown;
+            }
+        }
     }
 
-    public Player GetSide()
+    private void SetActiveAbilityOnCooldown(ActionMetadata actionMetadata)
     {
-        return side;
+        if (actionMetadata.ExecutedActionType == ActionType.ActiveAbility && actionMetadata.CharacterInAction == this)
+        {
+            SetActiveAbilityOnCooldown();
+        }
     }
 
-    public IActiveAbility GetActiveAbility()
+    private void ReduceActiveAbiliyCooldown(PlayerType player)
     {
-        return activeAbility;
-    }
-
-    private void ReduceActiveAbiliyCooldown(Player player)
-    {
-        if (side.Equals(player))
+        if (Side.Equals(player))
         {
             ReduceActiveAbilityCooldown();
         }
     }
 
-    private void ApplyPassiveAbility(GamePhase gamePhase)
-    {
-        if(gamePhase == GamePhase.GAMEPLAY)
-            passiveAbility.Apply();
-    }
-
     private void UpdateHitPointAnimator()
     {
-        if(!IsDead())
-            UIUtils.UpdateAnimator(hitPointAnimator, this.HitPoints);
+        UIUtils.UpdateAnimator(hitPointAnimator, HitPoints);
     }
 
     private void UpdateCooldownAnimator()
     {
-        if (!IsDead())
-            UIUtils.UpdateAnimator(cooldownAnimator, this.ActiveAbilityCooldown);
+        UIUtils.UpdateAnimator(cooldownAnimator, ActiveAbilityCooldown);
     }
 
-    private void InitCharacterGameObject()
+    private void PrepareCharacter(GamePhase gamePhase)
     {
-        this.characterGameObject = GameObject.Instantiate(this.CharacterPrefab(this.side));
-        this.characterGameObject.transform.SetParent(GameObject.Find("GameplayObjects").transform);
+        if (gamePhase != GamePhase.PLACEMENT && gamePhase != GamePhase.GAMEPLAY)
+            return;
 
-        hitPointAnimator = UIUtils.FindChildGameObject(this.characterGameObject, "Leben").GetComponent<Animator>();
-        cooldownAnimator = UIUtils.FindChildGameObject(this.characterGameObject, "Cooldown").GetComponent<Animator>();
+        isClickable = true;
+
+        if (gamePhase == GamePhase.GAMEPLAY)
+        {
+            PassiveAbility.Apply();
+        }
     }
 
-    ~Character()
+    private void HighlightCharacter(Character character)
     {
-        GameEvents.OnGamePhaseStart -= ApplyPassiveAbility;
+        Highlight(character == this);
+    }
+
+    private void Highlight(bool highlight)
+    {
+        activeHighlight.SetActive(highlight);
+    }
+
+    #region EventsRegion
+
+    private void SubscribeEvents()
+    {
+        GameEvents.OnGamePhaseStart += PrepareCharacter;
+        GameplayEvents.OnFinishAction += SetActiveAbilityOnCooldown;
+        GameplayEvents.OnCharacterSelectionChange += HighlightCharacter;
+    }
+
+    private void UnsubscribeEvents()
+    {
+        GameEvents.OnGamePhaseStart -= PrepareCharacter;
+        GameplayEvents.OnFinishAction -= SetActiveAbilityOnCooldown;
+        GameplayEvents.OnCharacterSelectionChange -= HighlightCharacter;
         GameplayEvents.OnPlayerTurnEnded -= ReduceActiveAbiliyCooldown;
     }
-}*/
+
+    #endregion
+
+    private void OnDestroy()
+    {
+        UnsubscribeEvents();
+    }
+}

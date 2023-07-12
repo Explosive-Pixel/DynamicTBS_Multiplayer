@@ -187,7 +187,7 @@ public class AudioManager : MonoBehaviour
     private void ActionAudio(ActionMetadata actionMetadata)
     {
         ActionType actionType = actionMetadata.ExecutedActionType;
-        CharacterMB character = actionMetadata.CharacterInAction;
+        Character character = actionMetadata.CharacterInAction;
 
         if (character == null)
             return;
@@ -234,12 +234,12 @@ public class AudioManager : MonoBehaviour
         fxSource.PlayOneShot(turnChangeClip);
     }
 
-    private void UnitDraftAudio(CharacterMB character)
+    private void UnitDraftAudio(Character character)
     {
         fxSource.PlayOneShot(unitDraftedClip);
     }
 
-    private void UnitPlacementAudio(CharacterMB character)
+    private void UnitPlacementAudio(Character character)
     {
         fxSource.PlayOneShot(unitPlacedClip);
 

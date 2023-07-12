@@ -212,6 +212,20 @@ MonoBehaviour:
   hitPointAnimator: {fileID: 4737274756616868950}
   cooldownAnimator: {fileID: 612900705619546719}
   activeHighlight: {fileID: 8585225863818319891}
+--- !u!114 &4426036606055149181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1261058338705117478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e5df2d5c4aac504d8fe6df8da76d1a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aaCooldown: 3
+  electrifyRadius: 1
 --- !u!114 &9103764418894061925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,8 +238,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87cdc699f416fba42a31dcda54a7bdcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxInfluence: 0
-  influenceAuraPatternType: 0
+  maxInfluence: 3
+  influenceAuraPatternType: 1
 --- !u!95 &4737274756616868950 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 2220326497007760933, guid: bc2bba4b9472eb34682304f038d98552, type: 3}

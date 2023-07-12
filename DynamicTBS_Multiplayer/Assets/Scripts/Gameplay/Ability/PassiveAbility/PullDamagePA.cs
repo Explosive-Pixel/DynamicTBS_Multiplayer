@@ -7,18 +7,18 @@ public class PullDamagePA : MonoBehaviour, IPassiveAbility
 {
     [SerializeField] private PatternType pullDamagePatternType; // = PatternType.Cross;
 
-    private CharacterMB owner;
+    private Character owner;
 
     private void Awake()
     {
-        owner = gameObject.GetComponent<CharacterMB>();
+        owner = gameObject.GetComponent<Character>();
     }
 
     public void Apply()
     {
-        List<CharacterMB> characters = CharacterManager.GetAllLivingCharacters();
+        List<Character> characters = CharacterManager.GetAllLivingCharacters();
 
-        foreach (CharacterMB character in characters)
+        foreach (Character character in characters)
         {
             var defaultNetDamage = character.netDamage;
             character.netDamage = (damage) =>
@@ -44,7 +44,7 @@ public class PullDamagePA : MonoBehaviour, IPassiveAbility
         CharacterEvents.OnCharacterReceivesDamage += AbsorbDamage;
     }
 
-    private void AbsorbDamage(CharacterMB character, int damage)
+    private void AbsorbDamage(Character character, int damage)
     {
         if (character.PassiveAbility.GetType() == typeof(PullDamagePA))
         {

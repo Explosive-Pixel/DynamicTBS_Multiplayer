@@ -1,50 +1,65 @@
-/*using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
-public class Tile
+public class Tile : MonoBehaviour
 {
-    private TileType type;
-
+    //[SerializeField]
     private int row;
+    //[SerializeField]
     private int column;
-    private Vector3 position;
-    private GameObject tileGameObject;
-    private Sprite tileSprite;
-    private Character currentInhabitant;
+
+    public GameObject machineCore;
+    public GameObject unitStart_pink;
+    public GameObject unitStart_blue;
+    public GameObject masterStart_pink;
+    public GameObject masterStart_blue;
+
+    public int Row { get { return row; } }
+    public int Column { get { return column; } }
+    public string Name { get { return gameObject.name; } }
+
+    private GameObject UnitStart(PlayerType side) { return side == PlayerType.blue ? unitStart_blue : unitStart_pink; }
+    private GameObject MasterStart(PlayerType side) { return side == PlayerType.blue ? masterStart_blue : masterStart_pink; }
+
+    private TileType tileType;
+    public TileType TileType { get { return tileType; } }
+    private PlayerType side;
+    public PlayerType Side { get { return side; } }
+
+    public Character CurrentInhabitant { get { return gameObject.GetComponentInChildren<Character>(); } }
+
     private State state;
 
     public delegate bool IsChangeable();
     public IsChangeable isChangeable;
 
-    public Tile(TileType type, PlayerType side, int row, int column) 
+    public void Init(TileType tileType, PlayerType side)
     {
-        this.type = type;
-        this.row = row;
-        this.column = column;
-        this.tileSprite = TileSpriteManager.GetTileSprite(type, side, WithDepth());
-        this.position = Board.FindPosition(row, column);
-        this.currentInhabitant = null;
-        this.isChangeable = () => !IsGoal();
-        this.tileGameObject = CreateTileGameObject();
-        this.state = null;
+        this.side = side;
+        state = null;
+
+        row = int.Parse(Name[1].ToString()) - 1;
+        column = ((int)Name[0]) - 65;
+
+        Transform(tileType);
+        SubscribeEvents();
     }
 
-    public int GetRow()
+    public void Transform(TileType tileType)
     {
-        return row;
-    }
+        this.tileType = tileType;
 
-    public int GetColumn()
-    {
-        return column;
-    }
+        gameObject.GetComponent<SpriteRenderer>().enabled = tileType != TileType.EmptyTile;
+        machineCore.SetActive(tileType == TileType.GoalTile);
+        UnitStart(side).SetActive(tileType == TileType.StartTile);
+        UnitStart(PlayerManager.GetOtherSide(side)).SetActive(false);
+        MasterStart(side).SetActive(tileType == TileType.MasterStartTile);
+        MasterStart(PlayerManager.GetOtherSide(side)).SetActive(false);
 
-    public TileType GetTileType()
-    {
-        return type;
+        isChangeable = () => !IsGoal();
     }
 
     public bool IsElectrified()
@@ -54,37 +69,25 @@ public class Tile
 
     public void SetState(TileStateType stateType)
     {
-        this.state = TileStateFactory.Create(stateType, tileGameObject);
+        state = TileStateFactory.Create(stateType, gameObject);
     }
 
     private void ResetState()
     {
-        if(state != null)
+        if (state != null)
             state.Destroy();
 
         state = null;
     }
 
-    public Character GetCurrentInhabitant()
-    {
-        return currentInhabitant;
-    }
-
-    public GameObject GetTileGameObject() { return tileGameObject; }
-
-    public Vector3 GetPosition() 
-    {
-        return this.position;
-    }
-
     public bool IsGoal()
     {
-        return type == TileType.GoalTile;
+        return tileType == TileType.GoalTile;
     }
 
     public bool IsHole()
     {
-        return type == TileType.EmptyTile;
+        return tileType == TileType.EmptyTile;
     }
 
     public bool IsNormalFloor()
@@ -94,78 +97,36 @@ public class Tile
 
     public bool IsOccupied()
     {
-        return currentInhabitant != null;
+        return CurrentInhabitant != null;
     }
 
-    public bool IsAccessible() 
+    public bool IsAccessible()
     {
         return !IsOccupied() && !IsHole();
     }
 
-    public void SetCurrentInhabitant(Character character)
+    private void TransformToFloorTile(Character character)
     {
-        currentInhabitant = character;
+        if (CurrentInhabitant == character)
+            Transform(TileType.FloorTile);
     }
 
-    public Tile Transform(TileType newTileType)
+    #region EventSubscriptions
+
+    private void SubscribeEvents()
     {
-        if (!isChangeable())
-            return this;
-
-        this.type = newTileType;
-        this.tileSprite = TileSpriteManager.GetTileSprite(newTileType, Board.FindSideOfTile(row), WithDepth());
-        this.tileGameObject.GetComponent<SpriteRenderer>().sprite = this.tileSprite;
-
-        ResetState();
-
-        // Adapt depth of tile below
-        Tile tileBelow = Board.GetTileByCoordinates(GetRow() + 1, GetColumn());
-        if (tileBelow != null && tileBelow.IsHole())
-        {
-            tileBelow.Transform(TileType.EmptyTile);
-        }
-
-        return this;
+        PlacementEvents.OnPlaceCharacter += TransformToFloorTile;
     }
 
-    public string GetTileName()
+    private void UnsubscribeEvents()
     {
-        int row = 9 - this.GetRow();
-        char columnChar = (char)(this.GetColumn() + 65);
-        return columnChar.ToString() + row.ToString();
+        PlacementEvents.OnPlaceCharacter -= TransformToFloorTile;
     }
 
-    private GameObject CreateTileGameObject()
+    #endregion
+
+    private void OnDestroy()
     {
-        GameObject tile = new GameObject
-        {
-            name = GetTileName()
-        };
-
-        Quaternion startRotation = Quaternion.identity;
-
-        SpriteRenderer spriteRenderer = tile.AddComponent<SpriteRenderer>();
-        spriteRenderer.sprite = this.tileSprite;
-        spriteRenderer.sortingOrder = -2;
-        tile.transform.position = position;
-        tile.transform.rotation = startRotation;
-
-        tile.AddComponent<BoxCollider>();
-
-        tile.transform.SetParent(GameObject.Find("GameplayObjects").transform);
-
-        return tile;
+        UnsubscribeEvents();
     }
-
-    private bool WithDepth()
-    {
-        bool withDepth = false;
-        Tile tileAbove = Board.GetTileByCoordinates(row - 1, column);
-        if (tileAbove != null && !tileAbove.IsHole())
-        {
-            withDepth = true;
-        }
-
-        return withDepth;
-    }
-}*/
+}

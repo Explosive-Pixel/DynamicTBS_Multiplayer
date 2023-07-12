@@ -11,10 +11,10 @@ public class HealAAAction : MonoBehaviour, IAction
     private List<GameObject> healTargets = new();
     public List<GameObject> ActionDestinations { get { return healTargets; } }
 
-    private CharacterMB characterInAction = null;
-    public CharacterMB CharacterInAction { get { return characterInAction; } }
+    private Character characterInAction = null;
+    public Character CharacterInAction { get { return characterInAction; } }
 
-    private List<CharacterMB> buffedCharacters = new();
+    private List<Character> buffedCharacters = new();
 
     private List<GameObject> patternTargets = new();
 
@@ -24,11 +24,11 @@ public class HealAAAction : MonoBehaviour, IAction
         GameplayEvents.OnFinishAction += DebuffCharacter;
     }
 
-    public void ShowActionPattern(CharacterMB character)
+    public void ShowActionPattern(Character character)
     {
-        TileMB tile = BoardNew.GetTileByCharacter(character);
+        Tile tile = Board.GetTileByCharacter(character);
 
-        List<Vector3> patternPositions = BoardNew.GetTilesInAllStarDirections(tile, HealAA.range)
+        List<Vector3> patternPositions = Board.GetTilesInAllStarDirections(tile, HealAA.range)
             .ConvertAll(tile => tile.gameObject.transform.position);
 
         patternTargets = ActionUtils.InstantiateActionPositions(patternPositions, healPrefab);
@@ -39,7 +39,7 @@ public class HealAAAction : MonoBehaviour, IAction
         ActionUtils.Clear(patternTargets);
     }
 
-    public int CountActionDestinations(CharacterMB character)
+    public int CountActionDestinations(Character character)
     {
         List<Vector3> healPositions = FindHealPositions(character);
 
@@ -51,7 +51,7 @@ public class HealAAAction : MonoBehaviour, IAction
         return 0;
     }
 
-    public void CreateActionDestinations(CharacterMB character)
+    public void CreateActionDestinations(Character character)
     {
         List<Vector3> healPositions = FindHealPositions(character);
 
@@ -64,10 +64,10 @@ public class HealAAAction : MonoBehaviour, IAction
 
     public void ExecuteAction(GameObject actionDestination)
     {
-        TileMB tile = BoardNew.GetTileByPosition(actionDestination.transform.position);
+        Tile tile = Board.GetTileByPosition(actionDestination.transform.position);
         if (tile != null)
         {
-            CharacterMB characterToHeal = tile.CurrentInhabitant;
+            Character characterToHeal = tile.CurrentInhabitant;
             int hitPointsBeforeHeal = characterToHeal.HitPoints;
             characterToHeal.Heal(HealAA.healingPoints);
 
@@ -89,11 +89,11 @@ public class HealAAAction : MonoBehaviour, IAction
         characterInAction = null;
     }
 
-    private List<Vector3> FindHealPositions(CharacterMB character)
+    private List<Vector3> FindHealPositions(Character character)
     {
-        TileMB characterTile = BoardNew.GetTileByCharacter(character);
+        Tile characterTile = Board.GetTileByCharacter(character);
 
-        List<TileMB> healTiles = BoardNew.GetTilesOfClosestCharactersOfSideInAllStarDirections(characterTile, character.Side, HealAA.range)
+        List<Tile> healTiles = Board.GetTilesOfClosestCharactersOfSideInAllStarDirections(characterTile, character.Side, HealAA.range)
             .FindAll(tile => tile.IsOccupied() && tile.CurrentInhabitant.isHealableBy(character) && !tile.CurrentInhabitant.HasFullHP());
 
         List<Vector3> healPositions = healTiles.ConvertAll(tile => tile.gameObject.transform.position);
@@ -115,12 +115,12 @@ public class HealAAAction : MonoBehaviour, IAction
         }
     }
 
-    private int BufferCount(CharacterMB character)
+    private int BufferCount(Character character)
     {
         return buffedCharacters.FindAll(c => c == character).Count;
     }
 
-    private void UpdateBufferGameObject(CharacterMB character)
+    private void UpdateBufferGameObject(Character character)
     {
         // TODO: Make nicer (not hard coded)
         GameObject child = UIUtils.FindChildGameObject(character.gameObject, "Speedup");

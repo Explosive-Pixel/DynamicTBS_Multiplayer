@@ -14,25 +14,8 @@ public enum CharacterType
 
 static class CharacterTypeMethods
 {
-    // TODO
     public static string Name(this CharacterType characterType)
     {
-        switch (characterType)
-        {
-            case CharacterType.MasterChar:
-                return MasterCharMB.Name;
-            /*case CharacterType.MechanicChar:
-                return MechanicChar.name;
-            case CharacterType.MedicChar:
-                return MedicChar.name;
-            case CharacterType.RunnerChar:
-                return RunnerChar.name;
-            case CharacterType.ShooterChar:
-                return ShooterChar.name;
-            case CharacterType.TankChar:
-                return TankChar.name;*/
-            default:
-                return "";
-        }
+        return CharacterFactory.GetPrettyName(characterType);
     }
 }

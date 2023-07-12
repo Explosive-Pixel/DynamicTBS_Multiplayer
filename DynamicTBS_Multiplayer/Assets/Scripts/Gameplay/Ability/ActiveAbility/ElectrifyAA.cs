@@ -11,14 +11,14 @@ public class ElectrifyAA : MonoBehaviour, IActiveAbility
 
     public int Cooldown { get { return aaCooldown; } }
 
-    CharacterMB character;
+    Character character;
     private ElectrifyAAAction electrifyAAAction;
 
     private void Awake()
     {
         radius = electrifyRadius;
 
-        this.character = gameObject.GetComponent<CharacterMB>();
+        this.character = gameObject.GetComponent<Character>();
         electrifyAAAction = GameObject.Find("ActionRegistry").GetComponent<ElectrifyAAAction>();
     }
 

@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class HighPerformancePA : MonoBehaviour, IPassiveAbility
 {
-    private CharacterMB owner;
+    private Character owner;
 
     private void Awake()
     {
-        owner = gameObject.GetComponent<CharacterMB>();
+        owner = gameObject.GetComponent<Character>();
     }
 
     public void Apply()

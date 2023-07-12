@@ -87,7 +87,7 @@ public class CurrentPlayerUIHandler : MonoBehaviour
         }
         draftMessageText.text += ".";
 
-        draftGameSetupText.text = "Map: " + BoardNew.selectedMapType.Description() + "\nTime speed: " + Timer.TimerSetupType.Description();
+        draftGameSetupText.text = "Map: " + Board.selectedMapType.Description() + "\nTime speed: " + Timer.TimerSetupType.Description();
     }
 
     private void DisplayPlacementMessages(PlayerType currentPlayer)

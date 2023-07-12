@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class AdrenalinPA : MonoBehaviour, IPassiveAbility
 {
-    private CharacterMB owner;
+    private Character owner;
 
     private void Awake()
     {
-        owner = gameObject.GetComponent<CharacterMB>();
+        owner = gameObject.GetComponent<Character>();
     }
 
     public void Apply()
@@ -16,7 +16,7 @@ public class AdrenalinPA : MonoBehaviour, IPassiveAbility
         CharacterEvents.OnCharacterTakesDamage += ResetActiveAbilityCooldown;
     }
 
-    private void ResetActiveAbilityCooldown(CharacterMB character, int damage)
+    private void ResetActiveAbilityCooldown(Character character, int damage)
     {
         if (character == owner)
         {

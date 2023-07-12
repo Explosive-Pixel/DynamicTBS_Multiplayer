@@ -68,11 +68,11 @@ public class PlacementManager : MonoBehaviour
 
     public static void RandomPlacement(PlayerType side)
     {
-        List<CharacterMB> charactersOfPlayer = CharacterManager.GetAllLivingCharactersOfSide(side)
+        List<Character> charactersOfPlayer = CharacterManager.GetAllLivingCharactersOfSide(side)
                 .FindAll(character => character.IsClickable);
         if (charactersOfPlayer.Count > 0)
         {
-            CharacterMB randomCharacter = charactersOfPlayer[0];
+            Character randomCharacter = charactersOfPlayer[0];
             ActionUtils.InstantiateAllActionPositions(randomCharacter);
             List<GameObject> placementPositions = ActionRegistry.GetActions().ConvertAll(action => action.ActionDestinations).SelectMany(i => i).ToList();
             GameObject randomPosition = placementPositions[RandomNumberGenerator.GetInt32(0, placementPositions.Count)];
@@ -99,8 +99,8 @@ public class PlacementManager : MonoBehaviour
 
     private void SpawnMaster(PlayerType playerType)
     {
-        CharacterMB master = CharacterFactoryMB.CreateCharacter(CharacterType.MasterChar, playerType);
-        TileMB masterSpawnTile = BoardNew.Tiles.Find(tile => tile.TileType == TileType.MasterStartTile && tile.Side == playerType);
+        Character master = CharacterFactory.CreateCharacter(CharacterType.MasterChar, playerType);
+        Tile masterSpawnTile = Board.Tiles.Find(tile => tile.TileType == TileType.MasterStartTile && tile.Side == playerType);
 
         MoveAction.MoveCharacter(master, masterSpawnTile);
 
@@ -129,7 +129,7 @@ public class PlacementManager : MonoBehaviour
 
     private void SortCharactersOfSide(PlayerType side)
     {
-        List<CharacterMB> characters = CharacterManager.GetAllLivingCharactersOfSide(side);
+        List<Character> characters = CharacterManager.GetAllLivingCharactersOfSide(side);
         List<Vector3> positions = CharacterPositions(side);
 
         for (int i = 0; i < characters.Count(); i++)

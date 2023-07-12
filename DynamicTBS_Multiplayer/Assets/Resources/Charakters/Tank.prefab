@@ -73,3 +73,72 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc2bba4b9472eb34682304f038d98552, type: 3}
+--- !u!95 &360779504018028600 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6336411380225159212, guid: bc2bba4b9472eb34682304f038d98552, type: 3}
+  m_PrefabInstance: {fileID: 5975937610305783828}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2017866745970588481 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5687532331230442325, guid: bc2bba4b9472eb34682304f038d98552, type: 3}
+  m_PrefabInstance: {fileID: 5975937610305783828}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2671681955317175179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2017866745970588481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5873071fbb3bd487f814289ddbe971f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prettyName: Tank
+  maxHitPoints: 4
+  moveSpeed: 1
+  attackRange: 1
+  side: 0
+  hitPointAnimator: {fileID: 5494080071505591857}
+  cooldownAnimator: {fileID: 360779504018028600}
+  activeHighlight: {fileID: 8837209887186711156}
+--- !u!114 &190145593233152051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2017866745970588481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 194e7e2d64b73b142b53df09649dce0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aaDistance: 1
+  aaPattern: 0
+  aaCooldown: 3
+  blockDurationInRounds: 2
+--- !u!114 &5470139361406796093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2017866745970588481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45cb3e55781c0b542a3b1e4469084a9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pullDamagePatternType: 0
+--- !u!95 &5494080071505591857 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2220326497007760933, guid: bc2bba4b9472eb34682304f038d98552, type: 3}
+  m_PrefabInstance: {fileID: 5975937610305783828}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8837209887186711156 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2903370447749462624, guid: bc2bba4b9472eb34682304f038d98552, type: 3}
+  m_PrefabInstance: {fileID: 5975937610305783828}
+  m_PrefabAsset: {fileID: 0}

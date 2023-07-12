@@ -14,7 +14,7 @@ public class ExplosionUIEffect : MonoBehaviour
         CharacterEvents.OnCharacterDeath += InstantiatePrefab;
     }
 
-    private void InstantiatePrefab(CharacterMB character, Vector3 lastPosition)
+    private void InstantiatePrefab(Character character, Vector3 lastPosition)
     {
         Vector3 instantiationPosition = lastPosition + new Vector3(0f, yOffset, 0f);
 

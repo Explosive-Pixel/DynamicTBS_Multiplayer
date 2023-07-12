@@ -14,7 +14,7 @@ public class CardHandler : MonoBehaviour
     }
 
     /// <summary>method <c>setActive</c> aktiviert Kind nach character in cardClass.</summary>
-    public void SetActive(CharacterMB character)
+    public void SetActive(Character character)
     {
         foreach (Transform card in transform)
         {

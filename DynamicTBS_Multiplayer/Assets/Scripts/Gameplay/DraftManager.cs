@@ -21,6 +21,11 @@ public class DraftManager : MonoBehaviour
 
     private bool init = false;
 
+    private void Start()
+    {
+        GameManager.ChangeGamePhase(GamePhase.DRAFT);
+    }
+
     private void Awake()
     {
         if (!init)
@@ -36,16 +41,11 @@ public class DraftManager : MonoBehaviour
         currentPlayerDraftCount = 0;
     }
 
-    private void Start()
-    {
-        GameManager.ChangeGamePhase(GamePhase.DRAFT);
-    }
-
     public static void DraftCharacter(CharacterType type, PlayerType side)
     {
         if (CurrentPlayerTotalDraftCount == 0) return;
 
-        CharacterMB character = CharacterFactoryMB.CreateCharacter(type, side);
+        Character character = CharacterFactory.CreateCharacter(type, side);
         character.gameObject.transform.position = SpawnPositions[draftCounter];
 
         DraftEvents.CharacterCreated(character);
@@ -64,7 +64,7 @@ public class DraftManager : MonoBehaviour
 
     public static void RandomDraft(PlayerType side)
     {
-        CharacterType randomCharacterType = CharacterFactoryMB.GetRandomCharacterType();
+        CharacterType randomCharacterType = CharacterFactory.GetRandomCharacterType();
         DraftCharacter(randomCharacterType, side);
     }
 

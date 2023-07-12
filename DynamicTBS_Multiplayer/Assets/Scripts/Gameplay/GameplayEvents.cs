@@ -11,7 +11,7 @@ public static class GameplayEvents
     public delegate void FinishAction(ActionMetadata actionMetadata);
     public static event FinishAction OnFinishAction;
 
-    public delegate void ExecuteActiveAbility(CharacterMB character);
+    public delegate void ExecuteActiveAbility(Character character);
     public static event ExecuteActiveAbility OnExecuteActiveAbility;
 
     public delegate void ChangeRemainingActions();
@@ -20,7 +20,7 @@ public static class GameplayEvents
     public delegate void GameOver(PlayerType? winner, GameOverCondition endGameCondition);
     public static event GameOver OnGameOver;
 
-    public delegate void CharacterSelection(CharacterMB character);
+    public delegate void CharacterSelection(Character character);
     public static event CharacterSelection OnCharacterSelectionChange;
 
     public delegate void NextPlayer(PlayerType player);
@@ -56,7 +56,7 @@ public static class GameplayEvents
             OnFinishAction(actionMetadata);
     }
 
-    public static void StartExecuteActiveAbility(CharacterMB character)
+    public static void StartExecuteActiveAbility(Character character)
     {
         if (OnExecuteActiveAbility != null)
             OnExecuteActiveAbility(character);
@@ -78,7 +78,7 @@ public static class GameplayEvents
         }
     }
 
-    public static void ChangeCharacterSelection(CharacterMB character)
+    public static void ChangeCharacterSelection(Character character)
     {
         if (OnCharacterSelectionChange != null)
             OnCharacterSelectionChange(character);

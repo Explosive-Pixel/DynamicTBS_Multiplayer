@@ -8,13 +8,13 @@ public class InfluenceAuraPA : MonoBehaviour, IPassiveAbility
     [SerializeField] private int maxInfluence; //= 3;
     [SerializeField] private PatternType influenceAuraPatternType; // = PatternType.Star;
 
-    private CharacterMB owner;
+    private Character owner;
 
-    private readonly Dictionary<CharacterMB, int> influencePoints = new();
+    private readonly Dictionary<Character, int> influencePoints = new();
 
     private void Awake()
     {
-        owner = gameObject.GetComponent<CharacterMB>();
+        owner = gameObject.GetComponent<Character>();
     }
 
     public void Apply()
@@ -26,10 +26,10 @@ public class InfluenceAuraPA : MonoBehaviour, IPassiveAbility
     {
         if (side != owner.Side)
         {
-            List<CharacterMB> characters = CharacterManager.GetAllLivingCharactersOfSide(side)
+            List<Character> characters = CharacterManager.GetAllLivingCharactersOfSide(side)
                 .FindAll(character => character.PassiveAbility.GetType() != typeof(InfluenceAuraPA));
 
-            foreach (CharacterMB character in characters)
+            foreach (Character character in characters)
             {
                 if (CharacterManager.Neighbors(owner, character, influenceAuraPatternType))
                 {
@@ -48,7 +48,7 @@ public class InfluenceAuraPA : MonoBehaviour, IPassiveAbility
         }
     }
 
-    private void SwapSides(CharacterMB character)
+    private void SwapSides(Character character)
     {
         influencePoints.Remove(character);
         UpdateInfluenceAnimator(character, 0);
@@ -75,7 +75,7 @@ public class InfluenceAuraPA : MonoBehaviour, IPassiveAbility
         }
     }
 
-    private void UpdateInfluenceAnimator(CharacterMB character, int influence)
+    private void UpdateInfluenceAnimator(Character character, int influence)
     {
         // TODO
         GameObject child = UIUtils.FindChildGameObject(character.gameObject, "MasterTakeoverProgression");

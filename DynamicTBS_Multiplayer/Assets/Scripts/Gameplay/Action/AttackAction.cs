@@ -13,8 +13,8 @@ public class AttackAction : MonoBehaviour, IAction
     private List<GameObject> targets = new();
     public List<GameObject> ActionDestinations { get { return targets; } }
 
-    private CharacterMB characterInAction = null;
-    public CharacterMB CharacterInAction { get { return characterInAction; } }
+    private Character characterInAction = null;
+    public Character CharacterInAction { get { return characterInAction; } }
 
     private List<GameObject> patternTargets = new();
 
@@ -27,12 +27,12 @@ public class AttackAction : MonoBehaviour, IAction
         GameEvents.OnGamePhaseStart += Register;
     }
 
-    public void ShowActionPattern(CharacterMB character)
+    public void ShowActionPattern(Character character)
     {
         int range = character.AttackRange;
-        TileMB tile = BoardNew.GetTileByCharacter(character);
+        Tile tile = Board.GetTileByCharacter(character);
 
-        List<Vector3> patternPositions = BoardNew.GetTilesInAllStarDirections(tile, range)
+        List<Vector3> patternPositions = Board.GetTilesInAllStarDirections(tile, range)
             .ConvertAll(tile => tile.gameObject.transform.position);
 
         patternTargets = ActionUtils.InstantiateActionPositions(patternPositions, attackCirclePrefab);
@@ -43,7 +43,7 @@ public class AttackAction : MonoBehaviour, IAction
         ActionUtils.Clear(patternTargets);
     }
 
-    public int CountActionDestinations(CharacterMB character)
+    public int CountActionDestinations(Character character)
     {
         List<Vector3> targetPositions = FindTargetPositions(character);
 
@@ -55,7 +55,7 @@ public class AttackAction : MonoBehaviour, IAction
         return 0;
     }
 
-    public void CreateActionDestinations(CharacterMB character)
+    public void CreateActionDestinations(Character character)
     {
         List<Vector3> targetPositions = FindTargetPositions(character);
 
@@ -68,10 +68,10 @@ public class AttackAction : MonoBehaviour, IAction
 
     public void ExecuteAction(GameObject actionDestination)
     {
-        TileMB tile = BoardNew.GetTileByPosition(actionDestination.transform.position);
+        Tile tile = Board.GetTileByPosition(actionDestination.transform.position);
         if (tile != null)
         {
-            CharacterMB characterToAttack = tile.CurrentInhabitant;
+            Character characterToAttack = tile.CurrentInhabitant;
             characterToAttack.TakeDamage(attackDamage);
         }
 
@@ -84,14 +84,14 @@ public class AttackAction : MonoBehaviour, IAction
         characterInAction = null;
     }
 
-    private List<Vector3> FindTargetPositions(CharacterMB character)
+    private List<Vector3> FindTargetPositions(Character character)
     {
         int range = character.AttackRange;
-        TileMB tile = BoardNew.GetTileByCharacter(character);
+        Tile tile = Board.GetTileByCharacter(character);
 
         PlayerType otherSide = PlayerManager.GetOtherSide(character.Side);
 
-        List<Vector3> targetPositions = BoardNew.GetTilesOfClosestCharactersOfSideInAllStarDirections(tile, otherSide, range)
+        List<Vector3> targetPositions = Board.GetTilesOfClosestCharactersOfSideInAllStarDirections(tile, otherSide, range)
             .FindAll(tile => tile.IsOccupied() && tile.CurrentInhabitant.isAttackableBy(character))
             .ConvertAll(tile => tile.gameObject.transform.position);
 

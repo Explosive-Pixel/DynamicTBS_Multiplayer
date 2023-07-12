@@ -99,7 +99,7 @@ public class MovesDisplay : MonoBehaviour
 
         if (position != null)
         {
-            TileMB tile = BoardNew.GetTileByPosition(position.GetValueOrDefault());
+            Tile tile = Board.GetTileByPosition(position.GetValueOrDefault());
             if (tile != null)
             {
                 text = tile.Name;
@@ -108,7 +108,7 @@ public class MovesDisplay : MonoBehaviour
         return text;
     }
 
-    private string TranslateActionType(ActionType actiontype, CharacterMB character)
+    private string TranslateActionType(ActionType actiontype, Character character)
     {
         string text = "";
 
@@ -134,7 +134,7 @@ public class MovesDisplay : MonoBehaviour
         return text;
     }
 
-    private string TranslateCharacterName(CharacterMB character)
+    private string TranslateCharacterName(Character character)
     {
         if (character != null)
         {

@@ -9,7 +9,7 @@ public class OnlineClientMessageSender : MonoBehaviour
         SubscribeEvents();
     }
 
-    private void SendDraftCharacterMessage(CharacterMB character)
+    private void SendDraftCharacterMessage(Character character)
     {
         if (OnlineClient.Instance.ShouldSendMessage(character.Side) && character.CharacterType != CharacterType.MasterChar)
         {

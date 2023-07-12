@@ -9,7 +9,7 @@ public class GameplayManager : MonoBehaviour
 
     private static int remainingActions;
 
-    private static readonly Dictionary<CharacterMB, List<ActionType>> actionsPerCharacterPerTurn = new();
+    private static readonly Dictionary<Character, List<ActionType>> actionsPerCharacterPerTurn = new();
 
     private static bool hasGameStarted;
     public static bool HasGameStarted { get { return hasGameStarted; } }
@@ -42,7 +42,7 @@ public class GameplayManager : MonoBehaviour
         return remainingActions;
     }
 
-    public static bool ActionAvailable(CharacterMB character, ActionType actionType)
+    public static bool ActionAvailable(Character character, ActionType actionType)
     {
         if (actionsPerCharacterPerTurn.ContainsKey(character) && actionsPerCharacterPerTurn[character].Contains(actionType))
         {
@@ -103,9 +103,9 @@ public class GameplayManager : MonoBehaviour
 
     private bool HasAvailableAction(PlayerType player)
     {
-        List<CharacterMB> characters = CharacterManager.GetAllLivingCharactersOfSide(player);
+        List<Character> characters = CharacterManager.GetAllLivingCharactersOfSide(player);
 
-        foreach (CharacterMB character in characters)
+        foreach (Character character in characters)
         {
             if (character.CanPerformAction())
             {

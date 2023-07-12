@@ -6,7 +6,7 @@ public class SteadyStandPA : MonoBehaviour, IPassiveAbility
 {
     public void Apply()
     {
-        foreach (TileMB tile in BoardNew.Tiles)
+        foreach (Tile tile in Board.Tiles)
         {
             var defaultIsChangeable = tile.isChangeable;
             tile.isChangeable = () =>

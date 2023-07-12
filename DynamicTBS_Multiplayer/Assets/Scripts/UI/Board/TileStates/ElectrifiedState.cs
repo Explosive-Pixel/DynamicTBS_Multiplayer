@@ -7,12 +7,12 @@ public class ElectrifiedState : State
     protected override int Duration { get { return 2; } }
     private static readonly string prefabPath = "EffectPrefabs/ElectrifyPrefab";
 
-    private TileMB tile;
-    private CharacterMB stunnedInhabitant;
+    private Tile tile;
+    private Character stunnedInhabitant;
 
     public ElectrifiedState(GameObject parent) : base(parent)
     {
-        tile = BoardNew.GetTileByPosition(parent.transform.position);
+        tile = Board.GetTileByPosition(parent.transform.position);
 
         StunInhabitant();
         GameplayEvents.OnFinishAction += StunInhabitant;

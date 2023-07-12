@@ -16,7 +16,7 @@ public class StunnedState : State
 
     protected override GameObject LoadPrefab(GameObject parent)
     {
-        CharacterMB character = parent.GetComponent<CharacterMB>();
+        Character character = parent.GetComponent<Character>();
 
         if (character != null)
         {

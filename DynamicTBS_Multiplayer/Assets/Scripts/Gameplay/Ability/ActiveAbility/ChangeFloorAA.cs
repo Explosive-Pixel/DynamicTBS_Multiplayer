@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ChangeFloorAA : MonoBehaviour, IActiveAbility
 {
-    [SerializeField] private int aaCooldown;
+    [SerializeField] private int aaCooldown; // 3
     [SerializeField] private int changeFloorRadius; // 2
     [SerializeField] private int changeFloorRadiusWithInhabitants; // 1
 
@@ -14,14 +14,14 @@ public class ChangeFloorAA : MonoBehaviour, IActiveAbility
     public int Cooldown { get { return aaCooldown; } }
     private ChangeFloorAAAction changeFloorAAAction;
 
-    CharacterMB character;
+    Character character;
 
     private void Awake()
     {
         radius = changeFloorRadius;
         radiusWithInhabitants = changeFloorRadiusWithInhabitants;
 
-        this.character = gameObject.GetComponent<CharacterMB>();
+        this.character = gameObject.GetComponent<Character>();
         changeFloorAAAction = GameObject.Find("ActionRegistry").GetComponent<ChangeFloorAAAction>();
     }
 

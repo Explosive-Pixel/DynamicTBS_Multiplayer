@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9006414184099744331}
   - component: {fileID: 2907500528339517506}
   - component: {fileID: 748062788652825035}
-  - component: {fileID: 7543437495190540207}
+  - component: {fileID: 5175158874703908864}
   m_Layer: 0
   m_Name: _BaseTile
   m_TagString: Untagged
@@ -104,7 +104,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.022, y: 0.022, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7543437495190540207
+--- !u!114 &5175158874703908864
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121,8 +121,8 @@ MonoBehaviour:
   machineCore: {fileID: 4165381945365942810}
   unitStart_pink: {fileID: 9073716051683759624}
   unitStart_blue: {fileID: 8761563004506917255}
-  captainStart_pink: {fileID: 7782910756190445529}
-  captainStart_blue: {fileID: 4105231244398972050}
+  masterStart_pink: {fileID: 7782910756190445529}
+  masterStart_blue: {fileID: 4105231244398972050}
 --- !u!1 &4105231244398972050
 GameObject:
   m_ObjectHideFlags: 0

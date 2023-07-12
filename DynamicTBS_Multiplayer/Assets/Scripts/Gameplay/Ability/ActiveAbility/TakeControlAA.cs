@@ -8,11 +8,11 @@ public class TakeControlAA : MonoBehaviour, IActiveAbility
 
     public int Cooldown { get { return aaCooldown; } }
 
-    CharacterMB character;
+    Character character;
 
     private void Awake()
     {
-        this.character = gameObject.GetComponent<CharacterMB>();
+        this.character = gameObject.GetComponent<Character>();
     }
 
     public void Execute()
@@ -48,7 +48,7 @@ public class TakeControlAA : MonoBehaviour, IActiveAbility
 
     private bool Executable()
     {
-        TileMB tile = BoardNew.GetTileByCharacter(character);
+        Tile tile = Board.GetTileByCharacter(character);
         if (tile != null && tile.TileType.Equals(TileType.GoalTile))
         {
             return true;

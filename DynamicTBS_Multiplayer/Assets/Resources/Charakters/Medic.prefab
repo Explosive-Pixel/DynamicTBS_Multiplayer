@@ -145,3 +145,71 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc2bba4b9472eb34682304f038d98552, type: 3}
+--- !u!95 &824412867855983529 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2220326497007760933, guid: bc2bba4b9472eb34682304f038d98552, type: 3}
+  m_PrefabInstance: {fileID: 1558465432507766156}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4461396006841413612 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2903370447749462624, guid: bc2bba4b9472eb34682304f038d98552, type: 3}
+  m_PrefabInstance: {fileID: 1558465432507766156}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &4778245098708788640 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6336411380225159212, guid: bc2bba4b9472eb34682304f038d98552, type: 3}
+  m_PrefabInstance: {fileID: 1558465432507766156}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6579447381502453465 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5687532331230442325, guid: bc2bba4b9472eb34682304f038d98552, type: 3}
+  m_PrefabInstance: {fileID: 1558465432507766156}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3068145531600519746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6579447381502453465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65b3d61a38db64badb14bc16b9721ac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prettyName: Doc
+  maxHitPoints: 2
+  moveSpeed: 1
+  attackRange: 1
+  side: 0
+  hitPointAnimator: {fileID: 824412867855983529}
+  cooldownAnimator: {fileID: 4778245098708788640}
+  activeHighlight: {fileID: 4461396006841413612}
+--- !u!114 &5507378916479559353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6579447381502453465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 129f53a54dbaeb449b5e5fb9bdceee29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aaCooldown: 3
+  healRange: 2
+  healPoints: 1
+  moveSpeedBuffer: 1
+--- !u!114 &6373974226428726217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6579447381502453465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ced75b1926531d4a9aafaede6977a48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

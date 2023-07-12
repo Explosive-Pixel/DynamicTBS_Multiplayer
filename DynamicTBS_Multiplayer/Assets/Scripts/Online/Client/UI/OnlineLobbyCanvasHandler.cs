@@ -176,7 +176,7 @@ public class OnlineLobbyCanvasHandler : MonoBehaviour
             OnlineClient.Instance.SendToServer(new MsgStartGame
             {
                 timerSetup = Timer.TimerSetupType,
-                selectedMap = BoardNew.selectedMapType
+                selectedMap = Board.selectedMapType
             });
         }
     }

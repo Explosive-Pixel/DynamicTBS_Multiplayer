@@ -11,8 +11,8 @@ public class PowershotAAAction : MonoBehaviour, IAction
     private List<GameObject> powershotTargets = new();
     public List<GameObject> ActionDestinations { get { return powershotTargets; } }
 
-    private CharacterMB characterInAction = null;
-    public CharacterMB CharacterInAction { get { return characterInAction; } }
+    private Character characterInAction = null;
+    public Character CharacterInAction { get { return characterInAction; } }
 
     private List<GameObject> patternTargets = new();
 
@@ -21,7 +21,7 @@ public class PowershotAAAction : MonoBehaviour, IAction
         GameEvents.OnGamePhaseStart += Register;
     }
 
-    public void ShowActionPattern(CharacterMB character)
+    public void ShowActionPattern(Character character)
     {
         patternTargets = CreateDestinations(character);
     }
@@ -31,20 +31,20 @@ public class PowershotAAAction : MonoBehaviour, IAction
         ActionUtils.Clear(patternTargets);
     }
 
-    public int CountActionDestinations(CharacterMB character)
+    public int CountActionDestinations(Character character)
     {
-        TileMB tile = BoardNew.GetTileByCharacter(character);
+        Tile tile = Board.GetTileByCharacter(character);
 
-        if (tile.Row > 0 && tile.Row < BoardNew.Rows && tile.Column > 0 && tile.Column < BoardNew.Columns)
+        if (tile.Row > 0 && tile.Row < Board.Rows && tile.Column > 0 && tile.Column < Board.Columns)
             return 4;
 
-        if ((tile.Row == 0 || tile.Row == BoardNew.Rows) && (tile.Column == 0 || tile.Column == BoardNew.Columns))
+        if ((tile.Row == 0 || tile.Row == Board.Rows) && (tile.Column == 0 || tile.Column == Board.Columns))
             return 2;
 
         return 3;
     }
 
-    public void CreateActionDestinations(CharacterMB character)
+    public void CreateActionDestinations(Character character)
     {
         powershotTargets = CreateDestinations(character);
         characterInAction = character;
@@ -53,7 +53,7 @@ public class PowershotAAAction : MonoBehaviour, IAction
     public void ExecuteAction(GameObject actionDestination)
     {
         Vector3 clickPosition = actionDestination.transform.position;
-        TileMB characterTile = BoardNew.GetTileByCharacter(characterInAction);
+        Tile characterTile = Board.GetTileByCharacter(characterInAction);
         Vector3 shooterPosition = characterTile.gameObject.transform.position;
 
         Vector3 shootDirection = Vector3.up;
@@ -72,9 +72,9 @@ public class PowershotAAAction : MonoBehaviour, IAction
             }
         }
 
-        List<TileMB> hitCharacterTiles = BoardNew.GetAllOccupiedTilesInOneDirection(characterTile, shootDirection);
+        List<Tile> hitCharacterTiles = Board.GetAllOccupiedTilesInOneDirection(characterTile, shootDirection);
 
-        foreach (TileMB tile in hitCharacterTiles)
+        foreach (Tile tile in hitCharacterTiles)
         {
             if (tile.CurrentInhabitant != null && tile.CurrentInhabitant.isAttackableBy(characterInAction))
                 tile.CurrentInhabitant.TakeDamage(PowershotAA.damage);
@@ -91,25 +91,25 @@ public class PowershotAAAction : MonoBehaviour, IAction
         characterInAction = null;
     }
 
-    private List<GameObject> CreateDestinations(CharacterMB character)
+    private List<GameObject> CreateDestinations(Character character)
     {
-        TileMB characterTile = BoardNew.GetTileByCharacter(character);
+        Tile characterTile = Board.GetTileByCharacter(character);
 
         List<GameObject> targetList = new();
 
-        for (int i = 0; i < BoardNew.Columns; i++)
+        for (int i = 0; i < Board.Columns; i++)
         {
             if (i != characterTile.Column)
             {
-                targetList.Add(ActionUtils.InstantiateActionPosition(BoardNew.GetTileByCoordinates(characterTile.Row, i).gameObject.transform.position, attackCirclePrefab));
+                targetList.Add(ActionUtils.InstantiateActionPosition(Board.GetTileByCoordinates(characterTile.Row, i).gameObject.transform.position, attackCirclePrefab));
             }
         }
 
-        for (int i = 0; i < BoardNew.Rows; i++)
+        for (int i = 0; i < Board.Rows; i++)
         {
             if (i != characterTile.Row)
             {
-                targetList.Add(ActionUtils.InstantiateActionPosition(BoardNew.GetTileByCoordinates(i, characterTile.Column).gameObject.transform.position, attackCirclePrefab));
+                targetList.Add(ActionUtils.InstantiateActionPosition(Board.GetTileByCoordinates(i, characterTile.Column).gameObject.transform.position, attackCirclePrefab));
             }
         }
 

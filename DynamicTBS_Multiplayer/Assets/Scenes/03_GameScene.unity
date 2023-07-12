@@ -1014,6 +1014,7 @@ GameObject:
   - component: {fileID: 99576327}
   - component: {fileID: 99576326}
   - component: {fileID: 99576325}
+  - component: {fileID: 99576328}
   m_Layer: 5
   m_Name: MechanicChar_BlueButton
   m_TagString: Untagged
@@ -1086,9 +1087,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1840157253}
-        m_TargetAssemblyTypeName: DraftManager, Assembly-CSharp
-        m_MethodName: CreateCharacter
+      - m_Target: {fileID: 99576328}
+        m_TargetAssemblyTypeName: DraftButtonHandler, Assembly-CSharp
+        m_MethodName: DraftCharacter
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1136,6 +1137,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 99576323}
   m_CullTransparentMesh: 1
+--- !u!114 &99576328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 99576323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da4f07fd705114584bae51275f2c6111, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterType: 2
+  side: 2
 --- !u!1 &111991153
 GameObject:
   m_ObjectHideFlags: 0
@@ -2253,6 +2268,7 @@ GameObject:
   - component: {fileID: 236548870}
   - component: {fileID: 236548869}
   - component: {fileID: 236548868}
+  - component: {fileID: 236548871}
   m_Layer: 5
   m_Name: ShooterChar_PinkButton
   m_TagString: Untagged
@@ -2325,9 +2341,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1840157253}
-        m_TargetAssemblyTypeName: DraftManager, Assembly-CSharp
-        m_MethodName: CreateCharacter
+      - m_Target: {fileID: 236548871}
+        m_TargetAssemblyTypeName: DraftButtonHandler, Assembly-CSharp
+        m_MethodName: DraftCharacter
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2375,6 +2391,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 236548866}
   m_CullTransparentMesh: 1
+--- !u!114 &236548871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 236548866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da4f07fd705114584bae51275f2c6111, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterType: 5
+  side: 1
 --- !u!1 &239607343
 GameObject:
   m_ObjectHideFlags: 0
@@ -2522,6 +2552,7 @@ GameObject:
   - component: {fileID: 251157748}
   - component: {fileID: 251157747}
   - component: {fileID: 251157746}
+  - component: {fileID: 251157749}
   m_Layer: 5
   m_Name: ShooterChar_BlueButton
   m_TagString: Untagged
@@ -2594,9 +2625,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1840157253}
-        m_TargetAssemblyTypeName: DraftManager, Assembly-CSharp
-        m_MethodName: CreateCharacter
+      - m_Target: {fileID: 251157749}
+        m_TargetAssemblyTypeName: DraftButtonHandler, Assembly-CSharp
+        m_MethodName: DraftCharacter
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2644,6 +2675,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 251157744}
   m_CullTransparentMesh: 1
+--- !u!114 &251157749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 251157744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da4f07fd705114584bae51275f2c6111, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterType: 5
+  side: 2
 --- !u!1 &262854008
 GameObject:
   m_ObjectHideFlags: 0
@@ -4493,6 +4538,7 @@ GameObject:
   - component: {fileID: 524468245}
   - component: {fileID: 524468244}
   - component: {fileID: 524468243}
+  - component: {fileID: 524468246}
   m_Layer: 5
   m_Name: MedicChar_BlueButton
   m_TagString: Untagged
@@ -4565,9 +4611,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1840157253}
-        m_TargetAssemblyTypeName: DraftManager, Assembly-CSharp
-        m_MethodName: CreateCharacter
+      - m_Target: {fileID: 524468246}
+        m_TargetAssemblyTypeName: DraftButtonHandler, Assembly-CSharp
+        m_MethodName: DraftCharacter
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4615,6 +4661,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 524468241}
   m_CullTransparentMesh: 1
+--- !u!114 &524468246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 524468241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da4f07fd705114584bae51275f2c6111, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterType: 3
+  side: 2
 --- !u!1 &534569814
 GameObject:
   m_ObjectHideFlags: 0
@@ -6416,6 +6476,16 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 769352483}
   m_CullTransparentMesh: 1
+--- !u!1 &790196707 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5381128982590176793, guid: 052a63fa0b4120b4f8d66f3bf4984390, type: 3}
+  m_PrefabInstance: {fileID: 1129471931}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &790196708 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2186319793477954898, guid: 052a63fa0b4120b4f8d66f3bf4984390, type: 3}
+  m_PrefabInstance: {fileID: 1129471931}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &804524250
 GameObject:
   m_ObjectHideFlags: 0
@@ -7461,6 +7531,7 @@ GameObject:
   - component: {fileID: 1012994596}
   - component: {fileID: 1012994595}
   - component: {fileID: 1012994594}
+  - component: {fileID: 1012994597}
   m_Layer: 5
   m_Name: MechanicChar_PinkButton
   m_TagString: Untagged
@@ -7533,9 +7604,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1840157253}
-        m_TargetAssemblyTypeName: DraftManager, Assembly-CSharp
-        m_MethodName: CreateCharacter
+      - m_Target: {fileID: 1012994597}
+        m_TargetAssemblyTypeName: DraftButtonHandler, Assembly-CSharp
+        m_MethodName: DraftCharacter
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7583,6 +7654,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1012994592}
   m_CullTransparentMesh: 1
+--- !u!114 &1012994597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1012994592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da4f07fd705114584bae51275f2c6111, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterType: 2
+  side: 1
 --- !u!1 &1014266377
 GameObject:
   m_ObjectHideFlags: 0
@@ -8826,6 +8911,14 @@ PrefabInstance:
       propertyPath: column
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 5620567355599171183, guid: 052a63fa0b4120b4f8d66f3bf4984390, type: 3}
+      propertyPath: masterStart_blue
+      value: 
+      objectReference: {fileID: 790196708}
+    - target: {fileID: 5620567355599171183, guid: 052a63fa0b4120b4f8d66f3bf4984390, type: 3}
+      propertyPath: masterStart_pink
+      value: 
+      objectReference: {fileID: 790196707}
     - target: {fileID: 5702275334037472808, guid: 052a63fa0b4120b4f8d66f3bf4984390, type: 3}
       propertyPath: row
       value: 1
@@ -9655,6 +9748,7 @@ GameObject:
   - component: {fileID: 1248732912}
   - component: {fileID: 1248732911}
   - component: {fileID: 1248732910}
+  - component: {fileID: 1248732913}
   m_Layer: 5
   m_Name: MedicChar_PinkButton
   m_TagString: Untagged
@@ -9727,9 +9821,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1840157253}
-        m_TargetAssemblyTypeName: DraftManager, Assembly-CSharp
-        m_MethodName: CreateCharacter
+      - m_Target: {fileID: 1248732913}
+        m_TargetAssemblyTypeName: DraftButtonHandler, Assembly-CSharp
+        m_MethodName: DraftCharacter
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9777,6 +9871,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1248732908}
   m_CullTransparentMesh: 1
+--- !u!114 &1248732913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1248732908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da4f07fd705114584bae51275f2c6111, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterType: 3
+  side: 1
 --- !u!1 &1265367717
 GameObject:
   m_ObjectHideFlags: 0
@@ -11505,6 +11613,7 @@ GameObject:
   - component: {fileID: 1583022816}
   - component: {fileID: 1583022815}
   - component: {fileID: 1583022814}
+  - component: {fileID: 1583022817}
   m_Layer: 5
   m_Name: TankChar_PinkButton
   m_TagString: Untagged
@@ -11577,9 +11686,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1840157253}
-        m_TargetAssemblyTypeName: DraftManager, Assembly-CSharp
-        m_MethodName: CreateCharacter
+      - m_Target: {fileID: 1583022817}
+        m_TargetAssemblyTypeName: DraftButtonHandler, Assembly-CSharp
+        m_MethodName: DraftCharacter
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11627,6 +11736,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1583022812}
   m_CullTransparentMesh: 1
+--- !u!114 &1583022817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1583022812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da4f07fd705114584bae51275f2c6111, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterType: 6
+  side: 1
 --- !u!1 &1598309570
 GameObject:
   m_ObjectHideFlags: 0
@@ -12091,7 +12214,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1637328597}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1637328599}
+        m_TargetAssemblyTypeName: DraftButtonHandler, Assembly-CSharp
+        m_MethodName: DraftCharacter
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1637328597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13556,8 +13691,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   master_blue: {fileID: 2550273066123922897, guid: 86a170897724b70448c5a4730501b7e8, type: 3}
   master_pink: {fileID: 9184072761978377047, guid: a06de651e1d190d41b123a7818033737, type: 3}
+  mechanic_blue: {fileID: 2480155659641147852, guid: afc0f4d0a40ab6c40a8ba30f40397410, type: 3}
+  mechanic_pink: {fileID: 6678963199176301642, guid: e009b9881c78aa54397413132f00b9fc, type: 3}
+  medic_blue: {fileID: 8419942489251312343, guid: 113fa7a9852d91e419116eb93fba7320, type: 3}
+  medic_pink: {fileID: 1817118630238348747, guid: 01ad2a1121185df4f92b5352e45596f1, type: 3}
   runner_blue: {fileID: 4812845494385860101, guid: bcb10637a8697344fbb30a1a65312fd3, type: 3}
   runner_pink: {fileID: 1391693925305464559, guid: 9b75561573efb7248b5297c44c7d7671, type: 3}
+  shooter_blue: {fileID: 2386654771802019897, guid: 1eb19f8ff40d1d74d82998053ff41d92, type: 3}
+  shooter_pink: {fileID: 8402350255004926577, guid: e21545fe1d5eb5d49a60da9fdec82c2d, type: 3}
+  tank_blue: {fileID: 5188852879467059313, guid: 7e617b94bfd1fd741aa90f0b66570127, type: 3}
+  tank_pink: {fileID: 6518315123431092423, guid: 2cda4fafe1111304da2803d0485ce247, type: 3}
 --- !u!1 &1866489495 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 790111220651243363, guid: 052a63fa0b4120b4f8d66f3bf4984390, type: 3}
@@ -13625,6 +13768,12 @@ MonoBehaviour:
       side: 2
     - tile: {fileID: 1129471934}
       tileType: 4
+      side: 2
+    - tile: {fileID: 1929907780}
+      tileType: 1
+      side: 2
+    - tile: {fileID: 1929907779}
+      tileType: 1
       side: 2
 --- !u!1 &1873924215
 GameObject:
@@ -14027,6 +14176,16 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1924648209}
   m_CullTransparentMesh: 1
+--- !u!1 &1929907779 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4429407631550960346, guid: 052a63fa0b4120b4f8d66f3bf4984390, type: 3}
+  m_PrefabInstance: {fileID: 1129471931}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1929907780 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5041178691772915788, guid: 052a63fa0b4120b4f8d66f3bf4984390, type: 3}
+  m_PrefabInstance: {fileID: 1129471931}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1957609758
 GameObject:
   m_ObjectHideFlags: 0

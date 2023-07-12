@@ -17,7 +17,7 @@ public class BlockAA : MonoBehaviour, IActiveAbility
 
     private BlockAAAction blockAAAction;
 
-    private CharacterMB character;
+    private Character character;
     private int currentBlockCount = 0;
 
     private bool firstExecution = true;
@@ -28,7 +28,7 @@ public class BlockAA : MonoBehaviour, IActiveAbility
         pattern = aaPattern;
         blockingRounds = blockDurationInRounds;
 
-        this.character = gameObject.GetComponent<CharacterMB>();
+        this.character = gameObject.GetComponent<Character>();
         blockAAAction = GameObject.Find("ActionRegistry").GetComponent<BlockAAAction>();
 
         var defaultIsAttackableBy = character.isAttackableBy;
@@ -104,16 +104,16 @@ public class BlockAA : MonoBehaviour, IActiveAbility
 
     private void ChangeIsAttackableByOfOtherCharacters()
     {
-        foreach (CharacterMB c in CharacterManager.GetAllLivingCharacters())
+        foreach (Character c in CharacterManager.GetAllLivingCharacters())
         {
             var cDefaultIsAttackableBy = c.isAttackableBy;
             c.isAttackableBy = (attacker) =>
                 {
                     if (currentBlockCount > 0 && attacker != character)
                     {
-                        TileMB attackerTile = BoardNew.GetTileByCharacter(attacker);
-                        TileMB cTile = BoardNew.GetTileByCharacter(c);
-                        TileMB characterTile = BoardNew.GetTileByCharacter(character);
+                        Tile attackerTile = Board.GetTileByCharacter(attacker);
+                        Tile cTile = Board.GetTileByCharacter(c);
+                        Tile characterTile = Board.GetTileByCharacter(character);
                         if (attackerTile.Row == cTile.Row && cTile.Row == characterTile.Row)
                         {
                             if (attackerTile.Column < characterTile.Column && characterTile.Column < cTile.Column)

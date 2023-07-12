@@ -7,11 +7,11 @@ public class ExplodePA : MonoBehaviour, IPassiveAbility
     [SerializeField] private PatternType explodePatternType; // PatternType.Star
     [SerializeField] private int explodeDamage; // 1
 
-    private CharacterMB owner;
+    private Character owner;
 
     private void Awake()
     {
-        owner = gameObject.GetComponent<CharacterMB>();
+        owner = gameObject.GetComponent<Character>();
     }
 
     public void Apply()
@@ -20,13 +20,13 @@ public class ExplodePA : MonoBehaviour, IPassiveAbility
 
     private void Explode(Vector3 lastPosition)
     {
-        TileMB ownerLastTile = BoardNew.GetTileByPosition(lastPosition);
-        foreach (CharacterMB character in CharacterManager.GetAllLivingCharacters())
+        Tile ownerLastTile = Board.GetTileByPosition(lastPosition);
+        foreach (Character character in CharacterManager.GetAllLivingCharacters())
         {
             if (character != null && character.gameObject != null)
             {
-                TileMB neighborTile = BoardNew.GetTileByCharacter(character);
-                if (BoardNew.Neighbors(ownerLastTile, neighborTile, explodePatternType))
+                Tile neighborTile = Board.GetTileByCharacter(character);
+                if (Board.Neighbors(ownerLastTile, neighborTile, explodePatternType))
                 {
                     character.TakeDamage(explodeDamage);
                 }

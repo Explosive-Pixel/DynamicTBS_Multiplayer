@@ -11,8 +11,8 @@ public class JumpAAAction : MonoBehaviour, IAction
     private List<GameObject> jumpTargets = new();
     public List<GameObject> ActionDestinations { get { return jumpTargets; } }
 
-    private CharacterMB characterInAction = null;
-    public CharacterMB CharacterInAction { get { return characterInAction; } }
+    private Character characterInAction = null;
+    public Character CharacterInAction { get { return characterInAction; } }
 
     private List<GameObject> patternTargets = new();
 
@@ -21,7 +21,7 @@ public class JumpAAAction : MonoBehaviour, IAction
         GameEvents.OnGamePhaseStart += Register;
     }
 
-    public void ShowActionPattern(CharacterMB character)
+    public void ShowActionPattern(Character character)
     {
         List<Vector3> patternPositions = FindMovePositions(character, true);
 
@@ -36,7 +36,7 @@ public class JumpAAAction : MonoBehaviour, IAction
         ActionUtils.Clear(patternTargets);
     }
 
-    public int CountActionDestinations(CharacterMB character)
+    public int CountActionDestinations(Character character)
     {
         List<Vector3> movePositions = FindMovePositions(character);
 
@@ -48,7 +48,7 @@ public class JumpAAAction : MonoBehaviour, IAction
         return 0;
     }
 
-    public void CreateActionDestinations(CharacterMB character)
+    public void CreateActionDestinations(Character character)
     {
         List<Vector3> movePositions = FindMovePositions(character);
 
@@ -61,7 +61,7 @@ public class JumpAAAction : MonoBehaviour, IAction
 
     public void ExecuteAction(GameObject actionDestination)
     {
-        TileMB tile = BoardNew.GetTileByPosition(actionDestination.transform.position);
+        Tile tile = Board.GetTileByPosition(actionDestination.transform.position);
         if (tile != null)
         {
             MoveAction.MoveCharacter(characterInAction, tile);
@@ -77,11 +77,11 @@ public class JumpAAAction : MonoBehaviour, IAction
         ActionRegistry.Remove(this);
     }
 
-    private List<Vector3> FindMovePositions(CharacterMB character, bool pattern = false)
+    private List<Vector3> FindMovePositions(Character character, bool pattern = false)
     {
-        TileMB characterTile = BoardNew.GetTileByCharacter(character);
+        Tile characterTile = Board.GetTileByCharacter(character);
 
-        List<TileMB> moveTiles = BoardNew.GetTilesOfDistance(characterTile, JumpAA.movePattern, JumpAA.distance);
+        List<Tile> moveTiles = Board.GetTilesOfDistance(characterTile, JumpAA.movePattern, JumpAA.distance);
 
         List<Vector3> movePositions = moveTiles
             .FindAll(tile => tile.IsAccessible() || pattern)
