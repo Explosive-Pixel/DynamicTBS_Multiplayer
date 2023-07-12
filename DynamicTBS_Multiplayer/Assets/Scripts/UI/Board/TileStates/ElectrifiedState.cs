@@ -7,12 +7,12 @@ public class ElectrifiedState : State
     protected override int Duration { get { return 2; } }
     private static readonly string prefabPath = "EffectPrefabs/ElectrifyPrefab";
 
-    private Tile tile;
-    private Character stunnedInhabitant;
+    private TileMB tile;
+    private CharacterMB stunnedInhabitant;
 
     public ElectrifiedState(GameObject parent) : base(parent)
     {
-        tile = Board.GetTileByPosition(parent.transform.position);
+        tile = BoardNew.GetTileByPosition(parent.transform.position);
 
         StunInhabitant();
         GameplayEvents.OnFinishAction += StunInhabitant;
@@ -25,7 +25,7 @@ public class ElectrifiedState : State
 
     private void StunInhabitant(ActionMetadata actionMetadata)
     {
-        if(tile.IsOccupied() && tile.GetCurrentInhabitant() != stunnedInhabitant)
+        if (tile.IsOccupied() && tile.CurrentInhabitant != stunnedInhabitant)
         {
             StunInhabitant();
         }
@@ -35,9 +35,9 @@ public class ElectrifiedState : State
     {
         if (tile.IsOccupied())
         {
-            stunnedInhabitant = tile.GetCurrentInhabitant();
+            stunnedInhabitant = tile.CurrentInhabitant;
             stunnedInhabitant.SetState(CharacterStateType.STUNNED);
-            currentCount = 2*StunnedState.StunDuration + 1;
+            currentCount = 2 * StunnedState.StunDuration + 1;
         }
     }
 

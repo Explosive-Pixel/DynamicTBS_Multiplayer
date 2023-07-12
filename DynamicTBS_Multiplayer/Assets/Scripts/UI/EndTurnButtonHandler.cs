@@ -40,7 +40,7 @@ public class EndTurnButtonHandler : MonoBehaviour
     {
         if (GameManager.gameType == GameType.ONLINE)
         {
-            ChangeButtonVisibility(PlayerManager.GetCurrentPlayer().GetPlayerType() == OnlineClient.Instance.Side);
+            ChangeButtonVisibility(PlayerManager.CurrentPlayer == OnlineClient.Instance.Side);
         }
     }
 

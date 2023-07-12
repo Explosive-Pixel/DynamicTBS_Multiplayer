@@ -2,8 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CaptainCharMB : CharacterMB
+public class MasterCharMB : CharacterMB
 {
+
+    private void Start()
+    {
+        characterType = CharacterType.RunnerChar;
+    }
+
     public override void Die()
     {
         base.Die();

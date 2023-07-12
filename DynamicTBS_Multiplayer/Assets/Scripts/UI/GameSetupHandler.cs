@@ -46,7 +46,7 @@ public class GameSetupHandler : MonoBehaviour
     {
         AudioEvents.PressingButton();
 
-        Board.selectedMap = mapType;
+        BoardNew.selectedMapType = mapType;
         mapSetup.GetComponentsInChildren<Button>().ToList().ForEach(button => button.interactable = true);
         button.interactable = false;
         mapSelected = true;

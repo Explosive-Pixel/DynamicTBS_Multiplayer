@@ -7,7 +7,7 @@ public class UIClickHandler : MonoBehaviour
 {
     private Camera currentCamera;
 
-    private Character currentCharacter = null;
+    private CharacterMB currentCharacter = null;
     private bool activeAbilityExecutionStarted = false;
 
     private void Awake()
@@ -45,10 +45,11 @@ public class UIClickHandler : MonoBehaviour
 
         // If not, check whether click was onto a character
         // If yes, create action destinations for this character
-        if (!actionExecuted) {
-            List<GameObject> charactersOfPlayer = CharacterHandler.GetAllLivingCharacters()
-                .FindAll(character => character.isClickable && character.GetSide() == PlayerManager.GetCurrentPlayer())
-                .ConvertAll(character => character.GetCharacterGameObject());
+        if (!actionExecuted)
+        {
+            List<GameObject> charactersOfPlayer = CharacterManager.GetAllLivingCharactersOfSide(PlayerManager.CurrentPlayer)
+                .FindAll(character => character.IsClickable)
+                .ConvertAll(character => character.gameObject);
 
             GameObject characterGameObject = UIUtils.FindGameObjectByRay(charactersOfPlayer, position);
 
@@ -63,11 +64,12 @@ public class UIClickHandler : MonoBehaviour
                 return;
             }
 
-            Character character = CharacterHandler.GetCharacterByGameObject(characterGameObject);
+            CharacterMB character = characterGameObject.GetComponent<CharacterMB>();
             GameplayEvents.ChangeCharacterSelection(character);
             ActionUtils.InstantiateAllActionPositions(character);
-            
-        } else
+
+        }
+        else
         {
             UnselectCharacter();
         }
@@ -75,7 +77,7 @@ public class UIClickHandler : MonoBehaviour
 
     private void HandleKeyInputsAnyClient()
     {
-        
+
     }
 
     private void HandleKeyInputsAnyPlayer()
@@ -83,7 +85,7 @@ public class UIClickHandler : MonoBehaviour
         // Pause Game
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            GameplayEvents.UIActionExecuted(PlayerManager.GetCurrentlyExecutingPlayer(), GameplayManager.gameIsPaused ? UIAction.UNPAUSE_GAME : UIAction.PAUSE_GAME);
+            GameplayEvents.UIActionExecuted(PlayerManager.ExecutingPlayer, GameplayManager.gameIsPaused ? UIAction.UNPAUSE_GAME : UIAction.PAUSE_GAME);
         }
     }
 
@@ -108,13 +110,15 @@ public class UIClickHandler : MonoBehaviour
             if (currentCharacter != null && !currentCharacter.IsActiveAbilityOnCooldown())
             {
                 ActionUtils.ResetActionDestinations();
-                if(activeAbilityExecutionStarted)
+                if (activeAbilityExecutionStarted)
                 {
-                    Character character = currentCharacter;
+                    CharacterMB character = currentCharacter;
                     UnselectCharacter();
                     SelectCharacter(character);
-                } else
+                }
+                else
                 {
+                    // TODO
                     GameObject activeAbilityButton = GameObject.Find("ActiveAbilityButton");
                     if (activeAbilityButton != null)
                     {
@@ -139,10 +143,10 @@ public class UIClickHandler : MonoBehaviour
         // Show complete active ability pattern, not just legal moves.
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            if(currentCharacter != null)
+            if (currentCharacter != null)
             {
                 ActionUtils.ResetActionDestinations();
-                currentCharacter.GetActiveAbility().ShowActionPattern();
+                currentCharacter.ActiveAbility.ShowActionPattern();
             }
         }
 
@@ -166,20 +170,20 @@ public class UIClickHandler : MonoBehaviour
         }
     }
 
-    private void SelectCharacter(Character character)
+    private void SelectCharacter(CharacterMB character)
     {
         if (character != null)
         {
-            HandleClick(UIUtils.DefaultRay(character.GetCharacterGameObject().transform.position));
+            HandleClick(UIUtils.DefaultRay(character.gameObject.transform.position));
         }
     }
 
-    private void SetActiveAbilityStarted(Character character)
+    private void SetActiveAbilityStarted(CharacterMB character)
     {
         activeAbilityExecutionStarted = true;
     }
 
-    private void ChangeCharacterSelection(Character character)
+    private void ChangeCharacterSelection(CharacterMB character)
     {
         ActionUtils.ResetActionDestinations();
         activeAbilityExecutionStarted = false;

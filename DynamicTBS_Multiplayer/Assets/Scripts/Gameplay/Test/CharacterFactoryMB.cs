@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,5 +29,11 @@ public class CharacterFactoryMB : MonoBehaviour
             return characterGO.GetComponent<CharacterMB>();
 
         return null;
+    }
+
+    public static CharacterType GetRandomCharacterType()
+    {
+        int characterCount = Enum.GetNames(typeof(CharacterType)).Length;
+        return (CharacterType)RandomNumberGenerator.GetInt32(2, characterCount + 1);
     }
 }

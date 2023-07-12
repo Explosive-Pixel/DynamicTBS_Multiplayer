@@ -8,7 +8,7 @@ public class MovesDisplay : MonoBehaviour
 {
     [SerializeField] private GameObject movesDisplayObject;
     [SerializeField] private Text displayText;
-    private List<string> movesList = new List<string>();
+    private List<string> movesList = new();
 
     private int actionCount = 0;
 
@@ -24,7 +24,7 @@ public class MovesDisplay : MonoBehaviour
 
         if (actionMetadata.ExecutedActionType == ActionType.Skip)
         {
-            newLine += TranslatePlayerSide(actionMetadata.ExecutingPlayer.GetPlayerType()) + "ended their turn";
+            newLine += TranslatePlayerSide(actionMetadata.ExecutingPlayer) + "ended their turn";
         }
         else
         {
@@ -99,16 +99,16 @@ public class MovesDisplay : MonoBehaviour
 
         if (position != null)
         {
-            Tile tile = Board.GetTileByPosition(position.GetValueOrDefault());
+            TileMB tile = BoardNew.GetTileByPosition(position.GetValueOrDefault());
             if (tile != null)
             {
-                text = tile.GetTileName();
+                text = tile.Name;
             }
         }
         return text;
     }
 
-    private string TranslateActionType(ActionType actiontype, Character character)
+    private string TranslateActionType(ActionType actiontype, CharacterMB character)
     {
         string text = "";
 
@@ -118,42 +118,29 @@ public class MovesDisplay : MonoBehaviour
             text = " attacked ";
         if (actiontype == ActionType.ActiveAbility)
         {
-            if (character.GetCharacterType() == CharacterType.MasterChar)
+            if (character.CharacterType == CharacterType.MasterChar)
                 text = " used Take Control on ";
-            if (character.GetCharacterType() == CharacterType.TankChar)
+            if (character.CharacterType == CharacterType.TankChar)
                 text = " used Block on ";
-            if (character.GetCharacterType() == CharacterType.ShooterChar)
+            if (character.CharacterType == CharacterType.ShooterChar)
                 text = " used Powershot on ";
-            if (character.GetCharacterType() == CharacterType.RunnerChar)
+            if (character.CharacterType == CharacterType.RunnerChar)
                 text = " used Jump on ";
-            if (character.GetCharacterType() == CharacterType.MechanicChar)
+            if (character.CharacterType == CharacterType.MechanicChar)
                 text = " used Change Floor on ";
-            if (character.GetCharacterType() == CharacterType.MedicChar)
+            if (character.CharacterType == CharacterType.MedicChar)
                 text = " used Heal on ";
         }
         return text;
     }
 
-    private string TranslateCharacterName(Character character)
+    private string TranslateCharacterName(CharacterMB character)
     {
-        string text = "";
-
         if (character != null)
         {
-            if (character.GetCharacterType() == CharacterType.MasterChar)
-                text = "Captain ";
-            if (character.GetCharacterType() == CharacterType.TankChar)
-                text = "Tank ";
-            if (character.GetCharacterType() == CharacterType.ShooterChar)
-                text = "Shooter ";
-            if (character.GetCharacterType() == CharacterType.RunnerChar)
-                text = "Runner ";
-            if (character.GetCharacterType() == CharacterType.MechanicChar)
-                text = "Mechanic ";
-            if (character.GetCharacterType() == CharacterType.MedicChar)
-                text = "Doc ";
+            return character.PrettyName + " ";
         }
-        return text;
+        return "";
     }
 
     private string TranslatePlayerSide(PlayerType playerType)

@@ -87,7 +87,7 @@ public class AttackAction : MonoBehaviour, IAction
     private List<Vector3> FindTargetPositions(CharacterMB character)
     {
         int range = character.AttackRange;
-        TileMB tile = BoardNew.GetTileByPosition(character.gameObject.transform.position);
+        TileMB tile = BoardNew.GetTileByCharacter(character);
 
         PlayerType otherSide = PlayerManager.GetOtherSide(character.Side);
 

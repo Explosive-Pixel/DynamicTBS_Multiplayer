@@ -47,10 +47,7 @@ public class CurrentPlayerUIHandler : MonoBehaviour
     {
         GameplayEvents.OnCurrentPlayerChanged += UpdateMessages;
 
-        if (PlayerManager.GetCurrentPlayer() != null)
-        {
-            UpdateMessages(PlayerManager.GetCurrentPlayer().GetPlayerType());
-        }
+        UpdateMessages(PlayerManager.CurrentPlayer);
     }
 
     private void UpdateMessages(PlayerType currentPlayer)
@@ -90,7 +87,7 @@ public class CurrentPlayerUIHandler : MonoBehaviour
         }
         draftMessageText.text += ".";
 
-        draftGameSetupText.text = "Map: " + Board.selectedMap.Description() + "\nTime speed: " + Timer.TimerSetupType.Description();
+        draftGameSetupText.text = "Map: " + BoardNew.selectedMapType.Description() + "\nTime speed: " + Timer.TimerSetupType.Description();
     }
 
     private void DisplayPlacementMessages(PlayerType currentPlayer)

@@ -6,7 +6,6 @@ using UnityEngine.TextCore.Text;
 public class CharacterMB : MonoBehaviour
 {
     [SerializeField] private string prettyName;
-    [SerializeField] private CharacterType characterType;
     [SerializeField] private int maxHitPoints;
     [SerializeField] private int moveSpeed;
     [SerializeField] private int attackRange;
@@ -15,6 +14,8 @@ public class CharacterMB : MonoBehaviour
     [SerializeField] private Animator hitPointAnimator;
     [SerializeField] private Animator cooldownAnimator;
     [SerializeField] private GameObject activeHighlight;
+
+    protected CharacterType characterType;
 
     private int attackDamage = AttackAction.AttackDamage;
     private PatternType movePattern = MoveAction.MovePattern;
@@ -40,20 +41,30 @@ public class CharacterMB : MonoBehaviour
     public delegate bool IsDisabled();
     public IsDisabled isDisabled = () => false;
 
+    public string PrettyName { get { return prettyName; } }
     public CharacterType CharacterType { get { return characterType; } }
     public PlayerType Side { get { return side; } set { side = value; } }
     public int MoveSpeed { get { return moveSpeed; } set { moveSpeed = value; } }
     public int AttackRange { get { return attackRange; } }
     public int AttackDamage { get { return attackDamage; } set { attackDamage = value; } }
     public PatternType MovePattern { get { return movePattern; } set { movePattern = value; } }
-    public IActiveAbility ActiveAbility { get { return gameObject.GetComponent<IActiveAbility>(); } }
-    public IPassiveAbility PassiveAbility { get { return gameObject.GetComponent<IPassiveAbility>(); } }
-    public int HitPoints { get { return hitPoints; } set { this.hitPoints = value; UpdateHitPointAnimator(); } }
-    public int ActiveAbilityCooldown { get { return activeAbilityCooldown; } set { this.activeAbilityCooldown = value; UpdateCooldownAnimator(); } }
+    public IActiveAbility ActiveAbility;
+    public IPassiveAbility PassiveAbility;
+    public int HitPoints { get { return hitPoints; } set { hitPoints = value; UpdateHitPointAnimator(); } }
+    public int ActiveAbilityCooldown { get { return activeAbilityCooldown; } set { activeAbilityCooldown = value; UpdateCooldownAnimator(); } }
     public bool IsClickable { get { return isClickable; } set { isClickable = value; } }
+
+    public static string Name;
 
     private void Awake()
     {
+        Name = PrettyName;
+        HitPoints = maxHitPoints;
+        ActiveAbilityCooldown = 0;
+
+        ActiveAbility = gameObject.GetComponent<IActiveAbility>();
+        PassiveAbility = gameObject.GetComponent<IPassiveAbility>();
+
         SubscribeEvents();
     }
 
@@ -62,13 +73,13 @@ public class CharacterMB : MonoBehaviour
         int actualDamage = netDamage(damage);
         if (isDamageable(damage) && actualDamage > 0)
         {
-            this.HitPoints -= actualDamage;
+            HitPoints -= actualDamage;
 
             CharacterEvents.CharacterTakesDamage(this, actualDamage);
 
-            if (this.HitPoints <= 0)
+            if (HitPoints <= 0)
             {
-                this.Die();
+                Die();
             }
         }
         CharacterEvents.CharacterReceivesDamage(this, damage);
@@ -77,20 +88,20 @@ public class CharacterMB : MonoBehaviour
     public void Heal(int healPoints)
     {
         this.HitPoints += healPoints;
-        if (this.HitPoints > this.maxHitPoints)
+        if (HitPoints > maxHitPoints)
         {
-            this.HitPoints = this.maxHitPoints;
+            HitPoints = maxHitPoints;
         }
     }
 
     public bool HasFullHP()
     {
-        return this.HitPoints == this.maxHitPoints;
+        return HitPoints == maxHitPoints;
     }
 
     public void SetState(CharacterStateType stateType)
     {
-        this.state = CharacterStateFactory.Create(stateType, gameObject);
+        state = CharacterStateFactory.Create(stateType, gameObject);
     }
 
     private void ResetState()
@@ -118,6 +129,7 @@ public class CharacterMB : MonoBehaviour
 
     public bool CanPerformActiveAbility()
     {
+        Debug.Log("Active Ability: " + ActiveAbility);
         return !IsActiveAbilityOnCooldown() && ActiveAbility.CountActionDestinations() > 0;
     }
 
@@ -126,34 +138,60 @@ public class CharacterMB : MonoBehaviour
         return !IsStunned() && (ActionUtils.CountAllActionDestinations(this) > 0 || CanPerformActiveAbility());
     }
 
-    private void SetActiveAbilityOnCooldown(ActionMetadata actionMetadata)
+    public void SetActiveAbilityOnCooldown()
     {
-        //if (actionMetadata.ExecutedActionType == ActionType.ActiveAbility && actionMetadata.CharacterInAction == this)
-        //{
-        //    SetActiveAbilityOnCooldown();
-        //}
+        ActiveAbilityCooldown = ActiveAbility.Cooldown + 1;
+        UIUtils.UpdateAnimator(cooldownAnimator, ActiveAbilityCooldown - 1);
+        GameplayEvents.OnPlayerTurnEnded += ReduceActiveAbiliyCooldown;
     }
 
-    private void Highlight(bool highlight)
+    public void ReduceActiveAbilityCooldown()
     {
-        activeHighlight.SetActive(highlight);
+        if (ActiveAbilityCooldown > 0)
+        {
+            ActiveAbilityCooldown -= 1;
+            if (ActiveAbilityCooldown == 0)
+            {
+                GameplayEvents.OnPlayerTurnEnded -= ReduceActiveAbiliyCooldown;
+            }
+        }
+    }
+
+    private void SetActiveAbilityOnCooldown(ActionMetadata actionMetadata)
+    {
+        if (actionMetadata.ExecutedActionType == ActionType.ActiveAbility && actionMetadata.CharacterInAction == this)
+        {
+            SetActiveAbilityOnCooldown();
+        }
+    }
+
+    private void ReduceActiveAbiliyCooldown(PlayerType player)
+    {
+        if (Side.Equals(player))
+        {
+            ReduceActiveAbilityCooldown();
+        }
     }
 
     private void UpdateHitPointAnimator()
     {
-        UIUtils.UpdateAnimator(hitPointAnimator, this.HitPoints);
+        UIUtils.UpdateAnimator(hitPointAnimator, HitPoints);
     }
 
     private void UpdateCooldownAnimator()
     {
-        UIUtils.UpdateAnimator(cooldownAnimator, this.ActiveAbilityCooldown);
+        UIUtils.UpdateAnimator(cooldownAnimator, ActiveAbilityCooldown);
     }
 
     private void PrepareCharacter(GamePhase gamePhase)
     {
+        if (gamePhase != GamePhase.PLACEMENT && gamePhase != GamePhase.GAMEPLAY)
+            return;
+
+        isClickable = true;
+
         if (gamePhase == GamePhase.GAMEPLAY)
         {
-            isClickable = true;
             PassiveAbility.Apply();
         }
     }
@@ -163,20 +201,26 @@ public class CharacterMB : MonoBehaviour
         Highlight(character == this);
     }
 
+    private void Highlight(bool highlight)
+    {
+        activeHighlight.SetActive(highlight);
+    }
+
     #region EventsRegion
 
     private void SubscribeEvents()
     {
         GameEvents.OnGamePhaseStart += PrepareCharacter;
         GameplayEvents.OnFinishAction += SetActiveAbilityOnCooldown;
-        //GameplayEvents.OnCharacterSelectionChange += HighlightCharacter;
+        GameplayEvents.OnCharacterSelectionChange += HighlightCharacter;
     }
 
     private void UnsubscribeEvents()
     {
         GameEvents.OnGamePhaseStart -= PrepareCharacter;
         GameplayEvents.OnFinishAction -= SetActiveAbilityOnCooldown;
-        //GameplayEvents.OnCharacterSelectionChange -= HighlightCharacter;
+        GameplayEvents.OnCharacterSelectionChange -= HighlightCharacter;
+        GameplayEvents.OnPlayerTurnEnded -= ReduceActiveAbiliyCooldown;
     }
 
     #endregion

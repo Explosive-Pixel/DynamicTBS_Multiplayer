@@ -21,7 +21,7 @@ public class ActionsCounterHandler : MonoBehaviour
 
     private GameObject CurrentActionsCounter()
     {
-        if (PlayerManager.GetCurrentPlayer().GetPlayerType() == PlayerType.blue)
+        if (PlayerManager.CurrentPlayer == PlayerType.blue)
         {
             return blueActionsCounter;
         }

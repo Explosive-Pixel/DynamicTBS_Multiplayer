@@ -1,4 +1,4 @@
-using System;
+/*using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
@@ -39,4 +39,4 @@ public class CharacterFactory : MonoBehaviour
         int characterCount = Enum.GetNames(typeof(CharacterType)).Length;
         return (CharacterType)RandomNumberGenerator.GetInt32(2, characterCount + 1);
     }
-}
+}*/

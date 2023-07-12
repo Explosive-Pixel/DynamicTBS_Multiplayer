@@ -16,6 +16,7 @@ public class TileMB : MonoBehaviour
 
     public int Row { get { return row; } }
     public int Column { get { return column; } }
+    public string Name { get { return gameObject.name; } }
 
     private GameObject UnitStart(PlayerType side) { return side == PlayerType.blue ? unitStart_blue : unitStart_pink; }
     private GameObject CaptainStart(PlayerType side) { return side == PlayerType.blue ? captainStart_blue : captainStart_pink; }
@@ -35,7 +36,7 @@ public class TileMB : MonoBehaviour
     public void Init(TileType tileType, PlayerType side)
     {
         this.side = side;
-        this.state = null;
+        state = null;
 
         Transform(tileType);
         SubscribeEvents();
@@ -52,7 +53,7 @@ public class TileMB : MonoBehaviour
         CaptainStart(side).SetActive(tileType == TileType.MasterStartTile);
         CaptainStart(PlayerManager.GetOtherSide(side)).SetActive(false);
 
-        this.isChangeable = () => !IsGoal();
+        isChangeable = () => !IsGoal();
     }
 
     public bool IsElectrified()
@@ -62,7 +63,7 @@ public class TileMB : MonoBehaviour
 
     public void SetState(TileStateType stateType)
     {
-        this.state = TileStateFactory.Create(stateType, gameObject);
+        state = TileStateFactory.Create(stateType, gameObject);
     }
 
     private void ResetState()
@@ -108,12 +109,12 @@ public class TileMB : MonoBehaviour
 
     private void SubscribeEvents()
     {
-        //PlacementEvents.OnPlaceCharacter += TransformToFloorTile;
+        PlacementEvents.OnPlaceCharacter += TransformToFloorTile;
     }
 
     private void UnsubscribeEvents()
     {
-        //PlacementEvents.OnPlaceCharacter -= TransformToFloorTile;
+        PlacementEvents.OnPlaceCharacter -= TransformToFloorTile;
     }
 
     #endregion

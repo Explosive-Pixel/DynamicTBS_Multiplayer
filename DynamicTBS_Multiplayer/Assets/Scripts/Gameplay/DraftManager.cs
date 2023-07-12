@@ -64,13 +64,13 @@ public class DraftManager : MonoBehaviour
 
     public static void RandomDraft(PlayerType side)
     {
-        CharacterType randomCharacterType = CharacterFactory.GetRandomCharacterType();
+        CharacterType randomCharacterType = CharacterFactoryMB.GetRandomCharacterType();
         DraftCharacter(randomCharacterType, side);
     }
 
     public static int GetRemainingDraftCount(PlayerType currentPlayer)
     {
-        if (PlayerManager.GetCurrentPlayer().GetPlayerType() != currentPlayer)
+        if (PlayerManager.CurrentPlayer != currentPlayer)
         {
             return 0;
         }

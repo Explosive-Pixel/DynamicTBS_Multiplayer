@@ -14,13 +14,14 @@ public enum CharacterType
 
 static class CharacterTypeMethods
 {
+    // TODO
     public static string Name(this CharacterType characterType)
     {
         switch (characterType)
         {
             case CharacterType.MasterChar:
-                return MasterChar.name;
-            case CharacterType.MechanicChar:
+                return MasterCharMB.Name;
+            /*case CharacterType.MechanicChar:
                 return MechanicChar.name;
             case CharacterType.MedicChar:
                 return MedicChar.name;
@@ -29,7 +30,7 @@ static class CharacterTypeMethods
             case CharacterType.ShooterChar:
                 return ShooterChar.name;
             case CharacterType.TankChar:
-                return TankChar.name;
+                return TankChar.name;*/
             default:
                 return "";
         }

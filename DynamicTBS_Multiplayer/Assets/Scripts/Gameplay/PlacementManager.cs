@@ -39,7 +39,7 @@ public class PlacementManager : MonoBehaviour
     private void AdvancePlacementOrder(ActionMetadata actionMetadata)
     {
         PlacementEvents.CharacterPlaced(actionMetadata.CharacterInAction);
-        actionMetadata.CharacterInAction.isClickable = false;
+        actionMetadata.CharacterInAction.IsClickable = false;
 
         currentPlayerPlacementCount++;
 
@@ -57,7 +57,7 @@ public class PlacementManager : MonoBehaviour
         }
     }
 
-    public static void RandomPlacements(Player side)
+    public static void RandomPlacements(PlayerType side)
     {
         int i = GetRemainingPlacementCount(side);
         while (i-- > 0)
@@ -66,13 +66,13 @@ public class PlacementManager : MonoBehaviour
         }
     }
 
-    public static void RandomPlacement(Player side)
+    public static void RandomPlacement(PlayerType side)
     {
-        List<Character> charactersOfPlayer = CharacterHandler.GetAllLivingCharacters()
-                .FindAll(character => character.isClickable && character.GetSide() == side);
+        List<CharacterMB> charactersOfPlayer = CharacterManager.GetAllLivingCharactersOfSide(side)
+                .FindAll(character => character.IsClickable);
         if (charactersOfPlayer.Count > 0)
         {
-            Character randomCharacter = charactersOfPlayer[0];
+            CharacterMB randomCharacter = charactersOfPlayer[0];
             ActionUtils.InstantiateAllActionPositions(randomCharacter);
             List<GameObject> placementPositions = ActionRegistry.GetActions().ConvertAll(action => action.ActionDestinations).SelectMany(i => i).ToList();
             GameObject randomPosition = placementPositions[RandomNumberGenerator.GetInt32(0, placementPositions.Count)];
@@ -87,9 +87,9 @@ public class PlacementManager : MonoBehaviour
         AudioEvents.SpawningMasters();
     }
 
-    public static int GetRemainingPlacementCount(Player currentPlayer)
+    public static int GetRemainingPlacementCount(PlayerType currentPlayer)
     {
-        if (PlayerManager.GetCurrentPlayer() != currentPlayer)
+        if (PlayerManager.CurrentPlayer != currentPlayer)
         {
             return 0;
         }
@@ -105,7 +105,7 @@ public class PlacementManager : MonoBehaviour
         MoveAction.MoveCharacter(master, masterSpawnTile);
 
         DraftEvents.CharacterCreated(master);
-        //PlacementEvents.CharacterPlaced(master);
+        PlacementEvents.CharacterPlaced(master);
     }
 
     private void PlacementCompleted()

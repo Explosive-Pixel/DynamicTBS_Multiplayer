@@ -92,12 +92,14 @@ public class MoveAction : MonoBehaviour, IAction
         }
 
         TileMB currentTile = BoardNew.GetTileByCharacter(character);
+        Debug.Log("current Tile: " + currentTile);
 
         if (currentTile == null) return null;
 
-        List<Vector3> movePositions = new List<Vector3>();
+        List<Vector3> movePositions = new();
 
         int range = character.MoveSpeed;
+        Debug.Log("Range: " + range);
         Dictionary<int, Queue<TileMB>> tileQueueByDistance = new();
         int distance = 0;
         tileQueueByDistance[distance] = new Queue<TileMB>();
@@ -134,6 +136,8 @@ public class MoveAction : MonoBehaviour, IAction
                 distance++;
             }
         }
+
+        Debug.Log("Move Positions: " + movePositions);
 
         return movePositions;
     }

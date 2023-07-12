@@ -48,7 +48,7 @@ public class MsgUIAction : OnlineMessage
     {
         if (OnlineClient.Instance.ShouldReadMessage(playerId))
         {
-            GameplayEvents.UIActionExecuted(PlayerManager.GetPlayer(playerId), uiAction);
+            GameplayEvents.UIActionExecuted(playerId, uiAction);
         }
     }
 

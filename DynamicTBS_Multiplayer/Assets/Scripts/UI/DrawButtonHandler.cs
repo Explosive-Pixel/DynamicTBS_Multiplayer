@@ -35,24 +35,25 @@ public class DrawButtonHandler : MonoBehaviour
 
     private void FireUIActionExecutedEvent(UIAction uIAction)
     {
-        Player player = PlayerManager.GetCurrentlyExecutingPlayer();
+        PlayerType player = PlayerManager.ExecutingPlayer;
         GameplayEvents.UIActionExecuted(player, uIAction);
     }
 
-    private void OnDrawButtonClicked(Player player, UIAction uIAction)
+    private void OnDrawButtonClicked(PlayerType player, UIAction uIAction)
     {
-        if(uIAction == UIAction.OFFER_DRAW)
+        if (uIAction == UIAction.OFFER_DRAW)
         {
             offerDrawButton.interactable = false;
-            if (!(GameManager.gameType == GameType.ONLINE && OnlineClient.Instance.Side == player.GetPlayerType()))
+            if (!(GameManager.gameType == GameType.ONLINE && OnlineClient.Instance.Side == player))
             {
                 SetActive(answerDrawBox, true);
             }
         }
-        else if(uIAction == UIAction.ACCEPT_DRAW)
+        else if (uIAction == UIAction.ACCEPT_DRAW)
         {
             GameplayEvents.GameIsOver(null, GameOverCondition.DRAW_ACCEPTED);
-        } else if(uIAction == UIAction.DECLINE_DRAW)
+        }
+        else if (uIAction == UIAction.DECLINE_DRAW)
         {
             offerDrawButton.interactable = true;
             SetActive(answerDrawBox, false);
@@ -61,7 +62,7 @@ public class DrawButtonHandler : MonoBehaviour
 
     private void SetOfferDrawButtonActive(GamePhase gamePhase)
     {
-        if(gamePhase == GamePhase.GAMEPLAY)
+        if (gamePhase == GamePhase.GAMEPLAY)
             SetActive(offerDrawButton.gameObject, true);
     }
 

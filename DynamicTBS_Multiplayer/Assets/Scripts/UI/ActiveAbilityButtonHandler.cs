@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class ActiveAbilityButtonHandler : MonoBehaviour
 {
     [SerializeField] private Button activeAbilityButton;
-    private Character currentCharacter;
+    private CharacterMB currentCharacter;
 
     private void Awake()
     {
@@ -16,7 +16,7 @@ public class ActiveAbilityButtonHandler : MonoBehaviour
     {
         if (currentCharacter != null && currentCharacter.CanPerformActiveAbility())
         {
-            currentCharacter.GetActiveAbility().Execute();
+            currentCharacter.ActiveAbility.Execute();
             // Please remember to call this after every execution (in AAHandler classes): GameplayEvents.ActionFinished(actionMetadata);
             GameplayEvents.StartExecuteActiveAbility(currentCharacter);
 
@@ -24,7 +24,7 @@ public class ActiveAbilityButtonHandler : MonoBehaviour
         }
     }
 
-    private void ChangeButtonVisibility(Character character)
+    private void ChangeButtonVisibility(CharacterMB character)
     {
         currentCharacter = character;
 

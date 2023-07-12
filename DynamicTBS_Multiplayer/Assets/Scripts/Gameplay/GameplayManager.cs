@@ -28,7 +28,7 @@ public class GameplayManager : MonoBehaviour
         ActionRegistry.RemoveAll();
     }
 
-    private void ToggleGameIsPaused(Player player, UIAction uIAction)
+    private void ToggleGameIsPaused(PlayerType player, UIAction uIAction)
     {
         if (uIAction == UIAction.PAUSE_GAME || uIAction == UIAction.UNPAUSE_GAME)
         {
@@ -70,7 +70,7 @@ public class GameplayManager : MonoBehaviour
             }
 
             // Check if player can perform any further actions (move/attack/ActiveAbility)
-            CheckAvailableActions(actionMetadata.ExecutingPlayer.GetPlayerType());
+            CheckAvailableActions(actionMetadata.ExecutingPlayer);
         }
     }
 
@@ -116,10 +116,10 @@ public class GameplayManager : MonoBehaviour
         return false;
     }
 
-    private void OnPlayerTurnEnded(Player player)
+    private void OnPlayerTurnEnded(PlayerType player)
     {
         // Check if other player can perform any action (move/attack/ActiveAbility) -> if not, player wins
-        CheckAvailableActions(PlayerManager.GetOtherSide(player.GetPlayerType()));
+        CheckAvailableActions(PlayerManager.GetOtherSide(player));
     }
 
     private void AbortTurn()

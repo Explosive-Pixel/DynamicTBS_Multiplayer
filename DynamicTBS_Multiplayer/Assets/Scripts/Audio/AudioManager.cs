@@ -229,7 +229,7 @@ public class AudioManager : MonoBehaviour
     }
 
     #region GameplayAudio
-    private void TurnChangeAudio(Player player)
+    private void TurnChangeAudio(PlayerType player)
     {
         fxSource.PlayOneShot(turnChangeClip);
     }

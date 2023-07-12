@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System.ComponentModel;
 
 [Serializable]
 public class TileDefinition
@@ -19,6 +20,18 @@ public class Map
     public List<TileDefinition> layout;
 }
 
+public enum MapType
+{
+    [Description("Classic")]
+    EXPLOSIVE = 0,
+    [Description("Bones")]
+    BONES = 1,
+    [Description("Arrows")]
+    ARROWS = 2,
+    [Description("Labyrinth")]
+    LABYRINTH = 3
+}
+
 public class BoardNew : MonoBehaviour
 {
     public List<Map> maps = new();
@@ -29,15 +42,18 @@ public class BoardNew : MonoBehaviour
     //private List<TileMB> Tiles { get { return gameObject.GetComponentsInChildren<TileMB>().ToList(); } }
     //private List<GameObject> TileGameObjects { get { return Tiles.ConvertAll(tile => tile.gameObject); } }
 
-    private static readonly List<GameObject> tileGameObjects = new List<GameObject>();
+    private static readonly List<GameObject> tileGameObjects = new();
     public static List<GameObject> TileGameObjects { get { return tileGameObjects; } }
 
-    public static List<TileMB> Tiles { get { return tileGameObjects.ConvertAll(go => go.GetComponent<TileMB>()); } }
+    public static List<TileMB> Tiles = new();
     public static int Rows { get { return Tiles.Max(tile => tile.Row); } }
     public static int Columns { get { return Tiles.Max(tile => tile.Column); } }
 
     private void Awake()
     {
+        tileGameObjects.Clear();
+        Tiles.Clear();
+
         UnsubscribeEvents();
         SubscribeEvents();
         gameObject.SetActive(false);
@@ -53,6 +69,7 @@ public class BoardNew : MonoBehaviour
         {
             TileMB tile = tileDefinition.tile.GetComponent<TileMB>();
             tile.Init(tileDefinition.tileType, tileDefinition.side);
+            Tiles.Add(tile);
             tileGameObjects.Add(tile.gameObject);
         }
 

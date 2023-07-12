@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,4 +23,4 @@ public class ShooterChar : Character
     {
         return side.GetPlayerType() == PlayerType.blue ? PrefabManager.BLUE_SHOOTER_PREFAB : PrefabManager.PINK_SHOOTER_PREFAB;
     }
-}
+}*/

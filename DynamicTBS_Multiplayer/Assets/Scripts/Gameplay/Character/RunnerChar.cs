@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,4 +23,4 @@ public class RunnerChar : Character
     {
         return side.GetPlayerType() == PlayerType.blue ? PrefabManager.BLUE_RUNNER_PREFAB : PrefabManager.PINK_RUNNER_PREFAB;
     }
-}
+}*/

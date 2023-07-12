@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,4 +23,4 @@ public class MedicChar : Character
     {
         return side.GetPlayerType() == PlayerType.blue ? PrefabManager.BLUE_MEDIC_PREFAB : PrefabManager.PINK_MEDIC_PREFAB;
     }
-}
+}*/

@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,4 +23,4 @@ public class TankChar : Character
     {
         return side.GetPlayerType() == PlayerType.blue ? PrefabManager.BLUE_TANK_PREFAB : PrefabManager.PINK_TANK_PREFAB;
     }
-}
+}*/

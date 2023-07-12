@@ -24,14 +24,14 @@ public enum GameOverCondition
 
 static class GameOverConditionMethods
 {
-    public static string ToText(this GameOverCondition condition, PlayerType? winner) 
+    public static string ToText(this GameOverCondition condition, PlayerType? winner)
     {
-        switch(condition)
+        switch (condition)
         {
             case GameOverCondition.MASTER_TOOK_CONTROL:
-                return "The " + winner + " "  + MasterChar.name + " took control over the engine.";
+                return "The " + winner + " " + MasterCharMB.Name + " took control over the engine.";
             case GameOverCondition.MASTER_DIED:
-                return "The " + PlayerManager.GetOtherSide(winner.Value) + " " + MasterChar.name + " died.";
+                return "The " + PlayerManager.GetOtherSide(winner.Value) + " " + MasterCharMB.Name + " died.";
             case GameOverCondition.PLAYER_SURRENDERED:
                 return "Player " + PlayerManager.GetOtherSide(winner.Value) + " surrendered.";
             case GameOverCondition.NO_AVAILABLE_ACTION:

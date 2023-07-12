@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RunnerCharMB : CharacterMB
+public class MechanicCharMB : CharacterMB
 {
     private void Start()
     {
-        characterType = CharacterType.RunnerChar;
+        characterType = CharacterType.MechanicChar;
     }
 }

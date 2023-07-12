@@ -6,7 +6,7 @@ using UnityEngine;
 public class CardHandler : MonoBehaviour
 {
     //notwendig um in UI zu deaktivieren
-    private void Start(){}
+    private void Start() { }
 
     private void Awake()
     {
@@ -14,11 +14,11 @@ public class CardHandler : MonoBehaviour
     }
 
     /// <summary>method <c>setActive</c> aktiviert Kind nach character in cardClass.</summary>
-    public void SetActive(Character character)
+    public void SetActive(CharacterMB character)
     {
         foreach (Transform card in transform)
         {
-            card.gameObject.SetActive((character != null ? character.GetCharacterType() : null) == card.gameObject.GetComponent<CharacterClass>().character);
+            card.gameObject.SetActive((character != null ? character.CharacterType : null) == card.gameObject.GetComponent<CharacterClass>().character);
         }
     }
 

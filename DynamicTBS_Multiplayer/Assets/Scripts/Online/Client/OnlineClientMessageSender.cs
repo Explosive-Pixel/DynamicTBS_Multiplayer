@@ -23,11 +23,11 @@ public class OnlineClientMessageSender : MonoBehaviour
 
     private void SendPerformActionMessage(ActionMetadata actionMetadata)
     {
-        if (OnlineClient.Instance.ShouldSendMessage(actionMetadata.ExecutingPlayer.GetPlayerType()))
+        if (OnlineClient.Instance.ShouldSendMessage(actionMetadata.ExecutingPlayer))
         {
             OnlineClient.Instance.SendToServer(new MsgPerformAction
             {
-                playerId = actionMetadata.ExecutingPlayer.GetPlayerType(),
+                playerId = actionMetadata.ExecutingPlayer,
                 characterX = actionMetadata.CharacterInitialPosition != null ? actionMetadata.CharacterInitialPosition.Value.x : 0f,
                 characterY = actionMetadata.CharacterInitialPosition != null ? actionMetadata.CharacterInitialPosition.Value.y : 0f,
                 actionType = actionMetadata.ExecutedActionType,
@@ -39,13 +39,13 @@ public class OnlineClientMessageSender : MonoBehaviour
         }
     }
 
-    private void SendUIActionMessage(Player player, UIAction uiAction)
+    private void SendUIActionMessage(PlayerType player, UIAction uiAction)
     {
-        if (OnlineClient.Instance.ShouldSendMessage(player.GetPlayerType()))
+        if (OnlineClient.Instance.ShouldSendMessage(player))
         {
             OnlineClient.Instance.SendToServer(new MsgUIAction
             {
-                playerId = player.GetPlayerType(),
+                playerId = player,
                 uiAction = uiAction
             });
         }

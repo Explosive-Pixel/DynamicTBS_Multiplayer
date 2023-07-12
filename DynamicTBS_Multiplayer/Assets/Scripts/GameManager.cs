@@ -16,10 +16,10 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        TileSpriteManager.LoadSprites();
-        PrefabManager.LoadPrefabs();
+        //TileSpriteManager.LoadSprites();
+        //PrefabManager.LoadPrefabs();
     }
-    
+
     public static bool IsPlayer()
     {
         return gameType == GameType.LOCAL || (gameType == GameType.ONLINE && OnlineClient.Instance.UserData.Role == ClientType.PLAYER);
