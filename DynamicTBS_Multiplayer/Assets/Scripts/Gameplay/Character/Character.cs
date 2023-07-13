@@ -119,14 +119,28 @@ public class Character : MonoBehaviour
         Destroy(gameObject);
     }
 
+    public void ExecuteActiveAbility()
+    {
+        if (CanPerformActiveAbility())
+        {
+            ActiveAbility.Execute();
+            GameplayEvents.StartExecuteActiveAbility(this);
+        }
+    }
+
     public bool IsActiveAbilityOnCooldown()
     {
         return ActiveAbilityCooldown > 0;
     }
 
+    public bool MayPerformActiveAbility()
+    {
+        return !isDisabled() && !IsActiveAbilityOnCooldown();
+    }
+
     public bool CanPerformActiveAbility()
     {
-        return !IsActiveAbilityOnCooldown() && ActiveAbility.CountActionDestinations() > 0;
+        return MayPerformActiveAbility() && ActiveAbility.CountActionDestinations() > 0;
     }
 
     public bool CanPerformAction()

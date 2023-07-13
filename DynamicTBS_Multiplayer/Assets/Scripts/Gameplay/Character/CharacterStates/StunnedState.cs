@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public class StunnedState : State
 {
@@ -12,6 +13,14 @@ public class StunnedState : State
 
     public StunnedState(GameObject parent) : base(parent)
     {
+        Character character = parent.GetComponent<Character>();
+
+        var defaultIsDisabled = character.isDisabled;
+        character.isDisabled = () =>
+        {
+            if (character.IsStunned()) return true;
+            return defaultIsDisabled();
+        };
     }
 
     protected override GameObject LoadPrefab(GameObject parent)

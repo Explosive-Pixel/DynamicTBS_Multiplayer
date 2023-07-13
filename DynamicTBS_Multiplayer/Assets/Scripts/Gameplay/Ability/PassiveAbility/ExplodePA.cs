@@ -7,15 +7,16 @@ public class ExplodePA : MonoBehaviour, IPassiveAbility
     [SerializeField] private PatternType explodePatternType; // PatternType.Star
     [SerializeField] private int explodeDamage; // 1
 
-    private Character owner;
+    private bool active = false;
 
     private void Awake()
     {
-        owner = gameObject.GetComponent<Character>();
+        active = false;
     }
 
     public void Apply()
     {
+        active = true;
     }
 
     private void Explode(Vector3 lastPosition)
@@ -40,6 +41,7 @@ public class ExplodePA : MonoBehaviour, IPassiveAbility
 
     private void OnDestroy()
     {
-        Explode(gameObject.transform.position);
+        if (active)
+            Explode(gameObject.transform.position);
     }
 }

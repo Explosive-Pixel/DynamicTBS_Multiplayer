@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class UIClickHandler : MonoBehaviour
 {
+    [SerializeField] private List<GameObject> activeAbilityTriggers;
+
     private Camera currentCamera;
 
     private Character currentCharacter = null;
@@ -55,7 +57,15 @@ public class UIClickHandler : MonoBehaviour
 
             if (characterGameObject == null)
             {
-                // Check if click is on UI Element (like active ability button)
+                // Check if click was onto active ability trigger
+                GameObject activeAbilityTrigger = UIUtils.FindGameObjectByRay(activeAbilityTriggers, position);
+
+                if (activeAbilityTrigger != null && currentCharacter != null)
+                {
+                    currentCharacter.ExecuteActiveAbility();
+                }
+
+                // Check if click is on UI Element (like surrender button)
                 if (!UIUtils.IsHit())
                 {
                     // If not
@@ -118,12 +128,7 @@ public class UIClickHandler : MonoBehaviour
                 }
                 else
                 {
-                    // TODO
-                    GameObject activeAbilityButton = GameObject.Find("ActiveAbilityButton");
-                    if (activeAbilityButton != null)
-                    {
-                        activeAbilityButton.GetComponent<Button>().onClick.Invoke();
-                    }
+                    currentCharacter.ExecuteActiveAbility();
                 }
             }
         }

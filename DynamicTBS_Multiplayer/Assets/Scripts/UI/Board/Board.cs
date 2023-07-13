@@ -97,6 +97,9 @@ public class Board : MonoBehaviour
 
     public static bool Neighbors(Tile tile1, Tile tile2, PatternType patternType)
     {
+        if (tile1 == null || tile2 == null)
+            return false;
+
         bool crossNeighbors = (tile1.Row == tile2.Row && Math.Abs(tile1.Column - tile2.Column) == 1) || (tile1.Column == tile2.Column && Math.Abs(tile1.Row - tile2.Row) == 1);
 
         if (patternType == PatternType.Cross)
