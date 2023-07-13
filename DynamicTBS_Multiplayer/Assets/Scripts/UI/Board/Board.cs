@@ -43,8 +43,8 @@ public class Board : MonoBehaviour
     public static List<GameObject> TileGameObjects { get { return tileGameObjects; } }
 
     public static List<Tile> Tiles = new();
-    public static int Rows { get { return Tiles.Max(tile => tile.Row); } }
-    public static int Columns { get { return Tiles.Max(tile => tile.Column); } }
+    public static int Rows { get { return Tiles.Max(tile => tile.Row) + 1; } }
+    public static int Columns { get { return Tiles.Max(tile => tile.Column) + 1; } }
 
     private void Awake()
     {
@@ -224,8 +224,7 @@ public class Board : MonoBehaviour
 
         for (int i = 1; i <= Math.Max(Rows, Columns); i++)
         {
-            // TODO: Probably has to be reworked
-            Tile tile = GetTileByCoordinates(startTile.Row - (i * (int)direction.y), startTile.Column + (i * (int)direction.x));
+            Tile tile = GetTileByCoordinates(startTile.Row + (i * (int)direction.y), startTile.Column + (i * (int)direction.x));
             if (tile == null) break;
             if (tile.IsOccupied()) occupiedTiles.Add(tile);
         }

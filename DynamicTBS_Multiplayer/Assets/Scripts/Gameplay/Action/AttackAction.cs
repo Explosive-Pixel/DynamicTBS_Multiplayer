@@ -72,7 +72,7 @@ public class AttackAction : MonoBehaviour, IAction
         if (tile != null)
         {
             Character characterToAttack = tile.CurrentInhabitant;
-            characterToAttack.TakeDamage(attackDamage);
+            characterToAttack.TakeDamage(characterInAction.AttackDamage);
         }
 
         AbortAction();

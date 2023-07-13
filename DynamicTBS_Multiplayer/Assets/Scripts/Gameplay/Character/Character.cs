@@ -84,7 +84,7 @@ public class Character : MonoBehaviour
 
     public void Heal(int healPoints)
     {
-        this.HitPoints += healPoints;
+        HitPoints += healPoints;
         if (HitPoints > maxHitPoints)
         {
             HitPoints = maxHitPoints;
@@ -103,9 +103,7 @@ public class Character : MonoBehaviour
 
     private void ResetState()
     {
-        if (state != null)
-            state.Destroy();
-
+        state?.Destroy();
         state = null;
     }
 
@@ -116,6 +114,8 @@ public class Character : MonoBehaviour
 
     public virtual void Die()
     {
+        ResetState();
+        CharacterEvents.CharacterDies(this, gameObject.transform.position);
         Destroy(gameObject);
     }
 
@@ -126,7 +126,6 @@ public class Character : MonoBehaviour
 
     public bool CanPerformActiveAbility()
     {
-        Debug.Log("Active Ability: " + ActiveAbility);
         return !IsActiveAbilityOnCooldown() && ActiveAbility.CountActionDestinations() > 0;
     }
 

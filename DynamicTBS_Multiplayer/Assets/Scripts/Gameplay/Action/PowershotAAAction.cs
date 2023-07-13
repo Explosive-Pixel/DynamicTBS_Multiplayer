@@ -35,10 +35,10 @@ public class PowershotAAAction : MonoBehaviour, IAction
     {
         Tile tile = Board.GetTileByCharacter(character);
 
-        if (tile.Row > 0 && tile.Row < Board.Rows && tile.Column > 0 && tile.Column < Board.Columns)
+        if (tile.Row > 0 && tile.Row < Board.Rows - 1 && tile.Column > 0 && tile.Column < Board.Columns - 1)
             return 4;
 
-        if ((tile.Row == 0 || tile.Row == Board.Rows) && (tile.Column == 0 || tile.Column == Board.Columns))
+        if ((tile.Row == 0 || tile.Row == Board.Rows - 1) && (tile.Column == 0 || tile.Column == Board.Columns - 1))
             return 2;
 
         return 3;

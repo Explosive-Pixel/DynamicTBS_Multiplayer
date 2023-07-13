@@ -6,16 +6,14 @@ using System;
 
 public class Tile : MonoBehaviour
 {
-    //[SerializeField]
-    private int row;
-    //[SerializeField]
-    private int column;
-
     public GameObject machineCore;
     public GameObject unitStart_pink;
     public GameObject unitStart_blue;
     public GameObject masterStart_pink;
     public GameObject masterStart_blue;
+
+    private int row;
+    private int column;
 
     public int Row { get { return row; } }
     public int Column { get { return column; } }
@@ -52,6 +50,9 @@ public class Tile : MonoBehaviour
     {
         this.tileType = tileType;
 
+        if (IsHole())
+            ResetState();
+
         gameObject.GetComponent<SpriteRenderer>().enabled = tileType != TileType.EmptyTile;
         machineCore.SetActive(tileType == TileType.GoalTile);
         UnitStart(side).SetActive(tileType == TileType.StartTile);
@@ -74,9 +75,7 @@ public class Tile : MonoBehaviour
 
     private void ResetState()
     {
-        if (state != null)
-            state.Destroy();
-
+        state?.Destroy();
         state = null;
     }
 

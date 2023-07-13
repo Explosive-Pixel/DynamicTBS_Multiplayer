@@ -34,12 +34,25 @@ public class CharacterFactory : MonoBehaviour
 
     public static Character CreateCharacter(CharacterType type, PlayerType side)
     {
-        GameObject characterGO = Instantiate(characters[type][side]);
+        GameObject prefab = GetPrefab(type, side);
 
-        if (characterGO != null)
-            return characterGO.GetComponent<Character>();
+        if (prefab != null)
+        {
+            GameObject characterGO = Instantiate(prefab);
+
+            if (characterGO != null)
+                return characterGO.GetComponent<Character>();
+        }
 
         return null;
+    }
+
+    public static GameObject GetPrefab(CharacterType type, PlayerType side)
+    {
+        if (!characters.ContainsKey(type))
+            return null;
+
+        return characters[type][side];
     }
 
     public static CharacterType GetRandomCharacterType()

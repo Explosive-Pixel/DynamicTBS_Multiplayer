@@ -57,21 +57,16 @@ public class InfluenceAuraPA : MonoBehaviour, IPassiveAbility
         {
             character.Side = PlayerManager.GetOtherSide(character.Side);
 
-            // TODO: Figure out how to swap
-            //CharacterMB newCharacter = CharacterFactoryMB.CreateCharacter(character.CharacterType, character.Side);
-            //newCharacter.gameObject.GetComponents(typeof(Component)).ToList().ForEach(component => Destroy(component));
-            //character.gameObject.GetComponents(typeof(Component)).ToList().ForEach(component => newCharacter.gameObject.AddComponent(component));
-
             // Change all sprites from childs to sprites of childs of prefab of other side
-            /*GameObject newPrefab = character.GetCharacterPrefab(character.side);
-            for(int i = 0; i < newPrefab.transform.childCount; i++)
+            GameObject newPrefab = CharacterFactory.GetPrefab(character.CharacterType, character.Side);
+            for (int i = 0; i < newPrefab.transform.childCount; i++)
             {
-                GameObject child = character.GetCharacterGameObject().transform.GetChild(i).gameObject;
-                if(child.TryGetComponent<SpriteRenderer>(out var spriteRenderer))
+                GameObject child = character.gameObject.transform.GetChild(i).gameObject;
+                if (child.TryGetComponent<SpriteRenderer>(out var spriteRenderer))
                 {
                     spriteRenderer.sprite = newPrefab.transform.GetChild(i).gameObject.GetComponent<SpriteRenderer>().sprite;
                 }
-            }*/
+            }
         }
     }
 

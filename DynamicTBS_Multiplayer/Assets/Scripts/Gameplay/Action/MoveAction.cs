@@ -110,7 +110,7 @@ public class MoveAction : MonoBehaviour, IAction
 
             if (distance + 1 <= range)
             {
-                List<Tile> neighbors = Board.GetTilesOfDistance(tile, movePattern, 1);
+                List<Tile> neighbors = Board.GetTilesOfDistance(tile, character.MovePattern, 1);
                 foreach (Tile neighbor in neighbors)
                 {
                     if (!visited.Contains(neighbor) && (neighbor.IsAccessible() || pattern))
