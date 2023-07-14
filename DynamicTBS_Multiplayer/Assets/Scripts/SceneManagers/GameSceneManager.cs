@@ -7,6 +7,7 @@ using System.Linq;
 public class GameSceneManager : MonoBehaviour
 {
     [SerializeField] private GameObject draftCanvas;
+    [SerializeField] private GameObject draftObjectsObject;
     [SerializeField] private GameObject gameplayCanvas;
     [SerializeField] private GameObject gameOverCanvas;
     [SerializeField] private GameObject gameplayObjectsObject;
@@ -16,7 +17,7 @@ public class GameSceneManager : MonoBehaviour
     [SerializeField] private Button backToLobbyButton;
     [SerializeField] private List<Button> backToMainMenuButtons;
 
-    private List<GameObject> canvasList = new List<GameObject>();
+    private readonly List<GameObject> canvasList = new();
 
     public GameObject GetGameplayCanvas()
     {
@@ -51,7 +52,7 @@ public class GameSceneManager : MonoBehaviour
         else
         {
             GameplayEvents.RestartGameplay();
-            foreach (GameObject canvas in canvasList) 
+            foreach (GameObject canvas in canvasList)
             {
                 canvas.SetActive(false);
             }
@@ -82,13 +83,15 @@ public class GameSceneManager : MonoBehaviour
     private void GoToDraftScreen()
     {
         HandleMenus(draftCanvas);
+        draftObjectsObject.SetActive(true);
     }
 
     private void GoToGameplayScreen(GamePhase gamePhase)
     {
-        if(gamePhase == GamePhase.DRAFT)
+        if (gamePhase == GamePhase.DRAFT)
         {
             HandleMenus(gameplayCanvas);
+            draftObjectsObject.SetActive(false);
             gameplayObjectsObject.SetActive(true);
         }
     }
