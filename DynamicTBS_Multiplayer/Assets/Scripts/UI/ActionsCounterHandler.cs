@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,12 +12,25 @@ public class ActionsCounterHandler : MonoBehaviour
     private void Awake()
     {
         SubscribeEvents();
-        ChangeVisibility(false);
+        UpdatePlacementCounter();
+    }
+
+    private void UpdatePlacementCounter()
+    {
+        UpdateCounter("Units to place: " + PlacementManager.CurrentPlayerRemainingPlacementCount);
     }
 
     public void UpdateActionsCounter()
     {
-        CurrentActionsCounter().GetComponent<Text>().text = GameplayManager.GetRemainingActions().ToString();
+        UpdateCounter("Actions: " + GameplayManager.GetRemainingActions().ToString());
+    }
+
+    private void UpdateCounter(string text)
+    {
+        CurrentActionsCounter().GetComponent<TMPro.TextMeshPro>().text = text;
+
+        blueActionsCounter.SetActive(PlayerManager.CurrentPlayer == PlayerType.blue);
+        pinkActionsCounter.SetActive(PlayerManager.CurrentPlayer == PlayerType.pink);
     }
 
     private GameObject CurrentActionsCounter()
@@ -28,32 +42,38 @@ public class ActionsCounterHandler : MonoBehaviour
         return pinkActionsCounter;
     }
 
-    private void ChangeVisibility(bool active)
+    private void TransformToActionCounter(GamePhase gamePhase)
     {
-        blueActionsCounter.SetActive(active);
-        pinkActionsCounter.SetActive(active);
+        if (gamePhase == GamePhase.GAMEPLAY)
+        {
+            UpdateActionsCounter();
+
+            GameplayEvents.OnFinishAction -= UpdatePlacementCounter;
+            GameplayEvents.OnChangeRemainingActions += UpdateActionsCounter;
+        }
     }
 
-    private void SetActive(GamePhase gamePhase)
+    private void UpdatePlacementCounter(ActionMetadata actionMetadata)
     {
-        if (gamePhase != GamePhase.GAMEPLAY)
-            return;
-
-        ChangeVisibility(true);
-        GameplayEvents.OnChangeRemainingActions += UpdateActionsCounter;
+        if (GameManager.gamePhase == GamePhase.PLACEMENT)
+        {
+            UpdatePlacementCounter();
+        }
     }
 
     #region EventsRegion
 
     private void SubscribeEvents()
     {
-        GameEvents.OnGamePhaseStart += SetActive;
+        GameplayEvents.OnFinishAction += UpdatePlacementCounter;
+        GameEvents.OnGamePhaseStart += TransformToActionCounter;
     }
 
     private void UnsubscribeEvents()
     {
-        GameEvents.OnGamePhaseStart -= SetActive;
+        GameEvents.OnGamePhaseStart -= TransformToActionCounter;
         GameplayEvents.OnChangeRemainingActions -= UpdateActionsCounter;
+        GameplayEvents.OnFinishAction -= UpdatePlacementCounter;
     }
 
     #endregion

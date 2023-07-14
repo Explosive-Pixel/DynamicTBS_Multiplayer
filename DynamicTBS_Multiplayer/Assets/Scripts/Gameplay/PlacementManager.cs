@@ -16,6 +16,7 @@ public class PlacementManager : MonoBehaviour
     private static int currentPlayerPlacementCount;
 
     public static int CurrentPlayerTotalPlacementCount { get { return placementSequenceIndex < PlacementSequence.Count ? PlacementSequence[placementSequenceIndex] : 0; } }
+    public static int CurrentPlayerRemainingPlacementCount { get { return CurrentPlayerTotalPlacementCount - currentPlayerPlacementCount; } }
     public static int MaxPlacementCount { get { return PlacementSequence.Sum(); } }
     private List<Vector3> CharacterPositions(PlayerType side) { return side == PlayerType.blue ? blueCharacterPositions : pinkCharacterPositions; }
 

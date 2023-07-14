@@ -63,6 +63,7 @@ public class UIClickHandler : MonoBehaviour
                 if (activeAbilityTrigger != null && currentCharacter != null)
                 {
                     currentCharacter.ExecuteActiveAbility();
+                    return;
                 }
 
                 // Check if click is on UI Element (like surrender button)

@@ -452,10 +452,8 @@ GameObject:
   - component: {fileID: 32580847}
   - component: {fileID: 32580854}
   - component: {fileID: 32580855}
-  - component: {fileID: 32580860}
   - component: {fileID: 32580859}
   - component: {fileID: 32580861}
-  - component: {fileID: 32580862}
   - component: {fileID: 32580863}
   - component: {fileID: 32580867}
   - component: {fileID: 32580868}
@@ -623,20 +621,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turnEndedButton: {fileID: 751270120}
---- !u!114 &32580860
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 32580846}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c441a991031f2475b8a4902914c95b8a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  activeAbilityTriggerPink: {fileID: 488440162}
-  activeAbilityTriggerBlue: {fileID: 1593043643}
 --- !u!114 &32580861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -650,20 +634,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   surrenderButton: {fileID: 903296275}
---- !u!114 &32580862
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 32580846}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40bc3812735c6a944a0eea70bb2de81f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  blueActionsCounter: {fileID: 1552067223}
-  pinkActionsCounter: {fileID: 111991153}
 --- !u!114 &32580863
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -943,6 +913,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e122006900238b64fa245b78397f5f76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activeAbilityTriggers:
+  - {fileID: 1593043643}
+  - {fileID: 488440162}
 --- !u!1 &90996747
 GameObject:
   m_ObjectHideFlags: 0
@@ -6228,6 +6201,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1958638195}
     m_Modifications:
+    - target: {fileID: 3209875333662334424, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: m_fontSize
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3209875333662334424, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4092446087219192565, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: m_fontSize
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4092446087219192565, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 6086951508252251166, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -6289,6 +6278,16 @@ PrefabInstance:
 --- !u!4 &719150809 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6086951509923738324, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &719150810 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2525004101664561510, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &719150811 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3530219157324626999, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
   m_PrefabInstance: {fileID: 719150808}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &727749559
@@ -14547,6 +14546,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1958638195}
   - component: {fileID: 1958638197}
+  - component: {fileID: 1958638198}
+  - component: {fileID: 1958638199}
   m_Layer: 5
   m_Name: ShipComponents
   m_TagString: Untagged
@@ -15080,6 +15081,34 @@ MonoBehaviour:
     - tile: {fileID: 2033343577}
       tileType: 1
       side: 2
+--- !u!114 &1958638198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1958638194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c441a991031f2475b8a4902914c95b8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activeAbilityTriggerPink: {fileID: 488440162}
+  activeAbilityTriggerBlue: {fileID: 1593043643}
+--- !u!114 &1958638199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1958638194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40bc3812735c6a944a0eea70bb2de81f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blueActionsCounter: {fileID: 719150811}
+  pinkActionsCounter: {fileID: 719150810}
 --- !u!1 &2002589903 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3083437042456260845, guid: 052a63fa0b4120b4f8d66f3bf4984390, type: 3}
@@ -15312,7 +15341,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 32580860}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ActiveAbilityButtonHandler, Assembly-CSharp
         m_MethodName: ExecuteActiveAbility
         m_Mode: 1
