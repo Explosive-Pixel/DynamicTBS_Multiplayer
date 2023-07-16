@@ -2,18 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ElectrifyAA : IActiveAbility
+public class ElectrifyAA : MonoBehaviour, IActiveAbility
 {
-    public static int radius = 1;
+    [SerializeField] private int aaCooldown; // 3
+    [SerializeField] private int electrifyRadius; // 1
 
-    public int Cooldown { get { return 3; } }
+    public static int radius;
+
+    public ActiveAbilityType AbilityType { get { return ActiveAbilityType.ELECTRIFY; } }
+    public int Cooldown { get { return aaCooldown; } }
 
     Character character;
     private ElectrifyAAAction electrifyAAAction;
 
-    public ElectrifyAA(Character character)
+    private void Awake()
     {
-        this.character = character;
+        radius = electrifyRadius;
+
+        this.character = gameObject.GetComponent<Character>();
         electrifyAAAction = GameObject.Find("ActionRegistry").GetComponent<ElectrifyAAAction>();
     }
 

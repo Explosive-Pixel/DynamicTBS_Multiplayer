@@ -27,14 +27,14 @@ public class Timer : MonoBehaviour
         private float startTimeLeft;
         public float timeLeft;
         public int debuff;
-        public Color color;
+        public GameObject timerGO;
 
         public float StartTimeLeft { get { return startTimeLeft; } set { startTimeLeft = value; timeLeft = value; } }
 
-        public PlayerInfo(Color color, float startTime)
+        public PlayerInfo(GameObject timerGO, float startTime)
         {
             StartTimeLeft = startTime;
-            this.color = color;
+            this.timerGO = timerGO;
             debuff = 0;
         }
     }
@@ -82,20 +82,16 @@ public class Timer : MonoBehaviour
 
     #endregion
 
-    [SerializeField] private GameObject timer;
+    [SerializeField] private GameObject timerPink;
+    [SerializeField] private GameObject timerBlue;
+    [SerializeField] private TimerType timerType;
+    [SerializeField] private GamePhase gamePhase;
+    [SerializeField] private GameObject lamp1;
+    [SerializeField] private GameObject lamp2;
 
-    public TimerType timerType;
-    public GamePhase gamePhase;
+    private delegate void NoTimeLeftConsequence(PlayerType player);
 
-    public Color color_blue;
-    public Color color_pink;
-    public TMPro.TMP_Text Timertext;
-    public GameObject lamp1;
-    public GameObject lamp2;
-
-    private delegate void NoTimeLeftConsequence(Player player);
-
-    private readonly Dictionary<PlayerType, PlayerInfo> playerStats = new Dictionary<PlayerType, PlayerInfo>();
+    private readonly Dictionary<PlayerType, PlayerInfo> playerStats = new();
 
     private bool isActive = false;
     private bool IsActive { get { return isActive && !GameplayManager.gameIsPaused && startTime != null; } }
@@ -108,6 +104,9 @@ public class Timer : MonoBehaviour
     private void Awake()
     {
         SubscribeEvents();
+
+        if (GameManager.gamePhase == gamePhase)
+            SetActive(gamePhase);
     }
 
     public static void InitTime(TimerSetupType timerSetup)
@@ -117,10 +116,9 @@ public class Timer : MonoBehaviour
 
     private void SetInactive()
     {
-        timer.SetActive(false);
         isActive = false;
 
-        GameplayEvents.OnPlayerTurnEnded -= ResetTimer;
+        GameplayEvents.OnPlayerTurnEnded -= ResetTimerForNextPlayer;
         GameplayEvents.OnTimerUpdate -= UpdateData;
         GameplayEvents.OnTimerTimeout -= DrawNoTimeLeftConsequences;
     }
@@ -135,8 +133,7 @@ public class Timer : MonoBehaviour
 
     private void UpdateTimer()
     {
-        Player player = PlayerManager.GetCurrentPlayer();
-        PlayerType side = player.GetPlayerType();
+        PlayerType side = PlayerManager.CurrentPlayer;
         if (playerStats[side].timeLeft > 0)
         {
             timerRanOff = false;
@@ -144,7 +141,7 @@ public class Timer : MonoBehaviour
             float timePassed = TimerUtils.TimeSince(startTime.Value) - ServerTimeDiff;
             playerStats[side].timeLeft = playerStats[side].StartTimeLeft - timePassed;
 
-            PrintTime(playerStats[side].timeLeft);
+            UpdateTime(side);
         }
         else
         {
@@ -154,7 +151,7 @@ public class Timer : MonoBehaviour
             timerRanOff = true;
             if (GameManager.gameType == GameType.LOCAL)
             {
-                GameplayEvents.TimerTimedOut(gamePhase, player.GetPlayerType());
+                GameplayEvents.TimerTimedOut(gamePhase, side);
             }
         }
     }
@@ -162,22 +159,24 @@ public class Timer : MonoBehaviour
     private void SetActive(GamePhase gamePhase)
     {
         if (this.gamePhase != gamePhase)
+        {
+            SetInactive();
             return;
+        }
 
         timerType = gamePhase == GamePhase.GAMEPLAY ? TimerType.GAMEPLAY : TimerType.DRAFT_AND_PLACEMENT;
 
-        playerStats[PlayerType.pink] = new PlayerInfo(color_pink, TotalTime[timerType]);
-        playerStats[PlayerType.blue] = new PlayerInfo(color_blue, TotalTime[timerType]);
+        playerStats[PlayerType.pink] = new PlayerInfo(timerPink, TotalTime[timerType]);
+        playerStats[PlayerType.blue] = new PlayerInfo(timerBlue, TotalTime[timerType]);
 
         GameplayEvents.OnTimerUpdate += UpdateData;
         GameplayEvents.OnTimerTimeout += DrawNoTimeLeftConsequences;
-        GameplayEvents.OnPlayerTurnEnded += ResetTimer;
+        GameplayEvents.OnPlayerTurnEnded += ResetTimerForNextPlayer;
         GameplayEvents.OnGamePause += OnUnpauseGame;
 
         ResetTimer(PlayerManager.StartPlayer[gamePhase]);
 
         isActive = true;
-        timer.SetActive(true);
     }
 
     private void OnUnpauseGame(bool paused)
@@ -185,7 +184,7 @@ public class Timer : MonoBehaviour
         if (GameManager.gameType != GameType.LOCAL)
             return;
 
-        if(!paused)
+        if (!paused)
         {
             UpdateData(playerStats[PlayerType.pink].timeLeft, playerStats[PlayerType.blue].timeLeft, TimerUtils.Timestamp());
         }
@@ -200,16 +199,6 @@ public class Timer : MonoBehaviour
         UpdateTimer();
     }
 
-    private void PrintTime(float currentTime)
-    {
-        currentTime = currentTime < 0 ? 0 : currentTime;
-
-        float minutes = Mathf.FloorToInt(currentTime / 60);
-        float seconds = Mathf.FloorToInt(currentTime % 60);
-
-        Timertext.text = string.Format("{0:00} : {1:00}", minutes, seconds);
-    }
-
     private void UpdateLamps(int debuffCount)
     {
         if (lamp1 == null || lamp2 == null)
@@ -219,78 +208,85 @@ public class Timer : MonoBehaviour
         lamp2.GetComponent<Animator>().SetInteger("Actions", debuffCount > 1 ? 1 : 0);
     }
 
-    private void ResetTimer(Player player)
+    private void ResetTimerForNextPlayer(PlayerType player)
     {
-        Player nextPlayer = PlayerManager.GetOtherPlayer(player);
-        ResetTimer(nextPlayer.GetPlayerType());
+        PlayerType nextPlayer = PlayerManager.GetOtherSide(player);
+        ResetTimer(nextPlayer);
     }
 
     private void ResetTimer(PlayerType nextPlayer)
     {
         startTime = null;
         timerRanOff = false;
+        PlayerType lastPlayer = PlayerManager.GetOtherSide(nextPlayer);
 
         if (timerType == TimerType.GAMEPLAY)
         {
             UpdateLamps(playerStats[nextPlayer].debuff);
             playerStats[nextPlayer].StartTimeLeft = TotalTime[timerType] * Mathf.Pow(1 - debuffRate, playerStats[nextPlayer].debuff);
-        } else
+        }
+        else
         {
-            PlayerType lastPlayer = PlayerManager.GetOtherSide(nextPlayer);
             playerStats[lastPlayer].StartTimeLeft = playerStats[lastPlayer].timeLeft;
         }
 
-        PrintTime(playerStats[nextPlayer].timeLeft);
-        ChangeTextColor(nextPlayer);
+        UpdateTime(nextPlayer);
+        playerStats[nextPlayer].timerGO.SetActive(true);
+        playerStats[lastPlayer].timerGO.SetActive(false);
 
-        if(GameManager.gameType == GameType.LOCAL)
+        if (GameManager.gameType == GameType.LOCAL)
             startTime = TimerUtils.Timestamp();
     }
 
-    private void ChangeTextColor(PlayerType side)
+    private void UpdateTime(PlayerType side)
     {
-        Timertext.color = playerStats[side].color;
+        float timeleft = playerStats[side].timeLeft;
+        float currentTime = timeleft < 0 ? 0 : timeleft;
+
+        float minutes = Mathf.FloorToInt(currentTime / 60);
+        float seconds = Mathf.FloorToInt(currentTime % 60);
+
+        if (playerStats[side].timerGO.TryGetComponent(out TMPro.TextMeshPro textInput))
+            textInput.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
     private void DrawNoTimeLeftConsequences(GamePhase gamePhase, PlayerType playerType)
     {
         playerStats[playerType].timeLeft = 0;
         AudioEvents.TimeRanOut();
-        Player player = PlayerManager.GetPlayer(playerType);
-        switch(gamePhase)
+
+        switch (gamePhase)
         {
             case GamePhase.DRAFT:
-                DrawNoTimeLeftConsequences_Draft(player);
+                DrawNoTimeLeftConsequences_Draft(playerType);
                 break;
             case GamePhase.PLACEMENT:
-                DrawNoTimeLeftConsequences_Placement(player);
+                DrawNoTimeLeftConsequences_Placement(playerType);
                 break;
             case GamePhase.GAMEPLAY:
-                DrawNoTimeLeftConsequences_Gameplay(player);
+                DrawNoTimeLeftConsequences_Gameplay(playerType);
                 break;
         }
     }
 
-    private void DrawNoTimeLeftConsequences_Draft(Player player)
+    private void DrawNoTimeLeftConsequences_Draft(PlayerType playerType)
     {
-        if (GameManager.gameType == GameType.ONLINE && (OnlineClient.Instance.Side != player.GetPlayerType() || OnlineClient.Instance.IsLoadingGame))
+        if (GameManager.gameType == GameType.ONLINE && (OnlineClient.Instance.Side != playerType || OnlineClient.Instance.IsLoadingGame))
             return;
 
-        DraftManager.RandomDrafts(player);   
+        DraftManager.RandomDrafts(playerType);
     }
 
-    private void DrawNoTimeLeftConsequences_Placement(Player player)
+    private void DrawNoTimeLeftConsequences_Placement(PlayerType playerType)
     {
-        if (GameManager.gameType == GameType.ONLINE && (OnlineClient.Instance.Side != player.GetPlayerType() || OnlineClient.Instance.IsLoadingGame))
+        if (GameManager.gameType == GameType.ONLINE && (OnlineClient.Instance.Side != playerType || OnlineClient.Instance.IsLoadingGame))
             return;
 
-        PlacementManager.RandomPlacements(player);
+        PlacementManager.RandomPlacements(playerType);
     }
 
-    private void DrawNoTimeLeftConsequences_Gameplay(Player player)
+    private void DrawNoTimeLeftConsequences_Gameplay(PlayerType side)
     {
-        PlayerType side = player.GetPlayerType();
-
         playerStats[side].debuff += 1;
 
         if (playerStats[side].debuff == maxDebuffs)
@@ -301,23 +297,15 @@ public class Timer : MonoBehaviour
         GameplayEvents.AbortCurrentPlayerTurn(GameplayManager.GetRemainingActions(), AbortTurnCondition.PLAYER_TIMEOUT);
     }
 
-    private void SetInactive(GamePhase gamePhase)
-    {
-        if(this.gamePhase == gamePhase)
-            SetInactive();
-    }
-
     private void SubscribeEvents()
     {
         GameEvents.OnGamePhaseStart += SetActive;
-        GameEvents.OnGamePhaseEnd += SetInactive;
     }
 
     private void UnsubscribeEvents()
     {
         GameEvents.OnGamePhaseStart -= SetActive;
-        GameEvents.OnGamePhaseEnd -= SetInactive;
-        GameplayEvents.OnPlayerTurnEnded -= ResetTimer;
+        GameplayEvents.OnPlayerTurnEnded -= ResetTimerForNextPlayer;
         GameplayEvents.OnTimerUpdate -= UpdateData;
         GameplayEvents.OnTimerTimeout -= DrawNoTimeLeftConsequences;
         GameplayEvents.OnGamePause -= OnUnpauseGame;

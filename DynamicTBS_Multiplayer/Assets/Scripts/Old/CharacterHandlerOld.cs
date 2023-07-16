@@ -1,4 +1,4 @@
-using System;
+/*using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,7 +61,7 @@ public class CharacterHandler : MonoBehaviour
 
     private void SetActiveAbilityOnCooldown(ActionMetadata actionMetadata)
     {
-        if(actionMetadata.ExecutedActionType == ActionType.ActiveAbility)
+        if (actionMetadata.ExecutedActionType == ActionType.ActiveAbility)
         {
             actionMetadata.CharacterInAction.SetActiveAbilityOnCooldown();
         }
@@ -74,7 +74,7 @@ public class CharacterHandler : MonoBehaviour
 
     private void PrepareCharacters(GamePhase gamePhase)
     {
-        if(gamePhase == GamePhase.GAMEPLAY)
+        if (gamePhase == GamePhase.GAMEPLAY)
             characters.ForEach(c => c.isClickable = true);
     }
 
@@ -82,7 +82,7 @@ public class CharacterHandler : MonoBehaviour
     {
         GetAllLivingCharacters().ForEach(c => c.Highlight(false));
 
-        if(character != null)
+        if (character != null)
         {
             character.Highlight(true);
         }
@@ -92,7 +92,7 @@ public class CharacterHandler : MonoBehaviour
 
     private void SubscribeEvents()
     {
-        DraftEvents.OnCharacterCreated += AddCharacterToList;
+        //DraftEvents.OnCharacterCreated += AddCharacterToList;
         GameEvents.OnGamePhaseStart += PrepareCharacters;
         GameplayEvents.OnFinishAction += SetActiveAbilityOnCooldown;
         GameplayEvents.OnCharacterSelectionChange += HighlightCharacter;
@@ -101,7 +101,7 @@ public class CharacterHandler : MonoBehaviour
 
     private void UnsubscribeEvents()
     {
-        DraftEvents.OnCharacterCreated -= AddCharacterToList;
+        //DraftEvents.OnCharacterCreated -= AddCharacterToList;
         GameEvents.OnGamePhaseStart -= PrepareCharacters;
         GameplayEvents.OnFinishAction -= SetActiveAbilityOnCooldown;
         GameplayEvents.OnCharacterSelectionChange -= HighlightCharacter;
@@ -109,9 +109,9 @@ public class CharacterHandler : MonoBehaviour
     }
 
     #endregion
-    
+
     private void OnDestroy()
     {
         UnsubscribeEvents();
     }
-}
+}*/

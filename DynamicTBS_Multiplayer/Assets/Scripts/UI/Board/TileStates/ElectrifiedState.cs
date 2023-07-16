@@ -25,7 +25,7 @@ public class ElectrifiedState : State
 
     private void StunInhabitant(ActionMetadata actionMetadata)
     {
-        if(tile.IsOccupied() && tile.GetCurrentInhabitant() != stunnedInhabitant)
+        if (tile.IsOccupied() && tile.CurrentInhabitant != stunnedInhabitant)
         {
             StunInhabitant();
         }
@@ -35,9 +35,9 @@ public class ElectrifiedState : State
     {
         if (tile.IsOccupied())
         {
-            stunnedInhabitant = tile.GetCurrentInhabitant();
+            stunnedInhabitant = tile.CurrentInhabitant;
             stunnedInhabitant.SetState(CharacterStateType.STUNNED);
-            currentCount = 2*StunnedState.StunDuration + 1;
+            currentCount = 2 * StunnedState.StunDuration + 1;
         }
     }
 

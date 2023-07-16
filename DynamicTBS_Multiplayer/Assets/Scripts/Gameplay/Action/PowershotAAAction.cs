@@ -4,18 +4,17 @@ using UnityEngine;
 
 public class PowershotAAAction : MonoBehaviour, IAction
 {
-    [SerializeField]
-    private GameObject attackCirclePrefab;
+    [SerializeField] private GameObject attackCirclePrefab;
 
     public ActionType ActionType { get { return ActionType.ActiveAbility; } }
 
-    private List<GameObject> powershotTargets = new List<GameObject>();
+    private List<GameObject> powershotTargets = new();
     public List<GameObject> ActionDestinations { get { return powershotTargets; } }
 
     private Character characterInAction = null;
     public Character CharacterInAction { get { return characterInAction; } }
 
-    private List<GameObject> patternTargets = new List<GameObject>();
+    private List<GameObject> patternTargets = new();
 
     private void Awake()
     {
@@ -36,10 +35,10 @@ public class PowershotAAAction : MonoBehaviour, IAction
     {
         Tile tile = Board.GetTileByCharacter(character);
 
-        if(tile.GetRow() > 0 && tile.GetRow() < Board.boardSize - 1 && tile.GetColumn() > 0 && tile.GetColumn() < Board.boardSize - 1)
+        if (tile.Row > 0 && tile.Row < Board.Rows - 1 && tile.Column > 0 && tile.Column < Board.Columns - 1)
             return 4;
 
-        if ((tile.GetRow() == 0 || tile.GetRow() == Board.boardSize - 1) && (tile.GetColumn() == 0 || tile.GetColumn() == Board.boardSize - 1))
+        if ((tile.Row == 0 || tile.Row == Board.Rows - 1) && (tile.Column == 0 || tile.Column == Board.Columns - 1))
             return 2;
 
         return 3;
@@ -55,7 +54,7 @@ public class PowershotAAAction : MonoBehaviour, IAction
     {
         Vector3 clickPosition = actionDestination.transform.position;
         Tile characterTile = Board.GetTileByCharacter(characterInAction);
-        Vector3 shooterPosition = characterTile.GetPosition();
+        Vector3 shooterPosition = characterTile.gameObject.transform.position;
 
         Vector3 shootDirection = Vector3.up;
         if (clickPosition.y == shooterPosition.y)
@@ -77,8 +76,8 @@ public class PowershotAAAction : MonoBehaviour, IAction
 
         foreach (Tile tile in hitCharacterTiles)
         {
-            if (tile.GetCurrentInhabitant() != null && tile.GetCurrentInhabitant().isAttackableBy(characterInAction))
-                tile.GetCurrentInhabitant().TakeDamage(PowershotAA.powershotDamage);
+            if (tile.CurrentInhabitant != null && tile.CurrentInhabitant.isAttackableBy(characterInAction))
+                tile.CurrentInhabitant.TakeDamage(PowershotAA.damage);
         }
         characterInAction.TakeDamage(PowershotAA.selfDamage);
 
@@ -96,18 +95,21 @@ public class PowershotAAAction : MonoBehaviour, IAction
     {
         Tile characterTile = Board.GetTileByCharacter(character);
 
-        List<GameObject> targetList = new List<GameObject>();
+        List<GameObject> targetList = new();
 
-        for (int i = 0; i < Board.boardSize; i++)
+        for (int i = 0; i < Board.Columns; i++)
         {
-            if (i != characterTile.GetColumn())
+            if (i != characterTile.Column)
             {
-                targetList.Add(ActionUtils.InstantiateActionPosition(Board.FindPosition(characterTile.GetRow(), i), attackCirclePrefab));
+                targetList.Add(ActionUtils.InstantiateActionPosition(Board.GetTileByCoordinates(characterTile.Row, i).gameObject.transform.position, attackCirclePrefab));
             }
+        }
 
-            if (i != characterTile.GetRow())
+        for (int i = 0; i < Board.Rows; i++)
+        {
+            if (i != characterTile.Row)
             {
-                targetList.Add(ActionUtils.InstantiateActionPosition(Board.FindPosition(i, characterTile.GetColumn()), attackCirclePrefab));
+                targetList.Add(ActionUtils.InstantiateActionPosition(Board.GetTileByCoordinates(i, characterTile.Column).gameObject.transform.position, attackCirclePrefab));
             }
         }
 

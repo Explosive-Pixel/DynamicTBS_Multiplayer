@@ -18,16 +18,16 @@ public class ExplosionUIEffect : MonoBehaviour
     {
         Vector3 instantiationPosition = lastPosition + new Vector3(0f, yOffset, 0f);
 
-        if (character.GetPassiveAbility().GetType() == typeof(ExplodePA))
+        if (character.PassiveAbility.GetType() == typeof(ExplodePA))
         {
-            if (character.GetSide().GetPlayerType() == PlayerType.blue)
+            if (character.Side == PlayerType.blue)
             {
-                GameObject newBlueExplosion = Instantiate(blueExplosionPrefab, instantiationPosition, character.GetCharacterGameObject().transform.rotation);
+                GameObject newBlueExplosion = Instantiate(blueExplosionPrefab, instantiationPosition, character.gameObject.transform.rotation);
                 StartCoroutine(ExplosionCoroutine(newBlueExplosion, explosionTime));
             }
             else
             {
-                GameObject newPinkExplosion = Instantiate(pinkExplosionPrefab, instantiationPosition, character.GetCharacterGameObject().transform.rotation);
+                GameObject newPinkExplosion = Instantiate(pinkExplosionPrefab, instantiationPosition, character.gameObject.transform.rotation);
                 StartCoroutine(ExplosionCoroutine(newPinkExplosion, explosionTime));
             }
         }

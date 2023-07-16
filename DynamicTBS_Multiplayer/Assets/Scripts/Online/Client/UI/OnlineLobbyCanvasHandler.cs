@@ -21,7 +21,7 @@ public class OnlineLobbyCanvasHandler : MonoBehaviour
 
     private PlayerType selectedSide;
     private bool sideSelected = false;
-    
+
     private bool AllSelected { get { return sideSelected && gameSetupHandler.AllSelected; } }
 
     private void Awake()
@@ -39,7 +39,7 @@ public class OnlineLobbyCanvasHandler : MonoBehaviour
         if (!OnlineClient.Instance)
             return;
 
-        switch(OnlineClient.Instance.ConnectionStatus)
+        switch (OnlineClient.Instance.ConnectionStatus)
         {
             case ConnectionStatus.CONNECTED:
                 PrintConnectedInfo();
@@ -81,19 +81,22 @@ public class OnlineLobbyCanvasHandler : MonoBehaviour
         if (OnlineClient.Instance.IsAdmin)
         {
             clientInfoText.text += "\nPlease choose a time speed, a map and a team ";
-            if(OnlineClient.Instance.PlayerCount < 2)
+            if (OnlineClient.Instance.PlayerCount < 2)
             {
                 clientInfoText.text += "and wait for another player to connect.";
-            } else
+            }
+            else
             {
                 clientInfoText.text += "and start the game.";
             }
-        } else
+        }
+        else
         {
-            if(OnlineClient.Instance.UserData.Role == ClientType.PLAYER)
+            if (OnlineClient.Instance.UserData.Role == ClientType.PLAYER)
             {
                 clientInfoText.text += "\nWaiting for opponent to start the game ...";
-            } else
+            }
+            else
             {
                 if (OnlineClient.Instance.PlayerCount < 2)
                 {
@@ -173,7 +176,7 @@ public class OnlineLobbyCanvasHandler : MonoBehaviour
             OnlineClient.Instance.SendToServer(new MsgStartGame
             {
                 timerSetup = Timer.TimerSetupType,
-                selectedMap = Board.selectedMap
+                selectedMap = Board.selectedMapType
             });
         }
     }
@@ -184,7 +187,7 @@ public class OnlineLobbyCanvasHandler : MonoBehaviour
         sideSetup.SetActive(active);
         startGameButton.gameObject.SetActive(active);
 
-        if(active)
+        if (active)
         {
             startGameButton.interactable = AllSelected && OnlineClient.Instance.PlayerCount == 2;
         }

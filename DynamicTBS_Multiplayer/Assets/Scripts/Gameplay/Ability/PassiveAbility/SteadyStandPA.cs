@@ -2,28 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SteadyStandPA : IPassiveAbility
+public class SteadyStandPA : MonoBehaviour, IPassiveAbility
 {
+    public PassiveAbilityType AbilityType { get { return PassiveAbilityType.STEADY_STAND; } }
+
     private Character owner;
 
-    public SteadyStandPA(Character character)
+    private void Awake()
     {
-        owner = character;
+        owner = gameObject.GetComponent<Character>();
     }
 
-    public void Apply() 
+    public void Apply()
     {
-        foreach (Tile tile in Board.GetAllTiles())
+        foreach (Tile tile in Board.Tiles)
         {
             var defaultIsChangeable = tile.isChangeable;
             tile.isChangeable = () =>
             {
-                if (tile.IsOccupied() && tile.GetCurrentInhabitant().GetPassiveAbility().GetType() == typeof(SteadyStandPA) && !tile.GetCurrentInhabitant().IsStunned())
+                if (tile.IsOccupied() && tile.CurrentInhabitant == owner && !IsDisabled())
                 {
                     return false;
                 }
                 return defaultIsChangeable();
             };
         }
+    }
+
+    public bool IsDisabled()
+    {
+        return owner.IsStunned();
     }
 }

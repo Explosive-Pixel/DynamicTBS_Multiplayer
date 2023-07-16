@@ -2,28 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AdrenalinPA : IPassiveAbility
+public class AdrenalinPA : MonoBehaviour, IPassiveAbility
 {
+    public PassiveAbilityType AbilityType { get { return PassiveAbilityType.ADRENALIN; } }
+
     private Character owner;
 
-    public AdrenalinPA(Character character)
+    private void Awake()
     {
-        owner = character;
+        owner = gameObject.GetComponent<Character>();
     }
 
-    public void Apply() 
+    public void Apply()
     {
         CharacterEvents.OnCharacterTakesDamage += ResetActiveAbilityCooldown;
     }
 
+    public bool IsDisabled()
+    {
+        return false;
+    }
+
     private void ResetActiveAbilityCooldown(Character character, int damage)
     {
-        if (owner.IsDead())
-        {
-            CharacterEvents.OnCharacterTakesDamage -= ResetActiveAbilityCooldown;
-            return;
-        }
-
         if (character == owner)
         {
             AudioEvents.AdrenalinRelease();
@@ -31,7 +32,7 @@ public class AdrenalinPA : IPassiveAbility
         }
     }
 
-    ~AdrenalinPA()
+    private void OnDestroy()
     {
         CharacterEvents.OnCharacterTakesDamage -= ResetActiveAbilityCooldown;
     }

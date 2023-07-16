@@ -26,7 +26,7 @@ public class ActionUtils : MonoBehaviour
 
     public static List<GameObject> InstantiateActionPositions(List<GameObject> parents, GameObject prefab)
     {
-        List<GameObject> actionGameObjects = new List<GameObject>();
+        List<GameObject> actionGameObjects = new();
         if (parents.Count > 0)
         {
             foreach (GameObject parent in parents)
@@ -63,7 +63,7 @@ public class ActionUtils : MonoBehaviour
     {
         int actionDestinationCount = 0;
 
-        foreach(IAction action in ActionRegistry.GetActions())
+        foreach (IAction action in ActionRegistry.GetActions())
         {
             if (GameplayManager.ActionAvailable(character, action.ActionType))
                 actionDestinationCount += action.CountActionDestinations(character);
@@ -94,7 +94,7 @@ public class ActionUtils : MonoBehaviour
     {
         foreach (IAction action in ActionRegistry.GetActions())
         {
-            if(action.ActionDestinations.Contains(actionDestination))
+            if (action.ActionDestinations.Contains(actionDestination))
             {
                 ExecuteAction(action, actionDestination);
             }
@@ -123,14 +123,14 @@ public class ActionUtils : MonoBehaviour
     private static void ExecuteAction(IAction action, GameObject actionDestination)
     {
         Character characterInAction = action.CharacterInAction;
-        Vector3 initialPosition = characterInAction.GetCharacterGameObject().transform.position;
+        Vector3 initialPosition = characterInAction.gameObject.transform.position;
         Vector3 actionDestinationPosition = actionDestination.transform.position;
 
         action.ExecuteAction(actionDestination);
 
         GameplayEvents.ActionFinished(new ActionMetadata
         {
-            ExecutingPlayer = characterInAction.GetSide(),
+            ExecutingPlayer = characterInAction.Side,
             ExecutedActionType = action.ActionType,
             CharacterInAction = characterInAction,
             CharacterInitialPosition = initialPosition,

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 9006414184099744331}
   - component: {fileID: 2907500528339517506}
   - component: {fileID: 748062788652825035}
+  - component: {fileID: 5175158874703908864}
   m_Layer: 0
   m_Name: _BaseTile
   m_TagString: Untagged
@@ -78,7 +79,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -3
   m_Sprite: {fileID: -559585675, guid: e84b66691aa71d74582e64d01b67ed97, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -103,6 +104,23 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.022, y: 0.022, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5175158874703908864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2110289578737125237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86ffe7e6cb8f34a7ea5b8ab30c8d64c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  machineCore: {fileID: 4165381945365942810}
+  unitStart_pink: {fileID: 9073716051683759624}
+  unitStart_blue: {fileID: 8761563004506917255}
+  masterStart_pink: {fileID: 7782910756190445529}
+  masterStart_blue: {fileID: 4105231244398972050}
 --- !u!1 &4105231244398972050
 GameObject:
   m_ObjectHideFlags: 0
@@ -274,7 +292,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 818568ddeba98a442a9cf11c43a077d2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

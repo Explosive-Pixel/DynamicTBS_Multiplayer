@@ -1,42 +1,44 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class InfluenceAuraPA : MonoBehaviour, IPassiveAbility
 {
-    private static int maxInfluence = 3;
-    private static PatternType influenceAuraPatternType = PatternType.Star;
+    [SerializeField] private int maxInfluence; //= 3;
+    [SerializeField] private PatternType influenceAuraPatternType; // = PatternType.Star;
+
+    public PassiveAbilityType AbilityType { get { return PassiveAbilityType.INFLUENCE_AURA; } }
 
     private Character owner;
 
-    private Dictionary<Character, int> influencePoints = new Dictionary<Character, int>();
+    private readonly Dictionary<Character, int> influencePoints = new();
 
-    public InfluenceAuraPA(Character character)
+    private void Awake()
     {
-        owner = character;
+        owner = gameObject.GetComponent<Character>();
     }
 
-    public void Apply() 
+    public void Apply()
     {
         GameplayEvents.OnPlayerTurnEnded += UpdateInfluences;
     }
 
-    private void UpdateInfluences(Player player)
+    public bool IsDisabled()
     {
-        if(owner.IsDead())
-        {
-            GameplayEvents.OnPlayerTurnEnded -= UpdateInfluences;
-            return;
-        }
+        return false;
+    }
 
-        if (player != owner.GetSide())
+    private void UpdateInfluences(PlayerType side)
+    {
+        if (side != owner.Side)
         {
-            List<Character> characters = CharacterHandler.GetAllLivingCharacters()
-                .FindAll(character => character.GetSide() == player && character.GetPassiveAbility().GetType() != typeof(InfluenceAuraPA));
+            List<Character> characters = CharacterManager.GetAllLivingCharactersOfSide(side)
+                .FindAll(character => character.PassiveAbility.GetType() != typeof(InfluenceAuraPA));
 
-            foreach(Character character in characters)
+            foreach (Character character in characters)
             {
-                if (CharacterHandler.Neighbors(owner, character, influenceAuraPatternType))
+                if (CharacterManager.Neighbors(owner, character, influenceAuraPatternType))
                 {
                     if (!influencePoints.ContainsKey(character))
                         influencePoints.Add(character, 0);
@@ -44,7 +46,7 @@ public class InfluenceAuraPA : MonoBehaviour, IPassiveAbility
                     influencePoints[character] += 1;
                     UpdateInfluenceAnimator(character, influencePoints[character]);
 
-                    if(influencePoints[character] == maxInfluence)
+                    if (influencePoints[character] == maxInfluence)
                     {
                         SwapSides(character);
                     }
@@ -58,16 +60,16 @@ public class InfluenceAuraPA : MonoBehaviour, IPassiveAbility
         influencePoints.Remove(character);
         UpdateInfluenceAnimator(character, 0);
 
-        if (!character.IsDead())
+        if (character != null)
         {
-            character.side = PlayerManager.GetOtherPlayer(character.side);
+            character.Side = PlayerManager.GetOtherSide(character.Side);
 
             // Change all sprites from childs to sprites of childs of prefab of other side
-            GameObject newPrefab = character.GetCharacterPrefab(character.side);
-            for(int i = 0; i < newPrefab.transform.childCount; i++)
+            GameObject newPrefab = CharacterFactory.GetPrefab(character.CharacterType, character.Side);
+            for (int i = 0; i < newPrefab.transform.childCount; i++)
             {
-                GameObject child = character.GetCharacterGameObject().transform.GetChild(i).gameObject;
-                if(child.TryGetComponent<SpriteRenderer>(out var spriteRenderer))
+                GameObject child = character.gameObject.transform.GetChild(i).gameObject;
+                if (child.TryGetComponent<SpriteRenderer>(out var spriteRenderer))
                 {
                     spriteRenderer.sprite = newPrefab.transform.GetChild(i).gameObject.GetComponent<SpriteRenderer>().sprite;
                 }
@@ -77,11 +79,12 @@ public class InfluenceAuraPA : MonoBehaviour, IPassiveAbility
 
     private void UpdateInfluenceAnimator(Character character, int influence)
     {
-        GameObject child = UIUtils.FindChildGameObject(character.GetCharacterGameObject(), "MasterTakeoverProgression");
+        // TODO
+        GameObject child = UIUtils.FindChildGameObject(character.gameObject, "MasterTakeoverProgression");
         UIUtils.UpdateAnimator(child.GetComponent<Animator>(), influence);
     }
 
-    ~InfluenceAuraPA()
+    private void OnDestroy()
     {
         GameplayEvents.OnPlayerTurnEnded -= UpdateInfluences;
     }

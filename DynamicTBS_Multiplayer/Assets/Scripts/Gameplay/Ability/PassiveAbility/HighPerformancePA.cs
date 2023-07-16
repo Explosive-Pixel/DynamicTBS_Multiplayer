@@ -3,18 +3,25 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class HighPerformancePA : IPassiveAbility
+public class HighPerformancePA : MonoBehaviour, IPassiveAbility
 {
+    public PassiveAbilityType AbilityType { get { return PassiveAbilityType.HIGH_PERFORMANCE; } }
+
     private Character owner;
 
-    public HighPerformancePA(Character character)
+    private void Awake()
     {
-        owner = character;
+        owner = gameObject.GetComponent<Character>();
     }
 
-    public void Apply() 
+    public void Apply()
     {
-        owner.attackDamage *= 2;
-        owner.movePattern = PatternType.Star;
+        owner.AttackDamage *= 2;
+        owner.MovePattern = PatternType.Star;
+    }
+
+    public bool IsDisabled()
+    {
+        return false;
     }
 }

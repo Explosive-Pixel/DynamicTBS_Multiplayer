@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ActionRegistry
 {
-    private static readonly List<IAction> actions = new List<IAction>();
-    private static readonly List<IAction> patternActions = new List<IAction>();
+    private static readonly List<IAction> actions = new();
+    private static readonly List<IAction> patternActions = new();
 
     public static void Register(IAction action)
     {
@@ -25,8 +25,8 @@ public class ActionRegistry
 
     public static List<IAction> GetActions()
     {
-        List<IAction> copy = new List<IAction>();
-        foreach(IAction action in actions)
+        List<IAction> copy = new();
+        foreach (IAction action in actions)
         {
             copy.Add(action);
         }
@@ -41,7 +41,7 @@ public class ActionRegistry
 
     public static void HideAllActionPatterns()
     {
-        foreach(IAction action in patternActions)
+        foreach (IAction action in patternActions)
         {
             action.HideActionPattern();
         }

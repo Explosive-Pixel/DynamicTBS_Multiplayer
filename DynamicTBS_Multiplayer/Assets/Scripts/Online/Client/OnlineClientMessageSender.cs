@@ -11,23 +11,23 @@ public class OnlineClientMessageSender : MonoBehaviour
 
     private void SendDraftCharacterMessage(Character character)
     {
-        if (OnlineClient.Instance.ShouldSendMessage(character.GetSide().GetPlayerType()) && character.GetCharacterType() != CharacterType.MasterChar)
+        if (OnlineClient.Instance.ShouldSendMessage(character.Side) && character.CharacterType != CharacterType.MasterChar)
         {
             OnlineClient.Instance.SendToServer(new MsgDraftCharacter
             {
-                playerId = character.GetSide().GetPlayerType(),
-                characterType = character.GetCharacterType()
+                playerId = character.Side,
+                characterType = character.CharacterType
             });
         }
     }
 
     private void SendPerformActionMessage(ActionMetadata actionMetadata)
     {
-        if (OnlineClient.Instance.ShouldSendMessage(actionMetadata.ExecutingPlayer.GetPlayerType()))
+        if (OnlineClient.Instance.ShouldSendMessage(actionMetadata.ExecutingPlayer))
         {
-            OnlineClient.Instance.SendToServer(new MsgPerformAction 
+            OnlineClient.Instance.SendToServer(new MsgPerformAction
             {
-                playerId = actionMetadata.ExecutingPlayer.GetPlayerType(),
+                playerId = actionMetadata.ExecutingPlayer,
                 characterX = actionMetadata.CharacterInitialPosition != null ? actionMetadata.CharacterInitialPosition.Value.x : 0f,
                 characterY = actionMetadata.CharacterInitialPosition != null ? actionMetadata.CharacterInitialPosition.Value.y : 0f,
                 actionType = actionMetadata.ExecutedActionType,
@@ -39,13 +39,13 @@ public class OnlineClientMessageSender : MonoBehaviour
         }
     }
 
-    private void SendUIActionMessage(Player player, UIAction uiAction)
+    private void SendUIActionMessage(PlayerType player, UIAction uiAction)
     {
-        if (OnlineClient.Instance.ShouldSendMessage(player.GetPlayerType()))
+        if (OnlineClient.Instance.ShouldSendMessage(player))
         {
-            OnlineClient.Instance.SendToServer(new MsgUIAction 
+            OnlineClient.Instance.SendToServer(new MsgUIAction
             {
-                playerId = player.GetPlayerType(),
+                playerId = player,
                 uiAction = uiAction
             });
         }
@@ -53,7 +53,7 @@ public class OnlineClientMessageSender : MonoBehaviour
 
     private void SendUpdateServerMessage(PlayerType currentPlayer)
     {
-        if(OnlineClient.Instance.AdminShouldSendMessage())
+        if (OnlineClient.Instance.AdminShouldSendMessage())
         {
             OnlineClient.Instance.SendToServer(new MsgUpdateServer
             {
@@ -72,7 +72,7 @@ public class OnlineClientMessageSender : MonoBehaviour
                 isDraw = winner == null
             };
 
-            if(winner != null)
+            if (winner != null)
             {
                 msg.winner = winner.Value;
             }

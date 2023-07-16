@@ -2,30 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TakeControlAA : IActiveAbility
+public class TakeControlAA : MonoBehaviour, IActiveAbility
 {
-    public int Cooldown { get { return 0; } }
+    [SerializeField] private int aaCooldown; // 0
+
+    public ActiveAbilityType AbilityType { get { return ActiveAbilityType.TAKE_CONTROL; } }
+    public int Cooldown { get { return aaCooldown; } }
 
     Character character;
 
-    public TakeControlAA(Character character)
+    private void Awake()
     {
-        this.character = character;
+        this.character = gameObject.GetComponent<Character>();
     }
 
-    public void Execute() 
+    public void Execute()
     {
         if (Executable())
         {
             GameplayEvents.ActionFinished(new ActionMetadata
             {
-                ExecutingPlayer = character.GetSide(),
+                ExecutingPlayer = character.Side,
                 ExecutedActionType = ActionType.ActiveAbility,
                 CharacterInAction = character,
-                CharacterInitialPosition = character.GetCharacterGameObject().transform.position,
+                CharacterInitialPosition = character.gameObject.transform.position,
                 ActionDestinationPosition = null
             });
-            GameplayEvents.GameIsOver(character.GetSide().GetPlayerType(), GameOverCondition.MASTER_TOOK_CONTROL);
+            GameplayEvents.GameIsOver(character.Side, GameOverCondition.MASTER_TOOK_CONTROL);
         }
     }
 
@@ -46,8 +49,8 @@ public class TakeControlAA : IActiveAbility
 
     private bool Executable()
     {
-        Tile tile = Board.GetTileByPosition(character.GetCharacterGameObject().transform.position);
-        if (tile != null && tile.GetTileType().Equals(TileType.GoalTile))
+        Tile tile = Board.GetTileByCharacter(character);
+        if (tile != null && tile.TileType.Equals(TileType.GoalTile))
         {
             return true;
         }

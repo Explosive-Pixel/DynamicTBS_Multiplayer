@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class UIClickHandler : MonoBehaviour
 {
+    [SerializeField] private List<GameObject> activeAbilityTriggers;
+
     private Camera currentCamera;
 
     private Character currentCharacter = null;
@@ -45,16 +47,26 @@ public class UIClickHandler : MonoBehaviour
 
         // If not, check whether click was onto a character
         // If yes, create action destinations for this character
-        if (!actionExecuted) {
-            List<GameObject> charactersOfPlayer = CharacterHandler.GetAllLivingCharacters()
-                .FindAll(character => character.isClickable && character.GetSide() == PlayerManager.GetCurrentPlayer())
-                .ConvertAll(character => character.GetCharacterGameObject());
+        if (!actionExecuted)
+        {
+            List<GameObject> charactersOfPlayer = CharacterManager.GetAllLivingCharactersOfSide(PlayerManager.CurrentPlayer)
+                .FindAll(character => character.IsClickable)
+                .ConvertAll(character => character.gameObject);
 
             GameObject characterGameObject = UIUtils.FindGameObjectByRay(charactersOfPlayer, position);
 
             if (characterGameObject == null)
             {
-                // Check if click is on UI Element (like active ability button)
+                // Check if click was onto active ability trigger
+                GameObject activeAbilityTrigger = UIUtils.FindGameObjectByRay(activeAbilityTriggers, position);
+
+                if (activeAbilityTrigger != null && currentCharacter != null)
+                {
+                    currentCharacter.ExecuteActiveAbility();
+                    return;
+                }
+
+                // Check if click is on UI Element (like surrender button)
                 if (!UIUtils.IsHit())
                 {
                     // If not
@@ -63,11 +75,12 @@ public class UIClickHandler : MonoBehaviour
                 return;
             }
 
-            Character character = CharacterHandler.GetCharacterByGameObject(characterGameObject);
+            Character character = characterGameObject.GetComponent<Character>();
             GameplayEvents.ChangeCharacterSelection(character);
             ActionUtils.InstantiateAllActionPositions(character);
-            
-        } else
+
+        }
+        else
         {
             UnselectCharacter();
         }
@@ -75,7 +88,7 @@ public class UIClickHandler : MonoBehaviour
 
     private void HandleKeyInputsAnyClient()
     {
-        
+
     }
 
     private void HandleKeyInputsAnyPlayer()
@@ -83,7 +96,7 @@ public class UIClickHandler : MonoBehaviour
         // Pause Game
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            GameplayEvents.UIActionExecuted(PlayerManager.GetCurrentlyExecutingPlayer(), GameplayManager.gameIsPaused ? UIAction.UNPAUSE_GAME : UIAction.PAUSE_GAME);
+            GameplayEvents.UIActionExecuted(PlayerManager.ExecutingPlayer, GameplayManager.gameIsPaused ? UIAction.UNPAUSE_GAME : UIAction.PAUSE_GAME);
         }
     }
 
@@ -108,18 +121,15 @@ public class UIClickHandler : MonoBehaviour
             if (currentCharacter != null && !currentCharacter.IsActiveAbilityOnCooldown())
             {
                 ActionUtils.ResetActionDestinations();
-                if(activeAbilityExecutionStarted)
+                if (activeAbilityExecutionStarted)
                 {
                     Character character = currentCharacter;
                     UnselectCharacter();
                     SelectCharacter(character);
-                } else
+                }
+                else
                 {
-                    GameObject activeAbilityButton = GameObject.Find("ActiveAbilityButton");
-                    if (activeAbilityButton != null)
-                    {
-                        activeAbilityButton.GetComponent<Button>().onClick.Invoke();
-                    }
+                    currentCharacter.ExecuteActiveAbility();
                 }
             }
         }
@@ -139,10 +149,10 @@ public class UIClickHandler : MonoBehaviour
         // Show complete active ability pattern, not just legal moves.
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            if(currentCharacter != null)
+            if (currentCharacter != null)
             {
                 ActionUtils.ResetActionDestinations();
-                currentCharacter.GetActiveAbility().ShowActionPattern();
+                currentCharacter.ActiveAbility.ShowActionPattern();
             }
         }
 
@@ -170,7 +180,7 @@ public class UIClickHandler : MonoBehaviour
     {
         if (character != null)
         {
-            HandleClick(UIUtils.DefaultRay(character.GetCharacterGameObject().transform.position));
+            HandleClick(UIUtils.DefaultRay(character.gameObject.transform.position));
         }
     }
 

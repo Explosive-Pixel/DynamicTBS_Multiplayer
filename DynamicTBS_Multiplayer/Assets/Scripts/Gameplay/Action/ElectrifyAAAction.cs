@@ -4,18 +4,17 @@ using UnityEngine;
 
 public class ElectrifyAAAction : MonoBehaviour, IAction
 {
-    [SerializeField]
-    private GameObject electrifyPrefab;
+    [SerializeField] private GameObject electrifyPrefab;
 
     public ActionType ActionType { get { return ActionType.ActiveAbility; } }
 
-    private List<GameObject> electrifyTargets = new List<GameObject>();
+    private List<GameObject> electrifyTargets = new();
     public List<GameObject> ActionDestinations { get { return electrifyTargets; } }
 
     private Character characterInAction = null;
     public Character CharacterInAction { get { return characterInAction; } }
 
-    private List<GameObject> patternTargets = new List<GameObject>();
+    private List<GameObject> patternTargets = new();
 
     private void Awake()
     {
@@ -24,12 +23,12 @@ public class ElectrifyAAAction : MonoBehaviour, IAction
 
     public void ShowActionPattern(Character character)
     {
-        Tile characterTile = Board.GetTileByPosition(character.GetCharacterGameObject().transform.position);
-        List<Vector3> patternPositions = Board.GetAllTilesWithinRadius(characterTile, ElectrifyAA.radius).ConvertAll(tile => tile.GetPosition());
+        Tile characterTile = Board.GetTileByCharacter(character);
+        List<Vector3> patternPositions = Board.GetAllTilesWithinRadius(characterTile, ElectrifyAA.radius).ConvertAll(tile => tile.gameObject.transform.position);
 
-        if (characterTile.GetTileType() == TileType.GoalTile)
+        if (characterTile.TileType == TileType.GoalTile)
         {
-            patternPositions.Add(characterTile.GetPosition());
+            patternPositions.Add(characterTile.gameObject.transform.position);
         }
 
         patternTargets = ActionUtils.InstantiateActionPositions(patternPositions, electrifyPrefab);
@@ -68,9 +67,9 @@ public class ElectrifyAAAction : MonoBehaviour, IAction
         Tile tile = Board.GetTileByPosition(actionDestination.transform.position);
         if (tile != null)
         {
-            if (tile.GetTileType().Equals(TileType.GoalTile))
+            if (tile.TileType.Equals(TileType.GoalTile))
             {
-                GameplayEvents.GameIsOver(characterInAction.GetSide().GetPlayerType(), GameOverCondition.MASTER_TOOK_CONTROL);
+                GameplayEvents.GameIsOver(characterInAction.Side, GameOverCondition.MASTER_TOOK_CONTROL);
             }
 
             tile.SetState(TileStateType.ELECTRIFIED);
@@ -88,17 +87,17 @@ public class ElectrifyAAAction : MonoBehaviour, IAction
 
     private List<Vector3> FindElectrifyPositions(Character character)
     {
-        Tile characterTile = Board.GetTileByPosition(character.GetCharacterGameObject().transform.position);
+        Tile characterTile = Board.GetTileByCharacter(character);
 
         List<Tile> floorTiles = Board.GetAllTilesWithinRadius(characterTile, ElectrifyAA.radius)
             .FindAll(tile => tile.IsNormalFloor());
 
-        if(characterTile.GetTileType() == TileType.GoalTile)
+        if (characterTile.TileType == TileType.GoalTile)
         {
             floorTiles.Add(characterTile);
         }
 
-        List<Vector3> floorPositions = floorTiles.ConvertAll(tile => tile.GetPosition());
+        List<Vector3> floorPositions = floorTiles.ConvertAll(tile => tile.gameObject.transform.position);
 
         return floorPositions;
     }

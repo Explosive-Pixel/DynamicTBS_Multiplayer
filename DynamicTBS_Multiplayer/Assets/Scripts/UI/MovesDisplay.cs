@@ -8,7 +8,7 @@ public class MovesDisplay : MonoBehaviour
 {
     [SerializeField] private GameObject movesDisplayObject;
     [SerializeField] private Text displayText;
-    private List<string> movesList = new List<string>();
+    private List<string> movesList = new();
 
     private int actionCount = 0;
 
@@ -24,7 +24,7 @@ public class MovesDisplay : MonoBehaviour
 
         if (actionMetadata.ExecutedActionType == ActionType.Skip)
         {
-            newLine += TranslatePlayerSide(actionMetadata.ExecutingPlayer.GetPlayerType()) + "ended their turn";
+            newLine += TranslatePlayerSide(actionMetadata.ExecutingPlayer) + "ended their turn";
         }
         else
         {
@@ -44,10 +44,11 @@ public class MovesDisplay : MonoBehaviour
     {
         PlayerType player = GetPlayerTypeByActionCount();
         string newLine = TranslatePlayerSide(player).Trim() + "'s turn was aborted since " + player + " ";
-        if(abortTurnCondition == AbortTurnCondition.NO_AVAILABLE_ACTION)
+        if (abortTurnCondition == AbortTurnCondition.NO_AVAILABLE_ACTION)
         {
             newLine += "had no more available action.";
-        } else if(abortTurnCondition == AbortTurnCondition.PLAYER_TIMEOUT)
+        }
+        else if (abortTurnCondition == AbortTurnCondition.PLAYER_TIMEOUT)
         {
             newLine += "ran out of time.";
         }
@@ -77,9 +78,9 @@ public class MovesDisplay : MonoBehaviour
 
     private string GetMoveCountString()
     {
-        int counter = (actionCount / (GameplayManager.maxActionsPerRound * 2)) + 1;
+        int counter = (actionCount / (GameplayManager.MaxActionsPerRound * 2)) + 1;
         PlayerType player = GetPlayerTypeByActionCount();
-        char addition = (char)((actionCount % GameplayManager.maxActionsPerRound) + 65);
+        char addition = (char)((actionCount % GameplayManager.MaxActionsPerRound) + 65);
 
         string text = TranslatePlayerSide(player) + " " + counter.ToString() + addition;
 
@@ -89,7 +90,7 @@ public class MovesDisplay : MonoBehaviour
 
     private PlayerType GetPlayerTypeByActionCount()
     {
-        return actionCount % (GameplayManager.maxActionsPerRound * 2) <= 1 ? PlayerManager.StartPlayer[GamePhase.GAMEPLAY] : PlayerManager.GetOtherSide(PlayerManager.StartPlayer[GamePhase.GAMEPLAY]);
+        return actionCount % (GameplayManager.MaxActionsPerRound * 2) <= 1 ? PlayerManager.StartPlayer[GamePhase.GAMEPLAY] : PlayerManager.GetOtherSide(PlayerManager.StartPlayer[GamePhase.GAMEPLAY]);
     }
 
     private string TranslateTilePosition(Vector3? position)
@@ -101,7 +102,7 @@ public class MovesDisplay : MonoBehaviour
             Tile tile = Board.GetTileByPosition(position.GetValueOrDefault());
             if (tile != null)
             {
-                text = tile.GetTileName();
+                text = tile.Name;
             }
         }
         return text;
@@ -117,17 +118,17 @@ public class MovesDisplay : MonoBehaviour
             text = " attacked ";
         if (actiontype == ActionType.ActiveAbility)
         {
-            if (character.GetCharacterType() == CharacterType.MasterChar)
+            if (character.CharacterType == CharacterType.MasterChar)
                 text = " used Take Control on ";
-            if (character.GetCharacterType() == CharacterType.TankChar)
+            if (character.CharacterType == CharacterType.TankChar)
                 text = " used Block on ";
-            if (character.GetCharacterType() == CharacterType.ShooterChar)
+            if (character.CharacterType == CharacterType.ShooterChar)
                 text = " used Powershot on ";
-            if (character.GetCharacterType() == CharacterType.RunnerChar)
+            if (character.CharacterType == CharacterType.RunnerChar)
                 text = " used Jump on ";
-            if (character.GetCharacterType() == CharacterType.MechanicChar)
+            if (character.CharacterType == CharacterType.MechanicChar)
                 text = " used Change Floor on ";
-            if (character.GetCharacterType() == CharacterType.MedicChar)
+            if (character.CharacterType == CharacterType.MedicChar)
                 text = " used Heal on ";
         }
         return text;
@@ -135,30 +136,17 @@ public class MovesDisplay : MonoBehaviour
 
     private string TranslateCharacterName(Character character)
     {
-        string text = "";
-
         if (character != null)
         {
-            if (character.GetCharacterType() == CharacterType.MasterChar)
-                text = "Captain ";
-            if (character.GetCharacterType() == CharacterType.TankChar)
-                text = "Tank ";
-            if (character.GetCharacterType() == CharacterType.ShooterChar)
-                text = "Shooter ";
-            if (character.GetCharacterType() == CharacterType.RunnerChar)
-                text = "Runner ";
-            if (character.GetCharacterType() == CharacterType.MechanicChar)
-                text = "Mechanic ";
-            if (character.GetCharacterType() == CharacterType.MedicChar)
-                text = "Doc ";
+            return character.PrettyName + " ";
         }
-        return text;
+        return "";
     }
 
     private string TranslatePlayerSide(PlayerType playerType)
     {
         string text = "";
-        
+
         if (playerType == PlayerType.blue)
         {
             text = "Blue ";
@@ -173,7 +161,7 @@ public class MovesDisplay : MonoBehaviour
 
     private void OnGameplayPhaseStarts(GamePhase gamePhase)
     {
-        if(gamePhase == GamePhase.GAMEPLAY)
+        if (gamePhase == GamePhase.GAMEPLAY)
         {
             ActivateMovesDisplay();
             ActivateRecordingSubscription();

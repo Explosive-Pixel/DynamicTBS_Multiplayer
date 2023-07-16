@@ -5,18 +5,17 @@ using UnityEngine;
 
 public class ChangeFloorAAAction : MonoBehaviour, IAction
 {
-    [SerializeField]
-    private GameObject changeFloorPrefab;
+    [SerializeField] private GameObject changeFloorPrefab;
 
     public ActionType ActionType { get { return ActionType.ActiveAbility; } }
 
-    private List<GameObject> changeFloorTargets = new List<GameObject>();
+    private List<GameObject> changeFloorTargets = new();
     public List<GameObject> ActionDestinations { get { return changeFloorTargets; } }
 
     private Character characterInAction = null;
     public Character CharacterInAction { get { return characterInAction; } }
 
-    private List<GameObject> patternTargets = new List<GameObject>();
+    private List<GameObject> patternTargets = new();
 
     private void Awake()
     {
@@ -25,8 +24,8 @@ public class ChangeFloorAAAction : MonoBehaviour, IAction
 
     public void ShowActionPattern(Character character)
     {
-        Tile characterTile = Board.GetTileByPosition(character.GetCharacterGameObject().transform.position);
-        List<Vector3> patternPositions = Board.GetAllTilesWithinRadius(characterTile, ChangeFloorAA.radius).ConvertAll(tile => tile.GetPosition());
+        Tile characterTile = Board.GetTileByCharacter(character);
+        List<Vector3> patternPositions = Board.GetAllTilesWithinRadius(characterTile, ChangeFloorAA.radius).ConvertAll(tile => tile.gameObject.transform.position);
 
         if (patternPositions != null)
         {
@@ -67,11 +66,11 @@ public class ChangeFloorAAAction : MonoBehaviour, IAction
         Tile tile = Board.GetTileByPosition(actionDestination.transform.position);
         if (tile != null)
         {
-            tile.Transform(OtherTileType(tile.GetTileType()));
+            tile.Transform(OtherTileType(tile.TileType));
 
             if (tile.IsOccupied() && tile.IsHole())
             {
-                tile.GetCurrentInhabitant().Die();
+                tile.CurrentInhabitant.Die();
             }
         }
 
@@ -92,7 +91,7 @@ public class ChangeFloorAAAction : MonoBehaviour, IAction
 
     private List<Vector3> FindChangeFloorPositions(Character character)
     {
-        Tile characterTile = Board.GetTileByPosition(character.GetCharacterGameObject().transform.position);
+        Tile characterTile = Board.GetTileByCharacter(character);
 
         List<Tile> changeFlootWithInhabitantTiles = Board.GetAllTilesWithinRadius(characterTile, ChangeFloorAA.radiusWithInhabitants);
         List<Tile> changeFloorWithoutInhabitantTiles = Board.GetAllTilesWithinRadius(characterTile, ChangeFloorAA.radius)
@@ -101,7 +100,7 @@ public class ChangeFloorAAAction : MonoBehaviour, IAction
         List<Vector3> changeFloorPositions = Enumerable.Union(changeFlootWithInhabitantTiles, changeFloorWithoutInhabitantTiles)
             .ToList()
             .FindAll(tile => tile.isChangeable())
-            .ConvertAll(tile => tile.GetPosition());
+            .ConvertAll(tile => tile.gameObject.transform.position);
 
         return changeFloorPositions;
     }

@@ -2,49 +2,53 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ExplodePA : IPassiveAbility
+public class ExplodePA : MonoBehaviour, IPassiveAbility
 {
-    private static PatternType explodePatternType = PatternType.Star;
-    private static int explodeDamage = 1;
+    [SerializeField] private PatternType explodePatternType; // PatternType.Star
+    [SerializeField] private int explodeDamage; // 1
 
-    private Character owner;
+    public PassiveAbilityType AbilityType { get { return PassiveAbilityType.EXPLODE; } }
 
-    public ExplodePA(Character character)
+    private bool active = false;
+
+    private void Awake()
     {
-        owner = character;
+        active = false;
     }
 
-    public void Apply() 
+    public void Apply()
     {
-        CharacterEvents.OnCharacterDeath += Explode;
+        active = true;
     }
 
-    private void Explode(Character deadCharacter, Vector3 lastPosition)
+    public bool IsDisabled()
     {
-        if(deadCharacter == owner)
+        return false;
+    }
+
+    private void Explode(Vector3 lastPosition)
+    {
+        Tile ownerLastTile = Board.GetTileByPosition(lastPosition);
+        foreach (Character character in CharacterManager.GetAllLivingCharacters())
         {
-            Tile ownerLastTile = Board.GetTileByPosition(lastPosition);
-            foreach(Character character in CharacterHandler.GetAllLivingCharacters())
+            if (character != null && character.gameObject != null)
             {
-                if (character.GetCharacterGameObject() != null)
+                Tile neighborTile = Board.GetTileByCharacter(character);
+                if (Board.Neighbors(ownerLastTile, neighborTile, explodePatternType))
                 {
-                    Tile neighborTile = Board.GetTileByPosition(character.GetCharacterGameObject().transform.position);
-                    if (Board.Neighbors(ownerLastTile, neighborTile, explodePatternType))
-                    {
-                        character.TakeDamage(explodeDamage);
-                    }
+                    character.TakeDamage(explodeDamage);
                 }
             }
-
-            ownerLastTile.Transform(TileType.EmptyTile);
-
-            AudioEvents.Exploding();
-            CharacterEvents.OnCharacterDeath -= Explode;
         }
+
+        ownerLastTile.Transform(TileType.EmptyTile);
+
+        AudioEvents.Exploding();
     }
 
-    ~ExplodePA()
+    private void OnDestroy()
     {
-        CharacterEvents.OnCharacterDeath -= Explode;
+        if (active)
+            Explode(gameObject.transform.position);
     }
 }

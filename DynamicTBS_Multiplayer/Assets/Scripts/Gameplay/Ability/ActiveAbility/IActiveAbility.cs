@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ActiveAbility
+public enum ActiveAbilityType
 {
     BLOCK,
     CHANGE_FLOOR,
@@ -15,6 +15,7 @@ public enum ActiveAbility
 
 public interface IActiveAbility
 {
+    ActiveAbilityType AbilityType { get; }
     int Cooldown { get; }
     void Execute();
 

@@ -8,7 +8,7 @@ public class SkipAction : MonoBehaviour
     {
         GameplayEvents.ActionFinished(new ActionMetadata
         {
-            ExecutingPlayer = PlayerManager.GetCurrentPlayer(),
+            ExecutingPlayer = PlayerManager.CurrentPlayer,
             ExecutedActionType = ActionType.Skip,
             ActionCount = numberOfActionsToSkip,
             CharacterInAction = null,

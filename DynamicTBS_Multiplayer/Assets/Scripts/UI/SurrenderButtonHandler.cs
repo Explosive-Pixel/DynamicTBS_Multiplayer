@@ -15,14 +15,14 @@ public class SurrenderButtonHandler : MonoBehaviour
 
     public void Surrender()
     {
-        Player player = PlayerManager.GetCurrentlyExecutingPlayer();
+        PlayerType player = PlayerManager.ExecutingPlayer;
         GameplayEvents.UIActionExecuted(player, UIAction.SURRENDER);
     }
 
-    private void OnSurrenderClicked(Player player, UIAction uIAction)
+    private void OnSurrenderClicked(PlayerType player, UIAction uIAction)
     {
-        if(uIAction == UIAction.SURRENDER)
-            GameplayEvents.GameIsOver(PlayerManager.GetOtherPlayer(player).GetPlayerType(), GameOverCondition.PLAYER_SURRENDERED);
+        if (uIAction == UIAction.SURRENDER)
+            GameplayEvents.GameIsOver(PlayerManager.GetOtherSide(player), GameOverCondition.PLAYER_SURRENDERED);
     }
 
     private void ChangeButtonVisibility(bool active)
@@ -39,7 +39,7 @@ public class SurrenderButtonHandler : MonoBehaviour
 
     private void SetActive(GamePhase gamePhase)
     {
-        if(gamePhase == GamePhase.GAMEPLAY)
+        if (gamePhase == GamePhase.GAMEPLAY)
             ChangeButtonVisibility(true);
     }
 

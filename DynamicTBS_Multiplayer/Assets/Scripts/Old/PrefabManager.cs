@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -33,4 +33,4 @@ public class PrefabManager
         BLUE_MEDIC_PREFAB = Resources.Load<GameObject>("Charakters/Blue/Medic Blue");
         PINK_MEDIC_PREFAB = Resources.Load<GameObject>("Charakters/Pink/Medic Pink");
     }
-}
+}*/

@@ -1,59 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class PlayerManager : MonoBehaviour
 {
-    #region Player Config
+    [SerializeField] private PlayerType draftStartPlayer;
+    [SerializeField] private PlayerType placementStartPlayer;
+    [SerializeField] private PlayerType gameplayStartPlayer;
 
-    private static readonly Dictionary<GamePhase, PlayerType> startPlayer = new Dictionary<GamePhase, PlayerType>()
-    {
-        { GamePhase.DRAFT, PlayerType.pink },
-        { GamePhase.PLACEMENT, PlayerType.pink },
-        { GamePhase.GAMEPLAY, PlayerType.blue }
-    };
+    private static PlayerType currentPlayer;
+    public static PlayerType CurrentPlayer { get { return currentPlayer; } }
+    public static PlayerType ExecutingPlayer { get { return GameManager.gameType == GameType.ONLINE ? OnlineClient.Instance.Side : CurrentPlayer; } }
 
-    #endregion
-
-    private static Player currentPlayer;
-
-    private static Player bluePlayer;
-    public static Player BluePlayer { get { return bluePlayer; } }
-
-    private static Player pinkPlayer;
-    public static Player PinkPlayer { get { return pinkPlayer; } }
-
+    private static Dictionary<GamePhase, PlayerType> startPlayer;
     public static Dictionary<GamePhase, PlayerType> StartPlayer { get { return startPlayer; } }
 
     private void Awake()
     {
-        bluePlayer = new Player(PlayerType.blue);
-        pinkPlayer = new Player(PlayerType.pink);
+        startPlayer = new Dictionary<GamePhase, PlayerType>()
+        {
+            { GamePhase.DRAFT, draftStartPlayer },
+            { GamePhase.PLACEMENT, placementStartPlayer },
+            { GamePhase.GAMEPLAY, gameplayStartPlayer }
+        };
+
         SubscribeEvents();
 
-        currentPlayer = GetPlayer(startPlayer[GamePhase.DRAFT]);
-    }
-
-    public static List<Player> GetAllPlayers()
-    {
-        return new List<Player>() { bluePlayer, pinkPlayer };
-    }
-
-    public static Player GetCurrentlyExecutingPlayer()
-    {
-        return GameManager.gameType == GameType.ONLINE ? GetPlayer(OnlineClient.Instance.Side) : GetCurrentPlayer();
-    }
-
-    public static Player GetOtherPlayer(Player player)
-    {
-        if (player == bluePlayer)
-            return pinkPlayer;
-        return bluePlayer;
+        currentPlayer = startPlayer[GamePhase.DRAFT];
     }
 
     public static PlayerType GetOtherSide(PlayerType side)
     {
-        if(side == PlayerType.blue)
+        if (side == PlayerType.blue)
         {
             return PlayerType.pink;
         }
@@ -62,51 +41,21 @@ public class PlayerManager : MonoBehaviour
 
     public static void NextPlayer()
     {
-        currentPlayer.IncreaseRoundCounter();
-        GameplayEvents.EndPlayerTurn(currentPlayer);
+        GameplayEvents.EndPlayerTurn(CurrentPlayer);
 
-        currentPlayer = GetOtherPlayer(currentPlayer);
+        currentPlayer = GetOtherSide(currentPlayer);
         CurrentPlayerChanged();
     }
 
-    public static Player GetCurrentPlayer()
+    public static bool IsCurrentPlayer(PlayerType side)
     {
-        return currentPlayer;
-    }
-
-    public static bool IsCurrentPlayer(string name)
-    {
-        return GetPlayer(name) == GetCurrentPlayer();
+        return side == CurrentPlayer;
     }
 
     public static bool ClientIsCurrentPlayer()
     {
-        return GameManager.gameType == GameType.LOCAL || OnlineClient.Instance.Side == GetCurrentPlayer().GetPlayerType();
-    }
-
-    public static Player GetPlayer(string name)
-    {
-        if(name.ToLower().Contains(PlayerType.blue.ToString()))
-        {
-            return bluePlayer;
-        } else if(name.ToLower().Contains(PlayerType.pink.ToString()))
-        {
-            return pinkPlayer;
-        }
-        return null;
-    }
-
-    public static Player GetPlayer(PlayerType playerType)
-    {
-        if (playerType == PlayerType.blue)
-            return bluePlayer;
-        return pinkPlayer;
-    }
-
-    private void ResetRoundCounters() 
-    {
-        bluePlayer.ResetRoundCounter();
-        pinkPlayer.ResetRoundCounter();
+        //return GameManager.gameType == GameType.LOCAL || OnlineClient.Instance.Side == GetCurrentPlayer().GetPlayerType();
+        return ExecutingPlayer == CurrentPlayer;
     }
 
     private void SetStartPlayer(GamePhase gamePhase)
@@ -114,19 +63,14 @@ public class PlayerManager : MonoBehaviour
         if (gamePhase == GamePhase.NONE)
             return;
 
-        currentPlayer = GetPlayer(startPlayer[gamePhase]);
-
-        if(gamePhase == GamePhase.GAMEPLAY)
-        {
-            ResetRoundCounters();
-        }
+        currentPlayer = startPlayer[gamePhase];
 
         CurrentPlayerChanged();
     }
 
     private static void CurrentPlayerChanged()
     {
-        GameplayEvents.ChangeCurrentPlayer(currentPlayer.GetPlayerType());
+        GameplayEvents.ChangeCurrentPlayer(CurrentPlayer);
     }
 
     #region EventSubscriptions

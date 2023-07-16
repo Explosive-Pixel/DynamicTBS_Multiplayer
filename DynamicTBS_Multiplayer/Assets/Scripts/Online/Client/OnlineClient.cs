@@ -230,7 +230,7 @@ public class OnlineClient : MonoBehaviour
 
     private void SyncTimeWithServer()
     {
-        SendToServer(new MsgSyncTime {});
+        SendToServer(new MsgSyncTime { });
     }
 
     private void JoinLobby()
@@ -251,7 +251,7 @@ public class OnlineClient : MonoBehaviour
 
     public void StartGame(TimerSetupType timerSetup, MapType selectedMap)
     {
-        Board.selectedMap = selectedMap;
+        Board.selectedMapType = selectedMap;
         Timer.InitTime(timerSetup);
         GameManager.gameType = GameType.ONLINE;
 

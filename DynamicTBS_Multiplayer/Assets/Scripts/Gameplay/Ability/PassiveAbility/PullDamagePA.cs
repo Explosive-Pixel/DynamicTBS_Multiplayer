@@ -3,35 +3,37 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 
-public class PullDamagePA : IPassiveAbility
+public class PullDamagePA : MonoBehaviour, IPassiveAbility
 {
-    private static PatternType pullDamagePatternType = PatternType.Cross;
+    [SerializeField] private PatternType pullDamagePatternType; // = PatternType.Cross;
+
+    public PassiveAbilityType AbilityType { get { return PassiveAbilityType.PULL_DAMAGE; } }
 
     private Character owner;
 
-    public PullDamagePA(Character character)
+    private void Awake()
     {
-        owner = character;
+        owner = gameObject.GetComponent<Character>();
     }
 
-    public void Apply() 
+    public void Apply()
     {
-        List<Character> characters = CharacterHandler.GetAllLivingCharacters();
+        List<Character> characters = CharacterManager.GetAllLivingCharacters();
 
         foreach (Character character in characters)
         {
             var defaultNetDamage = character.netDamage;
             character.netDamage = (damage) =>
             {
-                if (character.GetPassiveAbility().GetType() == typeof(PullDamagePA))
+                if (character.PassiveAbility.GetType() == typeof(PullDamagePA))
                 {
                     return defaultNetDamage(damage);
                 }
 
-                if (!owner.isDisabled() && owner.isDamageable(damage) && CharacterHandler.AlliedNeighbors(character, owner, pullDamagePatternType))
+                if (!IsDisabled() && owner.isDamageable(damage) && CharacterManager.AlliedNeighbors(character, owner, pullDamagePatternType))
                 {
                     int netDamage = damage - owner.HitPoints;
-                    if(netDamage < defaultNetDamage(damage))
+                    if (netDamage < defaultNetDamage(damage))
                     {
                         return netDamage;
                     }
@@ -44,27 +46,26 @@ public class PullDamagePA : IPassiveAbility
         CharacterEvents.OnCharacterReceivesDamage += AbsorbDamage;
     }
 
+    public bool IsDisabled()
+    {
+        return owner.isDisabled();
+    }
+
     private void AbsorbDamage(Character character, int damage)
     {
-        if (owner.IsDead())
-        {
-            CharacterEvents.OnCharacterReceivesDamage -= AbsorbDamage;
-            return;
-        }
-
-        if (character.GetPassiveAbility().GetType() == typeof(PullDamagePA))
+        if (character.PassiveAbility.GetType() == typeof(PullDamagePA))
         {
             return;
         }
 
-        if(owner.isDamageable(damage) && CharacterHandler.AlliedNeighbors(character, owner, pullDamagePatternType))
+        if (owner.isDamageable(damage) && CharacterManager.AlliedNeighbors(character, owner, pullDamagePatternType))
         {
             owner.TakeDamage(damage);
         }
     }
 
 
-    ~PullDamagePA()
+    private void OnDestroy()
     {
         CharacterEvents.OnCharacterReceivesDamage -= AbsorbDamage;
     }

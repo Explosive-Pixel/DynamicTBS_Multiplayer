@@ -2,21 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PowershotAA : IActiveAbility
+public class PowershotAA : MonoBehaviour, IActiveAbility
 {
-    public static int powershotDamage = 1;
-    public static int selfDamage = 1;
-    public int Cooldown { get { return 3; } }
+    [SerializeField] private int aaCooldown; // 3
+    [SerializeField] private int powershotDamage; // 1
+    [SerializeField] private int powershotSelfDamage; // 1
 
+    public static int damage;
+    public static int selfDamage;
+    public int Cooldown { get { return aaCooldown; } }
+
+    public ActiveAbilityType AbilityType { get { return ActiveAbilityType.POWERSHOT; } }
     private PowershotAAAction powershotAAAction;
 
     Character character;
 
-    public PowershotAA(Character character)
+    private void Awake()
     {
-        this.character = character;
+        damage = powershotDamage;
+        selfDamage = powershotSelfDamage;
+
+        this.character = gameObject.GetComponent<Character>();
         powershotAAAction = GameObject.Find("ActionRegistry").GetComponent<PowershotAAAction>();
     }
+
     public void Execute()
     {
         powershotAAAction.CreateActionDestinations(character);
@@ -24,7 +33,7 @@ public class PowershotAA : IActiveAbility
     }
 
     public int CountActionDestinations()
-    { 
+    {
         return powershotAAAction.CountActionDestinations(character);
     }
 

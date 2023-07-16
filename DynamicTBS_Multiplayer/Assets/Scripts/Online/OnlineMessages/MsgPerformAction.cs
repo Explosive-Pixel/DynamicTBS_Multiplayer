@@ -62,10 +62,10 @@ public class MsgPerformAction : OnlineMessage
                 return;
             }
 
-            Character character = CharacterHandler.GetCharacterByPosition(new Vector3(characterX, characterY, 0));
+            Character character = CharacterManager.GetCharacterByPosition(new Vector3(characterX, characterY, 0));
             if (actionType == ActionType.ActiveAbility)
             {
-                character.GetActiveAbility().Execute();
+                character.ActiveAbility.Execute();
             }
             else
             {

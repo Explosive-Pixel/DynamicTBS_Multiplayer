@@ -15,7 +15,7 @@ public interface IAction
     int CountActionDestinations(Character character);
 
     void CreateActionDestinations(Character character);
-   
+
     void ExecuteAction(GameObject actionDestination);
 
     void AbortAction();
