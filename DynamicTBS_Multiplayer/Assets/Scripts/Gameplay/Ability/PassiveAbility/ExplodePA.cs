@@ -7,6 +7,8 @@ public class ExplodePA : MonoBehaviour, IPassiveAbility
     [SerializeField] private PatternType explodePatternType; // PatternType.Star
     [SerializeField] private int explodeDamage; // 1
 
+    public PassiveAbilityType AbilityType { get { return PassiveAbilityType.EXPLODE; } }
+
     private bool active = false;
 
     private void Awake()
@@ -17,6 +19,11 @@ public class ExplodePA : MonoBehaviour, IPassiveAbility
     public void Apply()
     {
         active = true;
+    }
+
+    public bool IsDisabled()
+    {
+        return false;
     }
 
     private void Explode(Vector3 lastPosition)

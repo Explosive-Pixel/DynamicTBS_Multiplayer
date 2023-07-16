@@ -11,6 +11,7 @@ public class ChangeFloorAA : MonoBehaviour, IActiveAbility
     public static int radius;
     public static int radiusWithInhabitants;
 
+    public ActiveAbilityType AbilityType { get { return ActiveAbilityType.CHANGE_FLOOR; } }
     public int Cooldown { get { return aaCooldown; } }
     private ChangeFloorAAAction changeFloorAAAction;
 

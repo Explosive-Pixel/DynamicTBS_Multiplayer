@@ -12,6 +12,7 @@ public class PowershotAA : MonoBehaviour, IActiveAbility
     public static int selfDamage;
     public int Cooldown { get { return aaCooldown; } }
 
+    public ActiveAbilityType AbilityType { get { return ActiveAbilityType.POWERSHOT; } }
     private PowershotAAAction powershotAAAction;
 
     Character character;

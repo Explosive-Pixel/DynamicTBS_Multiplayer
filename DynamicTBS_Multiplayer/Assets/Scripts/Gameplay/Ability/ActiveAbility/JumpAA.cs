@@ -11,6 +11,7 @@ public class JumpAA : MonoBehaviour, IActiveAbility
     public static PatternType movePattern;
     public static int distance;
 
+    public ActiveAbilityType AbilityType { get { return ActiveAbilityType.JUMP; } }
     public int Cooldown { get { return aaCooldown; } }
 
     private JumpAAAction jumpAAAction;

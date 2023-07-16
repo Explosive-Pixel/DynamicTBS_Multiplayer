@@ -7,6 +7,8 @@ public class PullDamagePA : MonoBehaviour, IPassiveAbility
 {
     [SerializeField] private PatternType pullDamagePatternType; // = PatternType.Cross;
 
+    public PassiveAbilityType AbilityType { get { return PassiveAbilityType.PULL_DAMAGE; } }
+
     private Character owner;
 
     private void Awake()
@@ -28,7 +30,7 @@ public class PullDamagePA : MonoBehaviour, IPassiveAbility
                     return defaultNetDamage(damage);
                 }
 
-                if (!owner.isDisabled() && owner.isDamageable(damage) && CharacterManager.AlliedNeighbors(character, owner, pullDamagePatternType))
+                if (!IsDisabled() && owner.isDamageable(damage) && CharacterManager.AlliedNeighbors(character, owner, pullDamagePatternType))
                 {
                     int netDamage = damage - owner.HitPoints;
                     if (netDamage < defaultNetDamage(damage))
@@ -42,6 +44,11 @@ public class PullDamagePA : MonoBehaviour, IPassiveAbility
         }
 
         CharacterEvents.OnCharacterReceivesDamage += AbsorbDamage;
+    }
+
+    public bool IsDisabled()
+    {
+        return owner.isDisabled();
     }
 
     private void AbsorbDamage(Character character, int damage)

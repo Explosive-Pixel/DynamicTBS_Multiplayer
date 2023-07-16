@@ -13,6 +13,7 @@ public class HealAA : MonoBehaviour, IActiveAbility
     public static int healingPoints;
     public static int moveSpeedBuff;
 
+    public ActiveAbilityType AbilityType { get { return ActiveAbilityType.HEAL; } }
     public int Cooldown { get { return aaCooldown; } }
 
     private HealAAAction healAAAction;

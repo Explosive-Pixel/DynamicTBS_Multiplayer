@@ -9,6 +9,7 @@ public class ElectrifyAA : MonoBehaviour, IActiveAbility
 
     public static int radius;
 
+    public ActiveAbilityType AbilityType { get { return ActiveAbilityType.ELECTRIFY; } }
     public int Cooldown { get { return aaCooldown; } }
 
     Character character;

@@ -13,6 +13,7 @@ public class BlockAA : MonoBehaviour, IActiveAbility
     public static int distance;
     public static int blockingRounds;
 
+    public ActiveAbilityType AbilityType { get { return ActiveAbilityType.BLOCK; } }
     public int Cooldown { get { return aaCooldown; } } // 3
 
     private BlockAAAction blockAAAction;

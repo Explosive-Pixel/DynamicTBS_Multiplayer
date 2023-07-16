@@ -6,6 +6,7 @@ public class TakeControlAA : MonoBehaviour, IActiveAbility
 {
     [SerializeField] private int aaCooldown; // 0
 
+    public ActiveAbilityType AbilityType { get { return ActiveAbilityType.TAKE_CONTROL; } }
     public int Cooldown { get { return aaCooldown; } }
 
     Character character;

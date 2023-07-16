@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class AdrenalinPA : MonoBehaviour, IPassiveAbility
 {
+    public PassiveAbilityType AbilityType { get { return PassiveAbilityType.ADRENALIN; } }
+
     private Character owner;
 
     private void Awake()
@@ -14,6 +16,11 @@ public class AdrenalinPA : MonoBehaviour, IPassiveAbility
     public void Apply()
     {
         CharacterEvents.OnCharacterTakesDamage += ResetActiveAbilityCooldown;
+    }
+
+    public bool IsDisabled()
+    {
+        return false;
     }
 
     private void ResetActiveAbilityCooldown(Character character, int damage)

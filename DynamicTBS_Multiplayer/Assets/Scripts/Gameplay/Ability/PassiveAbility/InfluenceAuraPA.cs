@@ -8,6 +8,8 @@ public class InfluenceAuraPA : MonoBehaviour, IPassiveAbility
     [SerializeField] private int maxInfluence; //= 3;
     [SerializeField] private PatternType influenceAuraPatternType; // = PatternType.Star;
 
+    public PassiveAbilityType AbilityType { get { return PassiveAbilityType.INFLUENCE_AURA; } }
+
     private Character owner;
 
     private readonly Dictionary<Character, int> influencePoints = new();
@@ -20,6 +22,11 @@ public class InfluenceAuraPA : MonoBehaviour, IPassiveAbility
     public void Apply()
     {
         GameplayEvents.OnPlayerTurnEnded += UpdateInfluences;
+    }
+
+    public bool IsDisabled()
+    {
+        return false;
     }
 
     private void UpdateInfluences(PlayerType side)
