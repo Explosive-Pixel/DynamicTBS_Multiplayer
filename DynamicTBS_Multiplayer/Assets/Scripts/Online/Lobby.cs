@@ -63,17 +63,25 @@ public class Lobby
 
     public void StartGame(TimerSetupType timerSetup, MapType selectedMap)
     {
+        Debug.Log("Lobby starting game");
         draft.Clear();
+        Debug.Log("Test 1");
+
+        this.selectedMap = selectedMap;
+        Debug.Log("Test 2");
+        timer = new LobbyTimer(timerSetup);
+        Debug.Log("Test 3");
+
+        Debug.Log("Started Game");
+        Debug.Log("timer: " + timer);
+        BroadcastPlayerNames();
 
         inGame = true;
-        this.selectedMap = selectedMap;
-        timer = new LobbyTimer(timerSetup);
-
-        BroadcastPlayerNames();
     }
 
     public void UpdateGameInfo(PlayerType currentPlayer, GamePhase gamePhase)
     {
+        Debug.Log("Update Game Info for gamePhase " + gamePhase);
         timer.UpdateGameInfo(currentPlayer, gamePhase, ShortId);
     }
 
@@ -92,14 +100,14 @@ public class Lobby
 
     public bool AddConnection(OnlineConnection connection)
     {
-        if(connection.Role == ClientType.PLAYER && Players.Count == 2)
+        if (connection.Role == ClientType.PLAYER && Players.Count == 2)
         {
             return false;
         }
 
         connections.Add(connection);
 
-        if(connection.Role == ClientType.PLAYER)
+        if (connection.Role == ClientType.PLAYER)
         {
             if (Players.Count == 1)
             {
@@ -124,7 +132,7 @@ public class Lobby
     {
         OnlineConnection cnn = FindOnlineConnection(networkConnection);
 
-        if(cnn != null)
+        if (cnn != null)
         {
             connections.Remove(cnn);
             return true;
@@ -159,7 +167,7 @@ public class Lobby
     // Swaps player which may choose side in next game
     private void SwapAdmin()
     {
-        if(Players.Count == 2)
+        if (Players.Count == 2)
         {
             Players.ForEach(player => player.IsAdmin = !player.IsAdmin);
             UpdatePlayers();
@@ -169,10 +177,10 @@ public class Lobby
     public void UpdateConnectionsAfterReconnect(NetworkConnection networkConnection)
     {
         OnlineConnection cnn = FindOnlineConnection(networkConnection);
-        if(cnn != null && cnn.Role == ClientType.PLAYER)
+        if (cnn != null && cnn.Role == ClientType.PLAYER)
         {
             OnlineConnection other = FindOtherPlayer(cnn);
-            if(other != null && other.Side != null)
+            if (other != null && other.Side != null)
             {
                 cnn.Side = PlayerManager.GetOtherSide(other.Side.Value);
                 cnn.IsAdmin = !other.IsAdmin;
@@ -191,7 +199,7 @@ public class Lobby
     {
         string opponentName = "";
         OnlineConnection otherPlayer = FindOtherPlayer(player);
-        if(otherPlayer != null)
+        if (otherPlayer != null)
         {
             opponentName = otherPlayer.Name;
         }
@@ -202,7 +210,7 @@ public class Lobby
             opponentName = opponentName
         };
 
-        if(player.Side != null)
+        if (player.Side != null)
         {
             msg.side = player.Side.Value;
         }
@@ -276,7 +284,7 @@ public class Lobby
 
     private OnlineConnection FindOtherPlayer(OnlineConnection player)
     {
-        if(Players.Contains(player))
+        if (Players.Contains(player))
         {
             return Players.Find(cnn => cnn != player);
         }

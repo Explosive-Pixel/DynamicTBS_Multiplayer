@@ -37,6 +37,7 @@ public class LobbyTimer
 
     public LobbyTimer(TimerSetupType timerSetup)
     {
+        Debug.Log("Creating lobby timer for timerSetupType " + timerSetup);
         this.timerSetup = timerSetup;
 
         timePerPlayer.Add(PlayerType.pink, new PlayerTime { StartTime = DraftAndPlacementTime });
@@ -45,6 +46,7 @@ public class LobbyTimer
 
     public void UpdateGameInfo(PlayerType currentPlayer, GamePhase gamePhase, int lobbyId)
     {
+        Debug.Log("Update game info in lobby timer");
         this.currentPlayer = currentPlayer;
         timerRanOff = false;
 
@@ -63,10 +65,11 @@ public class LobbyTimer
             timePerPlayer[PlayerType.blue].StartTime = newTime;
         }
 
-        if(gamePhase == GamePhase.GAMEPLAY)
+        if (gamePhase == GamePhase.GAMEPLAY)
         {
             timePerPlayer[currentPlayer].StartTime = GameplayTime * Mathf.Pow(1 - Timer.debuffRate, timePerPlayer[currentPlayer].debuff);
-        } else
+        }
+        else
         {
             PlayerType lastPlayer = PlayerManager.GetOtherSide(currentPlayer);
             timePerPlayer[lastPlayer].StartTime = timePerPlayer[lastPlayer].timeLeft;
@@ -83,6 +86,7 @@ public class LobbyTimer
 
     public void UpdateStartTime(int lobbyId)
     {
+        Debug.Log("Setting start time");
         startTime = TimerUtils.Timestamp();
         BroadcastTimerInfo(lobbyId);
     }
@@ -123,11 +127,13 @@ public class LobbyTimer
 
     private void BroadcastTimerInfo(int lobbyId)
     {
+        Debug.Log("Broadcasting timer info");
         OnlineServer.Instance.Broadcast(WriteMsgUpdateTimer(startTime), lobbyId);
     }
 
     private MsgUpdateTimer WriteMsgUpdateTimer(DateTime startTime)
     {
+        Debug.Log("Writing MsgUpdateTimer");
         return new MsgUpdateTimer
         {
             pinkTimeLeft = timePerPlayer[PlayerType.pink].StartTime,

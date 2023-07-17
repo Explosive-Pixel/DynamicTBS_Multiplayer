@@ -48,6 +48,7 @@ public class MsgUpdateServer : OnlineMessage
 
     public override void ReceivedOnServer(NetworkConnection cnn)
     {
+        Debug.Log("Receiving Update Server msg: gamephase " + gamePhase);
         OnlineServer.Instance.UpdateGameInfo(LobbyId, currentPlayer, gamePhase);
     }
 }

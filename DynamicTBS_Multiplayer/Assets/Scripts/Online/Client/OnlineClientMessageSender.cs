@@ -55,6 +55,7 @@ public class OnlineClientMessageSender : MonoBehaviour
     {
         if (OnlineClient.Instance.AdminShouldSendMessage())
         {
+            Debug.Log("Informing Server about current player change: " + currentPlayer + ", gamePhase: " + GameManager.gamePhase);
             OnlineClient.Instance.SendToServer(new MsgUpdateServer
             {
                 currentPlayer = currentPlayer,
