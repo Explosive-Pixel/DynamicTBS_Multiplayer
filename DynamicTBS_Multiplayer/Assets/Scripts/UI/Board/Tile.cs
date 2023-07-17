@@ -43,6 +43,8 @@ public class Tile : MonoBehaviour
         column = ((int)Name[0]) - 65;
 
         Transform(tileType);
+        isChangeable = () => !IsGoal();
+
         SubscribeEvents();
     }
 
@@ -59,13 +61,6 @@ public class Tile : MonoBehaviour
         UnitStart(PlayerManager.GetOtherSide(side)).SetActive(false);
         MasterStart(side).SetActive(tileType == TileType.MasterStartTile);
         MasterStart(PlayerManager.GetOtherSide(side)).SetActive(false);
-
-        isChangeable = () => !IsGoal();
-    }
-
-    public bool IsElectrified()
-    {
-        return state != null && state.GetType() == typeof(ElectrifyAA) && state.IsActive();
     }
 
     public void SetState(TileStateType stateType)

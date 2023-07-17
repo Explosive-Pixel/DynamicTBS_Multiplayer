@@ -6,7 +6,7 @@ public class MasterChar : Character
 {
     private void Start()
     {
-        characterType = CharacterType.RunnerChar;
+        characterType = CharacterType.MasterChar;
     }
 
     public override void Die()

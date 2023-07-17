@@ -31,6 +31,6 @@ public class SteadyStandPA : MonoBehaviour, IPassiveAbility
 
     public bool IsDisabled()
     {
-        return owner.IsStunned();
+        return owner.isDisabled();
     }
 }
