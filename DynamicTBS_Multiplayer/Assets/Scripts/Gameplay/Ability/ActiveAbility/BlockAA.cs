@@ -9,6 +9,8 @@ public class BlockAA : MonoBehaviour, IActiveAbility
     [SerializeField] private int aaCooldown; // 3
     [SerializeField] private int blockDurationInRounds; // 2
 
+    [SerializeField] private GameObject blockGameObject;
+
     public static PatternType pattern;
     public static int distance;
     public static int blockingRounds;
@@ -138,8 +140,7 @@ public class BlockAA : MonoBehaviour, IActiveAbility
 
     private void ToggleBlockPrefab(bool active)
     {
-        // TODO
-        UIUtils.FindChildGameObject(character.gameObject, "Block").SetActive(active);
+        blockGameObject.SetActive(active);
     }
 
     private void ReduceBlockCounter(PlayerType player)

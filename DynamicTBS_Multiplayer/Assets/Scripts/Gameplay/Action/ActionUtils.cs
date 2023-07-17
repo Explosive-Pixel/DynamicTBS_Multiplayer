@@ -7,7 +7,7 @@ public class ActionUtils : MonoBehaviour
 {
     public static List<GameObject> InstantiateActionPositions(List<Vector3> positions, GameObject prefab)
     {
-        List<GameObject> actionGameObjects = new List<GameObject>();
+        List<GameObject> actionGameObjects = new();
         if (positions.Count > 0)
         {
             foreach (Vector3 position in positions)
@@ -20,24 +20,9 @@ public class ActionUtils : MonoBehaviour
 
     public static GameObject InstantiateActionPosition(Vector3 position, GameObject prefab)
     {
-        prefab.transform.position = new Vector3(position.x, position.y, prefab.transform.position.z);
-        return Instantiate(prefab);
-    }
-
-    public static List<GameObject> InstantiateActionPositions(List<GameObject> parents, GameObject prefab)
-    {
-        List<GameObject> actionGameObjects = new();
-        if (parents.Count > 0)
-        {
-            foreach (GameObject parent in parents)
-            {
-                GameObject newGO = Instantiate(prefab);
-                newGO.transform.parent = parent.transform;
-                newGO.transform.position = parent.transform.position;
-                actionGameObjects.Add(newGO);
-            }
-        }
-        return actionGameObjects;
+        GameObject actionPosition = Instantiate(prefab);
+        actionPosition.transform.position = new Vector3(position.x, position.y, prefab.transform.position.z);
+        return actionPosition;
     }
 
     public static void Clear(List<GameObject> actionGameObjects)

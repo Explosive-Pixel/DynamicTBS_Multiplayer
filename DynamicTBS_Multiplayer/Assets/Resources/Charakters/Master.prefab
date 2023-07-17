@@ -240,6 +240,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxInfluence: 3
   influenceAuraPatternType: 1
+  takeoverProgressionGameObject: {fileID: 8777573540235113365}
 --- !u!95 &4737274756616868950 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 2220326497007760933, guid: bc2bba4b9472eb34682304f038d98552, type: 3}
@@ -248,5 +249,10 @@ Animator:
 --- !u!1 &8585225863818319891 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2903370447749462624, guid: bc2bba4b9472eb34682304f038d98552, type: 3}
+  m_PrefabInstance: {fileID: 6876435217903133299}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8777573540235113365 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2791727938227065318, guid: bc2bba4b9472eb34682304f038d98552, type: 3}
   m_PrefabInstance: {fileID: 6876435217903133299}
   m_PrefabAsset: {fileID: 0}
