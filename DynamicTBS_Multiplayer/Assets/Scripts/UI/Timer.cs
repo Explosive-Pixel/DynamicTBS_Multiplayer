@@ -116,8 +116,6 @@ public class Timer : MonoBehaviour
 
     private void SetInactive()
     {
-        Debug.Log("Setting timer inactive");
-
         isActive = false;
 
         GameplayEvents.OnPlayerTurnEnded -= ResetTimerForNextPlayer;
@@ -135,7 +133,6 @@ public class Timer : MonoBehaviour
 
     private void UpdateTimer()
     {
-        Debug.Log("Update TimeER");
         PlayerType side = PlayerManager.CurrentPlayer;
         if (playerStats[side].timeLeft > 0)
         {
@@ -167,8 +164,6 @@ public class Timer : MonoBehaviour
             return;
         }
 
-        Debug.Log("Setting timer active for gamePhase " + gamePhase);
-
         timerType = gamePhase == GamePhase.GAMEPLAY ? TimerType.GAMEPLAY : TimerType.DRAFT_AND_PLACEMENT;
 
         playerStats[PlayerType.pink] = new PlayerInfo(timerPink, TotalTime[timerType]);
@@ -182,9 +177,6 @@ public class Timer : MonoBehaviour
         ResetTimer(PlayerManager.StartPlayer[gamePhase]);
 
         isActive = true;
-        Debug.Log("isActive: " + isActive);
-        Debug.Log("startTime: " + startTime);
-        Debug.Log("IsActive: " + IsActive);
     }
 
     private void OnUnpauseGame(bool paused)
@@ -200,7 +192,6 @@ public class Timer : MonoBehaviour
 
     private void UpdateData(float pinkTimeLeft, float blueTimeLeft, DateTime startTime)
     {
-        Debug.Log("Updating data: startTime " + startTime);
         playerStats[PlayerType.pink].StartTimeLeft = pinkTimeLeft;
         playerStats[PlayerType.blue].StartTimeLeft = blueTimeLeft;
 
@@ -249,7 +240,6 @@ public class Timer : MonoBehaviour
 
     private void UpdateTime(PlayerType side)
     {
-        Debug.Log("Update time");
         float timeleft = playerStats[side].timeLeft;
         float currentTime = timeleft < 0 ? 0 : timeleft;
 

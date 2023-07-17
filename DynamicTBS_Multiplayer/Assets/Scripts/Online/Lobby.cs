@@ -63,25 +63,17 @@ public class Lobby
 
     public void StartGame(TimerSetupType timerSetup, MapType selectedMap)
     {
-        Debug.Log("Lobby starting game");
         draft.Clear();
-        Debug.Log("Test 1");
 
         this.selectedMap = selectedMap;
-        Debug.Log("Test 2");
         timer = new LobbyTimer(timerSetup);
-        Debug.Log("Test 3");
-
-        Debug.Log("Started Game");
-        Debug.Log("timer: " + timer);
-        BroadcastPlayerNames();
-
         inGame = true;
+
+        BroadcastPlayerNames();
     }
 
     public void UpdateGameInfo(PlayerType currentPlayer, GamePhase gamePhase)
     {
-        Debug.Log("Update Game Info for gamePhase " + gamePhase);
         timer.UpdateGameInfo(currentPlayer, gamePhase, ShortId);
     }
 

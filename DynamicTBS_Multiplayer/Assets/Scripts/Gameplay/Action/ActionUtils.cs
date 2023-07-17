@@ -57,6 +57,24 @@ public class ActionUtils : MonoBehaviour
         return actionDestinationCount;
     }
 
+    public static bool ExecuteAction(Vector3 position)
+    {
+        bool actionExecuted = false;
+        foreach (IAction action in ActionRegistry.GetActions())
+        {
+            GameObject hit = UIUtils.FindGameObjectByPosition(action.ActionDestinations, position);
+            if (hit != null)
+            {
+                ExecuteAction(action, hit);
+                actionExecuted = true;
+            }
+            else
+                action.AbortAction();
+        }
+
+        return actionExecuted;
+    }
+
     public static bool ExecuteAction(Ray ray)
     {
         bool actionExecuted = false;

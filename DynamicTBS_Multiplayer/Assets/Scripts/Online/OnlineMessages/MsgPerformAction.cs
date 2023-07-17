@@ -74,8 +74,7 @@ public class MsgPerformAction : OnlineMessage
 
             if (hasDestination)
             {
-                Ray ray = UIUtils.DefaultRay(new Vector3(destinationX, destinationY, 0));
-                ActionUtils.ExecuteAction(ray);
+                ActionUtils.ExecuteAction(new Vector3(destinationX, destinationY, 0));
             }
         }
     }

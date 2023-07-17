@@ -73,7 +73,7 @@ public class OnlineServer : MonoBehaviour
         messageBroker.Driver = driver;
 
         isActive = true;
-        Telegram.SendMessage("Server is active!");
+        SendNotification("Server is active!");
     }
 
     private void Update()
@@ -220,7 +220,7 @@ public class OnlineServer : MonoBehaviour
             driver.Dispose();
             lobbies.Clear();
             isActive = false;
-            Telegram.SendMessage("Server shut down!");
+            SendNotification("Server shut down!");
         }
     }
 
@@ -325,9 +325,7 @@ public class OnlineServer : MonoBehaviour
 
     public void StartGame(int lobbyId, TimerSetupType timerSetup, MapType selectedMap)
     {
-        Debug.Log("Starting Game for lobby with id " + lobbyId);
         Lobby lobby = FindLobby(lobbyId);
-        Debug.Log("Lobby: " + lobby);
         lobby.StartGame(timerSetup, selectedMap);
     }
 
@@ -354,7 +352,12 @@ public class OnlineServer : MonoBehaviour
 
     private void NotifyMetadata(string msg)
     {
-        Telegram.SendMessage(msg + "\nConnected Clients: " + ConnectionCount + "\nActive Lobbies: " + LobbyCount);
+        SendNotification(msg + "\nConnected Clients: " + ConnectionCount + "\nActive Lobbies: " + LobbyCount);
+    }
+
+    private void SendNotification(string msg)
+    {
+        Telegram.SendMessage(msg);
     }
 
     private void OnDestroy() // Shutting down server on destroy.

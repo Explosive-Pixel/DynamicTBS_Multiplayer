@@ -42,7 +42,6 @@ public class MsgUpdateTimer : OnlineMessage
 
     public override void ReceivedOnClient()
     {
-        Debug.Log("Receiving Update Timer msg");
         GameplayEvents.UpdateTimer(pinkTimeLeft, blueTimeLeft, startTimestamp);
     }
 

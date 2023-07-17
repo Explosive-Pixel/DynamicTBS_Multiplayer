@@ -24,6 +24,9 @@ public class CharacterFactory : MonoBehaviour
 
     private void Awake()
     {
+        if (characters.Count > 0)
+            return;
+
         characters.Add(CharacterType.MasterChar, new() { { PlayerType.blue, master_blue }, { PlayerType.pink, master_pink } });
         characters.Add(CharacterType.MechanicChar, new() { { PlayerType.blue, mechanic_blue }, { PlayerType.pink, mechanic_pink } });
         characters.Add(CharacterType.MedicChar, new() { { PlayerType.blue, medic_blue }, { PlayerType.pink, medic_pink } });
@@ -41,7 +44,11 @@ public class CharacterFactory : MonoBehaviour
             GameObject characterGO = Instantiate(prefab);
 
             if (characterGO != null)
-                return characterGO.GetComponent<Character>();
+            {
+                Character character = characterGO.GetComponent<Character>();
+                character.CharacterType = type;
+                return character;
+            }
         }
 
         return null;

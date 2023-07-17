@@ -42,7 +42,7 @@ public class Character : MonoBehaviour
     public IsDisabled isDisabled = () => false;
 
     public string PrettyName { get { return prettyName; } }
-    public CharacterType CharacterType { get { return characterType; } }
+    public CharacterType CharacterType { get { return characterType; } set { characterType = value; } }
     public PlayerType Side { get { return side; } set { side = value; } }
     public int MoveSpeed { get { return moveSpeed; } set { moveSpeed = value; } }
     public int AttackRange { get { return attackRange; } }

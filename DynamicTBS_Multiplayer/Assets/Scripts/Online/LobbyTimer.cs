@@ -24,8 +24,8 @@ public class LobbyTimer
     private float DraftAndPlacementTime { get { return Timer.GetTimeSetup(timerSetup)[TimerType.DRAFT_AND_PLACEMENT]; } }
     private float GameplayTime { get { return Timer.GetTimeSetup(timerSetup)[TimerType.GAMEPLAY]; } }
 
-    private PlayerType currentPlayer = PlayerManager.StartPlayer[GamePhase.DRAFT];
-    private Dictionary<PlayerType, PlayerTime> timePerPlayer = new Dictionary<PlayerType, PlayerTime>();
+    private PlayerType currentPlayer;
+    private readonly Dictionary<PlayerType, PlayerTime> timePerPlayer = new();
 
     private TimerType currentTimerType = TimerType.DRAFT_AND_PLACEMENT;
     private GamePhase currentGamePhase = GamePhase.NONE;
@@ -37,7 +37,6 @@ public class LobbyTimer
 
     public LobbyTimer(TimerSetupType timerSetup)
     {
-        Debug.Log("Creating lobby timer for timerSetupType " + timerSetup);
         this.timerSetup = timerSetup;
 
         timePerPlayer.Add(PlayerType.pink, new PlayerTime { StartTime = DraftAndPlacementTime });
@@ -46,7 +45,6 @@ public class LobbyTimer
 
     public void UpdateGameInfo(PlayerType currentPlayer, GamePhase gamePhase, int lobbyId)
     {
-        Debug.Log("Update game info in lobby timer");
         this.currentPlayer = currentPlayer;
         timerRanOff = false;
 
@@ -86,13 +84,15 @@ public class LobbyTimer
 
     public void UpdateStartTime(int lobbyId)
     {
-        Debug.Log("Setting start time");
         startTime = TimerUtils.Timestamp();
         BroadcastTimerInfo(lobbyId);
     }
 
     public void UpdateTime(int lobbyId)
     {
+        if (!timePerPlayer.ContainsKey(currentPlayer))
+            return;
+
         if (timePerPlayer[currentPlayer].timeLeft > 0)
         {
             timerRanOff = false;
@@ -127,13 +127,11 @@ public class LobbyTimer
 
     private void BroadcastTimerInfo(int lobbyId)
     {
-        Debug.Log("Broadcasting timer info");
         OnlineServer.Instance.Broadcast(WriteMsgUpdateTimer(startTime), lobbyId);
     }
 
     private MsgUpdateTimer WriteMsgUpdateTimer(DateTime startTime)
     {
-        Debug.Log("Writing MsgUpdateTimer");
         return new MsgUpdateTimer
         {
             pinkTimeLeft = timePerPlayer[PlayerType.pink].StartTime,

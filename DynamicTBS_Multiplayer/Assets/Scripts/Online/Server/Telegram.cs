@@ -7,8 +7,6 @@ using System.Text;
 
 public static class Telegram
 {
-    private const bool active = false;
-
     private static string chat_id = "288226916"; // ID (you can know your id via @userinfobot)
     private static string TOKEN = "6216484760:AAF8oUP5UZkztNuY7pEmJ2uTnMR853yIxww"; // bot token (@BotFather)
     private static string API_URL
@@ -33,7 +31,7 @@ public static class Telegram
 
     public static void SendFile(byte[] bytes, string filename, string caption = "")
     {
-        if (!active)
+        if (!ConfigManager.Instance.SendTelegramMessages)
             return;
 
         Init();
@@ -55,7 +53,7 @@ public static class Telegram
 
     public static void SendMessage(string text)
     {
-        if (!active)
+        if (!ConfigManager.Instance.SendTelegramMessages)
             return;
 
         string json = "{\"chat_id\":\"" + chat_id + "\",\"text\":\"" + text + "\"}";

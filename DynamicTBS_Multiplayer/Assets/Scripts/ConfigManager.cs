@@ -14,6 +14,9 @@ public class ConfigManager : MonoBehaviour
     private ushort port;
     public ushort Port { get { return port; } }
 
+    private bool sendTelegramMessages = false;
+    public bool SendTelegramMessages { get { return sendTelegramMessages; } }
+
     private void Awake()
     {
         if (Instance == null)
@@ -57,11 +60,12 @@ public class ConfigManager : MonoBehaviour
 
         ipAddress = data.ipAddress;
         port = Convert.ToUInt16(data.port);
+        sendTelegramMessages = data.sendTelegramMessages;
     }
 
     private static string GetIpAdress(string ipAdress)
     {
-        if(ipAdress == null)
+        if (ipAdress == null)
         {
             Debug.LogError("IP Adress is null");
         }
@@ -73,5 +77,6 @@ public class ConfigManager : MonoBehaviour
     {
         public string ipAddress;
         public int port;
+        public bool sendTelegramMessages;
     }
 }

@@ -42,7 +42,7 @@ public class MsgStartGame : OnlineMessage
     public override void ReceivedOnServer(NetworkConnection cnn)
     {
         OnlineServer.Instance.Broadcast(this, LobbyId);
-        Debug.Log("Received Start Game msg: timerSetup " + timerSetup + ", selectedMap " + selectedMap);
+
         OnlineServer.Instance.StartGame(LobbyId, timerSetup, selectedMap);
     }
 }

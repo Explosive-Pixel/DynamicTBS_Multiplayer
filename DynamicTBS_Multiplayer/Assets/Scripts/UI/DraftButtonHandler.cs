@@ -9,6 +9,9 @@ public class DraftButtonHandler : MonoBehaviour
 
     public void DraftCharacter()
     {
+        if (Input.GetKey(KeyCode.Space))
+            return;
+
         AudioEvents.PressingButton();
 
         if (!PlayerManager.IsCurrentPlayer(side)) return;
