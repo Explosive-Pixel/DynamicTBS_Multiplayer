@@ -37,7 +37,7 @@ public class ElectrifiedState : State
         {
             stunnedInhabitant = tile.CurrentInhabitant;
             stunnedInhabitant.SetState(CharacterStateType.STUNNED);
-            currentCount = 2 * StunnedState.StunDuration + 1;
+            Destroy();
         }
     }
 

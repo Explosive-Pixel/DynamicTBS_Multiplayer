@@ -18,7 +18,7 @@ public class StunnedState : State
         var defaultIsDisabled = character.isDisabled;
         character.isDisabled = () =>
         {
-            if (character.IsStunned()) return true;
+            if (IsStunned(character)) return true;
             return defaultIsDisabled();
         };
     }
@@ -34,5 +34,10 @@ public class StunnedState : State
         }
 
         return null;
+    }
+
+    private bool IsStunned(Character character)
+    {
+        return character.State != null && character.State.GetType() == typeof(StunnedState) && character.State.IsActive();
     }
 }

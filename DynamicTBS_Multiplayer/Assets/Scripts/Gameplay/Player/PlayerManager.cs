@@ -54,7 +54,6 @@ public class PlayerManager : MonoBehaviour
 
     public static bool ClientIsCurrentPlayer()
     {
-        //return GameManager.gameType == GameType.LOCAL || OnlineClient.Instance.Side == GetCurrentPlayer().GetPlayerType();
         return ExecutingPlayer == CurrentPlayer;
     }
 

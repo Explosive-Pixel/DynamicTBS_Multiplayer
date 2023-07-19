@@ -11,9 +11,9 @@ public abstract class State
 
     public State(GameObject parent)
     {
-        this.currentCount = Duration * 2 + 1;
+        currentCount = Duration * 2 + 1;
 
-        if (this.currentCount > 0)
+        if (currentCount > 0)
         {
             ShowPrefab(parent);
             GameplayEvents.OnPlayerTurnEnded += ReduceCurrentCount;

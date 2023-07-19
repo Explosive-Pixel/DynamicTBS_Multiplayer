@@ -20,6 +20,12 @@ public class UIClickHandler : MonoBehaviour
 
     private void Update()
     {
+        if (!currentCamera)
+        {
+            currentCamera = Camera.main;
+            return;
+        }
+
         HandleKeyInputsAnyClient();
 
         if (!GameManager.IsPlayer())
@@ -30,55 +36,40 @@ public class UIClickHandler : MonoBehaviour
         if (!PlayerManager.ClientIsCurrentPlayer())
             return;
 
-        if (!currentCamera)
-        {
-            currentCamera = Camera.main;
-            return;
-        }
-
         HandleKeyInputsCurrentPlayer();
     }
 
-    private void HandleClick(Ray position)
+    private void HandleClickCurrentPlayer(Ray position)
     {
         // First check whether click was onto an action field (like move destination or attack target)
         // If yes, execute that action
         bool actionExecuted = ActionUtils.ExecuteAction(position);
 
-        // If not, check whether click was onto a character
-        // If yes, create action destinations for this character
+        // If not 
         if (!actionExecuted)
         {
-            List<GameObject> charactersOfPlayer = CharacterManager.GetAllLivingCharactersOfSide(PlayerManager.CurrentPlayer)
-                .FindAll(character => character.IsClickable)
-                .ConvertAll(character => character.gameObject);
+            // Check whether click was onto a character
+            // If yes, create action destinations for this character
+            Character character = TrySelectCharacter(position);
+            if (character != null)
+                return;
 
-            GameObject characterGameObject = UIUtils.FindGameObjectByRay(charactersOfPlayer, position);
+            // If not
+            // Check if click was onto active ability trigger
+            GameObject activeAbilityTrigger = UIUtils.FindGameObjectByRay(activeAbilityTriggers, position);
 
-            if (characterGameObject == null)
+            if (activeAbilityTrigger != null && currentCharacter != null)
             {
-                // Check if click was onto active ability trigger
-                GameObject activeAbilityTrigger = UIUtils.FindGameObjectByRay(activeAbilityTriggers, position);
-
-                if (activeAbilityTrigger != null && currentCharacter != null)
-                {
-                    currentCharacter.ExecuteActiveAbility();
-                    return;
-                }
-
-                // Check if click is on UI Element (like surrender button)
-                if (!UIUtils.IsHit())
-                {
-                    // If not
-                    UnselectCharacter();
-                }
+                currentCharacter.ExecuteActiveAbility();
                 return;
             }
 
-            Character character = characterGameObject.GetComponent<Character>();
-            GameplayEvents.ChangeCharacterSelection(character);
-            ActionUtils.InstantiateAllActionPositions(character);
-
+            // Check if click is on UI Element (like surrender button)
+            if (!UIUtils.IsHit())
+            {
+                // If not
+                UnselectCharacter();
+            }
         }
         else
         {
@@ -86,9 +77,28 @@ public class UIClickHandler : MonoBehaviour
         }
     }
 
+    private void HandleClickAnyPlayer(Ray position)
+    {
+        Character character = TrySelectCharacter(position);
+        if (character == null)
+        {
+            UnselectCharacter();
+        }
+    }
+
     private void HandleKeyInputsAnyClient()
     {
+        HandleHotkeys();
 
+        if (GameManager.IsPlayer() && PlayerManager.ClientIsCurrentPlayer())
+            return;
+
+        // Handle mouse click
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            Vector3 clickPosition = Input.mousePosition;
+            HandleClickAnyPlayer(currentCamera.ScreenPointToRay(clickPosition));
+        }
     }
 
     private void HandleKeyInputsAnyPlayer()
@@ -106,19 +116,13 @@ public class UIClickHandler : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             Vector3 clickPosition = Input.mousePosition;
-            HandleClick(currentCamera.ScreenPointToRay(clickPosition));
-        }
-
-        // Unselect currently selected character.
-        if (Input.GetKeyDown(KeyCode.Mouse1)) // Right mouse.
-        {
-            UnselectCharacter();
+            HandleClickCurrentPlayer(currentCamera.ScreenPointToRay(clickPosition));
         }
 
         // Same function as pressing the "Use Active Ability" button.
         if (Input.GetKeyDown(KeyCode.A))
         {
-            if (currentCharacter != null && !currentCharacter.IsActiveAbilityOnCooldown())
+            if (currentCharacter != null && currentCharacter.MayPerformActiveAbility())
             {
                 ActionUtils.ResetActionDestinations();
                 if (activeAbilityExecutionStarted)
@@ -132,6 +136,15 @@ public class UIClickHandler : MonoBehaviour
                     currentCharacter.ExecuteActiveAbility();
                 }
             }
+        }
+    }
+
+    private void HandleHotkeys()
+    {
+        // Unselect currently selected character.
+        if (Input.GetKeyDown(KeyCode.Mouse1)) // Right mouse.
+        {
+            UnselectCharacter();
         }
 
         // Show complete movement pattern, not just legal moves.
@@ -176,11 +189,29 @@ public class UIClickHandler : MonoBehaviour
         }
     }
 
+    private Character TrySelectCharacter(Ray position)
+    {
+        List<GameObject> selectableCharacters = (GameManager.IsPlayer() ? CharacterManager.GetAllLivingCharactersOfSide(PlayerManager.ExecutingPlayer) : CharacterManager.GetAllLivingCharacters())
+                .FindAll(character => character.IsClickable)
+                .ConvertAll(character => character.gameObject);
+
+        GameObject characterGameObject = UIUtils.FindGameObjectByRay(selectableCharacters, position);
+
+        if (characterGameObject == null)
+            return null;
+
+        Character character = characterGameObject.GetComponent<Character>();
+        GameplayEvents.ChangeCharacterSelection(character);
+        ActionUtils.InstantiateAllActionPositions(character);
+
+        return character;
+    }
+
     private void SelectCharacter(Character character)
     {
         if (character != null)
         {
-            HandleClick(UIUtils.DefaultRay(character.gameObject.transform.position));
+            HandleClickCurrentPlayer(UIUtils.DefaultRay(character.gameObject.transform.position));
         }
     }
 

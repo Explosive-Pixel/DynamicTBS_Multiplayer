@@ -131,7 +131,7 @@ public class StatisticRecorder : MonoBehaviour
     public MapStatistics GetMapStatistics(MapType map)
     {
         MapStatistics mapStatistics = stats.mapStatistics.Find(ms => ms.map == map);
-        if(mapStatistics == null)
+        if (mapStatistics == null)
         {
             mapStatistics = new MapStatistics(map);
             stats.mapStatistics.Add(mapStatistics);
@@ -142,11 +142,11 @@ public class StatisticRecorder : MonoBehaviour
     public WinnerCount GetWinnerCount(MapStatistics mapStatistics, PlayerType winner)
     {
         WinnerCount winnerCount = mapStatistics.winsTotalPerPlayer.Find(wc => wc.winner == winner);
-        if(winnerCount == null)
+        if (winnerCount == null)
         {
             winnerCount = new WinnerCount(winner);
             mapStatistics.winsTotalPerPlayer.Add(winnerCount);
-        } 
+        }
 
         return winnerCount;
     }
@@ -154,7 +154,7 @@ public class StatisticRecorder : MonoBehaviour
     public TimerCount GetTimerCount(MapStatistics mapStatistics, TimerSetupType timerSetup)
     {
         TimerCount timerCount = mapStatistics.timerCounts.Find(tc => tc.timerSetup == timerSetup);
-        if(timerCount == null)
+        if (timerCount == null)
         {
             timerCount = new TimerCount(timerSetup);
             mapStatistics.timerCounts.Add(timerCount);
@@ -166,7 +166,7 @@ public class StatisticRecorder : MonoBehaviour
     public CharacterStatistics GetCharacterStatistics(CharacterType character, int draftTotal)
     {
         CharacterStatistics characterStatistics = stats.characterStatistics.Find(cs => cs.character == character && cs.draftTotal == draftTotal);
-        if(characterStatistics == null)
+        if (characterStatistics == null)
         {
             characterStatistics = new CharacterStatistics(character, draftTotal);
             stats.characterStatistics.Add(characterStatistics);
@@ -179,7 +179,7 @@ public class StatisticRecorder : MonoBehaviour
     {
         uniqueDraft.Sort();
         DraftStatistics draftStatistics = stats.draftStatistics.Find(ds => ds.uniqueDraft.SequenceEqual(uniqueDraft));
-        if(draftStatistics == null)
+        if (draftStatistics == null)
         {
             draftStatistics = new DraftStatistics(uniqueDraft);
             stats.draftStatistics.Add(draftStatistics);
@@ -190,7 +190,7 @@ public class StatisticRecorder : MonoBehaviour
     public MapCount GetMapCount(DraftStatistics draftStatistics, MapType mapType)
     {
         MapCount mapCount = draftStatistics.mapCounts.Find(mc => mc.mapType == mapType);
-        if(mapCount == null)
+        if (mapCount == null)
         {
             mapCount = new MapCount(mapType);
             draftStatistics.mapCounts.Add(mapCount);
@@ -225,7 +225,7 @@ public class StatisticRecorder : MonoBehaviour
 
     private void RecordMessage(OnlineMessage msg)
     {
-        if(msg.GetType() == typeof(MsgGameOver))
+        if (msg.GetType() == typeof(MsgGameOver))
         {
             RecordGameStats((MsgGameOver)msg);
             ExportToCSV();
@@ -260,10 +260,10 @@ public class StatisticRecorder : MonoBehaviour
 
     private void RecordCharacterStatistics(Lobby lobby)
     {
-        foreach(KeyValuePair<PlayerType, List<CharacterType>> draftByPlayer in lobby.Draft)
+        foreach (KeyValuePair<PlayerType, List<CharacterType>> draftByPlayer in lobby.Draft)
         {
             List<CharacterType> distinctDraftedCharacters = draftByPlayer.Value.Distinct().ToList();
-            foreach(CharacterType character in distinctDraftedCharacters)
+            foreach (CharacterType character in distinctDraftedCharacters)
             {
                 GetCharacterStatistics(character, draftByPlayer.Value.Count(c => c == character)).count++;
             }
@@ -277,7 +277,7 @@ public class StatisticRecorder : MonoBehaviour
             MapCount mapCount = GetMapCount(GetDraftStatistics(draftByPlayer.Value), lobby.SelectedMap);
             mapCount.count++;
 
-            if(!msg.isDraw && msg.winner == draftByPlayer.Key)
+            if (!msg.isDraw && msg.winner == draftByPlayer.Key)
             {
                 mapCount.winCount++;
             }
@@ -309,7 +309,7 @@ public class StatisticRecorder : MonoBehaviour
             ExportDraftStatisticsToCSV(writer);
             writer.WriteLine();
             ExportTimeStatisticsToCSV(writer);
-        }      
+        }
     }
 
     private void ExportMapStatisticsToCSV(StreamWriter writer)
@@ -373,7 +373,7 @@ public class StatisticRecorder : MonoBehaviour
         int total_drafts = 0;
         foreach (var c in GetCharacterTypes())
         {
-            int c_total = GetDraftNumbers().Sum(x => x*GetCharacterStatistics(c, x).count);
+            int c_total = GetDraftNumbers().Sum(x => x * GetCharacterStatistics(c, x).count);
             total_drafts += c_total;
             total_line += ";" + c_total;
             total_line_percent += ";" + ToPercent(c_total, total);
@@ -395,12 +395,12 @@ public class StatisticRecorder : MonoBehaviour
         header += ";Total times played;Total times played (in %);Total wins with this draft;Total wins with this draft (in %)";
         writer.WriteLine(header);
 
-        foreach(DraftStatistics draftStatistics in stats.draftStatistics)
+        foreach (DraftStatistics draftStatistics in stats.draftStatistics)
         {
             string line = draftStatistics.GetName();
             int total_count = draftStatistics.mapCounts.Sum(mc => mc.count);
             int total_win_count = draftStatistics.mapCounts.Sum(mc => mc.winCount);
-            foreach(MapType mapType in GetMapTypes())
+            foreach (MapType mapType in GetMapTypes())
             {
                 MapCount mapCount = GetMapCount(draftStatistics, mapType);
                 line += ";" + mapCount.count + ";" + ToPercent(mapCount.count, total_count) + ";" + mapCount.winCount + ";" + ToPercent(mapCount.winCount, total_win_count);
@@ -422,7 +422,7 @@ public class StatisticRecorder : MonoBehaviour
         header += ";Total played;Total played (in %)";
         writer.WriteLine(header);
 
-        foreach(TimerSetupType timerSetup in GetTimerSetupTypes())
+        foreach (TimerSetupType timerSetup in GetTimerSetupTypes())
         {
             string line = timerSetup.ToString();
             GetMapTypes().ForEach(map => line += ";" + GetTimerCount(GetMapStatistics(map), timerSetup).count);
@@ -441,7 +441,7 @@ public class StatisticRecorder : MonoBehaviour
     private List<PlayerType> GetPlayerTypes()
     {
         var playerTypes = new List<PlayerType>();
-        foreach(PlayerType playerType in Enum.GetValues(typeof(PlayerType)))
+        foreach (PlayerType playerType in Enum.GetValues(typeof(PlayerType)))
         {
             playerTypes.Add(playerType);
         }
@@ -461,7 +461,7 @@ public class StatisticRecorder : MonoBehaviour
     private List<TimerSetupType> GetTimerSetupTypes()
     {
         var timerSetupTypes = new List<TimerSetupType>();
-        foreach(TimerSetupType timerSetupType in Enum.GetValues(typeof(TimerSetupType)))
+        foreach (TimerSetupType timerSetupType in Enum.GetValues(typeof(TimerSetupType)))
         {
             timerSetupTypes.Add(timerSetupType);
         }
@@ -471,7 +471,7 @@ public class StatisticRecorder : MonoBehaviour
     private List<CharacterType> GetCharacterTypes()
     {
         var characterTypes = new List<CharacterType>();
-        foreach(CharacterType characterType in Enum.GetValues(typeof(CharacterType)))
+        foreach (CharacterType characterType in Enum.GetValues(typeof(CharacterType)))
         {
             if (characterType == CharacterType.MasterChar)
                 continue;
@@ -541,17 +541,17 @@ public class StatisticRecorder : MonoBehaviour
 
     private void StartSendDailyCSVReport()
     {
-        // Bestimme die gewünschte Uhrzeit für die Ausführung (hier um 10:00 Uhr)
+        // Bestimme die gewï¿½nschte Uhrzeit fï¿½r die Ausfï¿½hrung (hier um 10:00 Uhr)
         int targetHour = 13;
         int targetMinute = 37;
         int targetSecond = 0;
 
-        // Berechne die Zeit bis zur nächsten Ausführung
+        // Berechne die Zeit bis zur nï¿½chsten Ausfï¿½hrung
         System.DateTime now = System.DateTime.Now;
         System.DateTime nextRunTime = new System.DateTime(now.Year, now.Month, now.Day, targetHour, targetMinute, targetSecond);
         if (nextRunTime < now)
         {
-            nextRunTime = nextRunTime.AddDays(1); // Führe die Methode am nächsten Tag aus
+            nextRunTime = nextRunTime.AddDays(1); // Fï¿½hre die Methode am nï¿½chsten Tag aus
         }
         float delayInSeconds = (float)(nextRunTime - now).TotalSeconds;
 

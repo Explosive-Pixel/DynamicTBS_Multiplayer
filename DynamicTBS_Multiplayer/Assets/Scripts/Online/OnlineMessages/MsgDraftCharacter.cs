@@ -38,7 +38,7 @@ public class MsgDraftCharacter : OnlineMessage
     {
         if (OnlineClient.Instance.ShouldReadMessage(playerId))
         {
-            //DraftManager.DraftCharacter(characterType, PlayerManager.GetPlayer(playerId).GetPlayerType());
+            DraftManager.DraftCharacter(characterType, playerId);
         }
     }
 

@@ -246,8 +246,7 @@ public class Timer : MonoBehaviour
         float minutes = Mathf.FloorToInt(currentTime / 60);
         float seconds = Mathf.FloorToInt(currentTime % 60);
 
-        if (playerStats[side].timerGO.TryGetComponent(out TMPro.TextMeshPro textInput))
-            textInput.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        playerStats[side].timerGO.GetComponent<TMPro.TextMeshPro>().text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
     private void DrawNoTimeLeftConsequences(GamePhase gamePhase, PlayerType playerType)

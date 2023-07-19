@@ -24,8 +24,8 @@ public class LobbyTimer
     private float DraftAndPlacementTime { get { return Timer.GetTimeSetup(timerSetup)[TimerType.DRAFT_AND_PLACEMENT]; } }
     private float GameplayTime { get { return Timer.GetTimeSetup(timerSetup)[TimerType.GAMEPLAY]; } }
 
-    private PlayerType currentPlayer = PlayerManager.StartPlayer[GamePhase.DRAFT];
-    private Dictionary<PlayerType, PlayerTime> timePerPlayer = new Dictionary<PlayerType, PlayerTime>();
+    private PlayerType currentPlayer;
+    private readonly Dictionary<PlayerType, PlayerTime> timePerPlayer = new();
 
     private TimerType currentTimerType = TimerType.DRAFT_AND_PLACEMENT;
     private GamePhase currentGamePhase = GamePhase.NONE;
@@ -63,10 +63,11 @@ public class LobbyTimer
             timePerPlayer[PlayerType.blue].StartTime = newTime;
         }
 
-        if(gamePhase == GamePhase.GAMEPLAY)
+        if (gamePhase == GamePhase.GAMEPLAY)
         {
             timePerPlayer[currentPlayer].StartTime = GameplayTime * Mathf.Pow(1 - Timer.debuffRate, timePerPlayer[currentPlayer].debuff);
-        } else
+        }
+        else
         {
             PlayerType lastPlayer = PlayerManager.GetOtherSide(currentPlayer);
             timePerPlayer[lastPlayer].StartTime = timePerPlayer[lastPlayer].timeLeft;
@@ -89,6 +90,9 @@ public class LobbyTimer
 
     public void UpdateTime(int lobbyId)
     {
+        if (!timePerPlayer.ContainsKey(currentPlayer))
+            return;
+
         if (timePerPlayer[currentPlayer].timeLeft > 0)
         {
             timerRanOff = false;

@@ -20,7 +20,7 @@ public class PlacementManager : MonoBehaviour
     public static int MaxPlacementCount { get { return PlacementSequence.Sum(); } }
     private List<Vector3> CharacterPositions(PlayerType side) { return side == PlayerType.blue ? blueCharacterPositions : pinkCharacterPositions; }
 
-    private bool init = false;
+    private static bool init = false;
 
     private void Awake()
     {

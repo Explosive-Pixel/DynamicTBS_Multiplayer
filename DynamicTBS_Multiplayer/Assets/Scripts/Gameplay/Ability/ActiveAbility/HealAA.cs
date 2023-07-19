@@ -26,7 +26,7 @@ public class HealAA : MonoBehaviour, IActiveAbility
         healingPoints = healPoints;
         moveSpeedBuff = moveSpeedBuffer;
 
-        this.character = gameObject.GetComponent<Character>();
+        character = gameObject.GetComponent<Character>();
         healAAAction = GameObject.Find("ActionRegistry").GetComponent<HealAAAction>();
     }
 

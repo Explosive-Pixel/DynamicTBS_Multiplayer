@@ -42,7 +42,7 @@ public class Character : MonoBehaviour
     public IsDisabled isDisabled = () => false;
 
     public string PrettyName { get { return prettyName; } }
-    public CharacterType CharacterType { get { return characterType; } }
+    public CharacterType CharacterType { get { return characterType; } set { characterType = value; } }
     public PlayerType Side { get { return side; } set { side = value; } }
     public int MoveSpeed { get { return moveSpeed; } set { moveSpeed = value; } }
     public int AttackRange { get { return attackRange; } }
@@ -53,6 +53,7 @@ public class Character : MonoBehaviour
     public int HitPoints { get { return hitPoints; } set { hitPoints = value; UpdateHitPointAnimator(); } }
     public int ActiveAbilityCooldown { get { return activeAbilityCooldown; } set { activeAbilityCooldown = value; UpdateCooldownAnimator(); } }
     public bool IsClickable { get { return isClickable; } set { isClickable = value; } }
+    public State State { get { return state; } }
 
     private void Awake()
     {
@@ -107,11 +108,6 @@ public class Character : MonoBehaviour
         state = null;
     }
 
-    public bool IsStunned()
-    {
-        return state != null && state.GetType() == typeof(StunnedState) && state.IsActive();
-    }
-
     public virtual void Die()
     {
         ResetState();
@@ -145,7 +141,7 @@ public class Character : MonoBehaviour
 
     public bool CanPerformAction()
     {
-        return !IsStunned() && (ActionUtils.CountAllActionDestinations(this) > 0 || CanPerformActiveAbility());
+        return !isDisabled() && (ActionUtils.CountAllActionDestinations(this) > 0 || CanPerformActiveAbility());
     }
 
     public void SetActiveAbilityOnCooldown()

@@ -19,7 +19,7 @@ public class DraftManager : MonoBehaviour
     public static int CurrentPlayerTotalDraftCount { get { return draftSequenceIndex < DraftSequence.Count ? DraftSequence[draftSequenceIndex] : 0; } }
     public static int MaxDraftCount { get { return DraftSequence.Sum(); } }
 
-    private bool init = false;
+    private static bool init = false;
 
     private void Start()
     {

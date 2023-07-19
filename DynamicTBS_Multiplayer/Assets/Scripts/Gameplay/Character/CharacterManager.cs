@@ -6,6 +6,11 @@ using System.Linq;
 
 public class CharacterManager : MonoBehaviour
 {
+    private void Awake()
+    {
+        GetAllLivingCharacters().ForEach(character => Destroy(character.gameObject));
+    }
+
     public static List<Character> GetAllLivingCharacters()
     {
         return FindObjectsOfType<Character>().ToList();

@@ -63,7 +63,8 @@ public class OnlineServer : MonoBehaviour
             {
                 using WebClient client = new WebClient();
                 ip = client.DownloadString("https://api.ipify.org");
-            } catch(Exception)
+            }
+            catch (Exception)
             {
                 ip = "Unable to find out IP address.";
             }
@@ -72,7 +73,7 @@ public class OnlineServer : MonoBehaviour
         messageBroker.Driver = driver;
 
         isActive = true;
-        Telegram.SendMessage("Server is active!");
+        SendNotification("Server is active!");
     }
 
     private void Update()
@@ -102,7 +103,7 @@ public class OnlineServer : MonoBehaviour
     {
         Lobby lobby = FindLobby(lobbyId);
 
-        if(lobby != null)
+        if (lobby != null)
         {
             Broadcast(msg, lobby);
         }
@@ -219,7 +220,7 @@ public class OnlineServer : MonoBehaviour
             driver.Dispose();
             lobbies.Clear();
             isActive = false;
-            Telegram.SendMessage("Server shut down!");
+            SendNotification("Server shut down!");
         }
     }
 
@@ -252,7 +253,7 @@ public class OnlineServer : MonoBehaviour
     {
         Lobby lobby = FindLobby(lobbyId);
 
-        if(lobby == null)
+        if (lobby == null)
         {
             // Send message to client that lobby does not exist
             SendToClient(new MsgServerNotification
@@ -266,7 +267,7 @@ public class OnlineServer : MonoBehaviour
         OnlineConnection connection = new OnlineConnection(cnn, userData);
         bool added = lobby.AddConnection(connection);
 
-        if(!added)
+        if (!added)
         {
             // Send message to client that lobby is full
             SendToClient(new MsgServerNotification
@@ -316,7 +317,7 @@ public class OnlineServer : MonoBehaviour
 
         BroadcastMetadata(lobby);
 
-        if(connection.Role == ClientType.PLAYER)
+        if (connection.Role == ClientType.PLAYER)
             lobby.UpdatePlayers();
 
         lobby.SendGameState(connection.NetworkConnection);
@@ -351,7 +352,12 @@ public class OnlineServer : MonoBehaviour
 
     private void NotifyMetadata(string msg)
     {
-        Telegram.SendMessage(msg + "\nConnected Clients: " + ConnectionCount + "\nActive Lobbies: " + LobbyCount);
+        SendNotification(msg + "\nConnected Clients: " + ConnectionCount + "\nActive Lobbies: " + LobbyCount);
+    }
+
+    private void SendNotification(string msg)
+    {
+        Telegram.SendMessage(msg);
     }
 
     private void OnDestroy() // Shutting down server on destroy.
