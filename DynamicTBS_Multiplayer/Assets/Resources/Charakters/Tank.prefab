@@ -55,6 +55,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2238198538404079837, guid: bc2bba4b9472eb34682304f038d98552, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.079
+      objectReference: {fileID: 0}
+    - target: {fileID: 2238198538404079837, guid: bc2bba4b9472eb34682304f038d98552, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.08
+      objectReference: {fileID: 0}
     - target: {fileID: 4841834827429287078, guid: bc2bba4b9472eb34682304f038d98552, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -66,11 +74,15 @@ PrefabInstance:
     - target: {fileID: 5978164662305834790, guid: bc2bba4b9472eb34682304f038d98552, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: a9596e19de196c047b09d5550c8138da, type: 3}
+      objectReference: {fileID: 21300000, guid: 3b2f717c44e2ad440bdbff5903e7d1cc, type: 3}
     - target: {fileID: 5978164662305834790, guid: bc2bba4b9472eb34682304f038d98552, type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8570135766121187851, guid: bc2bba4b9472eb34682304f038d98552, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 6b2a8517f3a708a46b36191e4b6834ef, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc2bba4b9472eb34682304f038d98552, type: 3}
 --- !u!95 &360779504018028600 stripped
@@ -113,7 +125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prettyName: Tank
-  maxHitPoints: 4
+  maxHitPoints: 3
   moveSpeed: 1
   attackRange: 1
   side: 0
