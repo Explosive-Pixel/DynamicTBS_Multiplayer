@@ -7,6 +7,8 @@ using System.Linq;
 
 public class StatisticRecorder : MonoBehaviour
 {
+    private const int maxDraftCount = 14;
+
     #region SingletonImplementation
     public static StatisticRecorder Instance { set; get; }
 
@@ -35,7 +37,7 @@ public class StatisticRecorder : MonoBehaviour
     [Serializable]
     public class Statistics
     {
-        public DateTime recordedSince = DateTime.Now;
+        public string recordedSince = DateTime.Now.ToString("dddd, dd MMMM yyyy HH:mm:ss");
         public int gamesTotal = 0;
         public List<MapStatistics> mapStatistics = new();
         public List<CharacterStatistics> characterStatistics = new();
@@ -299,7 +301,7 @@ public class StatisticRecorder : MonoBehaviour
         {
             writer.WriteLine("SKYMATES STATISTICS");
             writer.WriteLine(DateTime.Now.ToString("dddd, dd MMMM yyyy HH:mm:ss"));
-            writer.WriteLine("Games recorded since: " + stats.recordedSince.ToString("dddd, dd MMMM yyyy HH:mm:ss"));
+            writer.WriteLine("Games recorded since: " + stats.recordedSince);
             writer.WriteLine();
             writer.WriteLine();
 
@@ -485,7 +487,7 @@ public class StatisticRecorder : MonoBehaviour
     private List<int> GetDraftNumbers()
     {
         var draftNumbers = new List<int>();
-        for (int x = 0; x <= DraftManager.MaxDraftCount / 2; x++)
+        for (int x = 0; x <= maxDraftCount / 2; x++)
         {
             draftNumbers.Add(x);
         }
