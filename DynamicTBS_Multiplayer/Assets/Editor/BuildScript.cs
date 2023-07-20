@@ -83,18 +83,20 @@ public static class BuildScript
     private static void PerformBuild(BuildType buildType, Platform platform)
     {
         Debug.Log("Performing build: " + buildType);
-        string buildPath = "Builds/" + platform.ToString() + "/" + buildType.ToString() +"/" + PlayerSettings.productName + "-" + PlayerSettings.bundleVersion;
+        string buildPath = "Builds/" + platform.ToString() + "/" + buildType.ToString() + "/" + PlayerSettings.productName + "-" + PlayerSettings.bundleVersion;
 
         BuildTarget buildTarget = BuildTarget.StandaloneWindows64;
         if (platform == Platform.Windows)
         {
             buildTarget = BuildTarget.StandaloneWindows64;
             buildPath += ".exe";
-        } else if (platform == Platform.Mac)
+        }
+        else if (platform == Platform.Mac)
         {
             buildTarget = BuildTarget.StandaloneOSX;
             buildPath += ".app";
-        } else if (platform == Platform.Linux)
+        }
+        else if (platform == Platform.Linux)
         {
             buildTarget = BuildTarget.StandaloneLinux64;
             buildPath += ".x86_64";
@@ -119,6 +121,9 @@ public static class BuildScript
     {
         PlayerSettings.resizableWindow = true;
         PlayerSettings.allowFullscreenSwitch = buildType == BuildType.Client;
+
+        if (buildType == BuildType.Server)
+            PlayerSettings.fullScreenMode = FullScreenMode.Windowed;
     }
 
     private static string[] ConfigureScenes(BuildType buildType)
