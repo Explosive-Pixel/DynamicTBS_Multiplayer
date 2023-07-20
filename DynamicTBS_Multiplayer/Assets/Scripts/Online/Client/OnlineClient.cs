@@ -206,7 +206,7 @@ public class OnlineClient : MonoBehaviour
     public string GetPlayerName(PlayerType side)
     {
         if (userData.Role == ClientType.SPECTATOR)
-            return playerNames[side];
+            return playerNames.ContainsKey(side) ? playerNames[side] : "";
 
         return Side == side ? UserData.Name : OpponentName;
     }
