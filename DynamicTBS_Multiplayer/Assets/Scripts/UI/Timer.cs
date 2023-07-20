@@ -293,7 +293,7 @@ public class Timer : MonoBehaviour
             GameplayEvents.GameIsOver(PlayerManager.GetOtherSide(side), GameOverCondition.PLAYER_TIMEOUT);
         }
 
-        GameplayEvents.AbortCurrentPlayerTurn(GameplayManager.GetRemainingActions(), AbortTurnCondition.PLAYER_TIMEOUT);
+        GameplayEvents.AbortCurrentPlayerTurn(side, GameplayManager.GetRemainingActions(), AbortTurnCondition.PLAYER_TIMEOUT);
     }
 
     private void SubscribeEvents()

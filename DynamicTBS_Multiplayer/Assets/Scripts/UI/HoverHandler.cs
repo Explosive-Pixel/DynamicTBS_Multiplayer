@@ -21,4 +21,9 @@ public class HoverHandler : MonoBehaviour
     {
         hoverObject.SetActive(false);
     }
+
+    private void OnDisable()
+    {
+        hoverObject.SetActive(false);
+    }
 }

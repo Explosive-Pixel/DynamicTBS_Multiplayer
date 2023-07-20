@@ -9,7 +9,9 @@ public class UIClickHandler : MonoBehaviour
 
     private Camera currentCamera;
 
-    private Character currentCharacter = null;
+    private static Character currentCharacter = null;
+    public static Character CurrentCharacter { get { return currentCharacter; } }
+
     private bool activeAbilityExecutionStarted = false;
 
     private void Awake()
@@ -202,7 +204,6 @@ public class UIClickHandler : MonoBehaviour
 
         Character character = characterGameObject.GetComponent<Character>();
         GameplayEvents.ChangeCharacterSelection(character);
-        ActionUtils.InstantiateAllActionPositions(character);
 
         return character;
     }
@@ -225,6 +226,9 @@ public class UIClickHandler : MonoBehaviour
         ActionUtils.ResetActionDestinations();
         activeAbilityExecutionStarted = false;
         currentCharacter = character;
+
+        if (character != null)
+            ActionUtils.InstantiateAllActionPositions(character);
     }
 
     private void UnselectCharacter()
@@ -237,9 +241,10 @@ public class UIClickHandler : MonoBehaviour
         UnselectCharacter();
     }
 
-    private void UnselectCharacter(int remainingActions, AbortTurnCondition abortTurnCondition)
+    private void UnselectCharacter(PlayerType abortedTurnPlayer, int remainingActions, AbortTurnCondition abortTurnCondition)
     {
-        UnselectCharacter();
+        if (abortedTurnPlayer == PlayerManager.ExecutingPlayer)
+            UnselectCharacter();
     }
 
     #region EventSubscriptions
