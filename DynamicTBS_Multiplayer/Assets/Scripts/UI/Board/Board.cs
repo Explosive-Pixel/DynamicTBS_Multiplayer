@@ -29,7 +29,11 @@ public enum MapType
     [Description("Arrows")]
     ARROWS = 2,
     [Description("Labyrinth")]
-    LABYRINTH = 3
+    LABYRINTH = 3,
+    [Description("Radiance")]
+    RADIANCE = 4,
+    [Description("Fracture")]
+    FRACTURE = 5
 }
 
 public class Board : MonoBehaviour
