@@ -92,7 +92,7 @@ public class GameplayManager : MonoBehaviour
         {
             if (maxActionsPerRound - remainingActions <= minActionsPerRound)
             {
-                GameplayEvents.AbortCurrentPlayerTurn(remainingActions, AbortTurnCondition.NO_AVAILABLE_ACTION);
+                GameplayEvents.AbortCurrentPlayerTurn(player, remainingActions, AbortTurnCondition.NO_AVAILABLE_ACTION);
             }
             else
             {
@@ -128,7 +128,7 @@ public class GameplayManager : MonoBehaviour
         HandleNoRemainingActions();
     }
 
-    private void AbortTurn(int remainingActions, AbortTurnCondition abortTurnCondition)
+    private void AbortTurn(PlayerType abortedTurnPlayer, int remainingActions, AbortTurnCondition abortTurnCondition)
     {
         AbortTurn();
     }

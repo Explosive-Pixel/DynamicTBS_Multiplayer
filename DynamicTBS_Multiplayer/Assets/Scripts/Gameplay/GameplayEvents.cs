@@ -29,7 +29,7 @@ public static class GameplayEvents
     public delegate void UpdatePlayer(PlayerType currentPlayer);
     public static event UpdatePlayer OnCurrentPlayerChanged;
 
-    public delegate void AbortTurn(int remainingActions, AbortTurnCondition abortTurnCondition);
+    public delegate void AbortTurn(PlayerType abortedTurnPlayer, int remainingActions, AbortTurnCondition abortTurnCondition);
     public static event AbortTurn OnPlayerTurnAborted;
 
     public delegate void ExecuteUIAction(PlayerType player, UIAction uIAction);
@@ -96,10 +96,10 @@ public static class GameplayEvents
             OnCurrentPlayerChanged(playerType);
     }
 
-    public static void AbortCurrentPlayerTurn(int remainingActions, AbortTurnCondition abortTurnCondition)
+    public static void AbortCurrentPlayerTurn(PlayerType abortedTurnPlayer, int remainingActions, AbortTurnCondition abortTurnCondition)
     {
         if (OnPlayerTurnAborted != null)
-            OnPlayerTurnAborted(remainingActions, abortTurnCondition);
+            OnPlayerTurnAborted(abortedTurnPlayer, remainingActions, abortTurnCondition);
     }
 
     public static void UIActionExecuted(PlayerType player, UIAction uIAction)

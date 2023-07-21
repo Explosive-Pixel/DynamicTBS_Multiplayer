@@ -233,6 +233,9 @@ public class Character : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (UIClickHandler.CurrentCharacter == this)
+            GameplayEvents.ChangeCharacterSelection(null);
+
         UnsubscribeEvents();
     }
 }

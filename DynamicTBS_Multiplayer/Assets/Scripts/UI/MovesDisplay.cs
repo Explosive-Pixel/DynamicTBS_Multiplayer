@@ -40,10 +40,9 @@ public class MovesDisplay : MonoBehaviour
         DisplayMoves(newLine);
     }
 
-    private void WriteAbortTurnToString(int remainingActions, AbortTurnCondition abortTurnCondition)
+    private void WriteAbortTurnToString(PlayerType abortedTurnPlayer, int remainingActions, AbortTurnCondition abortTurnCondition)
     {
-        PlayerType player = GetPlayerTypeByActionCount();
-        string newLine = TranslatePlayerSide(player).Trim() + "'s turn was aborted since " + player + " ";
+        string newLine = TranslatePlayerSide(abortedTurnPlayer).Trim() + "'s turn was aborted since " + abortedTurnPlayer + " ";
         if (abortTurnCondition == AbortTurnCondition.NO_AVAILABLE_ACTION)
         {
             newLine += "had no more available action.";

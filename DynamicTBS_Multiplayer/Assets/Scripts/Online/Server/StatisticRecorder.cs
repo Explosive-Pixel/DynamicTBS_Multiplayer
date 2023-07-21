@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Linq;
 
 public class StatisticRecorder : MonoBehaviour
 {
+    private const int maxDraftCount = 14;
+
     #region SingletonImplementation
     public static StatisticRecorder Instance { set; get; }
 
@@ -36,10 +37,11 @@ public class StatisticRecorder : MonoBehaviour
     [Serializable]
     public class Statistics
     {
+        public string recordedSince = DateTime.Now.ToString("dddd, dd MMMM yyyy HH:mm:ss");
         public int gamesTotal = 0;
-        public List<MapStatistics> mapStatistics = new List<MapStatistics>();
-        public List<CharacterStatistics> characterStatistics = new List<CharacterStatistics>();
-        public List<DraftStatistics> draftStatistics = new List<DraftStatistics>();
+        public List<MapStatistics> mapStatistics = new();
+        public List<CharacterStatistics> characterStatistics = new();
+        public List<DraftStatistics> draftStatistics = new();
     }
 
     [Serializable]
@@ -48,8 +50,8 @@ public class StatisticRecorder : MonoBehaviour
         public MapType map;
         public int gamesTotal = 0;
         public int drawGamesTotal = 0;
-        public List<WinnerCount> winsTotalPerPlayer = new List<WinnerCount>();
-        public List<TimerCount> timerCounts = new List<TimerCount>();
+        public List<WinnerCount> winsTotalPerPlayer = new();
+        public List<TimerCount> timerCounts = new();
 
         public MapStatistics(MapType map)
         {
@@ -99,7 +101,7 @@ public class StatisticRecorder : MonoBehaviour
     public class DraftStatistics
     {
         public List<CharacterType> uniqueDraft;
-        public List<MapCount> mapCounts = new List<MapCount>();
+        public List<MapCount> mapCounts = new();
 
         public DraftStatistics(List<CharacterType> uniqueDraft)
         {
@@ -297,8 +299,9 @@ public class StatisticRecorder : MonoBehaviour
 
         using (StreamWriter writer = new StreamWriter(path))
         {
-            writer.WriteLine("SKYRATS STATISTICS");
+            writer.WriteLine("SKYMATES STATISTICS");
             writer.WriteLine(DateTime.Now.ToString("dddd, dd MMMM yyyy HH:mm:ss"));
+            writer.WriteLine("Games recorded since: " + stats.recordedSince);
             writer.WriteLine();
             writer.WriteLine();
 
@@ -484,7 +487,7 @@ public class StatisticRecorder : MonoBehaviour
     private List<int> GetDraftNumbers()
     {
         var draftNumbers = new List<int>();
-        for (int x = 0; x <= DraftManager.MaxDraftCount / 2; x++)
+        for (int x = 0; x <= maxDraftCount / 2; x++)
         {
             draftNumbers.Add(x);
         }

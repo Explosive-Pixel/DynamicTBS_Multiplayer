@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class HoverHandler : MonoBehaviour
 {
@@ -12,6 +13,16 @@ public class HoverHandler : MonoBehaviour
     }
 
     private void OnMouseExit()
+    {
+        hoverObject.SetActive(false);
+    }
+
+    private void OnMouseDown()
+    {
+        hoverObject.SetActive(false);
+    }
+
+    private void OnDisable()
     {
         hoverObject.SetActive(false);
     }

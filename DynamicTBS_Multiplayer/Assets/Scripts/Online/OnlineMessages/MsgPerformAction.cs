@@ -56,26 +56,32 @@ public class MsgPerformAction : OnlineMessage
     {
         if (OnlineClient.Instance.ShouldReadMessage(playerId))
         {
+            Character currentlySelectedCharacter = UIClickHandler.CurrentCharacter;
+            GameplayEvents.ChangeCharacterSelection(null);
+
             if (actionType == ActionType.Skip)
             {
                 SkipAction.Execute(actionCount);
-                return;
-            }
-
-            Character character = CharacterManager.GetCharacterByPosition(new Vector3(characterX, characterY, 0));
-            if (actionType == ActionType.ActiveAbility)
-            {
-                character.ActiveAbility.Execute();
             }
             else
             {
-                ActionUtils.InstantiateAllActionPositions(character);
+                Character character = CharacterManager.GetCharacterByPosition(new Vector3(characterX, characterY, 0));
+                if (actionType == ActionType.ActiveAbility)
+                {
+                    character.ActiveAbility.Execute();
+                }
+                else
+                {
+                    ActionUtils.InstantiateAllActionPositions(character);
+                }
+
+                if (hasDestination)
+                {
+                    ActionUtils.ExecuteAction(new Vector3(destinationX, destinationY, 0));
+                }
             }
 
-            if (hasDestination)
-            {
-                ActionUtils.ExecuteAction(new Vector3(destinationX, destinationY, 0));
-            }
+            GameplayEvents.ChangeCharacterSelection(currentlySelectedCharacter);
         }
     }
 
