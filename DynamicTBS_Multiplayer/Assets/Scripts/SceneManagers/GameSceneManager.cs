@@ -45,18 +45,8 @@ public class GameSceneManager : MonoBehaviour
     {
         AudioEvents.PressingButton();
 
-        if (GameManager.gameType == GameType.LOCAL)
-        {
-            GameEvents.StartGame();
-        }
-        else
-        {
-            GameplayEvents.RestartGameplay();
-            foreach (GameObject canvas in canvasList)
-            {
-                canvas.SetActive(false);
-            }
-        }
+        GameplayEvents.RestartGameplay();
+        SceneChangeManager.Instance.LoadScene(Scene.GAME_SETUP);
     }
 
     private void SetCanvasList()

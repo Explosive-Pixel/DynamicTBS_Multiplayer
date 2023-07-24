@@ -40,12 +40,13 @@ public class OnlineMenuCanvasHandler : MonoBehaviour
 
     private void JoinLobby(LobbyId lobbyId)
     {
+        GameManager.gameType = GameType.ONLINE;
+
         UserData userData = new UserData(userName.text.Trim(), spectatorToggle.isOn ? ClientType.SPECTATOR : ClientType.PLAYER);
         client.Init(ConfigManager.Instance.IpAdress, ConfigManager.Instance.Port, userData, lobbyId);
 
-        lobbyCanvas.SetActive(true);
         onlineMetadataCanvas.SetActive(true);
-        this.gameObject.SetActive(false);
+        SceneChangeManager.Instance.LoadScene(Scene.GAME_SETUP);
     }
 
     private bool IsValidName()

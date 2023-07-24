@@ -5,35 +5,14 @@ using UnityEngine;
 public class OnlineMenuSceneManager : MonoBehaviour
 {
     [SerializeField] private GameObject onlineMenuCanvas;
-    [SerializeField] private GameObject onlineClientCanvas;
     [SerializeField] private GameObject onlineLoadingScreenCanvas;
-
-    private List<GameObject> canvasList = new List<GameObject>();
 
     private void Awake()
     {
         GameEvents.OnGameIsLoading += ToggleOnlineLoadingScreen;
-        SetCanvasList();
-        GoToOnlineMenu();
-
         onlineLoadingScreenCanvas.SetActive(false);
-    }
 
-    private void SetCanvasList()
-    {
-        canvasList.Add(onlineMenuCanvas);
-        canvasList.Add(onlineClientCanvas);
-    }
-
-    private void HandleMenus(GameObject menuCanvas)
-    {
-        foreach (GameObject gameObject in canvasList)
-        {
-            if (gameObject == menuCanvas)
-                menuCanvas.SetActive(true);
-            else
-                gameObject.SetActive(false);
-        }
+        GoToOnlineMenu();
     }
 
     private void ToggleOnlineLoadingScreen(bool isLoading)
@@ -48,8 +27,8 @@ public class OnlineMenuSceneManager : MonoBehaviour
 
     public void GoToOnlineMenu()
     {
-        HandleMenus(onlineMenuCanvas);
         AudioEvents.PressingButton();
+        onlineMenuCanvas.SetActive(true);
     }
 
     private void OnDestroy()
