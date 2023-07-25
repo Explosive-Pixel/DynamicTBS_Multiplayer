@@ -21,7 +21,7 @@ public static class BuildScript
         Linux
     }
 
-    static string[] scenePaths = { "Assets/Scenes/00_ServerScene.unity", "Assets/Scenes/01_MainMenuScene.unity", "Assets/Scenes/02_OnlineMenuScene.unity", "Assets/Scenes/03_GameScene.unity", "Assets/Scenes/04_TutorialScene.unity", "Assets/Scenes/05_HallOfFame.unity", "Assets/Scenes/06_CreditsScene.unity" };
+    static string[] scenePaths = { "Assets/Scenes/00_ServerScene.unity", "Assets/Scenes/01_MainMenuScene.unity", "Assets/Scenes/02_OnlineMenuScene.unity", "Assets/Scenes/03_GameSetupScene.unity", "Assets/Scenes/04_GameScene.unity", "Assets/Scenes/05_TutorialScene.unity", "Assets/Scenes/06_HallOfFame.unity", "Assets/Scenes/07_CreditsScene.unity" };
 
     [MenuItem("Build/Server Build (Windows)")]
     public static void PerformServerBuildWindows()

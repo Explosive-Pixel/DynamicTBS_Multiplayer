@@ -17,20 +17,29 @@ public class OnlineLobbyCanvasHandler : MonoBehaviour
 
     [SerializeField] private GameSetupHandler gameSetupHandler;
 
-    [SerializeField] private GameObject onlineMetadataCanvas;
-
     private PlayerType selectedSide;
     private bool sideSelected = false;
 
     private bool AllSelected { get { return sideSelected && gameSetupHandler.AllSelected; } }
 
+    private bool active = false;
+
     private void Awake()
     {
-        ResetCanvas();
+        if (GameManager.gameType == GameType.ONLINE)
+        {
+            active = true;
+
+            startGameButton.onClick.AddListener(() => StartGame());
+            SetActive(false);
+        }
     }
 
     private void Update()
     {
+        if (!active)
+            return;
+
         UpdateInfoTexts();
     }
 
@@ -191,44 +200,5 @@ public class OnlineLobbyCanvasHandler : MonoBehaviour
         {
             startGameButton.interactable = AllSelected && OnlineClient.Instance.PlayerCount == 2;
         }
-    }
-
-    private void ShowCanvas()
-    {
-        ResetCanvas();
-        gameObject.SetActive(true);
-    }
-
-    private void HideCanvas()
-    {
-        gameObject.SetActive(false);
-    }
-
-    private void ResetCanvas()
-    {
-        UnsubscribeEvents();
-        sideSelected = false;
-        selectBlueButton.interactable = true;
-        selectPinkButton.interactable = true;
-        gameSetupHandler.ResetCanvas();
-        SetActive(false);
-        SubscribeEvents();
-    }
-
-    private void SubscribeEvents()
-    {
-        GameEvents.OnGameStart += HideCanvas;
-        GameplayEvents.OnRestartGame += ShowCanvas;
-    }
-
-    private void UnsubscribeEvents()
-    {
-        GameEvents.OnGameStart -= HideCanvas;
-        GameplayEvents.OnRestartGame -= ShowCanvas;
-    }
-
-    private void OnDestroy()
-    {
-        UnsubscribeEvents();
     }
 }

@@ -4,16 +4,8 @@ using UnityEngine;
 
 public class MainMenuSceneManager : MonoBehaviour
 {
-    [SerializeField] private GameObject startMenuCanvas;
-    [SerializeField] private GameObject localGameSetupCanvas;
     [SerializeField] private GameObject playOptionsMenu;
     [SerializeField] private GameObject infoOptions;
-    
-    private void Awake()
-    {
-        startMenuCanvas.SetActive(true);
-        localGameSetupCanvas.SetActive(false);
-    }
 
     private void Start()
     {
@@ -42,13 +34,7 @@ public class MainMenuSceneManager : MonoBehaviour
 
     public void SwitchToLocalGameSetup()
     {
-        localGameSetupCanvas.SetActive(true);
-        startMenuCanvas.SetActive(false);
-    }
-
-    public void SwitchToStartMenu()
-    {
-        localGameSetupCanvas.SetActive(false);
-        startMenuCanvas.SetActive(true);
+        GameManager.gameType = GameType.LOCAL;
+        SceneChangeManager.Instance.LoadScene(Scene.GAME_SETUP);
     }
 }

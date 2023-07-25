@@ -8,10 +8,11 @@ public enum Scene
 {
     MAIN_MENU = 0,
     ONLINE_MENU = 1,
-    GAME = 2,
-    TUTORIAL = 3,
-    LORE = 4,
-    CREDITS = 5
+    GAME_SETUP = 2,
+    GAME = 3,
+    TUTORIAL = 4,
+    LORE = 5,
+    CREDITS = 6
 }
 
 public class SceneChangeManager : MonoBehaviour
@@ -24,7 +25,7 @@ public class SceneChangeManager : MonoBehaviour
 
     private void Awake()
     {
-        if(Instance != null)
+        if (Instance != null)
         {
             Destroy(gameObject);
         }

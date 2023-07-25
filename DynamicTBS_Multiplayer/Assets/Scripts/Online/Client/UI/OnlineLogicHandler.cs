@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class OnlineLogicHandler : MonoBehaviour
 {
+    private readonly List<Scene> dontDestroyOnLoadScenes = new() { Scene.ONLINE_MENU, Scene.GAME_SETUP, Scene.GAME };
+
     #region SingletonImplementation
     public static OnlineLogicHandler Instance { set; get; }
 
@@ -26,7 +28,7 @@ public class OnlineLogicHandler : MonoBehaviour
 
     private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
     {
-        if (SceneChangeManager.Instance.CurrentScene == Scene.ONLINE_MENU || SceneChangeManager.Instance.CurrentScene == Scene.GAME)
+        if (dontDestroyOnLoadScenes.Contains(SceneChangeManager.Instance.CurrentScene))
             return;
 
         Destroy(gameObject);
