@@ -32,7 +32,7 @@ public class Tile : MonoBehaviour
     private State state;
 
     public delegate bool IsChangeable();
-    public IsChangeable isChangeable;
+    public IsChangeable isChangeable = () => true;
 
     public void Init(TileType tileType, PlayerType side)
     {
@@ -50,6 +50,9 @@ public class Tile : MonoBehaviour
 
     public void Transform(TileType tileType)
     {
+        if (!isChangeable())
+            return;
+
         this.tileType = tileType;
 
         if (IsHole())
