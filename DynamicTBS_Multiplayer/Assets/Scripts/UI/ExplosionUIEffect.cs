@@ -11,8 +11,6 @@ public class ExplosionUIEffect : MonoBehaviour
     [SerializeField] private float explosionTime;
     [SerializeField] private float yOffset;
 
-    private GameObject explosionGameObject;
-
     private void Awake()
     {
         CharacterEvents.OnCharacterDeath += InstantiatePrefab;
@@ -31,12 +29,12 @@ public class ExplosionUIEffect : MonoBehaviour
 
     private void AnimateExplosion(GameObject explosionPrefab, Vector3 instantiationPosition, Quaternion rotation)
     {
-        explosionGameObject = Instantiate(explosionPrefab, instantiationPosition, rotation);
+        GameObject explosionGameObject = Instantiate(explosionPrefab, instantiationPosition, rotation);
         explosionGameObject.transform.SetParent(parent.transform);
-        StartCoroutine(ExplosionCoroutine(explosionTime));
+        StartCoroutine(ExplosionCoroutine(explosionGameObject, explosionTime));
     }
 
-    private IEnumerator ExplosionCoroutine(float timerDuration)
+    private IEnumerator ExplosionCoroutine(GameObject explosionGameObject, float timerDuration)
     {
         float timerEndpoint = 0;
 
@@ -52,7 +50,6 @@ public class ExplosionUIEffect : MonoBehaviour
 
     private void OnDestroy()
     {
-        Destroy(explosionGameObject);
         CharacterEvents.OnCharacterDeath -= InstantiatePrefab;
     }
 }
