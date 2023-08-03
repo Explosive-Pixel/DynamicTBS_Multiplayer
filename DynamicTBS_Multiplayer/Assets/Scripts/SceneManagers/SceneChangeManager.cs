@@ -11,7 +11,7 @@ public enum Scene
     GAME_SETUP = 2,
     GAME = 3,
     TUTORIAL = 4,
-    LORE = 5,
+    HALL_OF_FAME = 5,
     CREDITS = 6
 }
 
