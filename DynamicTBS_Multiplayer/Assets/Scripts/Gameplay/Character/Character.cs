@@ -236,6 +236,7 @@ public class Character : MonoBehaviour
         if (UIClickHandler.CurrentCharacter == this)
             GameplayEvents.ChangeCharacterSelection(null);
 
+        ResetState();
         UnsubscribeEvents();
     }
 }
