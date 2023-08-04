@@ -43,6 +43,7 @@ public class ElectrifiedState : State
 
     public override void Destroy()
     {
+        stunnedInhabitant = null;
         GameplayEvents.OnFinishAction -= StunInhabitant;
         base.Destroy();
     }

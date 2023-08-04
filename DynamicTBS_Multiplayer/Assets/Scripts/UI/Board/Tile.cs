@@ -124,6 +124,7 @@ public class Tile : MonoBehaviour
 
     private void OnDestroy()
     {
+        ResetState();
         UnsubscribeEvents();
     }
 }
