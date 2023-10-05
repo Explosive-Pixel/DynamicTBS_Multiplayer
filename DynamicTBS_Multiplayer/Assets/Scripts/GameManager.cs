@@ -9,6 +9,15 @@ public enum GameType
     LOCAL,
     ONLINE
 }
+
+public enum GamePhase
+{
+    DRAFT,
+    PLACEMENT,
+    GAMEPLAY,
+    NONE
+}
+
 public class GameManager : MonoBehaviour
 {
     public static GameType gameType = GameType.LOCAL;

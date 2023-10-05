@@ -3,14 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Networking.Transport;
 
-public enum GamePhase
-{
-    DRAFT,
-    PLACEMENT,
-    GAMEPLAY,
-    NONE
-}
-
 public class MsgUpdateServer : OnlineMessage
 {
     public PlayerType currentPlayer;
