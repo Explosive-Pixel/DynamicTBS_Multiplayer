@@ -10,18 +10,18 @@ public class InfoBoxHandler : MonoBehaviour
     [SerializeField] private GameObject passiveAbilities;
 
     private List<CharacterClass> UnitIcons;
-    private List<ActiveAbilityClass> ActiveAbilityIcons;
-    private List<PassiveAbilityClass> PassiveAbilityIcons;
+    private List<AbilityClass> ActiveAbilityIcons;
+    private List<AbilityClass> PassiveAbilityIcons;
 
     private void Awake()
     {
-        UnitIcons = units.GetComponentsInChildren<CharacterClass>().ToList();
+        UnitIcons = units.GetComponentsInChildren<CharacterClass>(true).ToList();
         UnitIcons.ForEach(unitIcon => unitIcon.gameObject.SetActive(false));
 
-        ActiveAbilityIcons = activeAbilities.GetComponentsInChildren<ActiveAbilityClass>().ToList();
+        ActiveAbilityIcons = activeAbilities.GetComponentsInChildren<AbilityClass>(true).ToList();
         ActiveAbilityIcons.ForEach(aaIcon => aaIcon.gameObject.SetActive(false));
 
-        PassiveAbilityIcons = passiveAbilities.GetComponentsInChildren<PassiveAbilityClass>().ToList();
+        PassiveAbilityIcons = passiveAbilities.GetComponentsInChildren<AbilityClass>(true).ToList();
         PassiveAbilityIcons.ForEach(paIcon => paIcon.gameObject.SetActive(false));
 
         GameplayEvents.OnCharacterSelectionChange += UpdateInfoBox;

@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DrawButtonHandler : MonoBehaviour
+public class DrawButtonHandler : MonoBehaviour, IClickableObject
 {
-    [SerializeField] private Button offerDrawButton;
-
     [SerializeField] private GameObject answerDrawBox;
     [SerializeField] private Button acceptDrawButton;
     [SerializeField] private Button declineDrawButton;
@@ -14,11 +12,11 @@ public class DrawButtonHandler : MonoBehaviour
     private void Awake()
     {
         SubscribeEvents();
-        SetActive(offerDrawButton.gameObject, false);
+        SetActive(gameObject, false);
         SetActive(answerDrawBox, false);
     }
 
-    public void OfferDraw()
+    public void OnClick()
     {
         FireUIActionExecutedEvent(UIAction.OFFER_DRAW);
     }
@@ -43,7 +41,7 @@ public class DrawButtonHandler : MonoBehaviour
     {
         if (uIAction == UIAction.OFFER_DRAW)
         {
-            offerDrawButton.interactable = false;
+            //offerDrawButton.interactable = false;
             if (!(GameManager.gameType == GameType.ONLINE && OnlineClient.Instance.Side == player))
             {
                 SetActive(answerDrawBox, true);
@@ -55,7 +53,7 @@ public class DrawButtonHandler : MonoBehaviour
         }
         else if (uIAction == UIAction.DECLINE_DRAW)
         {
-            offerDrawButton.interactable = true;
+            //offerDrawButton.interactable = true;
             SetActive(answerDrawBox, false);
         }
     }
@@ -63,19 +61,12 @@ public class DrawButtonHandler : MonoBehaviour
     private void SetOfferDrawButtonActive(GamePhase gamePhase)
     {
         if (gamePhase == GamePhase.GAMEPLAY)
-            SetActive(offerDrawButton.gameObject, true);
+            SetActive(gameObject, true);
     }
 
     private void SetActive(GameObject gameObject, bool active)
     {
-        if (!GameManager.IsPlayer())
-        {
-            gameObject.SetActive(false);
-        }
-        else
-        {
-            gameObject.SetActive(active);
-        }
+        gameObject.SetActive(GameManager.IsPlayer() && active);
     }
 
     #region EventsRegion

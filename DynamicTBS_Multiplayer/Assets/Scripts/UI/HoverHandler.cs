@@ -6,24 +6,32 @@ using UnityEngine.EventSystems;
 public class HoverHandler : MonoBehaviour
 {
     [SerializeField] private GameObject hoverObject;
+    [SerializeField] private GameObject activationHover;
+
 
     private void OnMouseEnter()
     {
-        hoverObject.SetActive(true);
+        SetActive(true);
     }
 
     private void OnMouseExit()
     {
-        hoverObject.SetActive(false);
+        SetActive(false);
     }
 
     private void OnMouseDown()
     {
-        hoverObject.SetActive(false);
+        SetActive(false);
     }
 
     private void OnDisable()
     {
-        hoverObject.SetActive(false);
+        SetActive(false);
+    }
+
+    private void SetActive(bool active)
+    {
+        hoverObject.SetActive(active);
+        activationHover.SetActive(active);
     }
 }

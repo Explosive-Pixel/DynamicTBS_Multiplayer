@@ -3,17 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SurrenderButtonHandler : MonoBehaviour
+public class SurrenderButtonHandler : MonoBehaviour, IClickableObject
 {
-    [SerializeField] private Button surrenderButton;
-
     private void Awake()
     {
         SubscribeEvents();
         ChangeButtonVisibility(false);
     }
 
-    public void Surrender()
+    public void OnClick()
     {
         PlayerType player = PlayerManager.ExecutingPlayer;
         GameplayEvents.UIActionExecuted(player, UIAction.SURRENDER);
@@ -27,14 +25,7 @@ public class SurrenderButtonHandler : MonoBehaviour
 
     private void ChangeButtonVisibility(bool active)
     {
-        if (!GameManager.IsPlayer())
-        {
-            surrenderButton.gameObject.SetActive(false);
-        }
-        else
-        {
-            surrenderButton.gameObject.SetActive(active);
-        }
+        gameObject.SetActive(GameManager.IsPlayer() && active);
     }
 
     private void SetActive(GamePhase gamePhase)
