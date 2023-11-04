@@ -5756,6 +5756,18 @@ PrefabInstance:
       propertyPath: activeAbilityType
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 167979205981336675, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: side
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 167979205981336675, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: abilityType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 167979205981336675, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: passiveAbilityType
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 180031503998085021, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: hoverObject
       value: 
@@ -5799,6 +5811,18 @@ PrefabInstance:
     - target: {fileID: 1292122093509501033, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: activeAbilityType
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1432599621968830296, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: side
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1432599621968830296, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: abilityType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1432599621968830296, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: passiveAbilityType
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1606756334748235282, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: side
@@ -5916,6 +5940,18 @@ PrefabInstance:
       propertyPath: activeAbilityType
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 3804603854659165641, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: side
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3804603854659165641, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: abilityType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3804603854659165641, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: passiveAbilityType
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 3819282473457228874, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: hoverObject
       value: 
@@ -6008,6 +6044,18 @@ PrefabInstance:
       propertyPath: activeAbilityType
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5450767388775962060, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: side
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5450767388775962060, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: abilityType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5450767388775962060, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: passiveAbilityType
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 5455764016626654228, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: hoverObject
       value: 
@@ -6096,6 +6144,18 @@ PrefabInstance:
       propertyPath: hoverObject
       value: 
       objectReference: {fileID: 1842072858}
+    - target: {fileID: 6486716206851996417, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: disabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6486716206851996417, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: abilityType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6486716206851996417, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: passiveAbilityType
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6659589402558964591, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: side
       value: 1
@@ -6192,6 +6252,10 @@ PrefabInstance:
       propertyPath: abilityType
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7590272723659852523, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: passiveAbilityType
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 7628953038566377152, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: disabled
       value: 1
@@ -6216,10 +6280,34 @@ PrefabInstance:
       propertyPath: hoverObject
       value: 
       objectReference: {fileID: 1118503406}
+    - target: {fileID: 7767734846725450496, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: side
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7767734846725450496, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: abilityType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7767734846725450496, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: passiveAbilityType
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 7803775815131833883, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: hoverObject
       value: 
       objectReference: {fileID: 1842072858}
+    - target: {fileID: 8095008049120711764, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: side
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8095008049120711764, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: abilityType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8095008049120711764, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: passiveAbilityType
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 8141106830812631289, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: side
       value: 2
