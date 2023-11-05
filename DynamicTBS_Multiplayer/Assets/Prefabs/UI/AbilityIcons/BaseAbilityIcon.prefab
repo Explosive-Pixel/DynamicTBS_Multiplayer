@@ -94,6 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 147649987170495693}
   - component: {fileID: 5291580512286266331}
+  - component: {fileID: 8682467856658046994}
   m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
@@ -168,6 +169,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8682467856658046994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1561172108767348029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec471b1ba4da430392f533cad3660ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverObject: {fileID: 0}
+  activationHover: {fileID: 1345098495384634543}
 --- !u!1 &3042934762381003629
 GameObject:
   m_ObjectHideFlags: 0
@@ -178,6 +193,9 @@ GameObject:
   m_Component:
   - component: {fileID: 296382941524008997}
   - component: {fileID: 8639437068034509209}
+  - component: {fileID: 2391264642191296088}
+  - component: {fileID: 5207347466318592381}
+  - component: {fileID: 4994132205995006990}
   m_Layer: 0
   m_Name: BaseAbilityIcon
   m_TagString: Untagged
@@ -254,3 +272,47 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2391264642191296088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3042934762381003629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91c81ef5a316e41218e5ac285f3f1340, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilityType: 0
+  activeAbilityType: 0
+  passiveAbilityType: 0
+  side: 0
+  disabled: 0
+--- !u!114 &5207347466318592381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3042934762381003629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec471b1ba4da430392f533cad3660ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverObject: {fileID: 0}
+  activationHover: {fileID: 1345098495384634543}
+--- !u!65 &4994132205995006990
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3042934762381003629}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.17, y: 0.17, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}

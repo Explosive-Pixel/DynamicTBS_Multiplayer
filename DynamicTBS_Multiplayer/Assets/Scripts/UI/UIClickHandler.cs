@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class UIClickHandler : MonoBehaviour
 {
@@ -63,6 +64,15 @@ public class UIClickHandler : MonoBehaviour
             if (activeAbilityTrigger != null && currentCharacter != null)
             {
                 currentCharacter.ExecuteActiveAbility();
+                return;
+            }
+
+            // If not
+            // Check if click was onto any other clickable UI element (like surrender button)
+            GameObject clickableObject = UIUtils.FindGameObjectByRay(FindObjectsOfType<MonoBehaviour>().OfType<IClickableObject>().ToList().ConvertAll(o => ((MonoBehaviour)o).gameObject), position);
+            if (clickableObject != null)
+            {
+                clickableObject.GetComponent<IClickableObject>().OnClick();
                 return;
             }
 

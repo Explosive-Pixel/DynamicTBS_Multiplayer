@@ -3,45 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EndTurnButtonHandler : MonoBehaviour
+public class EndTurnButtonHandler : MonoBehaviour, IClickableObject
 {
-    [SerializeField] private Button turnEndedButton;
+    [SerializeField] private GameObject turnEndedButton;
+    [SerializeField] private GameObject turnEndedButton_grayed;
 
     private void Awake()
     {
         SubscribeEvents();
-        ChangeButtonVisibility(false);
+        SetActive(false, true);
     }
 
-    public void FinishTurn()
+    public void OnClick()
     {
-        SkipAction.Execute();
+        if (turnEndedButton.activeSelf)
+            SkipAction.Execute();
+    }
+
+    private void SetActive(bool active, bool interactable)
+    {
+        turnEndedButton.SetActive(active && interactable);
+        turnEndedButton_grayed.SetActive(active && !interactable);
     }
 
     private void ChangeButtonInteractability()
     {
-        ChangeButtonVisibilityOnMultiplayer();
-        turnEndedButton.interactable = GameplayManager.GetRemainingActions() == 1;
-    }
-
-    private void ChangeButtonVisibility(bool active)
-    {
-        if (!GameManager.IsPlayer())
-        {
-            turnEndedButton.gameObject.SetActive(false);
-        }
-        else
-        {
-            turnEndedButton.gameObject.SetActive(active);
-        }
-    }
-
-    private void ChangeButtonVisibilityOnMultiplayer()
-    {
-        if (GameManager.gameType == GameType.ONLINE)
-        {
-            ChangeButtonVisibility(PlayerManager.CurrentPlayer == OnlineClient.Instance.Side);
-        }
+        SetActive(!(GameManager.gameType == GameType.ONLINE && PlayerManager.CurrentPlayer != OnlineClient.Instance.Side), GameplayManager.GetRemainingActions() == 1);
     }
 
     private void SetActive(GamePhase gamePhase)
@@ -49,15 +36,7 @@ public class EndTurnButtonHandler : MonoBehaviour
         if (gamePhase != GamePhase.GAMEPLAY)
             return;
 
-        if (GameManager.gameType == GameType.ONLINE && PlayerManager.StartPlayer[GamePhase.GAMEPLAY] != OnlineClient.Instance.Side)
-        {
-            ChangeButtonVisibility(false);
-        }
-        else
-        {
-            ChangeButtonVisibility(true);
-        }
-        turnEndedButton.interactable = false;
+        SetActive(GameManager.IsPlayer() && !(GameManager.gameType == GameType.ONLINE && PlayerManager.StartPlayer[GamePhase.GAMEPLAY] != OnlineClient.Instance.Side), false);
         GameplayEvents.OnChangeRemainingActions += ChangeButtonInteractability;
     }
 
