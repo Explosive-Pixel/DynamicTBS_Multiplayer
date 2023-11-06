@@ -1,21 +1,22 @@
-using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class MovesDisplay : MonoBehaviour
+public class MovesInfoHandler : MonoBehaviour
 {
-    [SerializeField] private GameObject movesDisplayObject;
-    [SerializeField] private Text displayText;
-    private List<string> movesList = new();
+    [SerializeField] private TMPro.TextMeshPro displayText;
+    [SerializeField] private Color blue;
+    [SerializeField] private Color pink;
 
+    private readonly List<string> movesList = new();
     private int actionCount = 0;
 
     private void Awake()
     {
-        SubscribeEvents();
-        movesDisplayObject.SetActive(false);
+        displayText.text = "";
+
+        GameplayEvents.OnFinishAction += WriteMovesToString;
+        GameplayEvents.OnPlayerTurnAborted += WriteAbortTurnToString;
     }
 
     private void WriteMovesToString(ActionMetadata actionMetadata)
@@ -64,15 +65,10 @@ public class MovesDisplay : MonoBehaviour
         movesList.Add(newMove);
         displayText.text = "";
 
-        for (int i = movesList.Count - 1; i >= 0; i--)
+        for (int i = movesList.Count - 1; i >= Mathf.Max(0, movesList.Count - 4); i--)
         {
-            displayText.text += movesList[i];
+            displayText.text += "<color=#" + (movesList[i].StartsWith("Blue") ? ColorUtility.ToHtmlStringRGB(blue) : ColorUtility.ToHtmlStringRGB(pink)) + ">" + movesList[i] + "</color>";
         }
-    }
-
-    private void EmptyList(PlayerType? winner, GameOverCondition endGameCondition)
-    {
-        movesList.Clear();
     }
 
     private string GetMoveCountString()
@@ -94,43 +90,45 @@ public class MovesDisplay : MonoBehaviour
 
     private string TranslateTilePosition(Vector3? position)
     {
-        string text = "";
-
         if (position != null)
         {
             Tile tile = Board.GetTileByPosition(position.GetValueOrDefault());
             if (tile != null)
             {
-                text = tile.Name;
+                return tile.Name;
             }
         }
-        return text;
+        return "";
     }
 
     private string TranslateActionType(ActionType actiontype, Character character)
     {
-        string text = "";
-
         if (actiontype == ActionType.Move)
-            text = " moved to ";
+            return " moved to ";
+
         if (actiontype == ActionType.Attack)
-            text = " attacked ";
+            return " attacked ";
+
         if (actiontype == ActionType.ActiveAbility)
         {
-            if (character.CharacterType == CharacterType.MasterChar)
-                text = " used Take Control on ";
-            if (character.CharacterType == CharacterType.TankChar)
-                text = " used Block on ";
-            if (character.CharacterType == CharacterType.ShooterChar)
-                text = " used Powershot on ";
-            if (character.CharacterType == CharacterType.RunnerChar)
-                text = " used Jump on ";
-            if (character.CharacterType == CharacterType.MechanicChar)
-                text = " used Change Floor on ";
-            if (character.CharacterType == CharacterType.MedicChar)
-                text = " used Heal on ";
+            switch (character.CharacterType)
+            {
+                case CharacterType.MasterChar:
+                    return " used Take Control on ";
+                case CharacterType.TankChar:
+                    return " used Block on ";
+                case CharacterType.ShooterChar:
+                    return " used Powershot on ";
+                case CharacterType.RunnerChar:
+                    return " used Jump on ";
+                case CharacterType.MechanicChar:
+                    return " used Change Floor on ";
+                case CharacterType.MedicChar:
+                    return " used Heal on ";
+            }
         }
-        return text;
+
+        return "";
     }
 
     private string TranslateCharacterName(Character character)
@@ -144,67 +142,12 @@ public class MovesDisplay : MonoBehaviour
 
     private string TranslatePlayerSide(PlayerType playerType)
     {
-        string text = "";
-
-        if (playerType == PlayerType.blue)
-        {
-            text = "Blue ";
-        }
-        else
-        {
-            text = "Pink ";
-        }
-
-        return text;
-    }
-
-    private void OnGameplayPhaseStarts(GamePhase gamePhase)
-    {
-        if (gamePhase == GamePhase.GAMEPLAY)
-        {
-            ActivateMovesDisplay();
-            ActivateRecordingSubscription();
-        }
-    }
-
-    #region ActivationRegion
-    private void ActivateMovesDisplay()
-    {
-        movesDisplayObject.SetActive(true);
-    }
-
-    private void DeactivateMovesDisplay(PlayerType? winner, GameOverCondition endGameCondition)
-    {
-        movesDisplayObject.SetActive(false);
-    }
-
-    private void ActivateRecordingSubscription()
-    {
-        GameplayEvents.OnFinishAction += WriteMovesToString;
-        GameplayEvents.OnPlayerTurnAborted += WriteAbortTurnToString;
-    }
-    #endregion
-
-    #region EventsRegion
-    private void SubscribeEvents()
-    {
-        GameEvents.OnGamePhaseStart += OnGameplayPhaseStarts;
-        GameplayEvents.OnGameOver += EmptyList;
-        GameplayEvents.OnGameOver += DeactivateMovesDisplay;
-    }
-
-    private void UnsubscribeEvents()
-    {
-        GameEvents.OnGamePhaseStart -= OnGameplayPhaseStarts;
-        GameplayEvents.OnGameOver -= DeactivateMovesDisplay;
-        GameplayEvents.OnGameOver -= EmptyList;
-        GameplayEvents.OnFinishAction -= WriteMovesToString;
-        GameplayEvents.OnPlayerTurnAborted -= WriteAbortTurnToString;
+        return playerType == PlayerType.blue ? "Blue" : "Pink";
     }
 
     private void OnDestroy()
     {
-        UnsubscribeEvents();
+        GameplayEvents.OnFinishAction -= WriteMovesToString;
+        GameplayEvents.OnPlayerTurnAborted -= WriteAbortTurnToString;
     }
-    #endregion
 }
