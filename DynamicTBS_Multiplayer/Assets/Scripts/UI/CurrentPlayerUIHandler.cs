@@ -8,7 +8,7 @@ public class CurrentPlayerUIHandler : MonoBehaviour
 {
     [SerializeField] private List<GamePhase> associatedGamePhases;
 
-    [SerializeField] private Text playerNames;
+    //[SerializeField] private Text playerNames;
     [SerializeField] private Text playerInfoText;
 
     [SerializeField] private Text draftMessageText;
@@ -34,14 +34,14 @@ public class CurrentPlayerUIHandler : MonoBehaviour
         Init();
     }
 
-    private void Update()
-    {
-        playerNames.text = "";
-        if (GameManager.gameType == GameType.ONLINE)
-        {
-            playerNames.text = OnlineClient.Instance.GetPlayerName(PlayerType.blue) + " vs. " + OnlineClient.Instance.GetPlayerName(PlayerType.pink);
-        }
-    }
+    /*  private void Update()
+      {
+          playerNames.text = "";
+          if (GameManager.gameType == GameType.ONLINE)
+          {
+              playerNames.text = OnlineClient.Instance.GetPlayerName(PlayerType.blue) + " vs. " + OnlineClient.Instance.GetPlayerName(PlayerType.pink);
+          }
+      }*/
 
     private void Init()
     {
