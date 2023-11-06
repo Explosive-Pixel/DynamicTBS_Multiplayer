@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DrawButtonHandler : MonoBehaviour, IClickableObject
+public class OfferDrawButtonHandler : MonoBehaviour, IClickableObject
 {
     [SerializeField] private GameObject answerDrawBox;
-    [SerializeField] private Button acceptDrawButton;
-    [SerializeField] private Button declineDrawButton;
 
     private void Awake()
     {
@@ -18,30 +16,13 @@ public class DrawButtonHandler : MonoBehaviour, IClickableObject
 
     public void OnClick()
     {
-        FireUIActionExecutedEvent(UIAction.OFFER_DRAW);
-    }
-
-    public void AcceptDraw()
-    {
-        FireUIActionExecutedEvent(UIAction.ACCEPT_DRAW);
-    }
-
-    public void DeclineDraw()
-    {
-        FireUIActionExecutedEvent(UIAction.DECLINE_DRAW);
-    }
-
-    private void FireUIActionExecutedEvent(UIAction uIAction)
-    {
-        PlayerType player = PlayerManager.ExecutingPlayer;
-        GameplayEvents.UIActionExecuted(player, uIAction);
+        GameplayEvents.UIActionExecuted(PlayerManager.ExecutingPlayer, UIAction.OFFER_DRAW);
     }
 
     private void OnDrawButtonClicked(PlayerType player, UIAction uIAction)
     {
         if (uIAction == UIAction.OFFER_DRAW)
         {
-            //offerDrawButton.interactable = false;
             if (!(GameManager.gameType == GameType.ONLINE && OnlineClient.Instance.Side == player))
             {
                 SetActive(answerDrawBox, true);
@@ -53,7 +34,6 @@ public class DrawButtonHandler : MonoBehaviour, IClickableObject
         }
         else if (uIAction == UIAction.DECLINE_DRAW)
         {
-            //offerDrawButton.interactable = true;
             SetActive(answerDrawBox, false);
         }
     }

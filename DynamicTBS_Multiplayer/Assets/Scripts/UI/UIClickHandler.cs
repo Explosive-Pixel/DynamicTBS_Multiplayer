@@ -6,8 +6,6 @@ using System.Linq;
 
 public class UIClickHandler : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> activeAbilityTriggers;
-
     private Camera currentCamera;
 
     private static Character currentCharacter = null;
@@ -58,18 +56,10 @@ public class UIClickHandler : MonoBehaviour
                 return;
 
             // If not
-            // Check if click was onto active ability trigger
-            GameObject activeAbilityTrigger = UIUtils.FindGameObjectByRay(activeAbilityTriggers, position);
-
-            if (activeAbilityTrigger != null && currentCharacter != null)
-            {
-                currentCharacter.ExecuteActiveAbility();
-                return;
-            }
-
-            // If not
-            // Check if click was onto any other clickable UI element (like surrender button)
-            GameObject clickableObject = UIUtils.FindGameObjectByRay(FindObjectsOfType<MonoBehaviour>().OfType<IClickableObject>().ToList().ConvertAll(o => ((MonoBehaviour)o).gameObject), position);
+            // Check if click was onto any other clickable UI element (like AA icon or surrender button)
+            var clickableObjects = FindObjectsOfType<MonoBehaviour>().OfType<IClickableObject>().ToList().ConvertAll(o => ((MonoBehaviour)o).gameObject);
+            // clickableObjects.ForEach(co => Debug.Log(co.name));
+            GameObject clickableObject = UIUtils.FindGameObjectByRay(clickableObjects, position);
             if (clickableObject != null)
             {
                 clickableObject.GetComponent<IClickableObject>().OnClick();

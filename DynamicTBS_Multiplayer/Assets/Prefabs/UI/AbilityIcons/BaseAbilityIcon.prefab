@@ -94,7 +94,6 @@ GameObject:
   m_Component:
   - component: {fileID: 147649987170495693}
   - component: {fileID: 5291580512286266331}
-  - component: {fileID: 8682467856658046994}
   m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
@@ -169,20 +168,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8682467856658046994
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1561172108767348029}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ec471b1ba4da430392f533cad3660ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hoverObject: {fileID: 0}
-  activationHover: {fileID: 1345098495384634543}
 --- !u!1 &3042934762381003629
 GameObject:
   m_ObjectHideFlags: 0
