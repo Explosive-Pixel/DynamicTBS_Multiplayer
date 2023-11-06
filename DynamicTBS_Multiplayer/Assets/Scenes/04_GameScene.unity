@@ -816,9 +816,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e122006900238b64fa245b78397f5f76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeAbilityTriggers:
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!1 &90996747
 GameObject:
   m_ObjectHideFlags: 0
@@ -5713,6 +5710,14 @@ PrefabInstance:
       propertyPath: hoverObject
       value: 
       objectReference: {fileID: 1118503407}
+    - target: {fileID: 38187776906734590, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: m_Size.x
+      value: 1.73
+      objectReference: {fileID: 0}
+    - target: {fileID: 38187776906734590, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: m_Size.y
+      value: 0.4
+      objectReference: {fileID: 0}
     - target: {fileID: 50718503653767653, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: hoverObject
       value: 
@@ -5953,6 +5958,18 @@ PrefabInstance:
       propertyPath: m_fontSizeBase
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 4224917242859632352, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: m_Size.x
+      value: 1.73
+      objectReference: {fileID: 0}
+    - target: {fileID: 4224917242859632352, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: m_Size.y
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4224917242859632352, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: m_Center.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4469940592314830180, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -6033,6 +6050,14 @@ PrefabInstance:
       propertyPath: hoverObject
       value: 
       objectReference: {fileID: 1118503405}
+    - target: {fileID: 6077055289183092176, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: m_Size.x
+      value: 1.73
+      objectReference: {fileID: 0}
+    - target: {fileID: 6077055289183092176, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: m_Size.y
+      value: 0.4
+      objectReference: {fileID: 0}
     - target: {fileID: 6086951508252251166, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -6128,6 +6153,14 @@ PrefabInstance:
     - target: {fileID: 6486716206851996417, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: passiveAbilityType
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6648520421933507590, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: m_Size.x
+      value: 1.73
+      objectReference: {fileID: 0}
+    - target: {fileID: 6648520421933507590, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: m_Size.y
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 6659589402558964591, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: side
@@ -11031,8 +11064,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.95, y: 0.44, z: 1}
+  m_Center: {x: 1.51, y: -0.11, z: 0}
 --- !u!65 &1555523344
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11044,8 +11077,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.95, y: 0.4, z: 1}
+  m_Center: {x: 1.51, y: -0.11, z: 0}
 --- !u!1 &1559170441
 GameObject:
   m_ObjectHideFlags: 0
