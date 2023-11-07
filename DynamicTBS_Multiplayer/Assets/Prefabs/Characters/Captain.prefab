@@ -1,16 +1,12 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &8551383109074915547
+--- !u!1001 &6220907742633522073
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114010090247482231, guid: 81465a4e247cfb6429a71416afb6866c, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 8dd554ceb40af1c4a94f73ce67cd0441, type: 3}
     - target: {fileID: 1515746348609380309, guid: 81465a4e247cfb6429a71416afb6866c, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -55,21 +51,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2012910495178639928, guid: 81465a4e247cfb6429a71416afb6866c, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: c9c63c859a0abe042b2ec9162d58c2ff, type: 3}
-    - target: {fileID: 3714529140341352361, guid: 81465a4e247cfb6429a71416afb6866c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.06
-      objectReference: {fileID: 0}
     - target: {fileID: 5687532331230442325, guid: 81465a4e247cfb6429a71416afb6866c, type: 3}
       propertyPath: m_Name
-      value: Shooter
-      objectReference: {fileID: 0}
-    - target: {fileID: 8462101976858894118, guid: 81465a4e247cfb6429a71416afb6866c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.06
+      value: Character
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 81465a4e247cfb6429a71416afb6866c, type: 3}
