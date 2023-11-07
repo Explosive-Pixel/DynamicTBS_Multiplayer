@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
+using System.Linq;
 
 public class Character : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class Character : MonoBehaviour
     [SerializeField] private int maxHitPoints;
     [SerializeField] private int moveSpeed;
     [SerializeField] private int attackRange;
+    [SerializeField] private int maxActiveAbilityCooldown;
 
     //[SerializeField] private Animator hitPointAnimator;
     //[SerializeField] private Animator cooldownAnimator;
@@ -43,7 +45,7 @@ public class Character : MonoBehaviour
 
     public string PrettyName { get { return prettyName; } }
     public CharacterType CharacterType { get { return characterType; } set { characterType = value; } }
-    public PlayerType Side { get { return side; } set { side = value; } }
+    public PlayerType Side { get { return side; } set { side = value; UpdateSide(); } }
     public int MoveSpeed { get { return moveSpeed; } set { moveSpeed = value; } }
     public int AttackRange { get { return attackRange; } }
     public int AttackDamage { get { return attackDamage; } set { attackDamage = value; } }
@@ -51,13 +53,16 @@ public class Character : MonoBehaviour
     public IActiveAbility ActiveAbility;
     public IPassiveAbility PassiveAbility;
     public int MaxHitPoints { get { return maxHitPoints; } }
-    public int HitPoints { get { return hitPoints; } set { hitPoints = value; UpdateHitPointAnimator(); } }
-    public int ActiveAbilityCooldown { get { return activeAbilityCooldown; } set { activeAbilityCooldown = value; UpdateCooldownAnimator(); } }
+    public int HitPoints { get { return hitPoints; } set { hitPoints = value; UpdateHitPoints(); } }
+    public int ActiveAbilityCooldown { get { return activeAbilityCooldown; } set { activeAbilityCooldown = value; UpdateCooldown(); } }
     public bool IsClickable { get { return isClickable; } set { isClickable = value; } }
     public State State { get { return state; } }
 
-    private void Awake()
+    public void Init(CharacterType type, PlayerType side)
     {
+        CharacterType = type;
+        Side = side;
+
         HitPoints = maxHitPoints;
         ActiveAbilityCooldown = 0;
 
@@ -65,14 +70,6 @@ public class Character : MonoBehaviour
         PassiveAbility = gameObject.GetComponent<IPassiveAbility>();
 
         SubscribeEvents();
-    }
-
-    public void Init(CharacterType type, PlayerType side)
-    {
-        this.characterType = type;
-        this.side = side;
-
-        gameObject.GetComponentInChildren<HealthPointsHandler>().InitHealth(MaxHitPoints, Side);
     }
 
     public void TakeDamage(int damage)
@@ -219,6 +216,21 @@ public class Character : MonoBehaviour
     private void Highlight(bool highlight)
     {
         activeHighlight.SetActive(highlight);
+    }
+
+    private void UpdateSide()
+    {
+        gameObject.GetComponentsInChildren<SideHandler>(true).ToList().ForEach(sideHandler => sideHandler.SetSide(side));
+    }
+
+    private void UpdateHitPoints()
+    {
+        gameObject.GetComponentInChildren<HealthBarHandler>().UpdateHP(hitPoints);
+    }
+
+    private void UpdateCooldown()
+    {
+        gameObject.GetComponentInChildren<CooldownBarHandler>().UpdateCooldown(maxActiveAbilityCooldown - activeAbilityCooldown);
     }
 
     #region EventsRegion

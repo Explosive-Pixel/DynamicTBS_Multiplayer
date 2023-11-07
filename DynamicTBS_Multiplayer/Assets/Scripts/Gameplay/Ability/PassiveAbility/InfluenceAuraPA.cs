@@ -57,6 +57,14 @@ public class InfluenceAuraPA : MonoBehaviour, IPassiveAbility
 
     private void SwapSides(Character character)
     {
+        influencePoints.Remove(character);
+        UpdateInfluenceAnimator(character, 0);
+
+        if (character == null)
+            return;
+
+        character.Side = PlayerManager.GetOtherSide(character.Side);
+
         // TODO: Rework 
         /*influencePoints.Remove(character);
         UpdateInfluenceAnimator(character, 0);

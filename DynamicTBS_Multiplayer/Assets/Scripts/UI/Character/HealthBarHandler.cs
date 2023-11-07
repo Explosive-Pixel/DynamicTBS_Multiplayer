@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class HealthPointsHandler : MonoBehaviour
+public class HealthBarHandler : MonoBehaviour
 {
     [SerializeField] private GameObject healthLeft;
     [SerializeField] private GameObject healthRight;
@@ -14,22 +14,29 @@ public class HealthPointsHandler : MonoBehaviour
 
     private readonly List<GameObject> healthPoints = new();
 
+    private bool init = false;
     private int maxHP;
 
-    public void UpdateHP(int hp, PlayerType side)
+    public void UpdateHP(int hp)
     {
-        SetSide(side);
+        if (!init)
+        {
+            InitHealth(hp);
+            init = true;
+        }
+
+        SetAllActive();
 
         int diff = maxHP - hp;
 
         while (diff > 0)
         {
-            healthPoints[maxHP - diff - 1].GetComponent<HealthHandler>().SetActive(false, side);
+            healthPoints[maxHP - diff - 1].GetComponent<ActiveHandler>().SetActive(false);
             diff--;
         }
     }
 
-    public void InitHealth(int maxHP, PlayerType side)
+    public void InitHealth(int maxHP)
     {
         this.maxHP = maxHP;
 
@@ -57,13 +64,11 @@ public class HealthPointsHandler : MonoBehaviour
 
             AppendHealthPoint(healthRight);
         }
-
-        SetSide(side);
     }
 
-    private void SetSide(PlayerType side)
+    private void SetAllActive()
     {
-        healthPoints.ForEach(hp => hp.GetComponent<HealthHandler>().SetActive(true, side));
+        healthPoints.ForEach(hp => hp.GetComponent<ActiveHandler>().SetActive(true));
     }
 
     private void AppendHealthPoint(GameObject hp)
