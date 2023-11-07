@@ -27,9 +27,9 @@ public class CharacterFactory : MonoBehaviour
         if (characters.Count > 0)
             return;
 
-        characters.Add(CharacterType.MasterChar, new() { { PlayerType.blue, master_blue }, { PlayerType.pink, master_pink } });
+        characters.Add(CharacterType.CaptainChar, new() { { PlayerType.blue, master_blue }, { PlayerType.pink, master_pink } });
         characters.Add(CharacterType.MechanicChar, new() { { PlayerType.blue, mechanic_blue }, { PlayerType.pink, mechanic_pink } });
-        characters.Add(CharacterType.MedicChar, new() { { PlayerType.blue, medic_blue }, { PlayerType.pink, medic_pink } });
+        characters.Add(CharacterType.DocChar, new() { { PlayerType.blue, medic_blue }, { PlayerType.pink, medic_pink } });
         characters.Add(CharacterType.RunnerChar, new() { { PlayerType.blue, runner_blue }, { PlayerType.pink, runner_pink } });
         characters.Add(CharacterType.ShooterChar, new() { { PlayerType.blue, shooter_blue }, { PlayerType.pink, shooter_pink } });
         characters.Add(CharacterType.TankChar, new() { { PlayerType.blue, tank_blue }, { PlayerType.pink, tank_pink } });

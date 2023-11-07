@@ -113,7 +113,7 @@ public class MovesInfoHandler : MonoBehaviour
         {
             switch (character.CharacterType)
             {
-                case CharacterType.MasterChar:
+                case CharacterType.CaptainChar:
                     return " used Take Control on ";
                 case CharacterType.TankChar:
                     return " used Block on ";
@@ -123,7 +123,7 @@ public class MovesInfoHandler : MonoBehaviour
                     return " used Jump on ";
                 case CharacterType.MechanicChar:
                     return " used Change Floor on ";
-                case CharacterType.MedicChar:
+                case CharacterType.DocChar:
                     return " used Heal on ";
             }
         }

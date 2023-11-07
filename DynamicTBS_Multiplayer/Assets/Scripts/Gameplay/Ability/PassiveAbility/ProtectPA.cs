@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 
-public class PullDamagePA : MonoBehaviour, IPassiveAbility
+public class ProtectPA : MonoBehaviour, IPassiveAbility
 {
     [SerializeField] private PatternType pullDamagePatternType; // = PatternType.Cross;
 
-    public PassiveAbilityType AbilityType { get { return PassiveAbilityType.PULL_DAMAGE; } }
+    public PassiveAbilityType AbilityType { get { return PassiveAbilityType.PROTECT; } }
 
     private Character owner;
 
@@ -25,7 +25,7 @@ public class PullDamagePA : MonoBehaviour, IPassiveAbility
             var defaultNetDamage = character.netDamage;
             character.netDamage = (damage) =>
             {
-                if (character.PassiveAbility.GetType() == typeof(PullDamagePA))
+                if (character.PassiveAbility.GetType() == typeof(ProtectPA))
                 {
                     return defaultNetDamage(damage);
                 }
@@ -53,7 +53,7 @@ public class PullDamagePA : MonoBehaviour, IPassiveAbility
 
     private void AbsorbDamage(Character character, int damage)
     {
-        if (character.PassiveAbility.GetType() == typeof(PullDamagePA))
+        if (character.PassiveAbility.GetType() == typeof(ProtectPA))
         {
             return;
         }

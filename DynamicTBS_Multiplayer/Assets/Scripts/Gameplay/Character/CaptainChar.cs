@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MasterChar : Character
+public class CaptainChar : Character
 {
     private void Start()
     {
-        characterType = CharacterType.MasterChar;
+        characterType = CharacterType.CaptainChar;
     }
 
     public override void Die()

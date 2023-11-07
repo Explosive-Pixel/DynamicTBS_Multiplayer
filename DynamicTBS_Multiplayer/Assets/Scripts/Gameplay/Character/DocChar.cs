@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MedicChar : Character
+public class DocChar : Character
 {
     private void Start()
     {
-        characterType = CharacterType.MedicChar;
+        characterType = CharacterType.DocChar;
     }
 }

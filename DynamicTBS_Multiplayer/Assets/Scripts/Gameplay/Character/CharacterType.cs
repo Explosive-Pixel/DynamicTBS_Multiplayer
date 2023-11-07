@@ -4,9 +4,9 @@ using UnityEngine;
 
 public enum CharacterType
 {
-    MasterChar = 1,
+    CaptainChar = 1,
     MechanicChar = 2,
-    MedicChar = 3,
+    DocChar = 3,
     RunnerChar = 4,
     ShooterChar = 5,
     TankChar = 6
@@ -23,9 +23,9 @@ static class CharacterTypeMethods
 
         return characterType switch
         {
-            CharacterType.MasterChar => "Captain",
+            CharacterType.CaptainChar => "Captain",
             CharacterType.MechanicChar => "Mechanic",
-            CharacterType.MedicChar => "Doc",
+            CharacterType.DocChar => "Doc",
             CharacterType.RunnerChar => "Runner",
             CharacterType.ShooterChar => "Shooter",
             CharacterType.TankChar => "Tank",
