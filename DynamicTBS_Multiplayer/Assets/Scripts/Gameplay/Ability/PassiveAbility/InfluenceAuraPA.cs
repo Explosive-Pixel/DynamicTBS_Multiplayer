@@ -57,7 +57,8 @@ public class InfluenceAuraPA : MonoBehaviour, IPassiveAbility
 
     private void SwapSides(Character character)
     {
-        influencePoints.Remove(character);
+        // TODO: Rework 
+        /*influencePoints.Remove(character);
         UpdateInfluenceAnimator(character, 0);
 
         if (character != null)
@@ -74,7 +75,7 @@ public class InfluenceAuraPA : MonoBehaviour, IPassiveAbility
                     spriteRenderer.sprite = newPrefab.transform.GetChild(i).gameObject.GetComponent<SpriteRenderer>().sprite;
                 }
             }
-        }
+        }*/
     }
 
     private void UpdateInfluenceAnimator(Character character, int influence)

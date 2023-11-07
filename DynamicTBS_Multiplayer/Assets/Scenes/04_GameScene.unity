@@ -9925,18 +9925,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98784b9471ba8f4698c12800cabce2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  master_blue: {fileID: 2550273066123922897, guid: 86a170897724b70448c5a4730501b7e8, type: 3}
-  master_pink: {fileID: 9184072761978377047, guid: a06de651e1d190d41b123a7818033737, type: 3}
-  mechanic_blue: {fileID: 2480155659641147852, guid: afc0f4d0a40ab6c40a8ba30f40397410, type: 3}
-  mechanic_pink: {fileID: 6678963199176301642, guid: e009b9881c78aa54397413132f00b9fc, type: 3}
-  medic_blue: {fileID: 8419942489251312343, guid: 113fa7a9852d91e419116eb93fba7320, type: 3}
-  medic_pink: {fileID: 1817118630238348747, guid: 01ad2a1121185df4f92b5352e45596f1, type: 3}
-  runner_blue: {fileID: 4812845494385860101, guid: bcb10637a8697344fbb30a1a65312fd3, type: 3}
-  runner_pink: {fileID: 1391693925305464559, guid: 9b75561573efb7248b5297c44c7d7671, type: 3}
-  shooter_blue: {fileID: 2386654771802019897, guid: 1eb19f8ff40d1d74d82998053ff41d92, type: 3}
-  shooter_pink: {fileID: 8402350255004926577, guid: e21545fe1d5eb5d49a60da9fdec82c2d, type: 3}
-  tank_blue: {fileID: 5188852879467059313, guid: 7e617b94bfd1fd741aa90f0b66570127, type: 3}
-  tank_pink: {fileID: 6518315123431092423, guid: 2cda4fafe1111304da2803d0485ce247, type: 3}
+  captain: {fileID: 1782077608749416652, guid: 8c737c3a5633a5b4fac3149ab3c1fc77, type: 3}
+  mechanic: {fileID: 397093963229379013, guid: a46276bb0178c834cada2aafb85998fe, type: 3}
+  doc: {fileID: 1670930401161900488, guid: 829d5f8a0dd051649b943d26d7304615, type: 3}
+  runner: {fileID: 1763848542226656330, guid: b1566a5b16ed7614db80d3bc4e996384, type: 3}
+  shooter: {fileID: 4053997383051486094, guid: 807c71d02437c9e46a474c1555da0395, type: 3}
+  tank: {fileID: 1564818809988685921, guid: 1225ec83956aa9145ac5ae22c48cc05e, type: 3}
 --- !u!1 &1842072853 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 983851165633828210, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}

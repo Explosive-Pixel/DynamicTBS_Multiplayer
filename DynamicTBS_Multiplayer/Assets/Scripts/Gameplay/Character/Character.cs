@@ -9,13 +9,13 @@ public class Character : MonoBehaviour
     [SerializeField] private int maxHitPoints;
     [SerializeField] private int moveSpeed;
     [SerializeField] private int attackRange;
-    [SerializeField] private PlayerType side;
 
-    [SerializeField] private Animator hitPointAnimator;
-    [SerializeField] private Animator cooldownAnimator;
+    //[SerializeField] private Animator hitPointAnimator;
+    //[SerializeField] private Animator cooldownAnimator;
     [SerializeField] private GameObject activeHighlight;
 
     protected CharacterType characterType;
+    private PlayerType side;
 
     private int attackDamage = AttackAction.AttackDamage;
     private PatternType movePattern = MoveAction.MovePattern;
@@ -50,6 +50,7 @@ public class Character : MonoBehaviour
     public PatternType MovePattern { get { return movePattern; } set { movePattern = value; } }
     public IActiveAbility ActiveAbility;
     public IPassiveAbility PassiveAbility;
+    public int MaxHitPoints { get { return maxHitPoints; } }
     public int HitPoints { get { return hitPoints; } set { hitPoints = value; UpdateHitPointAnimator(); } }
     public int ActiveAbilityCooldown { get { return activeAbilityCooldown; } set { activeAbilityCooldown = value; UpdateCooldownAnimator(); } }
     public bool IsClickable { get { return isClickable; } set { isClickable = value; } }
@@ -64,6 +65,14 @@ public class Character : MonoBehaviour
         PassiveAbility = gameObject.GetComponent<IPassiveAbility>();
 
         SubscribeEvents();
+    }
+
+    public void Init(CharacterType type, PlayerType side)
+    {
+        this.characterType = type;
+        this.side = side;
+
+        gameObject.GetComponentInChildren<HealthPointsHandler>().InitHealth(MaxHitPoints, Side);
     }
 
     public void TakeDamage(int damage)
@@ -147,7 +156,7 @@ public class Character : MonoBehaviour
     public void SetActiveAbilityOnCooldown()
     {
         ActiveAbilityCooldown = ActiveAbility.Cooldown + 1;
-        UIUtils.UpdateAnimator(cooldownAnimator, ActiveAbilityCooldown - 1);
+        // UIUtils.UpdateAnimator(cooldownAnimator, ActiveAbilityCooldown - 1);
         GameplayEvents.OnPlayerTurnEnded += ReduceActiveAbiliyCooldown;
     }
 
@@ -181,12 +190,12 @@ public class Character : MonoBehaviour
 
     private void UpdateHitPointAnimator()
     {
-        UIUtils.UpdateAnimator(hitPointAnimator, HitPoints);
+        //UIUtils.UpdateAnimator(hitPointAnimator, HitPoints);
     }
 
     private void UpdateCooldownAnimator()
     {
-        UIUtils.UpdateAnimator(cooldownAnimator, ActiveAbilityCooldown);
+        //UIUtils.UpdateAnimator(cooldownAnimator, ActiveAbilityCooldown);
     }
 
     private void PrepareCharacter(GamePhase gamePhase)

@@ -67,9 +67,57 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mechanic
       objectReference: {fileID: 0}
+    - target: {fileID: 6335397811996802209, guid: 81465a4e247cfb6429a71416afb6866c, type: 3}
+      propertyPath: moveSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6335397811996802209, guid: 81465a4e247cfb6429a71416afb6866c, type: 3}
+      propertyPath: prettyName
+      value: Mechanic
+      objectReference: {fileID: 0}
+    - target: {fileID: 6335397811996802209, guid: 81465a4e247cfb6429a71416afb6866c, type: 3}
+      propertyPath: attackRange
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6335397811996802209, guid: 81465a4e247cfb6429a71416afb6866c, type: 3}
+      propertyPath: maxHitPoints
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8462101976858894118, guid: 81465a4e247cfb6429a71416afb6866c, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.09
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 81465a4e247cfb6429a71416afb6866c, type: 3}
+--- !u!1 &397093963229379013 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5687532331230442325, guid: 81465a4e247cfb6429a71416afb6866c, type: 3}
+  m_PrefabInstance: {fileID: 5434980939823778448}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6904588922867117491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 397093963229379013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b8775bb0708a5240b1ddac75aadedf2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aaCooldown: 3
+  changeFloorRadius: 2
+  changeFloorRadiusWithInhabitants: 1
+--- !u!114 &6947562273440092625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 397093963229379013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97c57c9d56cef374ea17daf83475cf7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
