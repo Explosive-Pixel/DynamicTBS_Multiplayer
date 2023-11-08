@@ -31,7 +31,7 @@ public class HealthBarHandler : MonoBehaviour
 
         while (diff > 0)
         {
-            healthPoints[maxHP - diff - 1].GetComponent<ActiveHandler>().SetActive(false);
+            healthPoints[maxHP - diff].GetComponent<ActiveHandler>().SetActive(false);
             diff--;
         }
     }
@@ -50,7 +50,14 @@ public class HealthBarHandler : MonoBehaviour
         else
         {
             healthLeft.transform.position = startPosition;
-            Translate(healthLeft, -(distance * (maxHP - 1) / 2));
+
+            if (maxHP % 2 == 0)
+            {
+                Translate(healthLeft, -(healthLeft.GetComponentInChildren<SpriteRenderer>().localBounds.size.x / 2));
+            }
+
+            Translate(healthLeft, -(distance * (maxHP - 2)));
+
             healthPoints.Add(healthLeft);
 
             if (maxHP == 2)

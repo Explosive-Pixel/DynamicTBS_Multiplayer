@@ -18,42 +18,44 @@ public class CooldownBarHandler : MonoBehaviour
     {
         if (!init)
         {
-            InitCooldown(cd);
+            InitCooldown();
             init = true;
         }
 
-        SetAllActive();
+        SetAllActive(false);
 
-        int diff = maxCooldown - cd;
-
-        while (diff > 0)
+        for (int i = 0; i < Mathf.Min(cd, maxCooldown); i++)
         {
-            cooldownPoints[maxCooldown - diff - 1].GetComponent<ActiveHandler>().SetActive(false);
-            diff--;
+            cooldownPoints[i].GetComponent<ActiveHandler>().SetActive(true);
         }
     }
 
-    private void InitCooldown(int maxCooldown)
+    private void InitCooldown()
     {
-        this.maxCooldown = maxCooldown;
+        maxCooldown = gameObject.GetComponentInParent<Character>().ActiveAbility.Cooldown;
 
         cooldown.transform.position = startPosition;
-        Translate(cooldown, -(distance * (maxCooldown - 1) / 2));
+        Translate(cooldown, -(distance * (maxCooldown - 2)));
+        if (maxCooldown % 2 == 0)
+        {
+            Translate(cooldown, -(cooldown.GetComponentInChildren<SpriteRenderer>().localBounds.size.x / 2));
+        }
         cooldownPoints.Add(cooldown);
 
-        for (int i = 1; i < maxCooldown - 1; i++)
+        for (int i = 1; i < maxCooldown; i++)
         {
             AppendCooldownPoint(Instantiate(cooldown));
         }
     }
 
-    private void SetAllActive()
+    private void SetAllActive(bool active)
     {
-        cooldownPoints.ForEach(hp => hp.GetComponent<ActiveHandler>().SetActive(true));
+        cooldownPoints.ForEach(hp => hp.GetComponent<ActiveHandler>().SetActive(active));
     }
 
     private void AppendCooldownPoint(GameObject hp)
     {
+        hp.transform.parent = cooldown.transform.parent;
         hp.transform.position = cooldownPoints[^1].transform.position;
         Translate(hp, distance);
         cooldownPoints.Add(hp);

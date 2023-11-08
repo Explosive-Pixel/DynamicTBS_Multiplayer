@@ -8,6 +8,8 @@ public class InfluenceAuraPA : MonoBehaviour, IPassiveAbility
     [SerializeField] private int maxInfluence; //= 3;
     [SerializeField] private PatternType influenceAuraPatternType; // = PatternType.Star;
 
+    [SerializeField] private GameObject masterTakeoverProgression;
+
     public PassiveAbilityType AbilityType { get { return PassiveAbilityType.INFLUENCE_AURA; } }
 
     private Character owner;
@@ -58,39 +60,23 @@ public class InfluenceAuraPA : MonoBehaviour, IPassiveAbility
     private void SwapSides(Character character)
     {
         influencePoints.Remove(character);
-        UpdateInfluenceAnimator(character, 0);
 
         if (character == null)
             return;
 
-        character.Side = PlayerManager.GetOtherSide(character.Side);
-
-        // TODO: Rework 
-        /*influencePoints.Remove(character);
         UpdateInfluenceAnimator(character, 0);
-
-        if (character != null)
-        {
-            character.Side = PlayerManager.GetOtherSide(character.Side);
-
-            // Change all sprites from childs to sprites of childs of prefab of other side
-            GameObject newPrefab = CharacterFactory.GetPrefab(character.CharacterType, character.Side);
-            for (int i = 0; i < newPrefab.transform.childCount; i++)
-            {
-                GameObject child = character.gameObject.transform.GetChild(i).gameObject;
-                if (child.TryGetComponent<SpriteRenderer>(out var spriteRenderer))
-                {
-                    spriteRenderer.sprite = newPrefab.transform.GetChild(i).gameObject.GetComponent<SpriteRenderer>().sprite;
-                }
-            }
-        }*/
+        character.Side = PlayerManager.GetOtherSide(character.Side);
     }
 
     private void UpdateInfluenceAnimator(Character character, int influence)
     {
-        // TODO
-        GameObject child = UIUtils.FindChildGameObject(character.gameObject, "MasterTakeoverProgression");
-        UIUtils.UpdateAnimator(child.GetComponent<Animator>(), influence);
+        GameObject child = UIUtils.FindChildGameObject(character.gameObject, masterTakeoverProgression.name);
+        Animator animator = child.GetComponentInChildren<Animator>();
+
+        if (influence == 0)
+            animator.Rebind();
+
+        UIUtils.UpdateAnimator(animator, influence);
     }
 
     private void OnDestroy()

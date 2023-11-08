@@ -10,7 +10,6 @@ public class Character : MonoBehaviour
     [SerializeField] private int maxHitPoints;
     [SerializeField] private int moveSpeed;
     [SerializeField] private int attackRange;
-    [SerializeField] private int maxActiveAbilityCooldown;
 
     //[SerializeField] private Animator hitPointAnimator;
     //[SerializeField] private Animator cooldownAnimator;
@@ -63,11 +62,11 @@ public class Character : MonoBehaviour
         CharacterType = type;
         Side = side;
 
-        HitPoints = maxHitPoints;
-        ActiveAbilityCooldown = 0;
-
         ActiveAbility = gameObject.GetComponent<IActiveAbility>();
         PassiveAbility = gameObject.GetComponent<IPassiveAbility>();
+
+        HitPoints = maxHitPoints;
+        ActiveAbilityCooldown = 0;
 
         SubscribeEvents();
     }
@@ -230,7 +229,7 @@ public class Character : MonoBehaviour
 
     private void UpdateCooldown()
     {
-        gameObject.GetComponentInChildren<CooldownBarHandler>().UpdateCooldown(maxActiveAbilityCooldown - activeAbilityCooldown);
+        gameObject.GetComponentInChildren<CooldownBarHandler>().UpdateCooldown(activeAbilityCooldown);
     }
 
     #region EventsRegion

@@ -67,6 +67,10 @@ PrefabInstance:
       propertyPath: maxHitPoints
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 6335397811996802209, guid: 81465a4e247cfb6429a71416afb6866c, type: 3}
+      propertyPath: maxActiveAbilityCooldown
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 81465a4e247cfb6429a71416afb6866c, type: 3}
 --- !u!1 &1782077608749416652 stripped
@@ -102,3 +106,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxInfluence: 3
   influenceAuraPatternType: 1
+  masterTakeoverProgression: {fileID: 4911493997875471702}
+--- !u!1 &4911493997875471702 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1332004894905816783, guid: 81465a4e247cfb6429a71416afb6866c, type: 3}
+  m_PrefabInstance: {fileID: 6220907742633522073}
+  m_PrefabAsset: {fileID: 0}
