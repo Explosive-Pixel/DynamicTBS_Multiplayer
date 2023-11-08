@@ -11,8 +11,6 @@ public class Character : MonoBehaviour
     [SerializeField] private int moveSpeed;
     [SerializeField] private int attackRange;
 
-    //[SerializeField] private Animator hitPointAnimator;
-    //[SerializeField] private Animator cooldownAnimator;
     [SerializeField] private GameObject activeHighlight;
 
     protected CharacterType characterType;
@@ -152,7 +150,6 @@ public class Character : MonoBehaviour
     public void SetActiveAbilityOnCooldown()
     {
         ActiveAbilityCooldown = ActiveAbility.Cooldown + 1;
-        // UIUtils.UpdateAnimator(cooldownAnimator, ActiveAbilityCooldown - 1);
         GameplayEvents.OnPlayerTurnEnded += ReduceActiveAbiliyCooldown;
     }
 
@@ -182,16 +179,6 @@ public class Character : MonoBehaviour
         {
             ReduceActiveAbilityCooldown();
         }
-    }
-
-    private void UpdateHitPointAnimator()
-    {
-        //UIUtils.UpdateAnimator(hitPointAnimator, HitPoints);
-    }
-
-    private void UpdateCooldownAnimator()
-    {
-        //UIUtils.UpdateAnimator(cooldownAnimator, ActiveAbilityCooldown);
     }
 
     private void PrepareCharacter(GamePhase gamePhase)
