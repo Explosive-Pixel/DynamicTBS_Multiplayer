@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
+using System.Linq;
 
 public class Character : MonoBehaviour
 {
@@ -9,13 +10,11 @@ public class Character : MonoBehaviour
     [SerializeField] private int maxHitPoints;
     [SerializeField] private int moveSpeed;
     [SerializeField] private int attackRange;
-    [SerializeField] private PlayerType side;
 
-    [SerializeField] private Animator hitPointAnimator;
-    [SerializeField] private Animator cooldownAnimator;
     [SerializeField] private GameObject activeHighlight;
 
     protected CharacterType characterType;
+    private PlayerType side;
 
     private int attackDamage = AttackAction.AttackDamage;
     private PatternType movePattern = MoveAction.MovePattern;
@@ -43,25 +42,29 @@ public class Character : MonoBehaviour
 
     public string PrettyName { get { return prettyName; } }
     public CharacterType CharacterType { get { return characterType; } set { characterType = value; } }
-    public PlayerType Side { get { return side; } set { side = value; } }
+    public PlayerType Side { get { return side; } set { side = value; UpdateSide(); } }
     public int MoveSpeed { get { return moveSpeed; } set { moveSpeed = value; } }
     public int AttackRange { get { return attackRange; } }
     public int AttackDamage { get { return attackDamage; } set { attackDamage = value; } }
     public PatternType MovePattern { get { return movePattern; } set { movePattern = value; } }
     public IActiveAbility ActiveAbility;
     public IPassiveAbility PassiveAbility;
-    public int HitPoints { get { return hitPoints; } set { hitPoints = value; UpdateHitPointAnimator(); } }
-    public int ActiveAbilityCooldown { get { return activeAbilityCooldown; } set { activeAbilityCooldown = value; UpdateCooldownAnimator(); } }
+    public int MaxHitPoints { get { return maxHitPoints; } }
+    public int HitPoints { get { return hitPoints; } set { hitPoints = value; UpdateHitPoints(); } }
+    public int ActiveAbilityCooldown { get { return activeAbilityCooldown; } set { activeAbilityCooldown = value; UpdateCooldown(); } }
     public bool IsClickable { get { return isClickable; } set { isClickable = value; } }
     public State State { get { return state; } }
 
-    private void Awake()
+    public void Init(CharacterType type, PlayerType side)
     {
-        HitPoints = maxHitPoints;
-        ActiveAbilityCooldown = 0;
+        CharacterType = type;
+        Side = side;
 
         ActiveAbility = gameObject.GetComponent<IActiveAbility>();
         PassiveAbility = gameObject.GetComponent<IPassiveAbility>();
+
+        HitPoints = maxHitPoints;
+        ActiveAbilityCooldown = 0;
 
         SubscribeEvents();
     }
@@ -147,7 +150,6 @@ public class Character : MonoBehaviour
     public void SetActiveAbilityOnCooldown()
     {
         ActiveAbilityCooldown = ActiveAbility.Cooldown + 1;
-        UIUtils.UpdateAnimator(cooldownAnimator, ActiveAbilityCooldown - 1);
         GameplayEvents.OnPlayerTurnEnded += ReduceActiveAbiliyCooldown;
     }
 
@@ -179,16 +181,6 @@ public class Character : MonoBehaviour
         }
     }
 
-    private void UpdateHitPointAnimator()
-    {
-        UIUtils.UpdateAnimator(hitPointAnimator, HitPoints);
-    }
-
-    private void UpdateCooldownAnimator()
-    {
-        UIUtils.UpdateAnimator(cooldownAnimator, ActiveAbilityCooldown);
-    }
-
     private void PrepareCharacter(GamePhase gamePhase)
     {
         if (gamePhase != GamePhase.PLACEMENT && gamePhase != GamePhase.GAMEPLAY)
@@ -210,6 +202,21 @@ public class Character : MonoBehaviour
     private void Highlight(bool highlight)
     {
         activeHighlight.SetActive(highlight);
+    }
+
+    private void UpdateSide()
+    {
+        gameObject.GetComponentsInChildren<SideHandler>(true).ToList().ForEach(sideHandler => sideHandler.SetSide(side));
+    }
+
+    private void UpdateHitPoints()
+    {
+        gameObject.GetComponentInChildren<HealthBarHandler>().UpdateHP(hitPoints);
+    }
+
+    private void UpdateCooldown()
+    {
+        gameObject.GetComponentInChildren<CooldownBarHandler>().UpdateCooldown(activeAbilityCooldown);
     }
 
     #region EventsRegion

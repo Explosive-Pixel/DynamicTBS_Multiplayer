@@ -208,7 +208,7 @@ public class AudioManager : MonoBehaviour
                 fxSource.PlayOneShot(runnerDoubleAttackClip);
             if (character.CharacterType == CharacterType.MechanicChar)
                 fxSource.PlayOneShot(mechanicAttackClip);
-            if (character.CharacterType == CharacterType.MedicChar)
+            if (character.CharacterType == CharacterType.DocChar)
                 fxSource.PlayOneShot(medicAttackClip);
         }
         if (actionType == ActionType.ActiveAbility)
@@ -263,7 +263,7 @@ public class AudioManager : MonoBehaviour
             int rnd = Random.Range(0, mechanicVoiceClipsList.Count);
             voiceSource.PlayOneShot(mechanicVoiceClipsList[rnd]);
         }
-        if (character.CharacterType == CharacterType.MedicChar)
+        if (character.CharacterType == CharacterType.DocChar)
         {
             int rnd = Random.Range(0, medicVoiceClipsList.Count);
             voiceSource.PlayOneShot(medicVoiceClipsList[rnd]);

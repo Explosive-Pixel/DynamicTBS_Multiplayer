@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class HighPerformancePA : MonoBehaviour, IPassiveAbility
+public class BladeDancePA : MonoBehaviour, IPassiveAbility
 {
-    public PassiveAbilityType AbilityType { get { return PassiveAbilityType.HIGH_PERFORMANCE; } }
+    public PassiveAbilityType AbilityType { get { return PassiveAbilityType.BLADE_DANCE; } }
 
     private Character owner;
 

@@ -11,7 +11,7 @@ public class OnlineClientMessageSender : MonoBehaviour
 
     private void SendDraftCharacterMessage(Character character)
     {
-        if (OnlineClient.Instance.ShouldSendMessage(character.Side) && character.CharacterType != CharacterType.MasterChar)
+        if (OnlineClient.Instance.ShouldSendMessage(character.Side) && character.CharacterType != CharacterType.CaptainChar)
         {
             OnlineClient.Instance.SendToServer(new MsgDraftCharacter
             {

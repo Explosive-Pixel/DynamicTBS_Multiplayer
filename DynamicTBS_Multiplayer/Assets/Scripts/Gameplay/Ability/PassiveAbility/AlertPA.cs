@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SteadyStandPA : MonoBehaviour, IPassiveAbility
+public class AlertPA : MonoBehaviour, IPassiveAbility
 {
-    public PassiveAbilityType AbilityType { get { return PassiveAbilityType.STEADY_STAND; } }
+    public PassiveAbilityType AbilityType { get { return PassiveAbilityType.ALERT; } }
 
     private Character owner;
 

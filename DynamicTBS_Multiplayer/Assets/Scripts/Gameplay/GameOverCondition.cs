@@ -29,9 +29,9 @@ static class GameOverConditionMethods
         switch (condition)
         {
             case GameOverCondition.MASTER_TOOK_CONTROL:
-                return "The " + winner + " " + CharacterType.MasterChar.Name() + " took control over the engine.";
+                return "The " + winner + " " + CharacterType.CaptainChar.Name() + " took control over the engine.";
             case GameOverCondition.MASTER_DIED:
-                return "The " + PlayerManager.GetOtherSide(winner.Value) + " " + CharacterType.MasterChar.Name() + " died.";
+                return "The " + PlayerManager.GetOtherSide(winner.Value) + " " + CharacterType.CaptainChar.Name() + " died.";
             case GameOverCondition.PLAYER_SURRENDERED:
                 return "Player " + PlayerManager.GetOtherSide(winner.Value) + " surrendered.";
             case GameOverCondition.NO_AVAILABLE_ACTION:

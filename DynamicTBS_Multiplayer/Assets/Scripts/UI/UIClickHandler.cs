@@ -66,7 +66,7 @@ public class UIClickHandler : MonoBehaviour
                 return;
             }
 
-            // Check if click is on UI Element (like surrender button)
+            // Check if click is on canvas UI Element
             if (!UIUtils.IsHit())
             {
                 // If not

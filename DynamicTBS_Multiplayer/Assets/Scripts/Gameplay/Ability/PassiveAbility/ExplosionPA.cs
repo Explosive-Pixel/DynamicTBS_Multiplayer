@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ExplodePA : MonoBehaviour, IPassiveAbility
+public class ExplosionPA : MonoBehaviour, IPassiveAbility
 {
     [SerializeField] private PatternType explodePatternType; // PatternType.Star
     [SerializeField] private int explodeDamage; // 1
 
-    public PassiveAbilityType AbilityType { get { return PassiveAbilityType.EXPLODE; } }
+    public PassiveAbilityType AbilityType { get { return PassiveAbilityType.EXPLOSION; } }
 
     private bool active = false;
 

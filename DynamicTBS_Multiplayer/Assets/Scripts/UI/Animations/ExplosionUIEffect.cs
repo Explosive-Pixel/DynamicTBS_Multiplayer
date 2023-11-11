@@ -18,7 +18,7 @@ public class ExplosionUIEffect : MonoBehaviour
 
     private void InstantiatePrefab(Character character, Vector3 lastPosition)
     {
-        if (character.PassiveAbility.GetType() == typeof(ExplodePA))
+        if (character.PassiveAbility.GetType() == typeof(ExplosionPA))
         {
             Vector3 instantiationPosition = lastPosition + new Vector3(0f, yOffset, 0f);
             Quaternion rotation = character.gameObject.transform.rotation;
