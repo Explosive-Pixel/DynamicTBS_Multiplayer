@@ -25,7 +25,7 @@ public class MovesInfoHandler : MonoBehaviour
 
         if (actionMetadata.ExecutedActionType == ActionType.Skip)
         {
-            newLine += TranslatePlayerSide(actionMetadata.ExecutingPlayer) + "ended their turn";
+            newLine += TranslatePlayerSide(actionMetadata.ExecutingPlayer) + " ended their turn";
         }
         else
         {
