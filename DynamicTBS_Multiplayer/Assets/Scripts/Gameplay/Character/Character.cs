@@ -50,7 +50,7 @@ public class Character : MonoBehaviour
     public IActiveAbility ActiveAbility;
     public IPassiveAbility PassiveAbility;
     public int MaxHitPoints { get { return maxHitPoints; } }
-    public int HitPoints { get { return hitPoints; } set { hitPoints = value; UpdateHitPoints(); } }
+    public int HitPoints { get { return hitPoints; } set { hitPoints = Mathf.Max(value, 0); UpdateHitPoints(); } }
     public int ActiveAbilityCooldown { get { return activeAbilityCooldown; } set { activeAbilityCooldown = value; UpdateCooldown(); } }
     public bool IsClickable { get { return isClickable; } set { isClickable = value; } }
     public State State { get { return state; } }
@@ -88,11 +88,8 @@ public class Character : MonoBehaviour
 
     public void Heal(int healPoints)
     {
-        HitPoints += healPoints;
-        if (HitPoints > maxHitPoints)
-        {
-            HitPoints = maxHitPoints;
-        }
+        hitPoints += healPoints;
+        HitPoints = Mathf.Max(maxHitPoints, hitPoints);
     }
 
     public bool HasFullHP()
