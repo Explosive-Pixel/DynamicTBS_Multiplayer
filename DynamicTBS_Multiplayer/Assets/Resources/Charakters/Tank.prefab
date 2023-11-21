@@ -63,6 +63,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -0.08
       objectReference: {fileID: 0}
+    - target: {fileID: 4497325106717579055, guid: bc2bba4b9472eb34682304f038d98552, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4841834827429287078, guid: bc2bba4b9472eb34682304f038d98552, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -83,13 +87,12 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 6b2a8517f3a708a46b36191e4b6834ef, type: 3}
+    - target: {fileID: 8889200816352095202, guid: bc2bba4b9472eb34682304f038d98552, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc2bba4b9472eb34682304f038d98552, type: 3}
---- !u!95 &360779504018028600 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 6336411380225159212, guid: bc2bba4b9472eb34682304f038d98552, type: 3}
-  m_PrefabInstance: {fileID: 5975937610305783828}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2017866745970588481 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5687532331230442325, guid: bc2bba4b9472eb34682304f038d98552, type: 3}
@@ -128,9 +131,6 @@ MonoBehaviour:
   maxHitPoints: 3
   moveSpeed: 1
   attackRange: 1
-  side: 0
-  hitPointAnimator: {fileID: 5494080071505591857}
-  cooldownAnimator: {fileID: 360779504018028600}
   activeHighlight: {fileID: 8837209887186711156}
 --- !u!114 &5470139361406796093
 MonoBehaviour:
@@ -148,11 +148,6 @@ MonoBehaviour:
 --- !u!1 &3004466734442423286 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8889200816352095202, guid: bc2bba4b9472eb34682304f038d98552, type: 3}
-  m_PrefabInstance: {fileID: 5975937610305783828}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &5494080071505591857 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 2220326497007760933, guid: bc2bba4b9472eb34682304f038d98552, type: 3}
   m_PrefabInstance: {fileID: 5975937610305783828}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &8837209887186711156 stripped

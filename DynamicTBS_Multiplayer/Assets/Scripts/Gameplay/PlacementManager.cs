@@ -100,7 +100,7 @@ public class PlacementManager : MonoBehaviour
 
     private void SpawnMaster(PlayerType playerType)
     {
-        Character master = CharacterFactory.CreateCharacter(CharacterType.MasterChar, playerType);
+        Character master = CharacterFactory.CreateCharacter(CharacterType.CaptainChar, playerType);
         Tile masterSpawnTile = Board.Tiles.Find(tile => tile.TileType == TileType.MasterStartTile && tile.Side == playerType);
 
         MoveAction.MoveCharacter(master, masterSpawnTile);

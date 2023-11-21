@@ -88,7 +88,7 @@ public class GameplayManager : MonoBehaviour
 
     private void CheckAvailableActions(PlayerType player)
     {
-        if (!HasAvailableAction(player))
+        if (GameManager.gamePhase == GamePhase.GAMEPLAY && !HasAvailableAction(player))
         {
             if (maxActionsPerRound - remainingActions <= minActionsPerRound)
             {

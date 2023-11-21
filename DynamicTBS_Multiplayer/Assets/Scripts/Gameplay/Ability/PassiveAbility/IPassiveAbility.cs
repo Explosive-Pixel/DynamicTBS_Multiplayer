@@ -5,12 +5,12 @@ using System;
 
 public enum PassiveAbilityType
 {
-    ADRENALIN,
-    EXPLODE,
-    HIGH_PERFORMANCE,
-    INFLUENCE_AURA,
-    PULL_DAMAGE,
-    STEADY_STAND
+    ADRENALIN = 1,
+    EXPLOSION = 2,
+    BLADE_DANCE = 3,
+    INFLUENCE_AURA = 4,
+    PROTECT = 5,
+    ALERT = 6
 }
 
 public interface IPassiveAbility

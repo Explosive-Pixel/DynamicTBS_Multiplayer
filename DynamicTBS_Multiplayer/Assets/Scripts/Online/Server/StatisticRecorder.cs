@@ -476,7 +476,7 @@ public class StatisticRecorder : MonoBehaviour
         var characterTypes = new List<CharacterType>();
         foreach (CharacterType characterType in Enum.GetValues(typeof(CharacterType)))
         {
-            if (characterType == CharacterType.MasterChar)
+            if (characterType == CharacterType.CaptainChar)
                 continue;
 
             characterTypes.Add(characterType);

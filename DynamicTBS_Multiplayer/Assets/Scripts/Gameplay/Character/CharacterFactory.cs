@@ -7,37 +7,31 @@ using UnityEngine.UI;
 
 public class CharacterFactory : MonoBehaviour
 {
-    [SerializeField] private GameObject master_blue;
-    [SerializeField] private GameObject master_pink;
-    [SerializeField] private GameObject mechanic_blue;
-    [SerializeField] private GameObject mechanic_pink;
-    [SerializeField] private GameObject medic_blue;
-    [SerializeField] private GameObject medic_pink;
-    [SerializeField] private GameObject runner_blue;
-    [SerializeField] private GameObject runner_pink;
-    [SerializeField] private GameObject shooter_blue;
-    [SerializeField] private GameObject shooter_pink;
-    [SerializeField] private GameObject tank_blue;
-    [SerializeField] private GameObject tank_pink;
+    [SerializeField] private GameObject captain;
+    [SerializeField] private GameObject mechanic;
+    [SerializeField] private GameObject doc;
+    [SerializeField] private GameObject runner;
+    [SerializeField] private GameObject shooter;
+    [SerializeField] private GameObject tank;
 
-    private static readonly Dictionary<CharacterType, Dictionary<PlayerType, GameObject>> characters = new();
+    private static readonly Dictionary<CharacterType, GameObject> characters = new();
 
     private void Awake()
     {
         if (characters.Count > 0)
             return;
 
-        characters.Add(CharacterType.MasterChar, new() { { PlayerType.blue, master_blue }, { PlayerType.pink, master_pink } });
-        characters.Add(CharacterType.MechanicChar, new() { { PlayerType.blue, mechanic_blue }, { PlayerType.pink, mechanic_pink } });
-        characters.Add(CharacterType.MedicChar, new() { { PlayerType.blue, medic_blue }, { PlayerType.pink, medic_pink } });
-        characters.Add(CharacterType.RunnerChar, new() { { PlayerType.blue, runner_blue }, { PlayerType.pink, runner_pink } });
-        characters.Add(CharacterType.ShooterChar, new() { { PlayerType.blue, shooter_blue }, { PlayerType.pink, shooter_pink } });
-        characters.Add(CharacterType.TankChar, new() { { PlayerType.blue, tank_blue }, { PlayerType.pink, tank_pink } });
+        characters.Add(CharacterType.CaptainChar, captain);
+        characters.Add(CharacterType.MechanicChar, mechanic);
+        characters.Add(CharacterType.DocChar, doc);
+        characters.Add(CharacterType.RunnerChar, runner);
+        characters.Add(CharacterType.ShooterChar, shooter);
+        characters.Add(CharacterType.TankChar, tank);
     }
 
     public static Character CreateCharacter(CharacterType type, PlayerType side)
     {
-        GameObject prefab = GetPrefab(type, side);
+        GameObject prefab = GetPrefab(type);
 
         if (prefab != null)
         {
@@ -46,7 +40,7 @@ public class CharacterFactory : MonoBehaviour
             if (characterGO != null)
             {
                 Character character = characterGO.GetComponent<Character>();
-                character.CharacterType = type;
+                character.Init(type, side);
                 return character;
             }
         }
@@ -54,12 +48,12 @@ public class CharacterFactory : MonoBehaviour
         return null;
     }
 
-    public static GameObject GetPrefab(CharacterType type, PlayerType side)
+    public static GameObject GetPrefab(CharacterType type)
     {
         if (!characters.ContainsKey(type))
             return null;
 
-        return characters[type][side];
+        return characters[type];
     }
 
     public static CharacterType GetRandomCharacterType()
@@ -73,7 +67,7 @@ public class CharacterFactory : MonoBehaviour
         if (!characters.ContainsKey(characterType))
             return null;
 
-        GameObject characterPrefab = characters[characterType][PlayerType.blue];
+        GameObject characterPrefab = characters[characterType];
 
         if (characterPrefab != null)
         {
