@@ -71,13 +71,31 @@ PrefabInstance:
       propertyPath: maxActiveAbilityCooldown
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6335397811996802209, guid: 81465a4e247cfb6429a71416afb6866c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 81465a4e247cfb6429a71416afb6866c, type: 3}
 --- !u!1 &1782077608749416652 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5687532331230442325, guid: 81465a4e247cfb6429a71416afb6866c, type: 3}
   m_PrefabInstance: {fileID: 6220907742633522073}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8509842422232819158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1782077608749416652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 154f83bd70627a74681d8f8c4968cf8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prettyName: Captain
+  maxHitPoints: 3
+  moveSpeed: 1
+  attackRange: 0
+  activeHighlight: {fileID: 2836957676272102715}
 --- !u!114 &3463230580564421835
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -107,6 +125,11 @@ MonoBehaviour:
   maxInfluence: 3
   influenceAuraPatternType: 1
   masterTakeoverProgression: {fileID: 4911493997875471702}
+--- !u!1 &2836957676272102715 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8145885104940637858, guid: 81465a4e247cfb6429a71416afb6866c, type: 3}
+  m_PrefabInstance: {fileID: 6220907742633522073}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4911493997875471702 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1332004894905816783, guid: 81465a4e247cfb6429a71416afb6866c, type: 3}
