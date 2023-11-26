@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 using System.Linq;
 
 public class Character : MonoBehaviour
@@ -10,8 +9,6 @@ public class Character : MonoBehaviour
     [SerializeField] private int maxHitPoints;
     [SerializeField] private int moveSpeed;
     [SerializeField] private int attackRange;
-
-    [SerializeField] private GameObject activeHighlight;
 
     protected CharacterType characterType;
     private PlayerType side;
@@ -191,16 +188,6 @@ public class Character : MonoBehaviour
         }
     }
 
-    private void HighlightCharacter(Character character)
-    {
-        Highlight(character == this);
-    }
-
-    private void Highlight(bool highlight)
-    {
-        activeHighlight.SetActive(highlight);
-    }
-
     private void UpdateSide()
     {
         gameObject.GetComponentsInChildren<SideHandler>(true).ToList().ForEach(sideHandler => sideHandler.SetSide(side));
@@ -222,14 +209,12 @@ public class Character : MonoBehaviour
     {
         GameEvents.OnGamePhaseStart += PrepareCharacter;
         GameplayEvents.OnFinishAction += SetActiveAbilityOnCooldown;
-        GameplayEvents.OnCharacterSelectionChange += HighlightCharacter;
     }
 
     private void UnsubscribeEvents()
     {
         GameEvents.OnGamePhaseStart -= PrepareCharacter;
         GameplayEvents.OnFinishAction -= SetActiveAbilityOnCooldown;
-        GameplayEvents.OnCharacterSelectionChange -= HighlightCharacter;
         GameplayEvents.OnPlayerTurnEnded -= ReduceActiveAbiliyCooldown;
     }
 
