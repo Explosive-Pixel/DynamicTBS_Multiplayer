@@ -83,13 +83,31 @@ PrefabInstance:
       propertyPath: maxActiveAbilityCooldown
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6335397811996802209, guid: 81465a4e247cfb6429a71416afb6866c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 81465a4e247cfb6429a71416afb6866c, type: 3}
 --- !u!1 &1763848542226656330 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5687532331230442325, guid: 81465a4e247cfb6429a71416afb6866c, type: 3}
   m_PrefabInstance: {fileID: 6238715159327055647}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1190159262921816443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1763848542226656330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4d15eaf134fac64ca3e4c088a02733b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prettyName: Runner
+  maxHitPoints: 1
+  moveSpeed: 2
+  attackRange: 1
+  activeHighlight: {fileID: 2855177959317782973}
 --- !u!114 &4275598322764696556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117,3 +135,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 606bbcaf75d36f3488600a135324e940, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2855177959317782973 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8145885104940637858, guid: 81465a4e247cfb6429a71416afb6866c, type: 3}
+  m_PrefabInstance: {fileID: 6238715159327055647}
+  m_PrefabAsset: {fileID: 0}

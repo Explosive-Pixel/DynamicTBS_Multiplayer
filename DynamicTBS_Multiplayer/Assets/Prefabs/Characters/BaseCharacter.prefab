@@ -1914,7 +1914,6 @@ GameObject:
   - component: {fileID: 1515746348609380309}
   - component: {fileID: 6810969125420336678}
   - component: {fileID: -5382449487162889459}
-  - component: {fileID: 6335397811996802209}
   m_Layer: 0
   m_Name: BaseCharacter
   m_TagString: Untagged
@@ -1978,23 +1977,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.7, y: 0.7, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6335397811996802209
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5687532331230442325}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58ef55f285305dc49ad0665a37a7de58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prettyName: 
-  maxHitPoints: 0
-  moveSpeed: 0
-  attackRange: 0
-  activeHighlight: {fileID: 8145885104940637858}
 --- !u!1 &5961236665887323469
 GameObject:
   m_ObjectHideFlags: 0
@@ -2641,13 +2623,14 @@ GameObject:
   m_Component:
   - component: {fileID: 660725264584793198}
   - component: {fileID: 7098306423276501376}
+  - component: {fileID: 1978224374074081580}
   m_Layer: 0
   m_Name: ActiveCharacterHighlight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &660725264584793198
 Transform:
   m_ObjectHideFlags: 0
@@ -2679,6 +2662,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameObjectPink: {fileID: 8430689323523539331}
   gameObjectBlue: {fileID: 2903370447749462624}
+--- !u!114 &1978224374074081580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8145885104940637858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6528b93ccf0148468e1b67028b2761a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8430689323523539331
 GameObject:
   m_ObjectHideFlags: 0

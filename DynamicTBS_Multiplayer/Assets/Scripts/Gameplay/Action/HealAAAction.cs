@@ -122,11 +122,10 @@ public class HealAAAction : MonoBehaviour, IAction
 
     private void UpdateBufferGameObject(Character character)
     {
-        // TODO: Make nicer (not hard coded)
-        GameObject child = UIUtils.FindChildGameObject(character.gameObject, "Speedup");
+        GameObject speedBuff = UIUtils.FindChildGameObject(character.gameObject, HealAA.speedBuffName);
         int bufferCount = BufferCount(character);
-        child.GetComponent<TMPro.TextMeshPro>().text = "+" + bufferCount.ToString();
-        child.SetActive(bufferCount > 0);
+        speedBuff.GetComponentInChildren<TMPro.TextMeshPro>().text = "+" + bufferCount.ToString();
+        speedBuff.SetActive(bufferCount > 0);
     }
 
     private void Register(GamePhase gamePhase)
