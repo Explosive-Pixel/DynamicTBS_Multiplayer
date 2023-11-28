@@ -19,7 +19,6 @@ public class Character : MonoBehaviour
     private bool isClickable = false;
     private int hitPoints;
     private int activeAbilityCooldown;
-    private State state;
 
     // States whether the character can be targeted by another character to get attacked/healed
     public delegate bool IsTargetable(Character attacker);
@@ -50,7 +49,6 @@ public class Character : MonoBehaviour
     public int HitPoints { get { return hitPoints; } set { hitPoints = Mathf.Max(value, 0); UpdateHitPoints(); } }
     public int ActiveAbilityCooldown { get { return activeAbilityCooldown; } set { activeAbilityCooldown = value; UpdateCooldown(); } }
     public bool IsClickable { get { return isClickable; } set { isClickable = value; } }
-    public State State { get { return state; } }
 
     public void Init(CharacterType type, PlayerType side)
     {
@@ -94,20 +92,14 @@ public class Character : MonoBehaviour
         return HitPoints == maxHitPoints;
     }
 
-    public void SetState(CharacterStateType stateType)
+    private void ResetStates()
     {
-        state = CharacterStateFactory.Create(stateType, gameObject);
-    }
-
-    private void ResetState()
-    {
-        state?.Destroy();
-        state = null;
+        gameObject.GetComponents<IState>().ToList().ForEach(state => state.Destroy());
     }
 
     public virtual void Die()
     {
-        ResetState();
+        ResetStates();
         CharacterEvents.CharacterDies(this, gameObject.transform.position);
         Destroy(gameObject);
     }
@@ -225,7 +217,6 @@ public class Character : MonoBehaviour
         if (UIClickHandler.CurrentCharacter == this)
             GameplayEvents.ChangeCharacterSelection(null);
 
-        ResetState();
         UnsubscribeEvents();
     }
 }

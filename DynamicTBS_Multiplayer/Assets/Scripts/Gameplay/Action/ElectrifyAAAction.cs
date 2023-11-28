@@ -72,7 +72,8 @@ public class ElectrifyAAAction : MonoBehaviour, IAction
                 GameplayEvents.GameIsOver(characterInAction.Side, GameOverCondition.MASTER_TOOK_CONTROL);
             }
 
-            tile.SetState(TileStateType.ELECTRIFIED);
+            ((ElectrifyAA)characterInAction.ActiveAbility).ElectrifyTile(tile);
+            //tile.SetState(TileStateType.ELECTRIFIED);
         }
 
         AbortAction();

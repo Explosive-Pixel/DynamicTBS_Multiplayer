@@ -2,25 +2,49 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ElectrifiedState : State
+public class ElectrifiedState : MonoBehaviour, IState
 {
-    protected override int Duration { get { return 2; } }
-    private static readonly string prefabPath = "EffectPrefabs/ElectrifyPrefab";
+    private GameObject electrifyPrefab;
+    private int stunDuration;
 
     private Tile tile;
     private Character stunnedInhabitant;
+    private GameObject overlay;
 
-    public ElectrifiedState(GameObject parent) : base(parent)
+    public static ElectrifiedState Create(GameObject parent, int duration, int stunDuration, GameObject electrifyPrefab)
     {
-        tile = Board.GetTileByPosition(parent.transform.position);
+        ElectrifiedState es = parent.AddComponent<ElectrifiedState>();
+        es.Init(duration, stunDuration, electrifyPrefab);
 
-        StunInhabitant();
-        GameplayEvents.OnFinishAction += StunInhabitant;
+        return es;
     }
 
-    protected override GameObject LoadPrefab(GameObject parent)
+    private void Init(int duration, int stunDuration, GameObject electrifyPrefab)
     {
-        return Resources.Load<GameObject>(prefabPath);
+        this.stunDuration = stunDuration;
+        this.electrifyPrefab = electrifyPrefab;
+
+        ElectrifyTile();
+
+        RoundBasedCounter.Create(gameObject, duration, Destroy);
+    }
+
+    private void ElectrifyTile()
+    {
+        tile = Board.GetTileByPosition(gameObject.transform.position);
+
+        CreateOverlay();
+
+        GameplayEvents.OnFinishAction += StunInhabitant;
+        StunInhabitant();
+    }
+
+    private void CreateOverlay()
+    {
+        overlay = Instantiate(electrifyPrefab);
+        overlay.transform.position = gameObject.transform.position;
+        overlay.SetActive(true);
+        overlay.transform.SetParent(gameObject.transform);
     }
 
     private void StunInhabitant(ActionMetadata actionMetadata)
@@ -36,20 +60,20 @@ public class ElectrifiedState : State
         if (tile.IsOccupied())
         {
             stunnedInhabitant = tile.CurrentInhabitant;
-            stunnedInhabitant.SetState(CharacterStateType.STUNNED);
+            StunnedState.Create(stunnedInhabitant.gameObject, stunDuration);
             Destroy();
         }
     }
 
-    public override void Destroy()
+    public void Destroy()
     {
-        stunnedInhabitant = null;
-        GameplayEvents.OnFinishAction -= StunInhabitant;
-        base.Destroy();
+        Destroy(this);
     }
 
-    ~ElectrifiedState()
+    private void OnDestroy()
     {
-        Destroy();
+        Destroy(overlay);
+        stunnedInhabitant = null;
+        GameplayEvents.OnFinishAction -= StunInhabitant;
     }
 }
