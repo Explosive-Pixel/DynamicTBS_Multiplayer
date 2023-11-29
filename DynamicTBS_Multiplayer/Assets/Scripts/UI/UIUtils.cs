@@ -24,17 +24,22 @@ public class UIUtils : MonoBehaviour
     public static GameObject FindGameObjectByRay(List<GameObject> destinations, Ray ray)
     {
         RaycastHit[] hits = Physics.RaycastAll(ray);
+        GameObject hitWithMaxZValue = null;
+
         if (hits != null && hits.Length > 0)
         {
             foreach (RaycastHit hit in hits)
             {
                 GameObject gameObject = hit.transform.gameObject;
                 if (destinations.Contains(gameObject))
-                    return gameObject;
+                {
+                    if (hitWithMaxZValue == null || gameObject.transform.position.z > hitWithMaxZValue.transform.position.z)
+                        hitWithMaxZValue = gameObject;
+                }
             }
         }
 
-        return null;
+        return hitWithMaxZValue;
     }
 
     public static bool IsHit()

@@ -1262,6 +1262,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8373436223273109820}
+  - component: {fileID: 4579565517268059067}
   m_Layer: 0
   m_Name: EndTurnButton
   m_TagString: Untagged
@@ -1286,6 +1287,19 @@ Transform:
   m_Father: {fileID: 6255988068195692585}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &4579565517268059067
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3446669080242957098}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.72, y: 0.37, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3530219157324626999
 GameObject:
   m_ObjectHideFlags: 0
@@ -1627,6 +1641,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2155393197573380522}
+  - component: {fileID: 3052220577458271504}
   m_Layer: 0
   m_Name: AcceptButton
   m_TagString: Untagged
@@ -1642,7 +1657,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5089387479647100350}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.1, z: 0}
+  m_LocalPosition: {x: 0, y: -0.1, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1651,6 +1666,19 @@ Transform:
   m_Father: {fileID: 2434385806024375359}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &3052220577458271504
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5089387479647100350}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.94, y: 0.42, z: 1}
+  m_Center: {x: 1.51, y: -0.1, z: 0}
 --- !u!1 &5106787823210858034
 GameObject:
   m_ObjectHideFlags: 0
@@ -2844,6 +2872,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8704555505678678332}
+  - component: {fileID: 1612235378401357346}
   m_Layer: 0
   m_Name: DeclineButton
   m_TagString: Untagged
@@ -2859,7 +2888,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6511617388874155669}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.6, z: 0}
+  m_LocalPosition: {x: 0, y: -0.6, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2868,6 +2897,19 @@ Transform:
   m_Father: {fileID: 3637749606967606357}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1612235378401357346
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6511617388874155669}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.94, y: 0.42, z: 1}
+  m_Center: {x: 1.51, y: -0.1, z: 0}
 --- !u!1 &7586611324781587585
 GameObject:
   m_ObjectHideFlags: 0
@@ -2877,6 +2919,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2102042854023582831}
+  - component: {fileID: 1470852305737693548}
   m_Layer: 0
   m_Name: AcceptButton
   m_TagString: Untagged
@@ -2892,7 +2935,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7586611324781587585}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.1, z: 0}
+  m_LocalPosition: {x: 0, y: -0.1, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2901,6 +2944,19 @@ Transform:
   m_Father: {fileID: 3637749606967606357}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1470852305737693548
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7586611324781587585}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.94, y: 0.42, z: 1}
+  m_Center: {x: 1.51, y: -0.1, z: 0}
 --- !u!1 &8913168573335894404
 GameObject:
   m_ObjectHideFlags: 0
@@ -2910,6 +2966,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2284434109698934603}
+  - component: {fileID: 1283058601887354487}
   m_Layer: 0
   m_Name: DeclineButton
   m_TagString: Untagged
@@ -2925,7 +2982,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8913168573335894404}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.6, z: 0}
+  m_LocalPosition: {x: 0, y: -0.6, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2934,6 +2991,19 @@ Transform:
   m_Father: {fileID: 2434385806024375359}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1283058601887354487
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8913168573335894404}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.94, y: 0.42, z: 1}
+  m_Center: {x: 1.51, y: -0.1, z: 0}
 --- !u!1001 &36313265970086288
 PrefabInstance:
   m_ObjectHideFlags: 0
