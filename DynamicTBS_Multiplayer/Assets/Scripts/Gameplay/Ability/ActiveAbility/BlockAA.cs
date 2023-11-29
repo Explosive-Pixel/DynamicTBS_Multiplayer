@@ -21,9 +21,10 @@ public class BlockAA : MonoBehaviour, IActiveAbility
     private BlockAAAction blockAAAction;
 
     private Character character;
-    private int currentBlockCount = 0;
 
     private bool firstExecution = true;
+
+    private bool isBlocking;
 
     private void Awake()
     {
@@ -37,21 +38,21 @@ public class BlockAA : MonoBehaviour, IActiveAbility
         var defaultIsAttackableBy = character.isAttackableBy;
         character.isAttackableBy = (attacker) =>
         {
-            if (IsBlocking()) return false;
+            if (isBlocking) return false;
             return defaultIsAttackableBy(character);
         };
 
         var defaultIsDisabled = character.isDisabled;
         character.isDisabled = () =>
         {
-            if (IsBlocking()) return true;
+            if (isBlocking) return true;
             return defaultIsDisabled();
         };
 
         var defaultIsDamageable = character.isDamageable;
         character.isDamageable = (damage) =>
         {
-            if (IsBlocking()) return false;
+            if (isBlocking) return false;
             return defaultIsDamageable(damage);
         };
     }
@@ -67,11 +68,6 @@ public class BlockAA : MonoBehaviour, IActiveAbility
         return blockAAAction.CountActionDestinations(character);
     }
 
-    public bool IsBlocking()
-    {
-        return currentBlockCount > 0;
-    }
-
     public void ActivateBlock()
     {
         if (firstExecution)
@@ -80,24 +76,14 @@ public class BlockAA : MonoBehaviour, IActiveAbility
             firstExecution = false;
         }
 
-        currentBlockCount = blockingRounds + 1;
-        ToggleBlockPrefab(true);
-        SubscribeEvents();
+        ToggleBlock(true);
+        RoundBasedCounter.Create(gameObject, blockingRounds, () => ToggleBlock(false));
     }
 
-    public void ReduceBlockCount()
+    private void ToggleBlock(bool active)
     {
-        if (currentBlockCount > 0)
-        {
-            currentBlockCount -= 1;
-
-            if (currentBlockCount == 0)
-            {
-                currentBlockCount = 0;
-                ToggleBlockPrefab(false);
-                UnsubscribeEvents();
-            }
-        }
+        blockGameObject.SetActive(active);
+        isBlocking = active;
     }
 
     public void ShowActionPattern()
@@ -112,7 +98,7 @@ public class BlockAA : MonoBehaviour, IActiveAbility
             var cDefaultIsAttackableBy = c.isAttackableBy;
             c.isAttackableBy = (attacker) =>
                 {
-                    if (currentBlockCount > 0 && attacker != character)
+                    if (isBlocking && attacker != character)
                     {
                         Tile attackerTile = Board.GetTileByCharacter(attacker);
                         Tile cTile = Board.GetTileByCharacter(c);
@@ -136,33 +122,5 @@ public class BlockAA : MonoBehaviour, IActiveAbility
                     return cDefaultIsAttackableBy(attacker);
                 };
         }
-    }
-
-    private void ToggleBlockPrefab(bool active)
-    {
-        blockGameObject.SetActive(active);
-    }
-
-    private void ReduceBlockCounter(PlayerType player)
-    {
-        if (character.Side == player)
-        {
-            ReduceBlockCount();
-        }
-    }
-
-    private void SubscribeEvents()
-    {
-        GameplayEvents.OnPlayerTurnEnded += ReduceBlockCounter;
-    }
-
-    private void UnsubscribeEvents()
-    {
-        GameplayEvents.OnPlayerTurnEnded -= ReduceBlockCounter;
-    }
-
-    private void OnDestroy()
-    {
-        UnsubscribeEvents();
     }
 }

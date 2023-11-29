@@ -9,6 +9,7 @@ public class HighlightHandler : MonoBehaviour
     private void Awake()
     {
         character = gameObject.GetComponentInParent<Character>();
+
         Highlight(false);
 
         GameplayEvents.OnCharacterSelectionChange += HighlightCharacter;

@@ -79,6 +79,23 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5687532331230442325, guid: 81465a4e247cfb6429a71416afb6866c, type: 3}
   m_PrefabInstance: {fileID: 6220907742633522073}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3463230580564421835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1782077608749416652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e5df2d5c4aac504d8fe6df8da76d1a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aaCooldown: 3
+  electrifyRadius: 1
+  electrifyDuration: 2
+  electrifyStunDuration: 1
+  electrifyPrefab: {fileID: 4862152837891559308, guid: 13795ad02ea32854cbfd4cbc2aa87efe, type: 3}
 --- !u!114 &8509842422232819158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95,21 +112,6 @@ MonoBehaviour:
   maxHitPoints: 3
   moveSpeed: 1
   attackRange: 0
-  activeHighlight: {fileID: 2836957676272102715}
---- !u!114 &3463230580564421835
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1782077608749416652}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e5df2d5c4aac504d8fe6df8da76d1a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  aaCooldown: 3
-  electrifyRadius: 1
 --- !u!114 &8967390204183554450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,11 +127,6 @@ MonoBehaviour:
   maxInfluence: 3
   influenceAuraPatternType: 1
   masterTakeoverProgression: {fileID: 4911493997875471702}
---- !u!1 &2836957676272102715 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8145885104940637858, guid: 81465a4e247cfb6429a71416afb6866c, type: 3}
-  m_PrefabInstance: {fileID: 6220907742633522073}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4911493997875471702 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1332004894905816783, guid: 81465a4e247cfb6429a71416afb6866c, type: 3}
