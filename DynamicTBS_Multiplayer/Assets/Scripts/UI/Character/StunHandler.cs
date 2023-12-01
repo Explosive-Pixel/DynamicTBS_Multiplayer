@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class StunHandler : MonoBehaviour
 {
@@ -18,6 +19,6 @@ public class StunHandler : MonoBehaviour
     public void VisualizeStun(bool active)
     {
         stunMarker.SetActive(active);
-        characterSprite.GetComponentInChildren<SpriteRenderer>().color = active ? stunColor : defaultColor;
+        characterSprite.GetComponentsInChildren<SpriteRenderer>().ToList().ForEach(cs => cs.color = active ? stunColor : defaultColor);
     }
 }
