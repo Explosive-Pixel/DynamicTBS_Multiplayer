@@ -1242,6 +1242,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8542121398193918525}
+  - component: {fileID: 7025282578223619200}
   m_Layer: 0
   m_Name: SpeedBuff
   m_TagString: Untagged
@@ -1267,6 +1268,20 @@ Transform:
   m_Father: {fileID: 1515746348609380309}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7025282578223619200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3133021465174468142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 679cf3d13f0ce45cc9bffc70c7ae8a6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameObjectPink: {fileID: 5583924164052248055}
+  gameObjectBlue: {fileID: 2285592153740628246}
 --- !u!1 &4141461800075029497
 GameObject:
   m_ObjectHideFlags: 0
