@@ -13,6 +13,7 @@ public class SurrenderButtonHandler : MonoBehaviour, IClickableObject
     private void Awake()
     {
         GameEvents.OnGamePhaseStart += SetActive;
+        GameplayEvents.OnExecuteUIAction += OnSurrenderClicked;
 
         ChangeButtonVisibility(false);
         surrenderConfirmationBox.SetActive(false);
@@ -21,6 +22,12 @@ public class SurrenderButtonHandler : MonoBehaviour, IClickableObject
     public void OnClick()
     {
         surrenderConfirmationBox.SetActive(true);
+    }
+
+    private void OnSurrenderClicked(PlayerType player, UIAction uIAction)
+    {
+        if (uIAction == UIAction.SURRENDER)
+            GameplayEvents.GameIsOver(PlayerManager.GetOtherSide(player), GameOverCondition.PLAYER_SURRENDERED);
     }
 
     private void ChangeButtonVisibility(bool active)
@@ -37,5 +44,6 @@ public class SurrenderButtonHandler : MonoBehaviour, IClickableObject
     private void OnDestroy()
     {
         GameEvents.OnGamePhaseStart -= SetActive;
+        GameplayEvents.OnExecuteUIAction -= OnSurrenderClicked;
     }
 }

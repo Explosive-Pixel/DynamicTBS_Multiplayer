@@ -8,25 +8,9 @@ public class AcceptSurrenderButtonHandler : MonoBehaviour, IClickableObject
 
     public ClickPermission ClickPermission { get { return clickPermission; } }
 
-    private void Awake()
-    {
-        GameplayEvents.OnExecuteUIAction += OnSurrenderClicked;
-    }
-
     public void OnClick()
     {
         PlayerType player = PlayerManager.ExecutingPlayer;
         GameplayEvents.UIActionExecuted(player, UIAction.SURRENDER);
-    }
-
-    private void OnSurrenderClicked(PlayerType player, UIAction uIAction)
-    {
-        if (uIAction == UIAction.SURRENDER)
-            GameplayEvents.GameIsOver(PlayerManager.GetOtherSide(player), GameOverCondition.PLAYER_SURRENDERED);
-    }
-
-    private void OnDestroy()
-    {
-        GameplayEvents.OnExecuteUIAction -= OnSurrenderClicked;
     }
 }
