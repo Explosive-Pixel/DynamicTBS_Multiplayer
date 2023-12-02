@@ -73,7 +73,7 @@ public class Character : MonoBehaviour
 
             CharacterEvents.CharacterTakesDamage(this, actualDamage);
 
-            if (HitPoints <= 0)
+            if (IsDead())
             {
                 Die();
             }
@@ -90,6 +90,11 @@ public class Character : MonoBehaviour
     public bool HasFullHP()
     {
         return HitPoints == maxHitPoints;
+    }
+
+    public bool IsDead()
+    {
+        return HitPoints <= 0;
     }
 
     private void ResetStates()
