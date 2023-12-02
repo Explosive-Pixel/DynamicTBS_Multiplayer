@@ -84,7 +84,7 @@ public class Character : MonoBehaviour
     public void Heal(int healPoints)
     {
         hitPoints += healPoints;
-        HitPoints = Mathf.Max(maxHitPoints, hitPoints);
+        HitPoints = Mathf.Min(maxHitPoints, hitPoints);
     }
 
     public bool HasFullHP()

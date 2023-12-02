@@ -6,6 +6,9 @@ using UnityEngine.UI;
 public class SurrenderButtonHandler : MonoBehaviour, IClickableObject
 {
     [SerializeField] private GameObject surrenderConfirmationBox;
+    [SerializeField] private ClickPermission clickPermission;
+
+    public ClickPermission ClickPermission { get { return clickPermission; } }
 
     private void Awake()
     {

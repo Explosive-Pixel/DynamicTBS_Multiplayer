@@ -5,20 +5,18 @@ using System.Linq;
 
 public class StunHandler : MonoBehaviour
 {
-    [SerializeField] private GameObject stunMarker;
-    [SerializeField] private GameObject characterSprite;
-    [SerializeField] private Color stunColor;
+    [SerializeField] private GameObject stunMarkerPink;
+    [SerializeField] private GameObject stunMarkerBlue;
 
-    private Color defaultColor;
-
-    private void Awake()
+    public void VisualizeStun(PlayerType stunningSide)
     {
-        defaultColor = characterSprite.GetComponentInChildren<SpriteRenderer>().color;
+        gameObject.SetActive(true);
+        stunMarkerPink.SetActive(stunningSide == PlayerType.pink);
+        stunMarkerBlue.SetActive(stunningSide == PlayerType.blue);
     }
 
-    public void VisualizeStun(bool active)
+    public void TurnOffStunVisualization()
     {
-        stunMarker.SetActive(active);
-        characterSprite.GetComponentsInChildren<SpriteRenderer>().ToList().ForEach(cs => cs.color = active ? stunColor : defaultColor);
+        gameObject.SetActive(false);
     }
 }

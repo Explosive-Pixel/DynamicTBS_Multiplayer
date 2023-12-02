@@ -6,6 +6,9 @@ using UnityEngine.UI;
 public class OfferDrawButtonHandler : MonoBehaviour, IClickableObject
 {
     [SerializeField] private GameObject answerDrawBox;
+    [SerializeField] private ClickPermission clickPermission;
+
+    public ClickPermission ClickPermission { get { return clickPermission; } }
 
     private void Awake()
     {

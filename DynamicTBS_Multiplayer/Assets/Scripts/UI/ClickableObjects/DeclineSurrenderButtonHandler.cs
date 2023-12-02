@@ -5,6 +5,9 @@ using UnityEngine;
 public class DeclineSurrenderButtonHandler : MonoBehaviour, IClickableObject
 {
     [SerializeField] private GameObject surrenderConfirmationBox;
+    [SerializeField] private ClickPermission clickPermission;
+
+    public ClickPermission ClickPermission { get { return clickPermission; } }
 
     public void OnClick()
     {

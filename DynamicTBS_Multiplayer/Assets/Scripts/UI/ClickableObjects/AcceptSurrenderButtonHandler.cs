@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class AcceptSurrenderButtonHandler : MonoBehaviour, IClickableObject
 {
+    [SerializeField] private ClickPermission clickPermission;
+
+    public ClickPermission ClickPermission { get { return clickPermission; } }
+
     private void Awake()
     {
         GameplayEvents.OnExecuteUIAction += OnSurrenderClicked;

@@ -6,23 +6,25 @@ public class ElectrifiedState : MonoBehaviour, IState
 {
     private GameObject electrifyPrefab;
     private int stunDuration;
+    private PlayerType electrifyingSide;
 
     private Tile tile;
     private Character stunnedInhabitant;
     private GameObject overlay;
 
-    public static ElectrifiedState Create(GameObject parent, int duration, int stunDuration, GameObject electrifyPrefab)
+    public static ElectrifiedState Create(GameObject parent, int duration, int stunDuration, GameObject electrifyPrefab, PlayerType electrifyingSide)
     {
         ElectrifiedState es = parent.AddComponent<ElectrifiedState>();
-        es.Init(duration, stunDuration, electrifyPrefab);
+        es.Init(duration, stunDuration, electrifyPrefab, electrifyingSide);
 
         return es;
     }
 
-    private void Init(int duration, int stunDuration, GameObject electrifyPrefab)
+    private void Init(int duration, int stunDuration, GameObject electrifyPrefab, PlayerType electrifyingSide)
     {
         this.stunDuration = stunDuration;
         this.electrifyPrefab = electrifyPrefab;
+        this.electrifyingSide = electrifyingSide;
 
         ElectrifyTile();
 
@@ -60,7 +62,7 @@ public class ElectrifiedState : MonoBehaviour, IState
         if (tile.IsOccupied())
         {
             stunnedInhabitant = tile.CurrentInhabitant;
-            StunnedState.Create(stunnedInhabitant.gameObject, stunDuration);
+            StunnedState.Create(stunnedInhabitant.gameObject, stunDuration, electrifyingSide);
             Destroy();
         }
     }

@@ -34,7 +34,7 @@ public class ElectrifyAA : MonoBehaviour, IActiveAbility
 
     public void ElectrifyTile(Tile tile)
     {
-        ElectrifiedState.Create(tile.gameObject, electrifyDuration, electrifyStunDuration, electrifyPrefab);
+        ElectrifiedState.Create(tile.gameObject, electrifyDuration, electrifyStunDuration, electrifyPrefab, character.Side);
     }
 
     public int CountActionDestinations()

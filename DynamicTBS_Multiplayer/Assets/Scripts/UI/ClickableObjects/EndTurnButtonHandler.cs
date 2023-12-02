@@ -7,6 +7,9 @@ public class EndTurnButtonHandler : MonoBehaviour, IClickableObject
 {
     [SerializeField] private GameObject turnEndedButton;
     [SerializeField] private GameObject turnEndedButton_grayed;
+    [SerializeField] private ClickPermission clickPermission;
+
+    public ClickPermission ClickPermission { get { return clickPermission; } }
 
     private void Awake()
     {
