@@ -2248,7 +2248,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1488884027266762345}
-  - component: {fileID: 4557622452775355339}
   - component: {fileID: 7371296689486995434}
   m_Layer: 0
   m_Name: StunMarker
@@ -2274,20 +2273,6 @@ Transform:
   m_Father: {fileID: 1515746348609380309}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4557622452775355339
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5579077255012251921}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 679cf3d13f0ce45cc9bffc70c7ae8a6a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameObjectPink: {fileID: 6925544928860178865}
-  gameObjectBlue: {fileID: 442826727337178184}
 --- !u!114 &7371296689486995434
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2300,9 +2285,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21df59bf7b53444ee8bf50c854cad0cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stunMarker: {fileID: 5579077255012251921}
-  characterSprite: {fileID: 7797478450864279757}
-  stunColor: {r: 0.28898183, g: 0.30462387, b: 0.3207547, a: 1}
+  stunMarkerPink: {fileID: 6925544928860178865}
+  stunMarkerBlue: {fileID: 442826727337178184}
 --- !u!1 &5583924164052248055
 GameObject:
   m_ObjectHideFlags: 0

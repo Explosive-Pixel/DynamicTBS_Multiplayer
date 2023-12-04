@@ -73,7 +73,7 @@ public class Character : MonoBehaviour
 
             CharacterEvents.CharacterTakesDamage(this, actualDamage);
 
-            if (HitPoints <= 0)
+            if (IsDead())
             {
                 Die();
             }
@@ -84,12 +84,17 @@ public class Character : MonoBehaviour
     public void Heal(int healPoints)
     {
         hitPoints += healPoints;
-        HitPoints = Mathf.Max(maxHitPoints, hitPoints);
+        HitPoints = Mathf.Min(maxHitPoints, hitPoints);
     }
 
     public bool HasFullHP()
     {
         return HitPoints == maxHitPoints;
+    }
+
+    public bool IsDead()
+    {
+        return HitPoints <= 0;
     }
 
     private void ResetStates()

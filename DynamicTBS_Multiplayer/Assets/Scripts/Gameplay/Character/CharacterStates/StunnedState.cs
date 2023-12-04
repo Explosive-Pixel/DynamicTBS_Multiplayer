@@ -6,15 +6,15 @@ public class StunnedState : MonoBehaviour, IState
 {
     private Character character;
 
-    public static StunnedState Create(GameObject parent, int stunDuration)
+    public static StunnedState Create(GameObject parent, int stunDuration, PlayerType stunningSide)
     {
         StunnedState ss = parent.AddComponent<StunnedState>();
-        ss.Init(stunDuration);
+        ss.Init(stunDuration, stunningSide);
 
         return ss;
     }
 
-    private void Init(int stunDuration)
+    private void Init(int stunDuration, PlayerType stunningSide)
     {
         character = gameObject.GetComponent<Character>();
 
@@ -25,14 +25,14 @@ public class StunnedState : MonoBehaviour, IState
             return defaultIsDisabled();
         };
 
-        VisualizeStun(true);
+        VisualizeStun(stunningSide);
 
         RoundBasedCounter.Create(gameObject, stunDuration, Destroy);
     }
 
-    private void VisualizeStun(bool active)
+    private void VisualizeStun(PlayerType stunningSide)
     {
-        gameObject.GetComponentInChildren<StunHandler>(true).VisualizeStun(active);
+        gameObject.GetComponentInChildren<StunHandler>(true).VisualizeStun(stunningSide);
     }
 
     private bool IsStunned(Character character)
@@ -47,6 +47,6 @@ public class StunnedState : MonoBehaviour, IState
 
     private void OnDestroy()
     {
-        VisualizeStun(false);
+        gameObject.GetComponentInChildren<StunHandler>().TurnOffStunVisualization();
     }
 }
