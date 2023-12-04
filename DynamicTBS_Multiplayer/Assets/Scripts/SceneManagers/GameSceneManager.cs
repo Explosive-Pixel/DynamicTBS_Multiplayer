@@ -17,12 +17,10 @@ public class GameSceneManager : MonoBehaviour
     [SerializeField] private Button backToLobbyButton;
     [SerializeField] private List<Button> backToMainMenuButtons;
 
-    private readonly List<GameObject> canvasList = new();
+    [SerializeField] private int goToGameOverCanvasDelay;
+    [SerializeField] private int goToGameplayScreenDelay;
 
-    public GameObject GetGameplayCanvas()
-    {
-        return gameplayCanvas;
-    }
+    private readonly List<GameObject> canvasList = new();
 
     private void Awake()
     {
@@ -70,6 +68,7 @@ public class GameSceneManager : MonoBehaviour
     }
 
     #region ScreenChangeRegion
+
     private void GoToDraftScreen()
     {
         HandleMenus(draftCanvas);
@@ -80,37 +79,24 @@ public class GameSceneManager : MonoBehaviour
     {
         if (gamePhase == GamePhase.DRAFT)
         {
-            HandleMenus(gameplayCanvas);
             draftObjectsObject.SetActive(false);
+
+            HandleMenus(gameplayCanvas);
             gameplayObjectsObject.SetActive(true);
         }
     }
 
     private void GoToGameOverScreen(PlayerType? winner, GameOverCondition endGameCondition)
     {
-        HandleMenus(gameOverCanvas);
-        gameplayObjectsObject.SetActive(false);
-        Text gameOverText = gameOverCanvas.GetComponentInChildren<Text>();
-        Color backgroundColor = Color.gray;
-        if (winner != null)
-        {
-            gameOverText.text = "Player " + winner.ToString() + " has won.";
-            if (winner == PlayerType.pink)
-            {
-                backgroundColor = new Color(1f, 0.18f, 0.8f, 1);
-            }
-            else
-            {
-                backgroundColor = new Color(0.224f, 0.53f, 0.961f, 1);
-            }
-        }
-        else
-        {
-            gameOverText.text = "No player has won the game.";
-        }
-        gameOverText.text += "\n\n" + endGameCondition.ToText(winner);
-        gameOverCanvas.GetComponentInChildren<Image>().color = backgroundColor;
+        StartCoroutine(DelayGoToGameOverScreen());
     }
+
+    private IEnumerator DelayGoToGameOverScreen()
+    {
+        yield return new WaitForSeconds(goToGameOverCanvasDelay);
+        HandleMenus(gameOverCanvas);
+    }
+
     #endregion
 
     #region EventSubscriptions
