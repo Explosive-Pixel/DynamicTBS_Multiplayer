@@ -10,7 +10,7 @@ public class ActiveAbilityIconHandler : MonoBehaviour, IClickableObject
 
     public void OnClick()
     {
-        if (GameManager.gamePhase == GamePhase.GAMEPLAY)
+        if (GameManager.CurrentGamePhase == GamePhase.GAMEPLAY)
             UIClickHandler.CurrentCharacter.ExecuteActiveAbility();
     }
 }

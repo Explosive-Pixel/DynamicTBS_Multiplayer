@@ -9,7 +9,7 @@ public class PlayerInfoHandler : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.gameType == GameType.ONLINE)
+        if (GameManager.GameType == GameType.ONLINE)
         {
             playerNamePink.text = OnlineClient.Instance.GetPlayerName(PlayerType.pink);
             playerNameBlue.text = OnlineClient.Instance.GetPlayerName(PlayerType.blue);

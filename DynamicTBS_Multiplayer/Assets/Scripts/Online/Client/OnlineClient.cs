@@ -253,7 +253,7 @@ public class OnlineClient : MonoBehaviour
     {
         Board.selectedMapType = selectedMap;
         Timer.InitTime(timerSetup);
-        GameManager.gameType = GameType.ONLINE;
+        GameManager.GameType = GameType.ONLINE;
 
         GameEvents.StartGame();
     }

@@ -54,16 +54,16 @@ public class CurrentPlayerUIHandler : MonoBehaviour
     {
         // ChangeOverlay(currentPlayer);
 
-        if (!associatedGamePhases.Contains(GameManager.gamePhase))
+        if (!associatedGamePhases.Contains(GameManager.CurrentGamePhase))
             return;
 
         playerInfoText.text = "";
-        if (GameManager.gameType == GameType.ONLINE && OnlineClient.Instance.UserData.Role == ClientType.PLAYER)
+        if (GameManager.GameType == GameType.ONLINE && OnlineClient.Instance.UserData.Role == ClientType.PLAYER)
         {
             playerInfoText.text = "You are player " + OnlineClient.Instance.Side + ".";
         }
 
-        switch (GameManager.gamePhase)
+        switch (GameManager.CurrentGamePhase)
         {
             case GamePhase.DRAFT:
                 DisplayDraftMessages(currentPlayer);

@@ -14,7 +14,7 @@ public class LocalGameSetupCanvasHandler : MonoBehaviour
 
     private void Awake()
     {
-        if (GameManager.gameType == GameType.LOCAL)
+        if (GameManager.GameType == GameType.LOCAL)
         {
             active = true;
 

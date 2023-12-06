@@ -9,9 +9,12 @@ public class ActiveSideDisplayHandler : MonoBehaviour
 
     private void Awake()
     {
-        SetActive(PlayerManager.StartPlayer[GamePhase.GAMEPLAY]);
-
         GameplayEvents.OnCurrentPlayerChanged += SetActive;
+    }
+
+    private void Start()
+    {
+        SetActive(PlayerManager.StartPlayer[GamePhase.GAMEPLAY]);
     }
 
     private void SetActive(PlayerType side)

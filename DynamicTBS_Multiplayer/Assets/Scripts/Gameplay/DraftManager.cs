@@ -21,12 +21,10 @@ public class DraftManager : MonoBehaviour
 
     private static bool init = false;
 
-    private static DraftManager Instance;
-
-    private void Start()
-    {
-        GameManager.ChangeGamePhase(GamePhase.DRAFT);
-    }
+    /* private void Start()
+     {
+         GameManager.ChangeGamePhase(GamePhase.DRAFT);
+     } */
 
     private void Awake()
     {
@@ -44,7 +42,6 @@ public class DraftManager : MonoBehaviour
     {
         DraftSequence.AddRange(draftSequence);
         SpawnPositions.AddRange(spawnPositions);
-        Instance = gameObject.GetComponent<DraftManager>();
 
         init = true;
     }
@@ -107,13 +104,6 @@ public class DraftManager : MonoBehaviour
 
     private static void DraftCompleted()
     {
-        Instance.StartCoroutine(DelayGoToGameOverScreen());
-    }
-
-    private static IEnumerator DelayGoToGameOverScreen()
-    {
-        // TODO: Timer has to stop; need to change a lot of logic ...
-        yield return new WaitForSeconds(0);
         GameEvents.EndGamePhase(GamePhase.DRAFT);
     }
 }

@@ -55,7 +55,7 @@ public class ActionsCounterHandler : MonoBehaviour
 
     private void UpdatePlacementCounter(ActionMetadata actionMetadata)
     {
-        if (GameManager.gamePhase == GamePhase.PLACEMENT)
+        if (GameManager.CurrentGamePhase == GamePhase.PLACEMENT)
         {
             UpdatePlacementCounter();
         }

@@ -26,7 +26,7 @@ public class OfferDrawButtonHandler : MonoBehaviour, IClickableObject
     {
         if (uIAction == UIAction.OFFER_DRAW)
         {
-            if (!(GameManager.gameType == GameType.ONLINE && OnlineClient.Instance.Side == player))
+            if (!(GameManager.GameType == GameType.ONLINE && OnlineClient.Instance.Side == player))
             {
                 SetActive(answerDrawBox, true);
             }
