@@ -99,13 +99,16 @@ public class Timer : MonoBehaviour
     private DateTime? startTime = null;
     private bool timerRanOff = false;
 
-    private float ServerTimeDiff { get { return GameManager.gameType == GameType.ONLINE && OnlineClient.Instance && OnlineClient.Instance.IsActive ? OnlineClient.Instance.ServerTimeDiff : 0; } }
+    private float ServerTimeDiff { get { return GameManager.GameType == GameType.ONLINE && OnlineClient.Instance && OnlineClient.Instance.IsActive ? OnlineClient.Instance.ServerTimeDiff : 0; } }
 
     private void Awake()
     {
         SubscribeEvents();
+    }
 
-        if (GameManager.gamePhase == gamePhase)
+    private void Start()
+    {
+        if (GameManager.CurrentGamePhase == gamePhase)
             SetActive(gamePhase);
     }
 
@@ -149,7 +152,7 @@ public class Timer : MonoBehaviour
                 return;
 
             timerRanOff = true;
-            if (GameManager.gameType == GameType.LOCAL)
+            if (GameManager.GameType == GameType.LOCAL)
             {
                 GameplayEvents.TimerTimedOut(gamePhase, side);
             }
@@ -159,10 +162,7 @@ public class Timer : MonoBehaviour
     private void SetActive(GamePhase gamePhase)
     {
         if (this.gamePhase != gamePhase)
-        {
-            SetInactive();
             return;
-        }
 
         timerType = gamePhase == GamePhase.GAMEPLAY ? TimerType.GAMEPLAY : TimerType.DRAFT_AND_PLACEMENT;
 
@@ -179,9 +179,15 @@ public class Timer : MonoBehaviour
         isActive = true;
     }
 
+    private void SetInactive(GamePhase gamePhase)
+    {
+        if (this.gamePhase == gamePhase)
+            SetInactive();
+    }
+
     private void OnUnpauseGame(bool paused)
     {
-        if (GameManager.gameType != GameType.LOCAL)
+        if (GameManager.GameType != GameType.LOCAL)
             return;
 
         if (!paused)
@@ -234,7 +240,7 @@ public class Timer : MonoBehaviour
         playerStats[nextPlayer].timerGO.SetActive(true);
         playerStats[lastPlayer].timerGO.SetActive(false);
 
-        if (GameManager.gameType == GameType.LOCAL)
+        if (GameManager.GameType == GameType.LOCAL)
             startTime = TimerUtils.Timestamp();
     }
 
@@ -270,7 +276,7 @@ public class Timer : MonoBehaviour
 
     private void DrawNoTimeLeftConsequences_Draft(PlayerType playerType)
     {
-        if (GameManager.gameType == GameType.ONLINE && (OnlineClient.Instance.Side != playerType || OnlineClient.Instance.IsLoadingGame))
+        if (GameManager.GameType == GameType.ONLINE && (OnlineClient.Instance.Side != playerType || OnlineClient.Instance.IsLoadingGame))
             return;
 
         DraftManager.RandomDrafts(playerType);
@@ -278,7 +284,7 @@ public class Timer : MonoBehaviour
 
     private void DrawNoTimeLeftConsequences_Placement(PlayerType playerType)
     {
-        if (GameManager.gameType == GameType.ONLINE && (OnlineClient.Instance.Side != playerType || OnlineClient.Instance.IsLoadingGame))
+        if (GameManager.GameType == GameType.ONLINE && (OnlineClient.Instance.Side != playerType || OnlineClient.Instance.IsLoadingGame))
             return;
 
         PlacementManager.RandomPlacements(playerType);
@@ -299,11 +305,13 @@ public class Timer : MonoBehaviour
     private void SubscribeEvents()
     {
         GameEvents.OnGamePhaseStart += SetActive;
+        GameEvents.OnGamePhaseEnd += SetInactive;
     }
 
     private void UnsubscribeEvents()
     {
         GameEvents.OnGamePhaseStart -= SetActive;
+        GameEvents.OnGamePhaseEnd -= SetInactive;
         GameplayEvents.OnPlayerTurnEnded -= ResetTimerForNextPlayer;
         GameplayEvents.OnTimerUpdate -= UpdateData;
         GameplayEvents.OnTimerTimeout -= DrawNoTimeLeftConsequences;

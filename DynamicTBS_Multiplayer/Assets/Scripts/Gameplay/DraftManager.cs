@@ -21,11 +21,6 @@ public class DraftManager : MonoBehaviour
 
     private static bool init = false;
 
-    /* private void Start()
-     {
-         GameManager.ChangeGamePhase(GamePhase.DRAFT);
-     } */
-
     private void Awake()
     {
         if (!init)
