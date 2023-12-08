@@ -17,7 +17,9 @@ public class DraftManager : MonoBehaviour
     private static readonly List<Vector3> SpawnPositions = new();
 
     public static int CurrentPlayerTotalDraftCount { get { return draftSequenceIndex < DraftSequence.Count ? DraftSequence[draftSequenceIndex] : 0; } }
+    public static int CurrentPlayerRemainingDraftCount { get { return CurrentPlayerTotalDraftCount - currentPlayerDraftCount; } }
     public static int MaxDraftCount { get { return DraftSequence.Sum(); } }
+    public static int DraftCounter { get { return draftCounter; } }
 
     private static bool init = false;
 
@@ -48,9 +50,9 @@ public class DraftManager : MonoBehaviour
         Character character = CharacterFactory.CreateCharacter(type, side);
         character.gameObject.transform.position = SpawnPositions[draftCounter];
 
-        DraftEvents.CharacterCreated(character);
-
         AdvanceDraftOrder();
+
+        DraftEvents.CharacterCreated(character);
     }
 
     public static void RandomDrafts(PlayerType side)
