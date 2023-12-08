@@ -14,12 +14,6 @@ public class ActionInfoHandler : MonoBehaviour
         GameEvents.OnGamePhaseEnd += SetInactive;
     }
 
-    private void Start()
-    {
-        if (gamePhase == GameManager.CurrentGamePhase)
-            SetActive(gamePhase);
-    }
-
     private void SetActive(GamePhase currentGamePhase)
     {
         if (gamePhase != currentGamePhase)
@@ -28,7 +22,7 @@ public class ActionInfoHandler : MonoBehaviour
         switch (currentGamePhase)
         {
             case GamePhase.DRAFT:
-                DraftEvents.OnCharacterCreated += UpdateDraftCounter;
+                DraftEvents.OnDraftActionFinished += UpdateDraftCounter;
                 UpdateDraftCounter();
                 break;
             case GamePhase.PLACEMENT:
@@ -69,14 +63,9 @@ public class ActionInfoHandler : MonoBehaviour
 
     private void SetInactive(GamePhase lastGamePhase)
     {
-        DraftEvents.OnCharacterCreated -= UpdateDraftCounter;
+        DraftEvents.OnDraftActionFinished -= UpdateDraftCounter;
         GameplayEvents.OnFinishAction -= UpdatePlacementCounter;
         GameplayEvents.OnChangeRemainingActions -= UpdateGameplayCounter;
-    }
-
-    private void UpdateDraftCounter(Character character)
-    {
-        UpdateDraftCounter();
     }
 
     private void UpdatePlacementCounter(ActionMetadata actionMetadata)

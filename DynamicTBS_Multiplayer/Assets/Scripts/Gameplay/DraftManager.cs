@@ -50,9 +50,11 @@ public class DraftManager : MonoBehaviour
         Character character = CharacterFactory.CreateCharacter(type, side);
         character.gameObject.transform.position = SpawnPositions[draftCounter];
 
+        DraftEvents.CharacterCreated(character);
+
         AdvanceDraftOrder();
 
-        DraftEvents.CharacterCreated(character);
+        DraftEvents.FinishDraftAction();
     }
 
     public static void RandomDrafts(PlayerType side)
@@ -77,7 +79,7 @@ public class DraftManager : MonoBehaviour
             return 0;
         }
 
-        return CurrentPlayerTotalDraftCount - currentPlayerDraftCount;
+        return CurrentPlayerRemainingDraftCount;
     }
 
     private static void AdvanceDraftOrder()
@@ -87,15 +89,17 @@ public class DraftManager : MonoBehaviour
 
         if (currentPlayerDraftCount == CurrentPlayerTotalDraftCount)
         {
-            currentPlayerDraftCount = 0;
             draftSequenceIndex++;
+
+            if (draftSequenceIndex == DraftSequence.Count)
+            {
+                DraftCompleted();
+                return;
+            }
+
+            currentPlayerDraftCount = 0;
+
             PlayerManager.NextPlayer();
-        }
-
-
-        if (draftSequenceIndex == DraftSequence.Count)
-        {
-            DraftCompleted();
         }
     }
 

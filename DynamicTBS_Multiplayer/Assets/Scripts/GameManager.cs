@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float delayAfterGameplay;
 
     private static GameType gameType = GameType.LOCAL;
-    private static GamePhase currentGamePhase = GamePhase.DRAFT;
+    private static GamePhase currentGamePhase = GamePhase.NONE;
 
     public static GameType GameType { get { return gameType; } set { gameType = value; } }
     public static GamePhase CurrentGamePhase { get { return currentGamePhase; } }
@@ -35,13 +35,18 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        currentGamePhase = GamePhase.DRAFT;
+        currentGamePhase = GamePhase.NONE;
 
         delayAfterGamePhase.Add(GamePhase.DRAFT, delayAfterDraft);
         delayAfterGamePhase.Add(GamePhase.PLACEMENT, delayAfterPlacement);
         delayAfterGamePhase.Add(GamePhase.GAMEPLAY, delayAfterGameplay);
 
         GameEvents.OnGamePhaseEnd += ChangeGamePhase;
+    }
+
+    private void Start()
+    {
+        ChangeGamePhase(currentGamePhase);
     }
 
     public static bool IsPlayer()

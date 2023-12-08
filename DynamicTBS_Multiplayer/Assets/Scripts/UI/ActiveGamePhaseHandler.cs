@@ -11,11 +11,6 @@ public class ActiveGamePhaseHandler : MonoBehaviour
         GameEvents.OnGamePhaseStart += SetActive;
     }
 
-    private void Start()
-    {
-        SetActive(GameManager.CurrentGamePhase);
-    }
-
     private void SetActive(GamePhase gamePhase)
     {
         gameObject.SetActive(activeGamePhases.Contains(gamePhase));

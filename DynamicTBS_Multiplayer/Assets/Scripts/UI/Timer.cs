@@ -86,8 +86,9 @@ public class Timer : MonoBehaviour
     [SerializeField] private GameObject timerBlue;
     [SerializeField] private TimerType timerType;
     [SerializeField] private GamePhase gamePhase;
-    [SerializeField] private GameObject lamp1;
-    [SerializeField] private GameObject lamp2;
+
+    // [SerializeField] private GameObject lamp1;
+    // [SerializeField] private GameObject lamp2;
 
     private delegate void NoTimeLeftConsequence(PlayerType player);
 
@@ -104,12 +105,6 @@ public class Timer : MonoBehaviour
     private void Awake()
     {
         SubscribeEvents();
-    }
-
-    private void Start()
-    {
-        if (GameManager.CurrentGamePhase == gamePhase)
-            SetActive(gamePhase);
     }
 
     public static void InitTime(TimerSetupType timerSetup)
@@ -205,14 +200,14 @@ public class Timer : MonoBehaviour
         UpdateTimer();
     }
 
-    private void UpdateLamps(int debuffCount)
+    /*private void UpdateLamps(int debuffCount)
     {
         if (lamp1 == null || lamp2 == null)
             return;
 
         lamp1.GetComponent<Animator>().SetInteger("Actions", debuffCount > 0 ? 1 : 0);
         lamp2.GetComponent<Animator>().SetInteger("Actions", debuffCount > 1 ? 1 : 0);
-    }
+    }*/
 
     private void ResetTimerForNextPlayer(PlayerType player)
     {
@@ -228,7 +223,7 @@ public class Timer : MonoBehaviour
 
         if (timerType == TimerType.GAMEPLAY)
         {
-            UpdateLamps(playerStats[nextPlayer].debuff);
+            //UpdateLamps(playerStats[nextPlayer].debuff);
             playerStats[nextPlayer].StartTimeLeft = TotalTime[timerType] * Mathf.Pow(1 - debuffRate, playerStats[nextPlayer].debuff);
         }
         else
