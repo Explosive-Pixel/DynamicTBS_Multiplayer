@@ -203,7 +203,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -0.09, y: 0.08}
   m_SizeDelta: {x: 2.5, y: 4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &5317760985342092607
@@ -268,14 +268,33 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'SHOOTER
+  m_text: '<b>SHOOTER</b>
 
 
-    Stats &
+    Movement: 1
 
-    Abilities
+    Health: 2
 
-    Info'
+    Damage: 1
+
+    Range:
+    2
+
+
+    Active Ability: <b>Powershot</b>
+
+    Deals <b>1</b> damage to all units
+    in a direction in a <i>cross pattern</i> as well as this unit. Can only be stopped
+    by an active Block.
+
+    Cooldown: <b>3</b> turns.
+
+
+    Passive Ability: <b>Explosion</b>
+
+    If
+    this unit dies it explodes, dealing <b>1</b> damage to all units in a <i>radius</i>
+    of <b>1</b> and destroying the floor square it occupies.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -302,8 +321,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 3
-  m_fontSizeBase: 3
+  m_fontSize: 1.3
+  m_fontSizeBase: 1.3
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -565,7 +584,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -0.09, y: 0.08}
   m_SizeDelta: {x: 2.5, y: 4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &5317760985436178574
@@ -630,14 +649,33 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'SHOOTER
+  m_text: '<b>MECHANIC</b>
 
 
-    Stats &
+    Movement: 1
 
-    Abilities
+    Health: 2
 
-    Info'
+    Damage: 1
+
+    Range:
+    1
+
+
+    Active Ability: <b>Change Floor</b>
+
+    Changes a floor square to a
+    hole or the other way around in a <i>radius</i> of <b>2</b>. Occupied squares
+    can only be changed in a <i>radius</i> of <b>1</b>, instantly killing the occupying
+    units.
+
+    Cooldown: <b>3</b> turns
+
+
+    Passive Ability: <b>Alert</b>
+
+    If
+    this unit takes damage, its cooldown is set to <b>0</b>.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -664,8 +702,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 3
-  m_fontSizeBase: 3
+  m_fontSize: 1.3
+  m_fontSizeBase: 1.3
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -944,7 +982,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -0.09, y: 0.08}
   m_SizeDelta: {x: 2.5, y: 4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &5317760985519536549
@@ -1009,14 +1047,34 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'SHOOTER
+  m_text: '<b>DOC</b>
 
 
-    Stats &
+    Movement: 1
 
-    Abilities
+    Health: 2
 
-    Info'
+    Damage: 1
+
+    Range:
+    1
+
+
+    Active Ability: <b>Heal</b>
+
+    Throws a syringe in a <i>star pattern</i>
+    in a range of <b>2</b> to heal a unit for <b>1</b> health. Units may never have
+    more health than they started with. When being healed, a unit also receives a
+    movement buff of <b>+1</b> which is gone after its next move action.
+
+    Cooldown:
+    <b>3</b> turns
+
+
+    Passive Ability: <b>Adrenalin</b>
+
+    If this unit takes
+    damage, its cooldown is set to <b>0</b>.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1043,8 +1101,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 3
-  m_fontSizeBase: 3
+  m_fontSize: 1.3
+  m_fontSizeBase: 1.3
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1164,7 +1222,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -0.09, y: 0.08}
   m_SizeDelta: {x: 2.5, y: 4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &5317760985639398190
@@ -1229,14 +1287,35 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'SHOOTER
+  m_text: '<b>TANK</b>
 
 
-    Stats &
+    Movement: 1
 
-    Abilities
+    Health: 4
 
-    Info'
+    Damage: 1
+
+    Range:
+    1
+
+
+    Active Ability: <b>Block</b>
+
+    This unit rips out an adjacent floor
+    square in a <i>cross pattern</i> and uses it as a shield for <b>2</b> turns.
+    While shielded this unit will take no damage, but is unable to attack or move
+    and its passive ability is disabled.
+
+    Cooldown: <b>3</b> turns
+
+
+    Passive
+    Ability: <b>Protect</b>
+
+    If an allied unit is next to this one in a <i>cross
+    pattern</i>, this unit will take all damage for its ally. Does not work on other
+    Tanks. If this unit is stunned, this ability gets disabled.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1263,8 +1342,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 3
-  m_fontSizeBase: 3
+  m_fontSize: 1.3
+  m_fontSizeBase: 1.3
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1376,7 +1455,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -0.09, y: 0.08}
   m_SizeDelta: {x: 2.5, y: 4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &5317760985707132764
@@ -1441,14 +1520,32 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'SHOOTER
+  m_text: '<b>RUNNER</b>
 
 
-    Stats &
+    Movement: 2
 
-    Abilities
+    Health: 1
 
-    Info'
+    Damage: 2
+
+    Range:
+    1
+
+
+    Active Ability: <b>Jump</b>
+
+    Jumps <b>3</b> squares in a <i>star
+    pattern</i>, traversing units and holes. Has to land on an empty floor square.
+
+    Cooldown:
+    <b>2</b> turns
+
+
+    Passive Ability: <b>Blade Dance</b>
+
+    This unit moves
+    in a <i>star pattern</i> and deals <b>2</b> damage with each attack.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1475,8 +1572,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 3
-  m_fontSizeBase: 3
+  m_fontSize: 1.3
+  m_fontSizeBase: 1.3
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1707,7 +1804,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -0.09, y: 0.08}
   m_SizeDelta: {x: 2.5, y: 4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &5317760985809203482
@@ -1772,14 +1869,35 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'TANK
+  m_text: '<b>TANK</b>
 
 
-    Stats &
+    Movement: 1
 
-    Abilities
+    Health: 4
 
-    Info'
+    Damage: 1
+
+    Range:
+    1
+
+
+    Active Ability: <b>Block</b>
+
+    This unit rips out an adjacent floor
+    square in a <i>cross pattern</i> and uses it as a shield for <b>2</b> turns.
+    While shielded this unit will take no damage, but is unable to attack or move
+    and its passive ability is disabled.
+
+    Cooldown: <b>3</b> turns
+
+
+    Passive
+    Ability: <b>Protect</b>
+
+    If an allied unit is next to this one in a <i>cross
+    pattern</i>, this unit will take all damage for its ally. Does not work on other
+    Tanks. If this unit is stunned, this ability gets disabled.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1806,8 +1924,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 3
-  m_fontSizeBase: 3
+  m_fontSize: 1.3
+  m_fontSizeBase: 1.3
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1886,7 +2004,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -0.09, y: 0.08}
   m_SizeDelta: {x: 2.5, y: 4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &5317760985873038836
@@ -1951,14 +2069,33 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'SHOOTER
+  m_text: '<b>SHOOTER</b>
 
 
-    Stats &
+    Movement: 1
 
-    Abilities
+    Health: 2
 
-    Info'
+    Damage: 1
+
+    Range:
+    2
+
+
+    Active Ability: <b>Powershot</b>
+
+    Deals <b>1</b> damage to all units
+    in a direction in a <i>cross pattern</i> as well as this unit. Can only be stopped
+    by an active Block.
+
+    Cooldown: <b>3</b> turns.
+
+
+    Passive Ability: <b>Explosion</b>
+
+    If
+    this unit dies it explodes, dealing <b>1</b> damage to all units in a <i>radius</i>
+    of <b>1</b> and destroying the floor square it occupies.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1985,8 +2122,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 3
-  m_fontSizeBase: 3
+  m_fontSize: 1.3
+  m_fontSizeBase: 1.3
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3047,7 +3184,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -0.09, y: 0.08}
   m_SizeDelta: {x: 2.5, y: 4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &5317760986114081114
@@ -3112,14 +3249,33 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'SHOOTER
+  m_text: '<b>MECHANIC</b>
 
 
-    Stats &
+    Movement: 1
 
-    Abilities
+    Health: 2
 
-    Info'
+    Damage: 1
+
+    Range:
+    1
+
+
+    Active Ability: <b>Change Floor</b>
+
+    Changes a floor square to a
+    hole or the other way around in a <i>radius</i> of <b>2</b>. Occupied squares
+    can only be changed in a <i>radius</i> of <b>1</b>, instantly killing the occupying
+    units.
+
+    Cooldown: <b>3</b> turns
+
+
+    Passive Ability: <b>Alert</b>
+
+    If
+    this unit takes damage, its cooldown is set to <b>0</b>.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3146,8 +3302,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 3
-  m_fontSizeBase: 3
+  m_fontSize: 1.3
+  m_fontSizeBase: 1.3
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -4947,7 +5103,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -0.09, y: 0.08}
   m_SizeDelta: {x: 2.5, y: 4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &5317760986599331315
@@ -5012,14 +5168,34 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'SHOOTER
+  m_text: '<b>DOC</b>
 
 
-    Stats &
+    Movement: 1
 
-    Abilities
+    Health: 2
 
-    Info'
+    Damage: 1
+
+    Range:
+    1
+
+
+    Active Ability: <b>Heal</b>
+
+    Throws a syringe in a <i>star pattern</i>
+    in a range of <b>2</b> to heal a unit for <b>1</b> health. Units may never have
+    more health than they started with. When being healed, a unit also receives a
+    movement buff of <b>+1</b> which is gone after its next move action.
+
+    Cooldown:
+    <b>3</b> turns
+
+
+    Passive Ability: <b>Adrenalin</b>
+
+    If this unit takes
+    damage, its cooldown is set to <b>0</b>.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -5046,8 +5222,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 3
-  m_fontSizeBase: 3
+  m_fontSize: 1.3
+  m_fontSizeBase: 1.3
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -5990,7 +6166,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -0.09, y: 0.08}
   m_SizeDelta: {x: 2.5, y: 4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &5317760986835568626
@@ -6055,14 +6231,32 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'SHOOTER
+  m_text: '<b>RUNNER</b>
 
 
-    Stats &
+    Movement: 2
 
-    Abilities
+    Health: 1
 
-    Info'
+    Damage: 2
+
+    Range:
+    1
+
+
+    Active Ability: <b>Jump</b>
+
+    Jumps <b>3</b> squares in a <i>star
+    pattern</i>, traversing units and holes. Has to land on an empty floor square.
+
+    Cooldown:
+    <b>2</b> turns
+
+
+    Passive Ability: <b>Blade Dance</b>
+
+    This unit moves
+    in a <i>star pattern</i> and deals <b>2</b> damage with each attack.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -6089,8 +6283,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 3
-  m_fontSizeBase: 3
+  m_fontSize: 1.3
+  m_fontSizeBase: 1.3
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
