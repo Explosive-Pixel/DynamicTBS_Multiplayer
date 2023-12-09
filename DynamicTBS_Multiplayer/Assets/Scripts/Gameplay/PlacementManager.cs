@@ -119,13 +119,11 @@ public class PlacementManager : MonoBehaviour
 
     private void SortCharacters(GamePhase gamePhase)
     {
-        if (gamePhase != GamePhase.DRAFT)
+        if (gamePhase != GamePhase.PLACEMENT)
             return;
 
         SortCharactersOfSide(PlayerType.blue);
         SortCharactersOfSide(PlayerType.pink);
-
-        GameManager.ChangeGamePhase(GamePhase.PLACEMENT);
     }
 
     private void SortCharactersOfSide(PlayerType side)
@@ -146,13 +144,13 @@ public class PlacementManager : MonoBehaviour
     private void SubscribeEvents()
     {
         GameplayEvents.OnFinishAction += AdvancePlacementOrder;
-        GameEvents.OnGamePhaseEnd += SortCharacters;
+        GameEvents.OnGamePhaseStart += SortCharacters;
     }
 
     private void UnsubscribeEvents()
     {
         GameplayEvents.OnFinishAction -= AdvancePlacementOrder;
-        GameEvents.OnGamePhaseEnd -= SortCharacters;
+        GameEvents.OnGamePhaseStart -= SortCharacters;
     }
 
     #endregion

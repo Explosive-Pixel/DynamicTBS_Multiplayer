@@ -17,16 +17,11 @@ public class DraftManager : MonoBehaviour
     private static readonly List<Vector3> SpawnPositions = new();
 
     public static int CurrentPlayerTotalDraftCount { get { return draftSequenceIndex < DraftSequence.Count ? DraftSequence[draftSequenceIndex] : 0; } }
+    public static int CurrentPlayerRemainingDraftCount { get { return CurrentPlayerTotalDraftCount - currentPlayerDraftCount; } }
     public static int MaxDraftCount { get { return DraftSequence.Sum(); } }
+    public static int DraftCounter { get { return draftCounter; } }
 
     private static bool init = false;
-
-    private static DraftManager Instance;
-
-    private void Start()
-    {
-        GameManager.ChangeGamePhase(GamePhase.DRAFT);
-    }
 
     private void Awake()
     {
@@ -44,7 +39,6 @@ public class DraftManager : MonoBehaviour
     {
         DraftSequence.AddRange(draftSequence);
         SpawnPositions.AddRange(spawnPositions);
-        Instance = gameObject.GetComponent<DraftManager>();
 
         init = true;
     }
@@ -59,6 +53,8 @@ public class DraftManager : MonoBehaviour
         DraftEvents.CharacterCreated(character);
 
         AdvanceDraftOrder();
+
+        DraftEvents.FinishDraftAction();
     }
 
     public static void RandomDrafts(PlayerType side)
@@ -83,7 +79,7 @@ public class DraftManager : MonoBehaviour
             return 0;
         }
 
-        return CurrentPlayerTotalDraftCount - currentPlayerDraftCount;
+        return CurrentPlayerRemainingDraftCount;
     }
 
     private static void AdvanceDraftOrder()
@@ -93,27 +89,22 @@ public class DraftManager : MonoBehaviour
 
         if (currentPlayerDraftCount == CurrentPlayerTotalDraftCount)
         {
-            currentPlayerDraftCount = 0;
             draftSequenceIndex++;
+
+            if (draftSequenceIndex == DraftSequence.Count)
+            {
+                DraftCompleted();
+                return;
+            }
+
+            currentPlayerDraftCount = 0;
+
             PlayerManager.NextPlayer();
-        }
-
-
-        if (draftSequenceIndex == DraftSequence.Count)
-        {
-            DraftCompleted();
         }
     }
 
     private static void DraftCompleted()
     {
-        Instance.StartCoroutine(DelayGoToGameOverScreen());
-    }
-
-    private static IEnumerator DelayGoToGameOverScreen()
-    {
-        // TODO: Timer has to stop; need to change a lot of logic ...
-        yield return new WaitForSeconds(0);
         GameEvents.EndGamePhase(GamePhase.DRAFT);
     }
 }

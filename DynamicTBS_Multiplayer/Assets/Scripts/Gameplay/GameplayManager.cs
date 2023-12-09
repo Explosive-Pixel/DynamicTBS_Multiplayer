@@ -88,7 +88,7 @@ public class GameplayManager : MonoBehaviour
 
     private void CheckAvailableActions(PlayerType player)
     {
-        if (GameManager.gamePhase == GamePhase.GAMEPLAY && !HasAvailableAction(player))
+        if (GameManager.CurrentGamePhase == GamePhase.GAMEPLAY && !HasAvailableAction(player))
         {
             if (maxActionsPerRound - remainingActions <= minActionsPerRound)
             {
@@ -141,10 +141,8 @@ public class GameplayManager : MonoBehaviour
 
     private void SubscribeToGameplayEvents(GamePhase gamePhase)
     {
-        if (gamePhase != GamePhase.PLACEMENT)
+        if (gamePhase != GamePhase.GAMEPLAY)
             return;
-
-        GameManager.ChangeGamePhase(GamePhase.GAMEPLAY);
 
         GameplayEvents.OnFinishAction += OnActionFinished;
         GameplayEvents.OnPlayerTurnEnded += OnPlayerTurnEnded;
@@ -156,13 +154,13 @@ public class GameplayManager : MonoBehaviour
 
     private void SubscribeEvents()
     {
-        GameEvents.OnGamePhaseEnd += SubscribeToGameplayEvents;
+        GameEvents.OnGamePhaseStart += SubscribeToGameplayEvents;
         GameplayEvents.OnExecuteUIAction += ToggleGameIsPaused;
     }
 
     private void UnsubscribeEvents()
     {
-        GameEvents.OnGamePhaseEnd -= SubscribeToGameplayEvents;
+        GameEvents.OnGamePhaseStart -= SubscribeToGameplayEvents;
         GameplayEvents.OnFinishAction -= OnActionFinished;
         GameplayEvents.OnPlayerTurnEnded -= OnPlayerTurnEnded;
         GameplayEvents.OnPlayerTurnAborted -= AbortTurn;

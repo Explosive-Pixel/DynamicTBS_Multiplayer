@@ -11,7 +11,7 @@ public class PlayerManager : MonoBehaviour
 
     private static PlayerType currentPlayer;
     public static PlayerType CurrentPlayer { get { return currentPlayer; } }
-    public static PlayerType ExecutingPlayer { get { return GameManager.gameType == GameType.ONLINE ? OnlineClient.Instance.Side : CurrentPlayer; } }
+    public static PlayerType ExecutingPlayer { get { return GameManager.GameType == GameType.ONLINE ? OnlineClient.Instance.Side : CurrentPlayer; } }
 
     private static Dictionary<GamePhase, PlayerType> startPlayer;
     public static Dictionary<GamePhase, PlayerType> StartPlayer { get { return startPlayer; } }

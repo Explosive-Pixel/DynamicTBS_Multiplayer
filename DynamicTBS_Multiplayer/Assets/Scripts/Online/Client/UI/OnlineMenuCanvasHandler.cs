@@ -40,7 +40,7 @@ public class OnlineMenuCanvasHandler : MonoBehaviour
 
     private void JoinLobby(LobbyId lobbyId)
     {
-        GameManager.gameType = GameType.ONLINE;
+        GameManager.GameType = GameType.ONLINE;
 
         UserData userData = new UserData(userName.text.Trim(), spectatorToggle.isOn ? ClientType.SPECTATOR : ClientType.PLAYER);
         client.Init(ConfigManager.Instance.IpAdress, ConfigManager.Instance.Port, userData, lobbyId);

@@ -86,7 +86,7 @@ public class UIClickHandler : MonoBehaviour
             UnselectCharacter();
         }
 
-        if (GameManager.gamePhase != GamePhase.GAMEPLAY)
+        if (GameManager.CurrentGamePhase != GamePhase.GAMEPLAY)
             return;
 
         // Show complete movement pattern, not just legal moves.
@@ -126,7 +126,7 @@ public class UIClickHandler : MonoBehaviour
             GameplayEvents.UIActionExecuted(PlayerManager.ExecutingPlayer, GameplayManager.gameIsPaused ? UIAction.UNPAUSE_GAME : UIAction.PAUSE_GAME);
         }
 
-        if (GameManager.gamePhase != GamePhase.GAMEPLAY)
+        if (GameManager.CurrentGamePhase != GamePhase.GAMEPLAY)
             return;
 
         // Same function as pressing the Active Ability icon.

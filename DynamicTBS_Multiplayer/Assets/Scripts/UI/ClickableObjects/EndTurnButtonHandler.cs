@@ -31,7 +31,7 @@ public class EndTurnButtonHandler : MonoBehaviour, IClickableObject
 
     private void ChangeButtonInteractability()
     {
-        SetActive(!(GameManager.gameType == GameType.ONLINE && PlayerManager.CurrentPlayer != OnlineClient.Instance.Side), GameplayManager.GetRemainingActions() == 1);
+        SetActive(!(GameManager.GameType == GameType.ONLINE && PlayerManager.CurrentPlayer != OnlineClient.Instance.Side), GameplayManager.GetRemainingActions() == 1);
     }
 
     private void SetActive(GamePhase gamePhase)
@@ -39,7 +39,7 @@ public class EndTurnButtonHandler : MonoBehaviour, IClickableObject
         if (gamePhase != GamePhase.GAMEPLAY)
             return;
 
-        SetActive(GameManager.IsPlayer() && !(GameManager.gameType == GameType.ONLINE && PlayerManager.StartPlayer[GamePhase.GAMEPLAY] != OnlineClient.Instance.Side), false);
+        SetActive(GameManager.IsPlayer() && !(GameManager.GameType == GameType.ONLINE && PlayerManager.StartPlayer[GamePhase.GAMEPLAY] != OnlineClient.Instance.Side), false);
         GameplayEvents.OnChangeRemainingActions += ChangeButtonInteractability;
     }
 

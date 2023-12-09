@@ -33,7 +33,7 @@ public class InfoBoxHandler : MonoBehaviour
 
     private void UpdateInfoBox(Character character)
     {
-        if (GameManager.gamePhase != GamePhase.PLACEMENT && GameManager.gamePhase != GamePhase.GAMEPLAY)
+        if (GameManager.CurrentGamePhase != GamePhase.PLACEMENT && GameManager.CurrentGamePhase != GamePhase.GAMEPLAY)
             return;
 
         buttons.SetActive(character == null && !offerDrawBox.activeSelf);

@@ -55,15 +55,14 @@ public class Board : MonoBehaviour
         tileGameObjects.Clear();
         Tiles.Clear();
 
-        UnsubscribeEvents();
         SubscribeEvents();
-        gameObject.SetActive(false);
+
         tileGameObjects.Clear();
     }
 
     private void InitBoard(GamePhase gamePhase)
     {
-        if (gamePhase != GamePhase.DRAFT)
+        if (gamePhase != GamePhase.PLACEMENT)
             return;
 
         foreach (TileDefinition tileDefinition in SelectedMap.layout)
@@ -74,8 +73,6 @@ public class Board : MonoBehaviour
 
         Tiles = gameObject.GetComponentsInChildren<Tile>().ToList();
         tileGameObjects = Tiles.ConvertAll(tile => tile.gameObject);
-
-        gameObject.SetActive(true);
     }
 
     public static Tile GetTileByPosition(Vector3 position)
@@ -243,12 +240,12 @@ public class Board : MonoBehaviour
 
     private void SubscribeEvents()
     {
-        GameEvents.OnGamePhaseEnd += InitBoard;
+        GameEvents.OnGamePhaseStart += InitBoard;
     }
 
     private void UnsubscribeEvents()
     {
-        GameEvents.OnGamePhaseEnd -= InitBoard;
+        GameEvents.OnGamePhaseStart -= InitBoard;
     }
 
     #endregion
