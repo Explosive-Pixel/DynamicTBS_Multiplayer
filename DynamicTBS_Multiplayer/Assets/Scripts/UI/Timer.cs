@@ -119,6 +119,8 @@ public class Timer : MonoBehaviour
         GameplayEvents.OnPlayerTurnEnded -= ResetTimerForNextPlayer;
         GameplayEvents.OnTimerUpdate -= UpdateData;
         GameplayEvents.OnTimerTimeout -= DrawNoTimeLeftConsequences;
+
+        gameObject.SetActive(false);
     }
 
     private void Update()
@@ -158,6 +160,8 @@ public class Timer : MonoBehaviour
     {
         if (this.gamePhase != gamePhase)
             return;
+
+        gameObject.SetActive(true);
 
         timerType = gamePhase == GamePhase.GAMEPLAY ? TimerType.GAMEPLAY : TimerType.DRAFT_AND_PLACEMENT;
 
