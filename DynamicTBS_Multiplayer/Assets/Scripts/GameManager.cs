@@ -31,15 +31,19 @@ public class GameManager : MonoBehaviour
     public static GameType GameType { get { return gameType; } set { gameType = value; } }
     public static GamePhase CurrentGamePhase { get { return currentGamePhase; } }
 
-    private readonly Dictionary<GamePhase, float> delayAfterGamePhase = new();
+    private static Dictionary<GamePhase, float> delayAfterGamePhase = new();
+    public static Dictionary<GamePhase, float> DelayAfterGamePhase { get { return delayAfterGamePhase; } }
 
     private void Awake()
     {
         currentGamePhase = GamePhase.NONE;
 
-        delayAfterGamePhase.Add(GamePhase.DRAFT, delayAfterDraft);
-        delayAfterGamePhase.Add(GamePhase.PLACEMENT, delayAfterPlacement);
-        delayAfterGamePhase.Add(GamePhase.GAMEPLAY, delayAfterGameplay);
+        delayAfterGamePhase = new Dictionary<GamePhase, float>()
+        {
+            { GamePhase.DRAFT, delayAfterDraft },
+            { GamePhase.PLACEMENT, delayAfterPlacement },
+            { GamePhase.GAMEPLAY, delayAfterGameplay }
+        };
 
         GameEvents.OnGamePhaseEnd += ChangeGamePhase;
     }

@@ -19,6 +19,8 @@ public class ActionInfoHandler : MonoBehaviour
         if (gamePhase != currentGamePhase)
             return;
 
+        gameObject.SetActive(true);
+
         switch (currentGamePhase)
         {
             case GamePhase.DRAFT:
@@ -66,6 +68,8 @@ public class ActionInfoHandler : MonoBehaviour
         DraftEvents.OnDraftActionFinished -= UpdateDraftCounter;
         GameplayEvents.OnFinishAction -= UpdatePlacementCounter;
         GameplayEvents.OnChangeRemainingActions -= UpdateGameplayCounter;
+
+        gameObject.SetActive(false);
     }
 
     private void UpdatePlacementCounter(ActionMetadata actionMetadata)

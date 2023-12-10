@@ -8,13 +8,15 @@ using System.Linq;
 public class DraftManager : MonoBehaviour
 {
     [SerializeField] private List<int> draftSequence;
-    [SerializeField] private List<Vector3> spawnPositions;
+    [SerializeField] private List<GameObject> spawnPositions;
+    [SerializeField] private float characterScaling;
 
     private static readonly List<int> DraftSequence = new();
     private static int draftCounter;
     private static int draftSequenceIndex;
     private static int currentPlayerDraftCount;
     private static readonly List<Vector3> SpawnPositions = new();
+    private static Vector3 characterScaleVector;
 
     public static int CurrentPlayerTotalDraftCount { get { return draftSequenceIndex < DraftSequence.Count ? DraftSequence[draftSequenceIndex] : 0; } }
     public static int CurrentPlayerRemainingDraftCount { get { return CurrentPlayerTotalDraftCount - currentPlayerDraftCount; } }
@@ -38,7 +40,8 @@ public class DraftManager : MonoBehaviour
     private void Init()
     {
         DraftSequence.AddRange(draftSequence);
-        SpawnPositions.AddRange(spawnPositions);
+        SpawnPositions.AddRange(spawnPositions.ConvertAll(go => go.transform.position));
+        characterScaleVector = new Vector3(characterScaling, characterScaling, 1);
 
         init = true;
     }
@@ -49,6 +52,7 @@ public class DraftManager : MonoBehaviour
 
         Character character = CharacterFactory.CreateCharacter(type, side);
         character.gameObject.transform.position = SpawnPositions[draftCounter];
+        character.gameObject.transform.localScale = characterScaleVector;
 
         DraftEvents.CharacterCreated(character);
 

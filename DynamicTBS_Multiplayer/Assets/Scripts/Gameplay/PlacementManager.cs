@@ -134,6 +134,7 @@ public class PlacementManager : MonoBehaviour
         for (int i = 0; i < characters.Count(); i++)
         {
             characters[i].gameObject.transform.position = positions[i];
+            characters[i].gameObject.transform.localScale = new Vector3(1, 1, 1);
         }
     }
 

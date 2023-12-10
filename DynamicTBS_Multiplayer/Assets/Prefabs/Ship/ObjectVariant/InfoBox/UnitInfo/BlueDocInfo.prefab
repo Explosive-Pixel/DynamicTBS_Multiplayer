@@ -68,9 +68,21 @@ PrefabInstance:
       value: Throws syringes like darts to keep the team alive.
       objectReference: {fileID: 0}
     - target: {fileID: 2891140459074355693, guid: 3831d9d2f410fff4ba659cc02b83c372, type: 3}
+      propertyPath: m_Size.x
+      value: 3.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2891140459074355693, guid: 3831d9d2f410fff4ba659cc02b83c372, type: 3}
+      propertyPath: m_Size.y
+      value: 1.41
+      objectReference: {fileID: 0}
+    - target: {fileID: 2891140459074355693, guid: 3831d9d2f410fff4ba659cc02b83c372, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 6cb76d838ba6717439a69b235637388a, type: 3}
+      objectReference: {fileID: -559427631, guid: 9d6db1c2faeb5ec46b4ab394ae88b0fb, type: 3}
+    - target: {fileID: 2891140459074355693, guid: 3831d9d2f410fff4ba659cc02b83c372, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3262834417707893144, guid: 3831d9d2f410fff4ba659cc02b83c372, type: 3}
       propertyPath: m_text
       value: DOC
