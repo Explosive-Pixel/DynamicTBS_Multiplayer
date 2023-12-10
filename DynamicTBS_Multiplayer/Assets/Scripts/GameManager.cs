@@ -65,10 +65,18 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator DelayStartNewGamephase(GamePhase lastGamePhase)
     {
-        yield return new WaitForSeconds(delayAfterGamePhase.ContainsKey(lastGamePhase) ? delayAfterGamePhase[lastGamePhase] : 0);
+        yield return new WaitForSeconds(GetDelay(lastGamePhase));
 
         currentGamePhase = (GamePhase)(((int)lastGamePhase + 1) % 4);
         GameEvents.StartGamePhase(currentGamePhase);
+    }
+
+    private float GetDelay(GamePhase lastGamePhase)
+    {
+        if (!delayAfterGamePhase.ContainsKey(lastGamePhase) || (GameType == GameType.ONLINE && OnlineClient.Instance.IsLoadingGame))
+            return 0;
+
+        return delayAfterGamePhase[lastGamePhase];
     }
 
     private void OnDestroy()
