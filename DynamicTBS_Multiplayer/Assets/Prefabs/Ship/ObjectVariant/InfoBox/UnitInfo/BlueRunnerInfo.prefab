@@ -68,9 +68,21 @@ PrefabInstance:
       value: Dances through battle unprotected, embracing and bringing death.
       objectReference: {fileID: 0}
     - target: {fileID: 2891140459074355693, guid: 3831d9d2f410fff4ba659cc02b83c372, type: 3}
+      propertyPath: m_Size.x
+      value: 3.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2891140459074355693, guid: 3831d9d2f410fff4ba659cc02b83c372, type: 3}
+      propertyPath: m_Size.y
+      value: 1.51
+      objectReference: {fileID: 0}
+    - target: {fileID: 2891140459074355693, guid: 3831d9d2f410fff4ba659cc02b83c372, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: f84e498a8056f9449b107f276c46e28b, type: 3}
+      objectReference: {fileID: -197815656, guid: d9b84072d7d69a34bb056cc434ba11a2, type: 3}
+    - target: {fileID: 2891140459074355693, guid: 3831d9d2f410fff4ba659cc02b83c372, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3262834417707893144, guid: 3831d9d2f410fff4ba659cc02b83c372, type: 3}
       propertyPath: m_text
       value: RUNNER

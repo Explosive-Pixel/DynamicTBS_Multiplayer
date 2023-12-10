@@ -68,9 +68,21 @@ PrefabInstance:
       value: The electro-armed, ultra-charismatic leader of the team.
       objectReference: {fileID: 0}
     - target: {fileID: 2891140459074355693, guid: 3831d9d2f410fff4ba659cc02b83c372, type: 3}
+      propertyPath: m_Size.x
+      value: 3.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2891140459074355693, guid: 3831d9d2f410fff4ba659cc02b83c372, type: 3}
+      propertyPath: m_Size.y
+      value: 1.51
+      objectReference: {fileID: 0}
+    - target: {fileID: 2891140459074355693, guid: 3831d9d2f410fff4ba659cc02b83c372, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: b281e8044bca6914cbb49f32f6347fc8, type: 3}
+      objectReference: {fileID: -1997528365, guid: b301e99e3bae71747981896f42ebf638, type: 3}
+    - target: {fileID: 2891140459074355693, guid: 3831d9d2f410fff4ba659cc02b83c372, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3262834417707893144, guid: 3831d9d2f410fff4ba659cc02b83c372, type: 3}
       propertyPath: m_text
       value: CAPTAIN
