@@ -8,7 +8,7 @@ using System.Linq;
 public class DraftManager : MonoBehaviour
 {
     [SerializeField] private List<int> draftSequence;
-    [SerializeField] private List<Vector3> spawnPositions;
+    [SerializeField] private List<GameObject> spawnPositions;
     [SerializeField] private float characterScaling;
 
     private static readonly List<int> DraftSequence = new();
@@ -40,7 +40,7 @@ public class DraftManager : MonoBehaviour
     private void Init()
     {
         DraftSequence.AddRange(draftSequence);
-        SpawnPositions.AddRange(spawnPositions);
+        SpawnPositions.AddRange(spawnPositions.ConvertAll(go => go.transform.position));
         characterScaleVector = new Vector3(characterScaling, characterScaling, 1);
 
         init = true;

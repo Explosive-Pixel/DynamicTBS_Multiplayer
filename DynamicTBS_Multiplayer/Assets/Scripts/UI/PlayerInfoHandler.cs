@@ -10,6 +10,12 @@ public class PlayerInfoHandler : MonoBehaviour
 
     [SerializeField] private Text youArePlayer;
 
+    private void Awake()
+    {
+        playerNamePink.text = "Pink";
+        playerNameBlue.text = "Blue";
+    }
+
     private void Start()
     {
         youArePlayer.text = "";
