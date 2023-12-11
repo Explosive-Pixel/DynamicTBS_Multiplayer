@@ -65,6 +65,14 @@ PrefabInstance:
         Cooldown:
         <b>3</b> turns'
       objectReference: {fileID: 0}
+    - target: {fileID: 1234039959914733649, guid: fbb8951a8db15334980ef8f798960134, type: 3}
+      propertyPath: m_fontSize
+      value: 0.62
+      objectReference: {fileID: 0}
+    - target: {fileID: 1234039959914733649, guid: fbb8951a8db15334980ef8f798960134, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 0.62
+      objectReference: {fileID: 0}
     - target: {fileID: 1726121369747029956, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_Name
       value: HealAAInfo
@@ -72,6 +80,14 @@ PrefabInstance:
     - target: {fileID: 5802362004618636893, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_text
       value: Heal
+      objectReference: {fileID: 0}
+    - target: {fileID: 5802362004618636893, guid: fbb8951a8db15334980ef8f798960134, type: 3}
+      propertyPath: m_fontSize
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5802362004618636893, guid: fbb8951a8db15334980ef8f798960134, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 0.8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fbb8951a8db15334980ef8f798960134, type: 3}
