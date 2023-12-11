@@ -105,6 +105,13 @@ public class Timer : MonoBehaviour
     private void Awake()
     {
         SubscribeEvents();
+
+        timerType = gamePhase == GamePhase.GAMEPLAY ? TimerType.GAMEPLAY : TimerType.DRAFT_AND_PLACEMENT;
+
+        playerStats[PlayerType.pink] = new PlayerInfo(timerPink, TotalTime[timerType]);
+        playerStats[PlayerType.blue] = new PlayerInfo(timerBlue, TotalTime[timerType]);
+
+        GameplayEvents.OnTimerUpdate += UpdateData;
     }
 
     public static void InitTime(TimerSetupType timerSetup)
@@ -163,12 +170,6 @@ public class Timer : MonoBehaviour
 
         gameObject.SetActive(true);
 
-        timerType = gamePhase == GamePhase.GAMEPLAY ? TimerType.GAMEPLAY : TimerType.DRAFT_AND_PLACEMENT;
-
-        playerStats[PlayerType.pink] = new PlayerInfo(timerPink, TotalTime[timerType]);
-        playerStats[PlayerType.blue] = new PlayerInfo(timerBlue, TotalTime[timerType]);
-
-        GameplayEvents.OnTimerUpdate += UpdateData;
         GameplayEvents.OnTimerTimeout += DrawNoTimeLeftConsequences;
         GameplayEvents.OnPlayerTurnEnded += ResetTimerForNextPlayer;
         GameplayEvents.OnGamePause += OnUnpauseGame;
