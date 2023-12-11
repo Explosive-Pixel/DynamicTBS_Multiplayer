@@ -222,7 +222,7 @@ public class Timer : MonoBehaviour
 
     private void ResetTimer(PlayerType nextPlayer)
     {
-        startTime = null;
+        //startTime = null;
         timerRanOff = false;
         PlayerType lastPlayer = PlayerManager.GetOtherSide(nextPlayer);
 
