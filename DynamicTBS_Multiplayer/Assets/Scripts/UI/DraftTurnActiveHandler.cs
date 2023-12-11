@@ -25,7 +25,8 @@ public class DraftTurnActiveHandler : MonoBehaviour
 
     private void SetActive(int turnHighlightIndex)
     {
-        turnHighlights[turnHighlightIndex].SetActive(true);
+        if (turnHighlightIndex < turnHighlights.Count)
+            turnHighlights[turnHighlightIndex].SetActive(true);
     }
 
     private void UnsubscribeEvents(GamePhase gamePhase)

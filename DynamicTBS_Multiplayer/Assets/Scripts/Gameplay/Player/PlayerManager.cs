@@ -63,7 +63,12 @@ public class PlayerManager : MonoBehaviour
             return;
 
         currentPlayer = startPlayer[gamePhase];
+        CurrentPlayerChanged();
+    }
 
+    private void ResetCurrentPlayer(GamePhase gamePhase)
+    {
+        currentPlayer = PlayerType.none;
         CurrentPlayerChanged();
     }
 
@@ -77,11 +82,13 @@ public class PlayerManager : MonoBehaviour
     private void SubscribeEvents()
     {
         GameEvents.OnGamePhaseStart += SetStartPlayer;
+        GameEvents.OnGamePhaseEnd += ResetCurrentPlayer;
     }
 
     private void UnsubscribeEvents()
     {
         GameEvents.OnGamePhaseStart -= SetStartPlayer;
+        GameEvents.OnGamePhaseEnd -= ResetCurrentPlayer;
     }
 
     #endregion

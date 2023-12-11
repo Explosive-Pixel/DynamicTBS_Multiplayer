@@ -95,7 +95,7 @@ public class Timer : MonoBehaviour
     private readonly Dictionary<PlayerType, PlayerInfo> playerStats = new();
 
     private bool isActive = false;
-    private bool IsActive { get { return isActive && !GameplayManager.gameIsPaused && startTime != null; } }
+    private bool IsActive { get { return isActive && !GameplayManager.gameIsPaused && startTime != null && PlayerManager.CurrentPlayer != PlayerType.none; } }
 
     private DateTime? startTime = null;
     private bool timerRanOff = false;

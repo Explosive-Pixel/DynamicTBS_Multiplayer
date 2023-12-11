@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class CurrentPlayerColorHandler : MonoBehaviour
 {
+    [SerializeField] private GamePhase gamePhase;
+
     [SerializeField] private GameObject pinkGameObject;
     [SerializeField] private GameObject blueGameObject;
 
     private void Awake()
     {
-        GameplayEvents.OnCurrentPlayerChanged += ChangeColor;
+        GameplayEvents.OnCurrentPlayerChanged += ChangeColorDuringGamePhase;
     }
 
     private void Start()
     {
-        ChangeColor(PlayerManager.CurrentPlayer);
+        ChangeColor(PlayerManager.StartPlayer[gamePhase]);
     }
 
     private void ChangeColor(PlayerType currentPlayer)
@@ -23,8 +25,16 @@ public class CurrentPlayerColorHandler : MonoBehaviour
         blueGameObject.SetActive(currentPlayer == PlayerType.blue);
     }
 
+    private void ChangeColorDuringGamePhase(PlayerType currentPlayer)
+    {
+        if (GameManager.CurrentGamePhase != gamePhase)
+            return;
+
+        ChangeColor(currentPlayer);
+    }
+
     private void OnDestroy()
     {
-        GameplayEvents.OnCurrentPlayerChanged -= ChangeColor;
+        GameplayEvents.OnCurrentPlayerChanged -= ChangeColorDuringGamePhase;
     }
 }

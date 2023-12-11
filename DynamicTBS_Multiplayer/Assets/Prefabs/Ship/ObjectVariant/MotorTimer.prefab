@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7974474934369136327}
+  - component: {fileID: 6744475983158258657}
   m_Layer: 0
   m_Name: ActionCounter
   m_TagString: Untagged
@@ -33,6 +34,20 @@ Transform:
   m_Father: {fileID: 4108901855305834248}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6744475983158258657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 277629099262372011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9197dd1fc5cd41dca6054805e4c2896, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pinkGameObject: {fileID: 343732681585848299}
+  blueGameObject: {fileID: 1671514177788693178}
 --- !u!1 &343732681585848299
 GameObject:
   m_ObjectHideFlags: 0
