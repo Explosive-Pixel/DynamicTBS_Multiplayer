@@ -19,8 +19,6 @@ public class ActionInfoHandler : MonoBehaviour
         if (gamePhase != currentGamePhase)
             return;
 
-        gameObject.SetActive(true);
-
         switch (currentGamePhase)
         {
             case GamePhase.DRAFT:
@@ -55,7 +53,12 @@ public class ActionInfoHandler : MonoBehaviour
 
     private void UpdateCounter(string text)
     {
-        gameObject.GetComponentInChildren<TMPro.TextMeshPro>().text = text;
+        var textField = gameObject.GetComponentInChildren<TMPro.TextMeshPro>();
+
+        if (textField == null)
+            return;
+
+        textField.text = text;
     }
 
     private void Reset()
@@ -68,8 +71,6 @@ public class ActionInfoHandler : MonoBehaviour
         DraftEvents.OnDraftActionFinished -= UpdateDraftCounter;
         GameplayEvents.OnFinishAction -= UpdatePlacementCounter;
         GameplayEvents.OnChangeRemainingActions -= UpdateGameplayCounter;
-
-        gameObject.SetActive(false);
     }
 
     private void UpdatePlacementCounter(ActionMetadata actionMetadata)
@@ -79,6 +80,8 @@ public class ActionInfoHandler : MonoBehaviour
 
     private void OnDestroy()
     {
+        SetInactive(gamePhase);
+
         GameEvents.OnGamePhaseStart -= SetActive;
         GameEvents.OnGamePhaseEnd -= SetInactive;
     }
