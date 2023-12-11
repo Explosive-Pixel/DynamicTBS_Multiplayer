@@ -136,6 +136,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clickPermission: 0
+--- !u!114 &22408394 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 257135587489097570, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &22408395 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8703533362759143563, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &32580846
 GameObject:
   m_ObjectHideFlags: 0
@@ -328,6 +350,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeGamePhases: 010000000200000003000000
+  setInactiveOnGamePhaseEnd: 0
 --- !u!1 &34118702
 GameObject:
   m_ObjectHideFlags: 0
@@ -468,6 +491,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeGamePhases: 0200000003000000
+  setInactiveOnGamePhaseEnd: 0
 --- !u!1 &71818916
 GameObject:
   m_ObjectHideFlags: 0
@@ -615,6 +639,25 @@ MonoBehaviour:
   timerBlue: {fileID: 719150813}
   timerType: 0
   gamePhase: 1
+--- !u!1 &181429354 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2676295096328826599, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &181429355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 181429354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c361bf72d6c8a4bf99bbe776591f9b2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activeGamePhases: 02000000
+  setInactiveOnGamePhaseEnd: 1
 --- !u!1 &207437909 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2603707749072166530, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
@@ -749,6 +792,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeGamePhases: 03000000
+  setInactiveOnGamePhaseEnd: 0
 --- !u!1 &221020288 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4990745914992671168, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
@@ -785,7 +829,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f89d67630352f8b4f9450144748fdca0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  answerDrawBox: {fileID: 1555523340}
   clickPermission: 1
 --- !u!1 &231188472 stripped
 GameObject:
@@ -943,6 +986,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeGamePhases: 02000000
+  setInactiveOnGamePhaseEnd: 0
 --- !u!114 &296267127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -956,6 +1000,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeGamePhases: 01000000
+  setInactiveOnGamePhaseEnd: 0
 --- !u!114 &318988000 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 149441085284609387, guid: adfeae6a19ad5ae45988757e5db46f88, type: 3}
@@ -1344,6 +1389,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeGamePhases: 010000000200000003000000
+  setInactiveOnGamePhaseEnd: 0
 --- !u!114 &493265324 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6554549206122889682, guid: 2e0bdd0b95a7e1b489eae322c773e210, type: 3}
@@ -2876,6 +2922,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 830677132}
   m_CullTransparentMesh: 1
+--- !u!1 &855182615 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5395295037459206602, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &855182616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 855182615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2608645bb66cd490d9d88962ca382420, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  answerDrawBox: {fileID: 1555523340}
+  answerDrawBoxTimer: {fileID: 22408395}
+  drawInfoBox: {fileID: 1380917895}
+  drawInfoBoxTimer: {fileID: 22408394}
+  offerDrawTime: 5
 --- !u!1 &891951930
 GameObject:
   m_ObjectHideFlags: 0
@@ -4488,6 +4556,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gamePhase: 0
+--- !u!1 &1380917895 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7883853891317598913, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1394123027
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4854,7 +4927,6 @@ MonoBehaviour:
   activeAbilities: {fileID: 1602402125}
   passiveAbilities: {fileID: 1602402124}
   buttons: {fileID: 207437909}
-  offerDrawBox: {fileID: 1555523340}
 --- !u!114 &1626395198
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4982,6 +5054,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeGamePhases: 00000000
+  setInactiveOnGamePhaseEnd: 0
 --- !u!1 &1723997565
 GameObject:
   m_ObjectHideFlags: 0
@@ -5407,6 +5480,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeGamePhases: 00000000
+  setInactiveOnGamePhaseEnd: 0
 --- !u!114 &1840157257
 MonoBehaviour:
   m_ObjectHideFlags: 0
