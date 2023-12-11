@@ -187,8 +187,8 @@ public class OnlineServer : MonoBehaviour
 
     private void DisconnectClient(NetworkConnection cnn)
     {
-        AllConnections.Remove(cnn);
         messageBroker.RemoveConnection(cnn);
+        AllConnections.Remove(cnn);
 
         Lobby lobby = FindLobby(cnn);
         if (lobby != null)
@@ -274,6 +274,7 @@ public class OnlineServer : MonoBehaviour
             {
                 serverNotification = ServerNotification.CONNECTION_FORBIDDEN_FULL_LOBBY
             }, cnn, lobby.ShortId);
+
             DisconnectClient(cnn);
             return;
         }
