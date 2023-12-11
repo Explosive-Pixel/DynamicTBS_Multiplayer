@@ -19,6 +19,7 @@ public class DraftTurnActiveHandler : MonoBehaviour
 
     private void UpdateTurnHighlights(PlayerType nextPlayer)
     {
+        turnHighlights[counter].SetActive(false);
         SetActive(++counter);
     }
 
