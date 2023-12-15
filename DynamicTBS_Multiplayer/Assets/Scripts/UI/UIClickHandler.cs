@@ -26,6 +26,12 @@ public class UIClickHandler : MonoBehaviour
             return;
         }
 
+        if (GameplayManager.gameIsPaused)
+        {
+            HandleKeyInputsWhilePaused();
+            return;
+        }
+
         // Handle mouse click
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
@@ -120,11 +126,7 @@ public class UIClickHandler : MonoBehaviour
 
     private void HandleKeyInputsAnyPlayer()
     {
-        // Pause Game
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            GameplayEvents.UIActionExecuted(PlayerManager.ExecutingPlayer, GameplayManager.gameIsPaused ? UIAction.UNPAUSE_GAME : UIAction.PAUSE_GAME);
-        }
+        HandlePause();
 
         if (GameManager.CurrentGamePhase != GamePhase.GAMEPLAY)
             return;
@@ -152,6 +154,23 @@ public class UIClickHandler : MonoBehaviour
     private void HandleKeyInputsCurrentPlayer()
     {
 
+    }
+
+    private void HandleKeyInputsWhilePaused()
+    {
+        if (!GameManager.IsPlayer())
+            return;
+
+        HandlePause();
+    }
+
+    private void HandlePause()
+    {
+        // Pause/Unpause Game
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            GameplayEvents.UIActionExecuted(PlayerManager.ExecutingPlayer, GameplayManager.gameIsPaused ? UIAction.UNPAUSE_GAME : UIAction.PAUSE_GAME);
+        }
     }
 
     private void ShowActionPattern(ActionType actionType)
