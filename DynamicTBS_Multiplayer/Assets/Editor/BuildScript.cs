@@ -105,6 +105,7 @@ public static class BuildScript
         SetPlayerSettings(buildType);
 
         BuildReport report = BuildPipeline.BuildPlayer(ConfigureScenes(buildType), buildPath, buildTarget, BuildOptions.None);
+        // BuildReport report = BuildPipeline.BuildPlayer(ConfigureScenes(buildType), buildPath, buildTarget, BuildOptions.Development);
 
         // Check if the build succeeded
         if (report.summary.result == BuildResult.Succeeded)
