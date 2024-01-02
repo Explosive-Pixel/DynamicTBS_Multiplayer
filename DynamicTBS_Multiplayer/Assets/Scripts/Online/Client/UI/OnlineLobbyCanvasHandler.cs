@@ -130,7 +130,7 @@ public class OnlineLobbyCanvasHandler : MonoBehaviour
     {
         SetActive(false);
 
-        clientInfoText.text = "The Server refused the connection since there are already two players in the game.\nIf you just disconnected and are trying to reconnect, please try again in a few seconds.";
+        clientInfoText.text = "The Server refused the connection since there are already two players in the game.\nIf you want to join as a spectator, please check the respective checkbox before connecting.";
     }
 
     private void PrintLobbyNotFoundInfo()

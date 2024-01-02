@@ -113,7 +113,7 @@ public static class Client
     {
         Board.selectedMapType = selectedMap;
         TimerConfig.Init(draftAndPlacementTimeInSeconds, gameplayTimeInSeconds);
-        Client.side = Client.isAdmin ? adminSide : PlayerManager.GetOtherSide(adminSide);
+        Client.side = Client.role == ClientType.PLAYER ? (Client.isAdmin ? adminSide : PlayerManager.GetOtherSide(adminSide)) : PlayerType.none;
         GameManager.GameType = GameType.ONLINE;
 
         GameEvents.StartGame();

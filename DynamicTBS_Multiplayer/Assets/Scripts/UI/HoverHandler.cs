@@ -8,6 +8,10 @@ public class HoverHandler : MonoBehaviour
     [SerializeField] private GameObject hoverObject;
     [SerializeField] private GameObject activationHover;
 
+    private void Start()
+    {
+        SetActive(false);
+    }
 
     private void OnMouseEnter()
     {
