@@ -16,6 +16,9 @@ public class CurrentPlayerColorHandler : MonoBehaviour
 
     private void Start()
     {
+        if (gamePhase == GamePhase.NONE)
+            return;
+
         ChangeColor(PlayerManager.StartPlayer[gamePhase]);
     }
 

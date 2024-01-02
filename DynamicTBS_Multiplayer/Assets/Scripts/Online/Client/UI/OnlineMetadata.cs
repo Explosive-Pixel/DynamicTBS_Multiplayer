@@ -16,10 +16,10 @@ public class OnlineMetadata : MonoBehaviour
 
     private void Update()
     {
-        if (!OnlineClient.Instance)
+        if (!Client.Active)
             return;
 
-        switch(OnlineClient.Instance.ConnectionStatus)
+        switch (Client.ConnectionStatus)
         {
             case ConnectionStatus.IN_LOBBY:
                 PrintMetadata();
@@ -42,11 +42,11 @@ public class OnlineMetadata : MonoBehaviour
 
     private void PrintMetadata()
     {
-        infoText.text = "Lobby ID: " + OnlineClient.Instance.LobbyId.FullId;
-        infoText.text += "\nConnected players: " + OnlineClient.Instance.PlayerCount;
-        if (OnlineClient.Instance.SpectatorCount > 0)
+        infoText.text = "Lobby ID: " + Client.LobbyId.FullId;
+        infoText.text += "\nConnected players: " + Metadata.PlayerCount;
+        if (Metadata.SpectatorCount > 0)
         {
-            infoText.text += "\nSpectators: " + OnlineClient.Instance.SpectatorCount;
+            infoText.text += "\nSpectators: " + Metadata.SpectatorCount;
         }
     }
 }

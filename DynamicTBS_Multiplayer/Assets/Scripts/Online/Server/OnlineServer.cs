@@ -5,6 +5,7 @@ using UnityEngine;
 using Unity.Networking.Transport;
 using System.Linq;
 using System.Net;
+using static WSMsgServerNotification;
 
 public class OnlineServer : MonoBehaviour
 {

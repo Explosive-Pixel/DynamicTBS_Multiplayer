@@ -28,13 +28,9 @@ public class GameplayManager : MonoBehaviour
         ActionRegistry.RemoveAll();
     }
 
-    private void ToggleGameIsPaused(PlayerType player, UIAction uIAction)
+    private void ToggleGameIsPaused(bool paused)
     {
-        if (uIAction == UIAction.PAUSE_GAME || uIAction == UIAction.UNPAUSE_GAME)
-        {
-            gameIsPaused = uIAction == UIAction.PAUSE_GAME;
-            GameplayEvents.PauseGame(gameIsPaused);
-        }
+        gameIsPaused = paused;
     }
 
     public static int GetRemainingActions()
@@ -155,7 +151,7 @@ public class GameplayManager : MonoBehaviour
     private void SubscribeEvents()
     {
         GameEvents.OnGamePhaseStart += SubscribeToGameplayEvents;
-        GameplayEvents.OnExecuteUIAction += ToggleGameIsPaused;
+        GameplayEvents.OnGamePause += ToggleGameIsPaused;
     }
 
     private void UnsubscribeEvents()
@@ -164,7 +160,7 @@ public class GameplayManager : MonoBehaviour
         GameplayEvents.OnFinishAction -= OnActionFinished;
         GameplayEvents.OnPlayerTurnEnded -= OnPlayerTurnEnded;
         GameplayEvents.OnPlayerTurnAborted -= AbortTurn;
-        GameplayEvents.OnExecuteUIAction -= ToggleGameIsPaused;
+        GameplayEvents.OnGamePause -= ToggleGameIsPaused;
     }
 
     #endregion

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class OnlineMenuCanvasHandler : MonoBehaviour
 {
     [SerializeField] private OnlineClient client;
+    [SerializeField] private WSClient wsClient;
 
     [SerializeField] private InputField userName;
     [SerializeField] private InputField lobbyNameOrId;
@@ -30,20 +31,21 @@ public class OnlineMenuCanvasHandler : MonoBehaviour
 
     public void CreateLobby()
     {
-        JoinLobby(new LobbyId(lobbyNameOrId.text));
+        JoinLobby(new LobbyId(lobbyNameOrId.text), true);
     }
 
     public void JoinLobby()
     {
-        JoinLobby(LobbyId.FromFullId(lobbyNameOrId.text));
+        JoinLobby(LobbyId.FromFullId(lobbyNameOrId.text), false);
     }
 
-    private void JoinLobby(LobbyId lobbyId)
+    private void JoinLobby(LobbyId lobbyId, bool newLobby)
     {
         GameManager.GameType = GameType.ONLINE;
 
-        UserData userData = new UserData(userName.text.Trim(), spectatorToggle.isOn ? ClientType.SPECTATOR : ClientType.PLAYER);
-        client.Init(ConfigManager.Instance.IpAdress, ConfigManager.Instance.Port, userData, lobbyId);
+        // UserData userData = new UserData(userName.text.Trim(), spectatorToggle.isOn ? ClientType.SPECTATOR : ClientType.PLAYER);
+        //client.Init(ConfigManager.Instance.IpAdress, ConfigManager.Instance.Port, userData, lobbyId);
+        wsClient.Init(spectatorToggle.isOn ? ClientType.SPECTATOR : ClientType.PLAYER, userName.text.Trim(), lobbyId, newLobby);
 
         onlineMetadataCanvas.SetActive(true);
         SceneChangeManager.Instance.LoadScene(Scene.GAME_SETUP);

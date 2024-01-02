@@ -45,10 +45,10 @@ public class OnlineLobbyCanvasHandler : MonoBehaviour
 
     private void UpdateInfoTexts()
     {
-        if (!OnlineClient.Instance)
+        if (!Client.Active)
             return;
 
-        switch (OnlineClient.Instance.ConnectionStatus)
+        switch (Client.ConnectionStatus)
         {
             case ConnectionStatus.CONNECTED:
                 PrintConnectedInfo();
@@ -73,24 +73,24 @@ public class OnlineLobbyCanvasHandler : MonoBehaviour
 
     private void PrintInLobbyInfo()
     {
-        SetActive(OnlineClient.Instance.IsAdmin);
+        SetActive(Client.IsAdmin);
 
-        if (OnlineClient.Instance.LobbyId == null)
+        if (Client.LobbyId == null)
             return;
 
-        lobbyFullId.text = OnlineClient.Instance.LobbyId.FullId;
+        lobbyFullId.text = Client.LobbyId.FullId;
 
         clientInfoText.text = "You are connected!\n";
 
-        if (OnlineClient.Instance.PlayerCount == 2 && OnlineClient.Instance.OpponentName.Length > 0)
-        {
-            clientInfoText.text += "Your opponent is " + OnlineClient.Instance.OpponentName + "!\n";
-        }
+        /* if (OnlineClient.Instance.PlayerCount == 2 && OnlineClient.Instance.OpponentName.Length > 0)
+         {
+             clientInfoText.text += "Your opponent is " + OnlineClient.Instance.OpponentName + "!\n";
+         } */
 
-        if (OnlineClient.Instance.IsAdmin)
+        if (Client.IsAdmin)
         {
             clientInfoText.text += "\nPlease choose a time speed, a map and a team ";
-            if (OnlineClient.Instance.PlayerCount < 2)
+            if (Metadata.PlayerCount < 2)
             {
                 clientInfoText.text += "and wait for another player to connect.";
             }
@@ -101,13 +101,13 @@ public class OnlineLobbyCanvasHandler : MonoBehaviour
         }
         else
         {
-            if (OnlineClient.Instance.UserData.Role == ClientType.PLAYER)
+            if (Client.Role == ClientType.PLAYER)
             {
                 clientInfoText.text += "\nWaiting for opponent to start the game ...";
             }
             else
             {
-                if (OnlineClient.Instance.PlayerCount < 2)
+                if (Metadata.PlayerCount < 2)
                 {
                     clientInfoText.text += "\nWaiting for player(s) to connect ...";
                 }
@@ -180,13 +180,7 @@ public class OnlineLobbyCanvasHandler : MonoBehaviour
     {
         if (AllSelected)
         {
-            OnlineClient.Instance.ChooseSide(selectedSide);
-
-            OnlineClient.Instance.SendToServer(new MsgStartGame
-            {
-                timerSetup = Timer.TimerSetupType,
-                selectedMap = Board.selectedMapType
-            });
+            Client.SendStartGameMsg(TimerConfig.DraftAndPlacementTime, TimerConfig.GameplayTime, Board.selectedMapType, selectedSide);
         }
     }
 
@@ -198,7 +192,7 @@ public class OnlineLobbyCanvasHandler : MonoBehaviour
 
         if (active)
         {
-            startGameButton.interactable = AllSelected && OnlineClient.Instance.PlayerCount == 2;
+            startGameButton.interactable = AllSelected && Metadata.PlayerCount == 2;
         }
     }
 }

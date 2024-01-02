@@ -2,14 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Networking.Transport;
-
-public enum ServerNotification
-{
-    LOBBY_NOT_FOUND = 1,
-    CONNECTION_FORBIDDEN_FULL_LOBBY = 2,
-    TOGGLE_LOAD_GAME_STATUS = 3,
-    TIMEOUT = 4
-}
+using static WSMsgServerNotification;
 
 public class MsgServerNotification : OnlineMessage
 {

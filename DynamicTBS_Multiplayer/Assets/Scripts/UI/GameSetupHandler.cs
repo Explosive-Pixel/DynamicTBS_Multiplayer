@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using System.ComponentModel;
 
 public class GameSetupHandler : MonoBehaviour
 {
@@ -12,6 +13,42 @@ public class GameSetupHandler : MonoBehaviour
     private bool mapSelected = false;
     private bool timeSelected = false;
     public bool AllSelected { get { return mapSelected && timeSelected; } }
+
+    /*public enum TimerSetupType
+    {
+        [Description("Fast")]
+        FAST = 1,
+        [Description("Standard")]
+        STANDARD = 2,
+        [Description("Slow")]
+        SLOW = 3
+    }*/
+
+    private static readonly Dictionary<TimerSetupType, Dictionary<TimerType, float>> timeSetups = new()
+    {
+        { TimerSetupType.FAST,
+            new() {
+                { TimerType.DRAFT_AND_PLACEMENT, 10 },
+                { TimerType.GAMEPLAY, 30 }
+            }
+        },
+        {
+            TimerSetupType.STANDARD,
+            new()
+            {
+                { TimerType.DRAFT_AND_PLACEMENT, 300 },
+                { TimerType.GAMEPLAY, 90 }
+            }
+        },
+        {
+            TimerSetupType.SLOW,
+            new()
+            {
+                { TimerType.DRAFT_AND_PLACEMENT, 420 },
+                { TimerType.GAMEPLAY, 120 }
+            }
+        }
+    };
 
     private void Awake()
     {
@@ -36,7 +73,8 @@ public class GameSetupHandler : MonoBehaviour
     {
         AudioEvents.PressingButton();
 
-        Timer.InitTime(timerOptions.timerSetup);
+        var selectedTimeSetup = timeSetups[timerOptions.timerSetup];
+        TimerConfig.Init(selectedTimeSetup[TimerType.DRAFT_AND_PLACEMENT], selectedTimeSetup[TimerType.GAMEPLAY]);
         timeSetup.GetComponentsInChildren<Button>().ToList().ForEach(button => button.interactable = true);
         button.interactable = false;
         timeSelected = true;

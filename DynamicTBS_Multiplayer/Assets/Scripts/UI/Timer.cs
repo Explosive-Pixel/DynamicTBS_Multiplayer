@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.ComponentModel;
 using System;
+using System.Linq;
 
 public enum TimerType
 {
@@ -100,7 +101,7 @@ public class Timer : MonoBehaviour
     private DateTime? startTime = null;
     private bool timerRanOff = false;
 
-    private float ServerTimeDiff { get { return GameManager.GameType == GameType.ONLINE && OnlineClient.Instance && OnlineClient.Instance.IsActive ? OnlineClient.Instance.ServerTimeDiff : 0; } }
+    private float ServerTimeDiff { get { return GameManager.GameType == GameType.ONLINE && Client.Active ? Client.ServerTimeDiff : 0; } }
 
     private void Awake()
     {
@@ -111,7 +112,7 @@ public class Timer : MonoBehaviour
         playerStats[PlayerType.pink] = new PlayerInfo(timerPink, TotalTime[timerType]);
         playerStats[PlayerType.blue] = new PlayerInfo(timerBlue, TotalTime[timerType]);
 
-        GameplayEvents.OnTimerUpdate += UpdateData;
+        // GameplayEvents.OnTimerUpdate += UpdateData;
     }
 
     public static void InitTime(TimerSetupType timerSetup)
@@ -119,12 +120,26 @@ public class Timer : MonoBehaviour
         timerSetupType = timerSetup;
     }
 
+    public static void InitTime(float draftAndPlacementTimeInSeconds, float gameplayTimeInSeconds)
+    {
+        foreach (var (timerSetupType, timerValues) in timeSetups)
+        {
+            if (timerValues.TryGetValue(TimerType.DRAFT_AND_PLACEMENT, out var dpTime) &&
+                timerValues.TryGetValue(TimerType.GAMEPLAY, out var gpTime) &&
+                dpTime == draftAndPlacementTimeInSeconds && gpTime == gameplayTimeInSeconds)
+            {
+                Timer.timerSetupType = timerSetupType;
+                return;
+            }
+        }
+    }
+
     private void SetInactive()
     {
         isActive = false;
 
         GameplayEvents.OnPlayerTurnEnded -= ResetTimerForNextPlayer;
-        GameplayEvents.OnTimerUpdate -= UpdateData;
+        //GameplayEvents.OnTimerUpdate -= UpdateData;
         GameplayEvents.OnTimerTimeout -= DrawNoTimeLeftConsequences;
 
         gameObject.SetActive(false);
@@ -141,6 +156,10 @@ public class Timer : MonoBehaviour
     private void UpdateTimer()
     {
         PlayerType side = PlayerManager.CurrentPlayer;
+
+        if (side == PlayerType.none)
+            return;
+
         if (playerStats[side].timeLeft > 0)
         {
             timerRanOff = false;
@@ -276,7 +295,7 @@ public class Timer : MonoBehaviour
 
     private void DrawNoTimeLeftConsequences_Draft(PlayerType playerType)
     {
-        if (GameManager.GameType == GameType.ONLINE && (OnlineClient.Instance.Side != playerType || OnlineClient.Instance.IsLoadingGame))
+        if (GameManager.GameType == GameType.ONLINE && (Client.Side != playerType || Client.IsLoadingGame))
             return;
 
         DraftManager.RandomDrafts(playerType);
@@ -284,7 +303,7 @@ public class Timer : MonoBehaviour
 
     private void DrawNoTimeLeftConsequences_Placement(PlayerType playerType)
     {
-        if (GameManager.GameType == GameType.ONLINE && (OnlineClient.Instance.Side != playerType || OnlineClient.Instance.IsLoadingGame))
+        if (GameManager.GameType == GameType.ONLINE && (Client.Side != playerType || Client.IsLoadingGame))
             return;
 
         PlacementManager.RandomPlacements(playerType);
@@ -313,7 +332,7 @@ public class Timer : MonoBehaviour
         GameEvents.OnGamePhaseStart -= SetActive;
         GameEvents.OnGamePhaseEnd -= SetInactive;
         GameplayEvents.OnPlayerTurnEnded -= ResetTimerForNextPlayer;
-        GameplayEvents.OnTimerUpdate -= UpdateData;
+        //GameplayEvents.OnTimerUpdate -= UpdateData;
         GameplayEvents.OnTimerTimeout -= DrawNoTimeLeftConsequences;
         GameplayEvents.OnGamePause -= OnUnpauseGame;
     }

@@ -5,6 +5,7 @@ using UnityEditor;
 using UnityEditor.Build.Reporting;
 using UnityEditor.Callbacks;
 using UnityEngine;
+using Newtonsoft.Json.Schema;
 
 public static class BuildScript
 {

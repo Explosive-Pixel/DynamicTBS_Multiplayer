@@ -169,7 +169,10 @@ public class UIClickHandler : MonoBehaviour
         // Pause/Unpause Game
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            GameplayEvents.UIActionExecuted(PlayerManager.ExecutingPlayer, GameplayManager.gameIsPaused ? UIAction.UNPAUSE_GAME : UIAction.PAUSE_GAME);
+            if (GameManager.GameType == GameType.ONLINE)
+                GameplayEvents.UIActionExecuted(PlayerManager.ExecutingPlayer, GameplayManager.gameIsPaused ? UIAction.UNPAUSE_GAME : UIAction.PAUSE_GAME);
+            else
+                GameplayEvents.PauseGame(!GameplayManager.gameIsPaused);
         }
     }
 

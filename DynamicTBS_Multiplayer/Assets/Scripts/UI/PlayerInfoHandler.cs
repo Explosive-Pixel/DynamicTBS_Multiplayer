@@ -21,7 +21,7 @@ public class PlayerInfoHandler : MonoBehaviour
         youArePlayer.text = "";
         if (GameManager.IsPlayer() && GameManager.GameType == GameType.ONLINE)
         {
-            youArePlayer.text = "You are player " + OnlineClient.Instance.Side + ".";
+            youArePlayer.text = "You are player " + Client.Side + ".";
         }
     }
 
@@ -32,8 +32,8 @@ public class PlayerInfoHandler : MonoBehaviour
 
         if (GameManager.GameType == GameType.ONLINE)
         {
-            playerNamePink.text = OnlineClient.Instance.GetPlayerName(PlayerType.pink);
-            playerNameBlue.text = OnlineClient.Instance.GetPlayerName(PlayerType.blue);
+            playerNamePink.text = Metadata.PinkName;
+            playerNameBlue.text = Metadata.BlueName;
         }
     }
 }

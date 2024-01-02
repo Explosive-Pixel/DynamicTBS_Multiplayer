@@ -349,7 +349,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c361bf72d6c8a4bf99bbe776591f9b2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeGamePhases: 010000000200000003000000
+  activeGamePhases: 020000000300000000000000
   setInactiveOnGamePhaseEnd: 0
 --- !u!1 &34118702
 GameObject:
@@ -466,6 +466,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 834435128512467020, guid: adfeae6a19ad5ae45988757e5db46f88, type: 3}
+      propertyPath: gamePhase
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: adfeae6a19ad5ae45988757e5db46f88, type: 3}
 --- !u!4 &34788683 stripped
@@ -490,7 +494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c361bf72d6c8a4bf99bbe776591f9b2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeGamePhases: 0200000003000000
+  activeGamePhases: 0300000000000000
   setInactiveOnGamePhaseEnd: 0
 --- !u!1 &71818916
 GameObject:
@@ -623,6 +627,21 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6386758917370520121, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
   m_PrefabInstance: {fileID: 719150808}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &118082558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 118082557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9197dd1fc5cd41dca6054805e4c2896, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gamePhase: 2
+  pinkGameObject: {fileID: 719150812}
+  blueGameObject: {fileID: 719150813}
 --- !u!114 &118082559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -632,13 +651,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 118082557}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7eef4b62013ae514d8142d06cc6faa8e, type: 3}
+  m_Script: {fileID: 11500000, guid: 3ff294846ba534cb4ba6adba4d89374a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timerPink: {fileID: 719150812}
-  timerBlue: {fileID: 719150813}
-  timerType: 0
-  gamePhase: 1
+  pink: {fileID: 719150812}
+  blue: {fileID: 719150813}
+  gamePhase: 2
 --- !u!1 &181429354 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2676295096328826599, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
@@ -656,7 +674,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c361bf72d6c8a4bf99bbe776591f9b2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeGamePhases: 02000000
+  activeGamePhases: 03000000
   setInactiveOnGamePhaseEnd: 1
 --- !u!1 &207437909 stripped
 GameObject:
@@ -791,7 +809,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c361bf72d6c8a4bf99bbe776591f9b2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeGamePhases: 03000000
+  activeGamePhases: 00000000
   setInactiveOnGamePhaseEnd: 0
 --- !u!1 &221020288 stripped
 GameObject:
@@ -847,7 +865,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4db70ca7970e345e6b83aea5947d9ce0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gamePhase: 1
+  gamePhase: 2
 --- !u!1 &285260679
 GameObject:
   m_ObjectHideFlags: 0
@@ -985,7 +1003,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c361bf72d6c8a4bf99bbe776591f9b2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeGamePhases: 02000000
+  activeGamePhases: 03000000
   setInactiveOnGamePhaseEnd: 0
 --- !u!114 &296267127
 MonoBehaviour:
@@ -999,7 +1017,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c361bf72d6c8a4bf99bbe776591f9b2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeGamePhases: 01000000
+  activeGamePhases: 02000000
   setInactiveOnGamePhaseEnd: 0
 --- !u!114 &318988000 stripped
 MonoBehaviour:
@@ -1206,7 +1224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c361bf72d6c8a4bf99bbe776591f9b2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeGamePhases: 00000000
+  activeGamePhases: 01000000
   setInactiveOnGamePhaseEnd: 1
 --- !u!114 &426950947
 MonoBehaviour:
@@ -1220,7 +1238,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c361bf72d6c8a4bf99bbe776591f9b2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeGamePhases: 00000000
+  activeGamePhases: 01000000
   setInactiveOnGamePhaseEnd: 1
 --- !u!114 &426950948
 MonoBehaviour:
@@ -1234,7 +1252,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c361bf72d6c8a4bf99bbe776591f9b2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeGamePhases: 00000000
+  activeGamePhases: 01000000
   setInactiveOnGamePhaseEnd: 1
 --- !u!114 &426950949
 MonoBehaviour:
@@ -1248,7 +1266,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c361bf72d6c8a4bf99bbe776591f9b2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeGamePhases: 00000000
+  activeGamePhases: 01000000
   setInactiveOnGamePhaseEnd: 1
 --- !u!1 &434025632 stripped
 GameObject:
@@ -1464,7 +1482,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c361bf72d6c8a4bf99bbe776591f9b2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeGamePhases: 010000000200000003000000
+  activeGamePhases: 020000000300000000000000
   setInactiveOnGamePhaseEnd: 0
 --- !u!114 &493265324 stripped
 MonoBehaviour:
@@ -2271,7 +2289,7 @@ PrefabInstance:
       objectReference: {fileID: 1842072856}
     - target: {fileID: 2276992717101575875, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: gamePhase
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2329982612649930495, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: hoverObject
@@ -2867,7 +2885,7 @@ PrefabInstance:
       objectReference: {fileID: 1842072855}
     - target: {fileID: 8815378434748194156, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: gamePhase
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8830100571428954237, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: hoverObject
@@ -2920,7 +2938,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c4e72d29ae2a467fbf480843a8f651e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gamePhase: 1
+  gamePhase: 2
 --- !u!1 &719150816 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 912895033735788164, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
@@ -2953,7 +2971,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4db70ca7970e345e6b83aea5947d9ce0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gamePhase: 2
+  gamePhase: 3
 --- !u!114 &719150821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2963,13 +2981,41 @@ MonoBehaviour:
   m_GameObject: {fileID: 719150819}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7eef4b62013ae514d8142d06cc6faa8e, type: 3}
+  m_Script: {fileID: 11500000, guid: 3ff294846ba534cb4ba6adba4d89374a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timerPink: {fileID: 719150817}
-  timerBlue: {fileID: 719150818}
-  timerType: 1
-  gamePhase: 2
+  pink: {fileID: 719150817}
+  blue: {fileID: 719150818}
+  gamePhase: 3
+--- !u!114 &719150822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 719150819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9197dd1fc5cd41dca6054805e4c2896, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gamePhase: 3
+  pinkGameObject: {fileID: 719150817}
+  blueGameObject: {fileID: 719150818}
+--- !u!114 &719150823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 719150819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c361bf72d6c8a4bf99bbe776591f9b2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activeGamePhases: 03000000
+  setInactiveOnGamePhaseEnd: 1
 --- !u!1 &830677132
 GameObject:
   m_ObjectHideFlags: 0
@@ -4163,7 +4209,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c361bf72d6c8a4bf99bbe776591f9b2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeGamePhases: 00000000
+  activeGamePhases: 01000000
   setInactiveOnGamePhaseEnd: 1
 --- !u!1 &1118503403 stripped
 GameObject:
@@ -4558,6 +4604,42 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1708469621}
     m_Modifications:
+    - target: {fileID: 417522457130147617, guid: 2e0bdd0b95a7e1b489eae322c773e210, type: 3}
+      propertyPath: gamePhase
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1961694704665595896, guid: 2e0bdd0b95a7e1b489eae322c773e210, type: 3}
+      propertyPath: gamePhase
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1984291022553228741, guid: 2e0bdd0b95a7e1b489eae322c773e210, type: 3}
+      propertyPath: gamePhase
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3765469920396217718, guid: 2e0bdd0b95a7e1b489eae322c773e210, type: 3}
+      propertyPath: gamePhase
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3851959052579128033, guid: 2e0bdd0b95a7e1b489eae322c773e210, type: 3}
+      propertyPath: gamePhase
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4196770388778815720, guid: 2e0bdd0b95a7e1b489eae322c773e210, type: 3}
+      propertyPath: gamePhase
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5004700234200452413, guid: 2e0bdd0b95a7e1b489eae322c773e210, type: 3}
+      propertyPath: gamePhase
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5105691163451002691, guid: 2e0bdd0b95a7e1b489eae322c773e210, type: 3}
+      propertyPath: gamePhase
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5146037265919849772, guid: 2e0bdd0b95a7e1b489eae322c773e210, type: 3}
+      propertyPath: gamePhase
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5317760986135141934, guid: 2e0bdd0b95a7e1b489eae322c773e210, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -4618,6 +4700,34 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5669569322183591806, guid: 2e0bdd0b95a7e1b489eae322c773e210, type: 3}
+      propertyPath: gamePhase
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6636650239396595581, guid: 2e0bdd0b95a7e1b489eae322c773e210, type: 3}
+      propertyPath: gamePhase
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7252216595489178427, guid: 2e0bdd0b95a7e1b489eae322c773e210, type: 3}
+      propertyPath: gamePhase
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7397219553158026299, guid: 2e0bdd0b95a7e1b489eae322c773e210, type: 3}
+      propertyPath: gamePhase
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7399620955810805831, guid: 2e0bdd0b95a7e1b489eae322c773e210, type: 3}
+      propertyPath: gamePhase
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7559873651018215723, guid: 2e0bdd0b95a7e1b489eae322c773e210, type: 3}
+      propertyPath: gamePhase
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8362725933895941081, guid: 2e0bdd0b95a7e1b489eae322c773e210, type: 3}
+      propertyPath: gamePhase
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9032138651282502160, guid: 2e0bdd0b95a7e1b489eae322c773e210, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -4671,25 +4781,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9197dd1fc5cd41dca6054805e4c2896, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gamePhase: 0
+  gamePhase: 1
   pinkGameObject: {fileID: 1353708065}
   blueGameObject: {fileID: 1353708064}
---- !u!114 &1353708071
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1353708069}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7eef4b62013ae514d8142d06cc6faa8e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timerPink: {fileID: 1353708067}
-  timerBlue: {fileID: 1353708068}
-  timerType: 0
-  gamePhase: 0
 --- !u!114 &1353708072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4702,7 +4796,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c4e72d29ae2a467fbf480843a8f651e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gamePhase: 0
+  gamePhase: 1
+--- !u!114 &1353708073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1353708069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ff294846ba534cb4ba6adba4d89374a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pink: {fileID: 1353708067}
+  blue: {fileID: 1353708068}
+  gamePhase: 1
+--- !u!114 &1353708074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1353708069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9197dd1fc5cd41dca6054805e4c2896, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gamePhase: 1
+  pinkGameObject: {fileID: 1353708067}
+  blueGameObject: {fileID: 1353708068}
 --- !u!1 &1380917895 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7883853891317598913, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
@@ -5200,7 +5324,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c361bf72d6c8a4bf99bbe776591f9b2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeGamePhases: 00000000
+  activeGamePhases: 01000000
   setInactiveOnGamePhaseEnd: 0
 --- !u!1 &1723997565
 GameObject:
@@ -5626,7 +5750,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c361bf72d6c8a4bf99bbe776591f9b2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeGamePhases: 00000000
+  activeGamePhases: 01000000
   setInactiveOnGamePhaseEnd: 0
 --- !u!114 &1840157257
 MonoBehaviour:
@@ -5690,7 +5814,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4db70ca7970e345e6b83aea5947d9ce0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gamePhase: 0
+  gamePhase: 1
 --- !u!114 &1857167836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5716,7 +5840,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c4e72d29ae2a467fbf480843a8f651e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gamePhase: 2
+  gamePhase: 3
+--- !u!114 &1878221952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 719150811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c361bf72d6c8a4bf99bbe776591f9b2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activeGamePhases: 03000000
+  setInactiveOnGamePhaseEnd: 1
 --- !u!1 &1924648209
 GameObject:
   m_ObjectHideFlags: 0

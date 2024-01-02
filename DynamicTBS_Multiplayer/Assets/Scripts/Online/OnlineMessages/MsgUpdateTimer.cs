@@ -42,7 +42,7 @@ public class MsgUpdateTimer : OnlineMessage
 
     public override void ReceivedOnClient()
     {
-        GameplayEvents.UpdateTimer(pinkTimeLeft, blueTimeLeft, startTimestamp);
+        //  GameplayEvents.UpdateTimer(pinkTimeLeft, blueTimeLeft, startTimestamp);
     }
 
     public override void ReceivedOnServer(NetworkConnection cnn)

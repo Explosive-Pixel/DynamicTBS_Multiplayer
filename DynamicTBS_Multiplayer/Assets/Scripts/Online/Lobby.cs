@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using Unity.Networking.Transport;
 using System.Linq;
+using static WSMsgServerNotification;
 
 public class Lobby
 {

@@ -3,16 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Networking.Transport;
 
-public enum UIAction
-{
-    PAUSE_GAME = 1,
-    UNPAUSE_GAME = 2,
-    OFFER_DRAW = 3,
-    ACCEPT_DRAW = 4,
-    DECLINE_DRAW = 5,
-    SURRENDER = 6
-}
-
 public class MsgUIAction : OnlineMessage
 {
     public PlayerType playerId;
