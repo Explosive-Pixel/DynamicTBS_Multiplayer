@@ -6,6 +6,8 @@ using System;
 [Serializable]
 public class WSMsgGameOver : WSMessage
 {
+    public PlayerType winner;
+
     public WSMsgGameOver()
     {
         code = WSMessageCode.WSMsgGameOverCode;

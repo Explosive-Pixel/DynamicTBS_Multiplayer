@@ -81,7 +81,7 @@ public class MessageSender : MonoBehaviour
     {
         if (Client.AdminShouldSendMessage())
         {
-            Client.SendToServer(new WSMsgGameOver());
+            Client.SendToServer(new WSMsgGameOver { winner = winner ?? PlayerType.none });
         }
     }
 
