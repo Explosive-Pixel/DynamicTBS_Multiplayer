@@ -45,9 +45,6 @@ public class OnlineLobbyCanvasHandler : MonoBehaviour
 
     private void UpdateInfoTexts()
     {
-        if (!Client.Active)
-            return;
-
         switch (Client.ConnectionStatus)
         {
             case ConnectionStatus.CONNECTED:
@@ -144,7 +141,7 @@ public class OnlineLobbyCanvasHandler : MonoBehaviour
     {
         SetActive(false);
 
-        clientInfoText.text = "Could not connect to server. Please try again.";
+        clientInfoText.text = "Could not connect to server. Please check your internet connection or try again.";
     }
 
     private void PrintAttemptToConnectInfo()

@@ -7,67 +7,117 @@ public class WSClient : MonoBehaviour
 {
     WebSocket websocket;
 
-    bool active = false;
+    private string ipAdress;
+    private ushort port;
+    private bool destroyed = false;
+    private readonly Queue<WSMessage> unsendMsgs = new();
 
-    // Start is called before the first frame update
-    public async void Init(ClientType role, string userName, LobbyId lobby, bool createLobby)
+    public bool Active { get; private set; } = false;
+
+    #region SingletonImplementation
+
+    public static WSClient Instance { set; get; }
+
+    private void Awake()
     {
-        websocket = new WebSocket("ws://localhost:8007");
+        Instance = this;
+        destroyed = false;
+    }
+
+    #endregion
+
+    public void Init(string ipAdress, ushort port, ClientType role, string userName, LobbyId lobby, bool createLobby)
+    {
+        this.ipAdress = ipAdress;
+        this.port = port;
+
+        Client.Init(role, userName, lobby);
+
+        CreateWebsocketConnectionAsync(createLobby, false);
+    }
+
+    private async void CreateWebsocketConnectionAsync(bool createLobby, bool isReconnect)
+    {
+        Client.ConnectionStatus = ConnectionStatus.ATTEMPT_CONNECTION;
+        var resolvedIp = await IPResolver.GetPublicIpV6Address(ipAdress);
+
+        if (resolvedIp == null || resolvedIp.Length == 0)
+        {
+            Debug.Log("Error: Failed to resolve ip for adress " + ipAdress);
+            return;
+        }
+
+        Debug.Log("Trying to connect to server with ip " + resolvedIp);
+        websocket = new WebSocket("ws://[" + resolvedIp + "]:" + port);
 
         websocket.OnOpen += () =>
         {
             Debug.Log("Successfully connected to server!");
-            active = true;
-            Client.Init(this, role, userName, lobby, createLobby);
+            Active = true;
+            Client.TryJoinLobby(createLobby, isReconnect);
+
+            if (isReconnect)
+            {
+                while (unsendMsgs.Count > 0)
+                {
+                    SendMessage(unsendMsgs.Dequeue());
+                }
+            }
         };
 
         websocket.OnError += (e) =>
         {
-            Debug.Log("Error! " + e);
+            Client.ConnectionStatus = ConnectionStatus.UNCONNECTED;
+            Debug.Log("Error! Cannot connect to server: " + e);
         };
 
         websocket.OnClose += (e) =>
         {
-            active = false;
-            Debug.Log("Connection closed!");
+            Active = false;
+            Client.ConnectionStatus = ConnectionStatus.UNCONNECTED;
+            Debug.Log("Connection to server closed!");
+
+
+            TryReconnect();
         };
 
         websocket.OnMessage += (bytes) =>
         {
-            // Debug.Log(bytes);
-
             // getting the message as a string
             var message = System.Text.Encoding.UTF8.GetString(bytes);
             Debug.Log("Received msg:\n" + message);
             MessageReceiver.ReceiveMessage(message);
-            // Debug.Log("OnMessage! " + message);
         };
 
-        // Keep sending messages at every 0.3s
-        //InvokeRepeating("SendWebSocketMessage", 0.0f, 0.3f);
-
-        // waiting for messages
         await websocket.Connect();
+    }
+
+    private void TryReconnect()
+    {
+        if (Client.Active && !Active && !destroyed)
+        {
+            CreateWebsocketConnectionAsync(false, true);
+        }
     }
 
     void Update()
     {
 #if !UNITY_WEBGL || UNITY_EDITOR
-        if (active)
+        if (Active)
             websocket.DispatchMessageQueue();
 #endif
     }
 
     public async void SendMessage(WSMessage msg)
     {
-        if (websocket.State == WebSocketState.Open)
+        if (!Active && websocket.State != WebSocketState.Open)
         {
-            // Sending bytes
-            //await websocket.Send(new byte[] { 10, 20, 30 });
-
-            // Sending plain text
-            await websocket.SendText(msg.Serialize());
+            unsendMsgs.Enqueue(msg);
+            return;
         }
+
+        // Sending plain text
+        await websocket.SendText(msg.Serialize());
     }
 
     public void LoadGame(List<WSMessage> msgHistory)
@@ -88,6 +138,9 @@ public class WSClient : MonoBehaviour
 
     private async void OnDestroy()
     {
+        Debug.Log("Destroy WS Object");
+        destroyed = true;
+
         Client.Reset();
 
         if (websocket != null)

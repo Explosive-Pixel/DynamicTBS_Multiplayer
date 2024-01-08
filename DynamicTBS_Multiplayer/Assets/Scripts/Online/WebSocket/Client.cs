@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 using NativeWebSocket;
 
 public static class Client
 {
-    private static WSClient ws;
-    public static WSClient Ws => ws;
+    private static string uuid;
 
     private static ClientType role;
     public static ClientType Role => role;
@@ -34,19 +34,15 @@ public static class Client
     private static bool isLoadingGame = false;
     public static bool IsLoadingGame => isLoadingGame;
 
-    public static void Init(WSClient ws, ClientType role, string userName, LobbyId lobbyId, bool createLobby)
+    public static void Init(ClientType role, string userName, LobbyId lobbyId)
     {
-        Client.ws = ws;
+        Client.uuid = Guid.NewGuid().ToString();
         Client.role = role;
         Client.userName = userName;
         Client.lobbyId = lobbyId;
 
-        Client.active = true;
-        Client.connectionStatus = ConnectionStatus.CONNECTED;
         Client.side = PlayerType.none;
         Client.isLoadingGame = false;
-
-        TryJoinLobby(createLobby);
     }
 
     public static bool ShouldReadMessage(PlayerType playerType)
@@ -64,14 +60,19 @@ public static class Client
         return isAdmin && !isLoadingGame;
     }
 
-    public static void TryJoinLobby(bool create)
+    public static void TryJoinLobby(bool create, bool isReconnect)
     {
+        Client.active = true;
+        Client.connectionStatus = ConnectionStatus.CONNECTED;
+
         SendToServer(new WSMsgJoinLobby()
         {
             create = create,
             lobbyName = create ? lobbyId.Name : lobbyId.FullId,
+            clientUUID = uuid,
             userName = userName,
-            isPlayer = role == ClientType.PLAYER
+            isPlayer = role == ClientType.PLAYER,
+            isReconnect = isReconnect
         });
     }
 
@@ -123,7 +124,6 @@ public static class Client
     {
         active = false;
         connectionStatus = ConnectionStatus.UNCONNECTED;
-        ws = null;
         lobbyId = null;
         serverTimeDiff = 0;
     }
@@ -131,6 +131,7 @@ public static class Client
     public static void SendToServer(WSMessage wSMessage)
     {
         wSMessage.lobbyId = Client.lobbyId.Id;
-        ws.SendMessage(wSMessage);
+
+        WSClient.Instance.SendMessage(wSMessage);
     }
 }

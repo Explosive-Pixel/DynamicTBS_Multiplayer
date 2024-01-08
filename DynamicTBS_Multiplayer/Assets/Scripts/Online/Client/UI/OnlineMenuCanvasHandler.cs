@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class OnlineMenuCanvasHandler : MonoBehaviour
 {
-    [SerializeField] private OnlineClient client;
     [SerializeField] private WSClient wsClient;
 
     [SerializeField] private InputField userName;
@@ -43,9 +42,7 @@ public class OnlineMenuCanvasHandler : MonoBehaviour
     {
         GameManager.GameType = GameType.ONLINE;
 
-        // UserData userData = new UserData(userName.text.Trim(), spectatorToggle.isOn ? ClientType.SPECTATOR : ClientType.PLAYER);
-        //client.Init(ConfigManager.Instance.IpAdress, ConfigManager.Instance.Port, userData, lobbyId);
-        wsClient.Init(spectatorToggle.isOn ? ClientType.SPECTATOR : ClientType.PLAYER, userName.text.Trim(), lobbyId, newLobby);
+        wsClient.Init(ConfigManager.Instance.IpAdress, ConfigManager.Instance.Port, spectatorToggle.isOn ? ClientType.SPECTATOR : ClientType.PLAYER, userName.text.Trim(), lobbyId, newLobby);
 
         onlineMetadataCanvas.SetActive(true);
         SceneChangeManager.Instance.LoadScene(Scene.GAME_SETUP);

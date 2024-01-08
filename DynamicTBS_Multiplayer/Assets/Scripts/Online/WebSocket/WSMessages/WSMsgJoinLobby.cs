@@ -8,8 +8,10 @@ public class WSMsgJoinLobby : WSMessage
 {
     public bool create;
     public string lobbyName;
+    public string clientUUID;
     public string userName;
     public bool isPlayer;
+    public bool isReconnect;
 
     public WSMsgJoinLobby()
     {
