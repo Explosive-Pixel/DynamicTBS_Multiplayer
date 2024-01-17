@@ -84,7 +84,6 @@ public class WSClient : MonoBehaviour
 
         websocket.OnMessage += (bytes) =>
         {
-            // getting the message as a string
             var message = System.Text.Encoding.UTF8.GetString(bytes);
             Debug.Log("Received msg:\n" + message);
             MessageReceiver.ReceiveMessage(message);
@@ -126,7 +125,6 @@ public class WSClient : MonoBehaviour
             return;
         }
 
-        // Sending plain text
         await websocket.SendText(msg.Serialize());
     }
 
@@ -148,7 +146,6 @@ public class WSClient : MonoBehaviour
 
     private async void OnDestroy()
     {
-        Debug.Log("Destroy WS Object");
         destroyed = true;
 
         Client.Reset();

@@ -1,90 +1,60 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEditor.Build.Reporting;
 using UnityEditor.Callbacks;
 using UnityEngine;
-using Newtonsoft.Json.Schema;
 
 public static class BuildScript
 {
-    public enum BuildType
-    {
-        Client,
-        Server
-    }
-
     public enum Platform
     {
         Windows,
         Mac,
-        Linux
+        WebGL
     }
 
-    static string[] scenePaths = { "Assets/Scenes/00_ServerScene.unity", "Assets/Scenes/01_MainMenuScene.unity", "Assets/Scenes/02_OnlineMenuScene.unity", "Assets/Scenes/03_GameSetupScene.unity", "Assets/Scenes/04_GameScene.unity", "Assets/Scenes/05_TutorialScene.unity", "Assets/Scenes/06_HallOfFame.unity", "Assets/Scenes/07_CreditsScene.unity" };
+    static readonly string[] scenePaths = { "Assets/Scenes/01_MainMenuScene.unity", "Assets/Scenes/02_OnlineMenuScene.unity", "Assets/Scenes/03_GameSetupScene.unity", "Assets/Scenes/04_GameScene.unity", "Assets/Scenes/05_TutorialScene.unity", "Assets/Scenes/06_HallOfFame.unity", "Assets/Scenes/07_CreditsScene.unity" };
 
-    [MenuItem("Build/Server Build (Windows)")]
-    public static void PerformServerBuildWindows()
+    [MenuItem("Build/Windows Build")]
+    public static void PerformBuildWindows()
     {
-        PerformBuild(BuildType.Server, Platform.Windows);
+        PerformBuild(Platform.Windows);
     }
 
-    [MenuItem("Build/Client Build (Windows)")]
-    public static void PerformClientBuildWindows()
+    [MenuItem("Build/Windows Build (Development)")]
+    public static void PerformDevelopmentBuildWindows()
     {
-        PerformBuild(BuildType.Client, Platform.Windows);
+        PerformBuild(Platform.Windows, true);
     }
 
-    [MenuItem("Build/All Builds (Windows)")]
-    public static void PerformAllBuildsWindows()
+    [MenuItem("Build/Mac iOS Build")]
+    public static void PerformBuildMac()
     {
-        PerformServerBuildWindows();
-        PerformClientBuildWindows();
+        PerformBuild(Platform.Mac);
     }
 
-    [MenuItem("Build/Server Build (Mac iOS)")]
-    public static void PerformServerBuildMac()
+    [MenuItem("Build/Mac iOS Build (Development)")]
+    public static void PerformDevelopmentBuildMac()
     {
-        PerformBuild(BuildType.Server, Platform.Mac);
+        PerformBuild(Platform.Mac, true);
     }
 
-    [MenuItem("Build/Client Build (Mac iOS)")]
-    public static void PerformClientBuildMac()
+    [MenuItem("Build/WebGL Build")]
+    public static void PerformBuildWebGL()
     {
-        PerformBuild(BuildType.Client, Platform.Mac);
+        PerformBuild(Platform.WebGL);
     }
 
-    [MenuItem("Build/All Builds (Mac iOS)")]
-    public static void PerformAllBuildsMac()
+    [MenuItem("Build/WebGL Build (Development)")]
+    public static void PerformDevelopmentBuildWebGL()
     {
-        PerformServerBuildMac();
-        PerformClientBuildMac();
+        PerformBuild(Platform.WebGL, true);
     }
 
-    [MenuItem("Build/Server Build (Linux)")]
-    public static void PerformServerBuildLinux()
+    private static void PerformBuild(Platform platform, bool developmentBuild = false)
     {
-        PerformBuild(BuildType.Server, Platform.Linux);
-    }
-
-    [MenuItem("Build/Client Build (Linux)")]
-    public static void PerformClientBuildLinux()
-    {
-        PerformBuild(BuildType.Client, Platform.Linux);
-    }
-
-    [MenuItem("Build/All Builds (Linux)")]
-    public static void PerformAllBuildsLinux()
-    {
-        PerformServerBuildLinux();
-        PerformClientBuildLinux();
-    }
-
-    private static void PerformBuild(BuildType buildType, Platform platform)
-    {
-        Debug.Log("Performing build: " + buildType);
-        string buildPath = "Builds/" + platform.ToString() + "/" + buildType.ToString() + "/" + PlayerSettings.productName + "-" + PlayerSettings.bundleVersion;
+        Debug.Log("Performing build for platform: " + platform);
+        string buildPath = "Builds/" + platform.ToString() + "/" + PlayerSettings.productName + "-" + PlayerSettings.bundleVersion;
 
         BuildTarget buildTarget = BuildTarget.StandaloneWindows64;
         if (platform == Platform.Windows)
@@ -97,54 +67,32 @@ public static class BuildScript
             buildTarget = BuildTarget.StandaloneOSX;
             buildPath += ".app";
         }
-        else if (platform == Platform.Linux)
+        else if (platform == Platform.WebGL)
         {
-            buildTarget = BuildTarget.StandaloneLinux64;
-            buildPath += ".x86_64";
+            buildTarget = BuildTarget.WebGL;
         }
 
-        SetPlayerSettings(buildType);
+        SetPlayerSettings();
 
-        BuildReport report = BuildPipeline.BuildPlayer(ConfigureScenes(buildType), buildPath, buildTarget, BuildOptions.None);
-        // BuildReport report = BuildPipeline.BuildPlayer(ConfigureScenes(buildType), buildPath, buildTarget, BuildOptions.Development);
+        BuildReport report = BuildPipeline.BuildPlayer(scenePaths, buildPath, buildTarget, developmentBuild ? BuildOptions.Development : BuildOptions.None);
 
         // Check if the build succeeded
         if (report.summary.result == BuildResult.Succeeded)
         {
-            Debug.Log(buildType + " Build succeeded for platform " + platform + "!");
+            Debug.Log("Build succeeded for platform " + platform + "!");
         }
         else
         {
-            Debug.LogError(buildType + " Build for platform " + platform + " failed.");
+            Debug.LogError("Build for platform " + platform + " failed.");
         }
     }
 
-    private static void SetPlayerSettings(BuildType buildType)
+    private static void SetPlayerSettings()
     {
         PlayerSettings.resizableWindow = true;
-        PlayerSettings.allowFullscreenSwitch = buildType == BuildType.Client;
-
-        if (buildType == BuildType.Server)
-            PlayerSettings.fullScreenMode = FullScreenMode.Windowed;
+        PlayerSettings.allowFullscreenSwitch = true;
     }
 
-    private static string[] ConfigureScenes(BuildType buildType)
-    {
-        var scenes = new List<string>();
-        if (buildType == BuildType.Server)
-        {
-            scenes.Add(scenePaths[0]);
-        }
-        else
-        {
-            for (int i = 1; i < scenePaths.Length; i++)
-            {
-                scenes.Add(scenePaths[i]);
-            }
-        }
-
-        return scenes.ToArray();
-    }
 
     [PostProcessBuild]
     public static void OnPostprocessBuild(BuildTarget target, string pathToBuiltProject)
