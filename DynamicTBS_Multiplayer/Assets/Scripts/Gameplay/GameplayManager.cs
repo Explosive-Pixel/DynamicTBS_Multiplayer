@@ -49,7 +49,7 @@ public class GameplayManager : MonoBehaviour
 
     private void OnActionFinished(ActionMetadata actionMetadata)
     {
-        SetRemainingActions(remainingActions - actionMetadata.ActionCount);
+        SetRemainingActions(remainingActions - 1);
         if (remainingActions <= 0)
         {
             HandleNoRemainingActions();

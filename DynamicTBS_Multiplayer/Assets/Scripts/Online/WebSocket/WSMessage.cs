@@ -5,19 +5,20 @@ using System;
 
 public enum WSMessageCode
 {
-    WSMsgMetadataCode = 0,
-    WSMsgJoinLobbyCode = 1,
-    WSMsgWelcomeClientCode = 2,
-    WSMsgGameHistoryCode = 3,
-    WSMsgStartGameCode = 4,
-    WSMsgPauseGameCode = 5,
-    WSMsgServerNotificationCode = 6,
-    WSMsgUpdateServerCode = 7,
-    WSMsgUpdateClientCode = 8,
-    WSMsgGameOverCode = 9,
-    WSMsgDraftCharacterCode = 10,
-    WSMsgPerformActionCode = 11,
-    WSMsgUIActionCode = 12
+    WSMsgKeepAliveCode = 0,
+    WSMsgMetadataCode = 1,
+    WSMsgJoinLobbyCode = 2,
+    WSMsgWelcomeClientCode = 3,
+    WSMsgGameHistoryCode = 4,
+    WSMsgStartGameCode = 5,
+    WSMsgPauseGameCode = 6,
+    WSMsgServerNotificationCode = 7,
+    WSMsgUpdateServerCode = 8,
+    WSMsgUpdateClientCode = 9,
+    WSMsgGameOverCode = 10,
+    WSMsgDraftCharacterCode = 11,
+    WSMsgPerformActionCode = 12,
+    WSMsgUIActionCode = 13
 }
 
 [Serializable]
@@ -39,6 +40,8 @@ public abstract class WSMessage
 
         switch (code)
         {
+            case WSMessageCode.WSMsgKeepAliveCode:
+                return Deserialize<WSMsgKeepAlive>(json);
             case WSMessageCode.WSMsgMetadataCode:
                 return Deserialize<WSMsgMetadata>(json);
             case WSMessageCode.WSMsgJoinLobbyCode:

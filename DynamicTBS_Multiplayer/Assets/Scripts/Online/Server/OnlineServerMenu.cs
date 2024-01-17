@@ -8,7 +8,7 @@ public class OnlineServerMenu : MonoBehaviour
 
     private void Awake()
     {
-        server.Init(ConfigManager.Instance.Port);
+        //server.Init(ConfigManager.Instance.Port);
         Debug.Log("Server Initialized");
     }
 }

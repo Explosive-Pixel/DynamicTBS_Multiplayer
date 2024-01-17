@@ -31,7 +31,6 @@ public class MessageSender : MonoBehaviour
                 characterX = actionMetadata.CharacterInitialPosition != null ? actionMetadata.CharacterInitialPosition.Value.x : 0f,
                 characterY = actionMetadata.CharacterInitialPosition != null ? actionMetadata.CharacterInitialPosition.Value.y : 0f,
                 actionType = actionMetadata.ExecutedActionType,
-                actionCount = actionMetadata.ActionCount,
                 hasDestination = actionMetadata.ActionDestinationPosition != null,
                 destinationX = actionMetadata.ActionDestinationPosition != null ? actionMetadata.ActionDestinationPosition.Value.x : 0f,
                 destinationY = actionMetadata.ActionDestinationPosition != null ? actionMetadata.ActionDestinationPosition.Value.y : 0f,

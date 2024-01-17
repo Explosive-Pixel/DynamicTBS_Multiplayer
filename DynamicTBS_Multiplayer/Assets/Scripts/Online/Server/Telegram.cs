@@ -31,9 +31,6 @@ public static class Telegram
 
     public static void SendFile(byte[] bytes, string filename, string caption = "")
     {
-        if (!ConfigManager.Instance.SendTelegramMessages)
-            return;
-
         Init();
 
         WWWForm form = new WWWForm();
@@ -53,9 +50,6 @@ public static class Telegram
 
     public static void SendMessage(string text)
     {
-        if (!ConfigManager.Instance.SendTelegramMessages)
-            return;
-
         string json = "{\"chat_id\":\"" + chat_id + "\",\"text\":\"" + text + "\"}";
         HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
 

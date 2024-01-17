@@ -11,7 +11,6 @@ public class WSMsgPerformAction : WSMessage
     public float characterX;
     public float characterY;
     public ActionType actionType;
-    public int actionCount;
     public bool hasDestination;
     public float destinationX;
     public float destinationY;
@@ -30,7 +29,7 @@ public class WSMsgPerformAction : WSMessage
 
             if (actionType == ActionType.Skip)
             {
-                SkipAction.Execute(actionCount);
+                SkipAction.Execute();
             }
             else
             {

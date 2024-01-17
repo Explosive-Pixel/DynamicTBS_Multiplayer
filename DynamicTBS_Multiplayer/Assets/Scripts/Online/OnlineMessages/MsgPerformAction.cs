@@ -9,7 +9,6 @@ public class MsgPerformAction : OnlineMessage
     public float characterX;
     public float characterY;
     public ActionType actionType;
-    public int actionCount;
     public bool hasDestination;
     public float destinationX;
     public float destinationY;
@@ -34,7 +33,6 @@ public class MsgPerformAction : OnlineMessage
         writer.WriteFloat(characterX);
         writer.WriteFloat(characterY);
         writer.WriteInt((int)actionType);
-        writer.WriteInt(actionCount);
         writer.WriteByte(ToByte(hasDestination));
         writer.WriteFloat(destinationX);
         writer.WriteFloat(destinationY);
@@ -46,7 +44,6 @@ public class MsgPerformAction : OnlineMessage
         characterX = reader.ReadFloat();
         characterY = reader.ReadFloat();
         actionType = (ActionType)reader.ReadInt();
-        actionCount = reader.ReadInt();
         hasDestination = ToBool(reader.ReadByte());
         destinationX = reader.ReadFloat();
         destinationY = reader.ReadFloat();
@@ -61,7 +58,7 @@ public class MsgPerformAction : OnlineMessage
 
             if (actionType == ActionType.Skip)
             {
-                SkipAction.Execute(actionCount);
+                SkipAction.Execute();
             }
             else
             {

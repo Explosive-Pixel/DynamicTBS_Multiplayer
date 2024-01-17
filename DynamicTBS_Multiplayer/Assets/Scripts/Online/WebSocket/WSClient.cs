@@ -7,12 +7,15 @@ public class WSClient : MonoBehaviour
 {
     WebSocket websocket;
 
-    private string ipAdress;
-    private ushort port;
+    private string hostname;
+
     private bool destroyed = false;
     private readonly Queue<WSMessage> unsendMsgs = new();
 
     public bool Active { get; private set; } = false;
+
+    private float timer = 0f;
+    private const float keepAliveInterval = 120f; // in Seconds
 
     #region SingletonImplementation
 
@@ -26,29 +29,27 @@ public class WSClient : MonoBehaviour
 
     #endregion
 
-    public void Init(string ipAdress, ushort port, ClientType role, string userName, LobbyId lobby, bool createLobby)
+    public void Init(string hostname, ClientType role, string userName, LobbyId lobby, bool createLobby)
     {
-        this.ipAdress = ipAdress;
-        this.port = port;
+        this.hostname = hostname;
 
         Client.Init(role, userName, lobby);
 
-        CreateWebsocketConnectionAsync(createLobby, false);
+        CreateWebsocketConnection(createLobby, false);
+    }
+
+    private void CreateWebsocketConnection(bool createLobby, bool isReconnect)
+    {
+        Client.ConnectionStatus = ConnectionStatus.ATTEMPT_CONNECTION;
+
+        CreateWebsocketConnectionAsync(createLobby, isReconnect);
     }
 
     private async void CreateWebsocketConnectionAsync(bool createLobby, bool isReconnect)
     {
-        Client.ConnectionStatus = ConnectionStatus.ATTEMPT_CONNECTION;
-        var resolvedIp = await IPResolver.GetPublicIpV6Address(ipAdress);
+        Debug.Log("Trying to connect to server with hostname " + hostname);
 
-        if (resolvedIp == null || resolvedIp.Length == 0)
-        {
-            Debug.Log("Error: Failed to resolve ip for adress " + ipAdress);
-            return;
-        }
-
-        Debug.Log("Trying to connect to server with ip " + resolvedIp);
-        websocket = new WebSocket("ws://[" + resolvedIp + "]:" + port);
+        websocket = new WebSocket(hostname);
 
         websocket.OnOpen += () =>
         {
@@ -96,15 +97,24 @@ public class WSClient : MonoBehaviour
     {
         if (Client.Active && !Active && !destroyed)
         {
-            CreateWebsocketConnectionAsync(false, true);
+            CreateWebsocketConnection(false, true);
         }
     }
 
     void Update()
     {
+        if (!Active)
+            return;
+
+        timer += Time.deltaTime;
+        if (timer >= keepAliveInterval)
+        {
+            SendMessage(new WSMsgKeepAlive());
+            timer = 0f;
+        }
+
 #if !UNITY_WEBGL || UNITY_EDITOR
-        if (Active)
-            websocket.DispatchMessageQueue();
+        websocket.DispatchMessageQueue();
 #endif
     }
 

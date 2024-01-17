@@ -42,7 +42,9 @@ public class OnlineMenuCanvasHandler : MonoBehaviour
     {
         GameManager.GameType = GameType.ONLINE;
 
-        wsClient.Init(ConfigManager.Instance.IpAdress, ConfigManager.Instance.Port, spectatorToggle.isOn ? ClientType.SPECTATOR : ClientType.PLAYER, userName.text.Trim(), lobbyId, newLobby);
+        wsClient.Init(ConfigManager.Instance.Hostname, spectatorToggle.isOn ? ClientType.SPECTATOR : ClientType.PLAYER, userName.text.Trim(), lobbyId, newLobby);
+        //wsClient.Init("2a00:10:7175:6301:e8dc:f050:567f:99b0", 8007, spectatorToggle.isOn ? ClientType.SPECTATOR : ClientType.PLAYER, userName.text.Trim(), lobbyId, newLobby);
+
 
         onlineMetadataCanvas.SetActive(true);
         SceneChangeManager.Instance.LoadScene(Scene.GAME_SETUP);
