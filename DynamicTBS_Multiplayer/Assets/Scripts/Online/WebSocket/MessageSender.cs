@@ -25,13 +25,18 @@ public class MessageSender : MonoBehaviour
     {
         if (Client.ShouldSendMessage(actionMetadata.ExecutingPlayer))
         {
+            Tile characterInitialTile = actionMetadata.CharacterInitialPosition != null ? Board.GetTileByPosition(actionMetadata.CharacterInitialPosition.Value) : null;
+            Tile actionDestinationTile = actionMetadata.ActionDestinationPosition != null ? Board.GetTileByPosition(actionMetadata.ActionDestinationPosition.Value) : null;
             Client.SendToServer(new WSMsgPerformAction
             {
                 playerId = actionMetadata.ExecutingPlayer,
+                characterType = actionMetadata.CharacterInAction != null ? (int)actionMetadata.CharacterInAction.CharacterType : -1,
+                characterInitialTileName = characterInitialTile != null ? characterInitialTile.Name : null,
                 characterX = actionMetadata.CharacterInitialPosition != null ? actionMetadata.CharacterInitialPosition.Value.x : 0f,
                 characterY = actionMetadata.CharacterInitialPosition != null ? actionMetadata.CharacterInitialPosition.Value.y : 0f,
                 actionType = actionMetadata.ExecutedActionType,
                 hasDestination = actionMetadata.ActionDestinationPosition != null,
+                actionDestinationTileName = actionDestinationTile != null ? actionDestinationTile.Name : null,
                 destinationX = actionMetadata.ActionDestinationPosition != null ? actionMetadata.ActionDestinationPosition.Value.x : 0f,
                 destinationY = actionMetadata.ActionDestinationPosition != null ? actionMetadata.ActionDestinationPosition.Value.y : 0f,
             });
@@ -80,7 +85,7 @@ public class MessageSender : MonoBehaviour
     {
         if (Client.AdminShouldSendMessage())
         {
-            Client.SendToServer(new WSMsgGameOver { winner = winner ?? PlayerType.none });
+            Client.SendToServer(new WSMsgGameOver { winner = winner ?? PlayerType.none, gameOverCondition = endGameCondition });
         }
     }
 

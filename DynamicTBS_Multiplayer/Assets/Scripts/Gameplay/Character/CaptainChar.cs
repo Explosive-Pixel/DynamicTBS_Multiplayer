@@ -12,6 +12,6 @@ public class CaptainChar : Character
     public override void Die()
     {
         base.Die();
-        GameplayEvents.GameIsOver(PlayerManager.GetOtherSide(Side), GameOverCondition.MASTER_DIED);
+        GameplayEvents.GameIsOver(PlayerManager.GetOtherSide(Side), GameOverCondition.CAPTAIN_DIED);
     }
 }

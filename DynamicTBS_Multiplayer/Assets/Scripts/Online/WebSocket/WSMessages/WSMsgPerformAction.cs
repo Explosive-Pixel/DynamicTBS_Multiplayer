@@ -8,10 +8,13 @@ using System;
 public class WSMsgPerformAction : WSMessage
 {
     public PlayerType playerId;
+    public int characterType;
+    public string characterInitialTileName;
     public float characterX;
     public float characterY;
     public ActionType actionType;
     public bool hasDestination;
+    public string actionDestinationTileName;
     public float destinationX;
     public float destinationY;
 

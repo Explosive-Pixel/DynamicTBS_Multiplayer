@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Linq;
+using static GameSetupHandler;
 
 public class LocalGameSetupCanvasHandler : MonoBehaviour
 {
@@ -49,7 +47,7 @@ public class LocalGameSetupCanvasHandler : MonoBehaviour
 
     private void StartLocalGameWithDefaultSetup()
     {
-        Timer.InitTime(defaultTimer);
+        gameSetupHandler.InitTimer(defaultTimer);
         Board.selectedMapType = defaultMap;
         StartGame();
     }

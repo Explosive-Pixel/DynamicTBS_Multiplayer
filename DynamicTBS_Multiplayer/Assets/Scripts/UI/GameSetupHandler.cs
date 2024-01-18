@@ -14,7 +14,13 @@ public class GameSetupHandler : MonoBehaviour
     private bool timeSelected = false;
     public bool AllSelected { get { return mapSelected && timeSelected; } }
 
-    /*public enum TimerSetupType
+    public enum TimerType
+    {
+        DRAFT_AND_PLACEMENT,
+        GAMEPLAY
+    }
+
+    public enum TimerSetupType
     {
         [Description("Fast")]
         FAST = 1,
@@ -22,14 +28,14 @@ public class GameSetupHandler : MonoBehaviour
         STANDARD = 2,
         [Description("Slow")]
         SLOW = 3
-    }*/
+    }
 
     private static readonly Dictionary<TimerSetupType, Dictionary<TimerType, float>> timeSetups = new()
     {
         { TimerSetupType.FAST,
             new() {
-                { TimerType.DRAFT_AND_PLACEMENT, 10 },
-                { TimerType.GAMEPLAY, 30 }
+                { TimerType.DRAFT_AND_PLACEMENT, 120 },
+                { TimerType.GAMEPLAY, 60 }
             }
         },
         {
@@ -73,11 +79,16 @@ public class GameSetupHandler : MonoBehaviour
     {
         AudioEvents.PressingButton();
 
-        var selectedTimeSetup = timeSetups[timerOptions.timerSetup];
-        TimerConfig.Init(selectedTimeSetup[TimerType.DRAFT_AND_PLACEMENT], selectedTimeSetup[TimerType.GAMEPLAY]);
+        InitTimer(timerOptions.timerSetup);
         timeSetup.GetComponentsInChildren<Button>().ToList().ForEach(button => button.interactable = true);
         button.interactable = false;
         timeSelected = true;
+    }
+
+    public void InitTimer(TimerSetupType timerSetupType)
+    {
+        var selectedTimeSetup = timeSetups[timerSetupType];
+        TimerConfig.Init(selectedTimeSetup[TimerType.DRAFT_AND_PLACEMENT], selectedTimeSetup[TimerType.GAMEPLAY]);
     }
 
     public void ChooseBoardDesign(Button button, MapType mapType)

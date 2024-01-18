@@ -7,6 +7,7 @@ using System;
 public class WSMsgGameOver : WSMessage
 {
     public PlayerType winner;
+    public GameOverCondition gameOverCondition;
 
     public WSMsgGameOver()
     {
