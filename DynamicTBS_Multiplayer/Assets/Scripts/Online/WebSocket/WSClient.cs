@@ -15,7 +15,7 @@ public class WSClient : MonoBehaviour
     public bool Active { get; private set; } = false;
 
     private float timer = 0f;
-    private const float keepAliveInterval = 120f; // in Seconds
+    private const float keepAliveInterval = 25f; // in Seconds
 
     #region SingletonImplementation
 
