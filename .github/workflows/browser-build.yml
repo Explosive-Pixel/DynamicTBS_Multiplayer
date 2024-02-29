@@ -7,67 +7,47 @@ on:
 
 jobs:
   build:
-    name: Build Project
+    name: Build for ${{ matrix.targetPlatform }}
     runs-on: ubuntu-latest
-    # This stops builds that are in-progress once a new commit comes in
-    concurrency:
-      group: unity-build
-      cancel-in-progress: true
+    strategy:
+      fail-fast: false
+      matrix:
+        targetPlatform:
+          - StandaloneOSX # Build a macOS standalone (Intel 64-bit).
+          - StandaloneWindows64 # Build a Windows 64-bit standalone.
+          - WebGL # WebGL.
     steps:
-      # Checkout
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
+          fetch-depth: 0
           lfs: true
-      # Cache
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         with:
           path: DynamicTBS_Multiplayer/Library
           key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
           restore-keys: |
             Library-
-      # Build Windows
-      - name: Build project for windows
-        uses: game-ci/unity-builder@v2
+      - name: Set build method
+        run: |
+          if [ "${{ matrix.targetPlatform }}" == "StandaloneOSX" ]; then
+            echo "::set-env name=BUILD_METHOD::BuildScript.PerformBuildMac"
+          elif [ "${{ matrix.targetPlatform }}" == "StandaloneWindows64" ]; then
+            echo "::set-env name=BUILD_METHOD::BuildScript.PerformBuildWindows"
+          elif [ "${{ matrix.targetPlatform }}" == "WebGL" ]; then
+            echo "::set-env name=BUILD_METHOD::BuildScript.PerformBuildWebGL"
+          else
+            echo "Unsupported targetPlatform: ${{ matrix.targetPlatform }}"
+            exit 1
+          fi
+      - uses: game-ci/unity-builder@v4
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with:
+          targetPlatform: ${{ matrix.targetPlatform }}
           unityVersion: 2021.3.6f1
           projectPath: DynamicTBS_Multiplayer
-          buildMethod: BuildScript.PerformBuildWindows
-      # Upload Windows
-      - name: Upload Windows Build
-        uses: actions/upload-artifact@v2
+          buildMethod: ${{ env.BUILD_METHOD }}
+      - uses: actions/upload-artifact@v3
         with:
-          name: Build_Windows
-          path: DynamicTBS_Multiplayer/Builds/Windows
-      # Build Mac
-      - name: Build project for mac
-        uses: game-ci/unity-builder@v2
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-        with:
-          unityVersion: 2021.3.6f1
-          projectPath: DynamicTBS_Multiplayer
-          buildMethod: BuildScript.PerformBuildMac
-      # Upload Mac
-      - name: Upload Mac Build
-        uses: actions/upload-artifact@v2
-        with:
-          name: Build_Mac
-          path: DynamicTBS_Multiplayer/Builds/Mac
-      # Build WebGL
-      - name: Build project for browser
-        uses: game-ci/unity-builder@v2
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-        with:
-          unityVersion: 2021.3.6f1
-          projectPath: DynamicTBS_Multiplayer
-          buildMethod: BuildScript.PerformBuildWebGL
-      # Upload WebGL
-      - name: Upload WebGL Build
-        uses: actions/upload-artifact@v2
-        with:
-          name: Build_WebGL
-          path: DynamicTBS_Multiplayer/Builds/WebGL
+          name: Build_${{ matrix.targetPlatform }}
+          path: DynamicTBS_Multiplayer/Builds/${{ matrix.targetPlatform }}
