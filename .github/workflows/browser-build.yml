@@ -40,7 +40,7 @@ jobs:
             echo "Unsupported targetPlatform: ${{ matrix.targetPlatform }}"
             exit 1
           fi
-      - uses: game-ci/unity-builder@v4
+      - uses: game-ci/unity-builder@v2
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with:
