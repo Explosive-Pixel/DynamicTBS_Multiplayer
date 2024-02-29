@@ -28,13 +28,14 @@ jobs:
           restore-keys: |
             Library-
       - name: Set build method
+        id: set_build_method
         run: |
           if [ "${{ matrix.targetPlatform }}" == "StandaloneOSX" ]; then
-            echo "::set-env name=BUILD_METHOD::BuildScript.PerformBuildMac"
+            echo "BUILD_METHOD=BuildScript.PerformBuildMac" >> $GITHUB_ENV
           elif [ "${{ matrix.targetPlatform }}" == "StandaloneWindows64" ]; then
-            echo "::set-env name=BUILD_METHOD::BuildScript.PerformBuildWindows"
+            echo "BUILD_METHOD=BuildScript.PerformBuildWindows" >> $GITHUB_ENV
           elif [ "${{ matrix.targetPlatform }}" == "WebGL" ]; then
-            echo "::set-env name=BUILD_METHOD::BuildScript.PerformBuildWebGL"
+            echo "BUILD_METHOD=BuildScript.PerformBuildWebGL" >> $GITHUB_ENV
           else
             echo "Unsupported targetPlatform: ${{ matrix.targetPlatform }}"
             exit 1
@@ -46,7 +47,7 @@ jobs:
           targetPlatform: ${{ matrix.targetPlatform }}
           unityVersion: 2021.3.6f1
           projectPath: DynamicTBS_Multiplayer
-          buildMethod: ${{ env.BUILD_METHOD }}
+          buildMethod: ${{ steps.set_build_method.outputs.BUILD_METHOD }}
       - uses: actions/upload-artifact@v3
         with:
           name: Build_${{ matrix.targetPlatform }}
