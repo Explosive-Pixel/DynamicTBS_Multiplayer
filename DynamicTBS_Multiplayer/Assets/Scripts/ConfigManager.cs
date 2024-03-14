@@ -8,14 +8,15 @@ public class ConfigManager : MonoBehaviour
 {
     public static ConfigManager Instance { get; private set; }
 
-    private string ipAddress;
-    public string IpAdress { get { return GetIpAdress(ipAddress); } }
+    public string Hostname { get; private set; }
 
-    private ushort port;
-    public ushort Port { get { return port; } }
-
-    private bool sendTelegramMessages = false;
-    public bool SendTelegramMessages { get { return sendTelegramMessages; } }
+    [Serializable]
+    private class ConfigData
+    {
+        public string hostname;
+        public string hostname_local;
+        public bool local;
+    }
 
     private void Awake()
     {
@@ -58,25 +59,6 @@ public class ConfigManager : MonoBehaviour
     {
         ConfigData data = JsonUtility.FromJson<ConfigData>(json);
 
-        ipAddress = data.ipAddress;
-        port = Convert.ToUInt16(data.port);
-        sendTelegramMessages = data.sendTelegramMessages;
-    }
-
-    private static string GetIpAdress(string ipAdress)
-    {
-        if (ipAdress == null)
-        {
-            Debug.LogError("IP Adress is null");
-        }
-        return ipAdress;
-    }
-
-    [System.Serializable]
-    private class ConfigData
-    {
-        public string ipAddress;
-        public int port;
-        public bool sendTelegramMessages;
+        Hostname = data.local ? data.hostname_local : data.hostname;
     }
 }

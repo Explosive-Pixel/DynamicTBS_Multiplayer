@@ -213,7 +213,7 @@ public class AudioManager : MonoBehaviour
         }
         if (actionType == ActionType.ActiveAbility)
         {
-            if (character.ActiveAbility.GetType() == typeof(TakeControlAA))
+            if (character.ActiveAbility.GetType() == typeof(ElectrifyAA))
                 fxSource.PlayOneShot(takeControlClip);
             if (character.ActiveAbility.GetType() == typeof(BlockAA))
                 fxSource.PlayOneShot(blockClip);

@@ -1,0 +1,45 @@
+{
+  "type": "object",
+  "properties": {
+    "msg1": {
+      "required": true,
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "test1": {
+          "required": true,
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "test2": {
+          "required": true,
+          "type": "integer"
+        },
+        "test3": {
+          "required": true,
+          "type": "boolean"
+        }
+      }
+    },
+    "msg2": {
+      "required": true,
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "test12": {
+          "required": true,
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    }
+  }
+}

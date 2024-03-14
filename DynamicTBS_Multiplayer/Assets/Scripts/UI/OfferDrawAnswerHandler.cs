@@ -41,7 +41,7 @@ public class OfferDrawAnswerHandler : MonoBehaviour
     {
         if (uIAction == UIAction.OFFER_DRAW)
         {
-            if (!(GameManager.GameType == GameType.ONLINE && OnlineClient.Instance.Side == player))
+            if (!(GameManager.GameType == GameType.ONLINE && Client.Side == player))
             {
                 SetActive(answerDrawBox, true);
             }

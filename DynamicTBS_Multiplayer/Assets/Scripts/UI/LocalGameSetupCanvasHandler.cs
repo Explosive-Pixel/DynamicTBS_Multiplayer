@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Linq;
+using static GameSetupHandler;
 
 public class LocalGameSetupCanvasHandler : MonoBehaviour
 {
@@ -10,14 +8,23 @@ public class LocalGameSetupCanvasHandler : MonoBehaviour
 
     [SerializeField] private GameSetupHandler gameSetupHandler;
 
+    [SerializeField] private bool skipSetup = false;
+    [SerializeField] private MapType defaultMap;
+    [SerializeField] private TimerSetupType defaultTimer;
+
     private bool active = false;
 
     private void Awake()
     {
         if (GameManager.GameType == GameType.LOCAL)
         {
-            active = true;
+            if (skipSetup)
+            {
+                StartLocalGameWithDefaultSetup();
+                return;
+            }
 
+            active = true;
             startGameButton.onClick.AddListener(() => StartLocalGame());
         }
     }
@@ -29,11 +36,24 @@ public class LocalGameSetupCanvasHandler : MonoBehaviour
 
         startGameButton.interactable = gameSetupHandler.AllSelected;
     }
+
     public void StartLocalGame()
     {
         if (gameSetupHandler.AllSelected)
         {
-            GameEvents.StartGame();
+            StartGame();
         }
+    }
+
+    private void StartLocalGameWithDefaultSetup()
+    {
+        gameSetupHandler.InitTimer(defaultTimer);
+        Board.selectedMapType = defaultMap;
+        StartGame();
+    }
+
+    private void StartGame()
+    {
+        GameEvents.StartGame();
     }
 }

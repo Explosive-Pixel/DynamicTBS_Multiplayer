@@ -14,12 +14,12 @@ using UnityEngine;
 //           & both master units can't be killed.
 public enum GameOverCondition
 {
-    MASTER_TOOK_CONTROL,
-    MASTER_DIED,
-    PLAYER_SURRENDERED,
-    NO_AVAILABLE_ACTION,
-    DRAW_ACCEPTED,
-    PLAYER_TIMEOUT
+    CAPTAIN_TOOK_CONTROL = 0,
+    CAPTAIN_DIED = 1,
+    PLAYER_SURRENDERED = 2,
+    NO_AVAILABLE_ACTION = 3,
+    DRAW_ACCEPTED = 4,
+    PLAYER_TIMEOUT = 5
 }
 
 static class GameOverConditionMethods
@@ -28,9 +28,9 @@ static class GameOverConditionMethods
     {
         switch (condition)
         {
-            case GameOverCondition.MASTER_TOOK_CONTROL:
+            case GameOverCondition.CAPTAIN_TOOK_CONTROL:
                 return "The " + winner + " " + CharacterType.CaptainChar.Name() + " took control over the engine.";
-            case GameOverCondition.MASTER_DIED:
+            case GameOverCondition.CAPTAIN_DIED:
                 return "The " + PlayerManager.GetOtherSide(winner.Value) + " " + CharacterType.CaptainChar.Name() + " died.";
             case GameOverCondition.PLAYER_SURRENDERED:
                 return "Player " + PlayerManager.GetOtherSide(winner.Value) + " surrendered.";
