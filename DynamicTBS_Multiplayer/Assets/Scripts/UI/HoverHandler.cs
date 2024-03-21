@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 public class HoverHandler : MonoBehaviour
 {
     [SerializeField] private GameObject hoverObject;
     [SerializeField] private GameObject activationHover;
+
+    [SerializeField] private UnityEvent myUnityEvent;
 
     private void Start()
     {
@@ -37,5 +40,10 @@ public class HoverHandler : MonoBehaviour
     {
         hoverObject.SetActive(active);
         activationHover.SetActive(active);
+
+        if (!active)
+            return;
+
+        myUnityEvent?.Invoke();
     }
 }
