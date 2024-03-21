@@ -115,8 +115,7 @@ public class UIClickHandler : MonoBehaviour
 
         if (Input.GetKeyUp(KeyCode.Alpha1) || Input.GetKeyUp(KeyCode.Alpha2) || Input.GetKeyUp(KeyCode.Alpha3))
         {
-            ActionUtils.HideAllActionPatterns();
-            SelectCharacter(currentCharacter);
+            HideActionPattern();
         }
     }
 
@@ -127,6 +126,12 @@ public class UIClickHandler : MonoBehaviour
             ActionUtils.ResetActionDestinations();
             currentCharacter.ActiveAbility.ShowActionPattern();
         }
+    }
+
+    public void HideActionPattern()
+    {
+        ActionUtils.HideAllActionPatterns();
+        SelectCharacter(currentCharacter);
     }
 
     private void HandleKeyInputsAnyPlayer()

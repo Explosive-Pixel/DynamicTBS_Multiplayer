@@ -9,7 +9,10 @@ public class HoverHandler : MonoBehaviour
     [SerializeField] private GameObject hoverObject;
     [SerializeField] private GameObject activationHover;
 
-    [SerializeField] private UnityEvent myUnityEvent;
+    [SerializeField] private UnityEvent onHover;
+    [SerializeField] private UnityEvent onDrop;
+
+    private bool clicked = false;
 
     private void Start()
     {
@@ -18,6 +21,7 @@ public class HoverHandler : MonoBehaviour
 
     private void OnMouseEnter()
     {
+        clicked = false;
         SetActive(true);
     }
 
@@ -29,6 +33,7 @@ public class HoverHandler : MonoBehaviour
     private void OnMouseDown()
     {
         SetActive(false);
+        clicked = true;
     }
 
     private void OnDisable()
@@ -41,9 +46,12 @@ public class HoverHandler : MonoBehaviour
         hoverObject.SetActive(active);
         activationHover.SetActive(active);
 
-        if (!active)
+        if (clicked)
             return;
 
-        myUnityEvent?.Invoke();
+        if (active)
+            onHover?.Invoke();
+        else
+            onDrop?.Invoke();
     }
 }
