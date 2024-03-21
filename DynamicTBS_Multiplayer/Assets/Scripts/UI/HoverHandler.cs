@@ -13,10 +13,16 @@ public class HoverHandler : MonoBehaviour
     [SerializeField] private UnityEvent onDrop;
 
     private bool clicked = false;
+    private bool disabled = false;
 
     private void Start()
     {
         SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+        disabled = false;
     }
 
     private void OnMouseEnter()
@@ -38,15 +44,19 @@ public class HoverHandler : MonoBehaviour
 
     private void OnDisable()
     {
+        disabled = true;
         SetActive(false);
     }
 
     private void SetActive(bool active)
     {
-        hoverObject.SetActive(active);
-        activationHover.SetActive(active);
+        if (hoverObject != null)
+            hoverObject.SetActive(active);
 
-        if (clicked)
+        if (activationHover != null)
+            activationHover.SetActive(active);
+
+        if (clicked || disabled)
             return;
 
         if (active)
