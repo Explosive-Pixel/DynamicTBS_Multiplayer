@@ -36,7 +36,7 @@ public class BaseTimer : MonoBehaviour
                     GameplayEvents.TimerTimedOut(gamePhase, playerType);
                 }
 
-                StopTimer();
+                SetInactive();
             }
         }
     }
