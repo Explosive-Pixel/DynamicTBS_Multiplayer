@@ -92,36 +92,52 @@ public class UIClickHandler : MonoBehaviour
             UnselectCharacter();
         }
 
-        if (GameManager.CurrentGamePhase != GamePhase.GAMEPLAY)
+        if (GameManager.CurrentGamePhase != GamePhase.GAMEPLAY || currentCharacter == null)
             return;
 
         // Show complete movement pattern, not just legal moves.
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
+            ActionUtils.ResetActionDestinations();
             ShowActionPattern(ActionType.Move);
         }
 
         // Show complete attack pattern, not just legal moves.
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
+            ActionUtils.ResetActionDestinations();
             ShowActionPattern(ActionType.Attack);
         }
 
         // Show complete active ability pattern, not just legal moves.
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            if (currentCharacter != null)
-            {
-                ActionUtils.ResetActionDestinations();
-                currentCharacter.ActiveAbility.ShowActionPattern();
-            }
+            ShowActiveAbilityPattern();
         }
 
         if (Input.GetKeyUp(KeyCode.Alpha1) || Input.GetKeyUp(KeyCode.Alpha2) || Input.GetKeyUp(KeyCode.Alpha3))
         {
-            ActionUtils.HideAllActionPatterns();
-            SelectCharacter(currentCharacter);
+            HideActionPattern();
         }
+    }
+
+    public void ShowMoveAndAttackPattern()
+    {
+        ActionUtils.ResetActionDestinations();
+        ShowActionPattern(ActionType.Move);
+        ShowActionPattern(ActionType.Attack);
+    }
+
+    public void ShowActiveAbilityPattern()
+    {
+        ActionUtils.ResetActionDestinations();
+        currentCharacter.ActiveAbility.ShowActionPattern();
+    }
+
+    public void HideActionPattern()
+    {
+        ActionUtils.HideAllActionPatterns();
+        SelectCharacter(currentCharacter);
     }
 
     private void HandleKeyInputsAnyPlayer()
@@ -178,14 +194,10 @@ public class UIClickHandler : MonoBehaviour
 
     private void ShowActionPattern(ActionType actionType)
     {
-        if (currentCharacter != null)
+        IAction action = ActionRegistry.GetActions().Find(action => action.ActionType == actionType);
+        if (action != null)
         {
-            ActionUtils.ResetActionDestinations();
-            IAction action = ActionRegistry.GetActions().Find(action => action.ActionType == actionType);
-            if (action != null)
-            {
-                action.ShowActionPattern(currentCharacter);
-            }
+            action.ShowActionPattern(currentCharacter);
         }
     }
 
