@@ -85,7 +85,7 @@ public class WSClient : MonoBehaviour
         websocket.OnMessage += (bytes) =>
         {
             var message = System.Text.Encoding.UTF8.GetString(bytes);
-            Debug.Log("Received msg:\n" + message);
+            // Debug.Log("Received msg:\n" + message);
             MessageReceiver.ReceiveMessage(message);
         };
 
