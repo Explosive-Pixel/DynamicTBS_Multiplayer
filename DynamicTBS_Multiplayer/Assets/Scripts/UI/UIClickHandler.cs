@@ -123,6 +123,9 @@ public class UIClickHandler : MonoBehaviour
 
     public void ShowMoveAndAttackPattern()
     {
+        if (GameManager.CurrentGamePhase != GamePhase.GAMEPLAY)
+            return;
+
         ActionUtils.ResetActionDestinations();
         ShowActionPattern(ActionType.Move);
         ShowActionPattern(ActionType.Attack);
@@ -130,6 +133,9 @@ public class UIClickHandler : MonoBehaviour
 
     public void ShowActiveAbilityPattern()
     {
+        if (GameManager.CurrentGamePhase != GamePhase.GAMEPLAY)
+            return;
+
         ActionUtils.ResetActionDestinations();
         currentCharacter.ActiveAbility.ShowActionPattern();
     }
@@ -150,7 +156,7 @@ public class UIClickHandler : MonoBehaviour
         // Same function as pressing the Active Ability icon.
         if (Input.GetKeyDown(KeyCode.A))
         {
-            if (currentCharacter != null && currentCharacter.MayPerformActiveAbility())
+            if (currentCharacter != null && currentCharacter.Side == PlayerManager.ExecutingPlayer && currentCharacter.MayPerformActiveAbility())
             {
                 ActionUtils.ResetActionDestinations();
                 if (activeAbilityExecutionStarted)
@@ -203,7 +209,7 @@ public class UIClickHandler : MonoBehaviour
 
     private Character TrySelectCharacter(Ray position)
     {
-        List<GameObject> selectableCharacters = (GameManager.IsPlayer() ? CharacterManager.GetAllLivingCharactersOfSide(PlayerManager.ExecutingPlayer) : CharacterManager.GetAllLivingCharacters())
+        List<GameObject> selectableCharacters = CharacterManager.GetAllLivingCharacters()
                 .FindAll(character => character.IsClickable)
                 .ConvertAll(character => character.gameObject);
 
@@ -254,7 +260,7 @@ public class UIClickHandler : MonoBehaviour
         activeAbilityExecutionStarted = false;
         currentCharacter = character;
 
-        if (character != null)
+        if (character != null && (!GameManager.IsPlayer() || character.Side == PlayerManager.ExecutingPlayer))
             ActionUtils.InstantiateAllActionPositions(character);
     }
 
