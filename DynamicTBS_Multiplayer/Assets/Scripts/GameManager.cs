@@ -59,6 +59,11 @@ public class GameManager : MonoBehaviour
         return gameType == GameType.LOCAL || (gameType == GameType.ONLINE && Client.Role == ClientType.PLAYER);
     }
 
+    public static bool IsSpectator()
+    {
+        return gameType == GameType.ONLINE && Client.Role == ClientType.SPECTATOR;
+    }
+
     private void ChangeGamePhase(GamePhase lastGamePhase)
     {
         StartCoroutine(DelayStartNewGamephase(lastGamePhase));
