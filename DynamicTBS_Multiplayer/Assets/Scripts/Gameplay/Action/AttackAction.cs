@@ -7,6 +7,7 @@ public class AttackAction : MonoBehaviour, IAction
     [SerializeField] private GameObject attackCirclePrefab;
 
     [SerializeField] private int attackDamage;
+    [SerializeField] private PatternType attackPattern;
 
     public ActionType ActionType { get { return ActionType.Attack; } }
 
@@ -32,7 +33,7 @@ public class AttackAction : MonoBehaviour, IAction
         int range = character.AttackRange;
         Tile tile = Board.GetTileByCharacter(character);
 
-        List<Vector3> patternPositions = Board.GetTilesInAllStarDirections(tile, range)
+        List<Vector3> patternPositions = Board.GetTilesInAllDirections(tile, attackPattern, range)
             .ConvertAll(tile => tile.gameObject.transform.position);
 
         patternTargets = ActionUtils.InstantiateActionPositions(patternPositions, attackCirclePrefab);
@@ -91,7 +92,7 @@ public class AttackAction : MonoBehaviour, IAction
 
         PlayerType otherSide = PlayerManager.GetOtherSide(character.Side);
 
-        List<Vector3> targetPositions = Board.GetTilesOfClosestCharactersOfSideInAllStarDirections(tile, otherSide, range)
+        List<Vector3> targetPositions = Board.GetTilesOfClosestCharactersOfSideInAllDirections(tile, otherSide, attackPattern, range)
             .FindAll(tile => tile.IsOccupied() && tile.CurrentInhabitant.isAttackableBy(character))
             .ConvertAll(tile => tile.gameObject.transform.position);
 

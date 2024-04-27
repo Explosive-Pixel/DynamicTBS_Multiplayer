@@ -8,6 +8,7 @@ public class HealAA : MonoBehaviour, IActiveAbility
     [SerializeField] private int healRange; // 2
     [SerializeField] private int healPoints; // 1
     [SerializeField] private int moveSpeedBuffer; // 1
+    [SerializeField] private PatternType aaPattern;
 
     [SerializeField] private GameObject speedBuff;
 
@@ -15,6 +16,7 @@ public class HealAA : MonoBehaviour, IActiveAbility
     public static int healingPoints;
     public static int moveSpeedBuff;
     public static string speedBuffName;
+    public static PatternType pattern;
 
     public ActiveAbilityType AbilityType { get { return ActiveAbilityType.HEAL; } }
     public int Cooldown { get { return aaCooldown; } }
@@ -29,6 +31,7 @@ public class HealAA : MonoBehaviour, IActiveAbility
         healingPoints = healPoints;
         moveSpeedBuff = moveSpeedBuffer;
         speedBuffName = speedBuff.name;
+        pattern = aaPattern;
 
         character = gameObject.GetComponent<Character>();
         healAAAction = GameObject.Find("ActionRegistry").GetComponent<HealAAAction>();

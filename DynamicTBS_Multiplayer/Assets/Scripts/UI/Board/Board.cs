@@ -96,6 +96,9 @@ public class Board : MonoBehaviour
         return Tiles.Find(tile => tile.CurrentInhabitant == character);
     }
 
+    /// <summary>
+    /// Checks whether two tiles are adjacent with respect to a given pattern type.
+    /// </summary>
     public static bool Neighbors(Tile tile1, Tile tile2, PatternType patternType)
     {
         if (tile1 == null || tile2 == null)
@@ -109,6 +112,9 @@ public class Board : MonoBehaviour
         return (crossNeighbors || (Math.Abs(tile1.Column - tile2.Column) == 1) && (Math.Abs(tile1.Row - tile2.Row) == 1));
     }
 
+    /// <summary>
+    /// Returns all tiles having a given distance from a given tile.
+    /// </summary>
     public static List<Tile> GetTilesOfDistance(Tile tile, PatternType patternType, int distance)
     {
         var tiles = (new[] {
@@ -150,7 +156,75 @@ public class Board : MonoBehaviour
         return tiles;
     }
 
-    public static List<Tile> GetTilesOfClosestCharactersOfSideInAllStarDirections(Tile center, PlayerType side, int distance)
+    /// <summary>
+    /// Returns all occupied tiles in one direction (beginning from startTile, ending at the end of the board).
+    /// </summary>
+    public static List<Tile> GetAllOccupiedTilesInOneDirection(Tile startTile, Vector3 direction)
+    {
+        List<Tile> occupiedTiles = new();
+
+        for (int i = 1; i <= Math.Max(Rows, Columns); i++)
+        {
+            Tile tile = GetTileByCoordinates(startTile.Row + (i * (int)direction.y), startTile.Column + (i * (int)direction.x));
+            if (tile == null) break;
+            if (tile.IsOccupied()) occupiedTiles.Add(tile);
+        }
+
+        return occupiedTiles;
+    }
+
+    /// <summary>
+    /// Returns all tiles within a distance to a given tile (with respect to a given pattern type).
+    /// </summary>
+    public static List<Tile> GetTilesInAllDirections(Tile center, PatternType patternType, int distance)
+    {
+        return GetCustomTilesInAllDirections(center, patternType, distance,
+            (currentTile, positions, directionFinished, sig1, sig2) =>
+            {
+                positions.Add(currentTile);
+            });
+    }
+
+    /// <summary>
+    /// Returns all occupied tiles within a distance to a given tile (with respect to a given pattern type).
+    /// If side is specified (i.e. side != none), only occupied tiles with inhabitants of the given side are returned.
+    /// </summary>
+    public static List<Tile> GetTilesOfClosestCharactersOfSideInAllDirections(Tile center, PlayerType side, PatternType patternType, int distance)
+    {
+        return GetCustomTilesInAllDirections(center, patternType, distance,
+            (currentTile, positions, directionFinished, sig1, sig2) =>
+            {
+                if (currentTile.IsOccupied())
+                {
+                    if (side == PlayerType.none || currentTile.CurrentInhabitant.Side == side)
+                    {
+                        positions.Add(currentTile);
+                    }
+                    directionFinished[(sig1, sig2)] = true;
+                }
+            });
+
+    }
+
+    /// <summary>
+    /// Returns all tiles within a distance to a given tile (with respect to a given pattern type) until - for each direction - a tile is occupied.
+    /// The respective first occupied tiles are also included in the returned list.
+    /// </summary>
+    public static List<Tile> GetTilesUntilClosestCharactersInAllDirections(Tile center, PatternType patternType, int distance)
+    {
+        return GetCustomTilesInAllDirections(center, patternType, distance,
+            (currentTile, positions, directionFinished, sig1, sig2) =>
+            {
+                positions.Add(currentTile);
+
+                if (currentTile.IsOccupied())
+                {
+                    directionFinished[(sig1, sig2)] = true;
+                }
+            });
+    }
+
+    private static List<Tile> GetCustomTilesInAllDirections(Tile center, PatternType patternType, int distance, Action<Tile, List<Tile>, Dictionary<(int, int), bool>, int, int> customAction)
     {
         var signa = new[] { -1, 0, 1 };
         var directionFinished = new Dictionary<(int, int), bool>();
@@ -159,6 +233,9 @@ public class Board : MonoBehaviour
         {
             foreach (int sig2 in signa)
             {
+                if (patternType == PatternType.Cross && sig1 != 0 && sig2 != 0)
+                    continue;
+
                 directionFinished.Add((sig1, sig2), false);
             }
         }
@@ -172,16 +249,15 @@ public class Board : MonoBehaviour
             {
                 foreach (int sig2 in signa)
                 {
+                    if (patternType == PatternType.Cross && sig1 != 0 && sig2 != 0)
+                        continue;
+
                     if (!directionFinished[(sig1, sig2)])
                     {
                         Tile currentTile = GetTileByCoordinates(center.Row + sig1 * i, center.Column + sig2 * i);
-                        if (currentTile != null && currentTile.IsOccupied())
+                        if (currentTile != null)
                         {
-                            if (currentTile.CurrentInhabitant.Side == side)
-                            {
-                                positions.Add(currentTile);
-                            }
-                            directionFinished[(sig1, sig2)] = true;
+                            customAction(currentTile, positions, directionFinished, sig1, sig2);
                         }
                     }
                 }
@@ -192,48 +268,6 @@ public class Board : MonoBehaviour
         }
 
         return positions;
-    }
-
-    public static List<Tile> GetTilesInAllStarDirections(Tile center, int distance)
-    {
-        var signa = new[] { -1, 0, 1 };
-
-        List<Tile> positions = new();
-
-        int i = 1;
-        while (distance > 0)
-        {
-            foreach (int sig1 in signa)
-            {
-                foreach (int sig2 in signa)
-                {
-                    Tile currentTile = GetTileByCoordinates(center.Row + sig1 * i, center.Column + sig2 * i);
-                    if (currentTile != null)
-                    {
-                        positions.Add(currentTile);
-                    }
-                }
-            }
-
-            i++;
-            distance--;
-        }
-
-        return positions;
-    }
-
-    public static List<Tile> GetAllOccupiedTilesInOneDirection(Tile startTile, Vector3 direction)
-    {
-        List<Tile> occupiedTiles = new();
-
-        for (int i = 1; i <= Math.Max(Rows, Columns); i++)
-        {
-            Tile tile = GetTileByCoordinates(startTile.Row + (i * (int)direction.y), startTile.Column + (i * (int)direction.x));
-            if (tile == null) break;
-            if (tile.IsOccupied()) occupiedTiles.Add(tile);
-        }
-
-        return occupiedTiles;
     }
 
     #region EventSubscriptions
