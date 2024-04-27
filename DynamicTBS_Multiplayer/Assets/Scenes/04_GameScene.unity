@@ -6006,6 +6006,7 @@ GameObject:
   - component: {fileID: 1149377221}
   - component: {fileID: 1149377222}
   - component: {fileID: 1149377223}
+  - component: {fileID: 1149377224}
   m_Layer: 0
   m_Name: ActionRegistry
   m_TagString: Untagged
@@ -6135,6 +6136,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   electrifyPrefab: {fileID: 8423276495478319710, guid: c1ffae3fcbec7f5488d93a6083ef3733, type: 3}
+--- !u!114 &1149377224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1149377214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af3d3b39c15d74e0aa135d176856ea43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  charmPrefab: {fileID: 8423276495478319710, guid: c1ffae3fcbec7f5488d93a6083ef3733, type: 3}
 --- !u!114 &1191429008
 MonoBehaviour:
   m_ObjectHideFlags: 0
