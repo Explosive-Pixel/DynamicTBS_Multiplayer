@@ -197,7 +197,7 @@ Transform:
   m_GameObject: {fileID: 3042934762381003629}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 7.6, y: -2.5, z: 0}
-  m_LocalScale: {x: 6, y: 6, z: 6}
+  m_LocalScale: {x: 1.8, y: 1.8, z: 1.8}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 147649987170495693}
@@ -288,6 +288,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hoverObject: {fileID: 0}
   activationHover: {fileID: 1345098495384634543}
+  onHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onDrop:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!65 &4994132205995006990
 BoxCollider:
   m_ObjectHideFlags: 0
