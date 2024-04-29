@@ -10,10 +10,12 @@ public class PlacementManager : MonoBehaviour
     [SerializeField] private List<Vector3> blueCharacterPositions;
     [SerializeField] private List<Vector3> pinkCharacterPositions;
     [SerializeField] private List<int> placementSequence;
+    [SerializeField] private float characterScaling;
 
     private static readonly List<int> PlacementSequence = new();
     private static int placementSequenceIndex;
     private static int currentPlayerPlacementCount;
+    private static Vector3 characterScaleVector;
 
     public static int CurrentPlayerTotalPlacementCount { get { return placementSequenceIndex < PlacementSequence.Count ? PlacementSequence[placementSequenceIndex] : 0; } }
     public static int CurrentPlayerRemainingPlacementCount { get { return CurrentPlayerTotalPlacementCount - currentPlayerPlacementCount; } }
@@ -27,6 +29,7 @@ public class PlacementManager : MonoBehaviour
         if (!init)
         {
             PlacementSequence.AddRange(placementSequence);
+            characterScaleVector = new Vector3(characterScaling, characterScaling, 1);
 
             init = true;
         }
@@ -101,6 +104,7 @@ public class PlacementManager : MonoBehaviour
     private void SpawnMaster(PlayerType playerType)
     {
         Character master = CharacterFactory.CreateCharacter(CharacterType.CaptainChar, playerType);
+        master.gameObject.transform.localScale = characterScaleVector;
         Tile masterSpawnTile = Board.Tiles.Find(tile => tile.TileType == TileType.MasterStartTile && tile.Side == playerType);
 
         MoveAction.MoveCharacter(master, masterSpawnTile);
@@ -134,8 +138,11 @@ public class PlacementManager : MonoBehaviour
         for (int i = 0; i < characters.Count(); i++)
         {
             characters[i].gameObject.transform.position = positions[i];
-            characters[i].gameObject.transform.localScale = new Vector3(1, 1, 1);
+            characters[i].gameObject.transform.localScale = characterScaleVector;
         }
+
+        Camera.main.orthographicSize = 1.63f;
+        GameObject.Find("Background").transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
     }
 
     #endregion

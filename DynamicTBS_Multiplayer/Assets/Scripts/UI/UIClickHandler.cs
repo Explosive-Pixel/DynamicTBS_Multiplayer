@@ -131,13 +131,38 @@ public class UIClickHandler : MonoBehaviour
         ShowActionPattern(ActionType.Attack);
     }
 
+    public void ShowMovePattern()
+    {
+        ShowActionPattern(ActionType.Move);
+    }
+
+    public void ShowAttackPattern()
+    {
+        ShowActionPattern(ActionType.Attack);
+    }
+
     public void ShowActiveAbilityPattern()
+    {
+        ShowActionPattern(ActionType.ActiveAbility);
+    }
+
+    private void ShowActionPattern(ActionType actionType)
     {
         if (GameManager.CurrentGamePhase != GamePhase.GAMEPLAY)
             return;
 
         ActionUtils.ResetActionDestinations();
-        currentCharacter.ActiveAbility.ShowActionPattern();
+
+        if (actionType == ActionType.ActiveAbility)
+            currentCharacter.ActiveAbility.ShowActionPattern();
+        else
+        {
+            IAction action = ActionRegistry.GetActions().Find(action => action.ActionType == actionType);
+            if (action != null)
+            {
+                action.ShowActionPattern(currentCharacter);
+            }
+        }
     }
 
     public void HideActionPattern()
@@ -195,15 +220,6 @@ public class UIClickHandler : MonoBehaviour
                 GameplayEvents.UIActionExecuted(PlayerManager.ExecutingPlayer, GameplayManager.gameIsPaused ? UIAction.UNPAUSE_GAME : UIAction.PAUSE_GAME);
             else
                 GameplayEvents.PauseGame(!GameplayManager.gameIsPaused);
-        }
-    }
-
-    private void ShowActionPattern(ActionType actionType)
-    {
-        IAction action = ActionRegistry.GetActions().Find(action => action.ActionType == actionType);
-        if (action != null)
-        {
-            action.ShowActionPattern(currentCharacter);
         }
     }
 

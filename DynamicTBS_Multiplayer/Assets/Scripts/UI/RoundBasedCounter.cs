@@ -24,7 +24,7 @@ public class RoundBasedCounter : MonoBehaviour
         this.duration = duration;
         this.expireFunction = expireFunction;
 
-        currentCount = duration * 2 + 1;
+        currentCount = duration * 2;
 
         if (currentCount > 0)
         {
