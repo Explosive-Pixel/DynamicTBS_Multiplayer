@@ -141,6 +141,11 @@ public class PlacementManager : MonoBehaviour
             characters[i].gameObject.transform.localScale = characterScaleVector;
         }
 
+        /*
+         * TODO
+         * only for a transitional purpose
+         * please delete as soon as possible or refactor
+         */
         Camera.main.orthographicSize = 1.63f;
         GameObject.Find("Background").transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
     }

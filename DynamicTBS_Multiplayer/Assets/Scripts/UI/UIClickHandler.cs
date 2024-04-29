@@ -121,16 +121,6 @@ public class UIClickHandler : MonoBehaviour
         }
     }
 
-    public void ShowMoveAndAttackPattern()
-    {
-        if (GameManager.CurrentGamePhase != GamePhase.GAMEPLAY)
-            return;
-
-        ActionUtils.ResetActionDestinations();
-        ShowActionPattern(ActionType.Move);
-        ShowActionPattern(ActionType.Attack);
-    }
-
     public void ShowMovePattern()
     {
         ShowActionPattern(ActionType.Move);
