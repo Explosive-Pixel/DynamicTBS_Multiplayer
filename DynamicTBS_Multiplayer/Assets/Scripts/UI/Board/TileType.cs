@@ -8,5 +8,5 @@ public enum TileType
     FloorTile,
     GoalTile,
     StartTile,
-    MasterStartTile
+    CaptainStartTile
 }

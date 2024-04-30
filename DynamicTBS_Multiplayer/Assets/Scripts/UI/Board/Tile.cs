@@ -60,7 +60,7 @@ public class Tile : MonoBehaviour
         machineCore.SetActive(tileType == TileType.GoalTile);
         UnitStart(side).SetActive(tileType == TileType.StartTile);
         UnitStart(PlayerManager.GetOtherSide(side)).SetActive(false);
-        MasterStart(side).SetActive(tileType == TileType.MasterStartTile);
+        MasterStart(side).SetActive(tileType == TileType.CaptainStartTile);
         MasterStart(PlayerManager.GetOtherSide(side)).SetActive(false);
     }
 

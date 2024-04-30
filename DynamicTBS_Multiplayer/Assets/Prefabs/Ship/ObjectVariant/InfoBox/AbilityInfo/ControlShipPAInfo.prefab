@@ -56,34 +56,33 @@ PrefabInstance:
       value: '<i>Passive Ability</i>
 
 
-        Each turn an enemy unit is on an adjacent
-        square in a star pattern, it gains <b>1</b> influence point. If a unit reaches
-        <b>3</b> influence points, it switches sides. Influence points can only be
-        reset by switching sides.'
+        When entering the Machine Core square
+        the Captain uses her electric arm to take control of the ship and win the
+        game.'
       objectReference: {fileID: 0}
     - target: {fileID: 1234039959914733649, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_fontSize
-      value: 0.62
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 1234039959914733649, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_fontSizeBase
-      value: 0.62
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 1726121369747029956, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_Name
-      value: InfluenceAuraPAInfo
+      value: ControlShipPAInfo
       objectReference: {fileID: 0}
     - target: {fileID: 5802362004618636893, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_text
-      value: Influence Aura
+      value: Control Ship
       objectReference: {fileID: 0}
     - target: {fileID: 5802362004618636893, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_fontSize
-      value: 0.8
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 5802362004618636893, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_fontSizeBase
-      value: 0.8
+      value: 0.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fbb8951a8db15334980ef8f798960134, type: 3}

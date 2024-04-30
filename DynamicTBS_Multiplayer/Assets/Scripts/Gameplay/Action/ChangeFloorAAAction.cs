@@ -25,7 +25,7 @@ public class ChangeFloorAAAction : MonoBehaviour, IAction
     public void ShowActionPattern(Character character)
     {
         Tile characterTile = Board.GetTileByCharacter(character);
-        List<Vector3> patternPositions = Board.GetAllTilesWithinRadius(characterTile, ChangeFloorAA.radius).ConvertAll(tile => tile.gameObject.transform.position);
+        List<Vector3> patternPositions = Board.GetTilesInAllDirections(characterTile, ChangeFloorAA.pattern, ChangeFloorAA.range).ConvertAll(tile => tile.gameObject.transform.position);
 
         if (patternPositions != null)
         {
@@ -93,12 +93,11 @@ public class ChangeFloorAAAction : MonoBehaviour, IAction
     {
         Tile characterTile = Board.GetTileByCharacter(character);
 
-        List<Tile> changeFlootWithInhabitantTiles = Board.GetAllTilesWithinRadius(characterTile, ChangeFloorAA.radiusWithInhabitants);
-        List<Tile> changeFloorWithoutInhabitantTiles = Board.GetAllTilesWithinRadius(characterTile, ChangeFloorAA.radius)
-            .FindAll(tile => !changeFlootWithInhabitantTiles.Contains(tile) && !tile.IsOccupied());
+        List<Tile> changeFloorTilesWithInhabitant = Board.GetTilesOfClosestCharactersOfSideInAllDirections(characterTile, PlayerType.none, ChangeFloorAA.pattern, ChangeFloorAA.rangeWithInhabitants);
+        List<Tile> changeFloorTiles = Board.GetTilesUntilClosestCharactersInAllDirections(characterTile, ChangeFloorAA.pattern, ChangeFloorAA.range)
+            .FindAll(tile => changeFloorTilesWithInhabitant.Contains(tile) || !tile.IsOccupied());
 
-        List<Vector3> changeFloorPositions = Enumerable.Union(changeFlootWithInhabitantTiles, changeFloorWithoutInhabitantTiles)
-            .ToList()
+        List<Vector3> changeFloorPositions = changeFloorTiles
             .FindAll(tile => tile.isChangeable())
             .ConvertAll(tile => tile.gameObject.transform.position);
 

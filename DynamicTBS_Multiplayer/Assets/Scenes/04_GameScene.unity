@@ -158,6 +158,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &24321219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1813695170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec471b1ba4da430392f533cad3660ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverObject: {fileID: 0}
+  activationHover: {fileID: 0}
+  onHover:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: ShowMovePattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDrop:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: HideActionPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &32580846
 GameObject:
   m_ObjectHideFlags: 0
@@ -278,22 +322,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blueCharacterPositions:
-  - {x: -7, y: -0.5, z: 1}
-  - {x: -7, y: -1.5, z: 1}
-  - {x: -7, y: -2.5, z: 1}
-  - {x: -6, y: -0.5, z: 1}
-  - {x: -6, y: -1.5, z: 1}
-  - {x: -6, y: -2.5, z: 1}
-  - {x: -6, y: -3.5, z: 1}
+  - {x: -1.65, y: -0.15, z: 1}
+  - {x: -1.95, y: -0.15, z: 1}
+  - {x: -2.25, y: -0.15, z: 1}
+  - {x: -1.65, y: -0.5, z: 1}
+  - {x: -1.95, y: -0.5, z: 1}
+  - {x: -2.25, y: -0.5, z: 1}
+  - {x: -1.65, y: -0.85, z: 1}
   pinkCharacterPositions:
-  - {x: -7, y: 0.5, z: 1}
-  - {x: -7, y: 1.5, z: 1}
-  - {x: -7, y: 2.5, z: 1}
-  - {x: -6, y: 0.5, z: 1}
-  - {x: -6, y: 1.5, z: 1}
-  - {x: -6, y: 2.5, z: 1}
-  - {x: -6, y: 3.5, z: 1}
+  - {x: -1.65, y: 0.2, z: 1}
+  - {x: -1.95, y: 0.2, z: 1}
+  - {x: -2.25, y: 0.2, z: 1}
+  - {x: -1.65, y: 0.55, z: 1}
+  - {x: -1.95, y: 0.55, z: 1}
+  - {x: -2.25, y: 0.55, z: 1}
+  - {x: -1.65, y: 0.9, z: 1}
   placementSequence: 01000000020000000200000002000000010000000300000003000000
+  characterScaling: 0.3
 --- !u!114 &32580855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -404,7 +449,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 149441085859481748, guid: adfeae6a19ad5ae45988757e5db46f88, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 4.9
       objectReference: {fileID: 0}
     - target: {fileID: 149441085859481748, guid: adfeae6a19ad5ae45988757e5db46f88, type: 3}
       propertyPath: m_LocalPosition.y
@@ -578,6 +623,50 @@ RectTransform:
   m_AnchoredPosition: {x: -689.7899, y: 475}
   m_SizeDelta: {x: 420.41, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &73434876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1027764315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec471b1ba4da430392f533cad3660ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverObject: {fileID: 0}
+  activationHover: {fileID: 0}
+  onHover:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: ShowAttackPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDrop:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: HideActionPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &90912445
 GameObject:
   m_ObjectHideFlags: 0
@@ -622,6 +711,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e122006900238b64fa245b78397f5f76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &116969853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1027764313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec471b1ba4da430392f533cad3660ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverObject: {fileID: 0}
+  activationHover: {fileID: 0}
+  onHover:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: ShowAttackPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDrop:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: HideActionPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &118082557 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6386758917370520121, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
@@ -866,6 +999,94 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gamePhase: 2
+--- !u!114 &262200228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1027764319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec471b1ba4da430392f533cad3660ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverObject: {fileID: 0}
+  activationHover: {fileID: 0}
+  onHover:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: ShowAttackPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDrop:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: HideActionPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &267905984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1027764318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec471b1ba4da430392f533cad3660ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverObject: {fileID: 0}
+  activationHover: {fileID: 0}
+  onHover:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: ShowAttackPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDrop:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: HideActionPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &285260679
 GameObject:
   m_ObjectHideFlags: 0
@@ -1019,6 +1240,50 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activeGamePhases: 02000000
   setInactiveOnGamePhaseEnd: 0
+--- !u!114 &309607853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1813695171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec471b1ba4da430392f533cad3660ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverObject: {fileID: 0}
+  activationHover: {fileID: 0}
+  onHover:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: ShowMovePattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDrop:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: HideActionPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &318988000 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 149441085284609387, guid: adfeae6a19ad5ae45988757e5db46f88, type: 3}
@@ -1192,6 +1457,50 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clickPermission: 1
+--- !u!114 &415070691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1813695168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec471b1ba4da430392f533cad3660ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverObject: {fileID: 0}
+  activationHover: {fileID: 0}
+  onHover:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: ShowMovePattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDrop:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: HideActionPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &426950942 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5317760986869116898, guid: 2e0bdd0b95a7e1b489eae322c773e210, type: 3}
@@ -1788,6 +2097,94 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 568200382}
   m_CullTransparentMesh: 1
+--- !u!114 &583540592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1813695169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec471b1ba4da430392f533cad3660ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverObject: {fileID: 0}
+  activationHover: {fileID: 0}
+  onHover:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: ShowMovePattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDrop:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: HideActionPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &613090267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1027764316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec471b1ba4da430392f533cad3660ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverObject: {fileID: 0}
+  activationHover: {fileID: 0}
+  onHover:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: ShowAttackPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDrop:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: HideActionPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &643340433
 GameObject:
   m_ObjectHideFlags: 0
@@ -2055,6 +2452,50 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &690075602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1027764326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec471b1ba4da430392f533cad3660ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverObject: {fileID: 0}
+  activationHover: {fileID: 0}
+  onHover:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: ShowAttackPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDrop:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: HideActionPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &698688714
 GameObject:
   m_ObjectHideFlags: 0
@@ -2179,6 +2620,66 @@ PrefabInstance:
       propertyPath: hoverObject
       value: 
       objectReference: {fileID: 1842072853}
+    - target: {fileID: 50718503653767653, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: activationHover
+      value: 
+      objectReference: {fileID: 1667998144}
+    - target: {fileID: 50718503653767653, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 50718503653767653, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 50718503653767653, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 50718503653767653, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 50718503653767653, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 90912447}
+    - target: {fileID: 50718503653767653, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 90912447}
+    - target: {fileID: 50718503653767653, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 50718503653767653, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HideActionPattern
+      objectReference: {fileID: 0}
+    - target: {fileID: 50718503653767653, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 50718503653767653, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ShowActiveAbilityPattern
+      objectReference: {fileID: 0}
+    - target: {fileID: 50718503653767653, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UIClickHandler, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 50718503653767653, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UIClickHandler, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 50718503653767653, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 50718503653767653, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 109081210974783509, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: hoverObject
       value: 
@@ -2331,6 +2832,66 @@ PrefabInstance:
       propertyPath: hoverObject
       value: 
       objectReference: {fileID: 1842072855}
+    - target: {fileID: 662686516425653321, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: activationHover
+      value: 
+      objectReference: {fileID: 1667998146}
+    - target: {fileID: 662686516425653321, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 662686516425653321, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 662686516425653321, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 662686516425653321, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 662686516425653321, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 90912447}
+    - target: {fileID: 662686516425653321, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 90912447}
+    - target: {fileID: 662686516425653321, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 662686516425653321, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HideActionPattern
+      objectReference: {fileID: 0}
+    - target: {fileID: 662686516425653321, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 662686516425653321, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ShowActiveAbilityPattern
+      objectReference: {fileID: 0}
+    - target: {fileID: 662686516425653321, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UIClickHandler, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 662686516425653321, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UIClickHandler, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 662686516425653321, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 662686516425653321, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 816014942314100054, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: disabled
       value: 1
@@ -2487,18 +3048,6 @@ PrefabInstance:
       propertyPath: passiveAbilityType
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 1606756334748235282, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: side
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1606756334748235282, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: abilityType
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1606756334748235282, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: passiveAbilityType
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 1620532189417700581, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: m_SortingOrder
       value: 8
@@ -2632,12 +3181,56 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1842072858}
     - target: {fileID: 2329982612649930495, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: activationHover
+      value: 
+      objectReference: {fileID: 1667998149}
+    - target: {fileID: 2329982612649930495, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2329982612649930495, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2329982612649930495, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: myUnityEvent.m_PersistentCalls.m_Calls.Array.size
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2329982612649930495, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2329982612649930495, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2329982612649930495, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 90912447}
+    - target: {fileID: 2329982612649930495, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 90912447}
+    - target: {fileID: 2329982612649930495, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2329982612649930495, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: myUnityEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2329982612649930495, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HideActionPattern
+      objectReference: {fileID: 0}
+    - target: {fileID: 2329982612649930495, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2329982612649930495, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ShowActiveAbilityPattern
       objectReference: {fileID: 0}
     - target: {fileID: 2329982612649930495, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: myUnityEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -2646,6 +3239,22 @@ PrefabInstance:
     - target: {fileID: 2329982612649930495, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: myUnityEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2329982612649930495, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UIClickHandler, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2329982612649930495, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UIClickHandler, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2329982612649930495, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 2329982612649930495, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 2445304537553584897, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: side
@@ -2731,30 +3340,10 @@ PrefabInstance:
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
-    - target: {fileID: 2933755218251683024, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: side
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2933755218251683024, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: activeAbilityType
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 3064696663762289433, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: hoverObject
       value: 
       objectReference: {fileID: 1118503405}
-    - target: {fileID: 3112471905798218684, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: disabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3112471905798218684, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: abilityType
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3112471905798218684, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: passiveAbilityType
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 3170038546782182008, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: side
       value: 2
@@ -2762,18 +3351,6 @@ PrefabInstance:
     - target: {fileID: 3170038546782182008, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: activeAbilityType
       value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3209875333662334424, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: m_text
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3209875333662334424, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: m_fontSize
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3209875333662334424, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: m_fontSizeBase
-      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 3368826976299840895, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: hoverObject
@@ -2838,14 +3415,6 @@ PrefabInstance:
     - target: {fileID: 3377649625324993578, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 3453114457449676453, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: disabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3453114457449676453, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: activeAbilityType
-      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3705968186112214052, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: hoverObject
@@ -2950,18 +3519,6 @@ PrefabInstance:
     - target: {fileID: 3933176298987902183, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: m_SortingOrder
       value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4092446087219192565, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: m_text
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4092446087219192565, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: m_fontSize
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4092446087219192565, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: m_fontSizeBase
-      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 4224917242859632352, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: m_Size.x
@@ -3239,17 +3796,65 @@ PrefabInstance:
       propertyPath: hoverObject
       value: 
       objectReference: {fileID: 1842072856}
-    - target: {fileID: 5164280920691853914, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: side
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5164280920691853914, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: abilityType
+    - target: {fileID: 5080237565248602496, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: activationHover
+      value: 
+      objectReference: {fileID: 1667998147}
+    - target: {fileID: 5080237565248602496, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 5164280920691853914, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: passiveAbilityType
-      value: 4
+    - target: {fileID: 5080237565248602496, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5080237565248602496, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5080237565248602496, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5080237565248602496, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 90912447}
+    - target: {fileID: 5080237565248602496, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 90912447}
+    - target: {fileID: 5080237565248602496, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5080237565248602496, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HideActionPattern
+      objectReference: {fileID: 0}
+    - target: {fileID: 5080237565248602496, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5080237565248602496, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ShowActiveAbilityPattern
+      objectReference: {fileID: 0}
+    - target: {fileID: 5080237565248602496, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UIClickHandler, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5080237565248602496, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UIClickHandler, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5080237565248602496, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 5080237565248602496, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 5166928514708570895, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: side
@@ -3355,18 +3960,6 @@ PrefabInstance:
       propertyPath: hoverObject
       value: 
       objectReference: {fileID: 1118503405}
-    - target: {fileID: 5946454513111837914, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5946454513111837914, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5946454513111837914, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6077055289183092176, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: m_Size.x
       value: 1.72
@@ -3383,25 +3976,9 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 6086951508480216555, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: m_fontSize
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 6086951508480216555, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: m_fontSizeBase
-      value: 7
-      objectReference: {fileID: 0}
     - target: {fileID: 6086951508709204929, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: m_IsActive
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6086951508910145114, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: m_fontSize
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 6086951508910145114, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: m_fontSizeBase
-      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6086951509896411487, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: m_IsActive
@@ -3413,7 +3990,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6086951509923738324, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -5.35
       objectReference: {fileID: 0}
     - target: {fileID: 6086951509923738324, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3747,14 +4324,70 @@ PrefabInstance:
       propertyPath: myUnityEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
-    - target: {fileID: 6702562669394694490, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: m_text
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 6722401495139004991, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: hoverObject
       value: 
       objectReference: {fileID: 1842072857}
+    - target: {fileID: 6722401495139004991, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: activationHover
+      value: 
+      objectReference: {fileID: 1667998148}
+    - target: {fileID: 6722401495139004991, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6722401495139004991, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6722401495139004991, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6722401495139004991, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6722401495139004991, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 90912447}
+    - target: {fileID: 6722401495139004991, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 90912447}
+    - target: {fileID: 6722401495139004991, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6722401495139004991, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HideActionPattern
+      objectReference: {fileID: 0}
+    - target: {fileID: 6722401495139004991, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6722401495139004991, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ShowActiveAbilityPattern
+      objectReference: {fileID: 0}
+    - target: {fileID: 6722401495139004991, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UIClickHandler, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6722401495139004991, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UIClickHandler, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6722401495139004991, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6722401495139004991, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 6748616999732650732, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: hoverObject
       value: 
@@ -3847,6 +4480,66 @@ PrefabInstance:
       propertyPath: hoverObject
       value: 
       objectReference: {fileID: 1842072854}
+    - target: {fileID: 7077509274183289459, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: activationHover
+      value: 
+      objectReference: {fileID: 1667998145}
+    - target: {fileID: 7077509274183289459, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7077509274183289459, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7077509274183289459, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7077509274183289459, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7077509274183289459, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 90912447}
+    - target: {fileID: 7077509274183289459, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 90912447}
+    - target: {fileID: 7077509274183289459, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7077509274183289459, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HideActionPattern
+      objectReference: {fileID: 0}
+    - target: {fileID: 7077509274183289459, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7077509274183289459, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ShowActiveAbilityPattern
+      objectReference: {fileID: 0}
+    - target: {fileID: 7077509274183289459, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UIClickHandler, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7077509274183289459, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UIClickHandler, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7077509274183289459, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7077509274183289459, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 7110577890920279056, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -3926,18 +4619,6 @@ PrefabInstance:
     - target: {fileID: 7424356571884901331, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: passiveAbilityType
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7539109966575514052, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7539109966575514052, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7539109966575514052, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7545577731090919604, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: hoverObject
@@ -4131,14 +4812,6 @@ PrefabInstance:
       propertyPath: passiveAbilityType
       value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 8141106830812631289, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: side
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8141106830812631289, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: activeAbilityType
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 8311332678848431976, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -4194,18 +4867,6 @@ PrefabInstance:
     - target: {fileID: 8311332678848431976, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 8373436223273109820, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.08
-      objectReference: {fileID: 0}
-    - target: {fileID: 8373436223273109820, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8373436223273109820, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8492647410665180729, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: m_SortingOrder
@@ -4404,6 +5065,50 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activeGamePhases: 03000000
   setInactiveOnGamePhaseEnd: 1
+--- !u!114 &773472660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1027764310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec471b1ba4da430392f533cad3660ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverObject: {fileID: 0}
+  activationHover: {fileID: 0}
+  onHover:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: ShowAttackPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDrop:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: HideActionPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &830677132
 GameObject:
   m_ObjectHideFlags: 0
@@ -4700,7 +5405,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 790111220651243364, guid: 052a63fa0b4120b4f8d66f3bf4984390, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 790111220651243364, guid: 052a63fa0b4120b4f8d66f3bf4984390, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5425,11 +6130,395 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetScene: 2
+--- !u!1 &1027764309 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9058665214156843385, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1027764310 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 289641179220021643, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1027764311 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2760937586244536291, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1027764312 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6909376153511591697, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1027764313 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1514421350192996037, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1027764314 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7833894092512224823, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1027764315 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 199262129667422832, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1027764316 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8894662881132282498, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1027764317 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4537476507437609895, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1027764318 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5137342519843097429, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1027764319 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5422417522655818965, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1027764320 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3671444266401221671, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1027764321 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7544745968997548797, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1027764322 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1227100496541874703, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1027764323 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4919200928872388860, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1027764324 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4465134539454832654, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1027764325 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4011233894219558043, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1027764326 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5627556573506901097, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1027764327 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6728063887632662907, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1027764328 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2660846107420473737, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1027764329 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 240569560734720677, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1027764330 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8855615805495237207, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1027764331 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 625967220899901035, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1027764332 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8150454041948411545, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1027764333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1027764328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec471b1ba4da430392f533cad3660ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverObject: {fileID: 0}
+  activationHover: {fileID: 0}
+  onHover:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: ShowAttackPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDrop:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: HideActionPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1027764334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1027764329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec471b1ba4da430392f533cad3660ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverObject: {fileID: 0}
+  activationHover: {fileID: 0}
+  onHover:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: ShowAttackPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDrop:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: HideActionPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1027764335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1027764330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec471b1ba4da430392f533cad3660ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverObject: {fileID: 0}
+  activationHover: {fileID: 0}
+  onHover:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: ShowAttackPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDrop:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: HideActionPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1027764336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1027764331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec471b1ba4da430392f533cad3660ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverObject: {fileID: 0}
+  activationHover: {fileID: 0}
+  onHover:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: ShowAttackPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDrop:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: HideActionPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1027764337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1027764332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec471b1ba4da430392f533cad3660ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverObject: {fileID: 0}
+  activationHover: {fileID: 0}
+  onHover:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: ShowAttackPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDrop:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: HideActionPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1046251322 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 425406993411708034, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
   m_PrefabInstance: {fileID: 719150808}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1050912613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1813695166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec471b1ba4da430392f533cad3660ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverObject: {fileID: 0}
+  activationHover: {fileID: 0}
+  onHover:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: ShowMovePattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDrop:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: HideActionPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1082972209 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 902285156275704815, guid: 2e0bdd0b95a7e1b489eae322c773e210, type: 3}
@@ -5629,6 +6718,50 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2497812801923138993, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
   m_PrefabInstance: {fileID: 719150808}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1140614885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1027764312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec471b1ba4da430392f533cad3660ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverObject: {fileID: 0}
+  activationHover: {fileID: 0}
+  onHover:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: ShowAttackPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDrop:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: HideActionPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1149377214
 GameObject:
   m_ObjectHideFlags: 0
@@ -5646,6 +6779,7 @@ GameObject:
   - component: {fileID: 1149377221}
   - component: {fileID: 1149377222}
   - component: {fileID: 1149377223}
+  - component: {fileID: 1149377224}
   m_Layer: 0
   m_Name: ActionRegistry
   m_TagString: Untagged
@@ -5696,6 +6830,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackCirclePrefab: {fileID: 2364727012911892448, guid: 8e644992083b090478414b1e0573c85c, type: 3}
   attackDamage: 1
+  attackPattern: 1
 --- !u!114 &1149377218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5774,6 +6909,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   electrifyPrefab: {fileID: 8423276495478319710, guid: c1ffae3fcbec7f5488d93a6083ef3733, type: 3}
+--- !u!114 &1149377224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1149377214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af3d3b39c15d74e0aa135d176856ea43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  charmPrefab: {fileID: 8423276495478319710, guid: c1ffae3fcbec7f5488d93a6083ef3733, type: 3}
 --- !u!114 &1191429008
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5787,6 +6935,50 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clickPermission: 0
+--- !u!114 &1215407625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1027764309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec471b1ba4da430392f533cad3660ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverObject: {fileID: 0}
+  activationHover: {fileID: 0}
+  onHover:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: ShowAttackPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDrop:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: HideActionPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1219631936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5985,6 +7177,50 @@ Transform:
   m_Father: {fileID: 34118703}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1352763078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1027764327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec471b1ba4da430392f533cad3660ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverObject: {fileID: 0}
+  activationHover: {fileID: 0}
+  onHover:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: ShowAttackPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDrop:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: HideActionPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &1353708062
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6398,6 +7634,50 @@ MonoBehaviour:
   pinkWin: {fileID: 1394123030}
   draw: {fileID: 1394123029}
   gameOverText: {fileID: 568200384}
+--- !u!114 &1401313203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1027764324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec471b1ba4da430392f533cad3660ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverObject: {fileID: 0}
+  activationHover: {fileID: 0}
+  onHover:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: ShowAttackPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDrop:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: HideActionPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1420299926
 GameObject:
   m_ObjectHideFlags: 0
@@ -6478,6 +7758,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1420299926}
   m_CullTransparentMesh: 1
+--- !u!114 &1430222602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1027764321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec471b1ba4da430392f533cad3660ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverObject: {fileID: 0}
+  activationHover: {fileID: 0}
+  onHover:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: ShowAttackPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDrop:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: HideActionPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1555523338 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8913168573335894404, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
@@ -6595,6 +7919,16 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1563117264}
   m_CullTransparentMesh: 1
+--- !u!1 &1593000163 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3734573273439870247, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1593000164 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3790696870696859655, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1602402124 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6086951509808953374, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
@@ -6624,7 +7958,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   units: {fileID: 1801811190}
   activeAbilities: {fileID: 1602402125}
+  activeAbilityWriting: {fileID: 1593000164}
   passiveAbilities: {fileID: 1602402124}
+  passiveAbilityWriting: {fileID: 1593000163}
   buttons: {fileID: 207437909}
 --- !u!114 &1626395198
 MonoBehaviour:
@@ -6707,6 +8043,124 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1667998144 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6587923834411759047, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1667998145 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 441575742491808031, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1667998146 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1327069804814369270, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1667998147 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4863536813714969102, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1667998148 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1764276576933681295, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1667998149 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 475263583601443494, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1689799950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1027764317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec471b1ba4da430392f533cad3660ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverObject: {fileID: 0}
+  activationHover: {fileID: 0}
+  onHover:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: ShowAttackPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDrop:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: HideActionPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1697001350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1027764322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec471b1ba4da430392f533cad3660ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverObject: {fileID: 0}
+  activationHover: {fileID: 0}
+  onHover:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: ShowAttackPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDrop:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: HideActionPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1708469620
 GameObject:
   m_ObjectHideFlags: 0
@@ -6932,6 +8386,55 @@ MonoBehaviour:
   playerNamePink: {fileID: 1736078543}
   playerNameBlue: {fileID: 1736078544}
   youArePlayer: {fileID: 2039254972}
+--- !u!1 &1784783253 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6745870912584419254, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1784783254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1784783253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec471b1ba4da430392f533cad3660ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverObject: {fileID: 0}
+  activationHover: {fileID: 0}
+  onHover:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: ShowMovePattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDrop:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: HideActionPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1795314573
 GameObject:
   m_ObjectHideFlags: 0
@@ -7013,6 +8516,413 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3979528171705067617, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
   m_PrefabInstance: {fileID: 719150808}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1803488613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1813695167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec471b1ba4da430392f533cad3660ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverObject: {fileID: 0}
+  activationHover: {fileID: 0}
+  onHover:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: ShowMovePattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDrop:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: HideActionPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!1 &1813695166 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2557571125301267562, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1813695167 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8689796071112581872, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1813695168 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5461959622504233942, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1813695169 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6632503448013299555, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1813695170 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6931272583486559924, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1813695171 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1551707116922835398, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1813695172 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3926253884519589870, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1813695173 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1912915253433515503, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1813695174 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7593713965534267784, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1813695175 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 258511756863464552, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1813695176 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6226060157074770808, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+  m_PrefabInstance: {fileID: 719150808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1813695177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1813695172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec471b1ba4da430392f533cad3660ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverObject: {fileID: 0}
+  activationHover: {fileID: 0}
+  onHover:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: ShowMovePattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDrop:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: HideActionPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1813695178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1813695173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec471b1ba4da430392f533cad3660ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverObject: {fileID: 0}
+  activationHover: {fileID: 0}
+  onHover:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: ShowMovePattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDrop:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: HideActionPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1813695179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1813695174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec471b1ba4da430392f533cad3660ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverObject: {fileID: 0}
+  activationHover: {fileID: 0}
+  onHover:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: ShowMovePattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDrop:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: HideActionPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1813695180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1813695175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec471b1ba4da430392f533cad3660ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverObject: {fileID: 0}
+  activationHover: {fileID: 0}
+  onHover:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: ShowMovePattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDrop:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: HideActionPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1813695181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1813695176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec471b1ba4da430392f533cad3660ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverObject: {fileID: 0}
+  activationHover: {fileID: 0}
+  onHover:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: ShowMovePattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDrop:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: HideActionPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1817355645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1027764323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec471b1ba4da430392f533cad3660ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverObject: {fileID: 0}
+  activationHover: {fileID: 0}
+  onHover:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: ShowAttackPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDrop:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: HideActionPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1838314458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1027764311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec471b1ba4da430392f533cad3660ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverObject: {fileID: 0}
+  activationHover: {fileID: 0}
+  onHover:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: ShowAttackPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDrop:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: HideActionPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1840157248
 GameObject:
   m_ObjectHideFlags: 0
@@ -7363,6 +9273,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1924648209}
   m_CullTransparentMesh: 1
+--- !u!114 &1934201936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1027764320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec471b1ba4da430392f533cad3660ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverObject: {fileID: 0}
+  activationHover: {fileID: 0}
+  onHover:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: ShowAttackPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDrop:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: HideActionPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1958638194
 GameObject:
   m_ObjectHideFlags: 0
@@ -7394,7 +9348,6 @@ RectTransform:
   m_Children:
   - {fileID: 34788683}
   - {fileID: 719150809}
-  - {fileID: 2120464500}
   - {fileID: 946206113}
   m_Father: {fileID: 471011731}
   m_RootOrder: 0
@@ -8917,7 +10870,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6df9dfdc8a00f14f93ade446107642d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delayAfterDraft: 5
+  delayAfterDraft: 3
   delayAfterPlacement: 0
   delayAfterGameplay: 3
 --- !u!4 &2014880164
@@ -9210,6 +11163,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2050980130}
   m_CullTransparentMesh: 1
+--- !u!114 &2056402647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1027764314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec471b1ba4da430392f533cad3660ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverObject: {fileID: 0}
+  activationHover: {fileID: 0}
+  onHover:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: ShowAttackPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDrop:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: HideActionPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2068762505
 GameObject:
   m_ObjectHideFlags: 0
@@ -9345,6 +11342,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2068762505}
   m_CullTransparentMesh: 1
+--- !u!114 &2100297198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1027764325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec471b1ba4da430392f533cad3660ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverObject: {fileID: 0}
+  activationHover: {fileID: 0}
+  onHover:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: ShowAttackPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDrop:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90912447}
+        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+        m_MethodName: HideActionPattern
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2105799173
 GameObject:
   m_ObjectHideFlags: 0
@@ -9481,68 +11522,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetScene: 0
---- !u!1001 &2120464499
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 1958638195}
-    m_Modifications:
-    - target: {fileID: 1420121407795625417, guid: 34f055294ed0bf9489a9bc6faf7e1ed5, type: 3}
-      propertyPath: m_Name
-      value: NumbersLettersObject
-      objectReference: {fileID: 0}
-    - target: {fileID: 7502646268053395827, guid: 34f055294ed0bf9489a9bc6faf7e1ed5, type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7502646268053395827, guid: 34f055294ed0bf9489a9bc6faf7e1ed5, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7502646268053395827, guid: 34f055294ed0bf9489a9bc6faf7e1ed5, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7502646268053395827, guid: 34f055294ed0bf9489a9bc6faf7e1ed5, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7502646268053395827, guid: 34f055294ed0bf9489a9bc6faf7e1ed5, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7502646268053395827, guid: 34f055294ed0bf9489a9bc6faf7e1ed5, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7502646268053395827, guid: 34f055294ed0bf9489a9bc6faf7e1ed5, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7502646268053395827, guid: 34f055294ed0bf9489a9bc6faf7e1ed5, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7502646268053395827, guid: 34f055294ed0bf9489a9bc6faf7e1ed5, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7502646268053395827, guid: 34f055294ed0bf9489a9bc6faf7e1ed5, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7502646268053395827, guid: 34f055294ed0bf9489a9bc6faf7e1ed5, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 34f055294ed0bf9489a9bc6faf7e1ed5, type: 3}
---- !u!4 &2120464500 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7502646268053395827, guid: 34f055294ed0bf9489a9bc6faf7e1ed5, type: 3}
-  m_PrefabInstance: {fileID: 2120464499}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2142274384
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,6 +5,9 @@ using System;
 
 public static class GameplayEvents
 {
+    public delegate void FinishGameplayUISetup();
+    public static event FinishGameplayUISetup OnFinishGameplayUISetup;
+
     public delegate void FinishAction(ActionMetadata actionMetadata);
     public static event FinishAction OnFinishAction;
 
@@ -43,6 +46,12 @@ public static class GameplayEvents
 
     public delegate void TimerTimeout(GamePhase gamePhase, PlayerType currentPlayer);
     public static event TimerTimeout OnTimerTimeout;
+
+    public static void GameplayUISetupFinished()
+    {
+        if (OnFinishGameplayUISetup != null)
+            OnFinishGameplayUISetup();
+    }
 
     public static void ActionFinished(ActionMetadata actionMetadata)
     {

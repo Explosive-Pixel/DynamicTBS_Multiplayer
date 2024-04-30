@@ -53,54 +53,45 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1234039959914733649, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_text
-      value: '<i>Active Ability</i>
-
-
-        This unit electrifies a floor square
-        in a <i>radius</i> of <b>1</b> for <b>2</b> turns. If a unit is on an electrified
-        square, it is stunned (made unable to perform actions) for <b>1</b> turn,
-        after which the electrification ends. If the goal square is electrified,
-        the electrifying side wins. The goal square can only be electrified whilst
-        occupying it.
-
-
-        Cooldown: <b>3</b> turns'
+      value: "<i>ActiveAbility</i>\n\nGathering her charisma, the Captain charms
+        a rival Mate in range <b>2</b> in a <i>star pattern</i>, so they change sides
+        until the Captain\u2019s next turn. \n\nCooldown: <b>3</b> turns"
       objectReference: {fileID: 0}
     - target: {fileID: 1234039959914733649, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_fontSize
-      value: 0.62
+      value: 0.18
       objectReference: {fileID: 0}
     - target: {fileID: 1234039959914733649, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_fontSizeBase
-      value: 0.62
+      value: 0.18
       objectReference: {fileID: 0}
     - target: {fileID: 1726121369747029956, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_Name
-      value: ElectrifyAAInfo
+      value: CharmAAInfo
       objectReference: {fileID: 0}
     - target: {fileID: 3570286753581677792, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0.886
+      value: 0.2513
       objectReference: {fileID: 0}
     - target: {fileID: 3570286753581677792, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.006
+      value: 0.0235
       objectReference: {fileID: 0}
     - target: {fileID: 3570286753581677792, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.064
+      value: -0.0063
       objectReference: {fileID: 0}
     - target: {fileID: 5802362004618636893, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_text
-      value: Electrify
+      value: Charm
       objectReference: {fileID: 0}
     - target: {fileID: 5802362004618636893, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_fontSize
-      value: 0.8
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 5802362004618636893, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_fontSizeBase
-      value: 0.8
+      value: 0.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fbb8951a8db15334980ef8f798960134, type: 3}
