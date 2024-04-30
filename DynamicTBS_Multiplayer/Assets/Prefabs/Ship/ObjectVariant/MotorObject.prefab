@@ -1506,8 +1506,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.72, y: 0.37, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.45, y: 0.07, z: 1}
+  m_Center: {x: -0.04, y: 0.19, z: 0}
 --- !u!1 &3713215850890417948
 GameObject:
   m_ObjectHideFlags: 0
@@ -3971,7 +3971,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2794353943595760349, guid: 936689fd0bc7da449a04ae5b57619476, type: 3}
       propertyPath: m_Name
-      value: InfluenceAuraPAInfo
+      value: ControlShipPAInfo
       objectReference: {fileID: 0}
     - target: {fileID: 2794353943595760349, guid: 936689fd0bc7da449a04ae5b57619476, type: 3}
       propertyPath: m_IsActive
@@ -4761,9 +4761,29 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6086951508107795242}
     m_Modifications:
+    - target: {fileID: 811903904772549461, guid: a41c46fe208e48a42a955882e3e92517, type: 3}
+      propertyPath: m_fontSize
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 811903904772549461, guid: a41c46fe208e48a42a955882e3e92517, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 2141137545164766673, guid: a41c46fe208e48a42a955882e3e92517, type: 3}
       propertyPath: m_Name
       value: MotorTimerPlacement
+      objectReference: {fileID: 0}
+    - target: {fileID: 2235184955445482616, guid: a41c46fe208e48a42a955882e3e92517, type: 3}
+      propertyPath: m_text
+      value: 'Units to place: 2'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2235184955445482616, guid: a41c46fe208e48a42a955882e3e92517, type: 3}
+      propertyPath: m_fontSize
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2235184955445482616, guid: a41c46fe208e48a42a955882e3e92517, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 4108901855305834248, guid: a41c46fe208e48a42a955882e3e92517, type: 3}
       propertyPath: m_RootOrder
@@ -6551,7 +6571,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2794353943595760349, guid: c271d5edf554a874f8e49256005c9278, type: 3}
       propertyPath: m_Name
-      value: ElectrifyAAInfo
+      value: CharmAAInfo
       objectReference: {fileID: 0}
     - target: {fileID: 2794353943595760349, guid: c271d5edf554a874f8e49256005c9278, type: 3}
       propertyPath: m_IsActive

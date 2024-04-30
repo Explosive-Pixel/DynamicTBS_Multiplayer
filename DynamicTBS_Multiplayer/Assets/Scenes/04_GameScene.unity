@@ -322,21 +322,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blueCharacterPositions:
-  - {x: -7, y: -0.5, z: 1}
-  - {x: -7, y: -1.5, z: 1}
-  - {x: -7, y: -2.5, z: 1}
-  - {x: -6, y: -0.5, z: 1}
-  - {x: -6, y: -1.5, z: 1}
-  - {x: -6, y: -2.5, z: 1}
-  - {x: -6, y: -3.5, z: 1}
+  - {x: -1.65, y: -0.15, z: 1}
+  - {x: -1.95, y: -0.15, z: 1}
+  - {x: -2.25, y: -0.15, z: 1}
+  - {x: -1.65, y: -0.5, z: 1}
+  - {x: -1.95, y: -0.5, z: 1}
+  - {x: -2.25, y: -0.5, z: 1}
+  - {x: -1.65, y: -0.85, z: 1}
   pinkCharacterPositions:
-  - {x: -7, y: 0.5, z: 1}
-  - {x: -7, y: 1.5, z: 1}
-  - {x: -7, y: 2.5, z: 1}
-  - {x: -6, y: 0.5, z: 1}
-  - {x: -6, y: 1.5, z: 1}
-  - {x: -6, y: 2.5, z: 1}
-  - {x: -6, y: 3.5, z: 1}
+  - {x: -1.65, y: 0.2, z: 1}
+  - {x: -1.95, y: 0.2, z: 1}
+  - {x: -2.25, y: 0.2, z: 1}
+  - {x: -1.65, y: 0.55, z: 1}
+  - {x: -1.95, y: 0.55, z: 1}
+  - {x: -2.25, y: 0.55, z: 1}
+  - {x: -1.65, y: 0.9, z: 1}
   placementSequence: 01000000020000000200000002000000010000000300000003000000
   characterScaling: 0.3
 --- !u!114 &32580855
@@ -3048,18 +3048,6 @@ PrefabInstance:
       propertyPath: passiveAbilityType
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 1606756334748235282, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: side
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1606756334748235282, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: abilityType
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1606756334748235282, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: passiveAbilityType
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 1620532189417700581, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: m_SortingOrder
       value: 8
@@ -3352,30 +3340,10 @@ PrefabInstance:
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
-    - target: {fileID: 2933755218251683024, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: side
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2933755218251683024, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: activeAbilityType
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 3064696663762289433, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: hoverObject
       value: 
       objectReference: {fileID: 1118503405}
-    - target: {fileID: 3112471905798218684, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: disabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3112471905798218684, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: abilityType
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3112471905798218684, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: passiveAbilityType
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 3170038546782182008, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: side
       value: 2
@@ -3447,14 +3415,6 @@ PrefabInstance:
     - target: {fileID: 3377649625324993578, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 3453114457449676453, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: disabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3453114457449676453, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: activeAbilityType
-      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3705968186112214052, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: hoverObject
@@ -3895,18 +3855,6 @@ PrefabInstance:
     - target: {fileID: 5080237565248602496, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 5164280920691853914, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: side
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5164280920691853914, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: abilityType
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5164280920691853914, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: passiveAbilityType
-      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5166928514708570895, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: side
@@ -4887,14 +4835,6 @@ PrefabInstance:
     - target: {fileID: 8095008049120711764, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: passiveAbilityType
       value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8141106830812631289, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: side
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8141106830812631289, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: activeAbilityType
-      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8311332678848431976, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.size
