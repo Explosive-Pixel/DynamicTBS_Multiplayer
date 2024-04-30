@@ -10,10 +10,12 @@ public class PlacementManager : MonoBehaviour
     [SerializeField] private List<Vector3> blueCharacterPositions;
     [SerializeField] private List<Vector3> pinkCharacterPositions;
     [SerializeField] private List<int> placementSequence;
+    [SerializeField] private float characterScaling;
 
     private static readonly List<int> PlacementSequence = new();
     private static int placementSequenceIndex;
     private static int currentPlayerPlacementCount;
+    private static Vector3 characterScaleVector;
 
     public static int CurrentPlayerTotalPlacementCount { get { return placementSequenceIndex < PlacementSequence.Count ? PlacementSequence[placementSequenceIndex] : 0; } }
     public static int CurrentPlayerRemainingPlacementCount { get { return CurrentPlayerTotalPlacementCount - currentPlayerPlacementCount; } }
@@ -27,6 +29,7 @@ public class PlacementManager : MonoBehaviour
         if (!init)
         {
             PlacementSequence.AddRange(placementSequence);
+            characterScaleVector = new Vector3(characterScaling, characterScaling, 1);
 
             init = true;
         }
@@ -53,7 +56,6 @@ public class PlacementManager : MonoBehaviour
 
         if (placementSequenceIndex == PlacementSequence.Count)
         {
-            SpawnMasters();
             PlacementCompleted();
         }
     }
@@ -81,13 +83,6 @@ public class PlacementManager : MonoBehaviour
         }
     }
 
-    public void SpawnMasters()
-    {
-        SpawnMaster(PlayerType.blue);
-        SpawnMaster(PlayerType.pink);
-        AudioEvents.SpawningMasters();
-    }
-
     public static int GetRemainingPlacementCount(PlayerType currentPlayer)
     {
         if (PlayerManager.CurrentPlayer != currentPlayer)
@@ -98,15 +93,23 @@ public class PlacementManager : MonoBehaviour
         return CurrentPlayerTotalPlacementCount - currentPlayerPlacementCount;
     }
 
-    private void SpawnMaster(PlayerType playerType)
+    private void SpawnCaptains()
     {
-        Character master = CharacterFactory.CreateCharacter(CharacterType.CaptainChar, playerType);
-        Tile masterSpawnTile = Board.Tiles.Find(tile => tile.TileType == TileType.MasterStartTile && tile.Side == playerType);
+        SpawnCaptain(PlayerType.blue);
+        SpawnCaptain(PlayerType.pink);
+        AudioEvents.SpawningMasters();
+    }
 
-        MoveAction.MoveCharacter(master, masterSpawnTile);
+    private void SpawnCaptain(PlayerType playerType)
+    {
+        Character captain = CharacterFactory.CreateCharacter(CharacterType.CaptainChar, playerType);
+        captain.gameObject.transform.localScale = characterScaleVector;
+        Tile captainSpawnTile = Board.Tiles.Find(tile => tile.TileType == TileType.CaptainStartTile && tile.Side == playerType);
 
-        DraftEvents.CharacterCreated(master);
-        PlacementEvents.CharacterPlaced(master);
+        MoveAction.MoveCharacter(captain, captainSpawnTile);
+
+        DraftEvents.CharacterCreated(captain);
+        PlacementEvents.CharacterPlaced(captain);
     }
 
     private void PlacementCompleted()
@@ -115,26 +118,33 @@ public class PlacementManager : MonoBehaviour
         UnsubscribeEvents();
     }
 
-    #region UI
+    #region Setup
 
-    private void SortCharacters(GamePhase gamePhase)
+    private void SetupPlacement(GamePhase gamePhase)
     {
         if (gamePhase != GamePhase.PLACEMENT)
             return;
 
+        SortCharacters();
+    }
+
+    private void SortCharacters()
+    {
         SortCharactersOfSide(PlayerType.blue);
         SortCharactersOfSide(PlayerType.pink);
     }
 
     private void SortCharactersOfSide(PlayerType side)
     {
-        List<Character> characters = CharacterManager.GetAllLivingCharactersOfSide(side);
+        List<Character> characters = CharacterManager.GetAllLivingCharactersOfSide(side)
+            .FindAll(c => c.CharacterType != CharacterType.CaptainChar);
+
         List<Vector3> positions = CharacterPositions(side);
 
         for (int i = 0; i < characters.Count(); i++)
         {
             characters[i].gameObject.transform.position = positions[i];
-            characters[i].gameObject.transform.localScale = new Vector3(1, 1, 1);
+            characters[i].gameObject.transform.localScale = characterScaleVector;
         }
     }
 
@@ -144,14 +154,16 @@ public class PlacementManager : MonoBehaviour
 
     private void SubscribeEvents()
     {
+        GameEvents.OnGamePhaseStart += SetupPlacement;
+        GameplayEvents.OnFinishGameplayUISetup += SpawnCaptains;
         GameplayEvents.OnFinishAction += AdvancePlacementOrder;
-        GameEvents.OnGamePhaseStart += SortCharacters;
     }
 
     private void UnsubscribeEvents()
     {
+        GameEvents.OnGamePhaseStart -= SetupPlacement;
+        GameplayEvents.OnFinishGameplayUISetup -= SpawnCaptains;
         GameplayEvents.OnFinishAction -= AdvancePlacementOrder;
-        GameEvents.OnGamePhaseStart -= SortCharacters;
     }
 
     #endregion

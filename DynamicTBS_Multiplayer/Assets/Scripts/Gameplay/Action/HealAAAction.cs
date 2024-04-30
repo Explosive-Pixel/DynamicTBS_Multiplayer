@@ -28,7 +28,7 @@ public class HealAAAction : MonoBehaviour, IAction
     {
         Tile tile = Board.GetTileByCharacter(character);
 
-        List<Vector3> patternPositions = Board.GetTilesInAllStarDirections(tile, HealAA.range)
+        List<Vector3> patternPositions = Board.GetTilesInAllDirections(tile, HealAA.pattern, HealAA.range)
             .ConvertAll(tile => tile.gameObject.transform.position);
 
         patternTargets = ActionUtils.InstantiateActionPositions(patternPositions, healPrefab);
@@ -93,7 +93,7 @@ public class HealAAAction : MonoBehaviour, IAction
     {
         Tile characterTile = Board.GetTileByCharacter(character);
 
-        List<Tile> healTiles = Board.GetTilesOfClosestCharactersOfSideInAllStarDirections(characterTile, character.Side, HealAA.range)
+        List<Tile> healTiles = Board.GetTilesOfClosestCharactersOfSideInAllDirections(characterTile, character.Side, HealAA.pattern, HealAA.range)
             .FindAll(tile => tile.IsOccupied() && tile.CurrentInhabitant.isHealableBy(character) && !tile.CurrentInhabitant.HasFullHP());
 
         List<Vector3> healPositions = healTiles.ConvertAll(tile => tile.gameObject.transform.position);
