@@ -1,0 +1,57 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - browser
+
+jobs:
+  build:
+    name: Build for ${{ matrix.targetPlatform }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        targetPlatform:
+          - StandaloneOSX # Build a macOS standalone (Intel 64-bit).
+          - StandaloneWindows64 # Build a Windows 64-bit standalone.
+          - WebGL # WebGL.
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          lfs: true
+      - uses: actions/cache@v3
+        with:
+          path: DynamicTBS_Multiplayer/Library
+          key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-
+      - name: Set platform
+        id: set_platform
+        run: |
+          if [ "${{ matrix.targetPlatform }}" == "StandaloneOSX" ]; then
+            echo "BUILD_METHOD=BuildScript.PerformBuildMac" >> $GITHUB_ENV
+            echo "PLATFORM=Mac" >> $GITHUB_ENV
+          elif [ "${{ matrix.targetPlatform }}" == "StandaloneWindows64" ]; then
+            echo "BUILD_METHOD=BuildScript.PerformBuildWindows" >> $GITHUB_ENV
+            echo "PLATFORM=Windows" >> $GITHUB_ENV
+          elif [ "${{ matrix.targetPlatform }}" == "WebGL" ]; then
+            echo "BUILD_METHOD=BuildScript.PerformBuildWebGL" >> $GITHUB_ENV
+            echo "PLATFORM=WebGL" >> $GITHUB_ENV
+          else
+            echo "Unsupported targetPlatform: ${{ matrix.targetPlatform }}"
+            exit 1
+          fi
+      - uses: game-ci/unity-builder@v3
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        with:
+          targetPlatform: ${{ matrix.targetPlatform }}
+          unityVersion: 2021.3.6f1
+          projectPath: DynamicTBS_Multiplayer
+          buildMethod: ${{ steps.set_platform.outputs.BUILD_METHOD }}
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Build_${{ matrix.targetPlatform }}
+          path: DynamicTBS_Multiplayer/Builds/${{ steps.set_platform.outputs.PLATFORM }}

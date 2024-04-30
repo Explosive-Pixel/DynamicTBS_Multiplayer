@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class SkipAction : MonoBehaviour
 {
-    public static void Execute(int numberOfActionsToSkip = 1)
+    public static void Execute()
     {
         GameplayEvents.ActionFinished(new ActionMetadata
         {
             ExecutingPlayer = PlayerManager.CurrentPlayer,
             ExecutedActionType = ActionType.Skip,
-            ActionCount = numberOfActionsToSkip,
             CharacterInAction = null,
             CharacterInitialPosition = null,
             ActionDestinationPosition = null

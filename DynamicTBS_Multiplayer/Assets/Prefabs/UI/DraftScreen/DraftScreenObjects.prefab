@@ -2170,17 +2170,18 @@ MonoBehaviour:
     Active Ability: <b>Change Floor</b>
 
     Changes a floor square to a
-    hole or the other way around in a <i>radius</i> of <b>2</b>. Occupied squares
-    can only be changed in a <i>radius</i> of <b>1</b>, instantly killing the occupying
-    units.
+    hole or the other way around in a <i>star pattern</i> in range <b>2</b>, unless
+    the path is blocked by other units. Occupied squares can only be changed in range
+    <b>1</b>, instantly eliminating the occupying unit.
 
     Cooldown: <b>3</b> turns
 
 
-    Passive Ability: <b>Alert</b>
+    Passive
+    Ability: <b>Alert</b>
 
-    If
-    this unit takes damage, its cooldown is set to <b>0</b>.'
+    This unit always makes sure that the floor underneath
+    it cannot be changed.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2450,7 +2451,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.95, y: 1.1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6570860212990212899
 MonoBehaviour:
@@ -2480,6 +2481,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hoverObject: {fileID: 2459799073050342477}
   activationHover: {fileID: 3117271062215729259}
+  onHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onDrop:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5317760985519536550
 GameObject:
   m_ObjectHideFlags: 0
@@ -2596,18 +2603,19 @@ MonoBehaviour:
     Active Ability: <b>Heal</b>
 
     Throws a syringe in a <i>star pattern</i>
-    in a range of <b>2</b> to heal a unit for <b>1</b> health. Units may never have
-    more health than they started with. When being healed, a unit also receives a
-    movement buff of <b>+1</b> which is gone after its next move action.
+    in a range of <b>2</b> to heal a unit for <b>1</b> health, unless the path is
+    blocked by other units. Units may never have more health than they started with.
+    When being healed, a unit also receives a movement buff of <b>+1</b> which is
+    gone after its next move action.
 
-    Cooldown:
-    <b>3</b> turns
+    Cooldown: <b>3</b> turns
 
 
-    Passive Ability: <b>Adrenalin</b>
+    Passive
+    Ability: <b>Adrenalin</b>
 
-    If this unit takes
-    damage, its cooldown is set to <b>0</b>.'
+    If this unit takes damage, its cooldown is set
+    to <b>0</b>.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2843,7 +2851,7 @@ MonoBehaviour:
 
     If an allied unit is next to this one in a <i>cross
     pattern</i>, this unit will take all damage for its ally. Does not work on other
-    Tanks. If this unit is stunned, this ability gets disabled.'
+    Tanks.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3424,7 +3432,7 @@ MonoBehaviour:
 
     If an allied unit is next to this one in a <i>cross
     pattern</i>, this unit will take all damage for its ally. Does not work on other
-    Tanks. If this unit is stunned, this ability gets disabled.'
+    Tanks.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4334,7 +4342,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.95, y: 1.1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1673004634729128534
 MonoBehaviour:
@@ -4364,6 +4372,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hoverObject: {fileID: 3589281810301979971}
   activationHover: {fileID: 6618764343625580574}
+  onHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onDrop:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5317760986048144309
 GameObject:
   m_ObjectHideFlags: 0
@@ -4820,17 +4834,18 @@ MonoBehaviour:
     Active Ability: <b>Change Floor</b>
 
     Changes a floor square to a
-    hole or the other way around in a <i>radius</i> of <b>2</b>. Occupied squares
-    can only be changed in a <i>radius</i> of <b>1</b>, instantly killing the occupying
-    units.
+    hole or the other way around in a <i>star pattern</i> in range <b>2</b>, unless
+    the path is blocked by other units. Occupied squares can only be changed in range
+    <b>1</b>, instantly eliminating the occupying unit.
 
     Cooldown: <b>3</b> turns
 
 
-    Passive Ability: <b>Alert</b>
+    Passive
+    Ability: <b>Alert</b>
 
-    If
-    this unit takes damage, its cooldown is set to <b>0</b>.'
+    This unit always makes sure that the floor underneath
+    it cannot be changed.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -6733,18 +6748,19 @@ MonoBehaviour:
     Active Ability: <b>Heal</b>
 
     Throws a syringe in a <i>star pattern</i>
-    in a range of <b>2</b> to heal a unit for <b>1</b> health. Units may never have
-    more health than they started with. When being healed, a unit also receives a
-    movement buff of <b>+1</b> which is gone after its next move action.
+    in a range of <b>2</b> to heal a unit for <b>1</b> health, unless the path is
+    blocked by other units. Units may never have more health than they started with.
+    When being healed, a unit also receives a movement buff of <b>+1</b> which is
+    gone after its next move action.
 
-    Cooldown:
-    <b>3</b> turns
+    Cooldown: <b>3</b> turns
 
 
-    Passive Ability: <b>Adrenalin</b>
+    Passive
+    Ability: <b>Adrenalin</b>
 
-    If this unit takes
-    damage, its cooldown is set to <b>0</b>.'
+    If this unit takes damage, its cooldown is set
+    to <b>0</b>.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -6948,7 +6964,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.95, y: 1.1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8740434753487381280
 MonoBehaviour:
@@ -6978,6 +6994,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hoverObject: {fileID: 7246492477571260172}
   activationHover: {fileID: 1388811895758136823}
+  onHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onDrop:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5317760986661225157
 GameObject:
   m_ObjectHideFlags: 0
@@ -7198,7 +7220,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.95, y: 1.1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5768506920214234950
 MonoBehaviour:
@@ -7228,6 +7250,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hoverObject: {fileID: 463963719962122154}
   activationHover: {fileID: 3325659778585657408}
+  onHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onDrop:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5317760986736526209
 GameObject:
   m_ObjectHideFlags: 0
@@ -8098,7 +8126,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.95, y: 1.1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &579614562163939001
 MonoBehaviour:
@@ -8128,6 +8156,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hoverObject: {fileID: 8516127165951912303}
   activationHover: {fileID: 2881591747545477628}
+  onHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onDrop:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5317760986893667066
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,11 +5,13 @@ using UnityEngine;
 public class ChangeFloorAA : MonoBehaviour, IActiveAbility
 {
     [SerializeField] private int aaCooldown; // 3
-    [SerializeField] private int changeFloorRadius; // 2
-    [SerializeField] private int changeFloorRadiusWithInhabitants; // 1
+    [SerializeField] private int changeFloorRange; // 2
+    [SerializeField] private int changeFloorRangeWithInhabitants; // 1
+    [SerializeField] private PatternType aaPattern;
 
-    public static int radius;
-    public static int radiusWithInhabitants;
+    public static int range;
+    public static int rangeWithInhabitants;
+    public static PatternType pattern;
 
     public ActiveAbilityType AbilityType { get { return ActiveAbilityType.CHANGE_FLOOR; } }
     public int Cooldown { get { return aaCooldown; } }
@@ -19,8 +21,9 @@ public class ChangeFloorAA : MonoBehaviour, IActiveAbility
 
     private void Awake()
     {
-        radius = changeFloorRadius;
-        radiusWithInhabitants = changeFloorRadiusWithInhabitants;
+        range = changeFloorRange;
+        rangeWithInhabitants = changeFloorRangeWithInhabitants;
+        pattern = aaPattern;
 
         this.character = gameObject.GetComponent<Character>();
         changeFloorAAAction = GameObject.Find("ActionRegistry").GetComponent<ChangeFloorAAAction>();

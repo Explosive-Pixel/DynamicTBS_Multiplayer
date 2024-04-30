@@ -13,10 +13,10 @@ public enum GameType
 
 public enum GamePhase
 {
-    DRAFT = 0,
-    PLACEMENT = 1,
-    GAMEPLAY = 2,
-    NONE = 3
+    NONE = 0,
+    DRAFT = 1,
+    PLACEMENT = 2,
+    GAMEPLAY = 3,
 }
 
 public class GameManager : MonoBehaviour
@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
 
         delayAfterGamePhase = new Dictionary<GamePhase, float>()
         {
+            { GamePhase.NONE, 0 },
             { GamePhase.DRAFT, delayAfterDraft },
             { GamePhase.PLACEMENT, delayAfterPlacement },
             { GamePhase.GAMEPLAY, delayAfterGameplay }
@@ -55,7 +56,12 @@ public class GameManager : MonoBehaviour
 
     public static bool IsPlayer()
     {
-        return gameType == GameType.LOCAL || (gameType == GameType.ONLINE && OnlineClient.Instance.UserData.Role == ClientType.PLAYER);
+        return gameType == GameType.LOCAL || (gameType == GameType.ONLINE && Client.Role == ClientType.PLAYER);
+    }
+
+    public static bool IsSpectator()
+    {
+        return gameType == GameType.ONLINE && Client.Role == ClientType.SPECTATOR;
     }
 
     private void ChangeGamePhase(GamePhase lastGamePhase)
@@ -73,7 +79,7 @@ public class GameManager : MonoBehaviour
 
     private float GetDelay(GamePhase lastGamePhase)
     {
-        if (!delayAfterGamePhase.ContainsKey(lastGamePhase) || (GameType == GameType.ONLINE && OnlineClient.Instance.IsLoadingGame))
+        if (!delayAfterGamePhase.ContainsKey(lastGamePhase) || (GameType == GameType.ONLINE && Client.IsLoadingGame))
             return 0;
 
         return delayAfterGamePhase[lastGamePhase];

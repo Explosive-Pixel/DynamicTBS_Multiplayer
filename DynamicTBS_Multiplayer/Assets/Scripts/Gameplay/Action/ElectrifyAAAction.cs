@@ -69,7 +69,7 @@ public class ElectrifyAAAction : MonoBehaviour, IAction
         {
             if (tile.TileType.Equals(TileType.GoalTile))
             {
-                GameplayEvents.GameIsOver(characterInAction.Side, GameOverCondition.MASTER_TOOK_CONTROL);
+                GameplayEvents.GameIsOver(characterInAction.Side, GameOverCondition.CAPTAIN_TOOK_CONTROL);
             }
 
             ((ElectrifyAA)characterInAction.ActiveAbility).ElectrifyTile(tile);

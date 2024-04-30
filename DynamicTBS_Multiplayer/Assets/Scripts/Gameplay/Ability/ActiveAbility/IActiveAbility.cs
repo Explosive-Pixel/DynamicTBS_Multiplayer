@@ -10,7 +10,8 @@ public enum ActiveAbilityType
     HEAL = 4,
     JUMP = 5,
     POWERSHOT = 6,
-    TAKE_CONTROL = 7
+    TAKE_CONTROL = 7,
+    CHARM = 8
 }
 
 public interface IActiveAbility

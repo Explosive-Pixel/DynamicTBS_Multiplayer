@@ -92,36 +92,73 @@ public class UIClickHandler : MonoBehaviour
             UnselectCharacter();
         }
 
-        if (GameManager.CurrentGamePhase != GamePhase.GAMEPLAY)
+        if (GameManager.CurrentGamePhase != GamePhase.GAMEPLAY || currentCharacter == null)
             return;
 
         // Show complete movement pattern, not just legal moves.
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
+            ActionUtils.ResetActionDestinations();
             ShowActionPattern(ActionType.Move);
         }
 
         // Show complete attack pattern, not just legal moves.
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
+            ActionUtils.ResetActionDestinations();
             ShowActionPattern(ActionType.Attack);
         }
 
         // Show complete active ability pattern, not just legal moves.
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            if (currentCharacter != null)
-            {
-                ActionUtils.ResetActionDestinations();
-                currentCharacter.ActiveAbility.ShowActionPattern();
-            }
+            ShowActiveAbilityPattern();
         }
 
         if (Input.GetKeyUp(KeyCode.Alpha1) || Input.GetKeyUp(KeyCode.Alpha2) || Input.GetKeyUp(KeyCode.Alpha3))
         {
-            ActionUtils.HideAllActionPatterns();
-            SelectCharacter(currentCharacter);
+            HideActionPattern();
         }
+    }
+
+    public void ShowMovePattern()
+    {
+        ShowActionPattern(ActionType.Move);
+    }
+
+    public void ShowAttackPattern()
+    {
+        ShowActionPattern(ActionType.Attack);
+    }
+
+    public void ShowActiveAbilityPattern()
+    {
+        ShowActionPattern(ActionType.ActiveAbility);
+    }
+
+    private void ShowActionPattern(ActionType actionType)
+    {
+        if (GameManager.CurrentGamePhase != GamePhase.GAMEPLAY)
+            return;
+
+        ActionUtils.ResetActionDestinations();
+
+        if (actionType == ActionType.ActiveAbility)
+            currentCharacter.ActiveAbility.ShowActionPattern();
+        else
+        {
+            IAction action = ActionRegistry.GetActions().Find(action => action.ActionType == actionType);
+            if (action != null)
+            {
+                action.ShowActionPattern(currentCharacter);
+            }
+        }
+    }
+
+    public void HideActionPattern()
+    {
+        ActionUtils.HideAllActionPatterns();
+        SelectCharacter(currentCharacter);
     }
 
     private void HandleKeyInputsAnyPlayer()
@@ -134,7 +171,7 @@ public class UIClickHandler : MonoBehaviour
         // Same function as pressing the Active Ability icon.
         if (Input.GetKeyDown(KeyCode.A))
         {
-            if (currentCharacter != null && currentCharacter.MayPerformActiveAbility())
+            if (currentCharacter != null && currentCharacter.Side == PlayerManager.ExecutingPlayer && currentCharacter.MayPerformActiveAbility())
             {
                 ActionUtils.ResetActionDestinations();
                 if (activeAbilityExecutionStarted)
@@ -169,26 +206,16 @@ public class UIClickHandler : MonoBehaviour
         // Pause/Unpause Game
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            GameplayEvents.UIActionExecuted(PlayerManager.ExecutingPlayer, GameplayManager.gameIsPaused ? UIAction.UNPAUSE_GAME : UIAction.PAUSE_GAME);
-        }
-    }
-
-    private void ShowActionPattern(ActionType actionType)
-    {
-        if (currentCharacter != null)
-        {
-            ActionUtils.ResetActionDestinations();
-            IAction action = ActionRegistry.GetActions().Find(action => action.ActionType == actionType);
-            if (action != null)
-            {
-                action.ShowActionPattern(currentCharacter);
-            }
+            if (GameManager.GameType == GameType.ONLINE)
+                GameplayEvents.UIActionExecuted(PlayerManager.ExecutingPlayer, GameplayManager.gameIsPaused ? UIAction.UNPAUSE_GAME : UIAction.PAUSE_GAME);
+            else
+                GameplayEvents.PauseGame(!GameplayManager.gameIsPaused);
         }
     }
 
     private Character TrySelectCharacter(Ray position)
     {
-        List<GameObject> selectableCharacters = (GameManager.IsPlayer() ? CharacterManager.GetAllLivingCharactersOfSide(PlayerManager.ExecutingPlayer) : CharacterManager.GetAllLivingCharacters())
+        List<GameObject> selectableCharacters = CharacterManager.GetAllLivingCharacters()
                 .FindAll(character => character.IsClickable)
                 .ConvertAll(character => character.gameObject);
 
@@ -239,7 +266,7 @@ public class UIClickHandler : MonoBehaviour
         activeAbilityExecutionStarted = false;
         currentCharacter = character;
 
-        if (character != null)
+        if (character != null && (!GameManager.IsPlayer() || character.Side == PlayerManager.ExecutingPlayer))
             ActionUtils.InstantiateAllActionPositions(character);
     }
 

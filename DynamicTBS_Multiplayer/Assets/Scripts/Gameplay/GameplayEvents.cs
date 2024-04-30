@@ -5,6 +5,9 @@ using System;
 
 public static class GameplayEvents
 {
+    public delegate void FinishGameplayUISetup();
+    public static event FinishGameplayUISetup OnFinishGameplayUISetup;
+
     public delegate void FinishAction(ActionMetadata actionMetadata);
     public static event FinishAction OnFinishAction;
 
@@ -35,11 +38,20 @@ public static class GameplayEvents
     public delegate void GamePaused(bool paused);
     public static event GamePaused OnGamePause;
 
-    public delegate void TimerUpdate(float pinkTimeLeft, float blueTimeLeft, DateTime startTimestamp);
+    public delegate void GamePausedOnline(WSMsgPauseGame msg);
+    public static event GamePausedOnline OnGamePauseOnline;
+
+    public delegate void TimerUpdate(float pinkTimeLeft, float blueTimeLeft, DateTime startTimestamp, GamePhase gamePhase, PlayerType currentPlayer);
     public static event TimerUpdate OnTimerUpdate;
 
     public delegate void TimerTimeout(GamePhase gamePhase, PlayerType currentPlayer);
     public static event TimerTimeout OnTimerTimeout;
+
+    public static void GameplayUISetupFinished()
+    {
+        if (OnFinishGameplayUISetup != null)
+            OnFinishGameplayUISetup();
+    }
 
     public static void ActionFinished(ActionMetadata actionMetadata)
     {
@@ -106,10 +118,16 @@ public static class GameplayEvents
         }
     }
 
-    public static void UpdateTimer(float pinkTimeLeft, float blueTimeLeft, DateTime startTimestamp)
+    public static void PauseGameOnline(WSMsgPauseGame msg)
+    {
+        if (OnGamePauseOnline != null)
+            OnGamePauseOnline(msg);
+    }
+
+    public static void UpdateTimer(float pinkTimeLeft, float blueTimeLeft, DateTime startTimestamp, GamePhase gamePhase, PlayerType currentPlayer)
     {
         if (OnTimerUpdate != null)
-            OnTimerUpdate(pinkTimeLeft, blueTimeLeft, startTimestamp);
+            OnTimerUpdate(pinkTimeLeft, blueTimeLeft, startTimestamp, gamePhase, currentPlayer);
     }
 
     public static void TimerTimedOut(GamePhase gamePhase, PlayerType currentPlayer)
