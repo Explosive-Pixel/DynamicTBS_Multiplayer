@@ -73,6 +73,19 @@ public class Board : MonoBehaviour
 
         Tiles = gameObject.GetComponentsInChildren<Tile>().ToList();
         tileGameObjects = Tiles.ConvertAll(tile => tile.gameObject);
+
+        /*
+         * TODO
+         * only for a transitional purpose
+         * please delete as soon as possible or refactor
+         */
+        Camera.main.orthographicSize = 1.63f;
+        GameObject.Find("Background").transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
+        /*
+         * 
+         */
+
+        GameplayEvents.GameplayUISetupFinished();
     }
 
     public static Tile GetTileByPosition(Vector3 position)
