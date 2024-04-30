@@ -53,29 +53,37 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1234039959914733649, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_text
-      value: '<i>Passive Ability</i>
-
-
-        Each turn an enemy unit is on an adjacent
-        square in a star pattern, it gains <b>1</b> influence point. If a unit reaches
-        <b>3</b> influence points, it switches sides. Influence points can only be
-        reset by switching sides.'
+      value: "<i>ActiveAbility</i>\n\nGathering her charisma, the Captain charms
+        a rival Mate in range <b>2</b> in a <i>star pattern</i>, so they change sides
+        until the Captain\u2019s next turn. \n\nCooldown: <b>3</b> turns"
       objectReference: {fileID: 0}
     - target: {fileID: 1234039959914733649, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_fontSize
-      value: 0.2
+      value: 0.18
       objectReference: {fileID: 0}
     - target: {fileID: 1234039959914733649, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_fontSizeBase
-      value: 0.2
+      value: 0.18
       objectReference: {fileID: 0}
     - target: {fileID: 1726121369747029956, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_Name
-      value: InfluenceAuraPAInfo
+      value: CharmAAInfo
+      objectReference: {fileID: 0}
+    - target: {fileID: 3570286753581677792, guid: fbb8951a8db15334980ef8f798960134, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0.2513
+      objectReference: {fileID: 0}
+    - target: {fileID: 3570286753581677792, guid: fbb8951a8db15334980ef8f798960134, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.0235
+      objectReference: {fileID: 0}
+    - target: {fileID: 3570286753581677792, guid: fbb8951a8db15334980ef8f798960134, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.0063
       objectReference: {fileID: 0}
     - target: {fileID: 5802362004618636893, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_text
-      value: Influence Aura
+      value: Charm
       objectReference: {fileID: 0}
     - target: {fileID: 5802362004618636893, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_fontSize

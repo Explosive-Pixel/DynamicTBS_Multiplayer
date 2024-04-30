@@ -53,46 +53,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1234039959914733649, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_text
-      value: '<i>Active Ability</i>
+      value: '<i>Passive Ability</i>
 
 
-        This unit electrifies a floor square
-        in a <i>radius</i> of <b>1</b> for <b>2</b> turns. If a unit is on an electrified
-        square, it is stunned (made unable to perform actions) for <b>1</b> turn,
-        after which the electrification ends. If the goal square is electrified,
-        the electrifying side wins. The goal square can only be electrified whilst
-        occupying it.
-
-
-        Cooldown: <b>3</b> turns'
+        When entering the Machine Core square
+        the Captain uses her electric arm to take control of the ship and win the
+        game.'
       objectReference: {fileID: 0}
     - target: {fileID: 1234039959914733649, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_fontSize
-      value: 0.18
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 1234039959914733649, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_fontSizeBase
-      value: 0.18
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 1726121369747029956, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_Name
-      value: ElectrifyAAInfo
-      objectReference: {fileID: 0}
-    - target: {fileID: 3570286753581677792, guid: fbb8951a8db15334980ef8f798960134, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0.2513
-      objectReference: {fileID: 0}
-    - target: {fileID: 3570286753581677792, guid: fbb8951a8db15334980ef8f798960134, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0.0235
-      objectReference: {fileID: 0}
-    - target: {fileID: 3570286753581677792, guid: fbb8951a8db15334980ef8f798960134, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -0.0063
+      value: ControlShipPAInfo
       objectReference: {fileID: 0}
     - target: {fileID: 5802362004618636893, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_text
-      value: Electrify
+      value: Control Ship
       objectReference: {fileID: 0}
     - target: {fileID: 5802362004618636893, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_fontSize
