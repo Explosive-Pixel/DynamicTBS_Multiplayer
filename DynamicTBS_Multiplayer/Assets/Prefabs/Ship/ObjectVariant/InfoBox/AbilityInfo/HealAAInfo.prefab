@@ -57,13 +57,13 @@ PrefabInstance:
 
 
         Throws a syringe in a <i>star pattern</i>
-        in a range of <b>2</b> to heal a unit for <b>1</b> health. Units may never
-        have more health than they started with. When being healed, units also receive
-        a movement buff of <b>+1</b> for its next move action.
+        in a range of <b>2</b> to heal a unit for <b>1</b> health, unless the path
+        is blocked by other units. Units may never have more health than they started
+        with. When being healed, units also receive a movement buff of <b>+1</b>
+        for its next move action.
 
 
-        Cooldown:
-        <b>3</b> turns'
+        Cooldown: <b>3</b> turns'
       objectReference: {fileID: 0}
     - target: {fileID: 1234039959914733649, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_fontSize

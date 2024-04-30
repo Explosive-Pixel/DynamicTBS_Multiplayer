@@ -57,12 +57,13 @@ PrefabInstance:
 
 
         Changes a floor square to a hole or
-        the other way around in a <i>radius</i> of <b>2</b>. Occupied squares can
-        only be changed in a <i>radius</i> of <b>1</b>, instantly eliminating the
-        occupying unit.
+        the other way around in a <i>star pattern</i> in range <b>2</b>, unless the
+        path is blocked by other units. Occupied squares can only be changed in range
+        <b>1</b>, instantly eliminating the occupying unit.
 
 
-        Cooldown: <b>3</b> turns'
+        Cooldown: <b>3</b>
+        turns'
       objectReference: {fileID: 0}
     - target: {fileID: 1234039959914733649, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_fontSize
