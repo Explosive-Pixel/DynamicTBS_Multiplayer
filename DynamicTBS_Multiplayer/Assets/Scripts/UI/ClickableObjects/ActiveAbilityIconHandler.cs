@@ -2,20 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActiveAbilityIconHandler : MonoBehaviour, IClickableObject
+public class ActiveAbilityIconHandler : MonoBehaviour
 {
-    [SerializeField] private ClickPermission clickPermission;
-
-    public ClickPermission ClickPermission { get { return clickPermission; } }
-
-    public void OnClick()
+    public static void ExecuteActiveAbility()
     {
-        if (UIClickHandler.CurrentCharacter == null || GameManager.CurrentGamePhase != GamePhase.GAMEPLAY)
+        if (CharacterManager.SelectedCharacter == null || GameManager.CurrentGamePhase != GamePhase.GAMEPLAY)
             return;
 
         ActionUtils.ResetActionDestinations();
 
-        if (GameManager.IsSpectator() || UIClickHandler.CurrentCharacter.Side == PlayerManager.ExecutingPlayer)
-            UIClickHandler.CurrentCharacter.ExecuteActiveAbility();
+        if (GameManager.IsSpectator() || CharacterManager.SelectedCharacter.Side == PlayerManager.ExecutingPlayer)
+            CharacterManager.SelectedCharacter.ExecuteActiveAbility();
+    }
+
+    private void OnMouseDown()
+    {
+        ExecuteActiveAbility();
     }
 }

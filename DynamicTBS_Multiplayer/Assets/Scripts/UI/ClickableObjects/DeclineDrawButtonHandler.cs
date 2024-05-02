@@ -2,14 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DeclineDrawButtonHandler : MonoBehaviour, IClickableObject
+public class DeclineDrawButtonHandler : MonoBehaviour
 {
-    [SerializeField] private ClickPermission clickPermission;
-
-    public ClickPermission ClickPermission { get { return clickPermission; } }
-
-    public void OnClick()
+    public void OnMouseDown()
     {
+        if (GameManager.IsSpectator())
+            return;
+
         GameplayEvents.UIActionExecuted(PlayerManager.ExecutingPlayer, UIAction.DECLINE_DRAW);
     }
 }

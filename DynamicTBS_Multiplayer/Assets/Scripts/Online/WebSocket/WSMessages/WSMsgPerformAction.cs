@@ -27,7 +27,7 @@ public class WSMsgPerformAction : WSMessage
     {
         if (Client.ShouldReadMessage(playerId))
         {
-            Character currentlySelectedCharacter = UIClickHandler.CurrentCharacter;
+            Character currentlySelectedCharacter = CharacterManager.SelectedCharacter;
             GameplayEvents.ChangeCharacterSelection(null);
 
             if (actionType == ActionType.Skip)

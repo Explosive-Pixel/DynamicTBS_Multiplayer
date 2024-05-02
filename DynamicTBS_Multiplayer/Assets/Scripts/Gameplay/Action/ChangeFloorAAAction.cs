@@ -29,7 +29,7 @@ public class ChangeFloorAAAction : MonoBehaviour, IAction
 
         if (patternPositions != null)
         {
-            patternTargets = ActionUtils.InstantiateActionPositions(patternPositions, changeFloorPrefab);
+            patternTargets = ActionUtils.InstantiateActionPositions(this, patternPositions, changeFloorPrefab);
         }
     }
 
@@ -56,7 +56,7 @@ public class ChangeFloorAAAction : MonoBehaviour, IAction
 
         if (changeFloorPositions != null && changeFloorPositions.Count > 0)
         {
-            changeFloorTargets = ActionUtils.InstantiateActionPositions(changeFloorPositions, changeFloorPrefab);
+            changeFloorTargets = ActionUtils.InstantiateActionPositions(this, changeFloorPositions, changeFloorPrefab);
             characterInAction = character;
         }
     }

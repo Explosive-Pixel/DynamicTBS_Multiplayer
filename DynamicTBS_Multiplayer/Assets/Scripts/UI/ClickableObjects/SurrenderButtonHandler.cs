@@ -3,12 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SurrenderButtonHandler : MonoBehaviour, IClickableObject
+public class SurrenderButtonHandler : MonoBehaviour
 {
     [SerializeField] private GameObject surrenderConfirmationBox;
-    [SerializeField] private ClickPermission clickPermission;
-
-    public ClickPermission ClickPermission { get { return clickPermission; } }
 
     private void Awake()
     {
@@ -19,8 +16,11 @@ public class SurrenderButtonHandler : MonoBehaviour, IClickableObject
         surrenderConfirmationBox.SetActive(false);
     }
 
-    public void OnClick()
+    public void OnMouseDown()
     {
+        if (GameManager.IsSpectator())
+            return;
+
         surrenderConfirmationBox.SetActive(true);
     }
 

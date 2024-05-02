@@ -3,13 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EndTurnButtonHandler : MonoBehaviour, IClickableObject
+public class EndTurnButtonHandler : MonoBehaviour
 {
     [SerializeField] private GameObject turnEndedButton;
     [SerializeField] private GameObject turnEndedButton_grayed;
-    [SerializeField] private ClickPermission clickPermission;
-
-    public ClickPermission ClickPermission { get { return clickPermission; } }
 
     private void Awake()
     {
@@ -17,8 +14,11 @@ public class EndTurnButtonHandler : MonoBehaviour, IClickableObject
         SetActive(false, true);
     }
 
-    public void OnClick()
+    public void OnMouseDown()
     {
+        if (!PlayerManager.ClientIsCurrentPlayer())
+            return;
+
         if (turnEndedButton.activeSelf)
             SkipAction.Execute();
     }

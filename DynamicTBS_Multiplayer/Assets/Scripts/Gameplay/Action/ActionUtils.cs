@@ -5,23 +5,24 @@ using UnityEngine.UIElements;
 
 public class ActionUtils : MonoBehaviour
 {
-    public static List<GameObject> InstantiateActionPositions(List<Vector3> positions, GameObject prefab)
+    public static List<GameObject> InstantiateActionPositions(IAction action, List<Vector3> positions, GameObject prefab)
     {
         List<GameObject> actionGameObjects = new();
         if (positions.Count > 0)
         {
             foreach (Vector3 position in positions)
             {
-                actionGameObjects.Add(InstantiateActionPosition(position, prefab));
+                actionGameObjects.Add(InstantiateActionPosition(action, position, prefab));
             }
         }
         return actionGameObjects;
     }
 
-    public static GameObject InstantiateActionPosition(Vector3 position, GameObject prefab)
+    public static GameObject InstantiateActionPosition(IAction action, Vector3 position, GameObject prefab)
     {
         GameObject actionPosition = Instantiate(prefab);
         actionPosition.transform.position = new Vector3(position.x, position.y, prefab.transform.position.z);
+        ActionTileHandler.Create(action, actionPosition);
         return actionPosition;
     }
 
@@ -123,6 +124,7 @@ public class ActionUtils : MonoBehaviour
         ActionRegistry.HideAllActionPatterns();
     }
 
+    // TODO: Remove
     private static void ExecuteAction(IAction action, GameObject actionDestination)
     {
         Character characterInAction = action.CharacterInAction;

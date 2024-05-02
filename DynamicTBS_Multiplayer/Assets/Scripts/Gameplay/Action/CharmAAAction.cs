@@ -28,7 +28,7 @@ public class CharmAAAction : MonoBehaviour, IAction
         List<Vector3> patternPositions = Board.GetTilesInAllDirections(tile, CharmAA.pattern, CharmAA.range)
             .ConvertAll(tile => tile.gameObject.transform.position);
 
-        patternTargets = ActionUtils.InstantiateActionPositions(patternPositions, charmPrefab);
+        patternTargets = ActionUtils.InstantiateActionPositions(this, patternPositions, charmPrefab);
     }
 
     public void HideActionPattern()
@@ -54,7 +54,7 @@ public class CharmAAAction : MonoBehaviour, IAction
 
         if (charmPositions != null && charmPositions.Count > 0)
         {
-            charmTargets = ActionUtils.InstantiateActionPositions(charmPositions, charmPrefab);
+            charmTargets = ActionUtils.InstantiateActionPositions(this, charmPositions, charmPrefab);
             characterInAction = character;
         }
     }

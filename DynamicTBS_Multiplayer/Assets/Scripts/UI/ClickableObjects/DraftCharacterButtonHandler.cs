@@ -19,4 +19,14 @@ public class DraftCharacterButtonHandler : MonoBehaviour, IClickableObject
 
         DraftManager.DraftCharacter(characterType, PlayerManager.CurrentPlayer);
     }
+
+    private void OnMouseDown()
+    {
+        if (PlayerManager.ClientIsCurrentPlayer())
+        {
+            AudioEvents.PressingButton();
+
+            DraftManager.DraftCharacter(characterType, PlayerManager.CurrentPlayer);
+        }
+    }
 }

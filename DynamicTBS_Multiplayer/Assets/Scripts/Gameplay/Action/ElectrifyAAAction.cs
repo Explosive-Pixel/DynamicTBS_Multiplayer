@@ -31,7 +31,7 @@ public class ElectrifyAAAction : MonoBehaviour, IAction
             patternPositions.Add(characterTile.gameObject.transform.position);
         }
 
-        patternTargets = ActionUtils.InstantiateActionPositions(patternPositions, electrifyPrefab);
+        patternTargets = ActionUtils.InstantiateActionPositions(this, patternPositions, electrifyPrefab);
     }
 
     public void HideActionPattern()
@@ -57,7 +57,7 @@ public class ElectrifyAAAction : MonoBehaviour, IAction
 
         if (floorPositions != null && floorPositions.Count > 0)
         {
-            electrifyTargets = ActionUtils.InstantiateActionPositions(floorPositions, electrifyPrefab);
+            electrifyTargets = ActionUtils.InstantiateActionPositions(this, floorPositions, electrifyPrefab);
             characterInAction = character;
         }
     }

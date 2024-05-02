@@ -27,7 +27,7 @@ public class JumpAAAction : MonoBehaviour, IAction
 
         if (patternPositions != null)
         {
-            patternTargets = ActionUtils.InstantiateActionPositions(patternPositions, jumpPrefab);
+            patternTargets = ActionUtils.InstantiateActionPositions(this, patternPositions, jumpPrefab);
         }
     }
 
@@ -54,7 +54,7 @@ public class JumpAAAction : MonoBehaviour, IAction
 
         if (movePositions != null && movePositions.Count > 0)
         {
-            jumpTargets = ActionUtils.InstantiateActionPositions(movePositions, jumpPrefab);
+            jumpTargets = ActionUtils.InstantiateActionPositions(this, movePositions, jumpPrefab);
             characterInAction = character;
         }
     }

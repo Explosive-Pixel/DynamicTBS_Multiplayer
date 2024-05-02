@@ -39,7 +39,7 @@ public class MoveAction : MonoBehaviour, IAction
 
         if (patternPositions != null)
         {
-            patternTargets = ActionUtils.InstantiateActionPositions(patternPositions, moveCirclePrefab);
+            patternTargets = ActionUtils.InstantiateActionPositions(this, patternPositions, moveCirclePrefab);
         }
     }
 
@@ -66,7 +66,7 @@ public class MoveAction : MonoBehaviour, IAction
 
         if (movePositions != null)
         {
-            moveDestinations = ActionUtils.InstantiateActionPositions(movePositions, moveCirclePrefab);
+            moveDestinations = ActionUtils.InstantiateActionPositions(this, movePositions, moveCirclePrefab);
             characterInAction = character;
         }
     }

@@ -135,7 +135,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d52f73b7de7144a018d4cc638ec47242, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clickPermission: 0
 --- !u!114 &22408394 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 257135587489097570, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
@@ -175,8 +174,8 @@ MonoBehaviour:
   onHover:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: ShowMovePattern
         m_Mode: 1
         m_Arguments:
@@ -190,8 +189,8 @@ MonoBehaviour:
   onDrop:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: HideActionPattern
         m_Mode: 1
         m_Arguments:
@@ -405,6 +404,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 34118703}
+  - component: {fileID: 34118704}
+  - component: {fileID: 34118705}
   m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
@@ -430,8 +431,33 @@ Transform:
   - {fileID: 534569817}
   - {fileID: 2040694228}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &34118704
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 34118702}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 100, y: 100, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &34118705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 34118702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bb9f49e80d0540dd8c5f8c19ff577bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &34788682
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -640,8 +666,8 @@ MonoBehaviour:
   onHover:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: ShowAttackPattern
         m_Mode: 1
         m_Arguments:
@@ -655,8 +681,8 @@ MonoBehaviour:
   onDrop:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: HideActionPattern
         m_Mode: 1
         m_Arguments:
@@ -728,8 +754,8 @@ MonoBehaviour:
   onHover:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: ShowAttackPattern
         m_Mode: 1
         m_Arguments:
@@ -743,8 +769,8 @@ MonoBehaviour:
   onDrop:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: HideActionPattern
         m_Mode: 1
         m_Arguments:
@@ -967,7 +993,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   surrenderConfirmationBox: {fileID: 1046251322}
-  clickPermission: 1
 --- !u!114 &221020291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -980,7 +1005,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f89d67630352f8b4f9450144748fdca0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clickPermission: 1
 --- !u!1 &231188472 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7594267467912414507, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
@@ -1016,8 +1040,8 @@ MonoBehaviour:
   onHover:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: ShowAttackPattern
         m_Mode: 1
         m_Arguments:
@@ -1031,8 +1055,8 @@ MonoBehaviour:
   onDrop:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: HideActionPattern
         m_Mode: 1
         m_Arguments:
@@ -1060,8 +1084,8 @@ MonoBehaviour:
   onHover:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: ShowAttackPattern
         m_Mode: 1
         m_Arguments:
@@ -1075,8 +1099,8 @@ MonoBehaviour:
   onDrop:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: HideActionPattern
         m_Mode: 1
         m_Arguments:
@@ -1257,8 +1281,8 @@ MonoBehaviour:
   onHover:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: ShowMovePattern
         m_Mode: 1
         m_Arguments:
@@ -1272,8 +1296,8 @@ MonoBehaviour:
   onDrop:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: HideActionPattern
         m_Mode: 1
         m_Arguments:
@@ -1443,7 +1467,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   surrenderConfirmationBox: {fileID: 1046251322}
-  clickPermission: 1
 --- !u!114 &372310094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1456,7 +1479,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1951f387808154962b7d99f262880087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clickPermission: 1
 --- !u!114 &415070691
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1474,8 +1496,8 @@ MonoBehaviour:
   onHover:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: ShowMovePattern
         m_Mode: 1
         m_Arguments:
@@ -1489,8 +1511,8 @@ MonoBehaviour:
   onDrop:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: HideActionPattern
         m_Mode: 1
         m_Arguments:
@@ -1606,7 +1628,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turnEndedButton: {fileID: 434025633}
   turnEndedButton_grayed: {fileID: 434025632}
-  clickPermission: 2
 --- !u!1 &444533019 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7951208241680423740, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
@@ -1679,7 +1700,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d52f73b7de7144a018d4cc638ec47242, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clickPermission: 0
 --- !u!114 &444533032
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1692,7 +1712,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d52f73b7de7144a018d4cc638ec47242, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clickPermission: 0
 --- !u!114 &444533033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1705,7 +1724,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d52f73b7de7144a018d4cc638ec47242, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clickPermission: 0
 --- !u!114 &444533034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1718,7 +1736,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d52f73b7de7144a018d4cc638ec47242, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clickPermission: 0
 --- !u!114 &444533035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1731,7 +1748,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d52f73b7de7144a018d4cc638ec47242, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clickPermission: 0
 --- !u!1 &471011730
 GameObject:
   m_ObjectHideFlags: 0
@@ -1743,6 +1759,7 @@ GameObject:
   - component: {fileID: 471011731}
   - component: {fileID: 471011732}
   - component: {fileID: 471011733}
+  - component: {fileID: 471011734}
   m_Layer: 5
   m_Name: GameplayObjects
   m_TagString: Untagged
@@ -1764,7 +1781,7 @@ RectTransform:
   m_Children:
   - {fileID: 1958638195}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1793,6 +1810,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activeGamePhases: 020000000300000000000000
   setInactiveOnGamePhaseEnd: 0
+--- !u!114 &471011734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 471011730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a37f3a7bea2b845f7a5484595821c8a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &493265324 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6554549206122889682, guid: 2e0bdd0b95a7e1b489eae322c773e210, type: 3}
@@ -1815,6 +1844,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &494843124
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 494843126}
+  - component: {fileID: 494843125}
+  m_Layer: 0
+  m_Name: KeyInput
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &494843125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 494843124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7770c7631e8948639d288af074b773d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &494843126
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 494843124}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.1798792, y: 0.35701615, z: 0.7113632}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1911,7 +1984,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d52f73b7de7144a018d4cc638ec47242, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clickPermission: 0
 --- !u!1 &534569814
 GameObject:
   m_ObjectHideFlags: 0
@@ -2114,8 +2186,8 @@ MonoBehaviour:
   onHover:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: ShowMovePattern
         m_Mode: 1
         m_Arguments:
@@ -2129,8 +2201,8 @@ MonoBehaviour:
   onDrop:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: HideActionPattern
         m_Mode: 1
         m_Arguments:
@@ -2158,8 +2230,8 @@ MonoBehaviour:
   onHover:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: ShowAttackPattern
         m_Mode: 1
         m_Arguments:
@@ -2173,8 +2245,8 @@ MonoBehaviour:
   onDrop:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: HideActionPattern
         m_Mode: 1
         m_Arguments:
@@ -2469,8 +2541,8 @@ MonoBehaviour:
   onHover:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: ShowAttackPattern
         m_Mode: 1
         m_Arguments:
@@ -2484,8 +2556,8 @@ MonoBehaviour:
   onDrop:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: HideActionPattern
         m_Mode: 1
         m_Arguments:
@@ -2588,7 +2660,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d52f73b7de7144a018d4cc638ec47242, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clickPermission: 0
 --- !u!1001 &719150808
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2643,11 +2714,11 @@ PrefabInstance:
     - target: {fileID: 50718503653767653, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 90912447}
+      objectReference: {fileID: 471011734}
     - target: {fileID: 50718503653767653, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 90912447}
+      objectReference: {fileID: 471011734}
     - target: {fileID: 50718503653767653, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -2666,11 +2737,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 50718503653767653, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UIClickHandler, Assembly-CSharp
+      value: ActionPatternHandler, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 50718503653767653, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UIClickHandler, Assembly-CSharp
+      value: ActionPatternHandler, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 50718503653767653, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -2703,11 +2774,11 @@ PrefabInstance:
     - target: {fileID: 109081210974783509, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 90912447}
+      objectReference: {fileID: 471011734}
     - target: {fileID: 109081210974783509, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 90912447}
+      objectReference: {fileID: 471011734}
     - target: {fileID: 109081210974783509, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -2726,11 +2797,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 109081210974783509, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UIClickHandler, Assembly-CSharp
+      value: ActionPatternHandler, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 109081210974783509, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UIClickHandler, Assembly-CSharp
+      value: ActionPatternHandler, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 109081210974783509, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -2855,11 +2926,11 @@ PrefabInstance:
     - target: {fileID: 662686516425653321, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 90912447}
+      objectReference: {fileID: 471011734}
     - target: {fileID: 662686516425653321, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 90912447}
+      objectReference: {fileID: 471011734}
     - target: {fileID: 662686516425653321, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -2878,11 +2949,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 662686516425653321, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UIClickHandler, Assembly-CSharp
+      value: ActionPatternHandler, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 662686516425653321, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UIClickHandler, Assembly-CSharp
+      value: ActionPatternHandler, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 662686516425653321, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -2923,11 +2994,11 @@ PrefabInstance:
     - target: {fileID: 875605025309485356, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 90912447}
+      objectReference: {fileID: 471011734}
     - target: {fileID: 875605025309485356, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 90912447}
+      objectReference: {fileID: 471011734}
     - target: {fileID: 875605025309485356, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -2946,11 +3017,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 875605025309485356, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UIClickHandler, Assembly-CSharp
+      value: ActionPatternHandler, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 875605025309485356, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UIClickHandler, Assembly-CSharp
+      value: ActionPatternHandler, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 875605025309485356, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -3079,11 +3150,11 @@ PrefabInstance:
     - target: {fileID: 1842053529836416988, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 90912447}
+      objectReference: {fileID: 471011734}
     - target: {fileID: 1842053529836416988, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 90912447}
+      objectReference: {fileID: 471011734}
     - target: {fileID: 1842053529836416988, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -3102,11 +3173,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1842053529836416988, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UIClickHandler, Assembly-CSharp
+      value: ActionPatternHandler, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1842053529836416988, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UIClickHandler, Assembly-CSharp
+      value: ActionPatternHandler, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1842053529836416988, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -3207,11 +3278,11 @@ PrefabInstance:
     - target: {fileID: 2329982612649930495, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 90912447}
+      objectReference: {fileID: 471011734}
     - target: {fileID: 2329982612649930495, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 90912447}
+      objectReference: {fileID: 471011734}
     - target: {fileID: 2329982612649930495, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -3242,11 +3313,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2329982612649930495, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UIClickHandler, Assembly-CSharp
+      value: ActionPatternHandler, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2329982612649930495, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UIClickHandler, Assembly-CSharp
+      value: ActionPatternHandler, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2329982612649930495, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -3379,11 +3450,11 @@ PrefabInstance:
     - target: {fileID: 3377649625324993578, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 90912447}
+      objectReference: {fileID: 471011734}
     - target: {fileID: 3377649625324993578, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 90912447}
+      objectReference: {fileID: 471011734}
     - target: {fileID: 3377649625324993578, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -3402,11 +3473,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3377649625324993578, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UIClickHandler, Assembly-CSharp
+      value: ActionPatternHandler, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 3377649625324993578, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UIClickHandler, Assembly-CSharp
+      value: ActionPatternHandler, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 3377649625324993578, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -3463,11 +3534,11 @@ PrefabInstance:
     - target: {fileID: 3819282473457228874, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 90912447}
+      objectReference: {fileID: 471011734}
     - target: {fileID: 3819282473457228874, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 90912447}
+      objectReference: {fileID: 471011734}
     - target: {fileID: 3819282473457228874, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -3486,11 +3557,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3819282473457228874, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UIClickHandler, Assembly-CSharp
+      value: ActionPatternHandler, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 3819282473457228874, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UIClickHandler, Assembly-CSharp
+      value: ActionPatternHandler, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 3819282473457228874, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -3675,11 +3746,11 @@ PrefabInstance:
     - target: {fileID: 4746097708491058165, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 90912447}
+      objectReference: {fileID: 471011734}
     - target: {fileID: 4746097708491058165, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 90912447}
+      objectReference: {fileID: 471011734}
     - target: {fileID: 4746097708491058165, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -3698,11 +3769,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4746097708491058165, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UIClickHandler, Assembly-CSharp
+      value: ActionPatternHandler, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4746097708491058165, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UIClickHandler, Assembly-CSharp
+      value: ActionPatternHandler, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4746097708491058165, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -3739,11 +3810,11 @@ PrefabInstance:
     - target: {fileID: 4797865397985469789, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 90912447}
+      objectReference: {fileID: 471011734}
     - target: {fileID: 4797865397985469789, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 90912447}
+      objectReference: {fileID: 471011734}
     - target: {fileID: 4797865397985469789, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -3762,11 +3833,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4797865397985469789, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UIClickHandler, Assembly-CSharp
+      value: ActionPatternHandler, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4797865397985469789, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UIClickHandler, Assembly-CSharp
+      value: ActionPatternHandler, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4797865397985469789, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -3819,11 +3890,11 @@ PrefabInstance:
     - target: {fileID: 5080237565248602496, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 90912447}
+      objectReference: {fileID: 471011734}
     - target: {fileID: 5080237565248602496, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 90912447}
+      objectReference: {fileID: 471011734}
     - target: {fileID: 5080237565248602496, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -3842,11 +3913,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5080237565248602496, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UIClickHandler, Assembly-CSharp
+      value: ActionPatternHandler, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 5080237565248602496, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UIClickHandler, Assembly-CSharp
+      value: ActionPatternHandler, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 5080237565248602496, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -3891,11 +3962,11 @@ PrefabInstance:
     - target: {fileID: 5225367365049973796, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 90912447}
+      objectReference: {fileID: 471011734}
     - target: {fileID: 5225367365049973796, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 90912447}
+      objectReference: {fileID: 471011734}
     - target: {fileID: 5225367365049973796, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -3914,11 +3985,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5225367365049973796, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UIClickHandler, Assembly-CSharp
+      value: ActionPatternHandler, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 5225367365049973796, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UIClickHandler, Assembly-CSharp
+      value: ActionPatternHandler, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 5225367365049973796, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -4199,11 +4270,11 @@ PrefabInstance:
     - target: {fileID: 6662777320964439924, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 90912447}
+      objectReference: {fileID: 471011734}
     - target: {fileID: 6662777320964439924, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 90912447}
+      objectReference: {fileID: 471011734}
     - target: {fileID: 6662777320964439924, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -4222,11 +4293,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6662777320964439924, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UIClickHandler, Assembly-CSharp
+      value: ActionPatternHandler, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6662777320964439924, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UIClickHandler, Assembly-CSharp
+      value: ActionPatternHandler, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6662777320964439924, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -4263,11 +4334,11 @@ PrefabInstance:
     - target: {fileID: 6687357084738268365, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 90912447}
+      objectReference: {fileID: 471011734}
     - target: {fileID: 6687357084738268365, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 90912447}
+      objectReference: {fileID: 471011734}
     - target: {fileID: 6687357084738268365, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -4302,11 +4373,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6687357084738268365, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UIClickHandler, Assembly-CSharp
+      value: ActionPatternHandler, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6687357084738268365, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UIClickHandler, Assembly-CSharp
+      value: ActionPatternHandler, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6687357084738268365, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: myUnityEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -4351,11 +4422,11 @@ PrefabInstance:
     - target: {fileID: 6722401495139004991, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 90912447}
+      objectReference: {fileID: 471011734}
     - target: {fileID: 6722401495139004991, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 90912447}
+      objectReference: {fileID: 471011734}
     - target: {fileID: 6722401495139004991, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -4374,11 +4445,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6722401495139004991, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UIClickHandler, Assembly-CSharp
+      value: ActionPatternHandler, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6722401495139004991, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UIClickHandler, Assembly-CSharp
+      value: ActionPatternHandler, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6722401495139004991, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -4503,11 +4574,11 @@ PrefabInstance:
     - target: {fileID: 7077509274183289459, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 90912447}
+      objectReference: {fileID: 471011734}
     - target: {fileID: 7077509274183289459, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 90912447}
+      objectReference: {fileID: 471011734}
     - target: {fileID: 7077509274183289459, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -4526,11 +4597,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7077509274183289459, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UIClickHandler, Assembly-CSharp
+      value: ActionPatternHandler, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7077509274183289459, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UIClickHandler, Assembly-CSharp
+      value: ActionPatternHandler, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7077509274183289459, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -4643,11 +4714,11 @@ PrefabInstance:
     - target: {fileID: 7545577731090919604, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 90912447}
+      objectReference: {fileID: 471011734}
     - target: {fileID: 7545577731090919604, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 90912447}
+      objectReference: {fileID: 471011734}
     - target: {fileID: 7545577731090919604, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -4666,11 +4737,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7545577731090919604, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UIClickHandler, Assembly-CSharp
+      value: ActionPatternHandler, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7545577731090919604, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UIClickHandler, Assembly-CSharp
+      value: ActionPatternHandler, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7545577731090919604, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -4895,11 +4966,11 @@ PrefabInstance:
     - target: {fileID: 8684565542815784780, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 90912447}
+      objectReference: {fileID: 471011734}
     - target: {fileID: 8684565542815784780, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 90912447}
+      objectReference: {fileID: 471011734}
     - target: {fileID: 8684565542815784780, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -4918,11 +4989,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8684565542815784780, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UIClickHandler, Assembly-CSharp
+      value: ActionPatternHandler, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 8684565542815784780, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UIClickHandler, Assembly-CSharp
+      value: ActionPatternHandler, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 8684565542815784780, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -5082,8 +5153,8 @@ MonoBehaviour:
   onHover:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: ShowAttackPattern
         m_Mode: 1
         m_Arguments:
@@ -5097,8 +5168,8 @@ MonoBehaviour:
   onDrop:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: HideActionPattern
         m_Mode: 1
         m_Arguments:
@@ -6267,8 +6338,8 @@ MonoBehaviour:
   onHover:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: ShowAttackPattern
         m_Mode: 1
         m_Arguments:
@@ -6282,8 +6353,8 @@ MonoBehaviour:
   onDrop:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: HideActionPattern
         m_Mode: 1
         m_Arguments:
@@ -6311,8 +6382,8 @@ MonoBehaviour:
   onHover:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: ShowAttackPattern
         m_Mode: 1
         m_Arguments:
@@ -6326,8 +6397,8 @@ MonoBehaviour:
   onDrop:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: HideActionPattern
         m_Mode: 1
         m_Arguments:
@@ -6355,8 +6426,8 @@ MonoBehaviour:
   onHover:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: ShowAttackPattern
         m_Mode: 1
         m_Arguments:
@@ -6370,8 +6441,8 @@ MonoBehaviour:
   onDrop:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: HideActionPattern
         m_Mode: 1
         m_Arguments:
@@ -6399,8 +6470,8 @@ MonoBehaviour:
   onHover:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: ShowAttackPattern
         m_Mode: 1
         m_Arguments:
@@ -6414,8 +6485,8 @@ MonoBehaviour:
   onDrop:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: HideActionPattern
         m_Mode: 1
         m_Arguments:
@@ -6443,8 +6514,8 @@ MonoBehaviour:
   onHover:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: ShowAttackPattern
         m_Mode: 1
         m_Arguments:
@@ -6458,8 +6529,8 @@ MonoBehaviour:
   onDrop:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: HideActionPattern
         m_Mode: 1
         m_Arguments:
@@ -6492,8 +6563,8 @@ MonoBehaviour:
   onHover:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: ShowMovePattern
         m_Mode: 1
         m_Arguments:
@@ -6507,8 +6578,8 @@ MonoBehaviour:
   onDrop:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: HideActionPattern
         m_Mode: 1
         m_Arguments:
@@ -6735,8 +6806,8 @@ MonoBehaviour:
   onHover:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: ShowAttackPattern
         m_Mode: 1
         m_Arguments:
@@ -6750,8 +6821,8 @@ MonoBehaviour:
   onDrop:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: HideActionPattern
         m_Mode: 1
         m_Arguments:
@@ -6800,7 +6871,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1149377216
 MonoBehaviour:
@@ -6934,7 +7005,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d52f73b7de7144a018d4cc638ec47242, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clickPermission: 0
 --- !u!114 &1215407625
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6952,8 +7022,8 @@ MonoBehaviour:
   onHover:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: ShowAttackPattern
         m_Mode: 1
         m_Arguments:
@@ -6967,8 +7037,8 @@ MonoBehaviour:
   onDrop:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: HideActionPattern
         m_Mode: 1
         m_Arguments:
@@ -6991,7 +7061,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d52f73b7de7144a018d4cc638ec47242, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clickPermission: 0
 --- !u!1 &1236966007
 GameObject:
   m_ObjectHideFlags: 0
@@ -7194,8 +7263,8 @@ MonoBehaviour:
   onHover:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: ShowAttackPattern
         m_Mode: 1
         m_Arguments:
@@ -7209,8 +7278,8 @@ MonoBehaviour:
   onDrop:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: HideActionPattern
         m_Mode: 1
         m_Arguments:
@@ -7651,8 +7720,8 @@ MonoBehaviour:
   onHover:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: ShowAttackPattern
         m_Mode: 1
         m_Arguments:
@@ -7666,8 +7735,8 @@ MonoBehaviour:
   onDrop:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: HideActionPattern
         m_Mode: 1
         m_Arguments:
@@ -7775,8 +7844,8 @@ MonoBehaviour:
   onHover:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: ShowAttackPattern
         m_Mode: 1
         m_Arguments:
@@ -7790,8 +7859,8 @@ MonoBehaviour:
   onDrop:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: HideActionPattern
         m_Mode: 1
         m_Arguments:
@@ -7829,7 +7898,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46b3aee3514e047e18c88bf9d40b7369, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clickPermission: 1
 --- !u!114 &1555523342
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7842,7 +7910,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edfd9b3ae727a483eb68001fca0f17c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clickPermission: 1
 --- !u!1 &1563117264
 GameObject:
   m_ObjectHideFlags: 0
@@ -7974,7 +8041,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d52f73b7de7144a018d4cc638ec47242, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clickPermission: 0
 --- !u!1 &1631387763
 GameObject:
   m_ObjectHideFlags: 0
@@ -8090,8 +8156,8 @@ MonoBehaviour:
   onHover:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: ShowAttackPattern
         m_Mode: 1
         m_Arguments:
@@ -8105,8 +8171,8 @@ MonoBehaviour:
   onDrop:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: HideActionPattern
         m_Mode: 1
         m_Arguments:
@@ -8134,8 +8200,8 @@ MonoBehaviour:
   onHover:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: ShowAttackPattern
         m_Mode: 1
         m_Arguments:
@@ -8149,8 +8215,8 @@ MonoBehaviour:
   onDrop:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: HideActionPattern
         m_Mode: 1
         m_Arguments:
@@ -8192,7 +8258,7 @@ Transform:
   m_Children:
   - {fileID: 1353708063}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1708469622
 MonoBehaviour:
@@ -8408,8 +8474,8 @@ MonoBehaviour:
   onHover:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: ShowMovePattern
         m_Mode: 1
         m_Arguments:
@@ -8423,8 +8489,8 @@ MonoBehaviour:
   onDrop:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: HideActionPattern
         m_Mode: 1
         m_Arguments:
@@ -8533,8 +8599,8 @@ MonoBehaviour:
   onHover:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: ShowMovePattern
         m_Mode: 1
         m_Arguments:
@@ -8548,8 +8614,8 @@ MonoBehaviour:
   onDrop:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: HideActionPattern
         m_Mode: 1
         m_Arguments:
@@ -8632,8 +8698,8 @@ MonoBehaviour:
   onHover:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: ShowMovePattern
         m_Mode: 1
         m_Arguments:
@@ -8647,8 +8713,8 @@ MonoBehaviour:
   onDrop:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: HideActionPattern
         m_Mode: 1
         m_Arguments:
@@ -8676,8 +8742,8 @@ MonoBehaviour:
   onHover:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: ShowMovePattern
         m_Mode: 1
         m_Arguments:
@@ -8691,8 +8757,8 @@ MonoBehaviour:
   onDrop:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: HideActionPattern
         m_Mode: 1
         m_Arguments:
@@ -8720,8 +8786,8 @@ MonoBehaviour:
   onHover:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: ShowMovePattern
         m_Mode: 1
         m_Arguments:
@@ -8735,8 +8801,8 @@ MonoBehaviour:
   onDrop:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: HideActionPattern
         m_Mode: 1
         m_Arguments:
@@ -8764,8 +8830,8 @@ MonoBehaviour:
   onHover:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: ShowMovePattern
         m_Mode: 1
         m_Arguments:
@@ -8779,8 +8845,8 @@ MonoBehaviour:
   onDrop:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: HideActionPattern
         m_Mode: 1
         m_Arguments:
@@ -8808,8 +8874,8 @@ MonoBehaviour:
   onHover:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: ShowMovePattern
         m_Mode: 1
         m_Arguments:
@@ -8823,8 +8889,8 @@ MonoBehaviour:
   onDrop:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: HideActionPattern
         m_Mode: 1
         m_Arguments:
@@ -8852,8 +8918,8 @@ MonoBehaviour:
   onHover:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: ShowAttackPattern
         m_Mode: 1
         m_Arguments:
@@ -8867,8 +8933,8 @@ MonoBehaviour:
   onDrop:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: HideActionPattern
         m_Mode: 1
         m_Arguments:
@@ -8896,8 +8962,8 @@ MonoBehaviour:
   onHover:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: ShowAttackPattern
         m_Mode: 1
         m_Arguments:
@@ -8911,8 +8977,8 @@ MonoBehaviour:
   onDrop:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: HideActionPattern
         m_Mode: 1
         m_Arguments:
@@ -9165,7 +9231,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d52f73b7de7144a018d4cc638ec47242, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clickPermission: 0
 --- !u!114 &1878221951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9290,8 +9355,8 @@ MonoBehaviour:
   onHover:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: ShowAttackPattern
         m_Mode: 1
         m_Arguments:
@@ -9305,8 +9370,8 @@ MonoBehaviour:
   onDrop:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: HideActionPattern
         m_Mode: 1
         m_Arguments:
@@ -11180,8 +11245,8 @@ MonoBehaviour:
   onHover:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: ShowAttackPattern
         m_Mode: 1
         m_Arguments:
@@ -11195,8 +11260,8 @@ MonoBehaviour:
   onDrop:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: HideActionPattern
         m_Mode: 1
         m_Arguments:
@@ -11359,8 +11424,8 @@ MonoBehaviour:
   onHover:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: ShowAttackPattern
         m_Mode: 1
         m_Arguments:
@@ -11374,8 +11439,8 @@ MonoBehaviour:
   onDrop:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90912447}
-        m_TargetAssemblyTypeName: UIClickHandler, Assembly-CSharp
+      - m_Target: {fileID: 471011734}
+        m_TargetAssemblyTypeName: ActionPatternHandler, Assembly-CSharp
         m_MethodName: HideActionPattern
         m_Mode: 1
         m_Arguments:

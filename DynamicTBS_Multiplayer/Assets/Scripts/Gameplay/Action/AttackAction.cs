@@ -36,7 +36,7 @@ public class AttackAction : MonoBehaviour, IAction
         List<Vector3> patternPositions = Board.GetTilesInAllDirections(tile, attackPattern, range)
             .ConvertAll(tile => tile.gameObject.transform.position);
 
-        patternTargets = ActionUtils.InstantiateActionPositions(patternPositions, attackCirclePrefab);
+        patternTargets = ActionUtils.InstantiateActionPositions(this, patternPositions, attackCirclePrefab);
     }
 
     public void HideActionPattern()
@@ -63,7 +63,7 @@ public class AttackAction : MonoBehaviour, IAction
         if (targetPositions != null && targetPositions.Count > 0)
         {
             characterInAction = character;
-            targets = ActionUtils.InstantiateActionPositions(targetPositions, attackCirclePrefab);
+            targets = ActionUtils.InstantiateActionPositions(this, targetPositions, attackCirclePrefab);
         }
     }
 

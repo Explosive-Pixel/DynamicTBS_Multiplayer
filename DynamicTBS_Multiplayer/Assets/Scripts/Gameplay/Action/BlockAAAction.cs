@@ -28,7 +28,7 @@ public class BlockAAAction : MonoBehaviour, IAction
 
         if (patternPositions != null)
         {
-            patternTargets = ActionUtils.InstantiateActionPositions(patternPositions, blockActionPrefab);
+            patternTargets = ActionUtils.InstantiateActionPositions(this, patternPositions, blockActionPrefab);
         }
     }
 
@@ -55,7 +55,7 @@ public class BlockAAAction : MonoBehaviour, IAction
 
         if (floorPositions != null && floorPositions.Count > 0)
         {
-            blockTargets = ActionUtils.InstantiateActionPositions(floorPositions, blockActionPrefab);
+            blockTargets = ActionUtils.InstantiateActionPositions(this, floorPositions, blockActionPrefab);
             characterInAction = character;
         }
     }

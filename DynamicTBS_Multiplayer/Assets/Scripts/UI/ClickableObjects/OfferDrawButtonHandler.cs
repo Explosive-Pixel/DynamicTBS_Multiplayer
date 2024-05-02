@@ -3,19 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class OfferDrawButtonHandler : MonoBehaviour, IClickableObject
+public class OfferDrawButtonHandler : MonoBehaviour
 {
-    [SerializeField] private ClickPermission clickPermission;
-
-    public ClickPermission ClickPermission { get { return clickPermission; } }
-
     private void Awake()
     {
         SubscribeEvents();
     }
 
-    public void OnClick()
+    public void OnMouseDown()
     {
+        if (GameManager.IsSpectator())
+            return;
+
         GameplayEvents.UIActionExecuted(PlayerManager.ExecutingPlayer, UIAction.OFFER_DRAW);
     }
 

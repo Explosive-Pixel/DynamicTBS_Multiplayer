@@ -6,9 +6,13 @@ using System.Linq;
 
 public class CharacterManager : MonoBehaviour
 {
+    public static Character SelectedCharacter { get; private set; } = null;
+
     private void Awake()
     {
         GetAllLivingCharacters().ForEach(character => Destroy(character.gameObject));
+
+        GameplayEvents.OnCharacterSelectionChange += ChangeSelectedCharacter;
     }
 
     public static List<Character> GetAllLivingCharacters()
@@ -46,5 +50,15 @@ public class CharacterManager : MonoBehaviour
     public static bool AlliedNeighbors(Character c1, Character c2, PatternType patternType)
     {
         return c1.Side == c2.Side && Neighbors(c1, c2, patternType);
+    }
+
+    private void ChangeSelectedCharacter(Character character)
+    {
+        SelectedCharacter = character;
+    }
+
+    private void OnDestroy()
+    {
+        GameplayEvents.OnCharacterSelectionChange -= ChangeSelectedCharacter;
     }
 }

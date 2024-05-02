@@ -118,6 +118,11 @@ public class Character : MonoBehaviour
         }
     }
 
+    public void Select()
+    {
+        gameObject.GetComponent<CharacterClickHandler>().SelectCharacter();
+    }
+
     public bool IsActiveAbilityOnCooldown()
     {
         return ActiveAbilityCooldown > 0;
@@ -219,7 +224,7 @@ public class Character : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (UIClickHandler.CurrentCharacter == this)
+        if (CharacterManager.SelectedCharacter == this)
             GameplayEvents.ChangeCharacterSelection(null);
 
         UnsubscribeEvents();

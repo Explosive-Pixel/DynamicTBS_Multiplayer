@@ -101,7 +101,7 @@ public class PowershotAAAction : MonoBehaviour, IAction
         {
             if (i != characterTile.Column)
             {
-                targetList.Add(ActionUtils.InstantiateActionPosition(Board.GetTileByCoordinates(characterTile.Row, i).gameObject.transform.position, attackCirclePrefab));
+                targetList.Add(ActionUtils.InstantiateActionPosition(this, Board.GetTileByCoordinates(characterTile.Row, i).gameObject.transform.position, attackCirclePrefab));
             }
         }
 
@@ -109,7 +109,7 @@ public class PowershotAAAction : MonoBehaviour, IAction
         {
             if (i != characterTile.Row)
             {
-                targetList.Add(ActionUtils.InstantiateActionPosition(Board.GetTileByCoordinates(i, characterTile.Column).gameObject.transform.position, attackCirclePrefab));
+                targetList.Add(ActionUtils.InstantiateActionPosition(this, Board.GetTileByCoordinates(i, characterTile.Column).gameObject.transform.position, attackCirclePrefab));
             }
         }
 

@@ -31,7 +31,7 @@ public class HealAAAction : MonoBehaviour, IAction
         List<Vector3> patternPositions = Board.GetTilesInAllDirections(tile, HealAA.pattern, HealAA.range)
             .ConvertAll(tile => tile.gameObject.transform.position);
 
-        patternTargets = ActionUtils.InstantiateActionPositions(patternPositions, healPrefab);
+        patternTargets = ActionUtils.InstantiateActionPositions(this, patternPositions, healPrefab);
     }
 
     public void HideActionPattern()
@@ -57,7 +57,7 @@ public class HealAAAction : MonoBehaviour, IAction
 
         if (healPositions != null && healPositions.Count > 0)
         {
-            healTargets = ActionUtils.InstantiateActionPositions(healPositions, healPrefab);
+            healTargets = ActionUtils.InstantiateActionPositions(this, healPositions, healPrefab);
             characterInAction = character;
         }
     }
