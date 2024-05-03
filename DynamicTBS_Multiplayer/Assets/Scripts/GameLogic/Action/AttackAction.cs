@@ -105,7 +105,6 @@ public class AttackAction : MonoBehaviour, IAction
             return;
 
         ActionRegistry.Register(this);
-        ActionRegistry.RegisterPatternAction(this);
     }
 
     private void OnDestroy()

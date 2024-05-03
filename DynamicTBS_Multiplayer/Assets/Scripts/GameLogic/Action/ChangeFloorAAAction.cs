@@ -17,11 +17,6 @@ public class ChangeFloorAAAction : MonoBehaviour, IAction
 
     private List<GameObject> patternTargets = new();
 
-    private void Awake()
-    {
-        GameEvents.OnGamePhaseStart += Register;
-    }
-
     public void ShowActionPattern(Character character)
     {
         Tile characterTile = Board.GetTileByCharacter(character);
@@ -102,18 +97,5 @@ public class ChangeFloorAAAction : MonoBehaviour, IAction
             .ConvertAll(tile => tile.gameObject.transform.position);
 
         return changeFloorPositions;
-    }
-
-    private void Register(GamePhase gamePhase)
-    {
-        if (gamePhase != GamePhase.GAMEPLAY)
-            return;
-
-        ActionRegistry.RegisterPatternAction(this);
-    }
-
-    private void OnDestroy()
-    {
-        GameEvents.OnGamePhaseStart -= Register;
     }
 }

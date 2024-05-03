@@ -16,11 +16,6 @@ public class JumpAAAction : MonoBehaviour, IAction
 
     private List<GameObject> patternTargets = new();
 
-    private void Awake()
-    {
-        GameEvents.OnGamePhaseStart += Register;
-    }
-
     public void ShowActionPattern(Character character)
     {
         List<Vector3> patternPositions = FindMovePositions(character, true);
@@ -88,18 +83,5 @@ public class JumpAAAction : MonoBehaviour, IAction
             .ConvertAll(tile => tile.gameObject.transform.position);
 
         return movePositions;
-    }
-
-    private void Register(GamePhase gamePhase)
-    {
-        if (gamePhase != GamePhase.GAMEPLAY)
-            return;
-
-        ActionRegistry.RegisterPatternAction(this);
-    }
-
-    private void OnDestroy()
-    {
-        GameEvents.OnGamePhaseStart -= Register;
     }
 }

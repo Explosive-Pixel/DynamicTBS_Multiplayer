@@ -20,7 +20,6 @@ public class HealAAAction : MonoBehaviour, IAction
 
     private void Awake()
     {
-        GameEvents.OnGamePhaseStart += Register;
         GameplayEvents.OnFinishAction += DebuffCharacter;
     }
 
@@ -128,17 +127,8 @@ public class HealAAAction : MonoBehaviour, IAction
         speedBuff.SetActive(bufferCount > 0);
     }
 
-    private void Register(GamePhase gamePhase)
-    {
-        if (gamePhase != GamePhase.GAMEPLAY)
-            return;
-
-        ActionRegistry.RegisterPatternAction(this);
-    }
-
     private void OnDestroy()
     {
-        GameEvents.OnGamePhaseStart -= Register;
         GameplayEvents.OnFinishAction -= DebuffCharacter;
     }
 }

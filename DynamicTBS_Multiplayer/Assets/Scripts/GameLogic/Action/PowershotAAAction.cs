@@ -16,11 +16,6 @@ public class PowershotAAAction : MonoBehaviour, IAction
 
     private List<GameObject> patternTargets = new();
 
-    private void Awake()
-    {
-        GameEvents.OnGamePhaseStart += Register;
-    }
-
     public void ShowActionPattern(Character character)
     {
         patternTargets = CreateDestinations(character);
@@ -114,18 +109,5 @@ public class PowershotAAAction : MonoBehaviour, IAction
         }
 
         return targetList;
-    }
-
-    private void Register(GamePhase gamePhase)
-    {
-        if (gamePhase != GamePhase.GAMEPLAY)
-            return;
-
-        ActionRegistry.RegisterPatternAction(this);
-    }
-
-    private void OnDestroy()
-    {
-        GameEvents.OnGamePhaseStart -= Register;
     }
 }

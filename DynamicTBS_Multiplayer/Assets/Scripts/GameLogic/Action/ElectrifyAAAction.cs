@@ -16,11 +16,6 @@ public class ElectrifyAAAction : MonoBehaviour, IAction
 
     private List<GameObject> patternTargets = new();
 
-    private void Awake()
-    {
-        GameEvents.OnGamePhaseStart += Register;
-    }
-
     public void ShowActionPattern(Character character)
     {
         Tile characterTile = Board.GetTileByCharacter(character);
@@ -101,18 +96,5 @@ public class ElectrifyAAAction : MonoBehaviour, IAction
         List<Vector3> floorPositions = floorTiles.ConvertAll(tile => tile.gameObject.transform.position);
 
         return floorPositions;
-    }
-
-    private void Register(GamePhase gamePhase)
-    {
-        if (gamePhase != GamePhase.GAMEPLAY)
-            return;
-
-        ActionRegistry.RegisterPatternAction(this);
-    }
-
-    private void OnDestroy()
-    {
-        GameEvents.OnGamePhaseStart -= Register;
     }
 }

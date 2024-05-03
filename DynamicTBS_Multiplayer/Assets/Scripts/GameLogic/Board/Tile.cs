@@ -33,6 +33,8 @@ public class Tile : MonoBehaviour
     public delegate bool IsChangeable();
     public IsChangeable isChangeable = () => true;
 
+    public bool IsTransformable { get { return isChangeable() || !IsGameplayTile(); } }
+
     public void Init(TileType tileType, PlayerType side)
     {
         this.side = side;
@@ -48,7 +50,7 @@ public class Tile : MonoBehaviour
 
     public void Transform(TileType tileType)
     {
-        if (!isChangeable())
+        if (!IsTransformable)
             return;
 
         this.tileType = tileType;
@@ -82,6 +84,11 @@ public class Tile : MonoBehaviour
     public bool IsNormalFloor()
     {
         return !IsHole() && !IsGoal();
+    }
+
+    private bool IsGameplayTile()
+    {
+        return tileType != TileType.StartTile && tileType != TileType.CaptainStartTile;
     }
 
     public bool IsOccupied()

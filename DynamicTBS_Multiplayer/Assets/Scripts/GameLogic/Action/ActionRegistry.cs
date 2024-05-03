@@ -39,6 +39,13 @@ public class ActionRegistry
         patternActions.Add(action);
     }
 
+    public static void ShowActionPattern(ActionType actionType, Character character)
+    {
+        IAction patternAction = patternActions.Find(action => action.ActionType == actionType);
+        if (patternAction != null)
+            patternAction.ShowActionPattern(character);
+    }
+
     public static void HideAllActionPatterns()
     {
         foreach (IAction action in patternActions)

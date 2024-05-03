@@ -16,11 +16,6 @@ public class CharmAAAction : MonoBehaviour, IAction
 
     private List<GameObject> patternTargets = new();
 
-    private void Awake()
-    {
-        GameEvents.OnGamePhaseStart += Register;
-    }
-
     public void ShowActionPattern(Character character)
     {
         Tile tile = Board.GetTileByCharacter(character);
@@ -88,18 +83,5 @@ public class CharmAAAction : MonoBehaviour, IAction
         List<Vector3> charmPositions = charmTiles.ConvertAll(tile => tile.gameObject.transform.position);
 
         return charmPositions;
-    }
-
-    private void Register(GamePhase gamePhase)
-    {
-        if (gamePhase != GamePhase.GAMEPLAY)
-            return;
-
-        ActionRegistry.RegisterPatternAction(this);
-    }
-
-    private void OnDestroy()
-    {
-        GameEvents.OnGamePhaseStart -= Register;
     }
 }

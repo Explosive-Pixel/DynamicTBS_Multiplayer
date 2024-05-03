@@ -1,9 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class ActionPatternHandler : MonoBehaviour
 {
+    [SerializeField] private GameObject actionRegistry;
+
+    private void Awake()
+    {
+        GameEvents.OnGamePhaseStart += RegisterActionPatterns;
+    }
+
     public void ShowMovePattern()
     {
         ShowActionPattern(ActionType.Move);
@@ -21,7 +29,7 @@ public class ActionPatternHandler : MonoBehaviour
 
     private void ShowActionPattern(ActionType actionType)
     {
-        if (GameManager.CurrentGamePhase != GamePhase.GAMEPLAY || CharacterManager.SelectedCharacter == null)
+        if (CharacterManager.SelectedCharacter == null || CharacterManager.SelectedCharacter.CurrentTile == null)
             return;
 
         ActionUtils.ResetActionDestinations();
@@ -30,11 +38,7 @@ public class ActionPatternHandler : MonoBehaviour
             CharacterManager.SelectedCharacter.ActiveAbility.ShowActionPattern();
         else
         {
-            IAction action = ActionRegistry.GetActions().Find(action => action.ActionType == actionType);
-            if (action != null)
-            {
-                action.ShowActionPattern(CharacterManager.SelectedCharacter);
-            }
+            ActionRegistry.ShowActionPattern(actionType, CharacterManager.SelectedCharacter);
         }
     }
 
@@ -44,5 +48,19 @@ public class ActionPatternHandler : MonoBehaviour
 
         if (CharacterManager.SelectedCharacter != null)
             CharacterManager.SelectedCharacter.Select();
+    }
+
+    private void RegisterActionPatterns(GamePhase gamePhase)
+    {
+        if (gamePhase != GamePhase.PLACEMENT)
+            return;
+
+        List<IAction> actions = actionRegistry.GetComponentsInChildren<IAction>().ToList();
+        actions.ForEach(action => ActionRegistry.RegisterPatternAction(action));
+    }
+
+    private void OnDestroy()
+    {
+        GameEvents.OnGamePhaseStart -= RegisterActionPatterns;
     }
 }

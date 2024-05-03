@@ -28,13 +28,9 @@ public class ControlShipPA : MonoBehaviour, IPassiveAbility
         if (GameManager.CurrentGamePhase != GamePhase.GAMEPLAY)
             return;
 
-        Tile tile = Board.GetTileByCharacter(owner);
-        if (tile != null)
+        if (owner.CurrentTile != null && owner.CurrentTile.TileType.Equals(TileType.GoalTile))
         {
-            if (tile.TileType.Equals(TileType.GoalTile))
-            {
-                GameplayEvents.GameIsOver(owner.Side, GameOverCondition.CAPTAIN_TOOK_CONTROL);
-            }
+            GameplayEvents.GameIsOver(owner.Side, GameOverCondition.CAPTAIN_TOOK_CONTROL);
         }
     }
 

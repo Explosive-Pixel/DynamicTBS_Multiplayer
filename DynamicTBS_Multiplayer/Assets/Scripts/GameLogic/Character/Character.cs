@@ -185,7 +185,7 @@ public class Character : MonoBehaviour
 
         isClickable = true;
 
-        if (gamePhase == GamePhase.GAMEPLAY)
+        if (gamePhase == GamePhase.PLACEMENT)
         {
             PassiveAbility.Apply();
         }

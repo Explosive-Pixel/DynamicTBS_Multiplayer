@@ -86,7 +86,7 @@ public class MoveAction : MonoBehaviour, IAction
 
     private List<Vector3> FindMovePositions(Character character, bool pattern = false)
     {
-        if (!GameplayManager.HasGameStarted)
+        if (character.CurrentTile == null || (!GameplayManager.HasGameStarted && !pattern))
         {
             return FindAccessibleStartPositions(character);
         }
@@ -151,10 +151,9 @@ public class MoveAction : MonoBehaviour, IAction
     private void Register(GamePhase gamePhase)
     {
         if (gamePhase == GamePhase.PLACEMENT)
+        {
             ActionRegistry.Register(this);
-
-        if (gamePhase == GamePhase.GAMEPLAY)
-            ActionRegistry.RegisterPatternAction(this);
+        }
     }
 
     private void OnDestroy()
