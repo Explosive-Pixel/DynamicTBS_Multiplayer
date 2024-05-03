@@ -76,24 +76,6 @@ public class ActionUtils : MonoBehaviour
         return actionExecuted;
     }
 
-    public static bool ExecuteAction(Ray ray)
-    {
-        bool actionExecuted = false;
-        foreach (IAction action in ActionRegistry.GetActions())
-        {
-            GameObject hit = UIUtils.FindGameObjectByRay(action.ActionDestinations, ray);
-            if (hit != null)
-            {
-                ExecuteAction(action, hit);
-                actionExecuted = true;
-            }
-            else
-                action.AbortAction();
-        }
-
-        return actionExecuted;
-    }
-
     public static void ExecuteAction(GameObject actionDestination)
     {
         foreach (IAction action in ActionRegistry.GetActions())
@@ -124,14 +106,14 @@ public class ActionUtils : MonoBehaviour
         ActionRegistry.HideAllActionPatterns();
     }
 
-    // TODO: Remove
-    private static void ExecuteAction(IAction action, GameObject actionDestination)
+    public static void ExecuteAction(IAction action, GameObject actionDestination)
     {
         Character characterInAction = action.CharacterInAction;
         Vector3 initialPosition = characterInAction.gameObject.transform.position;
         Vector3 actionDestinationPosition = actionDestination.transform.position;
 
         action.ExecuteAction(actionDestination);
+        ResetActionDestinations();
 
         GameplayEvents.ActionFinished(new ActionMetadata
         {

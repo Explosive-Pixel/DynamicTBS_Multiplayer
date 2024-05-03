@@ -88,7 +88,7 @@ public class MoveAction : MonoBehaviour, IAction
     {
         if (!GameplayManager.HasGameStarted)
         {
-            return FindAccessibleStartPositions(character.Side);
+            return FindAccessibleStartPositions(character);
         }
 
         Tile currentTile = Board.GetTileByCharacter(character);
@@ -138,10 +138,13 @@ public class MoveAction : MonoBehaviour, IAction
         return movePositions;
     }
 
-    private List<Vector3> FindAccessibleStartPositions(PlayerType side)
+    private List<Vector3> FindAccessibleStartPositions(Character character)
     {
+        if (character.CurrentTile != null)
+            return new();
+
         List<GameObject> tiles = Board.TileGameObjects;
-        return Board.Tiles.FindAll(tile => tile.Side == side && tile.TileType == TileType.StartTile && tile.IsAccessible())
+        return Board.Tiles.FindAll(tile => tile.Side == character.Side && tile.TileType == TileType.StartTile && tile.IsAccessible())
             .ConvertAll(tile => tile.gameObject.transform.position);
     }
 

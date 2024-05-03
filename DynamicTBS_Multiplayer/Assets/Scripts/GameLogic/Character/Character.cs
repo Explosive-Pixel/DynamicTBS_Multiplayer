@@ -49,6 +49,7 @@ public class Character : MonoBehaviour
     public int HitPoints { get { return hitPoints; } set { hitPoints = Mathf.Max(value, 0); UpdateHitPoints(); } }
     public int ActiveAbilityCooldown { get { return activeAbilityCooldown; } set { activeAbilityCooldown = value; UpdateCooldown(); } }
     public bool IsClickable { get { return isClickable; } set { isClickable = value; } }
+    public Tile CurrentTile { get { return gameObject.GetComponentInParent<Tile>(); } }
 
     public void Init(CharacterType type, PlayerType side)
     {

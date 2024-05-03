@@ -43,7 +43,7 @@ public class PlacementManager : MonoBehaviour
     private void AdvancePlacementOrder(ActionMetadata actionMetadata)
     {
         PlacementEvents.CharacterPlaced(actionMetadata.CharacterInAction);
-        actionMetadata.CharacterInAction.IsClickable = false;
+        // actionMetadata.CharacterInAction.IsClickable = false;
 
         currentPlayerPlacementCount++;
 

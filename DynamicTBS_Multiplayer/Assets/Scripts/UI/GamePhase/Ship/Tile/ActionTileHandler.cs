@@ -18,20 +18,6 @@ public class ActionTileHandler : MonoBehaviour
         if (GameManager.IsSpectator())
             return;
 
-        Character characterInAction = action.CharacterInAction;
-        Vector3 initialPosition = characterInAction.gameObject.transform.position;
-        Vector3 actionDestinationPosition = gameObject.transform.position;
-
-        action.ExecuteAction(gameObject);
-        ActionUtils.ResetActionDestinations();
-
-        GameplayEvents.ActionFinished(new ActionMetadata
-        {
-            ExecutingPlayer = characterInAction.Side,
-            ExecutedActionType = action.ActionType,
-            CharacterInAction = characterInAction,
-            CharacterInitialPosition = initialPosition,
-            ActionDestinationPosition = actionDestinationPosition
-        });
+        ActionUtils.ExecuteAction(action, gameObject);
     }
 }
