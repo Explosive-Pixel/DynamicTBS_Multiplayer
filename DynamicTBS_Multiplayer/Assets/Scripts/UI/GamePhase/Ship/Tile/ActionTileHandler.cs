@@ -19,5 +19,6 @@ public class ActionTileHandler : MonoBehaviour
             return;
 
         ActionUtils.ExecuteAction(action, gameObject);
+        GameplayEvents.ChangeCharacterSelection(null);
     }
 }
