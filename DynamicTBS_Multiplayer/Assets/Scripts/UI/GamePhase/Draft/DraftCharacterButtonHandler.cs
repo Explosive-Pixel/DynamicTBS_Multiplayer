@@ -1,17 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class DraftCharacterButtonHandler : MonoBehaviour
 {
     [SerializeField] private CharacterType characterType;
     [SerializeField] private GameObject pinkHoverObject;
     [SerializeField] private GameObject blueHoverObject;
-
-    private void Start()
-    {
-        OnMouseExit();
-    }
 
     private void OnMouseDown()
     {
@@ -20,7 +16,7 @@ public class DraftCharacterButtonHandler : MonoBehaviour
 
         AudioEvents.PressingButton();
 
-        DraftManager.DraftCharacter(characterType, PlayerManager.CurrentPlayer, GetHoverObject(PlayerManager.CurrentPlayer));
+        DraftManager.DraftCharacter(characterType, PlayerManager.CurrentPlayer);
     }
 
     private void OnMouseEnter()
@@ -33,15 +29,5 @@ public class DraftCharacterButtonHandler : MonoBehaviour
     {
         pinkHoverObject.SetActive(false);
         blueHoverObject.SetActive(false);
-    }
-
-    private GameObject GetHoverObject(PlayerType side)
-    {
-        if (side == PlayerType.pink)
-            return pinkHoverObject;
-        if (side == PlayerType.blue)
-            return blueHoverObject;
-
-        return null;
     }
 }

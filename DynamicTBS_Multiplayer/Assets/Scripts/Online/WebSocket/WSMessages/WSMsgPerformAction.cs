@@ -52,7 +52,10 @@ public class WSMsgPerformAction : WSMessage
                 }
             }
 
-            GameplayEvents.ChangeCharacterSelection(currentlySelectedCharacter);
+            if (currentlySelectedCharacter != null && !currentlySelectedCharacter.IsDead())
+                currentlySelectedCharacter.Select();
+            else
+                GameplayEvents.ChangeCharacterSelection(null);
         }
     }
 }

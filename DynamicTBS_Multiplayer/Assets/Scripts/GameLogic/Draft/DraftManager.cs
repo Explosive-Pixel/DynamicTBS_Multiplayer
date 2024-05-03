@@ -10,6 +10,7 @@ public class DraftManager : MonoBehaviour
     [SerializeField] private List<int> draftSequence;
     [SerializeField] private List<GameObject> spawnPositions;
     [SerializeField] private float characterScaling;
+    [SerializeField] private GameObject unitInformation;
 
     private static readonly List<int> DraftSequence = new();
     private static int draftCounter;
@@ -17,6 +18,7 @@ public class DraftManager : MonoBehaviour
     private static int currentPlayerDraftCount;
     private static readonly List<Vector3> SpawnPositions = new();
     private static Vector3 characterScaleVector;
+    private static GameObject characterInformation;
 
     public static int CurrentPlayerTotalDraftCount { get { return draftSequenceIndex < DraftSequence.Count ? DraftSequence[draftSequenceIndex] : 0; } }
     public static int CurrentPlayerRemainingDraftCount { get { return CurrentPlayerTotalDraftCount - currentPlayerDraftCount; } }
@@ -35,6 +37,7 @@ public class DraftManager : MonoBehaviour
         draftCounter = 0;
         draftSequenceIndex = 0;
         currentPlayerDraftCount = 0;
+        characterInformation = unitInformation;
     }
 
     private void Init()
@@ -46,7 +49,7 @@ public class DraftManager : MonoBehaviour
         init = true;
     }
 
-    public static void DraftCharacter(CharacterType type, PlayerType side, GameObject hoverObject = null)
+    public static void DraftCharacter(CharacterType type, PlayerType side)
     {
         if (CurrentPlayerTotalDraftCount == 0) return;
 
@@ -54,6 +57,7 @@ public class DraftManager : MonoBehaviour
         character.gameObject.transform.position = SpawnPositions[draftCounter];
         character.gameObject.transform.localScale = characterScaleVector;
 
+        GameObject hoverObject = GetHoverObject(type, side);
         if (hoverObject != null)
             character.gameObject.AddComponent<HoverHandler>().HoverObject = hoverObject;
 
@@ -113,5 +117,16 @@ public class DraftManager : MonoBehaviour
     private static void DraftCompleted()
     {
         GameEvents.EndGamePhase(GamePhase.DRAFT);
+    }
+
+    private static GameObject GetHoverObject(CharacterType type, PlayerType side)
+    {
+        CharacterInformationClass cic = characterInformation.GetComponentsInChildren<CharacterInformationClass>(true).ToList()
+            .Find(cic => cic.characterType == type && cic.side == side);
+
+        if (cic != null)
+            return cic.gameObject;
+
+        return null;
     }
 }

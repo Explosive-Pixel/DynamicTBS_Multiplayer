@@ -34,10 +34,10 @@ public class OfferDrawAnswerHandler : MonoBehaviour
         }
     }
 
-    public void OnClick()
-    {
-        GameplayEvents.UIActionExecuted(PlayerManager.ExecutingPlayer, UIAction.OFFER_DRAW);
-    }
+    /* public void OnClick()
+     {
+         GameplayEvents.UIActionExecuted(PlayerManager.ExecutingPlayer, UIAction.OFFER_DRAW);
+     }*/
 
     private void OnDrawButtonClicked(PlayerType player, UIAction uIAction)
     {
@@ -52,6 +52,7 @@ public class OfferDrawAnswerHandler : MonoBehaviour
                 SetActive(drawInfoBox, true);
             }
 
+            buttons.SetActive(false);
             StartOfferDrawTimer();
         }
         else if (uIAction == UIAction.ACCEPT_DRAW)
@@ -61,6 +62,7 @@ public class OfferDrawAnswerHandler : MonoBehaviour
         else if (uIAction == UIAction.DECLINE_DRAW)
         {
             SetInactive();
+            buttons.SetActive(true);
         }
     }
 
