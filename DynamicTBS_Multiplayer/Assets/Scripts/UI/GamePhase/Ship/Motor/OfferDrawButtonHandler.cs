@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class OfferDrawButtonHandler : MonoBehaviour
 {
+    [SerializeField] private GameObject buttons;
+
     private void Awake()
     {
         SubscribeEvents();
@@ -12,9 +14,11 @@ public class OfferDrawButtonHandler : MonoBehaviour
 
     public void OnMouseDown()
     {
-        if (GameManager.IsSpectator())
+        if (GameManager.IsSpectator() || GameplayManager.gameIsPaused)
             return;
 
+        AudioEvents.PressingButton();
+        buttons.SetActive(false);
         GameplayEvents.UIActionExecuted(PlayerManager.ExecutingPlayer, UIAction.OFFER_DRAW);
     }
 

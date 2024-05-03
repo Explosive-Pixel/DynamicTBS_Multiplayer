@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class SurrenderButtonHandler : MonoBehaviour
 {
+    [SerializeField] private GameObject buttons;
     [SerializeField] private GameObject surrenderConfirmationBox;
 
     private void Awake()
@@ -18,9 +19,11 @@ public class SurrenderButtonHandler : MonoBehaviour
 
     public void OnMouseDown()
     {
-        if (GameManager.IsSpectator())
+        if (GameManager.IsSpectator() || GameplayManager.gameIsPaused)
             return;
 
+        AudioEvents.PressingButton();
+        buttons.SetActive(false);
         surrenderConfirmationBox.SetActive(true);
     }
 

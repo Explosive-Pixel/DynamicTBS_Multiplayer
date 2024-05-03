@@ -15,12 +15,12 @@ public class DraftCharacterButtonHandler : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (PlayerManager.ClientIsCurrentPlayer())
-        {
-            AudioEvents.PressingButton();
+        if (!PlayerManager.ClientIsCurrentPlayer() || GameplayManager.gameIsPaused)
+            return;
 
-            DraftManager.DraftCharacter(characterType, PlayerManager.CurrentPlayer, GetHoverObject(PlayerManager.CurrentPlayer));
-        }
+        AudioEvents.PressingButton();
+
+        DraftManager.DraftCharacter(characterType, PlayerManager.CurrentPlayer, GetHoverObject(PlayerManager.CurrentPlayer));
     }
 
     private void OnMouseEnter()

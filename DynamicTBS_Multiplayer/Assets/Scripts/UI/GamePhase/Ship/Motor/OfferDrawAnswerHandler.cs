@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class OfferDrawAnswerHandler : MonoBehaviour
 {
+    [SerializeField] private GameObject buttons;
     [SerializeField] private GameObject answerDrawBox;
     [SerializeField] private TMPro.TextMeshPro answerDrawBoxTimer;
     [SerializeField] private GameObject drawInfoBox;
@@ -29,6 +30,7 @@ public class OfferDrawAnswerHandler : MonoBehaviour
         if (remainingTime <= 0)
         {
             SetInactive();
+            buttons.SetActive(true);
         }
     }
 

@@ -948,6 +948,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a9f5f65d95a78b4b978c0fd3bff21ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttons: {fileID: 207437909}
   surrenderConfirmationBox: {fileID: 1046251322}
 --- !u!114 &221020291
 MonoBehaviour:
@@ -961,6 +962,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f89d67630352f8b4f9450144748fdca0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttons: {fileID: 207437909}
 --- !u!1 &231188472 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7594267467912414507, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
@@ -1442,6 +1444,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4e57f50aa727432f9046e4f8c1c0c72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttons: {fileID: 207437909}
   surrenderConfirmationBox: {fileID: 1046251322}
 --- !u!114 &372310094
 MonoBehaviour:
@@ -2653,14 +2656,6 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 38187776906734590, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: m_Size.x
-      value: 1.72
-      objectReference: {fileID: 0}
-    - target: {fileID: 38187776906734590, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: m_Size.y
-      value: 0.37
-      objectReference: {fileID: 0}
-    - target: {fileID: 38187776906734590, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -3096,6 +3091,14 @@ PrefabInstance:
       propertyPath: passiveAbilityType
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 1470852305737693548, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: m_Size.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1612235378401357346, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: m_Size.z
+      value: 0.9
+      objectReference: {fileID: 0}
     - target: {fileID: 1620532189417700581, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: m_SortingOrder
       value: 8
@@ -3468,6 +3471,10 @@ PrefabInstance:
       propertyPath: hoverObject
       value: 
       objectReference: {fileID: 1118503403}
+    - target: {fileID: 3734573273439870247, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3756434062095420698, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: disabled
       value: 1
@@ -3475,6 +3482,10 @@ PrefabInstance:
     - target: {fileID: 3756434062095420698, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: activeAbilityType
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3790696870696859655, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3804603854659165641, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: side
@@ -3568,22 +3579,6 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 8
       objectReference: {fileID: 0}
-    - target: {fileID: 4224917242859632352, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: m_Size.x
-      value: 1.72
-      objectReference: {fileID: 0}
-    - target: {fileID: 4224917242859632352, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: m_Size.y
-      value: 0.37
-      objectReference: {fileID: 0}
-    - target: {fileID: 4224917242859632352, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4224917242859632352, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: m_Center.x
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4445977995505746550, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -3642,6 +3637,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4469940592314830180, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4579565517268059067, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4612624055617412686, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
@@ -4008,14 +4007,6 @@ PrefabInstance:
       propertyPath: hoverObject
       value: 
       objectReference: {fileID: 1118503405}
-    - target: {fileID: 6077055289183092176, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: m_Size.x
-      value: 1.72
-      objectReference: {fileID: 0}
-    - target: {fileID: 6077055289183092176, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: m_Size.y
-      value: 0.37
-      objectReference: {fileID: 0}
     - target: {fileID: 6086951508252251166, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -4207,14 +4198,6 @@ PrefabInstance:
     - target: {fileID: 6486716206851996417, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: passiveAbilityType
       value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6648520421933507590, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: m_Size.x
-      value: 1.72
-      objectReference: {fileID: 0}
-    - target: {fileID: 6648520421933507590, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
-      propertyPath: m_Size.y
-      value: 0.37
       objectReference: {fileID: 0}
     - target: {fileID: 6659589402558964591, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: side
@@ -5250,6 +5233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2608645bb66cd490d9d88962ca382420, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttons: {fileID: 207437909}
   answerDrawBox: {fileID: 1555523340}
   answerDrawBoxTimer: {fileID: 22408395}
   drawInfoBox: {fileID: 1380917895}
@@ -7940,6 +7924,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46b3aee3514e047e18c88bf9d40b7369, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttons: {fileID: 207437909}
 --- !u!114 &1555523342
 MonoBehaviour:
   m_ObjectHideFlags: 0

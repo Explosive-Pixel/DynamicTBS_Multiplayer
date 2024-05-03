@@ -17,6 +17,7 @@ public class ActiveAbilityIconHandler : MonoBehaviour
 
     private void OnMouseDown()
     {
+        AudioEvents.PressingButton();
         ExecuteActiveAbility();
     }
 }

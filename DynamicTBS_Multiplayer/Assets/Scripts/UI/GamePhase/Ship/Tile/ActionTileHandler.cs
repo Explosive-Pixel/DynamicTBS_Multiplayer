@@ -15,7 +15,7 @@ public class ActionTileHandler : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (GameManager.IsSpectator())
+        if (GameManager.IsSpectator() || GameplayManager.gameIsPaused)
             return;
 
         ActionUtils.ExecuteAction(action, gameObject);

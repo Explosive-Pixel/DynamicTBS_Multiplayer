@@ -16,11 +16,14 @@ public class EndTurnButtonHandler : MonoBehaviour
 
     public void OnMouseDown()
     {
-        if (!PlayerManager.ClientIsCurrentPlayer())
+        if (!PlayerManager.ClientIsCurrentPlayer() || GameplayManager.gameIsPaused)
             return;
 
         if (turnEndedButton.activeSelf)
+        {
+            AudioEvents.PressingButton();
             SkipAction.Execute();
+        }
     }
 
     private void SetActive(bool active, bool interactable)
