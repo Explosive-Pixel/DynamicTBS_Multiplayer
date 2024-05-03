@@ -29,6 +29,10 @@ public class ExplosionPA : MonoBehaviour, IPassiveAbility
     private void Explode(Vector3 lastPosition)
     {
         Tile ownerLastTile = Board.GetTileByPosition(lastPosition);
+
+        if (ownerLastTile == null)
+            return;
+
         foreach (Character character in CharacterManager.GetAllLivingCharacters())
         {
             if (character != null && character.gameObject != null)
@@ -48,7 +52,7 @@ public class ExplosionPA : MonoBehaviour, IPassiveAbility
 
     private void OnDestroy()
     {
-        if (active)
+        if (active && gameObject != null)
             Explode(gameObject.transform.position);
     }
 }

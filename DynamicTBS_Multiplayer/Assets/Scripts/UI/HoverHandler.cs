@@ -12,6 +12,8 @@ public class HoverHandler : MonoBehaviour
     [SerializeField] private UnityEvent onHover;
     [SerializeField] private UnityEvent onDrop;
 
+    public GameObject HoverObject { get { return hoverObject; } set { hoverObject = value; } }
+
     private bool clicked = false;
     private bool disabled = false;
 

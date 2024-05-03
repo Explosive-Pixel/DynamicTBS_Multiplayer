@@ -46,13 +46,16 @@ public class DraftManager : MonoBehaviour
         init = true;
     }
 
-    public static void DraftCharacter(CharacterType type, PlayerType side)
+    public static void DraftCharacter(CharacterType type, PlayerType side, GameObject hoverObject = null)
     {
         if (CurrentPlayerTotalDraftCount == 0) return;
 
         Character character = CharacterFactory.CreateCharacter(type, side);
         character.gameObject.transform.position = SpawnPositions[draftCounter];
         character.gameObject.transform.localScale = characterScaleVector;
+
+        if (hoverObject != null)
+            character.gameObject.AddComponent<HoverHandler>().HoverObject = hoverObject;
 
         DraftEvents.CharacterCreated(character);
 

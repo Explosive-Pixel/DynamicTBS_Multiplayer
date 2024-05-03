@@ -43,7 +43,6 @@ public class PlacementManager : MonoBehaviour
     private void AdvancePlacementOrder(ActionMetadata actionMetadata)
     {
         PlacementEvents.CharacterPlaced(actionMetadata.CharacterInAction);
-        // actionMetadata.CharacterInAction.IsClickable = false;
 
         currentPlayerPlacementCount++;
 
@@ -72,7 +71,7 @@ public class PlacementManager : MonoBehaviour
     public static void RandomPlacement(PlayerType side)
     {
         List<Character> charactersOfPlayer = CharacterManager.GetAllLivingCharactersOfSide(side)
-                .FindAll(character => character.IsClickable);
+                .FindAll(character => character.IsClickable && character.CurrentTile == null);
         if (charactersOfPlayer.Count > 0)
         {
             Character randomCharacter = charactersOfPlayer[0];
@@ -107,6 +106,7 @@ public class PlacementManager : MonoBehaviour
         Tile captainSpawnTile = Board.Tiles.Find(tile => tile.TileType == TileType.CaptainStartTile && tile.Side == playerType);
 
         MoveAction.MoveCharacter(captain, captainSpawnTile);
+        captain.IsClickable = true;
 
         DraftEvents.CharacterCreated(captain);
         PlacementEvents.CharacterPlaced(captain);
@@ -145,6 +145,8 @@ public class PlacementManager : MonoBehaviour
         {
             characters[i].gameObject.transform.position = positions[i];
             characters[i].gameObject.transform.localScale = characterScaleVector;
+
+            Destroy(characters[i].gameObject.GetComponent<HoverHandler>());
         }
     }
 
