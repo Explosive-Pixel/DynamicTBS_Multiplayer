@@ -184,11 +184,12 @@ public class Character : MonoBehaviour
             return;
 
         isClickable = true;
+    }
 
-        if (gamePhase == GamePhase.PLACEMENT)
-        {
+    private void ApplyPassiveAbility(Character character)
+    {
+        if (character == this)
             PassiveAbility.Apply();
-        }
     }
 
     private void UpdateSide()
@@ -211,12 +212,14 @@ public class Character : MonoBehaviour
     private void SubscribeEvents()
     {
         GameEvents.OnGamePhaseStart += PrepareCharacter;
+        PlacementEvents.OnPlaceCharacter += ApplyPassiveAbility;
         GameplayEvents.OnFinishAction += SetActiveAbilityOnCooldown;
     }
 
     private void UnsubscribeEvents()
     {
         GameEvents.OnGamePhaseStart -= PrepareCharacter;
+        PlacementEvents.OnPlaceCharacter += ApplyPassiveAbility;
         GameplayEvents.OnFinishAction -= SetActiveAbilityOnCooldown;
         GameplayEvents.OnPlayerTurnEnded -= ReduceActiveAbiliyCooldown;
     }
