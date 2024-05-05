@@ -12,6 +12,7 @@ public class InfoBoxHandler : MonoBehaviour
     [SerializeField] private GameObject passiveAbilities;
     [SerializeField] private GameObject passiveAbilityWriting;
     [SerializeField] private GameObject buttons;
+    [SerializeField] private List<GameObject> confirmationObjects;
 
     private List<CharacterClass> UnitIcons;
     private List<AbilityClass> ActiveAbilityIcons;
@@ -36,7 +37,7 @@ public class InfoBoxHandler : MonoBehaviour
         if (GameManager.CurrentGamePhase != GamePhase.PLACEMENT && GameManager.CurrentGamePhase != GamePhase.GAMEPLAY)
             return;
 
-        buttons.SetActive(character == null);
+        buttons.SetActive(character == null && !UIUtils.ContainsActive(confirmationObjects));
 
         UnitIcons.ForEach(unitIcon => unitIcon.gameObject.SetActive(character != null && unitIcon.character == character.CharacterType && unitIcon.side == character.Side));
         ActiveAbilityIcons.ForEach(aaIcon => aaIcon.gameObject.SetActive(character != null && aaIcon.activeAbilityType == character.ActiveAbility.AbilityType && aaIcon.disabled == !character.MayPerformActiveAbility() && (aaIcon.side == character.Side || aaIcon.disabled)));

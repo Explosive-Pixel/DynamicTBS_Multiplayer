@@ -7259,10 +7259,6 @@ PrefabInstance:
       propertyPath: gamePhase
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: gamePhase
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2459799073050342477, guid: 2e0bdd0b95a7e1b489eae322c773e210, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -7283,15 +7279,7 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: gamePhase
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3851959052579128033, guid: 2e0bdd0b95a7e1b489eae322c773e210, type: 3}
-      propertyPath: gamePhase
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
       propertyPath: gamePhase
       value: 1
       objectReference: {fileID: 0}
@@ -7383,10 +7371,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: gamePhase
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7397219553158026299, guid: 2e0bdd0b95a7e1b489eae322c773e210, type: 3}
       propertyPath: gamePhase
       value: 1
@@ -7396,10 +7380,6 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7559873651018215723, guid: 2e0bdd0b95a7e1b489eae322c773e210, type: 3}
-      propertyPath: gamePhase
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
       propertyPath: gamePhase
       value: 1
       objectReference: {fileID: 0}
@@ -7976,6 +7956,10 @@ MonoBehaviour:
   passiveAbilities: {fileID: 1602402124}
   passiveAbilityWriting: {fileID: 1593000163}
   buttons: {fileID: 207437909}
+  confirmationObjects:
+  - {fileID: 1555523340}
+  - {fileID: 1380917895}
+  - {fileID: 1046251322}
 --- !u!114 &1626395198
 MonoBehaviour:
   m_ObjectHideFlags: 0

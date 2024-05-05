@@ -28,6 +28,17 @@ public class UIUtils : MonoBehaviour
         return null;
     }
 
+    public static bool ContainsActive(List<GameObject> gameObjects)
+    {
+        foreach (GameObject gameObject in gameObjects)
+        {
+            if (gameObject.activeSelf)
+                return true;
+        }
+
+        return false;
+    }
+
     public static void UpdateAnimator(Animator animator, int value)
     {
         if (animator != null && animator.parameterCount > 0)
