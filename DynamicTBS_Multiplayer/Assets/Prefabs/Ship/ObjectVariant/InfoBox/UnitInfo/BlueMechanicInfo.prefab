@@ -68,9 +68,25 @@ PrefabInstance:
       value: Uses a huge hammer to change the floor to create favourable chaos.
       objectReference: {fileID: 0}
     - target: {fileID: 2891140459074355693, guid: 3831d9d2f410fff4ba659cc02b83c372, type: 3}
+      propertyPath: m_Size.x
+      value: 3.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2891140459074355693, guid: 3831d9d2f410fff4ba659cc02b83c372, type: 3}
+      propertyPath: m_Size.y
+      value: 1.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 2891140459074355693, guid: 3831d9d2f410fff4ba659cc02b83c372, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: e33cf10225c163143bf432df1877070b, type: 3}
+      objectReference: {fileID: 21300000, guid: 08108c69d1d138c41b448724691c516a, type: 3}
+    - target: {fileID: 2891140459074355693, guid: 3831d9d2f410fff4ba659cc02b83c372, type: 3}
+      propertyPath: m_SortingOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2891140459074355693, guid: 3831d9d2f410fff4ba659cc02b83c372, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3262834417707893144, guid: 3831d9d2f410fff4ba659cc02b83c372, type: 3}
       propertyPath: m_text
       value: MECHANIC

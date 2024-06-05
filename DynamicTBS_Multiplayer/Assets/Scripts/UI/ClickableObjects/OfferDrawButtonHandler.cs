@@ -5,37 +5,18 @@ using UnityEngine.UI;
 
 public class OfferDrawButtonHandler : MonoBehaviour, IClickableObject
 {
-    [SerializeField] private GameObject answerDrawBox;
+    [SerializeField] private ClickPermission clickPermission;
+
+    public ClickPermission ClickPermission { get { return clickPermission; } }
 
     private void Awake()
     {
         SubscribeEvents();
-        SetActive(gameObject, false);
-        SetActive(answerDrawBox, false);
     }
 
     public void OnClick()
     {
         GameplayEvents.UIActionExecuted(PlayerManager.ExecutingPlayer, UIAction.OFFER_DRAW);
-    }
-
-    private void OnDrawButtonClicked(PlayerType player, UIAction uIAction)
-    {
-        if (uIAction == UIAction.OFFER_DRAW)
-        {
-            if (!(GameManager.gameType == GameType.ONLINE && OnlineClient.Instance.Side == player))
-            {
-                SetActive(answerDrawBox, true);
-            }
-        }
-        else if (uIAction == UIAction.ACCEPT_DRAW)
-        {
-            GameplayEvents.GameIsOver(null, GameOverCondition.DRAW_ACCEPTED);
-        }
-        else if (uIAction == UIAction.DECLINE_DRAW)
-        {
-            SetActive(answerDrawBox, false);
-        }
     }
 
     private void SetOfferDrawButtonActive(GamePhase gamePhase)
@@ -54,13 +35,11 @@ public class OfferDrawButtonHandler : MonoBehaviour, IClickableObject
     private void SubscribeEvents()
     {
         GameEvents.OnGamePhaseStart += SetOfferDrawButtonActive;
-        GameplayEvents.OnExecuteUIAction += OnDrawButtonClicked;
     }
 
     private void UnsubscribeEvents()
     {
         GameEvents.OnGamePhaseStart -= SetOfferDrawButtonActive;
-        GameplayEvents.OnExecuteUIAction -= OnDrawButtonClicked;
     }
 
     #endregion

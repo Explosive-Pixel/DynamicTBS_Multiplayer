@@ -5,16 +5,23 @@ using UnityEngine.UI;
 
 public class SurrenderButtonHandler : MonoBehaviour, IClickableObject
 {
+    [SerializeField] private GameObject surrenderConfirmationBox;
+    [SerializeField] private ClickPermission clickPermission;
+
+    public ClickPermission ClickPermission { get { return clickPermission; } }
+
     private void Awake()
     {
-        SubscribeEvents();
+        GameEvents.OnGamePhaseStart += SetActive;
+        GameplayEvents.OnExecuteUIAction += OnSurrenderClicked;
+
         ChangeButtonVisibility(false);
+        surrenderConfirmationBox.SetActive(false);
     }
 
     public void OnClick()
     {
-        PlayerType player = PlayerManager.ExecutingPlayer;
-        GameplayEvents.UIActionExecuted(player, UIAction.SURRENDER);
+        surrenderConfirmationBox.SetActive(true);
     }
 
     private void OnSurrenderClicked(PlayerType player, UIAction uIAction)
@@ -34,24 +41,9 @@ public class SurrenderButtonHandler : MonoBehaviour, IClickableObject
             ChangeButtonVisibility(true);
     }
 
-    #region EventsRegion
-
-    private void SubscribeEvents()
-    {
-        GameEvents.OnGamePhaseStart += SetActive;
-        GameplayEvents.OnExecuteUIAction += OnSurrenderClicked;
-    }
-
-    private void UnsubscribeEvents()
+    private void OnDestroy()
     {
         GameEvents.OnGamePhaseStart -= SetActive;
         GameplayEvents.OnExecuteUIAction -= OnSurrenderClicked;
-    }
-
-    #endregion
-
-    private void OnDestroy()
-    {
-        UnsubscribeEvents();
     }
 }

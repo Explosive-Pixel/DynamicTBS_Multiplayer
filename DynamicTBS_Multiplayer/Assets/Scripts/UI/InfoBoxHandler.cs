@@ -10,7 +10,6 @@ public class InfoBoxHandler : MonoBehaviour
     [SerializeField] private GameObject activeAbilities;
     [SerializeField] private GameObject passiveAbilities;
     [SerializeField] private GameObject buttons;
-    [SerializeField] private GameObject offerDrawBox;
 
     private List<CharacterClass> UnitIcons;
     private List<AbilityClass> ActiveAbilityIcons;
@@ -28,29 +27,22 @@ public class InfoBoxHandler : MonoBehaviour
         PassiveAbilityIcons.ForEach(paIcon => paIcon.gameObject.SetActive(false));
 
         GameplayEvents.OnCharacterSelectionChange += UpdateInfoBox;
-        GameplayEvents.OnExecuteUIAction += UpdateInfoBox;
     }
 
     private void UpdateInfoBox(Character character)
     {
-        if (GameManager.gamePhase != GamePhase.PLACEMENT && GameManager.gamePhase != GamePhase.GAMEPLAY)
+        if (GameManager.CurrentGamePhase != GamePhase.PLACEMENT && GameManager.CurrentGamePhase != GamePhase.GAMEPLAY)
             return;
 
-        buttons.SetActive(character == null && !offerDrawBox.activeSelf);
+        buttons.SetActive(character == null);
 
         UnitIcons.ForEach(unitIcon => unitIcon.gameObject.SetActive(character != null && unitIcon.character == character.CharacterType && unitIcon.side == character.Side));
         ActiveAbilityIcons.ForEach(aaIcon => aaIcon.gameObject.SetActive(character != null && aaIcon.activeAbilityType == character.ActiveAbility.AbilityType && aaIcon.disabled == !character.MayPerformActiveAbility() && (aaIcon.side == character.Side || aaIcon.disabled)));
         PassiveAbilityIcons.ForEach(paIcon => paIcon.gameObject.SetActive(character != null && paIcon.passiveAbilityType == character.PassiveAbility.AbilityType && paIcon.disabled == character.PassiveAbility.IsDisabled() && (paIcon.side == character.Side || paIcon.disabled)));
     }
 
-    private void UpdateInfoBox(PlayerType player, UIAction uIAction)
-    {
-        buttons.SetActive(UIClickHandler.CurrentCharacter == null && uIAction != UIAction.OFFER_DRAW);
-    }
-
     private void OnDestroy()
     {
         GameplayEvents.OnCharacterSelectionChange -= UpdateInfoBox;
-        GameplayEvents.OnExecuteUIAction -= UpdateInfoBox;
     }
 }

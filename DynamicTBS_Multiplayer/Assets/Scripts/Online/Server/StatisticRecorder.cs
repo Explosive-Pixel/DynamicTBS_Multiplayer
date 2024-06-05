@@ -443,12 +443,7 @@ public class StatisticRecorder : MonoBehaviour
 
     private List<PlayerType> GetPlayerTypes()
     {
-        var playerTypes = new List<PlayerType>();
-        foreach (PlayerType playerType in Enum.GetValues(typeof(PlayerType)))
-        {
-            playerTypes.Add(playerType);
-        }
-        return playerTypes;
+        return new List<PlayerType>() { PlayerType.pink, PlayerType.blue };
     }
 
     private List<MapType> GetMapTypes()

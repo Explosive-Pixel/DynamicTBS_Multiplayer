@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 using System.Linq;
 
 public class Character : MonoBehaviour
@@ -10,8 +9,6 @@ public class Character : MonoBehaviour
     [SerializeField] private int maxHitPoints;
     [SerializeField] private int moveSpeed;
     [SerializeField] private int attackRange;
-
-    [SerializeField] private GameObject activeHighlight;
 
     protected CharacterType characterType;
     private PlayerType side;
@@ -22,7 +19,6 @@ public class Character : MonoBehaviour
     private bool isClickable = false;
     private int hitPoints;
     private int activeAbilityCooldown;
-    private State state;
 
     // States whether the character can be targeted by another character to get attacked/healed
     public delegate bool IsTargetable(Character attacker);
@@ -53,7 +49,6 @@ public class Character : MonoBehaviour
     public int HitPoints { get { return hitPoints; } set { hitPoints = Mathf.Max(value, 0); UpdateHitPoints(); } }
     public int ActiveAbilityCooldown { get { return activeAbilityCooldown; } set { activeAbilityCooldown = value; UpdateCooldown(); } }
     public bool IsClickable { get { return isClickable; } set { isClickable = value; } }
-    public State State { get { return state; } }
 
     public void Init(CharacterType type, PlayerType side)
     {
@@ -78,7 +73,7 @@ public class Character : MonoBehaviour
 
             CharacterEvents.CharacterTakesDamage(this, actualDamage);
 
-            if (HitPoints <= 0)
+            if (IsDead())
             {
                 Die();
             }
@@ -89,7 +84,7 @@ public class Character : MonoBehaviour
     public void Heal(int healPoints)
     {
         hitPoints += healPoints;
-        HitPoints = Mathf.Max(maxHitPoints, hitPoints);
+        HitPoints = Mathf.Min(maxHitPoints, hitPoints);
     }
 
     public bool HasFullHP()
@@ -97,20 +92,19 @@ public class Character : MonoBehaviour
         return HitPoints == maxHitPoints;
     }
 
-    public void SetState(CharacterStateType stateType)
+    public bool IsDead()
     {
-        state = CharacterStateFactory.Create(stateType, gameObject);
+        return HitPoints <= 0;
     }
 
-    private void ResetState()
+    private void ResetStates()
     {
-        state?.Destroy();
-        state = null;
+        gameObject.GetComponents<IState>().ToList().ForEach(state => state.Destroy());
     }
 
     public virtual void Die()
     {
-        ResetState();
+        ResetStates();
         CharacterEvents.CharacterDies(this, gameObject.transform.position);
         Destroy(gameObject);
     }
@@ -191,16 +185,6 @@ public class Character : MonoBehaviour
         }
     }
 
-    private void HighlightCharacter(Character character)
-    {
-        Highlight(character == this);
-    }
-
-    private void Highlight(bool highlight)
-    {
-        activeHighlight.SetActive(highlight);
-    }
-
     private void UpdateSide()
     {
         gameObject.GetComponentsInChildren<SideHandler>(true).ToList().ForEach(sideHandler => sideHandler.SetSide(side));
@@ -222,14 +206,12 @@ public class Character : MonoBehaviour
     {
         GameEvents.OnGamePhaseStart += PrepareCharacter;
         GameplayEvents.OnFinishAction += SetActiveAbilityOnCooldown;
-        GameplayEvents.OnCharacterSelectionChange += HighlightCharacter;
     }
 
     private void UnsubscribeEvents()
     {
         GameEvents.OnGamePhaseStart -= PrepareCharacter;
         GameplayEvents.OnFinishAction -= SetActiveAbilityOnCooldown;
-        GameplayEvents.OnCharacterSelectionChange -= HighlightCharacter;
         GameplayEvents.OnPlayerTurnEnded -= ReduceActiveAbiliyCooldown;
     }
 
@@ -240,7 +222,6 @@ public class Character : MonoBehaviour
         if (UIClickHandler.CurrentCharacter == this)
             GameplayEvents.ChangeCharacterSelection(null);
 
-        ResetState();
         UnsubscribeEvents();
     }
 }

@@ -26,7 +26,7 @@ public class OnlineLobbyCanvasHandler : MonoBehaviour
 
     private void Awake()
     {
-        if (GameManager.gameType == GameType.ONLINE)
+        if (GameManager.GameType == GameType.ONLINE)
         {
             active = true;
 

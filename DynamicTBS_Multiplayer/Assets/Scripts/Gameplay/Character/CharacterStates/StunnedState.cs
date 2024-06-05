@@ -1,19 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 
-public class StunnedState : State
+public class StunnedState : MonoBehaviour, IState
 {
-    public const int StunDuration = 1;
+    private Character character;
 
-    protected override int Duration { get { return StunDuration; } }
-    private static readonly string blueStunPrefabPath = "EffectPrefabs/StunMarkerBluePrefab";
-    private static readonly string pinkStunPrefabPath = "EffectPrefabs/StunMarkerPinkPrefab";
-
-    public StunnedState(GameObject parent) : base(parent)
+    public static StunnedState Create(GameObject parent, int stunDuration, PlayerType stunningSide)
     {
-        Character character = parent.GetComponent<Character>();
+        StunnedState ss = parent.AddComponent<StunnedState>();
+        ss.Init(stunDuration, stunningSide);
+
+        return ss;
+    }
+
+    private void Init(int stunDuration, PlayerType stunningSide)
+    {
+        character = gameObject.GetComponent<Character>();
 
         var defaultIsDisabled = character.isDisabled;
         character.isDisabled = () =>
@@ -21,23 +24,29 @@ public class StunnedState : State
             if (IsStunned(character)) return true;
             return defaultIsDisabled();
         };
+
+        VisualizeStun(stunningSide);
+
+        RoundBasedCounter.Create(gameObject, stunDuration, Destroy);
     }
 
-    protected override GameObject LoadPrefab(GameObject parent)
+    private void VisualizeStun(PlayerType stunningSide)
     {
-        Character character = parent.GetComponent<Character>();
-
-        if (character != null)
-        {
-            string prefabPath = character.Side == PlayerType.blue ? blueStunPrefabPath : pinkStunPrefabPath;
-            return Resources.Load<GameObject>(prefabPath);
-        }
-
-        return null;
+        gameObject.GetComponentInChildren<StunHandler>(true).VisualizeStun(stunningSide);
     }
 
     private bool IsStunned(Character character)
     {
-        return character.State != null && character.State.GetType() == typeof(StunnedState) && character.State.IsActive();
+        return character.gameObject.GetComponent<StunnedState>() != null;
+    }
+
+    public void Destroy()
+    {
+        Destroy(this);
+    }
+
+    private void OnDestroy()
+    {
+        gameObject.GetComponentInChildren<StunHandler>().TurnOffStunVisualization();
     }
 }

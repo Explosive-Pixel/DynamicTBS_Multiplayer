@@ -34,7 +34,7 @@ public class MainMenuSceneManager : MonoBehaviour
 
     public void SwitchToLocalGameSetup()
     {
-        GameManager.gameType = GameType.LOCAL;
+        GameManager.GameType = GameType.LOCAL;
         SceneChangeManager.Instance.LoadScene(Scene.GAME_SETUP);
     }
 }

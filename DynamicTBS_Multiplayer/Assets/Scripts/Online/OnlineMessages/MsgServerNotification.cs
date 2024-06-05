@@ -47,7 +47,7 @@ public class MsgServerNotification : OnlineMessage
 
     public override void ReceivedOnClient()
     {
-        switch(serverNotification)
+        switch (serverNotification)
         {
             case ServerNotification.LOBBY_NOT_FOUND:
                 OnlineClient.Instance.ConnectionStatus = ConnectionStatus.LOBBY_NOT_FOUND;

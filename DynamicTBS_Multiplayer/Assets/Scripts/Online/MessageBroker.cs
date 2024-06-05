@@ -62,20 +62,21 @@ public class MessageBroker : MonoBehaviour
         if (!IsActive)
             return;
 
-        foreach(var cnnQueue in connections)
+        foreach (var cnnQueue in connections)
         {
             MessageQueue msgQueue = cnnQueue.Value;
 
-            if(msgQueue.currentMessageToAcknowledge != null)
+            if (msgQueue.currentMessageToAcknowledge != null)
             {
                 delta += Time.deltaTime;
-                if(delta >= waitForAcknowledgementInterval)
+                if (delta >= waitForAcknowledgementInterval)
                 {
                     delta = 0;
                     SendMessage(msgQueue.currentMessageToAcknowledge);
                     return;
                 }
-            } else
+            }
+            else
             {
                 if (msgQueue.queue.Count > 0)
                 {
@@ -89,7 +90,16 @@ public class MessageBroker : MonoBehaviour
     public void RemoveConnection(NetworkConnection cnn)
     {
         if (connections.ContainsKey(cnn))
+        {
+            // Send remaining message to Client before removing it
+            MessageQueue msgQueue = connections[cnn];
+            if (msgQueue.queue.Count > 0)
+            {
+                SendMessage(msgQueue.queue.Dequeue());
+            }
+
             connections.Remove(cnn);
+        }
 
         if (receivedMessages.ContainsKey(cnn))
             receivedMessages.Remove(cnn);
@@ -102,13 +112,13 @@ public class MessageBroker : MonoBehaviour
 
     private void SendMessage(OnlineMessage msg, Receiver receiver)
     {
-        if(!connections.ContainsKey(receiver.networkConnection))
+        if (!connections.ContainsKey(receiver.networkConnection))
         {
             connections.Add(receiver.networkConnection, new MessageQueue());
         }
 
         Letter letter = new Letter(msg, receiver);
-        if(messagesNotToBeAcknowledged.Contains(msg.Code))
+        if (messagesNotToBeAcknowledged.Contains(msg.Code))
         {
             SendMessage(letter);
             return;
@@ -132,7 +142,7 @@ public class MessageBroker : MonoBehaviour
             ConfirmAcknowledgement(sender, ((MsgAcknowledgement)msg).msgId);
             return;
         }
-        
+
         if (!messagesNotToBeAcknowledged.Contains(msg.Code))
         {
             // Debug.Log("Received msg " + msg + " with id " + msg.Id);
@@ -162,12 +172,12 @@ public class MessageBroker : MonoBehaviour
         {
             msgQueue.currentMessageToAcknowledge = null;
             // Debug.Log("ACKNOWLEDGE: Connection confirmed reception of msg with id " + msgId);
-        } 
+        }
     }
 
     private bool IgnoreMessage(OnlineMessage msg, NetworkConnection sender)
     {
-        if(!receivedMessages.ContainsKey(sender))
+        if (!receivedMessages.ContainsKey(sender))
         {
             receivedMessages.Add(sender, new(5));
         }

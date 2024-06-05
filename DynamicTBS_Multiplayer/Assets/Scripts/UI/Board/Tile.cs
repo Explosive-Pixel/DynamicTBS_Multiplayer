@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using System.Linq;
 
 public class Tile : MonoBehaviour
 {
@@ -29,15 +30,12 @@ public class Tile : MonoBehaviour
 
     public Character CurrentInhabitant { get { return gameObject.GetComponentInChildren<Character>(); } }
 
-    private State state;
-
     public delegate bool IsChangeable();
     public IsChangeable isChangeable = () => true;
 
     public void Init(TileType tileType, PlayerType side)
     {
         this.side = side;
-        state = null;
 
         row = int.Parse(Name[1].ToString()) - 1;
         column = ((int)Name[0]) - 65;
@@ -56,7 +54,7 @@ public class Tile : MonoBehaviour
         this.tileType = tileType;
 
         if (IsHole())
-            ResetState();
+            ResetStates();
 
         gameObject.GetComponent<SpriteRenderer>().enabled = tileType != TileType.EmptyTile;
         machineCore.SetActive(tileType == TileType.GoalTile);
@@ -66,15 +64,9 @@ public class Tile : MonoBehaviour
         MasterStart(PlayerManager.GetOtherSide(side)).SetActive(false);
     }
 
-    public void SetState(TileStateType stateType)
+    private void ResetStates()
     {
-        state = TileStateFactory.Create(stateType, gameObject);
-    }
-
-    private void ResetState()
-    {
-        state?.Destroy();
-        state = null;
+        gameObject.GetComponents<IState>().ToList().ForEach(state => state.Destroy());
     }
 
     public bool IsGoal()
@@ -124,7 +116,6 @@ public class Tile : MonoBehaviour
 
     private void OnDestroy()
     {
-        ResetState();
         UnsubscribeEvents();
     }
 }

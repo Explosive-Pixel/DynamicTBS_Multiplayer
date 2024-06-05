@@ -11,7 +11,7 @@ public class PlayerManager : MonoBehaviour
 
     private static PlayerType currentPlayer;
     public static PlayerType CurrentPlayer { get { return currentPlayer; } }
-    public static PlayerType ExecutingPlayer { get { return GameManager.gameType == GameType.ONLINE ? OnlineClient.Instance.Side : CurrentPlayer; } }
+    public static PlayerType ExecutingPlayer { get { return GameManager.GameType == GameType.ONLINE ? OnlineClient.Instance.Side : CurrentPlayer; } }
 
     private static Dictionary<GamePhase, PlayerType> startPlayer;
     public static Dictionary<GamePhase, PlayerType> StartPlayer { get { return startPlayer; } }
@@ -63,7 +63,12 @@ public class PlayerManager : MonoBehaviour
             return;
 
         currentPlayer = startPlayer[gamePhase];
+        CurrentPlayerChanged();
+    }
 
+    private void ResetCurrentPlayer(GamePhase gamePhase)
+    {
+        currentPlayer = PlayerType.none;
         CurrentPlayerChanged();
     }
 
@@ -77,11 +82,13 @@ public class PlayerManager : MonoBehaviour
     private void SubscribeEvents()
     {
         GameEvents.OnGamePhaseStart += SetStartPlayer;
+        GameEvents.OnGamePhaseEnd += ResetCurrentPlayer;
     }
 
     private void UnsubscribeEvents()
     {
         GameEvents.OnGamePhaseStart -= SetStartPlayer;
+        GameEvents.OnGamePhaseEnd -= ResetCurrentPlayer;
     }
 
     #endregion

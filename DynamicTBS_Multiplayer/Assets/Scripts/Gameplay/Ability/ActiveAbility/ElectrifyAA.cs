@@ -6,6 +6,9 @@ public class ElectrifyAA : MonoBehaviour, IActiveAbility
 {
     [SerializeField] private int aaCooldown; // 3
     [SerializeField] private int electrifyRadius; // 1
+    [SerializeField] private int electrifyDuration; // 2
+    [SerializeField] private int electrifyStunDuration; // 1
+    [SerializeField] private GameObject electrifyPrefab;
 
     public static int radius;
 
@@ -27,6 +30,11 @@ public class ElectrifyAA : MonoBehaviour, IActiveAbility
     {
         electrifyAAAction.CreateActionDestinations(character);
         ActionRegistry.Register(electrifyAAAction);
+    }
+
+    public void ElectrifyTile(Tile tile)
+    {
+        ElectrifiedState.Create(tile.gameObject, electrifyDuration, electrifyStunDuration, electrifyPrefab, character.Side);
     }
 
     public int CountActionDestinations()

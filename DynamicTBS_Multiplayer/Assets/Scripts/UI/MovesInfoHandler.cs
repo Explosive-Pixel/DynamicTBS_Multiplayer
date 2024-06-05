@@ -15,6 +15,14 @@ public class MovesInfoHandler : MonoBehaviour
     {
         displayText.text = "";
 
+        GameEvents.OnGamePhaseStart += SetActive;
+    }
+
+    private void SetActive(GamePhase gamePhase)
+    {
+        if (gamePhase != GamePhase.GAMEPLAY)
+            return;
+
         GameplayEvents.OnFinishAction += WriteMovesToString;
         GameplayEvents.OnPlayerTurnAborted += WriteAbortTurnToString;
     }
@@ -147,6 +155,7 @@ public class MovesInfoHandler : MonoBehaviour
 
     private void OnDestroy()
     {
+        GameEvents.OnGamePhaseStart -= SetActive;
         GameplayEvents.OnFinishAction -= WriteMovesToString;
         GameplayEvents.OnPlayerTurnAborted -= WriteAbortTurnToString;
     }

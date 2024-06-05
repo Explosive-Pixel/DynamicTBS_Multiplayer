@@ -58,7 +58,7 @@ public class OnlineClientMessageSender : MonoBehaviour
             OnlineClient.Instance.SendToServer(new MsgUpdateServer
             {
                 currentPlayer = currentPlayer,
-                gamePhase = GameManager.gamePhase
+                gamePhase = GameManager.CurrentGamePhase
             });
         }
     }

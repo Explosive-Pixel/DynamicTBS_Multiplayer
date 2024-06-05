@@ -324,7 +324,7 @@ public class AudioManager : MonoBehaviour
         AudioEvents.OnButtonPress += ButtonPressAudio;
 
         GameEvents.OnGameStart += SubscribeEventsOnDraftStart;
-        GameEvents.OnGamePhaseEnd += SubscribeEventsAfterPlacement;
+        GameEvents.OnGamePhaseStart += SubscribeGameplayEvents;
         AudioEvents.OnMainMenuEnter += UnsubscribeEventsOnReturnToMenu;
     }
 
@@ -335,7 +335,6 @@ public class AudioManager : MonoBehaviour
             DraftEvents.OnCharacterCreated += UnitDraftAudio;
             PlacementEvents.OnPlaceCharacter += UnitPlacementAudio;
             GameplayEvents.OnPlayerTurnEnded += TurnChangeAudio;
-            GameplayEvents.OnRestartGame += PlayAtmo;
             GameplayEvents.OnGameOver += StopAtmo;
             AudioEvents.OnSpawnMasters += MasterSpawnAudio;
             AudioEvents.OnTimeLow += LowTimeAudio;
@@ -343,9 +342,9 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    private void SubscribeEventsAfterPlacement(GamePhase gamePhase)
+    private void SubscribeGameplayEvents(GamePhase gamePhase)
     {
-        if (!subscriptionsActive && gamePhase == GamePhase.PLACEMENT)
+        if (!subscriptionsActive && gamePhase == GamePhase.GAMEPLAY)
         {
             GameplayEvents.OnFinishAction += ActionAudio;
             AudioEvents.OnAdrenalin += AdrenalinAudio;
@@ -362,7 +361,6 @@ public class AudioManager : MonoBehaviour
         DraftEvents.OnCharacterCreated -= UnitDraftAudio;
         PlacementEvents.OnPlaceCharacter -= UnitPlacementAudio;
         GameplayEvents.OnPlayerTurnEnded -= TurnChangeAudio;
-        GameplayEvents.OnRestartGame -= PlayAtmo;
         GameplayEvents.OnGameOver -= StopAtmo;
         AudioEvents.OnSpawnMasters -= MasterSpawnAudio;
         AudioEvents.OnTimeLow -= LowTimeAudio;
@@ -378,7 +376,7 @@ public class AudioManager : MonoBehaviour
         AudioEvents.OnButtonPress -= ButtonPressAudio;
 
         GameEvents.OnGameStart -= SubscribeEventsOnDraftStart;
-        GameEvents.OnGamePhaseEnd -= SubscribeEventsAfterPlacement;
+        GameEvents.OnGamePhaseStart -= SubscribeGameplayEvents;
         AudioEvents.OnMainMenuEnter -= UnsubscribeEventsOnReturnToMenu;
     }
 

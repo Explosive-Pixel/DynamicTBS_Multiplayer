@@ -15,7 +15,7 @@ public class AdrenalinPA : MonoBehaviour, IPassiveAbility
 
     public void Apply()
     {
-        CharacterEvents.OnCharacterTakesDamage += ResetActiveAbilityCooldown;
+        CharacterEvents.OnCharacterReceivesDamage += ResetActiveAbilityCooldown;
     }
 
     public bool IsDisabled()
@@ -25,15 +25,17 @@ public class AdrenalinPA : MonoBehaviour, IPassiveAbility
 
     private void ResetActiveAbilityCooldown(Character character, int damage)
     {
-        if (character == owner)
+        if (character == owner && !character.IsDead())
         {
-            AudioEvents.AdrenalinRelease();
+            if (owner.ActiveAbilityCooldown > 0)
+                AudioEvents.AdrenalinRelease();
+
             owner.ActiveAbilityCooldown = 0;
         }
     }
 
     private void OnDestroy()
     {
-        CharacterEvents.OnCharacterTakesDamage -= ResetActiveAbilityCooldown;
+        CharacterEvents.OnCharacterReceivesDamage -= ResetActiveAbilityCooldown;
     }
 }

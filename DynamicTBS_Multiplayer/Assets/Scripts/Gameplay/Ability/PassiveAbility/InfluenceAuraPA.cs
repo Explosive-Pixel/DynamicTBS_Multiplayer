@@ -9,6 +9,9 @@ public class InfluenceAuraPA : MonoBehaviour, IPassiveAbility
     [SerializeField] private PatternType influenceAuraPatternType; // = PatternType.Star;
 
     [SerializeField] private GameObject masterTakeoverProgression;
+    [SerializeField] private GameObject characterSprite;
+    [SerializeField] private Color influenceColorPink;
+    [SerializeField] private Color influenceColorBlue;
 
     public PassiveAbilityType AbilityType { get { return PassiveAbilityType.INFLUENCE_AURA; } }
 
@@ -70,13 +73,22 @@ public class InfluenceAuraPA : MonoBehaviour, IPassiveAbility
 
     private void UpdateInfluenceAnimator(Character character, int influence)
     {
-        GameObject child = UIUtils.FindChildGameObject(character.gameObject, masterTakeoverProgression.name);
-        Animator animator = child.GetComponentInChildren<Animator>();
+        /* GameObject child = UIUtils.FindChildGameObject(character.gameObject, masterTakeoverProgression.name);
+         Animator animator = child.GetComponentInChildren<Animator>();
 
-        if (influence == 0)
-            animator.Rebind();
+         if (influence == 0)
+             animator.Rebind();
 
-        UIUtils.UpdateAnimator(animator, influence);
+         UIUtils.UpdateAnimator(animator, influence);*/
+
+        GameObject sprite = UIUtils.FindChildGameObject(character.gameObject, characterSprite.name);
+        var assets = sprite.GetComponentsInChildren<SpriteRenderer>();
+        var defaultColor = new Color(0.981f, 0.981f, 0.981f, 1);
+
+        for (int i = 0; i < assets.Length; i++)
+        {
+            assets[i].color = i < influence ? (character.Side == PlayerType.pink ? influenceColorBlue : influenceColorPink) : defaultColor;
+        }
     }
 
     private void OnDestroy()

@@ -8,37 +8,42 @@ using System.Linq;
 public class DraftManager : MonoBehaviour
 {
     [SerializeField] private List<int> draftSequence;
-    [SerializeField] private List<Vector3> spawnPositions;
+    [SerializeField] private List<GameObject> spawnPositions;
+    [SerializeField] private float characterScaling;
 
     private static readonly List<int> DraftSequence = new();
     private static int draftCounter;
     private static int draftSequenceIndex;
     private static int currentPlayerDraftCount;
     private static readonly List<Vector3> SpawnPositions = new();
+    private static Vector3 characterScaleVector;
 
     public static int CurrentPlayerTotalDraftCount { get { return draftSequenceIndex < DraftSequence.Count ? DraftSequence[draftSequenceIndex] : 0; } }
+    public static int CurrentPlayerRemainingDraftCount { get { return CurrentPlayerTotalDraftCount - currentPlayerDraftCount; } }
     public static int MaxDraftCount { get { return DraftSequence.Sum(); } }
+    public static int DraftCounter { get { return draftCounter; } }
 
     private static bool init = false;
-
-    private void Start()
-    {
-        GameManager.ChangeGamePhase(GamePhase.DRAFT);
-    }
 
     private void Awake()
     {
         if (!init)
         {
-            DraftSequence.AddRange(draftSequence);
-            SpawnPositions.AddRange(spawnPositions);
-
-            init = true;
+            Init();
         }
 
         draftCounter = 0;
         draftSequenceIndex = 0;
         currentPlayerDraftCount = 0;
+    }
+
+    private void Init()
+    {
+        DraftSequence.AddRange(draftSequence);
+        SpawnPositions.AddRange(spawnPositions.ConvertAll(go => go.transform.position));
+        characterScaleVector = new Vector3(characterScaling, characterScaling, 1);
+
+        init = true;
     }
 
     public static void DraftCharacter(CharacterType type, PlayerType side)
@@ -47,10 +52,13 @@ public class DraftManager : MonoBehaviour
 
         Character character = CharacterFactory.CreateCharacter(type, side);
         character.gameObject.transform.position = SpawnPositions[draftCounter];
+        character.gameObject.transform.localScale = characterScaleVector;
 
         DraftEvents.CharacterCreated(character);
 
         AdvanceDraftOrder();
+
+        DraftEvents.FinishDraftAction();
     }
 
     public static void RandomDrafts(PlayerType side)
@@ -75,7 +83,7 @@ public class DraftManager : MonoBehaviour
             return 0;
         }
 
-        return CurrentPlayerTotalDraftCount - currentPlayerDraftCount;
+        return CurrentPlayerRemainingDraftCount;
     }
 
     private static void AdvanceDraftOrder()
@@ -85,15 +93,17 @@ public class DraftManager : MonoBehaviour
 
         if (currentPlayerDraftCount == CurrentPlayerTotalDraftCount)
         {
-            currentPlayerDraftCount = 0;
             draftSequenceIndex++;
+
+            if (draftSequenceIndex == DraftSequence.Count)
+            {
+                DraftCompleted();
+                return;
+            }
+
+            currentPlayerDraftCount = 0;
+
             PlayerManager.NextPlayer();
-        }
-
-
-        if (draftSequenceIndex == DraftSequence.Count)
-        {
-            DraftCompleted();
         }
     }
 

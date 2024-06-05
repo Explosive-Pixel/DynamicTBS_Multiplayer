@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class ActiveAbilityIconHandler : MonoBehaviour, IClickableObject
 {
+    [SerializeField] private ClickPermission clickPermission;
+
+    public ClickPermission ClickPermission { get { return clickPermission; } }
+
     public void OnClick()
     {
-        UIClickHandler.CurrentCharacter.ExecuteActiveAbility();
+        if (GameManager.CurrentGamePhase == GamePhase.GAMEPLAY)
+            UIClickHandler.CurrentCharacter.ExecuteActiveAbility();
     }
 }
