@@ -183,14 +183,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7032467679961486036}
-  - component: {fileID: 7252216595489178427}
   m_Layer: 0
   m_Name: MechanicInformation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7032467679961486036
 Transform:
   m_ObjectHideFlags: 0
@@ -208,21 +207,6 @@ Transform:
   m_Father: {fileID: 5317760985565649479}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7252216595489178427
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 463963719962122154}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9197dd1fc5cd41dca6054805e4c2896, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gamePhase: 0
-  pinkGameObject: {fileID: 5317760986839495662}
-  blueGameObject: {fileID: 5317760985445844187}
 --- !u!1 &511657501432959785
 GameObject:
   m_ObjectHideFlags: 0
@@ -529,14 +513,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9005788178220803511}
-  - component: {fileID: 8362725933895941081}
   m_Layer: 0
   m_Name: RunnerInformation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &9005788178220803511
 Transform:
   m_ObjectHideFlags: 0
@@ -554,21 +537,6 @@ Transform:
   m_Father: {fileID: 5317760985565649479}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8362725933895941081
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2459799073050342477}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9197dd1fc5cd41dca6054805e4c2896, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gamePhase: 0
-  pinkGameObject: {fileID: 5317760985419446376}
-  blueGameObject: {fileID: 5317760985419657583}
 --- !u!1 &2520559064769332441
 GameObject:
   m_ObjectHideFlags: 0
@@ -1242,14 +1210,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7972099862882129605}
-  - component: {fileID: 4196770388778815720}
   m_Layer: 0
   m_Name: ShooterInformation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7972099862882129605
 Transform:
   m_ObjectHideFlags: 0
@@ -1267,21 +1234,6 @@ Transform:
   m_Father: {fileID: 5317760985565649479}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4196770388778815720
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3589281810301979971}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9197dd1fc5cd41dca6054805e4c2896, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gamePhase: 0
-  pinkGameObject: {fileID: 5317760985425132723}
-  blueGameObject: {fileID: 5317760985768418183}
 --- !u!1 &3608146463623216371
 GameObject:
   m_ObjectHideFlags: 0
@@ -1964,13 +1916,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5317760985419446377}
+  - component: {fileID: 6622837585805323064}
   m_Layer: 0
   m_Name: PinkRunnerInformation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5317760985419446377
 Transform:
   m_ObjectHideFlags: 0
@@ -1988,6 +1941,20 @@ Transform:
   m_Father: {fileID: 9005788178220803511}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6622837585805323064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5317760985419446376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d06814452ecf144058b18517a4c4be5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterType: 4
+  side: 1
 --- !u!1 &5317760985419657583
 GameObject:
   m_ObjectHideFlags: 0
@@ -1997,13 +1964,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5317760985419657580}
+  - component: {fileID: 903455805315657276}
   m_Layer: 0
   m_Name: BlueRunnerInformation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5317760985419657580
 Transform:
   m_ObjectHideFlags: 0
@@ -2021,6 +1989,20 @@ Transform:
   m_Father: {fileID: 9005788178220803511}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &903455805315657276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5317760985419657583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d06814452ecf144058b18517a4c4be5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterType: 4
+  side: 2
 --- !u!1 &5317760985425132723
 GameObject:
   m_ObjectHideFlags: 0
@@ -2030,13 +2012,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5317760985425132720}
+  - component: {fileID: 209570766464884896}
   m_Layer: 0
   m_Name: PinkShooterInformation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5317760985425132720
 Transform:
   m_ObjectHideFlags: 0
@@ -2054,6 +2037,20 @@ Transform:
   m_Father: {fileID: 7972099862882129605}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &209570766464884896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5317760985425132723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d06814452ecf144058b18517a4c4be5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterType: 5
+  side: 1
 --- !u!1 &5317760985436178579
 GameObject:
   m_ObjectHideFlags: 0
@@ -2170,17 +2167,18 @@ MonoBehaviour:
     Active Ability: <b>Change Floor</b>
 
     Changes a floor square to a
-    hole or the other way around in a <i>radius</i> of <b>2</b>. Occupied squares
-    can only be changed in a <i>radius</i> of <b>1</b>, instantly killing the occupying
-    units.
+    hole or the other way around in a <i>star pattern</i> in range <b>2</b>, unless
+    the path is blocked by other units. Occupied squares can only be changed in range
+    <b>1</b>, instantly eliminating the occupying unit.
 
     Cooldown: <b>3</b> turns
 
 
-    Passive Ability: <b>Alert</b>
+    Passive
+    Ability: <b>Alert</b>
 
-    If
-    this unit takes damage, its cooldown is set to <b>0</b>.'
+    This unit always makes sure that the floor underneath
+    it cannot be changed.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2261,13 +2259,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5317760985445844184}
+  - component: {fileID: 942133528041323211}
   m_Layer: 0
   m_Name: BlueMechanicInformation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5317760985445844184
 Transform:
   m_ObjectHideFlags: 0
@@ -2285,6 +2284,20 @@ Transform:
   m_Father: {fileID: 7032467679961486036}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &942133528041323211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5317760985445844187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d06814452ecf144058b18517a4c4be5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterType: 2
+  side: 2
 --- !u!1 &5317760985481038215
 GameObject:
   m_ObjectHideFlags: 0
@@ -2378,13 +2391,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5317760985485142360}
+  - component: {fileID: 5094125501736966690}
   m_Layer: 0
   m_Name: PinkDocInformation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5317760985485142360
 Transform:
   m_ObjectHideFlags: 0
@@ -2402,6 +2416,20 @@ Transform:
   m_Father: {fileID: 8357914413587145922}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5094125501736966690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5317760985485142363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d06814452ecf144058b18517a4c4be5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterType: 3
+  side: 1
 --- !u!1 &5317760985507940011
 GameObject:
   m_ObjectHideFlags: 0
@@ -2450,7 +2478,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.95, y: 1.1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6570860212990212899
 MonoBehaviour:
@@ -2465,7 +2493,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterType: 4
-  clickPermission: 2
+  pinkHoverObject: {fileID: 5317760985419446376}
+  blueHoverObject: {fileID: 5317760985419657583}
 --- !u!114 &4208164413436000060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2478,8 +2507,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ec471b1ba4da430392f533cad3660ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hoverObject: {fileID: 2459799073050342477}
+  hoverObject: {fileID: 0}
   activationHover: {fileID: 3117271062215729259}
+  onHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onDrop:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5317760985519536550
 GameObject:
   m_ObjectHideFlags: 0
@@ -2596,18 +2631,19 @@ MonoBehaviour:
     Active Ability: <b>Heal</b>
 
     Throws a syringe in a <i>star pattern</i>
-    in a range of <b>2</b> to heal a unit for <b>1</b> health. Units may never have
-    more health than they started with. When being healed, a unit also receives a
-    movement buff of <b>+1</b> which is gone after its next move action.
+    in a range of <b>2</b> to heal a unit for <b>1</b> health, unless the path is
+    blocked by other units. Units may never have more health than they started with.
+    When being healed, a unit also receives a movement buff of <b>+1</b> which is
+    gone after its next move action.
 
-    Cooldown:
-    <b>3</b> turns
+    Cooldown: <b>3</b> turns
 
 
-    Passive Ability: <b>Adrenalin</b>
+    Passive
+    Ability: <b>Adrenalin</b>
 
-    If this unit takes
-    damage, its cooldown is set to <b>0</b>.'
+    If this unit takes damage, its cooldown is set
+    to <b>0</b>.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2843,7 +2879,7 @@ MonoBehaviour:
 
     If an allied unit is next to this one in a <i>cross
     pattern</i>, this unit will take all damage for its ally. Does not work on other
-    Tanks. If this unit is stunned, this ability gets disabled.'
+    Tanks.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2924,13 +2960,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5317760985704632567}
+  - component: {fileID: 3027234262514849207}
   m_Layer: 0
   m_Name: BlueDocInformation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5317760985704632567
 Transform:
   m_ObjectHideFlags: 0
@@ -2948,6 +2985,20 @@ Transform:
   m_Father: {fileID: 8357914413587145922}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3027234262514849207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5317760985704632566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d06814452ecf144058b18517a4c4be5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterType: 3
+  side: 2
 --- !u!1 &5317760985707132769
 GameObject:
   m_ObjectHideFlags: 0
@@ -3238,13 +3289,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5317760985768418180}
+  - component: {fileID: 7823440349620083200}
   m_Layer: 0
   m_Name: BlueShooterInformation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5317760985768418180
 Transform:
   m_ObjectHideFlags: 0
@@ -3262,6 +3314,20 @@ Transform:
   m_Father: {fileID: 7972099862882129605}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7823440349620083200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5317760985768418183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d06814452ecf144058b18517a4c4be5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterType: 5
+  side: 2
 --- !u!1 &5317760985792779814
 GameObject:
   m_ObjectHideFlags: 0
@@ -3424,7 +3490,7 @@ MonoBehaviour:
 
     If an allied unit is next to this one in a <i>cross
     pattern</i>, this unit will take all damage for its ally. Does not work on other
-    Tanks. If this unit is stunned, this ability gets disabled.'
+    Tanks.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4334,7 +4400,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.95, y: 1.1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1673004634729128534
 MonoBehaviour:
@@ -4349,7 +4415,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterType: 5
-  clickPermission: 2
+  pinkHoverObject: {fileID: 5317760985425132723}
+  blueHoverObject: {fileID: 5317760985768418183}
 --- !u!114 &8422077311056140124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4362,8 +4429,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ec471b1ba4da430392f533cad3660ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hoverObject: {fileID: 3589281810301979971}
+  hoverObject: {fileID: 0}
   activationHover: {fileID: 6618764343625580574}
+  onHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onDrop:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5317760986048144309
 GameObject:
   m_ObjectHideFlags: 0
@@ -4820,17 +4893,18 @@ MonoBehaviour:
     Active Ability: <b>Change Floor</b>
 
     Changes a floor square to a
-    hole or the other way around in a <i>radius</i> of <b>2</b>. Occupied squares
-    can only be changed in a <i>radius</i> of <b>1</b>, instantly killing the occupying
-    units.
+    hole or the other way around in a <i>star pattern</i> in range <b>2</b>, unless
+    the path is blocked by other units. Occupied squares can only be changed in range
+    <b>1</b>, instantly eliminating the occupying unit.
 
     Cooldown: <b>3</b> turns
 
 
-    Passive Ability: <b>Alert</b>
+    Passive
+    Ability: <b>Alert</b>
 
-    If
-    this unit takes damage, its cooldown is set to <b>0</b>.'
+    This unit always makes sure that the floor underneath
+    it cannot be changed.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -5969,13 +6043,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5317760986357741975}
+  - component: {fileID: 3264302981164563196}
   m_Layer: 0
   m_Name: PinkTankInformation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5317760986357741975
 Transform:
   m_ObjectHideFlags: 0
@@ -5993,6 +6068,20 @@ Transform:
   m_Father: {fileID: 5126449978188090578}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3264302981164563196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5317760986357741974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d06814452ecf144058b18517a4c4be5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterType: 6
+  side: 1
 --- !u!1 &5317760986358528324
 GameObject:
   m_ObjectHideFlags: 0
@@ -6733,18 +6822,19 @@ MonoBehaviour:
     Active Ability: <b>Heal</b>
 
     Throws a syringe in a <i>star pattern</i>
-    in a range of <b>2</b> to heal a unit for <b>1</b> health. Units may never have
-    more health than they started with. When being healed, a unit also receives a
-    movement buff of <b>+1</b> which is gone after its next move action.
+    in a range of <b>2</b> to heal a unit for <b>1</b> health, unless the path is
+    blocked by other units. Units may never have more health than they started with.
+    When being healed, a unit also receives a movement buff of <b>+1</b> which is
+    gone after its next move action.
 
-    Cooldown:
-    <b>3</b> turns
+    Cooldown: <b>3</b> turns
 
 
-    Passive Ability: <b>Adrenalin</b>
+    Passive
+    Ability: <b>Adrenalin</b>
 
-    If this unit takes
-    damage, its cooldown is set to <b>0</b>.'
+    If this unit takes damage, its cooldown is set
+    to <b>0</b>.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -6948,7 +7038,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.95, y: 1.1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8740434753487381280
 MonoBehaviour:
@@ -6963,7 +7053,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterType: 6
-  clickPermission: 2
+  pinkHoverObject: {fileID: 5317760986357741974}
+  blueHoverObject: {fileID: 5317760987292705664}
 --- !u!114 &2628538036273460193
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6976,8 +7067,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ec471b1ba4da430392f533cad3660ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hoverObject: {fileID: 7246492477571260172}
+  hoverObject: {fileID: 0}
   activationHover: {fileID: 1388811895758136823}
+  onHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onDrop:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5317760986661225157
 GameObject:
   m_ObjectHideFlags: 0
@@ -7198,7 +7295,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.95, y: 1.1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5768506920214234950
 MonoBehaviour:
@@ -7213,7 +7310,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterType: 2
-  clickPermission: 2
+  pinkHoverObject: {fileID: 5317760986839495662}
+  blueHoverObject: {fileID: 5317760985445844187}
 --- !u!114 &362639038641433147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7226,8 +7324,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ec471b1ba4da430392f533cad3660ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hoverObject: {fileID: 463963719962122154}
+  hoverObject: {fileID: 0}
   activationHover: {fileID: 3325659778585657408}
+  onHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onDrop:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5317760986736526209
 GameObject:
   m_ObjectHideFlags: 0
@@ -7942,13 +8046,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5317760986839495663}
+  - component: {fileID: 8903988633368070798}
   m_Layer: 0
   m_Name: PinkMechanicInformation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5317760986839495663
 Transform:
   m_ObjectHideFlags: 0
@@ -7966,6 +8071,20 @@ Transform:
   m_Father: {fileID: 7032467679961486036}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8903988633368070798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5317760986839495662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d06814452ecf144058b18517a4c4be5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterType: 2
+  side: 1
 --- !u!1 &5317760986866796279
 GameObject:
   m_ObjectHideFlags: 0
@@ -8098,7 +8217,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.95, y: 1.1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &579614562163939001
 MonoBehaviour:
@@ -8113,7 +8232,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterType: 3
-  clickPermission: 2
+  pinkHoverObject: {fileID: 5317760985485142363}
+  blueHoverObject: {fileID: 5317760985704632566}
 --- !u!114 &765355344417752074
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8126,8 +8246,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ec471b1ba4da430392f533cad3660ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hoverObject: {fileID: 8516127165951912303}
+  hoverObject: {fileID: 0}
   activationHover: {fileID: 2881591747545477628}
+  onHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onDrop:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5317760986893667066
 GameObject:
   m_ObjectHideFlags: 0
@@ -8817,13 +8943,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5317760987292705665}
+  - component: {fileID: 608402528281624034}
   m_Layer: 0
   m_Name: BlueTankInformation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5317760987292705665
 Transform:
   m_ObjectHideFlags: 0
@@ -8841,6 +8968,20 @@ Transform:
   m_Father: {fileID: 5126449978188090578}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &608402528281624034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5317760987292705664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d06814452ecf144058b18517a4c4be5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterType: 6
+  side: 2
 --- !u!1 &5317760987333171489
 GameObject:
   m_ObjectHideFlags: 0
@@ -9491,14 +9632,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5126449978188090578}
-  - component: {fileID: 1984291022553228741}
   m_Layer: 0
   m_Name: TankInformation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5126449978188090578
 Transform:
   m_ObjectHideFlags: 0
@@ -9516,21 +9656,6 @@ Transform:
   m_Father: {fileID: 5317760985565649479}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1984291022553228741
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7246492477571260172}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9197dd1fc5cd41dca6054805e4c2896, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gamePhase: 0
-  pinkGameObject: {fileID: 5317760986357741974}
-  blueGameObject: {fileID: 5317760987292705664}
 --- !u!1 &7886999381395990822
 GameObject:
   m_ObjectHideFlags: 0
@@ -9712,14 +9837,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8357914413587145922}
-  - component: {fileID: 3765469920396217718}
   m_Layer: 0
   m_Name: DocInformation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8357914413587145922
 Transform:
   m_ObjectHideFlags: 0
@@ -9737,21 +9861,6 @@ Transform:
   m_Father: {fileID: 5317760985565649479}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3765469920396217718
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8516127165951912303}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9197dd1fc5cd41dca6054805e4c2896, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gamePhase: 0
-  pinkGameObject: {fileID: 5317760985485142363}
-  blueGameObject: {fileID: 5317760985704632566}
 --- !u!1 &8578280091114290898
 GameObject:
   m_ObjectHideFlags: 0

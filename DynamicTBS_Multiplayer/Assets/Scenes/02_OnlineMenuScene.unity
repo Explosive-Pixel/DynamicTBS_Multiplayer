@@ -1058,6 +1058,7 @@ GameObject:
   - component: {fileID: 954437388}
   - component: {fileID: 954437387}
   - component: {fileID: 954437391}
+  - component: {fileID: 954437392}
   m_Layer: 5
   m_Name: OnlineMetadataCanvas
   m_TagString: Untagged
@@ -1161,6 +1162,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   multiplayerMetadata: {fileID: 954437385}
   infoText: {fileID: 542855482}
+--- !u!114 &954437392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 954437385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 089b15a4e0604418f8a2a0e70ff16045, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &975854606
 GameObject:
   m_ObjectHideFlags: 0
@@ -1282,7 +1295,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7cab306c488c004b9b4ed2b4f26106b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  client: {fileID: 1316232591}
+  client: {fileID: 0}
+  wsClient: {fileID: 1316232594}
   userName: {fileID: 157189375}
   lobbyNameOrId: {fileID: 992222381}
   spectatorToggle: {fileID: 1489946253}
@@ -1590,9 +1604,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1316232590}
-  - component: {fileID: 1316232591}
-  - component: {fileID: 1316232592}
-  - component: {fileID: 1316232593}
+  - component: {fileID: 1316232594}
+  - component: {fileID: 1316232595}
   m_Layer: 0
   m_Name: OnlineGameManager
   m_TagString: Untagged
@@ -1615,7 +1628,7 @@ Transform:
   m_Father: {fileID: 1418079725}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1316232591
+--- !u!114 &1316232594
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1624,11 +1637,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1316232587}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b23c71e990211dd46bcbf0d38d5b9c4d, type: 3}
+  m_Script: {fileID: 11500000, guid: b9309a50f8ec9481abb5c6e1c7d4194a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  messageBroker: {fileID: 1316232593}
---- !u!114 &1316232592
+--- !u!114 &1316232595
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1637,19 +1649,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1316232587}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aef353554f4b68645a74240c0d1a0e0f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1316232593
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1316232587}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75d5362f3d2184446b79ab3c95e24beb, type: 3}
+  m_Script: {fileID: 11500000, guid: 706a79be8d3cf4735928fabb00791384, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1344535524
