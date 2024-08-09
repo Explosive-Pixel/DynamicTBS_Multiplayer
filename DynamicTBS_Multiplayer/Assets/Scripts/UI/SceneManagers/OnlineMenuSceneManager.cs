@@ -12,7 +12,7 @@ public class OnlineMenuSceneManager : MonoBehaviour
         GameEvents.OnGameIsLoading += ToggleOnlineLoadingScreen;
         onlineLoadingScreenCanvas.SetActive(false);
 
-        GoToOnlineMenu();
+        //GoToOnlineMenu();
     }
 
     private void ToggleOnlineLoadingScreen(bool isLoading)

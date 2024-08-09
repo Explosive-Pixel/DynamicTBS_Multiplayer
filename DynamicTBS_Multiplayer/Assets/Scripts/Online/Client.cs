@@ -60,7 +60,7 @@ public static class Client
     public static void TryJoinLobby(bool create, bool isReconnect)
     {
         Client.Active = true;
-        Client.ConnectionStatus = ConnectionStatus.CONNECTED;
+        //Client.ConnectionStatus = ConnectionStatus.CONNECTED;
 
         SendToServer(new WSMsgJoinLobby()
         {

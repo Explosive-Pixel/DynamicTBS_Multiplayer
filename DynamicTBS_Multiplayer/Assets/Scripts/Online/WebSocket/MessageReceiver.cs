@@ -17,6 +17,7 @@ public static class MessageReceiver
 
     public static void ReceiveMessage(string rawMsg)
     {
+        Debug.Log(rawMsg);
         WSMessage msg = WSMessage.Deserialize(rawMsg);
         ReceiveMessage(msg);
         msg.HandleMessage();

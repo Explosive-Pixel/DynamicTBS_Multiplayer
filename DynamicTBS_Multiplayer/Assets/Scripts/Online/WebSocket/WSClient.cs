@@ -25,6 +25,9 @@ public class WSClient : MonoBehaviour
     {
         Instance = this;
         destroyed = false;
+
+        hostname = ConfigManager.Instance.Hostname;
+        CreateWebsocketConnection(false);
     }
 
     #endregion
@@ -35,17 +38,17 @@ public class WSClient : MonoBehaviour
 
         Client.Init(role, userName, lobby);
 
-        CreateWebsocketConnection(createLobby, false);
+        //  CreateWebsocketConnection(createLobby, false);
     }
 
-    private void CreateWebsocketConnection(bool createLobby, bool isReconnect)
+    private void CreateWebsocketConnection(bool isReconnect)
     {
         Client.ConnectionStatus = ConnectionStatus.ATTEMPT_CONNECTION;
 
-        CreateWebsocketConnectionAsync(createLobby, isReconnect);
+        CreateWebsocketConnectionAsync(isReconnect);
     }
 
-    private async void CreateWebsocketConnectionAsync(bool createLobby, bool isReconnect)
+    private async void CreateWebsocketConnectionAsync(bool isReconnect)
     {
         Debug.Log("Trying to connect to server with hostname " + hostname);
 
@@ -55,10 +58,12 @@ public class WSClient : MonoBehaviour
         {
             Debug.Log("Successfully connected to server!");
             Active = true;
-            Client.TryJoinLobby(createLobby, isReconnect);
+            Client.ConnectionStatus = ConnectionStatus.CONNECTED;
 
             if (isReconnect)
             {
+                Client.TryJoinLobby(false, isReconnect);
+
                 while (unsendMsgs.Count > 0)
                 {
                     SendMessage(unsendMsgs.Dequeue());
@@ -96,7 +101,7 @@ public class WSClient : MonoBehaviour
     {
         if (Client.Active && !Active && !destroyed)
         {
-            CreateWebsocketConnection(false, true);
+            CreateWebsocketConnection(true);
         }
     }
 
