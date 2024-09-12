@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private PlayerType draftStartPlayer;
     [SerializeField] private PlayerType placementStartPlayer;
     [SerializeField] private PlayerType gameplayStartPlayer;
+    [SerializeField] private AIInputControler aiInputControler;
 
     private static PlayerType currentPlayer;
     public static PlayerType CurrentPlayer { get { return currentPlayer; } }
@@ -30,6 +32,13 @@ public class PlayerManager : MonoBehaviour
         currentPlayer = startPlayer[GamePhase.DRAFT];
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F))
+            MakeAITurn();
+
+    }
+
     public static PlayerType GetOtherSide(PlayerType side)
     {
         if (side == PlayerType.blue)
@@ -42,6 +51,7 @@ public class PlayerManager : MonoBehaviour
     public static void NextPlayer()
     {
         GameplayEvents.EndPlayerTurn(CurrentPlayer);
+        
 
         currentPlayer = GetOtherSide(currentPlayer);
         CurrentPlayerChanged();
@@ -75,6 +85,11 @@ public class PlayerManager : MonoBehaviour
     private static void CurrentPlayerChanged()
     {
         GameplayEvents.ChangeCurrentPlayer(CurrentPlayer);
+    }
+
+    private void MakeAITurn()
+    {
+        aiInputControler.PlayMove();
     }
 
     #region EventSubscriptions

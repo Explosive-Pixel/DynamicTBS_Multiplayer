@@ -14,6 +14,8 @@ public abstract class AIDifficultySO : ScriptableObject
     
     protected List<Character> AvailableCharacters;
     protected AIAction ActionToTake;
+    protected List<GameObject> ActionDestinations;
+
 
     public abstract AIAction CalculateBestMove();
 

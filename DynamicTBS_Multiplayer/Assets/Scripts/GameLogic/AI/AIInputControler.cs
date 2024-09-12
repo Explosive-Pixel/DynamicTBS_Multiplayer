@@ -1,8 +1,11 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class AIInputControler : MonoBehaviour
 {
-	private AIDifficultySO currentStrategy;
+	public AIDifficultySO currentStrategy;
 	private AIAction currentAction;
 
 	private void Start()
@@ -29,15 +32,7 @@ public class AIInputControler : MonoBehaviour
 			{
 				currentAction.Character.ExecuteActiveAbility();
 			}
-			else
-			{
-				ActionUtils.InstantiateAllActionPositions(currentAction.Character);
-				
-				if (currentAction.Target != null)
-				{
-					ActionUtils.ExecuteAction(currentAction.Target);
-				}
-			}
+			ActionUtils.ExecuteAction(currentAction.Target);
 		}
 	}
 }
