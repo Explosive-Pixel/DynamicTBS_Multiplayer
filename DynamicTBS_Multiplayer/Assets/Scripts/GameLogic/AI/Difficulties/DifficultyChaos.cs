@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -16,22 +17,33 @@ public class DifficultyChaos : AIDifficultySO
         {
             GetCharacterWithMoves();
         }
-        else
-        {
-                ActionToTake.Type = ActionType.Skip;
-                return ActionToTake;
-        }
-
+        
         ActionToTake.Type =
                 (ActionType)RandomNumberGenerator.GetInt32((int)ActionType.Move, (int)ActionType.ActiveAbility + 1);
-            if (ActionToTake.Type != ActionType.ActiveAbility)
+            if (ActionToTake.Type == ActionType.ActiveAbility && ActionToTake.Character.CanPerformActiveAbility())
+            {
+                ActionToTake.Character.ExecuteActiveAbility();
+            }
+            else
             {
                 ActionUtils.InstantiateAllActionPositions(ActionToTake.Character);
             }
+            
+            ActionDestinations = ActionRegistry.GetActions().ConvertAll(action => action.ActionDestinations).SelectMany(i => i).ToList();
+            
+            if (ActionDestinations.Count == 0)
+            {
+                ActionToTake.Character.ExecuteActiveAbility();
+                ActionDestinations = ActionRegistry.GetActions().ConvertAll(action => action.ActionDestinations).SelectMany(i => i).ToList();
+            }
             ActionToTake.Target = ActionDestinations[RandomNumberGenerator.GetInt32(0, ActionDestinations.Count)];
-        
-
-        return ActionToTake;
+            foreach (IAction action in ActionRegistry.GetActions())
+            {
+                if(action.ActionType == ActionToTake.Type)
+                    ActionDestinations.AddRange(action.ActionDestinations);
+            }
+            
+            return ActionToTake;
     }
 
     private void GetCharacterWithMoves()
@@ -40,9 +52,6 @@ public class DifficultyChaos : AIDifficultySO
         {
             ActionToTake.Character =
                 AvailableCharacters[RandomNumberGenerator.GetInt32(0, AvailableCharacters.Count)];
-            ActionUtils.InstantiateAllActionPositions(ActionToTake.Character);
-            ActionDestinations = ActionRegistry.GetActions()
-                .ConvertAll(action => action.ActionDestinations).SelectMany(i => i).ToList();
-        } while (ActionDestinations.Count == 0);
+        } while (!ActionToTake.Character.CanPerformAction());
     }
 }

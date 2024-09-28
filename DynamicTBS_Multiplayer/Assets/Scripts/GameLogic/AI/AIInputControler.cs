@@ -21,18 +21,8 @@ public class AIInputControler : MonoBehaviour
 	private void GetBestMove()
 	{
 		currentAction = currentStrategy.CalculateBestMove();
-		if (currentAction.Type == ActionType.Skip)
-		{
-			SkipAction.Execute();
-		}
-		else
-		{
 
-			if (currentAction.Type == ActionType.ActiveAbility)
-			{
-				currentAction.Character.ExecuteActiveAbility();
-			}
-			ActionUtils.ExecuteAction(currentAction.Target);
-		}
+		ActionUtils.ExecuteAction(currentAction.Target);
+		
 	}
 }

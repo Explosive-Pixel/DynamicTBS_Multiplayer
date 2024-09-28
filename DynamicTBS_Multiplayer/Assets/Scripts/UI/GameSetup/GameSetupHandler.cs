@@ -42,7 +42,7 @@ public class GameSetupHandler : MonoBehaviour
             TimerSetupType.STANDARD,
             new()
             {
-                { TimerType.DRAFT_AND_PLACEMENT, 300 },
+                { TimerType.DRAFT_AND_PLACEMENT, 0 },
                 { TimerType.GAMEPLAY, 90 }
             }
         },
