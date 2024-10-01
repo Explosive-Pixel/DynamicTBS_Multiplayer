@@ -16,9 +16,6 @@ public class OnlineMetadata : MonoBehaviour
 
     private void Update()
     {
-        if (!Client.Active)
-            return;
-
         switch (Client.ConnectionStatus)
         {
             case ConnectionStatus.IN_LOBBY:
@@ -42,11 +39,14 @@ public class OnlineMetadata : MonoBehaviour
 
     private void PrintMetadata()
     {
-        infoText.text = "Lobby ID: " + Client.LobbyId.FullId;
-        infoText.text += "\nConnected players: " + Metadata.PlayerCount;
-        if (Metadata.SpectatorCount > 0)
+        if (!Client.InLobby)
+            return;
+
+        infoText.text = "Lobby ID: " + Client.CurrentLobby.LobbyId.FullId;
+        infoText.text += "\nConnected players: " + Client.CurrentLobby.PlayerCount;
+        if (Client.CurrentLobby.SpectatorCount > 0)
         {
-            infoText.text += "\nSpectators: " + Metadata.SpectatorCount;
+            infoText.text += "\nSpectators: " + Client.CurrentLobby.SpectatorCount;
         }
     }
 }

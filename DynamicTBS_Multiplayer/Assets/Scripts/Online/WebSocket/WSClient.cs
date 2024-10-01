@@ -12,10 +12,10 @@ public class WSClient : MonoBehaviour
     private bool destroyed = false;
     private readonly Queue<WSMessage> unsendMsgs = new();
 
-    public bool Active { get; private set; } = false;
-
     private float timer = 0f;
     private const float keepAliveInterval = 25f; // in Seconds
+
+    private bool IsConnectedToServer { get { return websocket.State == WebSocketState.Open; } }
 
     #region SingletonImplementation
 
@@ -31,15 +31,6 @@ public class WSClient : MonoBehaviour
     }
 
     #endregion
-
-    public void Init(string hostname, ClientType role, string userName, LobbyId lobby, bool createLobby)
-    {
-        this.hostname = hostname;
-
-        Client.Init(role, userName, lobby);
-
-        //  CreateWebsocketConnection(createLobby, false);
-    }
 
     private void CreateWebsocketConnection(bool isReconnect)
     {
@@ -57,12 +48,12 @@ public class WSClient : MonoBehaviour
         websocket.OnOpen += () =>
         {
             Debug.Log("Successfully connected to server!");
-            Active = true;
+            Client.Active = true;
             Client.ConnectionStatus = ConnectionStatus.CONNECTED;
 
             if (isReconnect)
             {
-                Client.TryJoinLobby(false, isReconnect);
+                Client.Reconnect();
 
                 while (unsendMsgs.Count > 0)
                 {
@@ -79,10 +70,8 @@ public class WSClient : MonoBehaviour
 
         websocket.OnClose += (e) =>
         {
-            Active = false;
             Client.ConnectionStatus = ConnectionStatus.UNCONNECTED;
             Debug.Log("Connection to server closed!");
-
 
             TryReconnect();
         };
@@ -99,7 +88,7 @@ public class WSClient : MonoBehaviour
 
     private void TryReconnect()
     {
-        if (Client.Active && !Active && !destroyed)
+        if (Client.Active && !IsConnectedToServer && !destroyed)
         {
             CreateWebsocketConnection(true);
         }
@@ -107,7 +96,7 @@ public class WSClient : MonoBehaviour
 
     void Update()
     {
-        if (!Active)
+        if (!IsConnectedToServer)
             return;
 
         timer += Time.deltaTime;
@@ -124,7 +113,7 @@ public class WSClient : MonoBehaviour
 
     public async void SendMessage(WSMessage msg)
     {
-        if (!Active && websocket.State != WebSocketState.Open)
+        if (!IsConnectedToServer)
         {
             unsendMsgs.Enqueue(msg);
             return;

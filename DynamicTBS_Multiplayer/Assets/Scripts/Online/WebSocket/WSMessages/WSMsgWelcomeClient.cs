@@ -6,8 +6,6 @@ using System;
 [Serializable]
 public class WSMsgWelcomeClient : WSMessage
 {
-    public string lobbyName;
-    public bool isAdmin;
     public long syncTimestamp;
 
     public WSMsgWelcomeClient()
@@ -18,6 +16,5 @@ public class WSMsgWelcomeClient : WSMessage
     public override void HandleMessage()
     {
         Client.SyncTimeWithServer(syncTimestamp);
-        Client.EnterLobby(new LobbyId(lobbyId, lobbyName), isAdmin);
     }
 }

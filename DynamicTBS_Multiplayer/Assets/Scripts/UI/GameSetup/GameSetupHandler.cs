@@ -1,97 +1,57 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Text.RegularExpressions;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Linq;
-using System.ComponentModel;
 
 public class GameSetupHandler : MonoBehaviour
 {
-    [SerializeField] private GameObject timeSetup;
+    [SerializeField] private TMP_InputField draftAndPlacementTime;
+    [SerializeField] private TMP_InputField gameplayTime;
+
     [SerializeField] private GameObject mapSetup;
 
     private bool mapSelected = false;
-    private bool timeSelected = false;
-    public bool AllSelected { get { return mapSelected && timeSelected; } }
-
-    public enum TimerType
-    {
-        DRAFT_AND_PLACEMENT,
-        GAMEPLAY
-    }
-
-    public enum TimerSetupType
-    {
-        [Description("Fast")]
-        FAST = 1,
-        [Description("Standard")]
-        STANDARD = 2,
-        [Description("Slow")]
-        SLOW = 3
-    }
-
-    private static readonly Dictionary<TimerSetupType, Dictionary<TimerType, float>> timeSetups = new()
-    {
-        { TimerSetupType.FAST,
-            new() {
-                { TimerType.DRAFT_AND_PLACEMENT, 120 },
-                { TimerType.GAMEPLAY, 60 }
-            }
-        },
-        {
-            TimerSetupType.STANDARD,
-            new()
-            {
-                { TimerType.DRAFT_AND_PLACEMENT, 300 },
-                { TimerType.GAMEPLAY, 90 }
-            }
-        },
-        {
-            TimerSetupType.SLOW,
-            new()
-            {
-                { TimerType.DRAFT_AND_PLACEMENT, 420 },
-                { TimerType.GAMEPLAY, 120 }
-            }
-        }
-    };
+    public bool Completed { get { return mapSelected && IsValidTime(draftAndPlacementTime.text) && IsValidTime(gameplayTime.text); } }
 
     private void Awake()
     {
-        Button[] timerOptions = timeSetup.GetComponentsInChildren<Button>();
-        for (int i = 0; i < timerOptions.Length; i++)
-        {
-            Button button = timerOptions[i];
-            TimerClass timerClass = button.GetComponent<TimerClass>();
-            button.onClick.AddListener(() => ChooseTimer(button, timerClass));
-        }
-
-        Button[] maps = mapSetup.GetComponentsInChildren<Button>();
+        MapClass[] maps = mapSetup.GetComponentsInChildren<MapClass>();
         for (int i = 0; i < maps.Length; i++)
         {
-            Button button = maps[i];
-            MapType mapType = button.GetComponent<MapClass>().mapType;
-            button.onClick.AddListener(() => ChooseBoardDesign(button, mapType));
+            MapClass map = maps[i];
+            Button button = map.GetComponent<Button>();
+            button.onClick.AddListener(() => ChooseBoardDesign(button, map.mapType));
+        }
+
+        draftAndPlacementTime.onValueChanged.AddListener(delegate { SetDraftAndPlacementTime(); });
+        gameplayTime.onValueChanged.AddListener(delegate { SetGameplayTime(); });
+    }
+
+    private void SetDraftAndPlacementTime()
+    {
+        Debug.Log("Draft and Placement time changed");
+        if (IsValidTime(draftAndPlacementTime.text))
+        {
+            Debug.Log("Valid input!");
+            TimerConfig.DraftAndPlacementTime = ConvertTimeToSeconds(draftAndPlacementTime.text);
+            Debug.Log("Number of seconds: " + TimerConfig.DraftAndPlacementTime);
         }
     }
 
-    public void ChooseTimer(Button button, TimerClass timerOptions)
+    private void SetGameplayTime()
     {
-        AudioEvents.PressingButton();
-
-        InitTimer(timerOptions.timerSetup);
-        timeSetup.GetComponentsInChildren<Button>().ToList().ForEach(button => button.interactable = true);
-        button.interactable = false;
-        timeSelected = true;
+        if (IsValidTime(gameplayTime.text))
+        {
+            TimerConfig.GameplayTime = ConvertTimeToSeconds(gameplayTime.text);
+        }
     }
 
-    public void InitTimer(TimerSetupType timerSetupType)
-    {
-        var selectedTimeSetup = timeSetups[timerSetupType];
-        TimerConfig.Init(selectedTimeSetup[TimerType.DRAFT_AND_PLACEMENT], selectedTimeSetup[TimerType.GAMEPLAY]);
-    }
-
-    public void ChooseBoardDesign(Button button, MapType mapType)
+    private void ChooseBoardDesign(Button button, MapType mapType)
     {
         AudioEvents.PressingButton();
 
@@ -101,18 +61,18 @@ public class GameSetupHandler : MonoBehaviour
         mapSelected = true;
     }
 
-    public void SetActive(bool active)
+    private bool IsValidTime(string input)
     {
-        timeSetup.SetActive(active);
-        mapSetup.SetActive(active);
+        string pattern = @"^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$";
+        return Regex.IsMatch(input, pattern);
     }
 
-    public void ResetCanvas()
+    private int ConvertTimeToSeconds(string timeInput)
     {
-        timeSelected = false;
-        timeSetup.GetComponentsInChildren<Button>().ToList().ForEach(button => button.interactable = true);
+        if (!IsValidTime(timeInput))
+            return -1;
 
-        mapSelected = false;
-        mapSetup.GetComponentsInChildren<Button>().ToList().ForEach(button => button.interactable = true);
+        TimeSpan timeSpan = TimeSpan.ParseExact(timeInput, "mm\\:ss", null);
+        return (int)timeSpan.TotalSeconds;
     }
 }

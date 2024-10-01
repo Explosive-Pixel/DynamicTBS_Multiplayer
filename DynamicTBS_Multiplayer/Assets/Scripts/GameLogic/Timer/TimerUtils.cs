@@ -33,4 +33,12 @@ public static class TimerUtils
         dateTime = dateTime.AddMilliseconds(unixTimeStamp).ToLocalTime();
         return dateTime;
     }
+
+    public static string FormatTime(float totalSeconds)
+    {
+        int minutes = Mathf.FloorToInt(totalSeconds / 60);
+        int seconds = Mathf.FloorToInt(totalSeconds % 60);
+
+        return string.Format("{0:00}:{1:00}", minutes, seconds);
+    }
 }

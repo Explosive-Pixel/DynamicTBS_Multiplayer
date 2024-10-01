@@ -30,10 +30,10 @@ public class PlayerInfoHandler : MonoBehaviour
         if (playerNamePink == null || playerNameBlue == null)
             return;
 
-        if (GameManager.GameType == GameType.ONLINE)
+        if (GameManager.GameType == GameType.ONLINE && Client.InLobby)
         {
-            playerNamePink.text = Metadata.PinkName;
-            playerNameBlue.text = Metadata.BlueName;
+            playerNamePink.text = Client.CurrentLobby.GetPlayerName(PlayerType.pink);
+            playerNameBlue.text = Client.CurrentLobby.GetPlayerName(PlayerType.blue);
         }
     }
 }

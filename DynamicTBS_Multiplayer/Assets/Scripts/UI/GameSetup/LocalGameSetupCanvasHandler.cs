@@ -1,12 +1,12 @@
 using UnityEngine;
 using UnityEngine.UI;
-using static GameSetupHandler;
+using static GameSetupHandlerOld;
 
 public class LocalGameSetupCanvasHandler : MonoBehaviour
 {
     [SerializeField] private Button startGameButton;
 
-    [SerializeField] private GameSetupHandler gameSetupHandler;
+    [SerializeField] private GameSetupHandlerOld gameSetupHandler;
 
     [SerializeField] private bool skipSetup = false;
     [SerializeField] private MapType defaultMap;

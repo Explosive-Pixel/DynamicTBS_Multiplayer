@@ -1,5 +1,5 @@
 using UnityEngine;
-using static GameSetupHandler;
+using static GameSetupHandlerOld;
 
 public class TimerClass : MonoBehaviour
 {

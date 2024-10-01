@@ -24,6 +24,13 @@ public class Metadata : MonoBehaviour
             PinkName = msgMetadata.pinkName;
             BlueName = msgMetadata.blueName;
         }
+
+        if (msg.code == WSMessageCode.WSMsgLobbyInfoCode)
+        {
+            WSMsgLobbyInfo msgLobbyInfo = (WSMsgLobbyInfo)msg;
+            PlayerCount = msgLobbyInfo.lobbyInfo.clients.FindAll(client => client.isPlayer).Count;
+            SpectatorCount = msgLobbyInfo.lobbyInfo.clients.Count - PlayerCount;
+        }
     }
 
     private void OnDestroy()

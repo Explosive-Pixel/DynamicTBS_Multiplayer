@@ -10,37 +10,54 @@ public enum ClientType
 public enum ConnectionStatus
 {
     UNCONNECTED = 0,
-    CONNECTED = 1,
-    LOBBY_NOT_FOUND = 2,
-    CONNECTION_DECLINED = 3,
-    ATTEMPT_CONNECTION = 4,
+    ATTEMPT_CONNECTION = 1,
+    CONNECTED = 2,
+    LOBBY_NOT_FOUND = 3,
+    CONNECTION_DECLINED = 4,
     IN_LOBBY = 5
 }
 
 public static class Client
 {
-    private static string Uuid { get; set; }
-    private static string UserName { get; set; }
+    public static string Uuid { get; private set; } = Guid.NewGuid().ToString();
 
-    public static ClientType Role { get; private set; }
-    public static LobbyId LobbyId { get; private set; }
+    public static string UserName { get; set; }
+    public static ClientType Role { get; set; }
+
+    public static Lobby CurrentLobby { get; private set; }
+
     public static bool IsAdmin { get; private set; }
-    public static PlayerType Side { get; private set; } = PlayerType.none;
-    public static bool Active { get; private set; } = false;
+    public static PlayerType Side { get; set; } = PlayerType.none;
     public static ConnectionStatus ConnectionStatus { get; set; } = ConnectionStatus.UNCONNECTED;
     public static float ServerTimeDiff { get; private set; } = 0;
+
+    public static bool Active { get; set; } = false;
     public static bool IsLoadingGame { get; private set; } = false;
+    public static bool IsReady { get; private set; } = false;
 
-    public static void Init(ClientType role, string userName, LobbyId lobbyId)
+    public static ClientInfo ClientInfo
     {
-        Client.Uuid = Guid.NewGuid().ToString();
-        Client.Role = role;
-        Client.UserName = userName;
-        Client.LobbyId = lobbyId;
+        get
+        {
+            return new ClientInfo()
+            {
+                uuid = Uuid,
+                name = UserName,
+                isPlayer = Role == ClientType.PLAYER,
+                side = Side,
+                isReady = IsReady
+            };
+        }
 
-        Client.Side = PlayerType.none;
-        Client.IsLoadingGame = false;
+        set
+        {
+            ClientInfo = value;
+            Side = value.side;
+        }
     }
+
+    public static bool IsConnectedToServer { get { return ConnectionStatus >= ConnectionStatus.CONNECTED; } }
+    public static bool InLobby { get { return CurrentLobby != null; } }
 
     public static bool ShouldReadMessage(PlayerType playerType)
     {
@@ -57,27 +74,47 @@ public static class Client
         return IsAdmin && !IsLoadingGame;
     }
 
-    public static void TryJoinLobby(bool create, bool isReconnect)
+    public static void CreateLobby(string lobbyName, bool isPrivateLobby)
     {
-        Client.Active = true;
-        //Client.ConnectionStatus = ConnectionStatus.CONNECTED;
-
-        SendToServer(new WSMsgJoinLobby()
+        SendToServer(new WSMsgCreateLobby()
         {
-            create = create,
-            lobbyName = create ? LobbyId.Name : LobbyId.FullId,
-            clientUUID = Uuid,
-            userName = UserName,
-            isPlayer = Role == ClientType.PLAYER,
-            isReconnect = isReconnect
+            lobbyName = lobbyName,
+            isPrivateLobby = isPrivateLobby,
+            clientInfo = ClientInfo,
+            gameConfig = GameplayConfig.GameConfig
         });
     }
 
-    public static void EnterLobby(LobbyId lobbyId, bool isAdmin)
+    public static void JoinLobby(string lobbyFullName, ClientType role)
     {
-        Client.LobbyId = lobbyId;
-        Client.IsAdmin = isAdmin;
-        Client.ConnectionStatus = ConnectionStatus.IN_LOBBY;
+        Client.Role = role;
+
+        SendToServer(new WSMsgJoinLobby()
+        {
+            lobbyFullName = lobbyFullName,
+            clientInfo = ClientInfo,
+            isReconnect = false
+        });
+    }
+
+    public static void EnterLobby(LobbyInfo lobbyInfo)
+    {
+        CurrentLobby = new Lobby(lobbyInfo);
+        ClientInfo = CurrentLobby.GetClientInfo(Uuid);
+        ConnectionStatus = ConnectionStatus.IN_LOBBY;
+    }
+
+    public static void Reconnect()
+    {
+        if (!InLobby)
+            return;
+
+        SendToServer(new WSMsgJoinLobby()
+        {
+            lobbyFullName = CurrentLobby.LobbyId.FullId,
+            clientInfo = ClientInfo,
+            isReconnect = true
+        });
     }
 
     public static void SyncTimeWithServer(long syncTimestamp)
@@ -119,15 +156,14 @@ public static class Client
 
     public static void Reset()
     {
-        Active = false;
         ConnectionStatus = ConnectionStatus.UNCONNECTED;
-        LobbyId = null;
+        CurrentLobby = null;
         ServerTimeDiff = 0;
     }
 
     public static void SendToServer(WSMessage wSMessage)
     {
-        wSMessage.lobbyId = Client.LobbyId.Id;
+        wSMessage.lobbyId = InLobby ? CurrentLobby.LobbyId.Id : 0;
 
         WSClient.Instance.SendMessage(wSMessage);
     }
