@@ -88,15 +88,14 @@ public class GameSetupHandlerOld : MonoBehaviour
     public void InitTimer(TimerSetupType timerSetupType)
     {
         var selectedTimeSetup = timeSetups[timerSetupType];
-        TimerConfig.Init(selectedTimeSetup[TimerType.DRAFT_AND_PLACEMENT], selectedTimeSetup[TimerType.GAMEPLAY]);
+        GameSetup.SetupTimer(new TimerSetup(selectedTimeSetup[TimerType.DRAFT_AND_PLACEMENT], selectedTimeSetup[TimerType.GAMEPLAY]));
     }
 
     public void ChooseBoardDesign(Button button, MapType mapType)
     {
-        Debug.Log("Map button pressed " + mapType);
         AudioEvents.PressingButton();
 
-        Board.selectedMapType = mapType;
+        GameSetup.SetupMap(new MapSetup(mapType));
         mapSetup.GetComponentsInChildren<Button>().ToList().ForEach(button => button.interactable = true);
         button.interactable = false;
         mapSelected = true;

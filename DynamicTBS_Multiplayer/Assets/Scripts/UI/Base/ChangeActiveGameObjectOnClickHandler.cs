@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ChangeActiveGameObjectOnClickHandler : MonoBehaviour
 {
-    [SerializeField] private BaseActiveHandler activeHandler;
-    [SerializeField] private GameObject activeOnClickGameObject;
+    public BaseActiveHandler activeHandler;
+    public GameObject activeOnClickGameObject;
 
     public void OnMouseDown()
     {

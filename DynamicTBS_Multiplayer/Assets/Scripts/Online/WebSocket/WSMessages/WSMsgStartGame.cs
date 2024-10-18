@@ -6,11 +6,6 @@ using System;
 [Serializable]
 public class WSMsgStartGame : WSMessage
 {
-    public float draftAndPlacementTimeInSeconds;
-    public float gameplayTimeInSeconds;
-    public MapType mapType;
-    public PlayerType adminSide;
-
     public WSMsgStartGame()
     {
         code = WSMessageCode.WSMsgStartGameCode;
@@ -18,6 +13,7 @@ public class WSMsgStartGame : WSMessage
 
     public override void HandleMessage()
     {
-        Client.StartGame(draftAndPlacementTimeInSeconds, gameplayTimeInSeconds, mapType, adminSide);
+        GameManager.GameType = GameType.ONLINE;
+        GameEvents.StartGame();
     }
 }

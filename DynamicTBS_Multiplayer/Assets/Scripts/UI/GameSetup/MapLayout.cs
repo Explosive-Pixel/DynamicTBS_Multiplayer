@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class MapLayout : MonoBehaviour
@@ -22,10 +23,11 @@ public class MapLayout : MonoBehaviour
         int columns = (int)Mathf.Sqrt(map.layout.Count);
         foreach (TileDefinition tileDefinition in map.layout)
         {
-            Tile tile = tileDefinition.tile.GetComponent<Tile>();
+            TilePreview tile = tileDefinition.tile.GetComponent<TilePreview>();
             tile.Init(tileDefinition.tileType, tileDefinition.side);
 
             tile.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(tileSize, tileSize);
+            tile.gameObject.GetComponentsInChildren<RectTransform>(true).ToList().ForEach(rt => rt.sizeDelta = new Vector2(tileSize, tileSize));
             tile.gameObject.transform.position = new Vector3(startPosition.x + i * tileSize, startPosition.y + j * tileSize, tile.gameObject.transform.position.z);
             j++;
             if (j == columns)
@@ -34,5 +36,8 @@ public class MapLayout : MonoBehaviour
                 j = 0;
             }
         }
+
+        if (!gameObject.activeSelf)
+            gameObject.GetComponentInParent<BaseActiveHandler>().SetActive(gameObject);
     }
 }

@@ -6,16 +6,12 @@ using UnityEngine.UI;
 
 public class JoinPrivateLobbyHandler : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI clientName;
-
-    [SerializeField] private TextMeshProUGUI fullLobbyName;
+    [SerializeField] private TMP_InputField fullLobbyName;
 
     [SerializeField] private Button joinAsSpectatorButton;
     [SerializeField] private Button joinLobbyButton;
 
-    private string ClientName { get { return clientName.text.Trim(); } }
-
-    private bool Completed { get { return IsPresent(ClientName) && IsValidLobbyID(); } }
+    private bool SetupCompleted { get { return IsValidLobbyID(); } }
 
     private void Awake()
     {
@@ -25,16 +21,14 @@ public class JoinPrivateLobbyHandler : MonoBehaviour
 
     private void Update()
     {
-        joinAsSpectatorButton.interactable = Completed;
-        joinLobbyButton.interactable = Completed;
+        joinAsSpectatorButton.interactable = SetupCompleted;
+        joinLobbyButton.interactable = SetupCompleted;
     }
 
     private void JoinLobby(ClientType role)
     {
-        if (Completed)
+        if (SetupCompleted)
         {
-            Client.UserName = ClientName;
-
             Client.JoinLobby(fullLobbyName.text.Trim(), role);
         }
     }

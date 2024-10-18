@@ -22,7 +22,8 @@ public enum WSMessageCode
     WSMsgUIActionCode = 14,
 
     WSMsgCreateLobbyCode = 15,
-    WSMsgLobbyInfoCode = 16
+    WSMsgLobbyInfoCode = 16,
+    WSMsgSetReadyCode = 17
 }
 
 [Serializable]
@@ -56,6 +57,8 @@ public abstract class WSMessage
                 return Deserialize<WSMsgWelcomeClient>(json);
             case WSMessageCode.WSMsgGameHistoryCode:
                 return Deserialize<WSMsgGameHistory>(json);
+            case WSMessageCode.WSMsgSetReadyCode:
+                return Deserialize<WSMsgSetReady>(json);
             case WSMessageCode.WSMsgStartGameCode:
                 return Deserialize<WSMsgStartGame>(json);
             case WSMessageCode.WSMsgPauseGameCode:

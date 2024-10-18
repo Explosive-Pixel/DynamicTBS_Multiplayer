@@ -11,6 +11,21 @@ public class GameSetup : MonoBehaviour
 
     public static bool SetupCompleted { get { return TimerSetup != null && MapSetup != null; } }
 
+    public static GameConfig GameConfig
+    {
+        get
+        {
+            return
+                new GameConfig() { timerConfig = TimerSetup.TimerConfig, mapType = MapSetup.MapType };
+        }
+    }
+
+    public static void Setup(GameConfig gameConfig)
+    {
+        SetupTimer(new TimerSetup(gameConfig.timerConfig));
+        SetupMap(new MapSetup(gameConfig.mapType));
+    }
+
     public static void SetupName(string name)
     {
         Name = name;

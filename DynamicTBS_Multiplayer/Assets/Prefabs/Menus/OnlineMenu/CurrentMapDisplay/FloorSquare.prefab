@@ -389,7 +389,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4721999834833816362}
-  - component: {fileID: 4217408619873694398}
+  - component: {fileID: 2092924298301732183}
   m_Layer: 5
   m_Name: FloorSquare
   m_TagString: Untagged
@@ -423,7 +423,7 @@ RectTransform:
   m_AnchoredPosition: {x: 600, y: 30}
   m_SizeDelta: {x: 30, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4217408619873694398
+--- !u!114 &2092924298301732183
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -432,14 +432,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 4721999834833816363}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86ffe7e6cb8f34a7ea5b8ab30c8d64c5, type: 3}
+  m_Script: {fileID: 11500000, guid: 212328e146dc84dffb681936af3ed2e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  machineCore: {fileID: 4721999833532343624}
-  unitStart_pink: {fileID: 4721999834849242286}
-  unitStart_blue: {fileID: 4721999834196452496}
-  masterStart_pink: {fileID: 4721999833407963231}
-  masterStart_blue: {fileID: 4721999833366225446}
+  floor: {fileID: 4721999834243886311}
+  oven: {fileID: 4721999833532343624}
+  blueStart: {fileID: 4721999834196452496}
+  pinkStart: {fileID: 4721999834849242286}
+  blueCaptainStart: {fileID: 4721999833366225446}
+  pinkCaptainStart: {fileID: 4721999833407963231}
 --- !u!1 &4721999834849242286
 GameObject:
   m_ObjectHideFlags: 0

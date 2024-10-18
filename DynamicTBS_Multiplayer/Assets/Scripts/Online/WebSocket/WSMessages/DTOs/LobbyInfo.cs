@@ -7,6 +7,7 @@ using UnityEngine;
 public class LobbyInfo
 {
     public string lobbyId;
+    public bool isPrivate;
     public GameConfig gameConfig;
     public List<ClientInfo> clients;
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapSetup : MonoBehaviour
+public class MapSetup
 {
     public MapType MapType { get; private set; }
 

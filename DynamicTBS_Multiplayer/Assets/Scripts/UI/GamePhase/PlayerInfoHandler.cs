@@ -21,7 +21,7 @@ public class PlayerInfoHandler : MonoBehaviour
         youArePlayer.text = "";
         if (GameManager.IsPlayer() && GameManager.GameType == GameType.ONLINE)
         {
-            youArePlayer.text = "You are player " + Client.Side + ".";
+            youArePlayer.text = "You are player " + PlayerSetup.Side + ".";
         }
     }
 

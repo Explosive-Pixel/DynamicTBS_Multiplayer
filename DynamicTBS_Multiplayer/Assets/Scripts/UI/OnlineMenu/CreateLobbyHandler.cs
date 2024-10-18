@@ -31,8 +31,6 @@ public class CreateLobbyHandler : MonoBehaviour
     {
         if (SetupCompleted)
         {
-            Client.UserName = GameSetup.Name;
-            Client.Side = GameSetup.Side;
             Client.Role = ClientType.PLAYER;
 
             SetupLobbyHandler setupLobbyHandler = (SetupLobbyHandler)gameSetup.Find(gameSetup => gameSetup.GetType() == typeof(SetupLobbyHandler));

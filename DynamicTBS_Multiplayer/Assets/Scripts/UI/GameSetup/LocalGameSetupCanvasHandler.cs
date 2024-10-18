@@ -48,7 +48,7 @@ public class LocalGameSetupCanvasHandler : MonoBehaviour
     private void StartLocalGameWithDefaultSetup()
     {
         gameSetupHandler.InitTimer(defaultTimer);
-        Board.selectedMapType = defaultMap;
+        GameSetup.SetupMap(new MapSetup(defaultMap));
         StartGame();
     }
 

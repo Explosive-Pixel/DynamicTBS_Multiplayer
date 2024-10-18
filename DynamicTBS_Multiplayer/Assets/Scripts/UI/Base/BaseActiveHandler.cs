@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BaseActiveHandler : MonoBehaviour
@@ -13,5 +14,14 @@ public class BaseActiveHandler : MonoBehaviour
 
         gameObject.SetActive(true);
         currentActiveGameObject = gameObject;
+    }
+
+    public void SetInactive()
+    {
+        if (currentActiveGameObject != null)
+        {
+            currentActiveGameObject.SetActive(false);
+            currentActiveGameObject = null;
+        }
     }
 }

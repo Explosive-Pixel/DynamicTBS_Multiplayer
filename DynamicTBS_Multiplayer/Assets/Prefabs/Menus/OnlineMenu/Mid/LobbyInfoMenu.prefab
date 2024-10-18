@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1482478774534172701}
+  - component: {fileID: 1399392637395488528}
   m_Layer: 5
   m_Name: LobbyInfoMenu
   m_TagString: Untagged
@@ -41,6 +42,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1399392637395488528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2670753485020658733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0646d2d913e6641d3a5c829b73bc6d2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  joinLobbyButton: {fileID: 588429885499436278}
+  readyButton: {fileID: 975052021679620818}
 --- !u!1 &7024847481824638470
 GameObject:
   m_ObjectHideFlags: 0
@@ -212,12 +227,27 @@ PrefabInstance:
       propertyPath: m_Name
       value: JoinLobbyButton
       objectReference: {fileID: 0}
+    - target: {fileID: 809136010211124963, guid: 1935ee7c63c4b854b8860e94a9f4c167, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 809136011241965245, guid: 1935ee7c63c4b854b8860e94a9f4c167, type: 3}
       propertyPath: m_text
       value: JOIN LOBBY
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1935ee7c63c4b854b8860e94a9f4c167, type: 3}
+--- !u!114 &588429885499436278 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 809136010211124961, guid: 1935ee7c63c4b854b8860e94a9f4c167, type: 3}
+  m_PrefabInstance: {fileID: 220717299692636695}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &588429885499436279 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 809136010211124960, guid: 1935ee7c63c4b854b8860e94a9f4c167, type: 3}
@@ -318,12 +348,27 @@ PrefabInstance:
       propertyPath: m_Name
       value: ReadyButton
       objectReference: {fileID: 0}
+    - target: {fileID: 809136010211124963, guid: 1935ee7c63c4b854b8860e94a9f4c167, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 809136011241965245, guid: 1935ee7c63c4b854b8860e94a9f4c167, type: 3}
       propertyPath: m_text
       value: READY
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1935ee7c63c4b854b8860e94a9f4c167, type: 3}
+--- !u!114 &975052021679620818 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 809136010211124961, guid: 1935ee7c63c4b854b8860e94a9f4c167, type: 3}
+  m_PrefabInstance: {fileID: 482646364734481459}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &975052021679620819 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 809136010211124960, guid: 1935ee7c63c4b854b8860e94a9f4c167, type: 3}
@@ -338,7 +383,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2120512633304883593, guid: d8adde4410e1e40e1bc6c444b74482f9, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2174997330165259209, guid: d8adde4410e1e40e1bc6c444b74482f9, type: 3}
       propertyPath: m_RootOrder
@@ -346,7 +391,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2874727531378510972, guid: d8adde4410e1e40e1bc6c444b74482f9, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8261938422866936906, guid: d8adde4410e1e40e1bc6c444b74482f9, type: 3}
       propertyPath: m_Pivot.x

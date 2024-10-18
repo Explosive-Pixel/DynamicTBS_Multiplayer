@@ -42,7 +42,7 @@ public class SetupSideHandler : MonoBehaviour, ISetupHandler
         AudioEvents.PressingButton();
 
         SelectedSide = side;
-        GameSetup.SetupSide(side);
+        PlayerSetup.SetupSide(side);
 
         selectBlueButton.interactable = random || side != PlayerType.blue;
         selectPinkButton.interactable = random || side != PlayerType.pink;

@@ -16,6 +16,8 @@ public class SetupTimeHandler : MonoBehaviour, ISetupHandler
     {
         draftAndPlacementTime.onValueChanged.AddListener(delegate { SetTime(); });
         gameplayTime.onValueChanged.AddListener(delegate { SetTime(); });
+
+        SetTime();
     }
 
     private void SetTime()

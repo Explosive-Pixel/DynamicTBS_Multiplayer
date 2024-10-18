@@ -10,9 +10,29 @@ public class TimerSetup
     public string DraftAndPlacementTimeFormatted { get { return TimerUtils.FormatTime(DraftAndPlacementTime); } }
     public string GameplayTimeFormatted { get { return TimerUtils.FormatTime(GameplayTime); } }
 
+    public GameConfig.TimerConfig TimerConfig
+    {
+        get
+        {
+            return
+                new GameConfig.TimerConfig()
+                {
+                    draftAndPlacementTime = DraftAndPlacementTime,
+                    gameplayTime = GameplayTime,
+                    gameplayTimePerTurn = true
+                };
+        }
+    }
+
     public TimerSetup(float draftAndPlacementTime, float gameplayTime)
     {
         DraftAndPlacementTime = draftAndPlacementTime;
         GameplayTime = gameplayTime;
+    }
+
+    public TimerSetup(GameConfig.TimerConfig timerConfig)
+    {
+        DraftAndPlacementTime = timerConfig.draftAndPlacementTime;
+        GameplayTime = timerConfig.gameplayTime;
     }
 }

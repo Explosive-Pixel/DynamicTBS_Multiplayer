@@ -16,9 +16,13 @@ public class SetupNameHandler : MonoBehaviour, ISetupHandler
         clientName.onValueChanged.AddListener(delegate { SetName(); });
     }
 
+    private void Update()
+    {
+        clientName.interactable = !Client.InLobby;
+    }
+
     private void SetName()
     {
-        if (SetupCompleted)
-            GameSetup.SetupName(ClientName);
+        PlayerSetup.SetupName(ClientName);
     }
 }

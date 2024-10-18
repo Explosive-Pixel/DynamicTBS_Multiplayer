@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class SetupMapHandler : MonoBehaviour, ISetupHandler
 {
+    [SerializeField] private MapLayout mapPreview;
+
     private bool mapSelected = false;
 
     public bool SetupCompleted { get { return mapSelected; } }
@@ -26,9 +28,10 @@ public class SetupMapHandler : MonoBehaviour, ISetupHandler
         AudioEvents.PressingButton();
 
         GameSetup.SetupMap(new MapSetup(mapType));
+        mapPreview.Init(mapType);
         mapSelected = true;
 
-        gameObject.GetComponentsInChildren<Button>().ToList().ForEach(button => button.interactable = true);
+        gameObject.GetComponentsInChildren<Button>(true).ToList().ForEach(button => button.interactable = true);
         button.interactable = false;
     }
 }

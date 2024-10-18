@@ -5,12 +5,16 @@ using UnityEngine;
 public class Lobby
 {
     public LobbyId LobbyId { get; private set; }
+    public bool IsPrivate { get; private set; }
+    public GameConfig GameConfig { get; private set; }
     public List<ClientInfo> Clients { get; private set; }
 
     public Lobby(LobbyInfo lobbyInfo)
     {
         LobbyId = LobbyId.FromFullId(lobbyInfo.lobbyId);
-        GameplayConfig.Init(lobbyInfo.gameConfig);
+        IsPrivate = lobbyInfo.isPrivate;
+        GameConfig = lobbyInfo.gameConfig;
+        //GameSetup.Setup(lobbyInfo.gameConfig);
         Clients = lobbyInfo.clients;
     }
 
@@ -19,6 +23,10 @@ public class Lobby
 
     public int PlayerCount { get { return Players.Count; } }
     public int SpectatorCount { get { return Spectators.Count; } }
+
+    public int ReadyPlayerCount { get { return Players.FindAll(p => p.isReady).Count; } }
+
+    public ClientInfo Admin { get { return (Players != null && Players.Count > 0) ? Players[0] : null; } }
 
     public ClientInfo GetClientInfo(string uuid)
     {

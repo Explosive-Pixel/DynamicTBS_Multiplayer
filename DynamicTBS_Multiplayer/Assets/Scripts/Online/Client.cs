@@ -21,19 +21,18 @@ public static class Client
 {
     public static string Uuid { get; private set; } = Guid.NewGuid().ToString();
 
-    public static string UserName { get; set; }
     public static ClientType Role { get; set; }
-
     public static Lobby CurrentLobby { get; private set; }
 
-    public static bool IsAdmin { get; private set; }
-    public static PlayerType Side { get; set; } = PlayerType.none;
+    public static bool Active { get; set; } = false;
     public static ConnectionStatus ConnectionStatus { get; set; } = ConnectionStatus.UNCONNECTED;
     public static float ServerTimeDiff { get; private set; } = 0;
 
-    public static bool Active { get; set; } = false;
     public static bool IsLoadingGame { get; private set; } = false;
-    public static bool IsReady { get; private set; } = false;
+
+    public static bool IsReady { get; set; } = false;
+
+    public static bool IsAdmin { get { return CurrentLobby != null && CurrentLobby.Admin != null && CurrentLobby.Admin.uuid == Uuid; } }
 
     public static ClientInfo ClientInfo
     {
@@ -42,17 +41,11 @@ public static class Client
             return new ClientInfo()
             {
                 uuid = Uuid,
-                name = UserName,
+                name = PlayerSetup.Name,
                 isPlayer = Role == ClientType.PLAYER,
-                side = Side,
+                side = PlayerSetup.Side,
                 isReady = IsReady
             };
-        }
-
-        set
-        {
-            ClientInfo = value;
-            Side = value.side;
         }
     }
 
@@ -61,17 +54,12 @@ public static class Client
 
     public static bool ShouldReadMessage(PlayerType playerType)
     {
-        return Side != playerType || IsLoadingGame;
+        return PlayerSetup.Side != playerType || IsLoadingGame;
     }
 
     public static bool ShouldSendMessage(PlayerType playerType)
     {
-        return Side == playerType && !IsLoadingGame;
-    }
-
-    public static bool AdminShouldSendMessage()
-    {
-        return IsAdmin && !IsLoadingGame;
+        return PlayerSetup.Side == playerType && !IsLoadingGame;
     }
 
     public static void CreateLobby(string lobbyName, bool isPrivateLobby)
@@ -81,7 +69,7 @@ public static class Client
             lobbyName = lobbyName,
             isPrivateLobby = isPrivateLobby,
             clientInfo = ClientInfo,
-            gameConfig = GameplayConfig.GameConfig
+            gameConfig = GameSetup.GameConfig
         });
     }
 
@@ -100,8 +88,10 @@ public static class Client
     public static void EnterLobby(LobbyInfo lobbyInfo)
     {
         CurrentLobby = new Lobby(lobbyInfo);
-        ClientInfo = CurrentLobby.GetClientInfo(Uuid);
+        GameSetup.Setup(lobbyInfo.gameConfig);
+        PlayerSetup.Setup(CurrentLobby.GetClientInfo(Uuid));
         ConnectionStatus = ConnectionStatus.IN_LOBBY;
+        MenuEvents.ChangeLobbySelection(CurrentLobby);
     }
 
     public static void Reconnect()
@@ -130,29 +120,29 @@ public static class Client
         GameEvents.IsGameLoading(IsLoadingGame);
     }
 
-    public static void SendStartGameMsg(float draftAndPlacementTimeInSeconds, float gameplayTimeInSeconds, MapType selectedMap, PlayerType adminSide)
-    {
-        if (Client.IsAdmin)
-        {
-            SendToServer(new WSMsgStartGame()
-            {
-                draftAndPlacementTimeInSeconds = draftAndPlacementTimeInSeconds,
-                gameplayTimeInSeconds = gameplayTimeInSeconds,
-                mapType = selectedMap,
-                adminSide = adminSide
-            });
-        }
-    }
+    /* public static void SendStartGameMsg(float draftAndPlacementTimeInSeconds, float gameplayTimeInSeconds, MapType selectedMap, PlayerType adminSide)
+     {
+         if (Client.IsAdmin)
+         {
+             SendToServer(new WSMsgStartGame()
+             {
+                 draftAndPlacementTimeInSeconds = draftAndPlacementTimeInSeconds,
+                 gameplayTimeInSeconds = gameplayTimeInSeconds,
+                 mapType = selectedMap,
+                 adminSide = adminSide
+             });
+         }
+     }
 
-    public static void StartGame(float draftAndPlacementTimeInSeconds, float gameplayTimeInSeconds, MapType selectedMap, PlayerType adminSide)
-    {
-        Board.selectedMapType = selectedMap;
-        TimerConfig.Init(draftAndPlacementTimeInSeconds, gameplayTimeInSeconds);
-        Client.Side = Client.Role == ClientType.PLAYER ? (Client.IsAdmin ? adminSide : PlayerManager.GetOtherSide(adminSide)) : PlayerType.none;
-        GameManager.GameType = GameType.ONLINE;
+     public static void StartGame(float draftAndPlacementTimeInSeconds, float gameplayTimeInSeconds, MapType selectedMap, PlayerType adminSide)
+     {
+         //Board.selectedMapType = selectedMap;
+         //TimerConfig.Init(draftAndPlacementTimeInSeconds, gameplayTimeInSeconds);
+         Client.Side = Client.Role == ClientType.PLAYER ? (Client.IsAdmin ? adminSide : PlayerManager.GetOtherSide(adminSide)) : PlayerType.none;
+         GameManager.GameType = GameType.ONLINE;
 
-        GameEvents.StartGame();
-    }
+         GameEvents.StartGame();
+     }*/
 
     public static void Reset()
     {
@@ -163,6 +153,9 @@ public static class Client
 
     public static void SendToServer(WSMessage wSMessage)
     {
+        if (IsLoadingGame)
+            return;
+
         wSMessage.lobbyId = InLobby ? CurrentLobby.LobbyId.Id : 0;
 
         WSClient.Instance.SendMessage(wSMessage);

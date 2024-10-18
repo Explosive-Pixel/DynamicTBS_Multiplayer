@@ -2,9 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
-public class LobbyDetailsHandler : MonoBehaviour
+public class LobbyDetailsHandler : MonoBehaviour, IExecuteOnSceneLoad
 {
+    [SerializeField] private GameObject lobbyNotAvailableInfo;
+    [SerializeField] private GameObject content;
+
     [SerializeField] private TMPro.TMP_Text lobbyName;
     [SerializeField] private TMPro.TMP_Text lobbyType;
 
@@ -16,22 +20,49 @@ public class LobbyDetailsHandler : MonoBehaviour
     [SerializeField] private TMPro.TMP_Text spectators;
     [SerializeField] private Button joinAsSpectatorButton;
 
-    private void Update()
+    public Lobby SelectedLobby { get; private set; }
+
+    public void ExecuteOnSceneLoaded()
+    {
+        MenuEvents.OnChangeLobbySelection += UpdateInfo;
+        MessageReceiver.OnWSMessageReceive += UpdateInfo;
+    }
+
+    private void Awake()
+    {
+        joinAsSpectatorButton.onClick.AddListener(() => JoinLobby());
+    }
+
+    /*private void Update()
     {
         if (!Client.InLobby)
             return;
 
-        lobbyName.text = Client.CurrentLobby.LobbyId.FullId;
+        UpdateInfo(Client.CurrentLobby);
+    }*/
+
+    public void UpdateInfo(Lobby selectedLobby)
+    {
+        SelectedLobby = selectedLobby;
+        content.SetActive(SelectedLobby != null);
+        lobbyNotAvailableInfo.SetActive(SelectedLobby == null);
+
+        if (SelectedLobby == null)
+            return;
+
+        lobbyName.text = SelectedLobby.LobbyId.FullId;
+        lobbyType.text = SelectedLobby.IsPrivate ? "PRIVATE" : "PUBLIC";
 
         HandlePlayerText(PlayerType.blue);
         HandlePlayerText(PlayerType.pink);
 
-        spectators.text = Client.CurrentLobby.SpectatorCount.ToString();
+        spectators.text = SelectedLobby.SpectatorCount.ToString();
+        joinAsSpectatorButton.gameObject.SetActive(!Client.InLobby);
     }
 
     private void HandlePlayerText(PlayerType side)
     {
-        ClientInfo player = Client.CurrentLobby.GetPlayer(side);
+        ClientInfo player = SelectedLobby.GetPlayer(side);
 
         if (player == null)
         {
@@ -62,5 +93,46 @@ public class LobbyDetailsHandler : MonoBehaviour
             }
         }
 
+    }
+
+    private void UpdateInfo(WSMessage msg)
+    {
+        switch (msg.code)
+        {
+            case WSMessageCode.WSMsgLobbyInfoCode:
+                UpdateInfo(new Lobby(((WSMsgLobbyInfo)msg).lobbyInfo));
+                break;
+            case WSMessageCode.WSMsgLobbyListCode:
+                HandleWSMsgLobbyList((WSMsgLobbyList)msg);
+                break;
+        }
+    }
+
+    private void HandleWSMsgLobbyList(WSMsgLobbyList msg)
+    {
+        if (SelectedLobby == null)
+            return;
+
+        LobbyInfo lobbyInfo = msg.lobbies.ToList().Find(li => li.lobbyId == SelectedLobby.LobbyId.FullId);
+        UpdateInfo(lobbyInfo != null ? new Lobby(lobbyInfo) : null);
+    }
+
+    private void JoinLobby()
+    {
+        if (SelectedLobby == null)
+            return;
+
+        Client.JoinLobby(SelectedLobby.LobbyId.FullId, ClientType.SPECTATOR);
+    }
+
+    private void OnDisable()
+    {
+        SelectedLobby = null;
+    }
+
+    private void OnDestroy()
+    {
+        MenuEvents.OnChangeLobbySelection -= UpdateInfo;
+        MessageReceiver.OnWSMessageReceive -= UpdateInfo;
     }
 }
