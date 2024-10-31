@@ -85,13 +85,13 @@ public static class Client
         });
     }
 
-    public static void EnterLobby(LobbyInfo lobbyInfo)
+    public static void UpdateLobby(LobbyInfo lobbyInfo)
     {
         CurrentLobby = new Lobby(lobbyInfo);
         GameSetup.Setup(lobbyInfo.gameConfig);
         PlayerSetup.Setup(CurrentLobby.GetClientInfo(Uuid));
         ConnectionStatus = ConnectionStatus.IN_LOBBY;
-        MenuEvents.ChangeLobbySelection(CurrentLobby);
+        MenuEvents.UpdateCurrentLobby();
     }
 
     public static void Reconnect()

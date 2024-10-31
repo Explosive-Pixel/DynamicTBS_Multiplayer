@@ -26,6 +26,8 @@ public class Lobby
 
     public int ReadyPlayerCount { get { return Players.FindAll(p => p.isReady).Count; } }
 
+    public bool IsFull { get { return PlayerCount == 2; } }
+
     public ClientInfo Admin { get { return (Players != null && Players.Count > 0) ? Players[0] : null; } }
 
     public ClientInfo GetClientInfo(string uuid)

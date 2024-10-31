@@ -37,7 +37,19 @@ public class MapLayout : MonoBehaviour
             }
         }
 
-        if (!gameObject.activeSelf)
-            gameObject.GetComponentInParent<BaseActiveHandler>().SetActive(gameObject);
+        SetActive(true);
+    }
+
+    public void SetActive(bool active)
+    {
+        BaseActiveHandler activeHandler = gameObject.GetComponentInParent<BaseActiveHandler>(true);
+
+        if (active && !gameObject.activeSelf)
+            activeHandler.SetActive(gameObject);
+        else if (!active && gameObject.activeSelf)
+            activeHandler.SetInactive();
+
+        if (activeHandler.gameObject.activeSelf != active)
+            activeHandler.gameObject.SetActive(active);
     }
 }

@@ -15,6 +15,8 @@ public class PlayerSetup : MonoBehaviour
     {
         SetupName(clientInfo.name);
         SetupSide(clientInfo.side);
+
+        Debug.Log("clientInfo: " + clientInfo.name + ", " + clientInfo.side);
     }
 
     public static void SetupName(string name)

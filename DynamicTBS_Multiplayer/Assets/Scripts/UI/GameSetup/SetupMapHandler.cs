@@ -34,4 +34,15 @@ public class SetupMapHandler : MonoBehaviour, ISetupHandler
         gameObject.GetComponentsInChildren<Button>(true).ToList().ForEach(button => button.interactable = true);
         button.interactable = false;
     }
+
+    private void OnEnable()
+    {
+        if (mapSelected)
+            mapPreview.SetActive(true);
+    }
+
+    private void OnDisable()
+    {
+        mapPreview.SetActive(false);
+    }
 }

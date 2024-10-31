@@ -13,6 +13,6 @@ public class WSMsgLobbyInfo : WSMessage
 
     public override void HandleMessage()
     {
-        Client.EnterLobby(lobbyInfo);
+        Client.UpdateLobby(lobbyInfo);
     }
 }

@@ -24410,6 +24410,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -585
       objectReference: {fileID: 0}
+    - target: {fileID: 3090127160989937720, guid: 9a76aa9624f7744ef85ca1bfcf0b9eab, type: 3}
+      propertyPath: m_text
+      value: 0/2
+      objectReference: {fileID: 0}
     - target: {fileID: 3107403084743699212, guid: 9a76aa9624f7744ef85ca1bfcf0b9eab, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 0
@@ -24441,6 +24445,18 @@ PrefabInstance:
     - target: {fileID: 4079569903463129800, guid: 9a76aa9624f7744ef85ca1bfcf0b9eab, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -245
+      objectReference: {fileID: 0}
+    - target: {fileID: 4309831692842360096, guid: 9a76aa9624f7744ef85ca1bfcf0b9eab, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4309831692842360096, guid: 9a76aa9624f7744ef85ca1bfcf0b9eab, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2175232983059775340}
+    - target: {fileID: 4309831692842360096, guid: 9a76aa9624f7744ef85ca1bfcf0b9eab, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnMouseDown
       objectReference: {fileID: 0}
     - target: {fileID: 4765074514795857544, guid: 9a76aa9624f7744ef85ca1bfcf0b9eab, type: 3}
       propertyPath: m_AnchorMax.y
@@ -24593,6 +24609,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2175232984918905473, guid: 9a76aa9624f7744ef85ca1bfcf0b9eab, type: 3}
   m_PrefabInstance: {fileID: 2175232983059775336}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2175232983059775340 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4265475090373941776, guid: 9a76aa9624f7744ef85ca1bfcf0b9eab, type: 3}
+  m_PrefabInstance: {fileID: 2175232983059775336}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 029086436f2004814a2a9114abd2df3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2175232983059775341
 MonoBehaviour:
   m_ObjectHideFlags: 0
