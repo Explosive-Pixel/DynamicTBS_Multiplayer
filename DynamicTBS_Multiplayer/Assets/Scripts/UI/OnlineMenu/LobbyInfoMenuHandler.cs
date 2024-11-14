@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LobbyInfoMenuHandler : MonoBehaviour, IExecuteOnSceneLoad
+public class LobbyInfoMenuHandler : MonoBehaviour
 {
     [SerializeField] private Button joinLobbyButton;
     [SerializeField] private Button readyButton;
@@ -14,15 +14,12 @@ public class LobbyInfoMenuHandler : MonoBehaviour, IExecuteOnSceneLoad
 
     public Lobby SelectedLobby { get; private set; }
 
-    public void ExecuteOnSceneLoaded()
+    private void Awake()
     {
         MenuEvents.OnChangeLobbySelection += UpdateInfo;
         MenuEvents.OnUpdateCurrentLobby += UpdateInfo;
         MessageReceiver.OnWSMessageReceive += UpdateInfo;
-    }
 
-    private void Awake()
-    {
         readyButton.onClick.AddListener(() => SetReady());
         joinLobbyButton.onClick.AddListener(() => JoinLobby());
     }

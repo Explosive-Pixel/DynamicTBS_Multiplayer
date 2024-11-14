@@ -132,6 +132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   createLobbyButton: {fileID: 1670350216210163222}
+  newLobby: 1
 --- !u!1001 &2023495303606845687
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -252,6 +253,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6822141742179711318}
     m_Modifications:
+    - target: {fileID: 3954754802941393121, guid: 775eb0c35d17441ee88aa3735d7bca1d, type: 3}
+      propertyPath: m_text
+      value: "00:01\u200B"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3954754803811961788, guid: 775eb0c35d17441ee88aa3735d7bca1d, type: 3}
+      propertyPath: m_Text
+      value: 00:01
+      objectReference: {fileID: 0}
     - target: {fileID: 4663814389577403868, guid: 775eb0c35d17441ee88aa3735d7bca1d, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

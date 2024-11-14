@@ -20,9 +20,8 @@ public class OnlineLogicHandler : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
-
-        SceneManager.sceneLoaded += OnSceneLoaded;
     }
     #endregion
 

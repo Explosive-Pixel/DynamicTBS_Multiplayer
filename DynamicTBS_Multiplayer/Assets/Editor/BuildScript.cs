@@ -92,6 +92,7 @@ public static class BuildScript
         PlayerSettings.resizableWindow = true;
         PlayerSettings.allowFullscreenSwitch = true;
         PlayerSettings.runInBackground = true;
+        PlayerSettings.resetResolutionOnWindowResize = true;
     }
 
 

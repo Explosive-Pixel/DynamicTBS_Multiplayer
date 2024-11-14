@@ -13,6 +13,11 @@ public class SetupNameHandler : MonoBehaviour, ISetupHandler
 
     private void Awake()
     {
+        if (PlayerSetup.Name != null)
+        {
+            clientName.text = PlayerSetup.Name;
+        }
+
         clientName.onValueChanged.AddListener(delegate { SetName(); });
     }
 

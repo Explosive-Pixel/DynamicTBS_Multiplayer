@@ -6,8 +6,8 @@ using UnityEngine;
 public class MapLayout : MonoBehaviour
 {
     [SerializeField] private List<Map> maps = new();
-    [SerializeField] private float tileSize = 40;
-    [SerializeField] private Vector3 startPosition = new(0f, 0f, 0f);
+    //[SerializeField] private float tileSize = 40;
+    //[SerializeField] private Vector3 startPosition = new(0f, 0f, 0f);
 
     public Map GetMap(MapType mapType)
     {
@@ -17,17 +17,21 @@ public class MapLayout : MonoBehaviour
     public void Init(MapType mapType)
     {
         Map map = GetMap(mapType);
+        int columns = (int)Mathf.Sqrt(map.layout.Count);
+
+        RectTransform parentRectTransform = gameObject.transform.parent.gameObject.GetComponentInChildren<RectTransform>();
+        float parentHeight = GetWorldHeight(parentRectTransform);
+        float tileSize = parentHeight / columns;
+        Vector3 startPosition = GetBottomLeftCorner(parentRectTransform, parentRectTransform.rect.height / columns);
 
         int i = 0;
         int j = 0;
-        int columns = (int)Mathf.Sqrt(map.layout.Count);
         foreach (TileDefinition tileDefinition in map.layout)
         {
             TilePreview tile = tileDefinition.tile.GetComponent<TilePreview>();
             tile.Init(tileDefinition.tileType, tileDefinition.side);
 
-            tile.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(tileSize, tileSize);
-            tile.gameObject.GetComponentsInChildren<RectTransform>(true).ToList().ForEach(rt => rt.sizeDelta = new Vector2(tileSize, tileSize));
+            tile.gameObject.GetComponentsInChildren<RectTransform>(true).ToList().ForEach(rt => rt.sizeDelta = new Vector2(tileSize / rt.lossyScale.x, tileSize / rt.lossyScale.y));
             tile.gameObject.transform.position = new Vector3(startPosition.x + i * tileSize, startPosition.y + j * tileSize, tile.gameObject.transform.position.z);
             j++;
             if (j == columns)
@@ -51,5 +55,25 @@ public class MapLayout : MonoBehaviour
 
         if (activeHandler.gameObject.activeSelf != active)
             activeHandler.gameObject.SetActive(active);
+    }
+
+    private Vector3 GetBottomLeftCorner(RectTransform rectTransform, float tileSize)
+    {
+        Vector2 localBottomLeft = new(
+            rectTransform.rect.xMin + tileSize / 2,
+            rectTransform.rect.yMin + tileSize / 2
+        );
+
+        Vector3 worldBottomLeft = rectTransform.TransformPoint(localBottomLeft);
+        return worldBottomLeft;
+    }
+
+    private float GetWorldHeight(RectTransform rectTransform)
+    {
+        Vector3 bottom = rectTransform.TransformPoint(new Vector3(0, rectTransform.rect.yMin, 0));
+        Vector3 top = rectTransform.TransformPoint(new Vector3(0, rectTransform.rect.yMax, 0));
+
+        float worldHeight = Vector3.Distance(bottom, top);
+        return worldHeight;
     }
 }

@@ -16,6 +16,11 @@ public class SetupSideHandler : MonoBehaviour, ISetupHandler
 
     private void Awake()
     {
+        if (PlayerSetup.Side != PlayerType.none)
+        {
+            SetSide(PlayerSetup.Side, false);
+        }
+
         selectPinkButton.onClick.AddListener(() => SelectPinkSide());
         selectBlueButton.onClick.AddListener(() => SelectBlueSide());
         selectRandomSideButton.onClick.AddListener(() => SelectRandomSide());
@@ -41,8 +46,13 @@ public class SetupSideHandler : MonoBehaviour, ISetupHandler
     {
         AudioEvents.PressingButton();
 
-        SelectedSide = side;
         PlayerSetup.SetupSide(side);
+        SetSide(side, random);
+    }
+
+    private void SetSide(PlayerType side, bool random)
+    {
+        SelectedSide = side;
 
         selectBlueButton.interactable = random || side != PlayerType.blue;
         selectPinkButton.interactable = random || side != PlayerType.pink;

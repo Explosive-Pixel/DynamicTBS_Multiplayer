@@ -47,6 +47,14 @@ public static class Client
                 isReady = IsReady
             };
         }
+        private set
+        {
+            if (value.uuid == Uuid)
+            {
+                PlayerSetup.SetupSide(value.side);
+                Client.IsReady = value.isReady;
+            }
+        }
     }
 
     public static bool IsConnectedToServer { get { return ConnectionStatus >= ConnectionStatus.CONNECTED; } }
@@ -73,6 +81,15 @@ public static class Client
         });
     }
 
+    public static void ConfigLobby()
+    {
+        SendToServer(new WSMsgConfigLobby()
+        {
+            clientInfo = ClientInfo,
+            gameConfig = GameSetup.GameConfig
+        });
+    }
+
     public static void JoinLobby(string lobbyFullName, ClientType role)
     {
         Client.Role = role;
@@ -89,7 +106,9 @@ public static class Client
     {
         CurrentLobby = new Lobby(lobbyInfo);
         GameSetup.Setup(lobbyInfo.gameConfig);
-        PlayerSetup.Setup(CurrentLobby.GetClientInfo(Uuid));
+
+        ClientInfo = CurrentLobby.GetClientInfo(Uuid);
+
         ConnectionStatus = ConnectionStatus.IN_LOBBY;
         MenuEvents.UpdateCurrentLobby();
     }
@@ -120,35 +139,13 @@ public static class Client
         GameEvents.IsGameLoading(IsLoadingGame);
     }
 
-    /* public static void SendStartGameMsg(float draftAndPlacementTimeInSeconds, float gameplayTimeInSeconds, MapType selectedMap, PlayerType adminSide)
-     {
-         if (Client.IsAdmin)
-         {
-             SendToServer(new WSMsgStartGame()
-             {
-                 draftAndPlacementTimeInSeconds = draftAndPlacementTimeInSeconds,
-                 gameplayTimeInSeconds = gameplayTimeInSeconds,
-                 mapType = selectedMap,
-                 adminSide = adminSide
-             });
-         }
-     }
-
-     public static void StartGame(float draftAndPlacementTimeInSeconds, float gameplayTimeInSeconds, MapType selectedMap, PlayerType adminSide)
-     {
-         //Board.selectedMapType = selectedMap;
-         //TimerConfig.Init(draftAndPlacementTimeInSeconds, gameplayTimeInSeconds);
-         Client.Side = Client.Role == ClientType.PLAYER ? (Client.IsAdmin ? adminSide : PlayerManager.GetOtherSide(adminSide)) : PlayerType.none;
-         GameManager.GameType = GameType.ONLINE;
-
-         GameEvents.StartGame();
-     }*/
 
     public static void Reset()
     {
         ConnectionStatus = ConnectionStatus.UNCONNECTED;
         CurrentLobby = null;
         ServerTimeDiff = 0;
+        IsReady = false;
     }
 
     public static void SendToServer(WSMessage wSMessage)

@@ -172,8 +172,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -280, y: 140}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 230, y: 70}
+  m_SizeDelta: {x: 153, y: 153}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7567263824879280379
 GameObject:
@@ -408,11 +408,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3956981265218154853, guid: ad4f50c8862f96b4bbca436710d856af, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 100
+      value: 153
       objectReference: {fileID: 0}
     - target: {fileID: 3956981265218154853, guid: ad4f50c8862f96b4bbca436710d856af, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 100
+      value: 153
       objectReference: {fileID: 0}
     - target: {fileID: 3956981265218154853, guid: ad4f50c8862f96b4bbca436710d856af, type: 3}
       propertyPath: m_LocalPosition.x
@@ -990,7 +990,6 @@ MonoBehaviour:
   gameplayTimeInfo: {fileID: 6535770887595535994}
   mapCategoryInfo: {fileID: 5115680904898104338}
   mapTypeInfo: {fileID: 1737179075941422743}
-  initialized: 0
 --- !u!1001 &6382715952658687849
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1601,8 +1601,6 @@ MonoBehaviour:
     - tile: {fileID: 0}
       tileType: 1
       side: 2
-  tileSize: 40
-  startPosition: {x: 0, y: 0, z: 0}
 --- !u!1001 &3956981263475614773
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2359,6 +2357,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3956981265218154853}
     m_Modifications:
+    - target: {fileID: 4721999834243886310, guid: ca4d2eb4eacc61c4c8d8c732e960ff53, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 4721999834243886310, guid: ca4d2eb4eacc61c4c8d8c732e960ff53, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 4721999834833816362, guid: ca4d2eb4eacc61c4c8d8c732e960ff53, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

@@ -6,6 +6,7 @@ public class Lobby
 {
     public LobbyId LobbyId { get; private set; }
     public bool IsPrivate { get; private set; }
+    public LobbyStatus Status { get; private set; }
     public GameConfig GameConfig { get; private set; }
     public List<ClientInfo> Clients { get; private set; }
 
@@ -13,8 +14,8 @@ public class Lobby
     {
         LobbyId = LobbyId.FromFullId(lobbyInfo.lobbyId);
         IsPrivate = lobbyInfo.isPrivate;
+        Status = lobbyInfo.status;
         GameConfig = lobbyInfo.gameConfig;
-        //GameSetup.Setup(lobbyInfo.gameConfig);
         Clients = lobbyInfo.clients;
     }
 

@@ -23,7 +23,8 @@ public enum WSMessageCode
 
     WSMsgCreateLobbyCode = 15,
     WSMsgLobbyInfoCode = 16,
-    WSMsgSetReadyCode = 17
+    WSMsgSetReadyCode = 17,
+    WSMsgConfigLobbyCode = 18
 }
 
 [Serializable]
@@ -81,6 +82,8 @@ public abstract class WSMessage
                 return Deserialize<WSMsgCreateLobby>(json);
             case WSMessageCode.WSMsgLobbyInfoCode:
                 return Deserialize<WSMsgLobbyInfo>(json);
+            case WSMessageCode.WSMsgConfigLobbyCode:
+                return Deserialize<WSMsgConfigLobby>(json);
         }
 
         return null;

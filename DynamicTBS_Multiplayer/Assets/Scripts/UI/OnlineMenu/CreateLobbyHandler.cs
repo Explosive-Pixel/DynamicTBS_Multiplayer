@@ -9,10 +9,13 @@ using TMPro;
 public class CreateLobbyHandler : MonoBehaviour
 {
     [SerializeField] private Button createLobbyButton;
+    [SerializeField] private bool newLobby;
 
     private List<ISetupHandler> gameSetup = new();
 
     private bool SetupCompleted { get { return !gameSetup.Exists(gameSetup => !gameSetup.SetupCompleted); } }
+
+    private bool created = false;
 
     private void Awake()
     {
@@ -20,11 +23,13 @@ public class CreateLobbyHandler : MonoBehaviour
 
         createLobbyButton.onClick.AddListener(() => CreateLobby());
         createLobbyButton.interactable = false;
+
+        created = false;
     }
 
     private void Update()
     {
-        createLobbyButton.interactable = SetupCompleted;
+        createLobbyButton.interactable = SetupCompleted && !created;
     }
 
     private void CreateLobby()
@@ -33,8 +38,17 @@ public class CreateLobbyHandler : MonoBehaviour
         {
             Client.Role = ClientType.PLAYER;
 
-            SetupLobbyHandler setupLobbyHandler = (SetupLobbyHandler)gameSetup.Find(gameSetup => gameSetup.GetType() == typeof(SetupLobbyHandler));
-            Client.CreateLobby(setupLobbyHandler.LobbyName, setupLobbyHandler.IsPrivateLobby);
+            if (newLobby)
+            {
+                SetupLobbyHandler setupLobbyHandler = (SetupLobbyHandler)gameSetup.Find(gameSetup => gameSetup.GetType() == typeof(SetupLobbyHandler));
+                Client.CreateLobby(setupLobbyHandler.LobbyName, setupLobbyHandler.IsPrivateLobby);
+            }
+            else
+            {
+                Client.ConfigLobby();
+            }
+
+            created = true;
         }
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.UI;
 
-public class LobbyListHandler : MonoBehaviour, IExecuteOnSceneLoad
+public class LobbyListHandler : MonoBehaviour
 {
     [SerializeField] private GameObject content;
     [SerializeField] private GameObject lobbyInfoPrefab;
@@ -12,9 +12,16 @@ public class LobbyListHandler : MonoBehaviour, IExecuteOnSceneLoad
     [SerializeField] private GameObject loadingInfo;
     [SerializeField] private GameObject noLobbiesInfo;
 
-    public void ExecuteOnSceneLoaded()
+    private void Awake()
     {
+        Debug.Log("LobbyListHandler awakes");
         MessageReceiver.OnWSMessageReceive += UpdateLobbyList;
+    }
+
+    private void OnEnable()
+    {
+        Debug.Log("LobbyListHandler beeing enabled");
+        Client.SendToServer(new WSMsgLobbyList());
     }
 
     private void UpdateLobbyList(WSMessage msg)
@@ -47,7 +54,7 @@ public class LobbyListHandler : MonoBehaviour, IExecuteOnSceneLoad
         }
 
         noLobbiesInfo.SetActive(false);
-        OnlineMenuScreenHandler onlineMenuScreenHandler = gameObject.GetComponentInParent<OnlineMenuScreenHandler>();
+        OnlineMenuScreenHandler onlineMenuScreenHandler = gameObject.GetComponentInParent<OnlineMenuScreenHandler>(true);
 
         //LobbyInfo[] sortedData = lobbyList.ToList().OrderBy(lm => lm.playerCount).ToArray();
         foreach (LobbyInfo lobbyInfo in lobbyList)

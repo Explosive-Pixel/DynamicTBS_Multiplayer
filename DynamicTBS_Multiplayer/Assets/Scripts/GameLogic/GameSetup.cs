@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class GameSetup : MonoBehaviour
 {
-    public static string Name { get; private set; } = "Player";
-    public static PlayerType Side { get; private set; } = PlayerType.none;
     public static TimerSetup TimerSetup { get; private set; }
     public static MapSetup MapSetup { get; private set; }
 
@@ -26,16 +24,6 @@ public class GameSetup : MonoBehaviour
         SetupMap(new MapSetup(gameConfig.mapType));
     }
 
-    public static void SetupName(string name)
-    {
-        Name = name;
-    }
-
-    public static void SetupSide(PlayerType side)
-    {
-        Side = side;
-    }
-
     public static void SetupTimer(TimerSetup timerSetup)
     {
         TimerSetup = timerSetup;
@@ -53,8 +41,6 @@ public class GameSetup : MonoBehaviour
 
     private void Reset()
     {
-        Name = "Player";
-        Side = PlayerType.none;
         TimerSetup = null;
         MapSetup = null;
     }

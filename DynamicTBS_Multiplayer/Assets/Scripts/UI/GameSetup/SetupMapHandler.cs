@@ -20,6 +20,11 @@ public class SetupMapHandler : MonoBehaviour, ISetupHandler
             MapClass map = maps[i];
             Button button = map.GetComponent<Button>();
             button.onClick.AddListener(() => ChooseBoardDesign(button, map.mapType));
+
+            if (GameSetup.MapSetup != null && GameSetup.MapSetup.MapType == map.mapType)
+            {
+                SetMap(button, map.mapType);
+            }
         }
     }
 
@@ -28,6 +33,15 @@ public class SetupMapHandler : MonoBehaviour, ISetupHandler
         AudioEvents.PressingButton();
 
         GameSetup.SetupMap(new MapSetup(mapType));
+        SetMap(button, mapType);
+    }
+
+    private void SetMap(Button button, MapType mapType)
+    {
+        GameObject parent = button.gameObject.transform.parent.gameObject;
+        if (!parent.activeSelf)
+            gameObject.GetComponent<BaseActiveHandler>().SetActive(parent);
+
         mapPreview.Init(mapType);
         mapSelected = true;
 
@@ -43,6 +57,7 @@ public class SetupMapHandler : MonoBehaviour, ISetupHandler
 
     private void OnDisable()
     {
-        mapPreview.SetActive(false);
+        if (mapPreview != null && mapSelected)
+            mapPreview.SetActive(false);
     }
 }

@@ -9,7 +9,7 @@ public class GameSetupInfoBoxHandler : MonoBehaviour
 
     private void Update()
     {
-        if (!Client.InLobby)
+        if (!Client.InLobby || Client.CurrentLobby.Status == LobbyStatus.UNDER_CONSTRUCTION)
             return;
 
         BaseActiveHandler activeHandler = gameObject.GetComponent<BaseActiveHandler>();

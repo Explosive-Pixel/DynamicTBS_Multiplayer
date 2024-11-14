@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NativeWebSocket;
+using UnityEngine.SceneManagement;
 
 public class WSClient : MonoBehaviour
 {
@@ -23,11 +24,18 @@ public class WSClient : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
-        destroyed = false;
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+            destroyed = false;
 
-        hostname = ConfigManager.Instance.Hostname;
-        CreateWebsocketConnection(false);
+            hostname = ConfigManager.Instance.Hostname;
+            CreateWebsocketConnection(false);
+        }
     }
 
     #endregion
@@ -140,6 +148,10 @@ public class WSClient : MonoBehaviour
 
     private async void OnDestroy()
     {
+        if (Instance != this)
+            return;
+
+        Debug.Log("WSClient ist getting destroyed");
         destroyed = true;
 
         Client.Reset();

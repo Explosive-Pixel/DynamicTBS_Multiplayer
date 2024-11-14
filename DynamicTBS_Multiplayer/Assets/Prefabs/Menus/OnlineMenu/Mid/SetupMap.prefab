@@ -542,6 +542,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BonesMapButton
       objectReference: {fileID: 0}
+    - target: {fileID: 3451435753648976008, guid: 4c57523dd6d3b4be2bffc34cab30b76d, type: 3}
+      propertyPath: mapType
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c57523dd6d3b4be2bffc34cab30b76d, type: 3}
 --- !u!224 &5707706020420994144 stripped
@@ -919,6 +923,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0705b1de7e250443589b353e59c13e62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mapPreview: {fileID: 0}
 --- !u!114 &8714889384233318764
 MonoBehaviour:
   m_ObjectHideFlags: 0

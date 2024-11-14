@@ -5,7 +5,8 @@ using UnityEngine;
 public class PlayerSetup : MonoBehaviour
 {
     private static string playerName;
-    public static string Name { get { return playerName ?? GetName(Side); } private set { playerName = value; } }
+    //public static string Name { get { return playerName ?? GetName(Side); } private set { playerName = value; } }
+    public static string Name { get { return playerName; } private set { playerName = value; } }
     public static PlayerType Side { get; private set; } = PlayerType.none;
 
     public static bool SetupCompleted { get { return Name != null && Side != PlayerType.none; } }
@@ -15,8 +16,6 @@ public class PlayerSetup : MonoBehaviour
     {
         SetupName(clientInfo.name);
         SetupSide(clientInfo.side);
-
-        Debug.Log("clientInfo: " + clientInfo.name + ", " + clientInfo.side);
     }
 
     public static void SetupName(string name)

@@ -14,6 +14,12 @@ public class SetupTimeHandler : MonoBehaviour, ISetupHandler
 
     private void Awake()
     {
+        if (GameSetup.TimerSetup != null)
+        {
+            draftAndPlacementTime.text = GameSetup.TimerSetup.DraftAndPlacementTimeFormatted;
+            gameplayTime.text = GameSetup.TimerSetup.GameplayTimeFormatted;
+        }
+
         draftAndPlacementTime.onValueChanged.AddListener(delegate { SetTime(); });
         gameplayTime.onValueChanged.AddListener(delegate { SetTime(); });
 

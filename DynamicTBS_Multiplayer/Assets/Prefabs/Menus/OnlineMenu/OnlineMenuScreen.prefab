@@ -109,6 +109,8 @@ MonoBehaviour:
   lobbyOverviewDisplay: {fileID: 4194934323231685785}
   midActiveHandler: {fileID: 5664067382576274784}
   lobbyInfoMenu: {fileID: 6209387530756977391}
+  resetLobbyMenu: {fileID: 5664067382835835859}
+  lobbyInfoRematchMenu: {fileID: 7138827597877370915}
   rightActiveHandler: {fileID: 5664067382780635968}
   infoBox: {fileID: 8297738528936754410}
 --- !u!1 &5664067382576274790
@@ -479,6 +481,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aad8bc688ec6648af9a54ad39d37a4ff, type: 3}
+--- !u!1 &7138827597877370915 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8638774725418121760, guid: aad8bc688ec6648af9a54ad39d37a4ff, type: 3}
+  m_PrefabInstance: {fileID: 1509024970822851075}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &7741627808491385085 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 9196046212254214910, guid: aad8bc688ec6648af9a54ad39d37a4ff, type: 3}
@@ -609,6 +616,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a021def931faf4c25877c6786f419558, type: 3}
+--- !u!1 &5664067382835835859 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 975097955266779626, guid: a021def931faf4c25877c6786f419558, type: 3}
+  m_PrefabInstance: {fileID: 4833190517060446777}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &5664067382835835868 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 975097955266779621, guid: a021def931faf4c25877c6786f419558, type: 3}
