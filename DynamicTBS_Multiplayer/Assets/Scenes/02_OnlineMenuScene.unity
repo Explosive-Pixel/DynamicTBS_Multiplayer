@@ -16535,6 +16535,11 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 2
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &1647575427 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5845320539834610807, guid: 9a76aa9624f7744ef85ca1bfcf0b9eab, type: 3}
+  m_PrefabInstance: {fileID: 2175232983059775336}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1650461065
 GameObject:
   m_ObjectHideFlags: 0
@@ -22167,6 +22172,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1228542575}
     m_Modifications:
+    - target: {fileID: 302886453653344157, guid: 9a76aa9624f7744ef85ca1bfcf0b9eab, type: 3}
+      propertyPath: nameSetup
+      value: 
+      objectReference: {fileID: 1647575427}
     - target: {fileID: 475438272235156227, guid: 9a76aa9624f7744ef85ca1bfcf0b9eab, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -22255,6 +22264,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3995582224909122486, guid: 9a76aa9624f7744ef85ca1bfcf0b9eab, type: 3}
+      propertyPath: nameSetup
+      value: 
+      objectReference: {fileID: 1647575427}
     - target: {fileID: 4079569903463129800, guid: 9a76aa9624f7744ef85ca1bfcf0b9eab, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -22415,6 +22428,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -415
       objectReference: {fileID: 0}
+    - target: {fileID: 8576504899210471998, guid: 9a76aa9624f7744ef85ca1bfcf0b9eab, type: 3}
+      propertyPath: nameSetup
+      value: 
+      objectReference: {fileID: 1647575427}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a76aa9624f7744ef85ca1bfcf0b9eab, type: 3}
 --- !u!224 &2175232983059775337 stripped

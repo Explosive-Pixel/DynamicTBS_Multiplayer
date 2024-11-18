@@ -25,12 +25,6 @@ public class WSMsgServerNotification : WSMessage
     {
         switch (serverNotification)
         {
-            case ServerNotification.LOBBY_NOT_FOUND:
-                Client.ConnectionStatus = ConnectionStatus.LOBBY_NOT_FOUND;
-                break;
-            case ServerNotification.CONNECTION_FORBIDDEN_FULL_LOBBY:
-                Client.ConnectionStatus = ConnectionStatus.CONNECTION_DECLINED;
-                break;
             case ServerNotification.TOGGLE_LOAD_GAME_STATUS:
                 Client.ToggleIsLoadingGame();
                 break;

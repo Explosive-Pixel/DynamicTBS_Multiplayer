@@ -14,13 +14,11 @@ public class LobbyListHandler : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("LobbyListHandler awakes");
         MessageReceiver.OnWSMessageReceive += UpdateLobbyList;
     }
 
     private void OnEnable()
     {
-        Debug.Log("LobbyListHandler beeing enabled");
         Client.SendToServer(new WSMsgLobbyList());
     }
 
@@ -56,8 +54,20 @@ public class LobbyListHandler : MonoBehaviour
         noLobbiesInfo.SetActive(false);
         OnlineMenuScreenHandler onlineMenuScreenHandler = gameObject.GetComponentInParent<OnlineMenuScreenHandler>(true);
 
-        //LobbyInfo[] sortedData = lobbyList.ToList().OrderBy(lm => lm.playerCount).ToArray();
-        foreach (LobbyInfo lobbyInfo in lobbyList)
+        LobbyInfo[] sortedLobbies = lobbyList
+            .OrderBy(lobby =>
+            {
+                return lobby.status switch
+                {
+                    LobbyStatus.WAITING_FOR_PLAYER => 0,
+                    LobbyStatus.UNDER_CONSTRUCTION => 1,
+                    LobbyStatus.IN_GAME => 2,
+                    _ => 3
+                };
+            })
+            .ToArray();
+
+        foreach (LobbyInfo lobbyInfo in sortedLobbies)
         {
             GameObject lobbyInfoGO = GameObject.Instantiate(lobbyInfoPrefab);
             lobbyInfoGO.transform.SetParent(content.transform);

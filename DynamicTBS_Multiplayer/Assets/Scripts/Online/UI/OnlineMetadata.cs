@@ -16,17 +16,16 @@ public class OnlineMetadata : MonoBehaviour
 
     private void Update()
     {
+        if (Client.InLobby)
+        {
+            PrintMetadata();
+            return;
+        }
+
         switch (Client.ConnectionStatus)
         {
-            case ConnectionStatus.IN_LOBBY:
-                PrintMetadata();
-                break;
             case ConnectionStatus.CONNECTED:
-                infoText.text = "You are connected to server. Trying to join lobby ...";
-                break;
-            case ConnectionStatus.CONNECTION_DECLINED:
-            case ConnectionStatus.LOBBY_NOT_FOUND:
-                infoText.text = "The server refused the connection.";
+                infoText.text = "You are connected to server.";
                 break;
             case ConnectionStatus.UNCONNECTED:
                 infoText.text = "Unable to connect to server.";

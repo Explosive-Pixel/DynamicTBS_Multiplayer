@@ -10,6 +10,7 @@ public class CreateLobbyHandler : MonoBehaviour
 {
     [SerializeField] private Button createLobbyButton;
     [SerializeField] private bool newLobby;
+    [SerializeField] private GameObject nameSetup;
 
     private List<ISetupHandler> gameSetup = new();
 
@@ -20,6 +21,7 @@ public class CreateLobbyHandler : MonoBehaviour
     private void Awake()
     {
         gameSetup = gameObject.GetComponentsInChildren<ISetupHandler>(true).ToList();
+        gameSetup.Add(nameSetup.GetComponent<ISetupHandler>());
 
         createLobbyButton.onClick.AddListener(() => CreateLobby());
         createLobbyButton.interactable = false;

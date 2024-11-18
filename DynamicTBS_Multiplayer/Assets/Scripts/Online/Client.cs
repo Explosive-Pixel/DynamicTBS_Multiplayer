@@ -11,10 +11,7 @@ public enum ConnectionStatus
 {
     UNCONNECTED = 0,
     ATTEMPT_CONNECTION = 1,
-    CONNECTED = 2,
-    LOBBY_NOT_FOUND = 3,
-    CONNECTION_DECLINED = 4,
-    IN_LOBBY = 5
+    CONNECTED = 2
 }
 
 public static class Client
@@ -109,7 +106,6 @@ public static class Client
 
         ClientInfo = CurrentLobby.GetClientInfo(Uuid);
 
-        ConnectionStatus = ConnectionStatus.IN_LOBBY;
         MenuEvents.UpdateCurrentLobby();
     }
 
