@@ -33,7 +33,12 @@ public class MapLayout : MonoBehaviour
             TilePreview tile = tileDefinition.tile.GetComponent<TilePreview>();
             tile.Init(tileDefinition.tileType, tileDefinition.side);
 
-            tile.gameObject.GetComponentsInChildren<RectTransform>(true).ToList().ForEach(rt => rt.sizeDelta = new Vector2(tileSize / rt.lossyScale.x, tileSize / rt.lossyScale.y));
+            tile.gameObject.GetComponentsInChildren<RectTransform>(true).ToList().ForEach(rt =>
+            {
+                float ratio = rt.sizeDelta.x / rt.sizeDelta.y;
+                Vector2 size = new Vector2(ratio >= 1 ? tileSize : tileSize * ratio, ratio < 1 ? tileSize : tileSize * 1 / ratio);
+                rt.sizeDelta = new Vector2(size.x / rt.lossyScale.x, size.y / rt.lossyScale.y);
+            });
             tile.gameObject.transform.position = new Vector3(startPosition.x + i * tileSize, startPosition.y + j * tileSize, tile.gameObject.transform.position.z);
             j++;
             if (j == columns)

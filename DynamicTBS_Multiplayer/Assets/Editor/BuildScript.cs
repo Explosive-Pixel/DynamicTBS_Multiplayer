@@ -13,7 +13,7 @@ public static class BuildScript
         WebGL
     }
 
-    static readonly string[] scenePaths = { "Assets/Scenes/01_MainMenuScene.unity", "Assets/Scenes/02_OnlineMenuScene.unity", "Assets/Scenes/03_GameSetupScene.unity", "Assets/Scenes/04_GameScene.unity", "Assets/Scenes/05_TutorialScene.unity", "Assets/Scenes/06_HallOfFame.unity", "Assets/Scenes/07_CreditsScene.unity" };
+    static readonly string[] scenePaths = { "Assets/Scenes/01_MainMenuScene.unity", "Assets/Scenes/02_OnlineMenuScene.unity", "Assets/Scenes/03_OfflineMenuScene.unity", "Assets/Scenes/04_GameScene.unity", "Assets/Scenes/05_TutorialScene.unity", "Assets/Scenes/06_HallOfFame.unity", "Assets/Scenes/07_CreditsScene.unity" };
 
     [MenuItem("Build/Windows Build")]
     public static void PerformBuildWindows()
