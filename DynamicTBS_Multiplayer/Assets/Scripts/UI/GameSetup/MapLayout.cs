@@ -6,8 +6,8 @@ using UnityEngine;
 public class MapLayout : MonoBehaviour
 {
     [SerializeField] private List<Map> maps = new();
-    //[SerializeField] private float tileSize = 40;
-    //[SerializeField] private Vector3 startPosition = new(0f, 0f, 0f);
+
+    private bool initialized = false;
 
     public Map GetMap(MapType mapType)
     {
@@ -16,6 +16,8 @@ public class MapLayout : MonoBehaviour
 
     public void Init(MapType mapType)
     {
+        Setup();
+
         Map map = GetMap(mapType);
         int columns = (int)Mathf.Sqrt(map.layout.Count);
 
@@ -42,6 +44,25 @@ public class MapLayout : MonoBehaviour
         }
 
         SetActive(true);
+    }
+
+    private void Setup()
+    {
+        if (!initialized)
+        {
+            for (int i = 1; i < maps.Count; i++)
+            {
+                Map map = maps[i];
+                int j = 0;
+                foreach (TileDefinition td in map.layout)
+                {
+                    td.tile = maps[0].layout[j].tile;
+                    j++;
+                }
+            }
+
+            initialized = true;
+        }
     }
 
     public void SetActive(bool active)
