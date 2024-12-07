@@ -32,9 +32,9 @@ public class MainMenuSceneManager : MonoBehaviour
         AudioEvents.PressingButton();
     }
 
-    public void SwitchToLocalGameSetup()
-    {
-        GameManager.GameType = GameType.LOCAL;
-        SceneChangeManager.Instance.LoadScene(Scene.GAME_SETUP);
-    }
+    /* public void SwitchToLocalGameSetup()
+     {
+         GameManager.GameType = GameType.LOCAL;
+         SceneChangeManager.Instance.LoadScene(Scene.OFFLINE_MENU);
+     }*/
 }

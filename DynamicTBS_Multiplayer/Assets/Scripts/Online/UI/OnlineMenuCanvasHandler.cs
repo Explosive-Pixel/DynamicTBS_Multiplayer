@@ -46,7 +46,7 @@ public class OnlineMenuCanvasHandler : MonoBehaviour
 
 
         onlineMetadataCanvas.SetActive(true);
-        SceneChangeManager.Instance.LoadScene(Scene.GAME_SETUP);
+        SceneChangeManager.Instance.LoadScene(Scene.OFFLINE_MENU);
     }
 
     private bool IsValidName()
