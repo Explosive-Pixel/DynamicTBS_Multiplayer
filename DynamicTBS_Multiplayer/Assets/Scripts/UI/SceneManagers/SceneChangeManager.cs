@@ -46,13 +46,6 @@ public class SceneChangeManager : MonoBehaviour
         SceneManager.LoadScene(sceneNumber, LoadSceneMode.Single);
     }
 
-    private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
-    {
-        scene.GetRootGameObjects().ToList()
-            .ForEach(root => root.GetComponentsInChildren<IExecuteOnSceneLoad>(true).ToList()
-            .ForEach(script => script.ExecuteOnSceneLoaded()));
-    }
-
     public void LoadGameScene()
     {
         LoadScene(Scene.GAME);
@@ -62,13 +55,11 @@ public class SceneChangeManager : MonoBehaviour
 
     private void SubscribeEvents()
     {
-        SceneManager.sceneLoaded += OnSceneLoaded;
         GameEvents.OnGameStart += LoadGameScene;
     }
 
     private void UnsubscribeEvents()
     {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
         GameEvents.OnGameStart -= LoadGameScene;
     }
 

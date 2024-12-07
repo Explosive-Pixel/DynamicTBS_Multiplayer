@@ -11,9 +11,6 @@ public class DraftCharacterButtonHandler : MonoBehaviour
 
     private void OnMouseDown()
     {
-        Debug.Log("clientIsCurrentPlayer: " + PlayerManager.ClientIsCurrentPlayer());
-        Debug.Log("PlayerSetup.Side: " + PlayerSetup.Side);
-        Debug.Log("GameManager.mode: " + GameManager.GameType);
         if (!PlayerManager.ClientIsCurrentPlayer() || GameplayManager.gameIsPaused)
             return;
 

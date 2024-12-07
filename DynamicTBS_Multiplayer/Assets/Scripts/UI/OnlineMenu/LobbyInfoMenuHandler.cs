@@ -12,16 +12,27 @@ public class LobbyInfoMenuHandler : MonoBehaviour
     [SerializeField] private LobbyDetailsHandler lobbyDetailsHandler;
     [SerializeField] private TimeAndMapInfoHandler timeAndMapInfoHandler;
 
+    [SerializeField] private GameObject nameSetup;
+
+    private ISetupHandler nameSetupHandler;
+
     public Lobby SelectedLobby { get; private set; }
 
     private void Awake()
     {
+        nameSetupHandler = nameSetup.GetComponent<ISetupHandler>();
+
         MenuEvents.OnChangeLobbySelection += UpdateInfo;
         MenuEvents.OnUpdateCurrentLobby += UpdateInfo;
         MessageReceiver.OnWSMessageReceive += UpdateInfo;
 
         readyButton.onClick.AddListener(() => SetReady());
         joinLobbyButton.onClick.AddListener(() => JoinLobby());
+    }
+
+    private void Update()
+    {
+        joinLobbyButton.interactable = nameSetupHandler.SetupCompleted;
     }
 
     private void SetReady()
@@ -32,7 +43,7 @@ public class LobbyInfoMenuHandler : MonoBehaviour
 
     private void JoinLobby()
     {
-        if (SelectedLobby == null)
+        if (SelectedLobby == null || !nameSetupHandler.SetupCompleted)
             return;
 
         Client.JoinLobby(SelectedLobby.LobbyId.FullId, ClientType.PLAYER);
