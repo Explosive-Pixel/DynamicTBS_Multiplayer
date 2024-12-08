@@ -1,8 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
-using UnityEngine.TextCore.Text;
+using UnityEngine;
 
 public class InfoBoxHandler : MonoBehaviour
 {

@@ -1,11 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class OnlineLogicHandler : MonoBehaviour
 {
-    private readonly List<Scene> dontDestroyOnLoadScenes = new() { Scene.ONLINE_MENU, Scene.OFFLINE_MENU, Scene.GAME };
+    private readonly List<Scene> dontDestroyOnLoadScenes = new() { Scene.ONLINE_MENU, Scene.GAME };
 
     #region SingletonImplementation
     public static OnlineLogicHandler Instance { set; get; }

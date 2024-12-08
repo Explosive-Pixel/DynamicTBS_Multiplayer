@@ -1,8 +1,8 @@
+using System;
+using System.Collections;
+using System.IO;
 using UnityEngine;
 using UnityEngine.Networking;
-using System;
-using System.IO;
-using System.Collections;
 
 public class ConfigManager : MonoBehaviour
 {

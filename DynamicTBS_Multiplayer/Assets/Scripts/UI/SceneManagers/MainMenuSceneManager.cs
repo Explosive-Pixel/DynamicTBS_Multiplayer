@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MainMenuSceneManager : MonoBehaviour
@@ -31,10 +29,4 @@ public class MainMenuSceneManager : MonoBehaviour
 
         AudioEvents.PressingButton();
     }
-
-    /* public void SwitchToLocalGameSetup()
-     {
-         GameManager.GameType = GameType.LOCAL;
-         SceneChangeManager.Instance.LoadScene(Scene.OFFLINE_MENU);
-     }*/
 }

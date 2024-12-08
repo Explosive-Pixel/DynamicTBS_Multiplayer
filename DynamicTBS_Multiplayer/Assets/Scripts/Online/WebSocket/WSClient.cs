@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NativeWebSocket;
-using UnityEngine.SceneManagement;
 
 public class WSClient : MonoBehaviour
 {
@@ -151,7 +150,6 @@ public class WSClient : MonoBehaviour
         if (Instance != this)
             return;
 
-        Debug.Log("WSClient ist getting destroyed");
         destroyed = true;
 
         Client.Reset();
@@ -159,5 +157,4 @@ public class WSClient : MonoBehaviour
         if (websocket != null)
             await websocket.Close();
     }
-
 }
