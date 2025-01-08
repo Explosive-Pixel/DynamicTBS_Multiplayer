@@ -4,25 +4,25 @@ using UnityEngine;
 public enum WSMessageCode
 {
     WSMsgKeepAliveCode = 0,
-    WSMsgMetadataCode = 1,
-    WSMsgLobbyListCode = 2,
-    WSMsgJoinLobbyCode = 3,
-    WSMsgWelcomeClientCode = 4,
-    WSMsgGameHistoryCode = 5,
-    WSMsgStartGameCode = 6,
-    WSMsgPauseGameCode = 7,
-    WSMsgServerNotificationCode = 8,
-    WSMsgUpdateServerCode = 9,
-    WSMsgUpdateClientCode = 10,
-    WSMsgGameOverCode = 11,
-    WSMsgDraftCharacterCode = 12,
-    WSMsgPerformActionCode = 13,
-    WSMsgUIActionCode = 14,
+    WSMsgWelcomeClientCode = 1,
 
-    WSMsgCreateLobbyCode = 15,
-    WSMsgLobbyInfoCode = 16,
-    WSMsgSetReadyCode = 17,
-    WSMsgConfigLobbyCode = 18
+    WSMsgLobbyListCode = 2,
+    WSMsgCreateLobbyCode = 3,
+    WSMsgJoinLobbyCode = 4,
+    WSMsgLobbyInfoCode = 5,
+    WSMsgSetReadyCode = 6,
+    WSMsgConfigLobbyCode = 7,
+
+    WSMsgGameHistoryCode = 8,
+    WSMsgStartGameCode = 9,
+    WSMsgPauseGameCode = 10,
+    WSMsgServerNotificationCode = 11,
+    WSMsgUpdateServerCode = 12,
+    WSMsgUpdateClientCode = 13,
+    WSMsgGameOverCode = 14,
+    WSMsgDraftCharacterCode = 15,
+    WSMsgPerformActionCode = 16,
+    WSMsgUIActionCode = 17,
 }
 
 [Serializable]
@@ -46,8 +46,6 @@ public abstract class WSMessage
         {
             case WSMessageCode.WSMsgKeepAliveCode:
                 return Deserialize<WSMsgKeepAlive>(json);
-            case WSMessageCode.WSMsgMetadataCode:
-                return Deserialize<WSMsgMetadata>(json);
             case WSMessageCode.WSMsgLobbyListCode:
                 return Deserialize<WSMsgLobbyList>(json);
             case WSMessageCode.WSMsgJoinLobbyCode:

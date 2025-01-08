@@ -678,7 +678,6 @@ GameObject:
   - component: {fileID: 954437388}
   - component: {fileID: 954437387}
   - component: {fileID: 954437391}
-  - component: {fileID: 954437392}
   m_Layer: 5
   m_Name: OnlineMetadataCanvas
   m_TagString: Untagged
@@ -782,18 +781,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   multiplayerMetadata: {fileID: 954437385}
   infoText: {fileID: 542855482}
---- !u!114 &954437392
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 954437385}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 089b15a4e0604418f8a2a0e70ff16045, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1046339886
 GameObject:
   m_ObjectHideFlags: 0

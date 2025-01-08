@@ -43,7 +43,7 @@ public class LobbyDetailsHandler : MonoBehaviour
         HandlePlayerText(selectedLobby, PlayerType.blue);
         HandlePlayerText(selectedLobby, PlayerType.pink);
 
-        spectators.text = selectedLobby.SpectatorCount.ToString();
+        spectators.text = selectedLobby.SpectatorCount.ToString() + " Spectator" + (selectedLobby.SpectatorCount != 1 ? "s" : "");
         joinAsSpectatorButton.gameObject.SetActive(!Client.InLobby);
     }
 
