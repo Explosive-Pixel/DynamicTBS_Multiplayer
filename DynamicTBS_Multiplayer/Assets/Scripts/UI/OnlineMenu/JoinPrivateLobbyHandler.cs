@@ -36,7 +36,7 @@ public class JoinPrivateLobbyHandler : MonoBehaviour
 
     private void Update()
     {
-        joinAsSpectatorButton.interactable = SetupCompleted;
+        joinAsSpectatorButton.interactable = IsValidLobbyID();
         joinLobbyButton.interactable = SetupCompleted;
     }
 
