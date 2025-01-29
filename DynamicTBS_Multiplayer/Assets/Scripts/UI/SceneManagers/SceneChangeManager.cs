@@ -1,14 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Linq;
 
 public enum Scene
 {
     MAIN_MENU = 0,
     ONLINE_MENU = 1,
-    GAME_SETUP = 2,
+    OFFLINE_MENU = 2,
     GAME = 3,
     TUTORIAL = 4,
     HALL_OF_FAME = 5,
@@ -33,9 +30,8 @@ public class SceneChangeManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            SubscribeEvents();
         }
-
-        SubscribeEvents();
     }
     #endregion
 

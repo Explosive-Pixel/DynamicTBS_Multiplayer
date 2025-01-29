@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public static class DraftEvents
 {
     public delegate void CharacterCreation(Character character);

@@ -1,9 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using System.Linq;
 using System.ComponentModel;
+using System.Linq;
+using UnityEngine;
 
 [Serializable]
 public class TileDefinition
@@ -40,8 +39,8 @@ public class Board : MonoBehaviour
 {
     public List<Map> maps = new();
 
-    public static MapType selectedMapType = MapType.EXPLOSIVE;
-    private Map SelectedMap { get { return maps.Find(map => map.name == selectedMapType); } }
+    public static MapType SelectedMapType { get { return GameSetup.SetupCompleted ? GameSetup.MapSetup.MapType : MapType.EXPLOSIVE; } }
+    private Map SelectedMap { get { return maps.Find(map => map.name == SelectedMapType); } }
 
     private static List<GameObject> tileGameObjects = new();
     public static List<GameObject> TileGameObjects { get { return tileGameObjects; } }

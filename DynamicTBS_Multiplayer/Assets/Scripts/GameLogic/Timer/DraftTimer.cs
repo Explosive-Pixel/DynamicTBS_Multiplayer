@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class DraftTimer : GameTimer
 {
@@ -20,7 +17,7 @@ public class DraftTimer : GameTimer
 
     public override void DrawNoTimeLeftConsequences()
     {
-        if (GameManager.GameType == GameType.ONLINE && (Client.Side != playerType || Client.IsLoadingGame))
+        if (GameManager.GameType == GameType.ONLINE && Client.ShouldReadMessage(playerType))
             return;
 
         DraftManager.RandomDrafts(playerType);

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,7 +19,7 @@ public class PlayerInfoHandler : MonoBehaviour
         youArePlayer.text = "";
         if (GameManager.IsPlayer() && GameManager.GameType == GameType.ONLINE)
         {
-            youArePlayer.text = "You are player " + Client.Side + ".";
+            youArePlayer.text = "You are player " + PlayerSetup.Side + ".";
         }
     }
 
@@ -30,10 +28,10 @@ public class PlayerInfoHandler : MonoBehaviour
         if (playerNamePink == null || playerNameBlue == null)
             return;
 
-        if (GameManager.GameType == GameType.ONLINE)
+        if (GameManager.GameType == GameType.ONLINE && Client.InLobby)
         {
-            playerNamePink.text = Metadata.PinkName;
-            playerNameBlue.text = Metadata.BlueName;
+            playerNamePink.text = Client.CurrentLobby.GetPlayerName(PlayerType.pink);
+            playerNameBlue.text = Client.CurrentLobby.GetPlayerName(PlayerType.blue);
         }
     }
 }

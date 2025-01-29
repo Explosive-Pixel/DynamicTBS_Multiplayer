@@ -12,10 +12,10 @@ public class WSClient : MonoBehaviour
     private bool destroyed = false;
     private readonly Queue<WSMessage> unsendMsgs = new();
 
-    public bool Active { get; private set; } = false;
-
     private float timer = 0f;
     private const float keepAliveInterval = 25f; // in Seconds
+
+    private bool IsConnectedToServer { get { return websocket.State == WebSocketState.Open; } }
 
     #region SingletonImplementation
 
@@ -23,29 +23,30 @@ public class WSClient : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
-        destroyed = false;
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+            destroyed = false;
+
+            hostname = ConfigManager.Instance.Hostname;
+            CreateWebsocketConnection(false);
+        }
     }
 
     #endregion
 
-    public void Init(string hostname, ClientType role, string userName, LobbyId lobby, bool createLobby)
-    {
-        this.hostname = hostname;
-
-        Client.Init(role, userName, lobby);
-
-        CreateWebsocketConnection(createLobby, false);
-    }
-
-    private void CreateWebsocketConnection(bool createLobby, bool isReconnect)
+    private void CreateWebsocketConnection(bool isReconnect)
     {
         Client.ConnectionStatus = ConnectionStatus.ATTEMPT_CONNECTION;
 
-        CreateWebsocketConnectionAsync(createLobby, isReconnect);
+        CreateWebsocketConnectionAsync(isReconnect);
     }
 
-    private async void CreateWebsocketConnectionAsync(bool createLobby, bool isReconnect)
+    private async void CreateWebsocketConnectionAsync(bool isReconnect)
     {
         Debug.Log("Trying to connect to server with hostname " + hostname);
 
@@ -54,11 +55,13 @@ public class WSClient : MonoBehaviour
         websocket.OnOpen += () =>
         {
             Debug.Log("Successfully connected to server!");
-            Active = true;
-            Client.TryJoinLobby(createLobby, isReconnect);
+            Client.Active = true;
+            Client.ConnectionStatus = ConnectionStatus.CONNECTED;
 
             if (isReconnect)
             {
+                Client.Reconnect();
+
                 while (unsendMsgs.Count > 0)
                 {
                     SendMessage(unsendMsgs.Dequeue());
@@ -74,10 +77,8 @@ public class WSClient : MonoBehaviour
 
         websocket.OnClose += (e) =>
         {
-            Active = false;
             Client.ConnectionStatus = ConnectionStatus.UNCONNECTED;
             Debug.Log("Connection to server closed!");
-
 
             TryReconnect();
         };
@@ -94,15 +95,15 @@ public class WSClient : MonoBehaviour
 
     private void TryReconnect()
     {
-        if (Client.Active && !Active && !destroyed)
+        if (Client.Active && !IsConnectedToServer && !destroyed)
         {
-            CreateWebsocketConnection(false, true);
+            CreateWebsocketConnection(true);
         }
     }
 
     void Update()
     {
-        if (!Active)
+        if (!IsConnectedToServer)
             return;
 
         timer += Time.deltaTime;
@@ -119,7 +120,7 @@ public class WSClient : MonoBehaviour
 
     public async void SendMessage(WSMessage msg)
     {
-        if (!Active && websocket.State != WebSocketState.Open)
+        if (!IsConnectedToServer)
         {
             unsendMsgs.Enqueue(msg);
             return;
@@ -146,6 +147,9 @@ public class WSClient : MonoBehaviour
 
     private async void OnDestroy()
     {
+        if (Instance != this)
+            return;
+
         destroyed = true;
 
         Client.Reset();
@@ -153,5 +157,4 @@ public class WSClient : MonoBehaviour
         if (websocket != null)
             await websocket.Close();
     }
-
 }

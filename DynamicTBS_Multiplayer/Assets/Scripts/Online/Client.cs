@@ -10,74 +10,116 @@ public enum ClientType
 public enum ConnectionStatus
 {
     UNCONNECTED = 0,
-    CONNECTED = 1,
-    LOBBY_NOT_FOUND = 2,
-    CONNECTION_DECLINED = 3,
-    ATTEMPT_CONNECTION = 4,
-    IN_LOBBY = 5
+    ATTEMPT_CONNECTION = 1,
+    CONNECTED = 2
 }
 
 public static class Client
 {
-    private static string Uuid { get; set; }
-    private static string UserName { get; set; }
+    public static string Uuid { get; private set; } = Guid.NewGuid().ToString();
 
-    public static ClientType Role { get; private set; }
-    public static LobbyId LobbyId { get; private set; }
-    public static bool IsAdmin { get; private set; }
-    public static PlayerType Side { get; private set; } = PlayerType.none;
-    public static bool Active { get; private set; } = false;
+    public static ClientType Role { get; set; }
+    public static Lobby CurrentLobby { get; private set; }
+
+    public static bool Active { get; set; } = false;
     public static ConnectionStatus ConnectionStatus { get; set; } = ConnectionStatus.UNCONNECTED;
     public static float ServerTimeDiff { get; private set; } = 0;
+
     public static bool IsLoadingGame { get; private set; } = false;
 
-    public static void Init(ClientType role, string userName, LobbyId lobbyId)
-    {
-        Client.Uuid = Guid.NewGuid().ToString();
-        Client.Role = role;
-        Client.UserName = userName;
-        Client.LobbyId = lobbyId;
+    public static bool IsReady { get; set; } = false;
 
-        Client.Side = PlayerType.none;
-        Client.IsLoadingGame = false;
+    public static bool IsAdmin { get { return CurrentLobby != null && CurrentLobby.Admin != null && CurrentLobby.Admin.uuid == Uuid; } }
+
+    public static ClientInfo ClientInfo
+    {
+        get
+        {
+            return new ClientInfo()
+            {
+                uuid = Uuid,
+                name = PlayerSetup.Name,
+                isPlayer = Role == ClientType.PLAYER,
+                side = PlayerSetup.Side,
+                isReady = IsReady
+            };
+        }
+        private set
+        {
+            if (value.uuid == Uuid)
+            {
+                PlayerSetup.SetupSide(value.side);
+                Client.IsReady = value.isReady;
+            }
+        }
     }
+
+    public static bool IsConnectedToServer { get { return ConnectionStatus >= ConnectionStatus.CONNECTED; } }
+    public static bool InLobby { get { return CurrentLobby != null; } }
 
     public static bool ShouldReadMessage(PlayerType playerType)
     {
-        return Side != playerType || IsLoadingGame;
+        return PlayerSetup.Side != playerType || IsLoadingGame;
     }
 
     public static bool ShouldSendMessage(PlayerType playerType)
     {
-        return Side == playerType && !IsLoadingGame;
+        return PlayerSetup.Side == playerType && !IsLoadingGame;
     }
 
-    public static bool AdminShouldSendMessage()
+    public static void CreateLobby(string lobbyName, bool isPrivateLobby)
     {
-        return IsAdmin && !IsLoadingGame;
-    }
-
-    public static void TryJoinLobby(bool create, bool isReconnect)
-    {
-        Client.Active = true;
-        Client.ConnectionStatus = ConnectionStatus.CONNECTED;
-
-        SendToServer(new WSMsgJoinLobby()
+        SendToServer(new WSMsgCreateLobby()
         {
-            create = create,
-            lobbyName = create ? LobbyId.Name : LobbyId.FullId,
-            clientUUID = Uuid,
-            userName = UserName,
-            isPlayer = Role == ClientType.PLAYER,
-            isReconnect = isReconnect
+            lobbyName = lobbyName,
+            isPrivateLobby = isPrivateLobby,
+            clientInfo = ClientInfo,
+            gameConfig = GameSetup.GameConfig
         });
     }
 
-    public static void EnterLobby(LobbyId lobbyId, bool isAdmin)
+    public static void ConfigLobby()
     {
-        Client.LobbyId = lobbyId;
-        Client.IsAdmin = isAdmin;
-        Client.ConnectionStatus = ConnectionStatus.IN_LOBBY;
+        SendToServer(new WSMsgConfigLobby()
+        {
+            clientInfo = ClientInfo,
+            gameConfig = GameSetup.GameConfig
+        });
+    }
+
+    public static void JoinLobby(string lobbyFullName, ClientType role)
+    {
+        Client.Role = role;
+
+        SendToServer(new WSMsgJoinLobby()
+        {
+            lobbyFullName = lobbyFullName,
+            clientInfo = ClientInfo,
+            isReconnect = false
+        });
+    }
+
+    public static void UpdateLobby(LobbyInfo lobbyInfo)
+    {
+        CurrentLobby = new Lobby(lobbyInfo);
+        GameSetup.Setup(lobbyInfo.gameConfig);
+
+        ClientInfo = CurrentLobby.GetClientInfo(Uuid);
+
+        MenuEvents.UpdateCurrentLobby();
+    }
+
+    public static void Reconnect()
+    {
+        if (!InLobby)
+            return;
+
+        SendToServer(new WSMsgJoinLobby()
+        {
+            lobbyFullName = CurrentLobby.LobbyId.FullId,
+            clientInfo = ClientInfo,
+            isReconnect = true
+        });
     }
 
     public static void SyncTimeWithServer(long syncTimestamp)
@@ -93,41 +135,21 @@ public static class Client
         GameEvents.IsGameLoading(IsLoadingGame);
     }
 
-    public static void SendStartGameMsg(float draftAndPlacementTimeInSeconds, float gameplayTimeInSeconds, MapType selectedMap, PlayerType adminSide)
-    {
-        if (Client.IsAdmin)
-        {
-            SendToServer(new WSMsgStartGame()
-            {
-                draftAndPlacementTimeInSeconds = draftAndPlacementTimeInSeconds,
-                gameplayTimeInSeconds = gameplayTimeInSeconds,
-                mapType = selectedMap,
-                adminSide = adminSide
-            });
-        }
-    }
-
-    public static void StartGame(float draftAndPlacementTimeInSeconds, float gameplayTimeInSeconds, MapType selectedMap, PlayerType adminSide)
-    {
-        Board.selectedMapType = selectedMap;
-        TimerConfig.Init(draftAndPlacementTimeInSeconds, gameplayTimeInSeconds);
-        Client.Side = Client.Role == ClientType.PLAYER ? (Client.IsAdmin ? adminSide : PlayerManager.GetOtherSide(adminSide)) : PlayerType.none;
-        GameManager.GameType = GameType.ONLINE;
-
-        GameEvents.StartGame();
-    }
 
     public static void Reset()
     {
-        Active = false;
         ConnectionStatus = ConnectionStatus.UNCONNECTED;
-        LobbyId = null;
+        CurrentLobby = null;
         ServerTimeDiff = 0;
+        IsReady = false;
     }
 
     public static void SendToServer(WSMessage wSMessage)
     {
-        wSMessage.lobbyId = Client.LobbyId.Id;
+        if (IsLoadingGame)
+            return;
+
+        wSMessage.lobbyId = InLobby ? CurrentLobby.LobbyId.Id : 0;
 
         WSClient.Instance.SendMessage(wSMessage);
     }

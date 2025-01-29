@@ -1,10 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterIndividualNames : MonoBehaviour
 {
-    List<string> maleCharacterNames = new List<string>() 
+    List<string> maleCharacterNames = new List<string>()
     {
         "Jack",
         "Aleksi",

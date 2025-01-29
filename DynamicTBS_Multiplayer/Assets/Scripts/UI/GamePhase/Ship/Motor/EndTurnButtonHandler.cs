@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class EndTurnButtonHandler : MonoBehaviour
 {
@@ -34,7 +31,7 @@ public class EndTurnButtonHandler : MonoBehaviour
 
     private void ChangeButtonInteractability()
     {
-        SetActive(!(GameManager.GameType == GameType.ONLINE && PlayerManager.CurrentPlayer != Client.Side), GameplayManager.GetRemainingActions() == 1);
+        SetActive(!PlayerSetup.IsNotSide(PlayerManager.CurrentPlayer), GameplayManager.GetRemainingActions() == 1);
     }
 
     private void SetActive(GamePhase gamePhase)
@@ -42,7 +39,7 @@ public class EndTurnButtonHandler : MonoBehaviour
         if (gamePhase != GamePhase.GAMEPLAY)
             return;
 
-        SetActive(GameManager.IsPlayer() && !(GameManager.GameType == GameType.ONLINE && PlayerManager.StartPlayer[GamePhase.GAMEPLAY] != Client.Side), false);
+        SetActive(GameManager.IsPlayer() && !PlayerSetup.IsNotSide(PlayerManager.StartPlayer[GamePhase.GAMEPLAY]), false);
         GameplayEvents.OnChangeRemainingActions += ChangeButtonInteractability;
     }
 

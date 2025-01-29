@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class LobbyId
 {
@@ -56,7 +53,7 @@ public class LobbyId
 
             return new LobbyId(id, name);
         }
-        catch(Exception)
+        catch (Exception)
         {
             return null;
         }

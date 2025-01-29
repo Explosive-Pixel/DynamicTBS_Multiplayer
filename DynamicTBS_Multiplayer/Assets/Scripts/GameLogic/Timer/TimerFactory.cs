@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public static class TimerFactory
@@ -13,15 +11,15 @@ public static class TimerFactory
         {
             case GamePhase.DRAFT:
                 timerScript = gameObject.AddComponent<DraftTimer>();
-                originalDuration = TimerConfig.DraftAndPlacementTime;
+                originalDuration = GameSetup.TimerSetup.DraftAndPlacementTime;
                 break;
             case GamePhase.PLACEMENT:
                 timerScript = gameObject.AddComponent<PlacementTimer>();
-                originalDuration = TimerConfig.DraftAndPlacementTime;
+                originalDuration = GameSetup.TimerSetup.DraftAndPlacementTime;
                 break;
             case GamePhase.GAMEPLAY:
                 timerScript = gameObject.AddComponent<GameplayTimer>();
-                originalDuration = TimerConfig.GameplayTime;
+                originalDuration = GameSetup.TimerSetup.GameplayTime;
                 break;
         }
 

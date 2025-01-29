@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MessageSender : MonoBehaviour
@@ -71,7 +69,7 @@ public class MessageSender : MonoBehaviour
 
     private void SendUpdateServerMessage(PlayerType currentPlayer)
     {
-        if (Client.AdminShouldSendMessage())
+        if (Client.IsAdmin)
         {
             Client.SendToServer(new WSMsgUpdateServer
             {
@@ -83,7 +81,7 @@ public class MessageSender : MonoBehaviour
 
     private void SendGameOverMessage(PlayerType? winner, GameOverCondition endGameCondition)
     {
-        if (Client.AdminShouldSendMessage())
+        if (Client.IsAdmin)
         {
             Client.SendToServer(new WSMsgGameOver { winner = winner ?? PlayerType.none, gameOverCondition = endGameCondition });
         }

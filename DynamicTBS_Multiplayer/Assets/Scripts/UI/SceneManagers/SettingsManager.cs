@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
@@ -99,7 +97,7 @@ public class SettingsManager : MonoBehaviour
         PlayerPrefs.SetFloat("AtmoVolumeSetting", atmoVolumeSlider.value);
         PlayerPrefs.SetFloat("FXVolumeSetting", fxVolumeSlider.value);
         PlayerPrefs.SetFloat("VoiceVolumeSetting", voiceVolumeSlider.value);
-        
+
         PlayerPrefs.Save();
     }
 

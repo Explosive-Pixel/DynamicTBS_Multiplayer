@@ -1,24 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using System;
+using UnityEngine;
 
 public enum WSMessageCode
 {
     WSMsgKeepAliveCode = 0,
-    WSMsgMetadataCode = 1,
-    WSMsgJoinLobbyCode = 2,
-    WSMsgWelcomeClientCode = 3,
-    WSMsgGameHistoryCode = 4,
-    WSMsgStartGameCode = 5,
-    WSMsgPauseGameCode = 6,
-    WSMsgServerNotificationCode = 7,
-    WSMsgUpdateServerCode = 8,
-    WSMsgUpdateClientCode = 9,
-    WSMsgGameOverCode = 10,
-    WSMsgDraftCharacterCode = 11,
-    WSMsgPerformActionCode = 12,
-    WSMsgUIActionCode = 13
+    WSMsgWelcomeClientCode = 1,
+
+    WSMsgLobbyListCode = 2,
+    WSMsgCreateLobbyCode = 3,
+    WSMsgJoinLobbyCode = 4,
+    WSMsgLobbyInfoCode = 5,
+    WSMsgSetReadyCode = 6,
+    WSMsgConfigLobbyCode = 7,
+
+    WSMsgGameHistoryCode = 8,
+    WSMsgStartGameCode = 9,
+    WSMsgPauseGameCode = 10,
+    WSMsgServerNotificationCode = 11,
+    WSMsgUpdateServerCode = 12,
+    WSMsgUpdateClientCode = 13,
+    WSMsgGameOverCode = 14,
+    WSMsgDraftCharacterCode = 15,
+    WSMsgPerformActionCode = 16,
+    WSMsgUIActionCode = 17,
 }
 
 [Serializable]
@@ -42,14 +46,16 @@ public abstract class WSMessage
         {
             case WSMessageCode.WSMsgKeepAliveCode:
                 return Deserialize<WSMsgKeepAlive>(json);
-            case WSMessageCode.WSMsgMetadataCode:
-                return Deserialize<WSMsgMetadata>(json);
+            case WSMessageCode.WSMsgLobbyListCode:
+                return Deserialize<WSMsgLobbyList>(json);
             case WSMessageCode.WSMsgJoinLobbyCode:
                 return Deserialize<WSMsgJoinLobby>(json);
             case WSMessageCode.WSMsgWelcomeClientCode:
                 return Deserialize<WSMsgWelcomeClient>(json);
             case WSMessageCode.WSMsgGameHistoryCode:
                 return Deserialize<WSMsgGameHistory>(json);
+            case WSMessageCode.WSMsgSetReadyCode:
+                return Deserialize<WSMsgSetReady>(json);
             case WSMessageCode.WSMsgStartGameCode:
                 return Deserialize<WSMsgStartGame>(json);
             case WSMessageCode.WSMsgPauseGameCode:
@@ -68,6 +74,12 @@ public abstract class WSMessage
                 return Deserialize<WSMsgPerformAction>(json);
             case WSMessageCode.WSMsgUIActionCode:
                 return Deserialize<WSMsgUIAction>(json);
+            case WSMessageCode.WSMsgCreateLobbyCode:
+                return Deserialize<WSMsgCreateLobby>(json);
+            case WSMessageCode.WSMsgLobbyInfoCode:
+                return Deserialize<WSMsgLobbyInfo>(json);
+            case WSMessageCode.WSMsgConfigLobbyCode:
+                return Deserialize<WSMsgConfigLobby>(json);
         }
 
         return null;

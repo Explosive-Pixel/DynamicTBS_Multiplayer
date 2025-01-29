@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class OfferDrawAnswerHandler : MonoBehaviour
@@ -43,7 +41,7 @@ public class OfferDrawAnswerHandler : MonoBehaviour
     {
         if (uIAction == UIAction.OFFER_DRAW)
         {
-            if (!(GameManager.GameType == GameType.ONLINE && Client.Side == player))
+            if (!PlayerSetup.IsSide(player))
             {
                 SetActive(answerDrawBox, true);
             }

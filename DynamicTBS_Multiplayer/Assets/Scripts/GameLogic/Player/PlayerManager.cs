@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -11,7 +9,8 @@ public class PlayerManager : MonoBehaviour
 
     private static PlayerType currentPlayer;
     public static PlayerType CurrentPlayer { get { return currentPlayer; } }
-    public static PlayerType ExecutingPlayer { get { return GameManager.GameType == GameType.ONLINE ? Client.Side : CurrentPlayer; } }
+    // TODO: Change for Type BotGame
+    public static PlayerType ExecutingPlayer { get { return GameManager.GameType == GameType.ONLINE ? PlayerSetup.Side : CurrentPlayer; } }
 
     private static Dictionary<GamePhase, PlayerType> startPlayer;
     public static Dictionary<GamePhase, PlayerType> StartPlayer { get { return startPlayer; } }
