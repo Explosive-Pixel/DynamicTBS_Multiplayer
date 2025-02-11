@@ -112,7 +112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -147,6 +147,10 @@ PrefabInstance:
     - target: {fileID: 3804887030423621952, guid: d2eacc4db99bc4d199ec2341b3b541c5, type: 3}
       propertyPath: m_fontSize
       value: 28
+      objectReference: {fileID: 0}
+    - target: {fileID: 3804887030423621952, guid: d2eacc4db99bc4d199ec2341b3b541c5, type: 3}
+      propertyPath: m_fontStyle
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3804887030423621952, guid: d2eacc4db99bc4d199ec2341b3b541c5, type: 3}
       propertyPath: m_fontSizeBase
@@ -218,7 +222,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9052056093243362341, guid: d2eacc4db99bc4d199ec2341b3b541c5, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -170
+      value: -255
       objectReference: {fileID: 0}
     - target: {fileID: 9052056093243362341, guid: d2eacc4db99bc4d199ec2341b3b541c5, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -284,7 +288,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6050529812101958069, guid: e35f7f6bdd7fc431db02c378b0589fd7, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 330
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 6050529812101958069, guid: e35f7f6bdd7fc431db02c378b0589fd7, type: 3}
       propertyPath: m_SizeDelta.y
@@ -320,7 +324,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6050529812101958069, guid: e35f7f6bdd7fc431db02c378b0589fd7, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 55
+      value: -56
       objectReference: {fileID: 0}
     - target: {fileID: 6050529812101958069, guid: e35f7f6bdd7fc431db02c378b0589fd7, type: 3}
       propertyPath: m_AnchoredPosition.y
