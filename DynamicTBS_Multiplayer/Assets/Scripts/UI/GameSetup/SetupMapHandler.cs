@@ -36,14 +36,16 @@ public class SetupMapHandler : MonoBehaviour, ISetupHandler
 
     private void SetMap(Button button, MapType mapType)
     {
+        // init buttons of "Setup Map" section for selected Map
         GameObject parent = button.gameObject.transform.parent.gameObject;
+        Button clickedButton = gameObject.GetComponentsInChildren<Button>(true).ToList().Find(b => b.GetComponent<ChangeActiveGameObjectOnClickHandler>() != null && b.GetComponent<ChangeActiveGameObjectOnClickHandler>().activeOnClickGameObject == parent);
         if (!parent.activeSelf)
-            gameObject.GetComponent<BaseActiveHandler>().SetActive(parent);
+            gameObject.GetComponent<BaseActiveHandler>().SetActive(clickedButton, parent);
 
         mapPreview.Init(mapType);
         mapSelected = true;
 
-        gameObject.GetComponentsInChildren<Button>(true).ToList().ForEach(button => button.interactable = true);
+        gameObject.GetComponentsInChildren<MapClass>(true).ToList().ForEach(map => map.GetComponent<Button>().interactable = true);
         button.interactable = false;
     }
 

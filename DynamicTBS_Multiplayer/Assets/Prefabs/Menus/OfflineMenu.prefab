@@ -45,6 +45,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 702918849399139214}
     m_Modifications:
+    - target: {fileID: 587813661106537175, guid: dbe728af9ebb645c6b35a690e7eaeeb4, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 587813662887228564, guid: dbe728af9ebb645c6b35a690e7eaeeb4, type: 3}
       propertyPath: m_Name
       value: OfflineMenuScreen
@@ -131,6 +135,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 587813662887228567, guid: dbe728af9ebb645c6b35a690e7eaeeb4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9139832964057294535, guid: dbe728af9ebb645c6b35a690e7eaeeb4, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

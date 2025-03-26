@@ -55,8 +55,12 @@ public class LobbyInfoMenuHandler : MonoBehaviour
         timeAndMapInfoHandler.UpdateInfo(selectedLobby?.GameConfig);
 
         joinLobbyButton.gameObject.SetActive(!Client.InLobby && SelectedLobby != null && !SelectedLobby.IsFull);
-        readyButton.interactable = Client.Role == ClientType.PLAYER && !Client.IsReady;
-        readyButton.gameObject.SetActive(Client.InLobby && Client.Role == ClientType.PLAYER);
+
+        bool readyCheckAvailable = Client.InLobby && Client.Role == ClientType.PLAYER && Client.CurrentLobby.IsFull;
+        if (!readyCheckAvailable)
+            Client.IsReady = false;
+        readyButton.interactable = readyCheckAvailable && !Client.IsReady;
+        readyButton.gameObject.SetActive(readyCheckAvailable);
     }
 
     private void UpdateInfo()
