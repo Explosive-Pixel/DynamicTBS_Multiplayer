@@ -25,8 +25,8 @@ public class EndTurnButtonHandler : MonoBehaviour
 
     private void SetActive(bool active, bool interactable)
     {
-        turnEndedButton.SetActive(active && interactable);
-        turnEndedButton_grayed.SetActive(active && !interactable);
+        turnEndedButton.SetActive(GameManager.IsPlayer() && active && interactable);
+        turnEndedButton_grayed.SetActive(GameManager.IsPlayer() && active && !interactable);
     }
 
     private void ChangeButtonInteractability()
