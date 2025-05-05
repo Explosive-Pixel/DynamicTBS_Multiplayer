@@ -77,6 +77,11 @@ public class Tile : MonoBehaviour
         return tileType == TileType.EmptyTile;
     }
 
+    public bool IsFloor()
+    {
+        return !IsHole();
+    }
+
     public bool IsNormalFloor()
     {
         return !IsHole() && !IsGoal();

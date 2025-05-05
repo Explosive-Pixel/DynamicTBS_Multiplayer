@@ -30,9 +30,17 @@ public class MovesInfoHandler : MonoBehaviour
     {
         string newLine = GetMoveCountString() + ": ";
 
-        if (actionMetadata.ExecutedActionType == ActionType.Skip)
+        if (actionMetadata.ExecutedActionType == ActionType.PlayerAction)
         {
-            newLine += TranslatePlayerSide(actionMetadata.ExecutingPlayer) + " ended their turn";
+            switch (actionMetadata.PlayerActionType)
+            {
+                case PlayerActionType.Skip:
+                    newLine += TranslatePlayerSide(actionMetadata.ExecutingPlayer) + " ended their turn";
+                    break;
+                case PlayerActionType.Refresh:
+                    newLine += TranslatePlayerSide(actionMetadata.ExecutingPlayer) + " refreshed their active abilities";
+                    break;
+            }
         }
         else
         {
@@ -118,21 +126,7 @@ public class MovesInfoHandler : MonoBehaviour
 
         if (actiontype == ActionType.ActiveAbility)
         {
-            switch (character.CharacterType)
-            {
-                case CharacterType.CaptainChar:
-                    return " used Take Control on ";
-                case CharacterType.TankChar:
-                    return " used Block on ";
-                case CharacterType.ShooterChar:
-                    return " used Powershot on ";
-                case CharacterType.RunnerChar:
-                    return " used Jump on ";
-                case CharacterType.MechanicChar:
-                    return " used Change Floor on ";
-                case CharacterType.DocChar:
-                    return " used Heal on ";
-            }
+            return " used " + character.ActiveAbility.AbilityType.Description() + " on ";
         }
 
         return "";

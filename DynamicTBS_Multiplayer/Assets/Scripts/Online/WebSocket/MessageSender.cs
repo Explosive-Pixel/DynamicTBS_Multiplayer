@@ -25,6 +25,7 @@ public class MessageSender : MonoBehaviour
         {
             Tile characterInitialTile = actionMetadata.CharacterInitialPosition != null ? Board.GetTileByPosition(actionMetadata.CharacterInitialPosition.Value) : null;
             Tile actionDestinationTile = actionMetadata.ActionDestinationPosition != null ? Board.GetTileByPosition(actionMetadata.ActionDestinationPosition.Value) : null;
+
             Client.SendToServer(new WSMsgPerformAction
             {
                 playerId = actionMetadata.ExecutingPlayer,
@@ -33,6 +34,7 @@ public class MessageSender : MonoBehaviour
                 characterX = actionMetadata.CharacterInitialPosition != null ? actionMetadata.CharacterInitialPosition.Value.x : 0f,
                 characterY = actionMetadata.CharacterInitialPosition != null ? actionMetadata.CharacterInitialPosition.Value.y : 0f,
                 actionType = actionMetadata.ExecutedActionType,
+                playerActionType = actionMetadata.PlayerActionType != null ? actionMetadata.PlayerActionType.Value : 0,
                 hasDestination = actionMetadata.ActionDestinationPosition != null,
                 actionDestinationTileName = actionDestinationTile != null ? actionDestinationTile.Name : null,
                 destinationX = actionMetadata.ActionDestinationPosition != null ? actionMetadata.ActionDestinationPosition.Value.x : 0f,

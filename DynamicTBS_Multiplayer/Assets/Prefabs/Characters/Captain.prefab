@@ -91,7 +91,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71189843226d945a58309eb7a452fb18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aaCooldown: 3
   charmRange: 2
   charmDuration: 1
   aaPattern: 1
@@ -111,15 +110,5 @@ MonoBehaviour:
   maxHitPoints: 3
   moveSpeed: 1
   attackRange: 0
---- !u!114 &2973897486106771608
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1782077608749416652}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f95a601691bc1490b8c6d42777e81ddc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  attackDamage: 0
+  movePattern: 0

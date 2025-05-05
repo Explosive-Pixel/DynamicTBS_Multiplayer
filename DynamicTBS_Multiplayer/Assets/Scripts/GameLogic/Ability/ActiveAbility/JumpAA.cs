@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class JumpAA : MonoBehaviour, IActiveAbility
 {
-    [SerializeField] private int aaCooldown; // 2
     [SerializeField] private PatternType jumpPattern; // Star
     [SerializeField] private int jumpDistance; // 3
 
@@ -10,7 +9,6 @@ public class JumpAA : MonoBehaviour, IActiveAbility
     public static int distance;
 
     public ActiveAbilityType AbilityType { get { return ActiveAbilityType.JUMP; } }
-    public int Cooldown { get { return aaCooldown; } }
 
     private JumpAAAction jumpAAAction;
 

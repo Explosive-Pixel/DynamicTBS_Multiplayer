@@ -2,13 +2,11 @@ using UnityEngine;
 
 public class PowershotAA : MonoBehaviour, IActiveAbility
 {
-    [SerializeField] private int aaCooldown; // 3
     [SerializeField] private int powershotDamage; // 1
     [SerializeField] private int powershotSelfDamage; // 1
 
     public static int damage;
     public static int selfDamage;
-    public int Cooldown { get { return aaCooldown; } }
 
     public ActiveAbilityType AbilityType { get { return ActiveAbilityType.POWERSHOT; } }
     private PowershotAAAction powershotAAAction;

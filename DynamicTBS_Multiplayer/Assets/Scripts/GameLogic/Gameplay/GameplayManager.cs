@@ -108,6 +108,14 @@ public class GameplayManager : MonoBehaviour
             }
         }
 
+        foreach (IPlayerAction playerAction in PlayerActionRegistry.GetActions())
+        {
+            if (playerAction.IsActionAvailable(player))
+            {
+                return true;
+            }
+        }
+
         return false;
     }
 

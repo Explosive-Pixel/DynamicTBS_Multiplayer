@@ -4,8 +4,6 @@ using UnityEngine;
 public class AttackAction : MonoBehaviour, IAction
 {
     [SerializeField] private GameObject attackCirclePrefab;
-
-    [SerializeField] private int attackDamage;
     [SerializeField] private PatternType attackPattern;
 
     public ActionType ActionType { get { return ActionType.Attack; } }
@@ -22,8 +20,6 @@ public class AttackAction : MonoBehaviour, IAction
 
     private void Awake()
     {
-        AttackDamage = attackDamage;
-
         GameEvents.OnGamePhaseStart += Register;
     }
 
@@ -84,9 +80,8 @@ public class AttackAction : MonoBehaviour, IAction
         characterInAction = null;
     }
 
-    private List<Vector3> FindTargetPositions(Character character)
+    public static List<Vector3> FindAttackTargets(PatternType attackPattern, int range, Character character)
     {
-        int range = character.AttackRange;
         Tile tile = Board.GetTileByCharacter(character);
 
         PlayerType otherSide = PlayerManager.GetOtherSide(character.Side);
@@ -96,6 +91,11 @@ public class AttackAction : MonoBehaviour, IAction
             .ConvertAll(tile => tile.gameObject.transform.position);
 
         return targetPositions;
+    }
+
+    private List<Vector3> FindTargetPositions(Character character)
+    {
+        return FindAttackTargets(attackPattern, character.AttackRange, character);
     }
 
     private void Register(GamePhase gamePhase)
