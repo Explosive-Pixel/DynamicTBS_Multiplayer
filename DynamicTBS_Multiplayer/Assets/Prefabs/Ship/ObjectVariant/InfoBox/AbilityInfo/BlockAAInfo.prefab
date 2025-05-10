@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 86364775189297550, guid: fbb8951a8db15334980ef8f798960134, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -5638732994581352410, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
     - target: {fileID: 952792709278910801, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -53,16 +57,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1234039959914733649, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_text
-      value: '<i>Active Ability</i>
+      value: '<i>Power</i>
 
-
-        This unit rips out an adjacent floor
-        square in a <i>cross pattern</i> and uses it as a shield for <b>2</b> turns.
-        While shielded this unit will take no damage, but is unable to attack or
-        move and its passive ability is disabled.
-
-
-        Cooldown: <b>3</b> turns'
+        Rush onto a floor square in range <b>1</b>. If
+        the floor square is occupied, the occupying unit is pushed <b>1</b> square
+        in the same direction (as are any units on adjacent squares in this direction)
+        and both the pushed unit und the Tank take <b>1</b> damage. If this pushes
+        a unit into a hole, it dies immediately. Units cannot be pushed across the
+        edge of the board. '
       objectReference: {fileID: 0}
     - target: {fileID: 1234039959914733649, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_fontSize
@@ -72,10 +74,22 @@ PrefabInstance:
       propertyPath: m_fontSizeBase
       value: 0.2
       objectReference: {fileID: 0}
+    - target: {fileID: 1234039959914733649, guid: fbb8951a8db15334980ef8f798960134, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
+    - target: {fileID: 1234039959914733649, guid: fbb8951a8db15334980ef8f798960134, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1726121369747029956, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_Name
       value: BlockAAInfo
       objectReference: {fileID: 0}
+    - target: {fileID: 2844471632506181553, guid: fbb8951a8db15334980ef8f798960134, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
     - target: {fileID: 3570286753581677792, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0.369
@@ -110,7 +124,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5802362004618636893, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_text
-      value: Block
+      value: Ram
       objectReference: {fileID: 0}
     - target: {fileID: 5802362004618636893, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_fontSize
@@ -121,8 +135,16 @@ PrefabInstance:
       value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 5802362004618636893, guid: fbb8951a8db15334980ef8f798960134, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -5638732994581352410, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
+    - target: {fileID: 5802362004618636893, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_VerticalAlignment
       value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 5802362004618636893, guid: fbb8951a8db15334980ef8f798960134, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7176947435035259950, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_SizeDelta.x

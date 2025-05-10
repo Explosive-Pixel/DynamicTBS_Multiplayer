@@ -58,7 +58,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -104,8 +104,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
+  m_sharedMaterial: {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1482,7 +1482,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5317760985307652473}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 1.6, z: 0}
+  m_LocalPosition: {x: 0.63, y: 1.76, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -1683,7 +1683,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1728,33 +1728,25 @@ MonoBehaviour:
   m_text: '<b>SHOOTER</b>
 
 
-    Health: 2
+    Health: <b>2</b>
 
-    Movement: 1
+    Movement pattern: <b>Cross</b>
 
-    Damage: 1
+    Steps:
+    <b>1</b>
 
-    Range:
-    2
+    Range: <b>2</b>
 
-
-    Active Ability: <b>Powershot</b>
-
-    Deals <b>1</b> damage to all units
-    in a direction in a <i>cross pattern</i> as well as this unit. Can only be stopped
-    by an active Block.
-
-    Cooldown: <b>3</b> turns.
+    Damage: <b>1</b>
 
 
-    Passive Ability: <b>Explosion</b>
+    Power: <b>Longshot</b>
 
-    If
-    this unit dies it explodes, dealing <b>1</b> damage to all units in a <i>radius</i>
-    of <b>1</b> and destroying the floor square it occupies.'
+    Attack
+    a target without range restriction whilst dealing <b>1</b> damage to yourself.'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
+  m_sharedMaterial: {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2109,7 +2101,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2154,34 +2146,26 @@ MonoBehaviour:
   m_text: '<b>MECHANIC</b>
 
 
-    Health: 2
+    Health: <b>2</b>
 
-    Movement: 1
+    Movement pattern: <b>Cross</b>
 
-    Damage: 1
+    Movement:
+    <b>1</b>
 
-    Range:
-    1
+    Range: <b>1</b>
 
-
-    Active Ability: <b>Change Floor</b>
-
-    Changes a floor square to a
-    hole or the other way around in a <i>star pattern</i> in range <b>2</b>, unless
-    the path is blocked by other units. Occupied squares can only be changed in range
-    <b>1</b>, instantly eliminating the occupying unit.
-
-    Cooldown: <b>3</b> turns
+    Damage: <b>1</b>
 
 
-    Passive
-    Ability: <b>Alert</b>
+    Power: <b>Repair</b>
 
-    This unit always makes sure that the floor underneath
-    it cannot be changed.'
+    Rip
+    out an unoccupied floor square in range <b>2</b> and use it to cover a hole in
+    range <b>2</b>.'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
+  m_sharedMaterial: {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2573,7 +2557,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2618,35 +2602,25 @@ MonoBehaviour:
   m_text: '<b>DOC</b>
 
 
-    Health: 2
+    Health: <b>2</b>
 
-    Movement: 1
+    Movement pattern: <b>Cross</b>
 
-    Damage: 1
+    Steps:
+    <b>1</b>
 
-    Range:
-    1
+    Range: <b>1</b>
 
-
-    Active Ability: <b>Heal</b>
-
-    Throws a syringe in a <i>star pattern</i>
-    in a range of <b>2</b> to heal a unit for <b>1</b> health, unless the path is
-    blocked by other units. Units may never have more health than they started with.
-    When being healed, a unit also receives a movement buff of <b>+1</b> which is
-    gone after its next move action.
-
-    Cooldown: <b>3</b> turns
+    Damage: <b>1</b>
 
 
-    Passive
-    Ability: <b>Adrenalin</b>
+    Power: <b>Transfusion</b>
 
-    If this unit takes damage, its cooldown is set
-    to <b>0</b>.'
+    Move
+    <b>1</b> health point from a unit in range <b>2</b> to another.'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
+  m_sharedMaterial: {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2809,7 +2783,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2854,35 +2828,29 @@ MonoBehaviour:
   m_text: '<b>TANK</b>
 
 
-    Health: 3
+    Health: <b>3</b>
 
-    Movement: 1
+    Movement pattern: <b>Cross</b>
 
-    Damage: 1
+    Steps:
+    <b>1</b>
 
-    Range:
-    1
+    Range: <b>1</b>
 
-
-    Active Ability: <b>Block</b>
-
-    This unit rips out an adjacent floor
-    square in a <i>cross pattern</i> and uses it as a shield for <b>2</b> turns.
-    While shielded this unit will take no damage, but is unable to attack or move
-    and its passive ability is disabled.
-
-    Cooldown: <b>3</b> turns
+    Damage: <b>1</b>
 
 
-    Passive
-    Ability: <b>Protect</b>
+    Power: <b>Ram</b>
 
-    If an allied unit is next to this one in a <i>cross
-    pattern</i>, this unit will take all damage for its ally. Does not work on other
-    Tanks.'
+    Rush
+    onto a floor square in range <b>1</b>. If the floor square is occupied, the occupying
+    unit is pushed <b>1</b> square in the same direction (as are any units on adjacent
+    squares in this direction) and both the pushed unit und the Tank take <b>1</b>
+    damage. If this pushes a unit into a hole, it dies immediately. Units cannot
+    be pushed across the edge of the board. '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
+  m_sharedMaterial: {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3057,7 +3025,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3102,32 +3070,25 @@ MonoBehaviour:
   m_text: '<b>RUNNER</b>
 
 
-    Health: 1
+    Health: <b>1</b>
 
-    Movement: 2
+    Movement pattern: <b>Star</b>
 
-    Damage: 2
+    Steps:
+    <b>2</b>
 
-    Range:
-    1
+    Range: <b>1</b>
 
-
-    Active Ability: <b>Jump</b>
-
-    Jumps <b>3</b> squares in a <i>star
-    pattern</i>, traversing units and holes. Has to land on an empty floor square.
-
-    Cooldown:
-    <b>2</b> turns
+    Damage: <b>2</b>
 
 
-    Passive Ability: <b>Blade Dance</b>
+    Power: <b>Jump</b>
 
-    This unit moves
-    in a <i>star pattern</i> and deals <b>2</b> damage with each attack.'
+    Jump
+    up to <b>3</b> squares across units and holes onto an unoccupied floor square.'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
+  m_sharedMaterial: {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3420,7 +3381,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3465,35 +3426,29 @@ MonoBehaviour:
   m_text: '<b>TANK</b>
 
 
-    Health: 3
+    Health: <b>3</b>
 
-    Movement: 1
+    Movement pattern: <b>Cross</b>
 
-    Damage: 1
+    Steps:
+    <b>1</b>
 
-    Range:
-    1
+    Range: <b>1</b>
 
-
-    Active Ability: <b>Block</b>
-
-    This unit rips out an adjacent floor
-    square in a <i>cross pattern</i> and uses it as a shield for <b>2</b> turns.
-    While shielded this unit will take no damage, but is unable to attack or move
-    and its passive ability is disabled.
-
-    Cooldown: <b>3</b> turns
+    Damage: <b>1</b>
 
 
-    Passive
-    Ability: <b>Protect</b>
+    Power: <b>Ram</b>
 
-    If an allied unit is next to this one in a <i>cross
-    pattern</i>, this unit will take all damage for its ally. Does not work on other
-    Tanks.'
+    Rush
+    onto a floor square in range <b>1</b>. If the floor square is occupied, the occupying
+    unit is pushed <b>1</b> square in the same direction (as are any units on adjacent
+    squares in this direction) and both the pushed unit und the Tank take <b>1</b>
+    damage. If this pushes a unit into a hole, it dies immediately. Units cannot
+    be pushed across the edge of the board. '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
+  m_sharedMaterial: {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3620,7 +3575,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3665,33 +3620,25 @@ MonoBehaviour:
   m_text: '<b>SHOOTER</b>
 
 
-    Health: 2
+    Health: <b>2</b>
 
-    Movement: 1
+    Movement pattern: <b>Cross</b>
 
-    Damage: 1
+    Steps:
+    <b>1</b>
 
-    Range:
-    2
+    Range: <b>2</b>
 
-
-    Active Ability: <b>Powershot</b>
-
-    Deals <b>1</b> damage to all units
-    in a direction in a <i>cross pattern</i> as well as this unit. Can only be stopped
-    by an active Block.
-
-    Cooldown: <b>3</b> turns.
+    Damage: <b>1</b>
 
 
-    Passive Ability: <b>Explosion</b>
+    Power: <b>Longshot</b>
 
-    If
-    this unit dies it explodes, dealing <b>1</b> damage to all units in a <i>radius</i>
-    of <b>1</b> and destroying the floor square it occupies.'
+    Attack
+    a target without range restriction whilst dealing <b>1</b> damage to yourself.'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
+  m_sharedMaterial: {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3869,7 +3816,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5317760985897126001}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 1.6, z: 0}
+  m_LocalPosition: {x: 0.65, y: 1.6, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -3986,7 +3933,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: -5638732994581352410, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4030,8 +3977,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: TANK
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
+  m_sharedMaterial: {fileID: -5638732994581352410, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4125,7 +4072,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5317760985941056314}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 1.6, z: 0}
+  m_LocalPosition: {x: 0.71, y: 1.6, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -4472,7 +4419,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 3.3}
+  m_AnchoredPosition: {x: 0, y: 3.35}
   m_SizeDelta: {x: 5, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &5317760986048144304
@@ -4495,7 +4442,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4539,8 +4486,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Pink drafts x units.
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
+  m_sharedMaterial: {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4835,7 +4782,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4880,34 +4827,26 @@ MonoBehaviour:
   m_text: '<b>MECHANIC</b>
 
 
-    Health: 2
+    Health: <b>2</b>
 
-    Movement: 1
+    Movement pattern: <b>Cross</b>
 
-    Damage: 1
+    Movement:
+    <b>1</b>
 
-    Range:
-    1
+    Range: <b>1</b>
 
-
-    Active Ability: <b>Change Floor</b>
-
-    Changes a floor square to a
-    hole or the other way around in a <i>star pattern</i> in range <b>2</b>, unless
-    the path is blocked by other units. Occupied squares can only be changed in range
-    <b>1</b>, instantly eliminating the occupying unit.
-
-    Cooldown: <b>3</b> turns
+    Damage: <b>1</b>
 
 
-    Passive
-    Ability: <b>Alert</b>
+    Power: <b>Repair</b>
 
-    This unit always makes sure that the floor underneath
-    it cannot be changed.'
+    Rip
+    out an unoccupied floor square in range <b>2</b> and use it to cover a hole in
+    range <b>2</b>.'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
+  m_sharedMaterial: {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5129,7 +5068,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 4.3}
+  m_AnchoredPosition: {x: 0, y: 4.35}
   m_SizeDelta: {x: 5, y: 2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &5317760986244017135
@@ -5152,7 +5091,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: -5638732994581352410, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5196,8 +5135,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 00:00
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
+  m_sharedMaterial: {fileID: -5638732994581352410, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5324,7 +5263,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: -5638732994581352410, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5368,8 +5307,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: DOC
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
+  m_sharedMaterial: {fileID: -5638732994581352410, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5463,7 +5402,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5317760986258726548}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 1.6, z: 0}
+  m_LocalPosition: {x: 0.74, y: 1.6, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -5557,7 +5496,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 3.3}
+  m_AnchoredPosition: {x: 0, y: 3.35}
   m_SizeDelta: {x: 5, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &5317760986292830478
@@ -5580,7 +5519,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5624,8 +5563,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Pink drafts x units.
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
+  m_sharedMaterial: {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5752,7 +5691,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: -5638732994581352410, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5796,8 +5735,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: SHOOTER
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
+  m_sharedMaterial: {fileID: -5638732994581352410, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -6764,7 +6703,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6809,35 +6748,25 @@ MonoBehaviour:
   m_text: '<b>DOC</b>
 
 
-    Health: 2
+    Health: <b>2</b>
 
-    Movement: 1
+    Movement pattern: <b>Cross</b>
 
-    Damage: 1
+    Steps:
+    <b>1</b>
 
-    Range:
-    1
+    Range: <b>1</b>
 
-
-    Active Ability: <b>Heal</b>
-
-    Throws a syringe in a <i>star pattern</i>
-    in a range of <b>2</b> to heal a unit for <b>1</b> health, unless the path is
-    blocked by other units. Units may never have more health than they started with.
-    When being healed, a unit also receives a movement buff of <b>+1</b> which is
-    gone after its next move action.
-
-    Cooldown: <b>3</b> turns
+    Damage: <b>1</b>
 
 
-    Passive
-    Ability: <b>Adrenalin</b>
+    Power: <b>Transfusion</b>
 
-    If this unit takes damage, its cooldown is set
-    to <b>0</b>.'
+    Move
+    <b>1</b> health point from a unit in range <b>2</b> to another.'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
+  m_sharedMaterial: {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -7110,7 +7039,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 4.3}
+  m_AnchoredPosition: {x: 0, y: 4.35}
   m_SizeDelta: {x: 5, y: 2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &5317760986661225152
@@ -7133,7 +7062,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: -5638732994581352410, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7177,8 +7106,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 00:00
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
+  m_sharedMaterial: {fileID: -5638732994581352410, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -7441,7 +7370,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5317760986755107591}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 1.6, z: 0}
+  m_LocalPosition: {x: 0.65, y: 1.6, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -7525,7 +7454,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5317760986771778706}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 1.6, z: 0}
+  m_LocalPosition: {x: 0.71, y: 1.6, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -7726,7 +7655,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: -5638732994581352410, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7770,8 +7699,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: RUNNER
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
+  m_sharedMaterial: {fileID: -5638732994581352410, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -7898,7 +7827,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7943,32 +7872,25 @@ MonoBehaviour:
   m_text: '<b>RUNNER</b>
 
 
-    Health: 1
+    Health: <b>1</b>
 
-    Movement: 2
+    Movement pattern: <b>Star</b>
 
-    Damage: 2
+    Steps:
+    <b>2</b>
 
-    Range:
-    1
+    Range: <b>1</b>
 
-
-    Active Ability: <b>Jump</b>
-
-    Jumps <b>3</b> squares in a <i>star
-    pattern</i>, traversing units and holes. Has to land on an empty floor square.
-
-    Cooldown:
-    <b>2</b> turns
+    Damage: <b>2</b>
 
 
-    Passive Ability: <b>Blade Dance</b>
+    Power: <b>Jump</b>
 
-    This unit moves
-    in a <i>star pattern</i> and deals <b>2</b> damage with each attack.'
+    Jump
+    up to <b>3</b> squares across units and holes onto an unoccupied floor square.'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
+  m_sharedMaterial: {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -8312,7 +8234,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: -5638732994581352410, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8356,8 +8278,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: MECHANIC
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
+  m_sharedMaterial: {fileID: -5638732994581352410, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -9007,7 +8929,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5317760987333171489}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 1.6, z: 0}
+  m_LocalPosition: {x: 0.63, y: 1.76, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -9091,7 +9013,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5317760987374698811}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 1.6, z: 0}
+  m_LocalPosition: {x: 0.74, y: 1.6, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -9919,7 +9841,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9963,8 +9885,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Pink
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
+  m_sharedMaterial: {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -10152,7 +10074,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 4.3}
+  m_AnchoredPosition: {x: 0, y: 4.35}
   m_SizeDelta: {x: 5, y: 2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &4339868239794695886
@@ -10175,7 +10097,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: -5638732994581352410, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10219,8 +10141,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 00:00
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
+  m_sharedMaterial: {fileID: -5638732994581352410, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
