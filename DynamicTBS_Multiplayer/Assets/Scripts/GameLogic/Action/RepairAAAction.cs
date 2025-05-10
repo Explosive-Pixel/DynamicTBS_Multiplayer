@@ -46,6 +46,9 @@ public class RepairAAAction : MonoBehaviour, IAction
 
     public void CreateActionDestinations(Character character)
     {
+        if (CountActionDestinations(character) == 0)
+            return;
+
         List<Vector3> changeFloorPositions = selectedFloor == null ? FindSelectableFloorPositions(character) : FindSelectableHolePositions(character);
 
         if (changeFloorPositions != null && changeFloorPositions.Count > 0)

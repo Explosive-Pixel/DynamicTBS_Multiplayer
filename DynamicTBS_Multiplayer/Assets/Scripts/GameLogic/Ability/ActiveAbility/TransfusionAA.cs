@@ -3,10 +3,12 @@ using UnityEngine;
 public class TransfusionAA : MonoBehaviour, IActiveAbility
 {
     [SerializeField] private int transfusionRange;
+    [SerializeField] private int transfusionHPCount;
     [SerializeField] private PatternType transfusionPattern;
 
     public static int range;
     public static PatternType pattern;
+    public static int hpCount;
 
     public ActiveAbilityType AbilityType { get { return ActiveAbilityType.TRANSFUSION; } }
 
@@ -18,6 +20,7 @@ public class TransfusionAA : MonoBehaviour, IActiveAbility
     {
         range = transfusionRange;
         pattern = transfusionPattern;
+        hpCount = transfusionHPCount;
 
         character = gameObject.GetComponent<Character>();
         transfusionAAAction = GameObject.Find("ActionRegistry").GetComponent<TransfusionAAAction>();
