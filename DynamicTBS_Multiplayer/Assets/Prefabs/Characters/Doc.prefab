@@ -147,23 +147,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5687532331230442325, guid: 81465a4e247cfb6429a71416afb6866c, type: 3}
   m_PrefabInstance: {fileID: 6475748406868165277}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &212202696500513350
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1670930401161900488}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 129f53a54dbaeb449b5e5fb9bdceee29, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healRange: 2
-  healPoints: 1
-  moveSpeedBuffer: 1
-  aaPattern: 1
-  speedBuff: {fileID: 8260939486826341555}
 --- !u!114 &903698133701564996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,8 +165,17 @@ MonoBehaviour:
   attackRange: 1
   attackDamage: 1
   movePattern: 0
---- !u!1 &8260939486826341555 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3133021465174468142, guid: 81465a4e247cfb6429a71416afb6866c, type: 3}
-  m_PrefabInstance: {fileID: 6475748406868165277}
+--- !u!114 &4180992293824007490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1670930401161900488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd1a0bb17d584172934886debcff171, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transfusionRange: 2
+  transfusionPattern: 1

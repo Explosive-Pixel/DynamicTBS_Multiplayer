@@ -3142,6 +3142,22 @@ PrefabInstance:
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 2193981329150730638, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 471011734}
+    - target: {fileID: 2193981329150730638, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 471011734}
+    - target: {fileID: 2193981329150730638, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HideActionPattern
+      objectReference: {fileID: 0}
+    - target: {fileID: 2193981329150730638, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ShowActiveAbilityPattern
+      objectReference: {fileID: 0}
     - target: {fileID: 2276992717101575875, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: gamePhase
       value: 3
@@ -4126,6 +4142,22 @@ PrefabInstance:
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 6227299064418632268, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 471011734}
+    - target: {fileID: 6227299064418632268, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 471011734}
+    - target: {fileID: 6227299064418632268, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HideActionPattern
+      objectReference: {fileID: 0}
+    - target: {fileID: 6227299064418632268, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ShowActiveAbilityPattern
+      objectReference: {fileID: 0}
     - target: {fileID: 6324444534087990011, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -4513,6 +4545,22 @@ PrefabInstance:
     - target: {fileID: 6784643377367098203, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: m_SortingOrder
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849284438023010640, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 471011734}
+    - target: {fileID: 6849284438023010640, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 471011734}
+    - target: {fileID: 6849284438023010640, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onDrop.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HideActionPattern
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849284438023010640, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
+      propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ShowActiveAbilityPattern
       objectReference: {fileID: 0}
     - target: {fileID: 6937357429297561743, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
       propertyPath: m_IsActive
@@ -6913,6 +6961,7 @@ GameObject:
   - component: {fileID: 1149377228}
   - component: {fileID: 1149377229}
   - component: {fileID: 1149377230}
+  - component: {fileID: 1149377231}
   m_Layer: 0
   m_Name: ActionRegistry
   m_TagString: Untagged
@@ -7131,6 +7180,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectCharacterPrefab: {fileID: 8423276495478319710, guid: c1ffae3fcbec7f5488d93a6083ef3733, type: 3}
+--- !u!114 &1149377231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1149377214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b0c810fd1dcb4a1ca4905061e2a175b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  patternPrefab: {fileID: 8423276495478319710, guid: c1ffae3fcbec7f5488d93a6083ef3733, type: 3}
+  stealHPCharacterPrefab: {fileID: 8423276495478319710, guid: c1ffae3fcbec7f5488d93a6083ef3733, type: 3}
+  giveHPCharacterPrefab: {fileID: 8423276495478319710, guid: c1ffae3fcbec7f5488d93a6083ef3733, type: 3}
 --- !u!114 &1191429008
 MonoBehaviour:
   m_ObjectHideFlags: 0
