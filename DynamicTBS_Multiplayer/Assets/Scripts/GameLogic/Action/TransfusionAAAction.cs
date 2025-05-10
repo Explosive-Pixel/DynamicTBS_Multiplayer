@@ -10,8 +10,8 @@ public class TransfusionAAAction : MonoBehaviour, IAction
 
     public ActionType ActionType { get { return ActionType.ActiveAbility; } }
 
-    private Tile stealHPCharacter = null;
-    private Tile giveHPCharacter = null;
+    private Character stealHPCharacter = null;
+    private Character giveHPCharacter = null;
 
     private List<GameObject> actionDestinations = new();
     public List<GameObject> ActionDestinations { get { return actionDestinations; } }
@@ -46,10 +46,13 @@ public class TransfusionAAAction : MonoBehaviour, IAction
 
     public void CreateActionDestinations(Character character)
     {
+        if (CountActionDestinations(character) == 0)
+            return;
+
         List<Vector3> changeFloorPositions = FindCharacterToTransfuseHPPositions(character);
 
         if (stealHPCharacter != null)
-            changeFloorPositions = changeFloorPositions.FindAll(pos => pos != stealHPCharacter.gameObject.transform.position);
+            changeFloorPositions = changeFloorPositions.FindAll(pos => pos != stealHPCharacter.CurrentTile.gameObject.transform.position);
 
         if (changeFloorPositions != null && changeFloorPositions.Count > 0)
         {
@@ -60,26 +63,26 @@ public class TransfusionAAAction : MonoBehaviour, IAction
 
     public bool ExecuteAction(GameObject actionDestination)
     {
-        /*Tile tile = Board.GetTileByPosition(actionDestination.transform.position);
+        Tile tile = Board.GetTileByPosition(actionDestination.transform.position);
         if (tile != null)
         {
-            if (selectedFloor == null)
+            if (stealHPCharacter == null)
             {
-                selectedFloor = tile;
+                stealHPCharacter = tile.CurrentInhabitant;
                 ActionUtils.Clear(actionDestinations);
                 CreateActionDestinations(characterInAction);
             }
             else
             {
-                selectedHole = tile;
-                selectedFloor.Transform(OtherTileType(selectedFloor.TileType));
-                selectedHole.Transform(OtherTileType(selectedHole.TileType));
+                giveHPCharacter = tile.CurrentInhabitant;
+                stealHPCharacter.TakeDamage(TransfusionAA.hpCount);
+                giveHPCharacter.Heal(TransfusionAA.hpCount);
             }
 
-            return selectedHole != null;
+            return giveHPCharacter != null;
         }
 
-        AbortAction();*/
+        AbortAction();
         return false;
     }
 

@@ -3,10 +3,12 @@ using UnityEngine;
 public class HypnotizedState : MonoBehaviour, IState
 {
     private Character character;
+    private Character hypnotizedBy;
 
-    public static HypnotizedState Create(GameObject parent)
+    public static HypnotizedState Create(GameObject parent, Character hypnotizedBy)
     {
         HypnotizedState hs = parent.AddComponent<HypnotizedState>();
+        hs.hypnotizedBy = hypnotizedBy;
         hs.Init();
         return hs;
     }
@@ -15,7 +17,10 @@ public class HypnotizedState : MonoBehaviour, IState
     {
         character = gameObject.GetComponent<Character>();
         SwapSide();
+        GameplayEvents.ChangeCharacterSelection(character);
+        CharacterManager.SelectedCharacter.Select();
 
+        GameplayEvents.OnCharacterSelectionChange += Destroy;
         GameplayEvents.OnFinishAction += Destroy;
         GameplayEvents.OnPlayerTurnAborted += Destroy;
     }
@@ -30,8 +35,20 @@ public class HypnotizedState : MonoBehaviour, IState
         Destroy(this);
     }
 
+    private void Destroy(Character selectedCharacter)
+    {
+        if (selectedCharacter != character)
+        {
+            Destroy();
+        }
+    }
+
     private void Destroy(ActionMetadata actionMetadata)
     {
+        if (actionMetadata.CharacterInAction == character)
+        {
+            hypnotizedBy.SetActiveAbilityOnCooldown();
+        }
         Destroy();
     }
 
@@ -42,6 +59,7 @@ public class HypnotizedState : MonoBehaviour, IState
 
     private void OnDestroy()
     {
+        GameplayEvents.OnCharacterSelectionChange -= Destroy;
         GameplayEvents.OnFinishAction -= Destroy;
         GameplayEvents.OnPlayerTurnAborted -= Destroy;
         SwapSide();

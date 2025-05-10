@@ -79,8 +79,8 @@ public class Character : MonoBehaviour
 
     public void Heal(int healPoints)
     {
-        hitPoints += healPoints;
-        HitPoints = Mathf.Min(maxHitPoints, hitPoints);
+        HitPoints += healPoints;
+        //HitPoints = Mathf.Min(maxHitPoints, hitPoints);
     }
 
     public bool HasFullHP()
@@ -194,7 +194,7 @@ public class Character : MonoBehaviour
 
     private void UpdateHitPoints()
     {
-        gameObject.GetComponentInChildren<HealthBarHandler>().UpdateHP(hitPoints);
+        gameObject.GetComponentInChildren<HealthBarHandler>().UpdateHP(this);
     }
 
     private void UpdateCooldown()

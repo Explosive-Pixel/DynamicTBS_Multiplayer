@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 
 public class HypnotizeAAAction : MonoBehaviour, IAction
 {
@@ -58,8 +57,7 @@ public class HypnotizeAAAction : MonoBehaviour, IAction
         if (tile != null)
         {
             selectedCharacter = tile.CurrentInhabitant;
-            HypnotizedState.Create(selectedCharacter.gameObject);
-            GameplayEvents.ChangeCharacterSelection(selectedCharacter);
+            HypnotizedState.Create(selectedCharacter.gameObject, characterInAction);
         }
 
         ActionUtils.Clear(actionDestinations);
@@ -78,7 +76,7 @@ public class HypnotizeAAAction : MonoBehaviour, IAction
     private List<Character> FindSelectableCharacters(Character character)
     {
         return Board.GetTilesOfClosestCharactersOfSideInAllDirections(Board.GetTileByCharacter(character), PlayerManager.GetOtherSide(character.Side), HypnotizeAA.pattern, HypnotizeAA.range)
-            .FindAll(tile => tile.IsOccupied() && tile.CurrentInhabitant.ActiveAbility.GetType() != typeof(HypnotizeAA))
+            .FindAll(tile => tile.IsOccupied() && tile.CurrentInhabitant.ActiveAbility.GetType() != typeof(HypnotizeAA) && tile.CurrentInhabitant.CanPerformAction())
             .ConvertAll(tile => tile.CurrentInhabitant);
     }
 
