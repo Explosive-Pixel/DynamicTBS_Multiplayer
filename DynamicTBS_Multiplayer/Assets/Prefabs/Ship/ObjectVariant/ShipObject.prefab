@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 790111220651243364}
   - component: {fileID: 4592933418238578346}
   - component: {fileID: 4817914393618855555}
+  - component: {fileID: 2380920043036645764}
   m_Layer: 0
   m_Name: ShipObject
   m_TagString: Untagged
@@ -236,6 +237,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movePrefab_blue: {fileID: 580196327337095606, guid: 3743c33957d7fa04fbd22f760ab8a8c6, type: 3}
   movePrefab_pink: {fileID: 7296310615251685721, guid: 7050aa4e6a3c8484a97a0960d333d51c, type: 3}
+  indicatorTime: 1
+--- !u!114 &2380920043036645764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 790111220651243363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 281736b3c04da407e9990a27a24bd090, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilityCharacterPrefab: {fileID: 2248638387403469824, guid: 2bf0b0397b952cb4194a7e0d0f068bc2, type: 3}
+  abilityTilePrefab: {fileID: 8368840566106771020, guid: 07f5e7cf95459aa44804d4c6d56cfd8c, type: 3}
   indicatorTime: 1
 --- !u!1 &790111221277616628
 GameObject:
