@@ -44,7 +44,7 @@ public class PowershotAAAction : MonoBehaviour, IAction
         characterInAction = character;
     }
 
-    public void ExecuteAction(GameObject actionDestination)
+    public bool ExecuteAction(GameObject actionDestination)
     {
         Vector3 clickPosition = actionDestination.transform.position;
         Tile characterTile = Board.GetTileByCharacter(characterInAction);
@@ -76,6 +76,8 @@ public class PowershotAAAction : MonoBehaviour, IAction
         characterInAction.TakeDamage(PowershotAA.selfDamage);
 
         AbortAction();
+
+        return true;
     }
 
     public void AbortAction()

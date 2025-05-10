@@ -21,7 +21,13 @@ public enum ActiveAbilityType
     [Description("Longshot")]
     LONGSHOT = 9,
     [Description("Ram")]
-    RAM = 10
+    RAM = 10,
+    [Description("Repair")]
+    REPAIR = 11,
+    [Description("Hypnotize")]
+    HYPNOTIZE = 12,
+    [Description("Transfusion")]
+    TRANSFUSION = 13
 }
 
 public interface IActiveAbility

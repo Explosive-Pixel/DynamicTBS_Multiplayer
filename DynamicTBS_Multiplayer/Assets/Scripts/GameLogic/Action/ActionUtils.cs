@@ -19,7 +19,11 @@ public class ActionUtils : MonoBehaviour
     public static GameObject InstantiateActionPosition(IAction action, Vector3 position, GameObject prefab)
     {
         GameObject actionPosition = Instantiate(prefab);
+        Tile tile = Board.GetTileByPosition(position);
+        if (tile != null)
+            actionPosition.transform.SetParent(tile.gameObject.transform);
         actionPosition.transform.position = new Vector3(position.x, position.y, prefab.transform.position.z);
+
         ActionTileHandler.Create(action, actionPosition);
         return actionPosition;
     }
@@ -104,22 +108,28 @@ public class ActionUtils : MonoBehaviour
         ActionRegistry.HideAllActionPatterns();
     }
 
-    public static void ExecuteAction(IAction action, GameObject actionDestination)
+    public static bool ExecuteAction(IAction action, GameObject actionDestination)
     {
         Character characterInAction = action.CharacterInAction;
         Vector3 initialPosition = characterInAction.gameObject.transform.position;
         Vector3 actionDestinationPosition = actionDestination.transform.position;
 
-        action.ExecuteAction(actionDestination);
-        ResetActionDestinations();
+        bool actionFinsihed = action.ExecuteAction(actionDestination);
 
-        GameplayEvents.ActionFinished(new ActionMetadata
+        if (actionFinsihed)
         {
-            ExecutingPlayer = characterInAction.Side,
-            ExecutedActionType = action.ActionType,
-            CharacterInAction = characterInAction,
-            CharacterInitialPosition = initialPosition,
-            ActionDestinationPosition = actionDestinationPosition
-        });
+            ResetActionDestinations();
+
+            GameplayEvents.ActionFinished(new ActionMetadata
+            {
+                ExecutingPlayer = characterInAction.Side,
+                ExecutedActionType = action.ActionType,
+                CharacterInAction = characterInAction,
+                CharacterInitialPosition = initialPosition,
+                ActionDestinationPosition = actionDestinationPosition
+            });
+        }
+
+        return actionFinsihed;
     }
 }

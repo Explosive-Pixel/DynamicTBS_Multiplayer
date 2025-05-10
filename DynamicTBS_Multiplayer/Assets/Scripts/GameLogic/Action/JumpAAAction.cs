@@ -53,7 +53,7 @@ public class JumpAAAction : MonoBehaviour, IAction
         }
     }
 
-    public void ExecuteAction(GameObject actionDestination)
+    public bool ExecuteAction(GameObject actionDestination)
     {
         Tile tile = Board.GetTileByPosition(actionDestination.transform.position);
         if (tile != null)
@@ -62,6 +62,8 @@ public class JumpAAAction : MonoBehaviour, IAction
         }
 
         AbortAction();
+
+        return true;
     }
 
     public void AbortAction()
