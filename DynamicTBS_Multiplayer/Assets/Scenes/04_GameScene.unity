@@ -2202,7 +2202,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2210,7 +2210,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 3999b4e58faa089429d29dcbb17736da, type: 3}
+    m_Font: {fileID: 12800000, guid: d744e7eb8a827654cad5165731a952c4, type: 3}
     m_FontSize: 30
     m_FontStyle: 0
     m_BestFit: 0
@@ -7322,7 +7322,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 3999b4e58faa089429d29dcbb17736da, type: 3}
+    m_Font: {fileID: 12800000, guid: d744e7eb8a827654cad5165731a952c4, type: 3}
     m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
@@ -7551,6 +7551,38 @@ PrefabInstance:
       propertyPath: gamePhase
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5317760985342092606, guid: 2e0bdd0b95a7e1b489eae322c773e210, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5317760985436178577, guid: 2e0bdd0b95a7e1b489eae322c773e210, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5317760985519536548, guid: 2e0bdd0b95a7e1b489eae322c773e210, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5317760985639398193, guid: 2e0bdd0b95a7e1b489eae322c773e210, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5317760985707132767, guid: 2e0bdd0b95a7e1b489eae322c773e210, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5317760985809203485, guid: 2e0bdd0b95a7e1b489eae322c773e210, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5317760985873038839, guid: 2e0bdd0b95a7e1b489eae322c773e210, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5317760986114081117, guid: 2e0bdd0b95a7e1b489eae322c773e210, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5317760986135141934, guid: 2e0bdd0b95a7e1b489eae322c773e210, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -7603,9 +7635,17 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5317760986599331314, guid: 2e0bdd0b95a7e1b489eae322c773e210, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5317760986638022904, guid: 2e0bdd0b95a7e1b489eae322c773e210, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5317760986835568629, guid: 2e0bdd0b95a7e1b489eae322c773e210, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5317760987068907531, guid: 2e0bdd0b95a7e1b489eae322c773e210, type: 3}
       propertyPath: m_IsActive
@@ -7988,7 +8028,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 3999b4e58faa089429d29dcbb17736da, type: 3}
+    m_Font: {fileID: 12800000, guid: d744e7eb8a827654cad5165731a952c4, type: 3}
     m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
@@ -11810,7 +11850,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 3999b4e58faa089429d29dcbb17736da, type: 3}
+    m_Font: {fileID: 12800000, guid: d744e7eb8a827654cad5165731a952c4, type: 3}
     m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
