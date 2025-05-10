@@ -12,6 +12,7 @@ public class OnlineMenuScreenHandler : MonoBehaviour
 
     [SerializeField] private BaseActiveHandler rightActiveHandler;
     [SerializeField] private GameObject infoBox;
+    [SerializeField] private GameObject infoBoxPlayerInfo;
 
     public BaseActiveHandler MidActiveHandler { get { return midActiveHandler; } }
     public GameObject LobbyInfoMenu { get { return lobbyInfoMenu; } }
@@ -53,7 +54,7 @@ public class OnlineMenuScreenHandler : MonoBehaviour
     {
         leftActiveHandler.SetInactive();
         midActiveHandler.SetActive(lobbyInfoMenu);
-        rightActiveHandler.SetActive(infoBox);
+        rightActiveHandler.SetActive(infoBoxPlayerInfo);
     }
 
     private void ShowRematchMenu()

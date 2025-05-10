@@ -10,6 +10,7 @@ public class WSMsgPerformAction : WSMessage
     public float characterX;
     public float characterY;
     public ActionType actionType;
+    public PlayerActionType playerActionType;
     public bool hasDestination;
     public string actionDestinationTileName;
     public float destinationX;
@@ -27,9 +28,9 @@ public class WSMsgPerformAction : WSMessage
             Character currentlySelectedCharacter = CharacterManager.SelectedCharacter;
             GameplayEvents.ChangeCharacterSelection(null);
 
-            if (actionType == ActionType.Skip)
+            if (actionType == ActionType.PlayerAction)
             {
-                SkipAction.Execute();
+                PlayerActionUtils.ExecuteAction(PlayerActionRegistry.GetAction(playerActionType), playerId);
             }
             else
             {

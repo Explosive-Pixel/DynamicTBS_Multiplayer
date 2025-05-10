@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class CharmAA : MonoBehaviour, IActiveAbility
 {
-    [SerializeField] private int aaCooldown;
     [SerializeField] private int charmRange;
     [SerializeField] private int charmDuration;
     [SerializeField] private PatternType aaPattern;
@@ -12,7 +11,6 @@ public class CharmAA : MonoBehaviour, IActiveAbility
     public static PatternType pattern;
 
     public ActiveAbilityType AbilityType { get { return ActiveAbilityType.CHARM; } }
-    public int Cooldown { get { return aaCooldown; } }
 
     private CharmAAAction charmAAAction;
 

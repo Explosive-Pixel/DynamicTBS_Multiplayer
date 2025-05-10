@@ -55,7 +55,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3620558844704542427
 RectTransform:
   m_ObjectHideFlags: 0
@@ -121,9 +121,29 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4448908256666198013}
     m_Modifications:
+    - target: {fileID: 1641018989931587893, guid: 284b17a34e8f54c35bd298f9eea979cf, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1973066367941867015, guid: 284b17a34e8f54c35bd298f9eea979cf, type: 3}
       propertyPath: m_text
       value: SECTION
+      objectReference: {fileID: 0}
+    - target: {fileID: 1973066367941867015, guid: 284b17a34e8f54c35bd298f9eea979cf, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1973066367941867015, guid: 284b17a34e8f54c35bd298f9eea979cf, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1973066367941867015, guid: 284b17a34e8f54c35bd298f9eea979cf, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1973066367941867015, guid: 284b17a34e8f54c35bd298f9eea979cf, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4278190080
       objectReference: {fileID: 0}
     - target: {fileID: 1980134146987100145, guid: 284b17a34e8f54c35bd298f9eea979cf, type: 3}
       propertyPath: m_Name

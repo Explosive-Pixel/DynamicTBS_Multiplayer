@@ -15,7 +15,8 @@ public interface IAction
 
     void CreateActionDestinations(Character character);
 
-    void ExecuteAction(GameObject actionDestination);
+    // Return true when Action is finished
+    bool ExecuteAction(GameObject actionDestination);
 
     void AbortAction();
 }

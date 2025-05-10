@@ -53,7 +53,7 @@ public class JumpAAAction : MonoBehaviour, IAction
         }
     }
 
-    public void ExecuteAction(GameObject actionDestination)
+    public bool ExecuteAction(GameObject actionDestination)
     {
         Tile tile = Board.GetTileByPosition(actionDestination.transform.position);
         if (tile != null)
@@ -62,6 +62,8 @@ public class JumpAAAction : MonoBehaviour, IAction
         }
 
         AbortAction();
+
+        return true;
     }
 
     public void AbortAction()
@@ -75,7 +77,7 @@ public class JumpAAAction : MonoBehaviour, IAction
     {
         Tile characterTile = Board.GetTileByCharacter(character);
 
-        List<Tile> moveTiles = Board.GetTilesOfDistance(characterTile, JumpAA.movePattern, JumpAA.distance);
+        List<Tile> moveTiles = Board.GetTilesInAllDirections(characterTile, JumpAA.movePattern, JumpAA.distance);
 
         List<Vector3> movePositions = moveTiles
             .FindAll(tile => tile.IsAccessible() || pattern)

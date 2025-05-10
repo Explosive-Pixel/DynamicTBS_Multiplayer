@@ -5,8 +5,6 @@ public class MoveAction : MonoBehaviour, IAction
 {
     [SerializeField] private GameObject moveCirclePrefab;
 
-    [SerializeField] private PatternType movePattern;
-
     public ActionType ActionType { get { return ActionType.Move; } }
 
     private List<GameObject> moveDestinations = new();
@@ -17,12 +15,8 @@ public class MoveAction : MonoBehaviour, IAction
 
     private List<GameObject> patternTargets = new();
 
-    public static PatternType MovePattern;
-
     private void Awake()
     {
-        MovePattern = movePattern;
-
         GameEvents.OnGamePhaseStart += Register;
     }
 
@@ -70,11 +64,13 @@ public class MoveAction : MonoBehaviour, IAction
         }
     }
 
-    public void ExecuteAction(GameObject actionDestination)
+    public bool ExecuteAction(GameObject actionDestination)
     {
         MoveCharacter(characterInAction, Board.GetTileByPosition(actionDestination.transform.position));
 
         AbortAction();
+
+        return true;
     }
 
     public void AbortAction()

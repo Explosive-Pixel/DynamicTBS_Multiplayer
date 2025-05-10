@@ -7,12 +7,11 @@ public class Character : MonoBehaviour
     [SerializeField] private int maxHitPoints;
     [SerializeField] private int moveSpeed;
     [SerializeField] private int attackRange;
+    [SerializeField] private int attackDamage;
+    [SerializeField] private PatternType movePattern;
 
     protected CharacterType characterType;
     private PlayerType side;
-
-    private int attackDamage = AttackAction.AttackDamage;
-    private PatternType movePattern = MoveAction.MovePattern;
 
     private bool isClickable = false;
     private int hitPoints;
@@ -42,7 +41,6 @@ public class Character : MonoBehaviour
     public int AttackDamage { get { return attackDamage; } set { attackDamage = value; } }
     public PatternType MovePattern { get { return movePattern; } set { movePattern = value; } }
     public IActiveAbility ActiveAbility;
-    public IPassiveAbility PassiveAbility;
     public int MaxHitPoints { get { return maxHitPoints; } }
     public int HitPoints { get { return hitPoints; } set { hitPoints = Mathf.Max(value, 0); UpdateHitPoints(); } }
     public int ActiveAbilityCooldown { get { return activeAbilityCooldown; } set { activeAbilityCooldown = value; UpdateCooldown(); } }
@@ -55,10 +53,9 @@ public class Character : MonoBehaviour
         Side = side;
 
         ActiveAbility = gameObject.GetComponent<IActiveAbility>();
-        PassiveAbility = gameObject.GetComponent<IPassiveAbility>();
 
         HitPoints = maxHitPoints;
-        ActiveAbilityCooldown = 0;
+        ResetActiveAbilityCooldown();
 
         SubscribeEvents();
     }
@@ -144,11 +141,17 @@ public class Character : MonoBehaviour
 
     public void SetActiveAbilityOnCooldown()
     {
-        ActiveAbilityCooldown = ActiveAbility.Cooldown + 1;
-        GameplayEvents.OnPlayerTurnEnded += ReduceActiveAbiliyCooldown;
+        ActiveAbilityCooldown = ActiveAbility.Cooldown;
+        //ActiveAbilityCooldown = ActiveAbility.Cooldown + 1;
+        //GameplayEvents.OnPlayerTurnEnded += ReduceActiveAbiliyCooldown;
     }
 
-    public void ReduceActiveAbilityCooldown()
+    public void ResetActiveAbilityCooldown()
+    {
+        ActiveAbilityCooldown = 0;
+    }
+
+    /*public void ReduceActiveAbilityCooldown()
     {
         if (ActiveAbilityCooldown > 0)
         {
@@ -158,7 +161,7 @@ public class Character : MonoBehaviour
                 GameplayEvents.OnPlayerTurnEnded -= ReduceActiveAbiliyCooldown;
             }
         }
-    }
+    }*/
 
     private void SetActiveAbilityOnCooldown(ActionMetadata actionMetadata)
     {
@@ -168,13 +171,13 @@ public class Character : MonoBehaviour
         }
     }
 
-    private void ReduceActiveAbiliyCooldown(PlayerType player)
+    /*private void ReduceActiveAbiliyCooldown(PlayerType player)
     {
         if (Side.Equals(player))
         {
             ReduceActiveAbilityCooldown();
         }
-    }
+    }*/
 
     private void PrepareCharacter(GamePhase gamePhase)
     {
@@ -182,12 +185,6 @@ public class Character : MonoBehaviour
             return;
 
         isClickable = true;
-    }
-
-    private void ApplyPassiveAbility(Character character)
-    {
-        if (character == this)
-            PassiveAbility.Apply();
     }
 
     private void UpdateSide()
@@ -210,16 +207,14 @@ public class Character : MonoBehaviour
     private void SubscribeEvents()
     {
         GameEvents.OnGamePhaseStart += PrepareCharacter;
-        PlacementEvents.OnPlaceCharacter += ApplyPassiveAbility;
         GameplayEvents.OnFinishAction += SetActiveAbilityOnCooldown;
     }
 
     private void UnsubscribeEvents()
     {
         GameEvents.OnGamePhaseStart -= PrepareCharacter;
-        PlacementEvents.OnPlaceCharacter += ApplyPassiveAbility;
         GameplayEvents.OnFinishAction -= SetActiveAbilityOnCooldown;
-        GameplayEvents.OnPlayerTurnEnded -= ReduceActiveAbiliyCooldown;
+        //GameplayEvents.OnPlayerTurnEnded -= ReduceActiveAbiliyCooldown;
     }
 
     #endregion

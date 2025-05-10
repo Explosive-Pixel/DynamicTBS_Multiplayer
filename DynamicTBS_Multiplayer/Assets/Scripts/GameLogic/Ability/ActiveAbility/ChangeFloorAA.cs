@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class ChangeFloorAA : MonoBehaviour, IActiveAbility
 {
-    [SerializeField] private int aaCooldown; // 3
     [SerializeField] private int changeFloorRange; // 2
     [SerializeField] private int changeFloorRangeWithInhabitants; // 1
     [SerializeField] private PatternType aaPattern;
@@ -12,7 +11,6 @@ public class ChangeFloorAA : MonoBehaviour, IActiveAbility
     public static PatternType pattern;
 
     public ActiveAbilityType AbilityType { get { return ActiveAbilityType.CHANGE_FLOOR; } }
-    public int Cooldown { get { return aaCooldown; } }
     private ChangeFloorAAAction changeFloorAAAction;
 
     Character character;

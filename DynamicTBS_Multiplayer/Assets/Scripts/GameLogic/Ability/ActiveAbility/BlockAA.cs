@@ -4,7 +4,6 @@ public class BlockAA : MonoBehaviour, IActiveAbility
 {
     [SerializeField] private int aaDistance; // 1
     [SerializeField] private PatternType aaPattern; // PatternType.Cross
-    [SerializeField] private int aaCooldown; // 3
     [SerializeField] private int blockDurationInRounds; // 2
 
     [SerializeField] private GameObject blockGameObject;
@@ -14,7 +13,6 @@ public class BlockAA : MonoBehaviour, IActiveAbility
     public static int blockingRounds;
 
     public ActiveAbilityType AbilityType { get { return ActiveAbilityType.BLOCK; } }
-    public int Cooldown { get { return aaCooldown; } } // 3
 
     private BlockAAAction blockAAAction;
 

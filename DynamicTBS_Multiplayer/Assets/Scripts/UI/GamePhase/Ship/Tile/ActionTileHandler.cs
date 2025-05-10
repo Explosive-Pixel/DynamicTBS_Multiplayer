@@ -16,7 +16,9 @@ public class ActionTileHandler : MonoBehaviour
         if (!PlayerManager.ClientIsCurrentPlayer() || GameplayManager.gameIsPaused)
             return;
 
-        ActionUtils.ExecuteAction(action, gameObject);
-        GameplayEvents.ChangeCharacterSelection(null);
+        bool actionFinished = ActionUtils.ExecuteAction(action, gameObject);
+
+        if (actionFinished)
+            GameplayEvents.ChangeCharacterSelection(null);
     }
 }

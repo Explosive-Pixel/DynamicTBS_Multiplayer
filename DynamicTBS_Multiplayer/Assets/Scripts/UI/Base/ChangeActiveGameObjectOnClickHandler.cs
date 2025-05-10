@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ChangeActiveGameObjectOnClickHandler : MonoBehaviour
 {
@@ -7,6 +8,13 @@ public class ChangeActiveGameObjectOnClickHandler : MonoBehaviour
 
     public void OnMouseDown()
     {
-        activeHandler.SetActive(activeOnClickGameObject);
+        if (gameObject.GetComponent<Button>() != null)
+        {
+            activeHandler.SetActive(gameObject.GetComponent<Button>(), activeOnClickGameObject);
+        }
+        else
+        {
+            activeHandler.SetActive(activeOnClickGameObject);
+        }
     }
 }
