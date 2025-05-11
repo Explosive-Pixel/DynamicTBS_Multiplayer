@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -55,11 +56,22 @@ public class JumpAAAction : MonoBehaviour, IAction
 
     public bool ExecuteAction(GameObject actionDestination)
     {
+        Vector3 initialPosition = characterInAction.gameObject.transform.position;
+
         Tile tile = Board.GetTileByPosition(actionDestination.transform.position);
         if (tile != null)
         {
             MoveAction.MoveCharacter(characterInAction, tile);
         }
+
+        GameplayEvents.ActionFinished(new ActionMetadata
+        {
+            ExecutingPlayer = characterInAction.Side,
+            ExecutedActionType = ActionType,
+            CharacterInAction = characterInAction,
+            CharacterInitialPosition = initialPosition,
+            ActionDestinationPosition = actionDestination.transform.position
+        });
 
         AbortAction();
 

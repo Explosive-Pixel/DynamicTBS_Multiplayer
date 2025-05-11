@@ -13,6 +13,7 @@ public class AttackEffect : IndicatorEffect
     private void Awake()
     {
         CharacterEvents.OnCharacterDeath += OnCharacterDeath;
+        CharacterEvents.OnCharacterTakesDamage += OnCharacterTakesDamage;
         GameplayEvents.OnFinishAction += OnAttackCharacter;
     }
 
@@ -21,8 +22,13 @@ public class AttackEffect : IndicatorEffect
         if (actionMetadata.ExecutedActionType == ActionType.Attack)
         {
             AnimateIndicator(actionMetadata.CharacterInAction.Side == PlayerType.blue ? attackerPrefab_blue : attackerPrefab_pink, actionMetadata.CharacterInitialPosition.Value, indicatorTime);
-            AnimateIndicator(GetRandomPrefab(hitPrefabs), actionMetadata.ActionDestinationPosition.Value, indicatorTime);
         }
+    }
+
+    private void OnCharacterTakesDamage(Character character, int damage)
+    {
+        if (!character.IsDead())
+            AnimateIndicator(GetRandomPrefab(hitPrefabs), character.CurrentTile.gameObject.transform.position, indicatorTime);
     }
 
     private void OnCharacterDeath(Character character, Vector3 lastPosition)
@@ -33,6 +39,7 @@ public class AttackEffect : IndicatorEffect
     private void OnDestroy()
     {
         CharacterEvents.OnCharacterDeath -= OnCharacterDeath;
+        CharacterEvents.OnCharacterTakesDamage -= OnCharacterTakesDamage;
         GameplayEvents.OnFinishAction -= OnAttackCharacter;
     }
 }

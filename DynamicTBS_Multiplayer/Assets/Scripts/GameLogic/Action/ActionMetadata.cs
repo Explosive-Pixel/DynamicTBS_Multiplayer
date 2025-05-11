@@ -8,4 +8,5 @@ public class ActionMetadata
     public Character CharacterInAction { get; set; }
     public Vector3? CharacterInitialPosition { get; set; }
     public Vector3? ActionDestinationPosition { get; set; }
+    public Vector3? SecondActionDestinationPosition { get; set; }
 }

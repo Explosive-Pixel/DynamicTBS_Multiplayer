@@ -60,6 +60,8 @@ public class RepairAAAction : MonoBehaviour, IAction
 
     public bool ExecuteAction(GameObject actionDestination)
     {
+        Vector3 initialPosition = characterInAction.gameObject.transform.position;
+
         Tile tile = Board.GetTileByPosition(actionDestination.transform.position);
         if (tile != null)
         {
@@ -74,6 +76,16 @@ public class RepairAAAction : MonoBehaviour, IAction
                 selectedHole = tile;
                 selectedFloor.Transform(OtherTileType(selectedFloor.TileType));
                 selectedHole.Transform(OtherTileType(selectedHole.TileType));
+
+                GameplayEvents.ActionFinished(new ActionMetadata
+                {
+                    ExecutingPlayer = characterInAction.Side,
+                    ExecutedActionType = ActionType,
+                    CharacterInAction = characterInAction,
+                    CharacterInitialPosition = initialPosition,
+                    ActionDestinationPosition = selectedFloor.gameObject.transform.position,
+                    SecondActionDestinationPosition = selectedHole.gameObject.transform.position
+                });
             }
 
             return selectedHole != null;

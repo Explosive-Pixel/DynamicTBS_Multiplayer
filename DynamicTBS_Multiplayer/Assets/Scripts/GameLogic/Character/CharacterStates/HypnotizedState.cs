@@ -9,6 +9,7 @@ public class HypnotizedState : MonoBehaviour, IState
     {
         HypnotizedState hs = parent.AddComponent<HypnotizedState>();
         hs.hypnotizedBy = hypnotizedBy;
+        HypnotizeAA.HypnotizeAAExecuted(hypnotizedBy, hypnotizedBy.transform.position);
         hs.Init();
         return hs;
     }
@@ -59,6 +60,7 @@ public class HypnotizedState : MonoBehaviour, IState
 
     private void OnDestroy()
     {
+        HypnotizeAA.HypnotizeAAExecuted(null, null);
         GameplayEvents.OnCharacterSelectionChange -= Destroy;
         GameplayEvents.OnFinishAction -= Destroy;
         GameplayEvents.OnPlayerTurnAborted -= Destroy;

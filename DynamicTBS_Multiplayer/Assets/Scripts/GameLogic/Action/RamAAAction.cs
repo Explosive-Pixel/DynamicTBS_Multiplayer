@@ -56,6 +56,8 @@ public class RamAAAction : MonoBehaviour, IAction
 
     public bool ExecuteAction(GameObject actionDestination)
     {
+        Vector3 initialPosition = characterInAction.gameObject.transform.position;
+
         Tile tile = Board.GetTileByPosition(actionDestination.transform.position);
         if (tile != null)
         {
@@ -70,7 +72,9 @@ public class RamAAAction : MonoBehaviour, IAction
                 if (!nextTile.IsOccupied())
                     break;
 
+                Tile neighbor = nextTile;
                 nextTile = Board.GetNextTileInSameDirection(currentTile, nextTile);
+                currentTile = neighbor;
             }
 
             if (neighbors.Last().IsOccupied())
@@ -96,6 +100,15 @@ public class RamAAAction : MonoBehaviour, IAction
                 MoveAction.MoveCharacter(characterInAction, tile);
                 characterInAction.TakeDamage(RamAA.selfDamage);
             }
+
+            GameplayEvents.ActionFinished(new ActionMetadata
+            {
+                ExecutingPlayer = characterInAction.Side,
+                ExecutedActionType = ActionType,
+                CharacterInAction = characterInAction,
+                CharacterInitialPosition = initialPosition,
+                ActionDestinationPosition = actionDestination.transform.position
+            });
         }
 
         AbortAction();
