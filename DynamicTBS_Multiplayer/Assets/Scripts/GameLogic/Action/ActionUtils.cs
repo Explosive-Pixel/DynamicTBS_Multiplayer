@@ -120,14 +120,17 @@ public class ActionUtils : MonoBehaviour
         {
             ResetActionDestinations();
 
-            GameplayEvents.ActionFinished(new ActionMetadata
+            if (action.ActionType != ActionType.ActiveAbility)
             {
-                ExecutingPlayer = characterInAction.Side,
-                ExecutedActionType = action.ActionType,
-                CharacterInAction = characterInAction,
-                CharacterInitialPosition = initialPosition,
-                ActionDestinationPosition = actionDestinationPosition
-            });
+                GameplayEvents.ActionFinished(new ActionMetadata
+                {
+                    ExecutingPlayer = characterInAction.Side,
+                    ExecutedActionType = action.ActionType,
+                    CharacterInAction = characterInAction,
+                    CharacterInitialPosition = initialPosition,
+                    ActionDestinationPosition = actionDestinationPosition
+                });
+            }
         }
 
         return actionFinsihed;

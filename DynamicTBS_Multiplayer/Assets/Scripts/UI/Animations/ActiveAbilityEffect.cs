@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ActiveAbilityEffect : IndicatorEffect
@@ -18,11 +16,18 @@ public class ActiveAbilityEffect : IndicatorEffect
     {
         if (actionMetadata.ExecutedActionType == ActionType.ActiveAbility)
         {
-            Tile initialTile = Board.GetTileByPosition(actionMetadata.CharacterInitialPosition.Value);
-            Tile destinationTile = Board.GetTileByPosition(actionMetadata.ActionDestinationPosition.Value);
+            AnimateIndicator(actionMetadata.CharacterInitialPosition);
+            AnimateIndicator(actionMetadata.ActionDestinationPosition);
+            AnimateIndicator(actionMetadata.SecondActionDestinationPosition);
+        }
+    }
 
-            AnimateIndicator(initialTile.IsOccupied() ? abilityCharacterPrefab : abilityTilePrefab, initialTile.transform.position, indicatorTime);
-            AnimateIndicator(destinationTile.IsOccupied() ? abilityCharacterPrefab : abilityTilePrefab, destinationTile.transform.position, indicatorTime);
+    private void AnimateIndicator(Vector3? position)
+    {
+        if (position.HasValue)
+        {
+            Tile tile = Board.GetTileByPosition(position.Value);
+            AnimateIndicator(tile.IsOccupied() ? abilityCharacterPrefab : abilityTilePrefab, tile.transform.position, indicatorTime);
         }
     }
 

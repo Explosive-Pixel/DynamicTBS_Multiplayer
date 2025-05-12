@@ -56,6 +56,8 @@ public class LongshotAAAction : MonoBehaviour, IAction
 
     public bool ExecuteAction(GameObject actionDestination)
     {
+        Vector3 initialPosition = characterInAction.gameObject.transform.position;
+
         Tile tile = Board.GetTileByPosition(actionDestination.transform.position);
         if (tile != null)
         {
@@ -63,6 +65,15 @@ public class LongshotAAAction : MonoBehaviour, IAction
             characterToAttack.TakeDamage(LongshotAA.damage);
             characterInAction.TakeDamage(LongshotAA.selfDamage);
         }
+
+        GameplayEvents.ActionFinished(new ActionMetadata
+        {
+            ExecutingPlayer = characterInAction.Side,
+            ExecutedActionType = ActionType,
+            CharacterInAction = characterInAction,
+            CharacterInitialPosition = initialPosition,
+            ActionDestinationPosition = actionDestination.transform.position
+        });
 
         AbortAction();
 
