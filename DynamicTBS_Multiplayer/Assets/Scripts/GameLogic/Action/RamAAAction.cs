@@ -98,7 +98,8 @@ public class RamAAAction : MonoBehaviour, IAction
                 }
 
                 MoveAction.MoveCharacter(characterInAction, tile);
-                characterInAction.TakeDamage(RamAA.selfDamage);
+                if (neighbors.Count > 1)
+                    characterInAction.TakeDamage(RamAA.selfDamage);
             }
 
             GameplayEvents.ActionFinished(new ActionMetadata
