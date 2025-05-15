@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -53,15 +54,28 @@ public class JumpAAAction : MonoBehaviour, IAction
         }
     }
 
-    public void ExecuteAction(GameObject actionDestination)
+    public bool ExecuteAction(GameObject actionDestination)
     {
+        Vector3 initialPosition = characterInAction.gameObject.transform.position;
+
         Tile tile = Board.GetTileByPosition(actionDestination.transform.position);
         if (tile != null)
         {
             MoveAction.MoveCharacter(characterInAction, tile);
         }
 
+        GameplayEvents.ActionFinished(new ActionMetadata
+        {
+            ExecutingPlayer = characterInAction.Side,
+            ExecutedActionType = ActionType,
+            CharacterInAction = characterInAction,
+            CharacterInitialPosition = initialPosition,
+            ActionDestinationPosition = actionDestination.transform.position
+        });
+
         AbortAction();
+
+        return true;
     }
 
     public void AbortAction()
@@ -75,7 +89,7 @@ public class JumpAAAction : MonoBehaviour, IAction
     {
         Tile characterTile = Board.GetTileByCharacter(character);
 
-        List<Tile> moveTiles = Board.GetTilesOfDistance(characterTile, JumpAA.movePattern, JumpAA.distance);
+        List<Tile> moveTiles = Board.GetTilesInAllDirections(characterTile, JumpAA.movePattern, JumpAA.distance);
 
         List<Vector3> movePositions = moveTiles
             .FindAll(tile => tile.IsAccessible() || pattern)

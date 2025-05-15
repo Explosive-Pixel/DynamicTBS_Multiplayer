@@ -155,35 +155,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5687532331230442325, guid: 81465a4e247cfb6429a71416afb6866c, type: 3}
   m_PrefabInstance: {fileID: 8551383109074915547}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2045375335303935799
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4053997383051486094}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27067e0d9bff04e4abac43227ab36cf1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  explodePatternType: 1
-  explodeDamage: 1
---- !u!114 &5618071715607149820
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4053997383051486094}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40d01cf5abbd1a049872346002fc3ef1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  aaCooldown: 3
-  powershotDamage: 1
-  powershotSelfDamage: 1
 --- !u!114 &7570527190999442958
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,3 +171,20 @@ MonoBehaviour:
   maxHitPoints: 2
   moveSpeed: 1
   attackRange: 2
+  attackDamage: 1
+  movePattern: 0
+--- !u!114 &6483303538532148358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4053997383051486094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3118f4c68fe4e4f00aa2ca911e8ed1ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  longshotDamage: 1
+  longshotSelfDamage: 1
+  longshotPattern: 1

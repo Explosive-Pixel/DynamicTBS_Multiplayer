@@ -1,73 +1,53 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class HealthBarHandler : MonoBehaviour
 {
-    [SerializeField] private GameObject healthLeft;
-    [SerializeField] private GameObject healthRight;
-    [SerializeField] private GameObject healthMiddle;
+    [SerializeField] private GameObject healthLeftPrefab;
+    [SerializeField] private GameObject healthRightPrefab;
+    [SerializeField] private GameObject healthMiddlePrefab;
 
-    [SerializeField] private Vector3 startPosition;
+    [SerializeField] private GameObject startPosition;
     [SerializeField] private float distance;
 
     private readonly List<GameObject> healthPoints = new();
 
-    private bool init = false;
-    private int maxHP;
-
-    public void UpdateHP(int hp)
+    public void UpdateHP(Character character)
     {
-        if (!init)
+        ResetHealthPoints();
+
+        if (character.HitPoints > 0)
         {
-            InitHealth(hp);
-            init = true;
-        }
-
-        SetAllActive();
-
-        int diff = maxHP - hp;
-
-        while (diff > 0)
-        {
-            healthPoints[maxHP - diff].GetComponent<ActiveHandler>().SetActive(false);
-            diff--;
+            InitHealth(character.HitPoints);
+            SetAllActive();
+            gameObject.GetComponentsInChildren<SideHandler>(true).ToList().ForEach(sideHandler => sideHandler.SetSide(character.Side));
         }
     }
 
     public void InitHealth(int maxHP)
     {
-        this.maxHP = maxHP;
-
         if (maxHP == 1)
         {
-            healthLeft.SetActive(false);
-            healthRight.SetActive(false);
-            healthMiddle.transform.position = startPosition;
-            healthPoints.Add(healthMiddle);
+            AppendHealthPoint(healthMiddlePrefab);
         }
         else
         {
-            healthLeft.transform.position = startPosition;
+            GameObject healthLeft = AppendHealthPoint(healthLeftPrefab);
 
             if (maxHP % 2 == 0)
             {
-                Translate(healthLeft, -(healthLeft.GetComponentInChildren<SpriteRenderer>().localBounds.size.x / 2));
+                Translate(healthLeft, -(healthLeft.GetComponentInChildren<SpriteRenderer>().bounds.size.x / 2));
             }
 
-            Translate(healthLeft, -(distance * (maxHP - 2)));
-
-            healthPoints.Add(healthLeft);
-
-            if (maxHP == 2)
-                healthMiddle.SetActive(false);
+            Translate(healthLeft, -(distance * healthLeft.transform.lossyScale.x * (maxHP - 2)));
 
             for (int i = 1; i < maxHP - 1; i++)
             {
-                GameObject midHP = i == 1 ? healthMiddle : Instantiate(healthMiddle);
-                AppendHealthPoint(midHP);
+                AppendHealthPoint(healthMiddlePrefab);
             }
 
-            AppendHealthPoint(healthRight);
+            AppendHealthPoint(healthRightPrefab);
         }
     }
 
@@ -76,11 +56,34 @@ public class HealthBarHandler : MonoBehaviour
         healthPoints.ForEach(hp => hp.GetComponent<ActiveHandler>().SetActive(true));
     }
 
-    private void AppendHealthPoint(GameObject hp)
+    private GameObject AppendHealthPoint(GameObject hpPrefab)
     {
-        hp.transform.position = healthPoints[^1].transform.position;
-        Translate(hp, distance);
+        GameObject hp = Instantiate(hpPrefab);
+        hp.transform.SetParent(this.transform);
+        hp.transform.localScale = hpPrefab.transform.localScale;
+
+        if (healthPoints.Count == 0)
+        {
+            hp.transform.position = startPosition.transform.position;
+        }
+        else
+        {
+            hp.transform.position = healthPoints[^1].transform.position;
+            Translate(hp, distance * hp.transform.lossyScale.x);
+        }
+
         healthPoints.Add(hp);
+        return hp;
+    }
+
+    private void ResetHealthPoints()
+    {
+        for (int i = 0; i < healthPoints.Count; i++)
+        {
+            Destroy(healthPoints[i]);
+        }
+
+        healthPoints.Clear();
     }
 
     private void Translate(GameObject go, float x)

@@ -11,6 +11,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 578201994068648090, guid: 95e1029d3979329458ab66195f22fe5e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -5638732994581352410, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
     - target: {fileID: 3033373235209043709, guid: 95e1029d3979329458ab66195f22fe5e, type: 3}
       propertyPath: m_Name
       value: SurrenderButton Variant
@@ -19,6 +23,14 @@ PrefabInstance:
       propertyPath: m_text
       value: SURRENDER
       objectReference: {fileID: 0}
+    - target: {fileID: 5019523361639399093, guid: 95e1029d3979329458ab66195f22fe5e, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
+    - target: {fileID: 5019523361639399093, guid: 95e1029d3979329458ab66195f22fe5e, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -5638732994581352410, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
     - target: {fileID: 5993141587400810711, guid: 95e1029d3979329458ab66195f22fe5e, type: 3}
       propertyPath: m_RootOrder
       value: 0

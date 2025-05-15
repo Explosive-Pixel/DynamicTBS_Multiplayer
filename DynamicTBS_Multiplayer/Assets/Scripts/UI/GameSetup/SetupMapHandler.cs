@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class SetupMapHandler : MonoBehaviour, ISetupHandler
 {
     [SerializeField] private MapLayout mapPreview;
+    [SerializeField] private MapType defaultMap;
 
     private bool mapSelected = false;
 
@@ -12,6 +13,9 @@ public class SetupMapHandler : MonoBehaviour, ISetupHandler
 
     private void Awake()
     {
+        if (GameSetup.MapSetup == null)
+            GameSetup.SetupMap(new MapSetup(defaultMap));
+
         MapClass[] maps = gameObject.GetComponentsInChildren<MapClass>(true);
         for (int i = 0; i < maps.Length; i++)
         {

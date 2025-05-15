@@ -236,6 +236,14 @@ public class Board : MonoBehaviour
             });
     }
 
+    public static Tile GetNextTileInSameDirection(Tile tile, Tile next)
+    {
+        int rowDiff = next.Row - tile.Row;
+        int columnDiff = next.Column - tile.Column;
+
+        return GetTileByCoordinates(next.Row + rowDiff, next.Column + columnDiff);
+    }
+
     private static List<Tile> GetCustomTilesInAllDirections(Tile center, PatternType patternType, int distance, Action<Tile, List<Tile>, Dictionary<(int, int), bool>, int, int> customAction)
     {
         var signa = new[] { -1, 0, 1 };

@@ -163,6 +163,8 @@ MonoBehaviour:
   maxHitPoints: 1
   moveSpeed: 2
   attackRange: 1
+  attackDamage: 2
+  movePattern: 1
 --- !u!114 &4275598322764696556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,18 +177,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be9653a7e2b7a7648a574cb354ead669, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aaCooldown: 2
   jumpPattern: 1
   jumpDistance: 3
---- !u!114 &8045062370185652016
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1763848542226656330}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 606bbcaf75d36f3488600a135324e940, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

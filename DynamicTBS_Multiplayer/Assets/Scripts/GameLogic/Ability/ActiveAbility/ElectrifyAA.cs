@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class ElectrifyAA : MonoBehaviour, IActiveAbility
 {
-    [SerializeField] private int aaCooldown; // 3
     [SerializeField] private int electrifyRadius; // 1
     [SerializeField] private int electrifyDuration; // 2
     [SerializeField] private int electrifyStunDuration; // 1
@@ -11,7 +10,6 @@ public class ElectrifyAA : MonoBehaviour, IActiveAbility
     public static int radius;
 
     public ActiveAbilityType AbilityType { get { return ActiveAbilityType.ELECTRIFY; } }
-    public int Cooldown { get { return aaCooldown; } }
 
     Character character;
     private ElectrifyAAAction electrifyAAAction;

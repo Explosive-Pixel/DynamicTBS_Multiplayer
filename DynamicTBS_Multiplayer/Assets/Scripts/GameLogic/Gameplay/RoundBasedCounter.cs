@@ -24,17 +24,14 @@ public class RoundBasedCounter : MonoBehaviour
 
         currentCount = duration * 2;
 
-        if (currentCount > 0)
-        {
-            GameplayEvents.OnPlayerTurnEnded += ReduceCurrentCount;
-        }
+        GameplayEvents.OnPlayerTurnEnded += ReduceCurrentCount;
     }
 
     private void ReduceCurrentCount(PlayerType player)
     {
         currentCount--;
 
-        if (currentCount == 0)
+        if (currentCount <= 0)
         {
             OnExpiration();
         }

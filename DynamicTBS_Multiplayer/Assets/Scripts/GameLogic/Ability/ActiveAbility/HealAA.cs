@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class HealAA : MonoBehaviour, IActiveAbility
 {
-    [SerializeField] private int aaCooldown; // 3
     [SerializeField] private int healRange; // 2
     [SerializeField] private int healPoints; // 1
     [SerializeField] private int moveSpeedBuffer; // 1
@@ -17,7 +16,6 @@ public class HealAA : MonoBehaviour, IActiveAbility
     public static PatternType pattern;
 
     public ActiveAbilityType AbilityType { get { return ActiveAbilityType.HEAL; } }
-    public int Cooldown { get { return aaCooldown; } }
 
     private HealAAAction healAAAction;
 

@@ -34,7 +34,7 @@ public class CooldownBarHandler : MonoBehaviour
         maxCooldown = gameObject.GetComponentInParent<Character>().ActiveAbility.Cooldown;
 
         cooldown.transform.position = startPosition;
-        Translate(cooldown, -(distance * (maxCooldown - 2)));
+        Translate(cooldown, -(distance * (maxCooldown - 1)));
         if (maxCooldown % 2 == 0)
         {
             Translate(cooldown, -(cooldown.GetComponentInChildren<SpriteRenderer>().localBounds.size.x / 2));
