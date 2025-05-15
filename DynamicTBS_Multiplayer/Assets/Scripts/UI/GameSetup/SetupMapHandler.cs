@@ -13,7 +13,8 @@ public class SetupMapHandler : MonoBehaviour, ISetupHandler
 
     private void Awake()
     {
-        GameSetup.SetupMap(new MapSetup(defaultMap));
+        if (GameSetup.MapSetup == null)
+            GameSetup.SetupMap(new MapSetup(defaultMap));
 
         MapClass[] maps = gameObject.GetComponentsInChildren<MapClass>(true);
         for (int i = 0; i < maps.Length; i++)
