@@ -27,6 +27,6 @@ public class MoveEffect : IndicatorEffect
 
     private void OnDestroy()
     {
-        GameplayEvents.OnFinishAction += OnMoveCharacter;
+        GameplayEvents.OnFinishAction -= OnMoveCharacter;
     }
 }
