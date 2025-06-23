@@ -3,6 +3,7 @@ using UnityEngine;
 public class MainMenuSceneManager : MonoBehaviour
 {
     [SerializeField] private GameObject playOptionsMenu;
+    [SerializeField] private GameObject tutorialButton;
     [SerializeField] private GameObject infoOptions;
 
     private void Start()
@@ -12,10 +13,8 @@ public class MainMenuSceneManager : MonoBehaviour
 
     public void TogglePlayOptionsMenu()
     {
-        if (playOptionsMenu.activeSelf == true)
-            playOptionsMenu.SetActive(false);
-        else
-            playOptionsMenu.SetActive(true);
+        playOptionsMenu.SetActive(!playOptionsMenu.activeSelf);
+        tutorialButton.SetActive(!tutorialButton.activeSelf);
 
         AudioEvents.PressingButton();
     }

@@ -18,6 +18,9 @@ public class RefreshAction : MonoBehaviour, IPlayerAction
     public void ExecuteAction(PlayerType player)
     {
         CharacterManager.GetAllLivingCharactersOfSide(player).ForEach(character => character.ResetActiveAbilityCooldown());
+
+        ActionUtils.ResetActionDestinations();
+        GameplayEvents.ChangeCharacterSelection(null);
     }
 
     private void Register(GamePhase gamePhase)
