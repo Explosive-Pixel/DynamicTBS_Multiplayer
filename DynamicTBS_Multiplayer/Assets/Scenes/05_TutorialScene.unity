@@ -1682,6 +1682,7 @@ GameObject:
   - component: {fileID: 502184530}
   - component: {fileID: 502184532}
   - component: {fileID: 502184531}
+  - component: {fileID: 502184533}
   m_Layer: 0
   m_Name: Goal&Board
   m_TagString: Untagged
@@ -1848,6 +1849,44 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &502184533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502184529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69beb381e244f92449b8c4cf954630e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TrackedObjects:
+  - rid: 6753505518209990668
+  references:
+    version: 2
+    RefIds:
+    - rid: 6753505518209990668
+      type: {class: TrackedUGuiGraphic, ns: UnityEngine.Localization.PropertyVariants.TrackedObjects, asm: Unity.Localization}
+      data:
+        m_Target: {fileID: 502184531}
+        m_TrackedProperties:
+          items:
+          - rid: 6753505518209990669
+        m_UpdateType: 0
+    - rid: 6753505518209990669
+      type: {class: LocalizedStringProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties, asm: Unity.Localization}
+      data:
+        m_Localized:
+          m_TableReference:
+            m_TableCollectionName: GUID:22a19ceee917359498deb2b059903236
+          m_TableEntryReference:
+            m_KeyId: 3519542951936
+            m_Key: 
+          m_FallbackState: 0
+          m_WaitForCompletion: 0
+          m_LocalVariables: []
+        m_PropertyPath: m_text
 --- !u!1 &511614559
 GameObject:
   m_ObjectHideFlags: 0
@@ -2142,8 +2181,8 @@ RectTransform:
   - {fileID: 1131676028}
   - {fileID: 54707824}
   - {fileID: 833999746}
-  - {fileID: 1514749442}
   - {fileID: 1880678356}
+  - {fileID: 1514749442}
   - {fileID: 327626673}
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -4399,11 +4438,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4759153458746110096, guid: e81f2d08c4e9146c096be7235737fc8e, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e81f2d08c4e9146c096be7235737fc8e, type: 3}
 --- !u!224 &1514749442 stripped
 RectTransform:
-  m_CorrespondingSourceObject: {fileID: 780895815611290422, guid: e81f2d08c4e9146c096be7235737fc8e, type: 3}
+  m_CorrespondingSourceObject: {fileID: 4759153458746110096, guid: e81f2d08c4e9146c096be7235737fc8e, type: 3}
   m_PrefabInstance: {fileID: 1514749441}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1667323791
@@ -4933,7 +4976,7 @@ RectTransform:
   m_Children:
   - {fileID: 727801511}
   m_Father: {fileID: 658890427}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
