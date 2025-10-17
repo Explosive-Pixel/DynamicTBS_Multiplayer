@@ -525,13 +525,13 @@ MonoBehaviour:
     There
     are <b>2</b> relevant patterns in the game:
 
-    <i>Cross pattern</i>: Horizontal
+    <b>Cross pattern</b>: Horizontal
     and vertical.
 
     <i>Star pattern</i>: Horizontal, vertical and diagonal.'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 3fb5af29be963474bbc524760ad99491, type: 2}
-  m_sharedMaterial: {fileID: -7109665973500014930, guid: 3fb5af29be963474bbc524760ad99491, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: be19911be0cb47a409e9003c0084646e, type: 2}
+  m_sharedMaterial: {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -562,12 +562,12 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 8
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: 1
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: 10
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -620,7 +620,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -7109665973500014930, guid: 3fb5af29be963474bbc524760ad99491, type: 2}
+  - {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -792,8 +792,8 @@ MonoBehaviour:
     be occupied by units. Unit starting positions are marked with an X. The goal
     square cannot be removed."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 3fb5af29be963474bbc524760ad99491, type: 2}
-  m_sharedMaterial: {fileID: -7109665973500014930, guid: 3fb5af29be963474bbc524760ad99491, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: be19911be0cb47a409e9003c0084646e, type: 2}
+  m_sharedMaterial: {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -823,8 +823,8 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
-  m_HorizontalAlignment: 8
+  m_fontStyle: 16
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -882,7 +882,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -7109665973500014930, guid: 3fb5af29be963474bbc524760ad99491, type: 2}
+  - {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1140,8 +1140,8 @@ MonoBehaviour:
   m_text: <i>Sky Mates</i> is a turn-based tactics game, in which two teams battle
     for the control of a crumbling airship.
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 3fb5af29be963474bbc524760ad99491, type: 2}
-  m_sharedMaterial: {fileID: -7109665973500014930, guid: 3fb5af29be963474bbc524760ad99491, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: be19911be0cb47a409e9003c0084646e, type: 2}
+  m_sharedMaterial: {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1171,7 +1171,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 17
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -1230,7 +1230,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -7109665973500014930, guid: 3fb5af29be963474bbc524760ad99491, type: 2}
+  - {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1665,7 +1665,7 @@ MonoBehaviour:
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: 1
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -1800,8 +1800,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: TUTORIAL
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 3fb5af29be963474bbc524760ad99491, type: 2}
-  m_sharedMaterial: {fileID: -7109665973500014930, guid: 3fb5af29be963474bbc524760ad99491, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: be19911be0cb47a409e9003c0084646e, type: 2}
+  m_sharedMaterial: {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1890,7 +1890,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -7109665973500014930, guid: 3fb5af29be963474bbc524760ad99491, type: 2}
+  - {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
