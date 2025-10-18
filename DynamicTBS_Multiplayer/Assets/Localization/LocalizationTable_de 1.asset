@@ -9,88 +9,88 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
-  m_Name: LocalizationTable Shared Data
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: LocalizationTable_de 1
   m_EditorClassIdentifier: 
-  m_TableCollectionName: LocalizationTable
-  m_TableCollectionNameGuidString: 5fe63ad03255ab043be4da51e6c25db3
-  m_Entries:
+  m_LocaleId:
+    m_Code: de
+  m_SharedData: {fileID: 11400000, guid: 5fe63ad03255ab043be4da51e6c25db3, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
   - m_Id: 141716086784
-    m_Key: play_button
+    m_Localized: SPIELEN
     m_Metadata:
       m_Items: []
   - m_Id: 1737292242944
-    m_Key: quit_button
+    m_Localized: BEENDEN
     m_Metadata:
       m_Items: []
   - m_Id: 1882482270208
-    m_Key: onlineGame_button
+    m_Localized: Online Spiel
     m_Metadata:
       m_Items: []
   - m_Id: 1946923556864
-    m_Key: offlineGame_button
+    m_Localized: Offlline Spiel
     m_Metadata:
       m_Items: []
   - m_Id: 4439032193024
-    m_Key: mainMenu_button
+    m_Localized: "HAUPTMEN\xDC"
     m_Metadata:
       m_Items: []
   - m_Id: 4728321728512
-    m_Key: onlineMenu_Title
+    m_Localized: ONLINE SPIEL
     m_Metadata:
       m_Items: []
   - m_Id: 4864221372416
-    m_Key: onlineMenu_Subtitle
+    m_Localized: LOBBY ERSTELLEN/BEITRETEN
     m_Metadata:
       m_Items: []
   - m_Id: 13517292822528
-    m_Key: fullscreen_Label
+    m_Localized: VOLLBILD
     m_Metadata:
       m_Items: []
   - m_Id: 38039224049664
-    m_Key: mainVolume_Label
+    m_Localized: "LAUTST\xC4RKE GESAMT"
     m_Metadata:
       m_Items: []
   - m_Id: 38378681655296
-    m_Key: musicVolume_Label
+    m_Localized: "LAUTST\xC4RKE MUSIK"
     m_Metadata:
       m_Items: []
   - m_Id: 38650501914624
-    m_Key: atmoVolume_Label
+    m_Localized: "LAUTST\xC4RKE ATMO"
     m_Metadata:
       m_Items: []
   - m_Id: 39001284141056
-    m_Key: fxVolume_Label
+    m_Localized: "LAUTST\xC4RKE FX"
     m_Metadata:
       m_Items: []
   - m_Id: 39274777927680
-    m_Key: voiceVolume_Label
+    m_Localized: "LAUTST\xC4RKE STIMME"
     m_Metadata:
       m_Items: []
   - m_Id: 39938480398336
-    m_Key: mousekey_Text
+    m_Localized: "STEUERUNG\n\nMAUS L: Einheit ausw\xE4hlen\nMAUS R: Einheit abw\xE4hlen\n\nLEERTASTE:
+      Spiel pausieren"
     m_Metadata:
       m_Items: []
   - m_Id: 40588463300608
-    m_Key: language_Label
+    m_Localized: DEUTSCH
     m_Metadata:
       m_Items: []
   - m_Id: 42411706277888
-    m_Key: worldChampion_Text
+    m_Localized: '<b>Weltmeister 2023</b>
+
+      shocker302'
     m_Metadata:
       m_Items: []
   - m_Id: 42732520202240
-    m_Key: rankedSeasonWinner_Text
+    m_Localized: '<b>Liga 1 Gewinner</b>
+
+      shocker302'
     m_Metadata:
       m_Items: []
-  m_Metadata:
-    m_Items: []
-  m_KeyGenerator:
-    rid: 3661690798427078658
   references:
     version: 2
-    RefIds:
-    - rid: 3661690798427078658
-      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
-      data:
-        m_CustomEpoch: 1760792531412
+    RefIds: []
