@@ -11,10 +11,7 @@ public class WSMsgPerformAction : WSMessage
     public float characterY;
     public ActionType actionType;
     public PlayerActionType playerActionType;
-    public bool hasDestination;
-    public string actionDestinationTileName;
-    public float destinationX;
-    public float destinationY;
+    public ActionDestination[] actionDestinations;
 
     public WSMsgPerformAction()
     {
@@ -44,9 +41,10 @@ public class WSMsgPerformAction : WSMessage
                     ActionUtils.InstantiateAllActionPositions(character);
                 }
 
-                if (hasDestination)
+                for (int i = 0; i < actionDestinations.Length; i++)
                 {
-                    ActionUtils.ExecuteAction(new Vector3(destinationX, destinationY, 0));
+                    ActionDestination actionDestination = actionDestinations[i];
+                    ActionUtils.ExecuteAction(new Vector3(actionDestination.x, actionDestination.y, 0));
                 }
             }
 

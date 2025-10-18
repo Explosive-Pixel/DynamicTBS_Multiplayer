@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
 
 public class MessageSender : MonoBehaviour
 {
@@ -24,7 +26,22 @@ public class MessageSender : MonoBehaviour
         if (Client.ShouldSendMessage(actionMetadata.ExecutingPlayer))
         {
             Tile characterInitialTile = actionMetadata.CharacterInitialPosition != null ? Board.GetTileByPosition(actionMetadata.CharacterInitialPosition.Value) : null;
-            Tile actionDestinationTile = actionMetadata.ActionDestinationPosition != null ? Board.GetTileByPosition(actionMetadata.ActionDestinationPosition.Value) : null;
+            List<Tile> actionsDestinationTiles = new();
+            if (actionMetadata.ActionDestinationPosition != null)
+            {
+                actionsDestinationTiles.Add(Board.GetTileByPosition(actionMetadata.ActionDestinationPosition.Value));
+            }
+            if (actionMetadata.SecondActionDestinationPosition != null)
+            {
+                actionsDestinationTiles.Add(Board.GetTileByPosition(actionMetadata.SecondActionDestinationPosition.Value));
+            }
+
+            ActionDestination[] actionDestinations = actionsDestinationTiles.ConvertAll(tile => new ActionDestination()
+            {
+                tileName = tile.Name,
+                x = tile.transform.position.x,
+                y = tile.transform.position.y
+            }).ToArray();
 
             Client.SendToServer(new WSMsgPerformAction
             {
@@ -35,10 +52,7 @@ public class MessageSender : MonoBehaviour
                 characterY = actionMetadata.CharacterInitialPosition != null ? actionMetadata.CharacterInitialPosition.Value.y : 0f,
                 actionType = actionMetadata.ExecutedActionType,
                 playerActionType = actionMetadata.PlayerActionType != null ? actionMetadata.PlayerActionType.Value : 0,
-                hasDestination = actionMetadata.ActionDestinationPosition != null,
-                actionDestinationTileName = actionDestinationTile != null ? actionDestinationTile.Name : null,
-                destinationX = actionMetadata.ActionDestinationPosition != null ? actionMetadata.ActionDestinationPosition.Value.x : 0f,
-                destinationY = actionMetadata.ActionDestinationPosition != null ? actionMetadata.ActionDestinationPosition.Value.y : 0f,
+                actionDestinations = actionDestinations
             });
         }
     }
