@@ -210,20 +210,21 @@ public class AudioManager : MonoBehaviour
             if (character.CharacterType == CharacterType.DocChar)
                 fxSource.PlayOneShot(medicAttackClip);
         }
+        // TODO: Sounds für neue Abilities!
         if (actionType == ActionType.ActiveAbility)
         {
-            if (character.ActiveAbility.GetType() == typeof(ElectrifyAA))
+            /*if (character.ActiveAbility.GetType() == typeof(ElectrifyAA))
                 fxSource.PlayOneShot(takeControlClip);
             if (character.ActiveAbility.GetType() == typeof(BlockAA))
                 fxSource.PlayOneShot(blockClip);
             if (character.ActiveAbility.GetType() == typeof(PowershotAA))
-                fxSource.PlayOneShot(powershotClip);
+                fxSource.PlayOneShot(powershotClip);*/
             if (character.ActiveAbility.GetType() == typeof(JumpAA))
                 fxSource.PlayOneShot(jumpClip);
-            if (character.ActiveAbility.GetType() == typeof(ChangeFloorAA))
+            /*if (character.ActiveAbility.GetType() == typeof(ChangeFloorAA))
                 fxSource.PlayOneShot(changeFloorClip);
             if (character.ActiveAbility.GetType() == typeof(HealAA))
-                fxSource.PlayOneShot(healClip);
+                fxSource.PlayOneShot(healClip);*/
         }
     }
 
