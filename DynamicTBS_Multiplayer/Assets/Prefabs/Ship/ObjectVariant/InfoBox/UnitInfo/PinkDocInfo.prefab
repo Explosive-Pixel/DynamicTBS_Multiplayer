@@ -67,6 +67,14 @@ PrefabInstance:
       propertyPath: m_text
       value: Throws syringes like darts to keep the team alive.
       objectReference: {fileID: 0}
+    - target: {fileID: 1867481213409231152, guid: 3831d9d2f410fff4ba659cc02b83c372, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: be19911be0cb47a409e9003c0084646e, type: 2}
+    - target: {fileID: 1867481213409231152, guid: 3831d9d2f410fff4ba659cc02b83c372, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
     - target: {fileID: 2448034657844359873, guid: 3831d9d2f410fff4ba659cc02b83c372, type: 3}
       propertyPath: m_SortingOrder
       value: 7
@@ -98,5 +106,65 @@ PrefabInstance:
         Range:   
         1'
       objectReference: {fileID: 0}
+    - target: {fileID: 8218711602473816390, guid: 3831d9d2f410fff4ba659cc02b83c372, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3831d9d2f410fff4ba659cc02b83c372, type: 3}
+--- !u!114 &6477845334416688506 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1867481213409231152, guid: 3831d9d2f410fff4ba659cc02b83c372, type: 3}
+  m_PrefabInstance: {fileID: 4615994207212733514}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8104622685417798683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &8104622685417798683 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3492023787963775057, guid: 3831d9d2f410fff4ba659cc02b83c372, type: 3}
+  m_PrefabInstance: {fileID: 4615994207212733514}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7301085094969845764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8104622685417798683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:5fe63ad03255ab043be4da51e6c25db3
+    m_TableEntryReference:
+      m_KeyId: 71911965974528
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6477845334416688506}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  references:
+    version: 2
+    RefIds: []
