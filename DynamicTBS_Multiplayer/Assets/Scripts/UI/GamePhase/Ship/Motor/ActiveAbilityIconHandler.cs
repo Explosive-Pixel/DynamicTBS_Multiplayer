@@ -7,7 +7,7 @@ public class ActiveAbilityIconHandler : MonoBehaviour
         if (CharacterManager.SelectedCharacter == null || GameManager.CurrentGamePhase != GamePhase.GAMEPLAY)
             return;
 
-        ActionUtils.ResetActionDestinations();
+        ActionHandler.Instance.ResetActionDestinations();
 
         if (GameManager.IsSpectator() || CharacterManager.SelectedCharacter.Side == PlayerManager.ExecutingPlayer)
             CharacterManager.SelectedCharacter.ExecuteActiveAbility();

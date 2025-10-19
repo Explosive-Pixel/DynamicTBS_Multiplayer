@@ -3,13 +3,10 @@ using UnityEngine;
 public class HypnotizedState : MonoBehaviour, IState
 {
     private Character character;
-    private Character hypnotizedBy;
 
-    public static HypnotizedState Create(GameObject parent, Character hypnotizedBy)
+    public static HypnotizedState Create(GameObject parent)
     {
         HypnotizedState hs = parent.AddComponent<HypnotizedState>();
-        hs.hypnotizedBy = hypnotizedBy;
-        HypnotizeAA.HypnotizeAAExecuted(hypnotizedBy, hypnotizedBy.transform.position);
         hs.Init();
         return hs;
     }
@@ -18,8 +15,9 @@ public class HypnotizedState : MonoBehaviour, IState
     {
         character = gameObject.GetComponent<Character>();
         SwapSide();
+
+        ActionHandler.Instance.InstantiateAllActionPositions(character);
         GameplayEvents.ChangeCharacterSelection(character);
-        CharacterManager.SelectedCharacter.Select();
 
         GameplayEvents.OnCharacterSelectionChange += Destroy;
         GameplayEvents.OnFinishAction += Destroy;
@@ -44,12 +42,8 @@ public class HypnotizedState : MonoBehaviour, IState
         }
     }
 
-    private void Destroy(ActionMetadata actionMetadata)
+    private void Destroy(Action action)
     {
-        if (actionMetadata.CharacterInAction == character)
-        {
-            hypnotizedBy.SetActiveAbilityOnCooldown();
-        }
         Destroy();
     }
 
@@ -60,7 +54,6 @@ public class HypnotizedState : MonoBehaviour, IState
 
     private void OnDestroy()
     {
-        HypnotizeAA.HypnotizeAAExecuted(null, null);
         GameplayEvents.OnCharacterSelectionChange -= Destroy;
         GameplayEvents.OnFinishAction -= Destroy;
         GameplayEvents.OnPlayerTurnAborted -= Destroy;

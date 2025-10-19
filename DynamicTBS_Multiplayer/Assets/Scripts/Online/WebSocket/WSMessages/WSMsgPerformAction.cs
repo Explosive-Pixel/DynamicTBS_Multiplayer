@@ -5,13 +5,8 @@ using UnityEngine;
 public class WSMsgPerformAction : WSMessage
 {
     public PlayerType playerId;
-    public int characterType;
-    public string characterInitialTileName;
-    public float characterX;
-    public float characterY;
-    public ActionType actionType;
     public PlayerActionType playerActionType;
-    public ActionDestination[] actionDestinations;
+    public ActionStepDto[] actionSteps;
 
     public WSMsgPerformAction()
     {
@@ -25,26 +20,37 @@ public class WSMsgPerformAction : WSMessage
             Character currentlySelectedCharacter = CharacterManager.SelectedCharacter;
             GameplayEvents.ChangeCharacterSelection(null);
 
-            if (actionType == ActionType.PlayerAction)
+            if (actionSteps == null || actionSteps.Length == 0)
             {
                 PlayerActionUtils.ExecuteAction(PlayerActionRegistry.GetAction(playerActionType), playerId);
             }
             else
             {
-                Character character = CharacterManager.GetCharacterByPosition(new Vector3(characterX, characterY, 0));
-                if (actionType == ActionType.ActiveAbility)
                 {
-                    character.ActiveAbility.Execute();
-                }
-                else
-                {
-                    ActionUtils.InstantiateAllActionPositions(character);
-                }
+                    int i = 0;
+                    while (i < actionSteps.Length)
+                    {
+                        ActionStepDto actionStep = actionSteps[i];
+                        Character character = CharacterManager.GetCharacterByPosition(new Vector3(actionStep.characterX, actionStep.characterY, 0));
+                        if (actionStep.actionType == ActionType.ActiveAbility)
+                        {
+                            character.ActiveAbility.Execute();
+                        }
+                        else
+                        {
+                            ActionHandler.Instance.InstantiateAllActionPositions(character);
+                        }
 
-                for (int i = 0; i < actionDestinations.Length; i++)
-                {
-                    ActionDestination actionDestination = actionDestinations[i];
-                    ActionUtils.ExecuteAction(new Vector3(actionDestination.x, actionDestination.y, 0));
+                        ActionHandler.Instance.ExecuteAction(new Vector3(actionStep.actionDestinationX, actionStep.actionDestinationY, 0));
+
+                        while ((i + 1) < actionSteps.Length && actionSteps[i + 1].actionType == actionStep.actionType && actionSteps[i + 1].characterInitialTileName == actionStep.characterInitialTileName)
+                        {
+                            ActionHandler.Instance.ExecuteAction(new Vector3(actionSteps[i + 1].actionDestinationX, actionSteps[i + 1].actionDestinationY, 0));
+                            i++;
+                        }
+
+                        i++;
+                    }
                 }
             }
 

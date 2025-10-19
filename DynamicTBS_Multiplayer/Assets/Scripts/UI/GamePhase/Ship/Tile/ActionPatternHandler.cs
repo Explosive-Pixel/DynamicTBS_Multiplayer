@@ -31,7 +31,7 @@ public class ActionPatternHandler : MonoBehaviour
         if (CharacterManager.SelectedCharacter == null || CharacterManager.SelectedCharacter.CurrentTile == null)
             return;
 
-        ActionUtils.ResetActionDestinations();
+        ActionHandler.Instance.ResetActionDestinations();
 
         if (actionType == ActionType.ActiveAbility)
             CharacterManager.SelectedCharacter.ActiveAbility.ShowActionPattern();
@@ -43,7 +43,7 @@ public class ActionPatternHandler : MonoBehaviour
 
     public void HideActionPattern()
     {
-        ActionUtils.HideAllActionPatterns();
+        ActionHandler.Instance.HideAllActionPatterns();
 
         if (CharacterManager.SelectedCharacter != null)
             CharacterManager.SelectedCharacter.Select();

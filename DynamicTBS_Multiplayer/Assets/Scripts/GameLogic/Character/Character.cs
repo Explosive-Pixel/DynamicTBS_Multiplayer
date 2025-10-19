@@ -80,7 +80,6 @@ public class Character : MonoBehaviour
     public void Heal(int healPoints)
     {
         HitPoints += healPoints;
-        //HitPoints = Mathf.Min(maxHitPoints, hitPoints);
     }
 
     public bool HasFullHP()
@@ -142,8 +141,6 @@ public class Character : MonoBehaviour
     public void SetActiveAbilityOnCooldown()
     {
         ActiveAbilityCooldown = ActiveAbility.Cooldown;
-        //ActiveAbilityCooldown = ActiveAbility.Cooldown + 1;
-        //GameplayEvents.OnPlayerTurnEnded += ReduceActiveAbiliyCooldown;
     }
 
     public void ResetActiveAbilityCooldown()
@@ -151,33 +148,15 @@ public class Character : MonoBehaviour
         ActiveAbilityCooldown = 0;
     }
 
-    /*public void ReduceActiveAbilityCooldown()
+    private void SetActiveAbilityOnCooldown(Action action)
     {
-        if (ActiveAbilityCooldown > 0)
+        if (action.ActionSteps != null)
         {
-            ActiveAbilityCooldown -= 1;
-            if (ActiveAbilityCooldown == 0)
-            {
-                GameplayEvents.OnPlayerTurnEnded -= ReduceActiveAbiliyCooldown;
-            }
-        }
-    }*/
-
-    private void SetActiveAbilityOnCooldown(ActionMetadata actionMetadata)
-    {
-        if (actionMetadata.ExecutedActionType == ActionType.ActiveAbility && actionMetadata.CharacterInAction == this)
-        {
-            SetActiveAbilityOnCooldown();
+            ActionStep actionStep = action.FindActionStep(ActionType.ActiveAbility, this);
+            if (actionStep != null)
+                SetActiveAbilityOnCooldown();
         }
     }
-
-    /*private void ReduceActiveAbiliyCooldown(PlayerType player)
-    {
-        if (Side.Equals(player))
-        {
-            ReduceActiveAbilityCooldown();
-        }
-    }*/
 
     private void PrepareCharacter(GamePhase gamePhase)
     {

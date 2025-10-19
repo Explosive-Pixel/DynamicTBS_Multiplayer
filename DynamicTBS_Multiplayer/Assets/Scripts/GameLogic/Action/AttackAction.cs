@@ -62,8 +62,11 @@ public class AttackAction : MonoBehaviour, IAction
         }
     }
 
-    public bool ExecuteAction(GameObject actionDestination)
+    public ActionStep ExecuteAction(GameObject actionDestination)
     {
+        Vector3 initialPosition = CharacterInAction.gameObject.transform.position;
+        Vector3 actionDestinationPosition = actionDestination.transform.position;
+
         Tile tile = Board.GetTileByPosition(actionDestination.transform.position);
         if (tile != null)
         {
@@ -71,9 +74,14 @@ public class AttackAction : MonoBehaviour, IAction
             characterToAttack.TakeDamage(characterInAction.AttackDamage);
         }
 
-        AbortAction();
-
-        return true;
+        return new ActionStep()
+        {
+            ActionType = ActionType,
+            CharacterInAction = CharacterInAction,
+            CharacterInitialPosition = initialPosition,
+            ActionDestinationPosition = actionDestinationPosition,
+            ActionFinished = true
+        };
     }
 
     public void AbortAction()

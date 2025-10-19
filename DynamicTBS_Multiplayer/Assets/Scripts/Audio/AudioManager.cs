@@ -183,10 +183,13 @@ public class AudioManager : MonoBehaviour
     }
     #endregion
 
-    private void ActionAudio(ActionMetadata actionMetadata)
+    private void ActionAudio(Action action)
     {
-        ActionType actionType = actionMetadata.ExecutedActionType;
-        Character character = actionMetadata.CharacterInAction;
+        if (action.ActionSteps == null || action.ActionSteps.Count == 0)
+            return;
+
+        ActionType actionType = action.ActionSteps[0].ActionType;
+        Character character = action.ActionSteps[0].CharacterInAction;
 
         if (character == null)
             return;

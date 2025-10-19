@@ -4,7 +4,7 @@ public class UnselectCharacterHandler : MonoBehaviour
 {
     private void OnMouseDown()
     {
-        ActionUtils.ResetActionDestinations();
+        ActionHandler.Instance.ResetActions();
         GameplayEvents.ChangeCharacterSelection(null);
     }
 }

@@ -54,7 +54,7 @@ public class RamAAAction : MonoBehaviour, IAction
         }
     }
 
-    public bool ExecuteAction(GameObject actionDestination)
+    public ActionStep ExecuteAction(GameObject actionDestination)
     {
         Vector3 initialPosition = characterInAction.gameObject.transform.position;
 
@@ -101,20 +101,16 @@ public class RamAAAction : MonoBehaviour, IAction
                 if (neighbors.Count > 1)
                     characterInAction.TakeDamage(RamAA.selfDamage);
             }
-
-            GameplayEvents.ActionFinished(new ActionMetadata
-            {
-                ExecutingPlayer = characterInAction.Side,
-                ExecutedActionType = ActionType,
-                CharacterInAction = characterInAction,
-                CharacterInitialPosition = initialPosition,
-                ActionDestinationPosition = actionDestination.transform.position
-            });
         }
 
-        AbortAction();
-
-        return true;
+        return new ActionStep()
+        {
+            ActionType = ActionType,
+            CharacterInAction = CharacterInAction,
+            CharacterInitialPosition = initialPosition,
+            ActionDestinationPosition = actionDestination.transform.position,
+            ActionFinished = true
+        };
     }
 
     public void AbortAction()

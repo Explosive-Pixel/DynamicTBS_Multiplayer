@@ -21,38 +21,30 @@ public class MessageSender : MonoBehaviour
         }
     }
 
-    private void SendPerformActionMessage(ActionMetadata actionMetadata)
+    private void SendPerformActionMessage(Action action)
     {
-        if (Client.ShouldSendMessage(actionMetadata.ExecutingPlayer))
+        if (Client.ShouldSendMessage(action.ExecutingPlayer))
         {
-            Tile characterInitialTile = actionMetadata.CharacterInitialPosition != null ? Board.GetTileByPosition(actionMetadata.CharacterInitialPosition.Value) : null;
-            List<Tile> actionsDestinationTiles = new();
-            if (actionMetadata.ActionDestinationPosition != null)
-            {
-                actionsDestinationTiles.Add(Board.GetTileByPosition(actionMetadata.ActionDestinationPosition.Value));
-            }
-            if (actionMetadata.SecondActionDestinationPosition != null)
-            {
-                actionsDestinationTiles.Add(Board.GetTileByPosition(actionMetadata.SecondActionDestinationPosition.Value));
-            }
-
-            ActionDestination[] actionDestinations = actionsDestinationTiles.ConvertAll(tile => new ActionDestination()
-            {
-                tileName = tile.Name,
-                x = tile.transform.position.x,
-                y = tile.transform.position.y
-            }).ToArray();
-
             Client.SendToServer(new WSMsgPerformAction
             {
-                playerId = actionMetadata.ExecutingPlayer,
-                characterType = actionMetadata.CharacterInAction != null ? (int)actionMetadata.CharacterInAction.CharacterType : -1,
-                characterInitialTileName = characterInitialTile != null ? characterInitialTile.Name : null,
-                characterX = actionMetadata.CharacterInitialPosition != null ? actionMetadata.CharacterInitialPosition.Value.x : 0f,
-                characterY = actionMetadata.CharacterInitialPosition != null ? actionMetadata.CharacterInitialPosition.Value.y : 0f,
-                actionType = actionMetadata.ExecutedActionType,
-                playerActionType = actionMetadata.PlayerActionType != null ? actionMetadata.PlayerActionType.Value : 0,
-                actionDestinations = actionDestinations
+                playerId = action.ExecutingPlayer,
+                playerActionType = action.PlayerActionType != null ? action.PlayerActionType.Value : 0,
+                actionSteps = (action.ActionSteps != null ? action.ActionSteps.ConvertAll(actionStep =>
+                {
+                    Tile characterInitialTile = actionStep.CharacterInitialPosition != null ? Board.GetTileByPosition(actionStep.CharacterInitialPosition.Value) : null;
+                    Tile actionDestinationTile = actionStep.ActionDestinationPosition != null ? Board.GetTileByPosition(actionStep.ActionDestinationPosition.Value) : null;
+                    return new ActionStepDto()
+                    {
+                        characterType = (int)actionStep.CharacterInAction.CharacterType,
+                        characterInitialTileName = characterInitialTile != null ? characterInitialTile.Name : null,
+                        characterX = actionStep.CharacterInitialPosition != null ? actionStep.CharacterInitialPosition.Value.x : 0f,
+                        characterY = actionStep.CharacterInitialPosition != null ? actionStep.CharacterInitialPosition.Value.y : 0f,
+                        actionType = actionStep.ActionType,
+                        actionDestinationTileName = actionDestinationTile != null ? actionDestinationTile.Name : null,
+                        actionDestinationX = actionStep.ActionDestinationPosition != null ? actionStep.ActionDestinationPosition.Value.x : 0f,
+                        actionDestinationY = actionStep.ActionDestinationPosition != null ? actionStep.ActionDestinationPosition.Value.y : 0f
+                    };
+                }) : new()).ToArray()
             });
         }
     }

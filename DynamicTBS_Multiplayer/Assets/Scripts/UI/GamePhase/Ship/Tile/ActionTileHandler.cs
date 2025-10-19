@@ -13,10 +13,10 @@ public class ActionTileHandler : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (!PlayerManager.ClientIsCurrentPlayer() || GameplayManager.gameIsPaused || action.CharacterInAction.Side != PlayerManager.CurrentPlayer)
+        if (!PlayerManager.ClientIsCurrentPlayer() || GameplayManager.gameIsPaused || (action.CharacterInAction != null && action.CharacterInAction.Side != PlayerManager.CurrentPlayer))
             return;
 
-        bool actionFinished = ActionUtils.ExecuteAction(action, gameObject);
+        bool actionFinished = ActionHandler.Instance.ExecuteAction(action, gameObject);
 
         if (actionFinished)
             GameplayEvents.ChangeCharacterSelection(null);

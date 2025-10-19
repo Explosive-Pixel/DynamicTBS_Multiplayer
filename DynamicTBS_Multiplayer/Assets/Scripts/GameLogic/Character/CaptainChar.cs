@@ -10,7 +10,7 @@ public class CaptainChar : Character
         GameplayEvents.OnFinishAction += CheckIfOwnerMovedOntoGoalSquare;
     }
 
-    private void CheckIfOwnerMovedOntoGoalSquare(ActionMetadata actionMetadata)
+    private void CheckIfOwnerMovedOntoGoalSquare(Action action)
     {
         if (GameManager.CurrentGamePhase != GamePhase.GAMEPLAY)
             return;

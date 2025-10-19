@@ -51,18 +51,30 @@ public class HypnotizeAAAction : MonoBehaviour, IAction
         }
     }
 
-    public bool ExecuteAction(GameObject actionDestination)
+    public ActionStep ExecuteAction(GameObject actionDestination)
     {
+        Vector3 initialPosition = characterInAction.gameObject.transform.position;
+        Character character = CharacterInAction;
+
         Tile tile = Board.GetTileByPosition(actionDestination.transform.position);
         if (tile != null)
         {
             selectedCharacter = tile.CurrentInhabitant;
-            HypnotizedState.Create(selectedCharacter.gameObject, characterInAction);
+            HypnotizedState.Create(selectedCharacter.gameObject);
         }
+
+        ActionStep actionStep = new()
+        {
+            ActionType = ActionType,
+            CharacterInAction = character,
+            CharacterInitialPosition = initialPosition,
+            ActionDestinationPosition = actionDestination.transform.position,
+            ActionFinished = false
+        };
 
         ActionUtils.Clear(actionDestinations);
 
-        return false;
+        return actionStep;
     }
 
     public void AbortAction()

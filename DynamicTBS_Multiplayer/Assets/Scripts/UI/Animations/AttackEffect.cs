@@ -17,12 +17,15 @@ public class AttackEffect : IndicatorEffect
         GameplayEvents.OnFinishAction += OnAttackCharacter;
     }
 
-    private void OnAttackCharacter(ActionMetadata actionMetadata)
+    private void OnAttackCharacter(Action action)
     {
-        if (actionMetadata.ExecutedActionType == ActionType.Attack)
+        action.ActionSteps?.ForEach(actionStep =>
         {
-            AnimateIndicator(actionMetadata.CharacterInAction.Side == PlayerType.blue ? attackerPrefab_blue : attackerPrefab_pink, actionMetadata.CharacterInitialPosition.Value, indicatorTime);
-        }
+            if (actionStep.ActionType == ActionType.Attack)
+            {
+                AnimateIndicator(actionStep.CharacterInAction.Side == PlayerType.blue ? attackerPrefab_blue : attackerPrefab_pink, actionStep.CharacterInitialPosition.Value, indicatorTime);
+            }
+        });
     }
 
     private void OnCharacterTakesDamage(Character character, int damage)

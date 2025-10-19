@@ -58,7 +58,7 @@ public class RepairAAAction : MonoBehaviour, IAction
         }
     }
 
-    public bool ExecuteAction(GameObject actionDestination)
+    public ActionStep ExecuteAction(GameObject actionDestination)
     {
         Vector3 initialPosition = characterInAction.gameObject.transform.position;
 
@@ -76,23 +76,18 @@ public class RepairAAAction : MonoBehaviour, IAction
                 selectedHole = tile;
                 selectedFloor.Transform(OtherTileType(selectedFloor.TileType));
                 selectedHole.Transform(OtherTileType(selectedHole.TileType));
-
-                GameplayEvents.ActionFinished(new ActionMetadata
-                {
-                    ExecutingPlayer = characterInAction.Side,
-                    ExecutedActionType = ActionType,
-                    CharacterInAction = characterInAction,
-                    CharacterInitialPosition = initialPosition,
-                    ActionDestinationPosition = selectedFloor.gameObject.transform.position,
-                    SecondActionDestinationPosition = selectedHole.gameObject.transform.position
-                });
+                ActionUtils.Clear(actionDestinations);
             }
-
-            return selectedHole != null;
         }
 
-        AbortAction();
-        return false;
+        return new ActionStep()
+        {
+            ActionType = ActionType,
+            CharacterInAction = CharacterInAction,
+            CharacterInitialPosition = initialPosition,
+            ActionDestinationPosition = actionDestination.transform.position,
+            ActionFinished = selectedHole != null
+        };
     }
 
     public void AbortAction()

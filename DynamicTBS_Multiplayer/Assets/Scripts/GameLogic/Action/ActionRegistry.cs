@@ -7,7 +7,8 @@ public class ActionRegistry
 
     public static void Register(IAction action)
     {
-        actions.Add(action);
+        if (!actions.Contains(action))
+            actions.Add(action);
     }
 
     public static void Remove(IAction action)
