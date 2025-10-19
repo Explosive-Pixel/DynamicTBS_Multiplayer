@@ -119,9 +119,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 64959160508416
-    m_Localized: "<b>TANK</b>\n\nLeben: <b>3</b>\nReichweite: <b>1</b>\nDamage: <b>1</b>\nSchritte:
-      <b>1</b>\nBewegungsmuster: <b>Kreuz</b>\n\nPower: <b>Rammen</b>\nRase auf ein
-      Bodenfeld in Reichweite 1. Ist das Feld besetzt, wird die darauf befindliche
+    m_Localized: "<b>TANK</b>\n\nLeben: <b>3</b>\nReichweite: <b>1</b>\nSchaden:
+      <b>1</b>\nSchritte: <b>1</b>\nBewegungsmuster: <b>Kreuz</b>\n\nPower: <b>Rammen</b>\nRase
+      auf ein Bodenfeld in Reichweite 1. Ist das Feld besetzt, wird die darauf befindliche
       Einheit um <b>1</b> Feld in die Bewegungsrichtung verschoben (sowie alle Einheiten
       auf benachbarten Feldern in derselben Richtung) und jede verschobene Einheit,
       sowie der Tank nehmen <b>1</b> Schaden. Schiebt dies eine Einheit in ein Loch,
@@ -353,6 +353,103 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 106759136993280
     m_Localized: SPIEL STARTEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 75731144007680
+    m_Localized: "<i>Power</i>\nSpringe bis zu <b>3</b> Felder \xFCber Einheiten
+      und L\xF6cher hinweg auf ein freies Bodenfeld."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76470994067456
+    m_Localized: "<i>Power</i>\nRase auf ein Bodenfeld in Reichweite <b>1</b>. Ist
+      das Feld besetzt, wird die darauf befindliche Einheit um <b>1</b> Feld in die
+      Bewegungsrichtung verschoben (sowie alle Einheiten auf benachbarten Feldern
+      in derselben Richtung) und jede verschobene Einheit, sowie der Tank nehmen
+      <b>1</b> Schaden. Schiebt dies eine Einheit in ein Loch, stirbt diese sofort.
+      Einheiten k\xF6nnen nicht \xFCber den Rand des Feldes geschoben werden."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 77438620000256
+    m_Localized: "<i>Power</i>\nAttackiere eine Einheit ohne Reichweiten-Einschr\xE4nkung.
+      F\xFCgt dir selbst <b>1</b> Schaden zu."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 78404811481088
+    m_Localized: "<i>Power</i>\nRei\xDFe ein unbesetztes Bodenfeld in Reichweite
+      <b>2</b> heraus und platziere es auf einem Loch in Reichweite <b>2</b>."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 79317789827072
+    m_Localized: "<i>Power</i>\nF\xFChre <b>1</b> Aktion mit einer gegnerischen Einheit
+      in Reichweite <b>2</b> aus. Kann nicht auf Captains angewendet werden."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 79943206690816
+    m_Localized: '<i>Power</i>
+
+      Bewege <b>1</b> Lebenspunkt von einer Einheit
+      in Reichweite <b>2</b> zu einer anderen.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71448403107840
+    m_Localized: '"Wenn ich dich anschaue wird''s elektrisch."'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71911965974528
+    m_Localized: '"Lass mich dir Gesundheit stehlen."'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72321200021504
+    m_Localized: "\"Wer braucht einen gr\xF6\xDFeren Hammer?\""
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72597793398784
+    m_Localized: "\"Schneid mich, S\xE4ugling, noch einmal.\""
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72865528406016
+    m_Localized: "\"Ich liebe den Geruch von Schie\xDFpulver am Morgen.\""
+    m_Metadata:
+      m_Items: []
+  - m_Id: 73417138102272
+    m_Localized: '"Bin ich zu stark, bist du zu schwach."'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 66322468691968
+    m_Localized: "<b>MECHANIC</b>\n\nLeben: <b>2</b>\nReichweite: <b>1</b>\nSchaden:
+      <b>1</b>\nSchritte: <b>1</b>\nBewegungsmuster: <b>Kreuz</b>\n\nPower: <b>Reparieren</b>\nRei\xDFe
+      ein unbesetztes Bodenfeld in Reichweite <b>2</b> heraus und platziere es auf
+      einem Loch in Reichweite <b>2</b>.\n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 66774111346688
+    m_Localized: "<b>RUNNER</b>\n\nLeben: <b>1</b>\nReichweite: <b>1</b>\nSchaden:
+      <b>2</b>\nSchritte: <b>2</b>\nBewegungsmuster: <b>Stern</b>\n\nPower: <b>Sprung</b>\nSpringe
+      bis zu <b>3</b> Felder weit \xFCber Einheiten und L\xF6cher hinweg auf ein
+      unbesetztes Bodenfeld."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67173832712192
+    m_Localized: '<b>DOC</b>
+
+
+      Leben: <b>2</b>
+
+      Reichweite: <b>1</b>
+
+      Schaden:
+      <b>1</b>
+
+      Schritte: <b>1</b>
+
+      Bewegungsmuster: <b>Kreuz</b>
+
+
+      Power:
+      <b>Transfusion</b>
+
+      Bewege <b>1</b> Lebenspunkt von einer Einheit in
+      Reichweite <b>2</b> zu einer anderen.'
     m_Metadata:
       m_Items: []
   references:
