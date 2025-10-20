@@ -27,6 +27,9 @@ public class HealthBarHandler : MonoBehaviour
 
     public void InitHealth(int maxHP)
     {
+        if (maxHP == 0)
+            return;
+
         if (maxHP == 1)
         {
             AppendHealthPoint(healthMiddlePrefab);
@@ -37,10 +40,10 @@ public class HealthBarHandler : MonoBehaviour
 
             if (maxHP % 2 == 0)
             {
-                Translate(healthLeft, -(healthLeft.GetComponentInChildren<SpriteRenderer>().bounds.size.x / 2));
+                Translate(healthLeft, healthLeft.GetComponentInChildren<SpriteRenderer>().bounds.size.x / 2);
             }
 
-            Translate(healthLeft, -(distance * healthLeft.transform.lossyScale.x * (maxHP - 2)));
+            Translate(healthLeft, -(distance * healthLeft.transform.lossyScale.x * (maxHP / 2)));
 
             for (int i = 1; i < maxHP - 1; i++)
             {
