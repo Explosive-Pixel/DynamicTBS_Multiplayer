@@ -1,0 +1,539 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: LocalizationTable_en 1
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 5fe63ad03255ab043be4da51e6c25db3, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 141716086784
+    m_Localized: PLAY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1737292242944
+    m_Localized: QUIT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1882482270208
+    m_Localized: Online Game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1946923556864
+    m_Localized: Offline Game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4439032193024
+    m_Localized: MAIN MENU
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4728321728512
+    m_Localized: ONLINE GAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4864221372416
+    m_Localized: CREATE OR JOIN LOBBY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13517292822528
+    m_Localized: FULLSCREEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38039224049664
+    m_Localized: MAIN VOLUME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38378681655296
+    m_Localized: MUSIC VOLUME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38650501914624
+    m_Localized: ATMO VOLUME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39001284141056
+    m_Localized: FX VOLUME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39274777927680
+    m_Localized: VOICE VOLUME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39938480398336
+    m_Localized: 'MOUSE & KEYBOARD
+
+
+      L. MOUSE: Select Unit
+
+      R. MOUSE:
+      Undo Selection
+
+
+      SPACE: Pause Game'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40588463300608
+    m_Localized: GERMAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42411706277888
+    m_Localized: '<b>World Champion 2023</b>
+
+      shocker302'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42732520202240
+    m_Localized: '<b>Ranked Season 1 Winner</b>
+
+      shocker302'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44568115404800
+    m_Localized: GAME PAUSED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44912186744832
+    m_Localized: IT'S A DRAW!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45371546918912
+    m_Localized: Play Again
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45644424142848
+    m_Localized: Back to Lobby
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63281891893248
+    m_Localized: Blue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63803298406400
+    m_Localized: '<b>SHOOTER</b>
+
+
+      Health: <b>2</b>
+
+      Range: <b>2</b>
+
+      Damage:
+      <b>1</b>
+
+      Steps: <b>1</b>
+
+      Movement pattern: <b>Cross</b>
+
+
+      Power:
+      <b>Longshot</b>
+
+      Attack a target without range restriction whilst dealing
+      <b>1</b> damage to yourself.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64959160508416
+    m_Localized: '<b>TANK</b>
+
+
+      Health: <b>3</b>
+
+      Range: <b>1</b>
+
+      Damage:
+      <b>1</b>
+
+      Steps: <b>1</b>
+
+      Movement pattern: <b>Cross</b>
+
+
+      Power:
+      <b>Ram</b>
+
+      Rush onto a floor square in range <b>1</b>. If the floor
+      square is occupied, the occupying unit is pushed <b>1</b> square in the same
+      direction (as are any units on adjacent squares in this direction) and both
+      the pushed unit und the Tank take <b>1</b> damage. If this pushes a unit into
+      a hole, it dies immediately. Units cannot be pushed across the edge of the
+      board. '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 66322468691968
+    m_Localized: '<b>MECHANIC</b>
+
+
+      Health: <b>2</b>
+
+      Range: <b>1</b>
+
+      Damage:
+      <b>1</b>
+
+      Steps: <b>1</b>
+
+      Movement pattern: <b>Cross</b>
+
+
+      Power:
+      <b>Repair</b>
+
+      Rip out an unoccupied floor square in range <b>2</b> and
+      use it to cover a hole in range <b>2</b>.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 66774111346688
+    m_Localized: '<b>RUNNER</b>
+
+
+      Health: <b>1</b>
+
+      Range: <b>1</b>
+
+      Damage:
+      <b>2</b>
+
+      Steps: <b>2</b>
+
+      Movement pattern: <b>Star</b>
+
+
+      Power:
+      <b>Jump</b>
+
+      Jump up to <b>3</b> squares across units and holes onto
+      an unoccupied floor square.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67173832712192
+    m_Localized: '<b>DOC</b>
+
+
+      Health: <b>2</b>
+
+      Range: <b>1</b>
+
+      Damage:
+      <b>1</b>
+
+      Steps: <b>1</b>
+
+      Movement pattern: <b>Cross</b>
+
+
+      Power:
+      <b>Transfusion</b>
+
+      Move <b>1</b> health point from a unit in range <b>2</b>
+      to another.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 69853296713728
+    m_Localized: Health
+    m_Metadata:
+      m_Items: []
+  - m_Id: 70181303869440
+    m_Localized: Steps
+    m_Metadata:
+      m_Items: []
+  - m_Id: 70458123739136
+    m_Localized: Damage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 70695387127808
+    m_Localized: Range
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71448403107840
+    m_Localized: '"When I look at you it feels electric."'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71911965974528
+    m_Localized: '"Sometimes you have to steal to heal."'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72321200021504
+    m_Localized: '"We''re gonna need a bigger hammer."'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72597793398784
+    m_Localized: '"Cut me baby, one more time."'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72865528406016
+    m_Localized: '"I love the smell of gunpowder in the morning."'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 73417138102272
+    m_Localized: '"If I''m too strong, you''re too weak."'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 75430458548224
+    m_Localized: Jump
+    m_Metadata:
+      m_Items: []
+  - m_Id: 75731144007680
+    m_Localized: '<i>Power</i>
+
+      Jump up to <b>3</b> squares across units and
+      holes onto an unoccupied floor square.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76199228334080
+    m_Localized: Ram
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76470994067456
+    m_Localized: '<i>Power</i>
+
+      Rush onto a floor square in range <b>1</b>.
+      If the floor square is occupied, the occupying unit is pushed <b>1</b> square
+      in the same direction (as are any units on adjacent squares in this direction)
+      and both the pushed unit und the Tank take <b>1</b> damage. If this pushes
+      a unit into a hole, it dies immediately. Units cannot be pushed across the
+      edge of the board. '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76799441625088
+    m_Localized: Longshot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 77438620000256
+    m_Localized: '<i>Power</i>
+
+      Attack a target without range restriction whilst
+      dealing <b>1</b> damage to yourself.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 78034316025856
+    m_Localized: Repair
+    m_Metadata:
+      m_Items: []
+  - m_Id: 78404811481088
+    m_Localized: '<i>Power</i>
+
+      Rip out an unoccupied floor square in range
+      <b>2</b> and use it to cover a hole in range <b>2</b>.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 78994224439296
+    m_Localized: Hypnotize
+    m_Metadata:
+      m_Items: []
+  - m_Id: 79317789827072
+    m_Localized: '<i>Power</i>
+
+      Perform <b>1</b> action with an enemy unit
+      within range <b>2</b>. Cannot target Captains.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 79628424175616
+    m_Localized: Transfusion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 79943206690816
+    m_Localized: '<i>Power</i>
+
+      Move <b>1</b> health point from a unit in range
+      <b>2</b> to another.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 80443125784576
+    m_Localized: END TURN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 80891060674560
+    m_Localized: OFFER DRAW
+    m_Metadata:
+      m_Items: []
+  - m_Id: 81435586191360
+    m_Localized: SURRENDER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 81802059309056
+    m_Localized: Your opponent offered a draw.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82137318416384
+    m_Localized: Accept
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82574100652032
+    m_Localized: Decline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82901025677312
+    m_Localized: You offered a draw. Waiting for opponent to respond.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83717828632576
+    m_Localized: Surrender?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 84090333159424
+    m_Localized: Yes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 84161581801472
+    m_Localized: No
+    m_Metadata:
+      m_Items: []
+  - m_Id: 86880631644160
+    m_Localized: Trying to connect to server...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 87603591241728
+    m_Localized: WAITING FOR SECOND PLAYER TO JOIN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 87993741205504
+    m_Localized: 'GAME STARTS WHEN BOTH PLAYERS ARE READY
+
+
+      READY PLAYERS: '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 89811820994560
+    m_Localized: JOIN LOBBY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 90163622436864
+    m_Localized: Loading Lobbies...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 90607102976000
+    m_Localized: There are no public lobbies at the moment :(
+    m_Metadata:
+      m_Items: []
+  - m_Id: 91125040799744
+    m_Localized: CREATE NEW LOBBY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 91385804873728
+    m_Localized: JOIN PRIVATE LOBBY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 91947971633152
+    m_Localized: CREATE LOBBY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92242197864448
+    m_Localized: PUBLIC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92477317963776
+    m_Localized: PRIVATE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92720033947648
+    m_Localized: OR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 93051488821248
+    m_Localized: YOUR SIDE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 93542444687360
+    m_Localized: RANDOM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 93802608975872
+    m_Localized: BLUE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 94004011065344
+    m_Localized: SET TIME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 94385944387584
+    m_Localized: 'DRAFT AND PLACEMENT:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 94704162037760
+    m_Localized: MINUTES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 95082253377536
+    m_Localized: 'TIME PER TURN:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 95596173058048
+    m_Localized: SET MAP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 95887979175936
+    m_Localized: COMPETITIV
+    m_Metadata:
+      m_Items: []
+  - m_Id: 96425999327232
+    m_Localized: CASUAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 97637486288896
+    m_Localized: CREATE LOBBY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 98651169873920
+    m_Localized: The selected lobby is no longer available.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 99023087198208
+    m_Localized: JOIN AS SPECTATOR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 99718964174848
+    m_Localized: WAITING FOR PLAYER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 100227754221568
+    m_Localized: TIME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 100495833161728
+    m_Localized: MAP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 101694170980352
+    m_Localized: 'THE OTHER PLAYER IS SETTING UP THE GAME.
+
+
+      PLEASE WAIT ...'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 102556029149184
+    m_Localized: JOIN PRIVATE LOBBY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 103087468437504
+    m_Localized: Lobby not found.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104396640739328
+    m_Localized: CONFIRM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 105456830767104
+    m_Localized: OFFLINE GAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 105869315399680
+    m_Localized: SET UP YOUR GAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106759136993280
+    m_Localized: START GAME
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

@@ -781,6 +781,18 @@ PrefabInstance:
       propertyPath: m_fontColor32.rgba
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 1033525109506417878, guid: 1935ee7c63c4b854b8860e94a9f4c167, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 104396640739328
+      objectReference: {fileID: 0}
+    - target: {fileID: 1033525109506417878, guid: 1935ee7c63c4b854b8860e94a9f4c167, type: 3}
+      propertyPath: m_UpdateString.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1848754317766936277}
+    - target: {fileID: 1033525109506417878, guid: 1935ee7c63c4b854b8860e94a9f4c167, type: 3}
+      propertyPath: m_UpdateString.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: set_text
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1935ee7c63c4b854b8860e94a9f4c167, type: 3}
 --- !u!224 &1848754316666889864 stripped
@@ -797,5 +809,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1848754317766936277 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 809136011241965245, guid: 1935ee7c63c4b854b8860e94a9f4c167, type: 3}
+  m_PrefabInstance: {fileID: 1338335086251737192}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

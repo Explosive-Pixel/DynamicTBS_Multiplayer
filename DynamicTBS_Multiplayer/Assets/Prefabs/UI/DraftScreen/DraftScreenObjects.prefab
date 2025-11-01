@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4564724840057787479}
   - component: {fileID: 4927322017942769757}
   - component: {fileID: 1988275072313132013}
+  - component: {fileID: 3164815193774904586}
   m_Layer: 0
   m_Name: Name
   m_TagString: Untagged
@@ -58,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
+  - {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -104,8 +105,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
-  m_sharedMaterial: {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: be19911be0cb47a409e9003c0084646e, type: 2}
+  m_sharedMaterial: {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -174,6 +175,46 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 4927322017942769757}
   m_maskType: 0
+--- !u!114 &3164815193774904586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 196875372457045368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:5fe63ad03255ab043be4da51e6c25db3
+    m_TableEntryReference:
+      m_KeyId: 63281891893248
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1988275072313132013}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &463963719962122154
 GameObject:
   m_ObjectHideFlags: 0
@@ -1636,6 +1677,7 @@ GameObject:
   - component: {fileID: 5317760985342092609}
   - component: {fileID: 5317760985342092607}
   - component: {fileID: 5317760985342092606}
+  - component: {fileID: 7604007851525536037}
   m_Layer: 0
   m_Name: Information
   m_TagString: Untagged
@@ -1683,7 +1725,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
+  - {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1730,23 +1772,24 @@ MonoBehaviour:
 
     Health: <b>2</b>
 
-    Movement pattern: <b>Cross</b>
-
-    Steps:
-    <b>1</b>
-
     Range: <b>2</b>
 
-    Damage: <b>1</b>
+    Damage:
+    <b>1</b>
+
+    Steps: <b>1</b>
+
+    Movement pattern: <b>Cross</b>
 
 
-    Power: <b>Longshot</b>
+    Power:
+    <b>Longshot</b>
 
-    Attack
-    a target without range restriction whilst dealing <b>1</b> damage to yourself.'
+    Attack a target without range restriction whilst dealing
+    <b>1</b> damage to yourself.'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
-  m_sharedMaterial: {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: be19911be0cb47a409e9003c0084646e, type: 2}
+  m_sharedMaterial: {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1815,6 +1858,46 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 5317760985342092607}
   m_maskType: 0
+--- !u!114 &7604007851525536037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5317760985342092608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:5fe63ad03255ab043be4da51e6c25db3
+    m_TableEntryReference:
+      m_KeyId: 63803298406400
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5317760985342092606}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &5317760985351366433
 GameObject:
   m_ObjectHideFlags: 0
@@ -2054,6 +2137,7 @@ GameObject:
   - component: {fileID: 5317760985436178576}
   - component: {fileID: 5317760985436178574}
   - component: {fileID: 5317760985436178577}
+  - component: {fileID: 5779938027529907848}
   m_Layer: 0
   m_Name: Information
   m_TagString: Untagged
@@ -2101,7 +2185,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
+  - {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2148,24 +2232,24 @@ MonoBehaviour:
 
     Health: <b>2</b>
 
-    Movement pattern: <b>Cross</b>
-
-    Movement:
-    <b>1</b>
-
     Range: <b>1</b>
 
-    Damage: <b>1</b>
+    Damage:
+    <b>1</b>
+
+    Steps: <b>1</b>
+
+    Movement pattern: <b>Cross</b>
 
 
-    Power: <b>Repair</b>
+    Power:
+    <b>Repair</b>
 
-    Rip
-    out an unoccupied floor square in range <b>2</b> and use it to cover a hole in
-    range <b>2</b>.'
+    Rip out an unoccupied floor square in range <b>2</b> and use
+    it to cover a hole in range <b>2</b>.'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
-  m_sharedMaterial: {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: be19911be0cb47a409e9003c0084646e, type: 2}
+  m_sharedMaterial: {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2234,6 +2318,46 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 5317760985436178574}
   m_maskType: 0
+--- !u!114 &5779938027529907848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5317760985436178579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:5fe63ad03255ab043be4da51e6c25db3
+    m_TableEntryReference:
+      m_KeyId: 66322468691968
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5317760985436178577}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &5317760985445844187
 GameObject:
   m_ObjectHideFlags: 0
@@ -2510,6 +2634,7 @@ GameObject:
   - component: {fileID: 5317760985519536551}
   - component: {fileID: 5317760985519536549}
   - component: {fileID: 5317760985519536548}
+  - component: {fileID: 9210657163285708648}
   m_Layer: 0
   m_Name: Information
   m_TagString: Untagged
@@ -2557,7 +2682,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
+  - {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2604,14 +2729,14 @@ MonoBehaviour:
 
     Health: <b>2</b>
 
-    Movement pattern: <b>Cross</b>
+    Range: <b>1</b>
+
+    Damage: <b>1</b>
 
     Steps:
     <b>1</b>
 
-    Range: <b>1</b>
-
-    Damage: <b>1</b>
+    Movement pattern: <b>Cross</b>
 
 
     Power: <b>Transfusion</b>
@@ -2619,8 +2744,8 @@ MonoBehaviour:
     Move
     <b>1</b> health point from a unit in range <b>2</b> to another.'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
-  m_sharedMaterial: {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: be19911be0cb47a409e9003c0084646e, type: 2}
+  m_sharedMaterial: {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2689,6 +2814,46 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 5317760985519536549}
   m_maskType: 0
+--- !u!114 &9210657163285708648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5317760985519536550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:5fe63ad03255ab043be4da51e6c25db3
+    m_TableEntryReference:
+      m_KeyId: 67173832712192
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5317760985519536548}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &5317760985565649478
 GameObject:
   m_ObjectHideFlags: 0
@@ -2736,6 +2901,7 @@ GameObject:
   - component: {fileID: 5317760985639398192}
   - component: {fileID: 5317760985639398190}
   - component: {fileID: 5317760985639398193}
+  - component: {fileID: 6045469442771112495}
   m_Layer: 0
   m_Name: Information
   m_TagString: Untagged
@@ -2783,7 +2949,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
+  - {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2830,14 +2996,14 @@ MonoBehaviour:
 
     Health: <b>3</b>
 
-    Movement pattern: <b>Cross</b>
+    Range: <b>1</b>
+
+    Damage: <b>1</b>
 
     Steps:
     <b>1</b>
 
-    Range: <b>1</b>
-
-    Damage: <b>1</b>
+    Movement pattern: <b>Cross</b>
 
 
     Power: <b>Ram</b>
@@ -2849,8 +3015,8 @@ MonoBehaviour:
     damage. If this pushes a unit into a hole, it dies immediately. Units cannot
     be pushed across the edge of the board. '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
-  m_sharedMaterial: {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: be19911be0cb47a409e9003c0084646e, type: 2}
+  m_sharedMaterial: {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2919,6 +3085,46 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 5317760985639398190}
   m_maskType: 0
+--- !u!114 &6045469442771112495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5317760985639398195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:5fe63ad03255ab043be4da51e6c25db3
+    m_TableEntryReference:
+      m_KeyId: 64959160508416
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5317760985639398193}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &5317760985704632566
 GameObject:
   m_ObjectHideFlags: 0
@@ -2978,6 +3184,7 @@ GameObject:
   - component: {fileID: 5317760985707132766}
   - component: {fileID: 5317760985707132764}
   - component: {fileID: 5317760985707132767}
+  - component: {fileID: 6973643786497265949}
   m_Layer: 0
   m_Name: Information
   m_TagString: Untagged
@@ -3025,7 +3232,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
+  - {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3072,23 +3279,24 @@ MonoBehaviour:
 
     Health: <b>1</b>
 
-    Movement pattern: <b>Star</b>
-
-    Steps:
-    <b>2</b>
-
     Range: <b>1</b>
 
-    Damage: <b>2</b>
+    Damage:
+    <b>2</b>
+
+    Steps: <b>2</b>
+
+    Movement pattern: <b>Star</b>
 
 
-    Power: <b>Jump</b>
+    Power:
+    <b>Jump</b>
 
-    Jump
-    up to <b>3</b> squares across units and holes onto an unoccupied floor square.'
+    Jump up to <b>3</b> squares across units and holes onto an unoccupied
+    floor square.'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
-  m_sharedMaterial: {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: be19911be0cb47a409e9003c0084646e, type: 2}
+  m_sharedMaterial: {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3157,6 +3365,46 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 5317760985707132764}
   m_maskType: 0
+--- !u!114 &6973643786497265949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5317760985707132769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:5fe63ad03255ab043be4da51e6c25db3
+    m_TableEntryReference:
+      m_KeyId: 66774111346688
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5317760985707132767}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &5317760985730247694
 GameObject:
   m_ObjectHideFlags: 0
@@ -3334,6 +3582,7 @@ GameObject:
   - component: {fileID: 5317760985809203484}
   - component: {fileID: 5317760985809203482}
   - component: {fileID: 5317760985809203485}
+  - component: {fileID: 7877798339800993608}
   m_Layer: 0
   m_Name: Information
   m_TagString: Untagged
@@ -3381,7 +3630,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
+  - {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3428,14 +3677,14 @@ MonoBehaviour:
 
     Health: <b>3</b>
 
-    Movement pattern: <b>Cross</b>
+    Range: <b>1</b>
+
+    Damage: <b>1</b>
 
     Steps:
     <b>1</b>
 
-    Range: <b>1</b>
-
-    Damage: <b>1</b>
+    Movement pattern: <b>Cross</b>
 
 
     Power: <b>Ram</b>
@@ -3447,8 +3696,8 @@ MonoBehaviour:
     damage. If this pushes a unit into a hole, it dies immediately. Units cannot
     be pushed across the edge of the board. '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
-  m_sharedMaterial: {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: be19911be0cb47a409e9003c0084646e, type: 2}
+  m_sharedMaterial: {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3517,6 +3766,46 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 5317760985809203482}
   m_maskType: 0
+--- !u!114 &7877798339800993608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5317760985809203487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:5fe63ad03255ab043be4da51e6c25db3
+    m_TableEntryReference:
+      m_KeyId: 64959160508416
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5317760985809203485}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &5317760985873038841
 GameObject:
   m_ObjectHideFlags: 0
@@ -3528,6 +3817,7 @@ GameObject:
   - component: {fileID: 5317760985873038838}
   - component: {fileID: 5317760985873038836}
   - component: {fileID: 5317760985873038839}
+  - component: {fileID: 8655857077841901085}
   m_Layer: 0
   m_Name: Information
   m_TagString: Untagged
@@ -3575,7 +3865,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
+  - {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3622,23 +3912,24 @@ MonoBehaviour:
 
     Health: <b>2</b>
 
-    Movement pattern: <b>Cross</b>
-
-    Steps:
-    <b>1</b>
-
     Range: <b>2</b>
 
-    Damage: <b>1</b>
+    Damage:
+    <b>1</b>
+
+    Steps: <b>1</b>
+
+    Movement pattern: <b>Cross</b>
 
 
-    Power: <b>Longshot</b>
+    Power:
+    <b>Longshot</b>
 
-    Attack
-    a target without range restriction whilst dealing <b>1</b> damage to yourself.'
+    Attack a target without range restriction whilst dealing
+    <b>1</b> damage to yourself.'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
-  m_sharedMaterial: {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: be19911be0cb47a409e9003c0084646e, type: 2}
+  m_sharedMaterial: {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3707,6 +3998,46 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 5317760985873038836}
   m_maskType: 0
+--- !u!114 &8655857077841901085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5317760985873038841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:5fe63ad03255ab043be4da51e6c25db3
+    m_TableEntryReference:
+      m_KeyId: 63803298406400
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5317760985873038839}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &5317760985876389156
 GameObject:
   m_ObjectHideFlags: 0
@@ -3816,7 +4147,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5317760985897126001}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.65, y: 1.6, z: 0}
+  m_LocalPosition: {x: 0.65, y: 1.7, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -3933,7 +4264,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -5638732994581352410, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
+  - {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3977,8 +4308,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: TANK
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
-  m_sharedMaterial: {fileID: -5638732994581352410, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: be19911be0cb47a409e9003c0084646e, type: 2}
+  m_sharedMaterial: {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4072,7 +4403,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5317760985941056314}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.71, y: 1.6, z: 0}
+  m_LocalPosition: {x: 0.71, y: 1.7, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -4442,7 +4773,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
+  - {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4486,8 +4817,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Pink drafts x units.
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
-  m_sharedMaterial: {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: be19911be0cb47a409e9003c0084646e, type: 2}
+  m_sharedMaterial: {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4735,6 +5066,7 @@ GameObject:
   - component: {fileID: 5317760986114081116}
   - component: {fileID: 5317760986114081114}
   - component: {fileID: 5317760986114081117}
+  - component: {fileID: 695012966712416335}
   m_Layer: 0
   m_Name: Information
   m_TagString: Untagged
@@ -4782,7 +5114,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
+  - {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4829,24 +5161,24 @@ MonoBehaviour:
 
     Health: <b>2</b>
 
-    Movement pattern: <b>Cross</b>
-
-    Movement:
-    <b>1</b>
-
     Range: <b>1</b>
 
-    Damage: <b>1</b>
+    Damage:
+    <b>1</b>
+
+    Steps: <b>1</b>
+
+    Movement pattern: <b>Cross</b>
 
 
-    Power: <b>Repair</b>
+    Power:
+    <b>Repair</b>
 
-    Rip
-    out an unoccupied floor square in range <b>2</b> and use it to cover a hole in
-    range <b>2</b>.'
+    Rip out an unoccupied floor square in range <b>2</b> and use
+    it to cover a hole in range <b>2</b>.'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
-  m_sharedMaterial: {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: be19911be0cb47a409e9003c0084646e, type: 2}
+  m_sharedMaterial: {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4915,6 +5247,46 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 5317760986114081114}
   m_maskType: 0
+--- !u!114 &695012966712416335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5317760986114081119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:5fe63ad03255ab043be4da51e6c25db3
+    m_TableEntryReference:
+      m_KeyId: 66322468691968
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5317760986114081117}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &5317760986135141937
 GameObject:
   m_ObjectHideFlags: 0
@@ -5091,7 +5463,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -5638732994581352410, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
+  - {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5135,8 +5507,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 00:00
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
-  m_sharedMaterial: {fileID: -5638732994581352410, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: be19911be0cb47a409e9003c0084646e, type: 2}
+  m_sharedMaterial: {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5263,7 +5635,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -5638732994581352410, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
+  - {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5307,8 +5679,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: DOC
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
-  m_sharedMaterial: {fileID: -5638732994581352410, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: be19911be0cb47a409e9003c0084646e, type: 2}
+  m_sharedMaterial: {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5402,7 +5774,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5317760986258726548}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.74, y: 1.6, z: 0}
+  m_LocalPosition: {x: 0.74, y: 1.7, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -5519,7 +5891,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
+  - {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5563,8 +5935,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Pink drafts x units.
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
-  m_sharedMaterial: {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: be19911be0cb47a409e9003c0084646e, type: 2}
+  m_sharedMaterial: {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5691,7 +6063,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -5638732994581352410, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
+  - {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5735,8 +6107,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: SHOOTER
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
-  m_sharedMaterial: {fileID: -5638732994581352410, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: be19911be0cb47a409e9003c0084646e, type: 2}
+  m_sharedMaterial: {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -6656,6 +7028,7 @@ GameObject:
   - component: {fileID: 5317760986599331317}
   - component: {fileID: 5317760986599331315}
   - component: {fileID: 5317760986599331314}
+  - component: {fileID: 3718550514541208919}
   m_Layer: 0
   m_Name: Information
   m_TagString: Untagged
@@ -6703,7 +7076,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
+  - {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6750,14 +7123,14 @@ MonoBehaviour:
 
     Health: <b>2</b>
 
-    Movement pattern: <b>Cross</b>
+    Range: <b>1</b>
+
+    Damage: <b>1</b>
 
     Steps:
     <b>1</b>
 
-    Range: <b>1</b>
-
-    Damage: <b>1</b>
+    Movement pattern: <b>Cross</b>
 
 
     Power: <b>Transfusion</b>
@@ -6765,8 +7138,8 @@ MonoBehaviour:
     Move
     <b>1</b> health point from a unit in range <b>2</b> to another.'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
-  m_sharedMaterial: {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: be19911be0cb47a409e9003c0084646e, type: 2}
+  m_sharedMaterial: {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -6835,6 +7208,46 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 5317760986599331315}
   m_maskType: 0
+--- !u!114 &3718550514541208919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5317760986599331316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:5fe63ad03255ab043be4da51e6c25db3
+    m_TableEntryReference:
+      m_KeyId: 67173832712192
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5317760986599331314}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &5317760986621429457
 GameObject:
   m_ObjectHideFlags: 0
@@ -7062,7 +7475,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -5638732994581352410, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
+  - {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7106,8 +7519,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 00:00
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
-  m_sharedMaterial: {fileID: -5638732994581352410, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: be19911be0cb47a409e9003c0084646e, type: 2}
+  m_sharedMaterial: {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -7286,7 +7699,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5317760986736526209}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 1.6, z: 0}
+  m_LocalPosition: {x: 0.5, y: 1.7, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -7370,7 +7783,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5317760986755107591}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.65, y: 1.6, z: 0}
+  m_LocalPosition: {x: 0.65, y: 1.7, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -7454,7 +7867,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5317760986771778706}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.71, y: 1.6, z: 0}
+  m_LocalPosition: {x: 0.71, y: 1.7, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -7655,7 +8068,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -5638732994581352410, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
+  - {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7699,8 +8112,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: RUNNER
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
-  m_sharedMaterial: {fileID: -5638732994581352410, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: be19911be0cb47a409e9003c0084646e, type: 2}
+  m_sharedMaterial: {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -7780,6 +8193,7 @@ GameObject:
   - component: {fileID: 5317760986835568628}
   - component: {fileID: 5317760986835568626}
   - component: {fileID: 5317760986835568629}
+  - component: {fileID: 4771928087876281187}
   m_Layer: 0
   m_Name: Information
   m_TagString: Untagged
@@ -7827,7 +8241,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
+  - {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7874,23 +8288,24 @@ MonoBehaviour:
 
     Health: <b>1</b>
 
-    Movement pattern: <b>Star</b>
-
-    Steps:
-    <b>2</b>
-
     Range: <b>1</b>
 
-    Damage: <b>2</b>
+    Damage:
+    <b>2</b>
+
+    Steps: <b>2</b>
+
+    Movement pattern: <b>Star</b>
 
 
-    Power: <b>Jump</b>
+    Power:
+    <b>Jump</b>
 
-    Jump
-    up to <b>3</b> squares across units and holes onto an unoccupied floor square.'
+    Jump up to <b>3</b> squares across units and holes onto an unoccupied
+    floor square.'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
-  m_sharedMaterial: {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: be19911be0cb47a409e9003c0084646e, type: 2}
+  m_sharedMaterial: {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -7959,6 +8374,46 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 5317760986835568626}
   m_maskType: 0
+--- !u!114 &4771928087876281187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5317760986835568631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:5fe63ad03255ab043be4da51e6c25db3
+    m_TableEntryReference:
+      m_KeyId: 66774111346688
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5317760986835568629}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &5317760986839495662
 GameObject:
   m_ObjectHideFlags: 0
@@ -8234,7 +8689,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -5638732994581352410, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
+  - {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8278,8 +8733,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: MECHANIC
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
-  m_sharedMaterial: {fileID: -5638732994581352410, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: be19911be0cb47a409e9003c0084646e, type: 2}
+  m_sharedMaterial: {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -9013,7 +9468,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5317760987374698811}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.74, y: 1.6, z: 0}
+  m_LocalPosition: {x: 0.74, y: 1.7, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -9181,7 +9636,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5317760987425222136}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 1.6, z: 0}
+  m_LocalPosition: {x: 0.5, y: 1.7, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -9841,7 +10296,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
+  - {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9885,8 +10340,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Pink
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
-  m_sharedMaterial: {fileID: 9212583051730330425, guid: 081a7e385b75acb4588bd9ee523efc80, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: be19911be0cb47a409e9003c0084646e, type: 2}
+  m_sharedMaterial: {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -10097,7 +10552,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -5638732994581352410, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
+  - {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10141,8 +10596,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 00:00
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
-  m_sharedMaterial: {fileID: -5638732994581352410, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: be19911be0cb47a409e9003c0084646e, type: 2}
+  m_sharedMaterial: {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
