@@ -46,26 +46,26 @@ public class GameplayManager : MonoBehaviour
         return true;
     }
 
-    private void OnActionFinished(ActionMetadata actionMetadata)
+    private void OnActionFinished(Action action)
     {
         SetRemainingActions(remainingActions - 1);
         if (remainingActions <= 0)
         {
             HandleNoRemainingActions();
         }
-        else if (actionMetadata.CharacterInAction != null)
+        else if (action.ActionSteps != null)
         {
-            if (actionsPerCharacterPerTurn.ContainsKey(actionMetadata.CharacterInAction))
+            action.ActionSteps.ForEach(actionStep =>
             {
-                actionsPerCharacterPerTurn[actionMetadata.CharacterInAction].Add(actionMetadata.ExecutedActionType);
-            }
-            else
-            {
-                actionsPerCharacterPerTurn.Add(actionMetadata.CharacterInAction, new List<ActionType>() { actionMetadata.ExecutedActionType });
-            }
+                if (!actionsPerCharacterPerTurn.ContainsKey(actionStep.CharacterInAction))
+                {
+                    actionsPerCharacterPerTurn.Add(actionStep.CharacterInAction, new());
+                }
+                actionsPerCharacterPerTurn[actionStep.CharacterInAction].Add(actionStep.ActionType);
+            });
 
             // Check if player can perform any further actions (move/attack/ActiveAbility)
-            CheckAvailableActions(actionMetadata.ExecutingPlayer);
+            CheckAvailableActions(action.ExecutingPlayer);
         }
     }
 

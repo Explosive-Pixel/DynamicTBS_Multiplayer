@@ -19,15 +19,10 @@ public class CharacterClickHandler : MonoBehaviour
         if (!character.IsClickable)
             return;
 
-        /*if (character.CurrentTile != null && character.CurrentTile.gameObject.TryGetComponent(out ActionTileHandler _))
-        {
-            return;
-        }*/
-
-        ActionUtils.ResetActionDestinations();
+        ActionHandler.Instance.ResetActionDestinations();
 
         if (GameManager.IsSpectator() || character.Side == PlayerManager.ExecutingPlayer)
-            ActionUtils.InstantiateAllActionPositions(character);
+            ActionHandler.Instance.InstantiateAllActionPositions(character);
 
         GameplayEvents.ChangeCharacterSelection(character);
     }

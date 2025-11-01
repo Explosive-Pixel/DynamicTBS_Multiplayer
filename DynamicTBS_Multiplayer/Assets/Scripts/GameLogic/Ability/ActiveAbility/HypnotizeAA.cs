@@ -10,9 +10,6 @@ public class HypnotizeAA : MonoBehaviour, IActiveAbility
 
     public ActiveAbilityType AbilityType { get { return ActiveAbilityType.HYPNOTIZE; } }
 
-    public delegate void ExecuteHypnotizeAA(Character hypnotizedBy, Vector3? hypnotizedByInitialPosition);
-    public static event ExecuteHypnotizeAA OnExecuteHypnotizeAA;
-
     private HypnotizeAAAction hypnotizeAAAction;
 
     Character character;
@@ -40,11 +37,5 @@ public class HypnotizeAA : MonoBehaviour, IActiveAbility
     public void ShowActionPattern()
     {
         hypnotizeAAAction.ShowActionPattern(character);
-    }
-
-    public static void HypnotizeAAExecuted(Character hypnotizedBy, Vector3? hypnotizedByInitialPosition)
-    {
-        if (OnExecuteHypnotizeAA != null)
-            OnExecuteHypnotizeAA(hypnotizedBy, hypnotizedByInitialPosition);
     }
 }

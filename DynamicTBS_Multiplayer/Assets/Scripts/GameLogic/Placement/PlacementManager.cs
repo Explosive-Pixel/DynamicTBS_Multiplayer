@@ -38,9 +38,9 @@ public class PlacementManager : MonoBehaviour
         SubscribeEvents();
     }
 
-    private void AdvancePlacementOrder(ActionMetadata actionMetadata)
+    private void AdvancePlacementOrder(Action action)
     {
-        PlacementEvents.CharacterPlaced(actionMetadata.CharacterInAction);
+        PlacementEvents.CharacterPlaced(action.ActionSteps[0].CharacterInAction);
 
         currentPlayerPlacementCount++;
 
@@ -73,10 +73,10 @@ public class PlacementManager : MonoBehaviour
         if (charactersOfPlayer.Count > 0)
         {
             Character randomCharacter = charactersOfPlayer[0];
-            ActionUtils.InstantiateAllActionPositions(randomCharacter);
+            ActionHandler.Instance.InstantiateAllActionPositions(randomCharacter);
             List<GameObject> placementPositions = ActionRegistry.GetActions().ConvertAll(action => action.ActionDestinations).SelectMany(i => i).ToList();
             GameObject randomPosition = placementPositions[RandomNumberGenerator.GetInt32(0, placementPositions.Count)];
-            ActionUtils.ExecuteAction(randomPosition);
+            ActionHandler.Instance.ExecuteAction(randomPosition);
         }
     }
 

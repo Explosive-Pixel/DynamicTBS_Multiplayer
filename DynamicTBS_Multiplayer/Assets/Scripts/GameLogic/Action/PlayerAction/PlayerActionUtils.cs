@@ -13,19 +13,12 @@ public class PlayerActionUtils
 
     public static void ExecuteAction(IPlayerAction action, PlayerType player)
     {
-        //if (!action.IsActionAvailable(player))
-        //    return;
-
         action.ExecuteAction(player);
 
-        GameplayEvents.ActionFinished(new ActionMetadata
+        GameplayEvents.ActionFinished(new Action
         {
             ExecutingPlayer = player,
-            ExecutedActionType = ActionType.PlayerAction,
             PlayerActionType = action.PlayerActionType
-            /*CharacterInAction = null,
-            CharacterInitialPosition = null,
-            ActionDestinationPosition = null*/
         });
     }
 }

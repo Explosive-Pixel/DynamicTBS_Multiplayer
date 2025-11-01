@@ -12,14 +12,16 @@ public class ActiveAbilityEffect : IndicatorEffect
         GameplayEvents.OnFinishAction += OnExecuteActiveAbilty;
     }
 
-    private void OnExecuteActiveAbilty(ActionMetadata actionMetadata)
+    private void OnExecuteActiveAbilty(Action action)
     {
-        if (actionMetadata.ExecutedActionType == ActionType.ActiveAbility)
-        {
-            AnimateIndicator(actionMetadata.CharacterInitialPosition);
-            AnimateIndicator(actionMetadata.ActionDestinationPosition);
-            AnimateIndicator(actionMetadata.SecondActionDestinationPosition);
-        }
+        action.ActionSteps?.ForEach(actionStep =>
+            {
+                if (actionStep.ActionType == ActionType.ActiveAbility)
+                {
+                    AnimateIndicator(actionStep.CharacterInitialPosition);
+                    AnimateIndicator(actionStep.ActionDestinationPosition);
+                }
+            });
     }
 
     private void AnimateIndicator(Vector3? position)

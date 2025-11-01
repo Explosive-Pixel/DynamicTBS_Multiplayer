@@ -54,7 +54,7 @@ public class JumpAAAction : MonoBehaviour, IAction
         }
     }
 
-    public bool ExecuteAction(GameObject actionDestination)
+    public ActionStep ExecuteAction(GameObject actionDestination)
     {
         Vector3 initialPosition = characterInAction.gameObject.transform.position;
 
@@ -64,18 +64,14 @@ public class JumpAAAction : MonoBehaviour, IAction
             MoveAction.MoveCharacter(characterInAction, tile);
         }
 
-        GameplayEvents.ActionFinished(new ActionMetadata
+        return new ActionStep()
         {
-            ExecutingPlayer = characterInAction.Side,
-            ExecutedActionType = ActionType,
-            CharacterInAction = characterInAction,
+            ActionType = ActionType,
+            CharacterInAction = CharacterInAction,
             CharacterInitialPosition = initialPosition,
-            ActionDestinationPosition = actionDestination.transform.position
-        });
-
-        AbortAction();
-
-        return true;
+            ActionDestinationPosition = actionDestination.transform.position,
+            ActionFinished = true
+        };
     }
 
     public void AbortAction()

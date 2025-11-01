@@ -37,16 +37,6 @@ public class ActionUtils : MonoBehaviour
         actionGameObjects.Clear();
     }
 
-    public static void InstantiateAllActionPositions(Character character)
-    {
-        AbortAllActions();
-        foreach (IAction action in ActionRegistry.GetActions())
-        {
-            if (GameplayManager.ActionAvailable(character, action.ActionType) && !character.isDisabled())
-                action.CreateActionDestinations(character);
-        }
-    }
-
     public static int CountAllActionDestinations(Character character)
     {
         int actionDestinationCount = 0;
@@ -58,81 +48,5 @@ public class ActionUtils : MonoBehaviour
         }
 
         return actionDestinationCount;
-    }
-
-    public static bool ExecuteAction(Vector3 position)
-    {
-        bool actionExecuted = false;
-        foreach (IAction action in ActionRegistry.GetActions())
-        {
-            GameObject hit = UIUtils.FindGameObjectByPosition(action.ActionDestinations, position);
-            if (hit != null)
-            {
-                ExecuteAction(action, hit);
-                actionExecuted = true;
-            }
-            else
-                action.AbortAction();
-        }
-
-        return actionExecuted;
-    }
-
-    public static void ExecuteAction(GameObject actionDestination)
-    {
-        foreach (IAction action in ActionRegistry.GetActions())
-        {
-            if (action.ActionDestinations.Contains(actionDestination))
-            {
-                ExecuteAction(action, actionDestination);
-            }
-        }
-    }
-
-    public static void ResetActionDestinations()
-    {
-        AbortAllActions();
-        HideAllActionPatterns();
-    }
-
-    public static void AbortAllActions()
-    {
-        foreach (IAction action in ActionRegistry.GetActions())
-        {
-            action.AbortAction();
-        }
-    }
-
-    public static void HideAllActionPatterns()
-    {
-        ActionRegistry.HideAllActionPatterns();
-    }
-
-    public static bool ExecuteAction(IAction action, GameObject actionDestination)
-    {
-        Character characterInAction = action.CharacterInAction;
-        Vector3 initialPosition = characterInAction.gameObject.transform.position;
-        Vector3 actionDestinationPosition = actionDestination.transform.position;
-
-        bool actionFinsihed = action.ExecuteAction(actionDestination);
-
-        if (actionFinsihed)
-        {
-            ResetActionDestinations();
-
-            if (action.ActionType != ActionType.ActiveAbility)
-            {
-                GameplayEvents.ActionFinished(new ActionMetadata
-                {
-                    ExecutingPlayer = characterInAction.Side,
-                    ExecutedActionType = action.ActionType,
-                    CharacterInAction = characterInAction,
-                    CharacterInitialPosition = initialPosition,
-                    ActionDestinationPosition = actionDestinationPosition
-                });
-            }
-        }
-
-        return actionFinsihed;
     }
 }

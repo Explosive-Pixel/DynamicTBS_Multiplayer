@@ -22,7 +22,7 @@ public enum WSMessageCode
     WSMsgGameOverCode = 14,
     WSMsgDraftCharacterCode = 15,
     WSMsgPerformActionCode = 16,
-    WSMsgUIActionCode = 17,
+    WSMsgUIActionCode = 17
 }
 
 [Serializable]

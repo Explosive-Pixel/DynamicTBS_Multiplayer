@@ -64,13 +64,21 @@ public class MoveAction : MonoBehaviour, IAction
         }
     }
 
-    public bool ExecuteAction(GameObject actionDestination)
+    public ActionStep ExecuteAction(GameObject actionDestination)
     {
+        Vector3 initialPosition = CharacterInAction.gameObject.transform.position;
+        Vector3 actionDestinationPosition = actionDestination.transform.position;
+
         MoveCharacter(characterInAction, Board.GetTileByPosition(actionDestination.transform.position));
 
-        AbortAction();
-
-        return true;
+        return new ActionStep()
+        {
+            ActionType = ActionType,
+            CharacterInAction = CharacterInAction,
+            CharacterInitialPosition = initialPosition,
+            ActionDestinationPosition = actionDestinationPosition,
+            ActionFinished = true
+        };
     }
 
     public void AbortAction()

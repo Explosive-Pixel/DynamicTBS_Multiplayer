@@ -12,17 +12,20 @@ public class MoveEffect : IndicatorEffect
         GameplayEvents.OnFinishAction += OnMoveCharacter;
     }
 
-    private void OnMoveCharacter(ActionMetadata actionMetadata)
+    private void OnMoveCharacter(Action action)
     {
         if (GameManager.CurrentGamePhase != GamePhase.GAMEPLAY)
             return;
 
-        if (actionMetadata.ExecutedActionType == ActionType.Move)
+        action.ActionSteps?.ForEach(actionStep =>
         {
-            GameObject prefab = actionMetadata.CharacterInAction.Side == PlayerType.blue ? movePrefab_blue : movePrefab_pink;
-            AnimateIndicator(prefab, actionMetadata.CharacterInitialPosition.Value, indicatorTime);
-            AnimateIndicator(prefab, actionMetadata.ActionDestinationPosition.Value, indicatorTime);
-        }
+            if (actionStep.ActionType == ActionType.Move)
+            {
+                GameObject prefab = actionStep.CharacterInAction.Side == PlayerType.blue ? movePrefab_blue : movePrefab_pink;
+                AnimateIndicator(prefab, actionStep.CharacterInitialPosition.Value, indicatorTime);
+                AnimateIndicator(prefab, actionStep.ActionDestinationPosition.Value, indicatorTime);
+            }
+        });
     }
 
     private void OnDestroy()

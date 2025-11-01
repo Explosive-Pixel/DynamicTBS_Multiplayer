@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 
 public class MovesInfoHandler : MonoBehaviour
 {
@@ -10,9 +9,6 @@ public class MovesInfoHandler : MonoBehaviour
 
     private readonly List<string> movesList = new();
     private int actionCount = 0;
-
-    private Character hypnotizedBy = null;
-    private Vector3? hypnotizedByInitialPosition;
 
     private void Awake()
     {
@@ -28,52 +24,46 @@ public class MovesInfoHandler : MonoBehaviour
 
         GameplayEvents.OnFinishAction += WriteMovesToString;
         GameplayEvents.OnPlayerTurnAborted += WriteAbortTurnToString;
-        HypnotizeAA.OnExecuteHypnotizeAA += WriteHypnotizeString;
     }
 
-    private void WriteHypnotizeString(Character hypnotizer, Vector3? hypnotizedByInitialPosition)
-    {
-        hypnotizedBy = hypnotizer;
-        this.hypnotizedByInitialPosition = hypnotizedByInitialPosition;
-    }
-
-    private void WriteMovesToString(ActionMetadata actionMetadata)
+    private void WriteMovesToString(Action action)
     {
         string newLine = GetMoveCountString() + ": ";
 
-        if (actionMetadata.ExecutedActionType == ActionType.PlayerAction)
+        if (action.PlayerActionType != null)
         {
-            switch (actionMetadata.PlayerActionType)
+            switch (action.PlayerActionType)
             {
                 case PlayerActionType.Skip:
-                    newLine += TranslatePlayerSide(actionMetadata.ExecutingPlayer) + " ended their turn";
+                    newLine += TranslatePlayerSide(action.ExecutingPlayer) + " ended their turn";
                     break;
                 case PlayerActionType.Refresh:
-                    newLine += TranslatePlayerSide(actionMetadata.ExecutingPlayer) + " refreshed their active abilities";
+                    newLine += TranslatePlayerSide(action.ExecutingPlayer) + " refreshed their active abilities";
                     break;
             }
         }
-        else
+        else if (action.ActionSteps != null)
         {
-            if (hypnotizedBy != null)
+            int i = 0;
+            while (i < action.ActionSteps.Count)
             {
-                newLine += TranslateCharacterName(hypnotizedBy) + "on " + TranslateTilePosition(hypnotizedByInitialPosition) + " used " + ActiveAbilityType.HYPNOTIZE.Description() + " on " + TranslateCharacterName(actionMetadata.CharacterInAction)
-            + "on "
-            + TranslateTilePosition(actionMetadata.CharacterInitialPosition) + " who ";
-            }
-            else
-            {
-                newLine += TranslateCharacterName(actionMetadata.CharacterInAction)
-            + "on "
-            + TranslateTilePosition(actionMetadata.CharacterInitialPosition);
-            }
+                ActionStep actionStep = action.ActionSteps[i];
+                newLine += TranslateCharacterName(actionStep.CharacterInAction) +
+                    "on " +
+                    TranslateTilePosition(actionStep.CharacterInitialPosition) +
+                    TranslateActionType(actionStep.ActionType, actionStep.CharacterInAction) +
+                    TranslateTilePosition(actionStep.ActionDestinationPosition);
 
-            newLine += TranslateActionType(actionMetadata.ExecutedActionType, actionMetadata.CharacterInAction)
-            + TranslateTilePosition(actionMetadata.ActionDestinationPosition);
+                while ((i + 1) < action.ActionSteps.Count && action.ActionSteps[i + 1].ActionType == actionStep.ActionType && action.ActionSteps[i + 1].CharacterInAction == actionStep.CharacterInAction)
+                {
+                    newLine += " and " + TranslateTilePosition(action.ActionSteps[i + 1].ActionDestinationPosition);
+                    i++;
+                }
 
-            if (actionMetadata.SecondActionDestinationPosition.HasValue)
-            {
-                newLine += " and " + TranslateTilePosition(actionMetadata.SecondActionDestinationPosition);
+                i++;
+
+                if (i < action.ActionSteps.Count)
+                    newLine += " and ";
             }
         }
 
@@ -174,7 +164,6 @@ public class MovesInfoHandler : MonoBehaviour
 
     private void OnDestroy()
     {
-        HypnotizeAA.OnExecuteHypnotizeAA -= WriteHypnotizeString;
         GameEvents.OnGamePhaseStart -= SetActive;
         GameplayEvents.OnFinishAction -= WriteMovesToString;
         GameplayEvents.OnPlayerTurnAborted -= WriteAbortTurnToString;

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -61,7 +60,7 @@ public class TransfusionAAAction : MonoBehaviour, IAction
         }
     }
 
-    public bool ExecuteAction(GameObject actionDestination)
+    public ActionStep ExecuteAction(GameObject actionDestination)
     {
         Vector3 initialPosition = characterInAction.gameObject.transform.position;
 
@@ -76,28 +75,20 @@ public class TransfusionAAAction : MonoBehaviour, IAction
             }
             else
             {
-                Vector3 stealHPCharacterPosition = stealHPCharacter.CurrentTile.transform.position;
-
                 giveHPCharacter = tile.CurrentInhabitant;
                 stealHPCharacter.TakeDamage(TransfusionAA.hpCount);
                 giveHPCharacter.Heal(TransfusionAA.hpCount);
-
-                GameplayEvents.ActionFinished(new ActionMetadata
-                {
-                    ExecutingPlayer = characterInAction.Side,
-                    ExecutedActionType = ActionType,
-                    CharacterInAction = characterInAction,
-                    CharacterInitialPosition = initialPosition,
-                    ActionDestinationPosition = stealHPCharacterPosition,
-                    SecondActionDestinationPosition = giveHPCharacter.gameObject.transform.position
-                });
             }
-
-            return giveHPCharacter != null;
         }
 
-        AbortAction();
-        return false;
+        return new ActionStep()
+        {
+            ActionType = ActionType,
+            CharacterInAction = CharacterInAction,
+            CharacterInitialPosition = initialPosition,
+            ActionDestinationPosition = actionDestination.transform.position,
+            ActionFinished = giveHPCharacter != null
+        };
     }
 
     public void AbortAction()

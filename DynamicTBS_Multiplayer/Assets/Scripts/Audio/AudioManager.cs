@@ -183,10 +183,13 @@ public class AudioManager : MonoBehaviour
     }
     #endregion
 
-    private void ActionAudio(ActionMetadata actionMetadata)
+    private void ActionAudio(Action action)
     {
-        ActionType actionType = actionMetadata.ExecutedActionType;
-        Character character = actionMetadata.CharacterInAction;
+        if (action.ActionSteps == null || action.ActionSteps.Count == 0)
+            return;
+
+        ActionType actionType = action.ActionSteps[0].ActionType;
+        Character character = action.ActionSteps[0].CharacterInAction;
 
         if (character == null)
             return;
@@ -210,20 +213,21 @@ public class AudioManager : MonoBehaviour
             if (character.CharacterType == CharacterType.DocChar)
                 fxSource.PlayOneShot(medicAttackClip);
         }
+        // TODO: Sounds für neue Abilities!
         if (actionType == ActionType.ActiveAbility)
         {
-            if (character.ActiveAbility.GetType() == typeof(ElectrifyAA))
+            /*if (character.ActiveAbility.GetType() == typeof(ElectrifyAA))
                 fxSource.PlayOneShot(takeControlClip);
             if (character.ActiveAbility.GetType() == typeof(BlockAA))
                 fxSource.PlayOneShot(blockClip);
             if (character.ActiveAbility.GetType() == typeof(PowershotAA))
-                fxSource.PlayOneShot(powershotClip);
+                fxSource.PlayOneShot(powershotClip);*/
             if (character.ActiveAbility.GetType() == typeof(JumpAA))
                 fxSource.PlayOneShot(jumpClip);
-            if (character.ActiveAbility.GetType() == typeof(ChangeFloorAA))
+            /*if (character.ActiveAbility.GetType() == typeof(ChangeFloorAA))
                 fxSource.PlayOneShot(changeFloorClip);
             if (character.ActiveAbility.GetType() == typeof(HealAA))
-                fxSource.PlayOneShot(healClip);
+                fxSource.PlayOneShot(healClip);*/
         }
     }
 

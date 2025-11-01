@@ -5,7 +5,7 @@ public static class GameplayEvents
     public delegate void FinishGameplayUISetup();
     public static event FinishGameplayUISetup OnFinishGameplayUISetup;
 
-    public delegate void FinishAction(ActionMetadata actionMetadata);
+    public delegate void FinishAction(Action action);
     public static event FinishAction OnFinishAction;
 
     public delegate void ExecuteActiveAbility(Character character);
@@ -50,10 +50,10 @@ public static class GameplayEvents
             OnFinishGameplayUISetup();
     }
 
-    public static void ActionFinished(ActionMetadata actionMetadata)
+    public static void ActionFinished(Action action)
     {
         if (OnFinishAction != null)
-            OnFinishAction(actionMetadata);
+            OnFinishAction(action);
     }
 
     public static void StartExecuteActiveAbility(Character character)

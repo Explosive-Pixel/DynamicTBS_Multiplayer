@@ -71,7 +71,7 @@ public class ActionInfoHandler : MonoBehaviour
         GameplayEvents.OnChangeRemainingActions -= UpdateGameplayCounter;
     }
 
-    private void UpdatePlacementCounter(ActionMetadata actionMetadata)
+    private void UpdatePlacementCounter(Action action)
     {
         UpdatePlacementCounter();
     }
