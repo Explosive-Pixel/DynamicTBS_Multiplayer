@@ -45,6 +45,6 @@ public class Lobby
         if (player != null)
             return GetPlayer(side).name;
 
-        return side == PlayerType.pink ? "Pink" : "Blue";
+        return PlayerSetup.GetSideName(side);
     }
 }

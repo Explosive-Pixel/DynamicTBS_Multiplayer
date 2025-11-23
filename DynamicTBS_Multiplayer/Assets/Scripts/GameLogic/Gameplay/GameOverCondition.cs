@@ -21,22 +21,17 @@ static class GameOverConditionMethods
 {
     public static string ToText(this GameOverCondition condition, PlayerType? winner)
     {
-        switch (condition)
+        if (winner == PlayerType.none)
+            return "";
+
+        return condition switch
         {
-            case GameOverCondition.CAPTAIN_TOOK_CONTROL:
-                return "The " + winner + " " + CharacterType.CaptainChar.Name() + " took control over the engine.";
-            case GameOverCondition.CAPTAIN_DIED:
-                return "The " + PlayerManager.GetOtherSide(winner.Value) + " " + CharacterType.CaptainChar.Name() + " died.";
-            case GameOverCondition.PLAYER_SURRENDERED:
-                return "Player " + PlayerManager.GetOtherSide(winner.Value) + " surrendered.";
-            case GameOverCondition.NO_AVAILABLE_ACTION:
-                return "Player " + PlayerManager.GetOtherSide(winner.Value) + " has no available actions.";
-            case GameOverCondition.DRAW_ACCEPTED:
-                return "The players have agreed on a draw.";
-            case GameOverCondition.PLAYER_TIMEOUT:
-                return "Player " + PlayerManager.GetOtherSide(winner.Value) + " took too much time.";
-            default:
-                return "";
-        }
+            GameOverCondition.CAPTAIN_TOOK_CONTROL => winner == PlayerType.blue ? "gameOverCondition_BlueCaptainTookControl" : "gameOverCondition_PinkCaptainTookControl",
+            GameOverCondition.CAPTAIN_DIED => winner == PlayerType.blue ? "gameOverCondition_PinkCaptainDied" : "gameOverCondition_BlueCaptainDied",
+            GameOverCondition.PLAYER_SURRENDERED => winner == PlayerType.blue ? "gameOverCondition_PlayerPinkSurrendered" : "gameOverCondition_PlayerBlueSurrendered",
+            GameOverCondition.NO_AVAILABLE_ACTION => winner == PlayerType.blue ? "gameOverCondition_PinkHasNoAvailableActions" : "gameOverCondition_BlueHasNoAvailableActions",
+            GameOverCondition.PLAYER_TIMEOUT => winner == PlayerType.blue ? "gameOverCondition_PinkTookTooMuchTime" : "gameOverCondition_BlueTookTooMuchTime",
+            _ => "",
+        };
     }
 }

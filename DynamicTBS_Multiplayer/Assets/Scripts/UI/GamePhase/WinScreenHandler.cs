@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
 public class WinScreenHandler : MonoBehaviour
@@ -8,6 +9,7 @@ public class WinScreenHandler : MonoBehaviour
     [SerializeField] private GameObject draw;
 
     [SerializeField] private Text gameOverText;
+    [SerializeField] private LocalizeStringEvent winningCondition;
 
     private void Awake()
     {
@@ -16,12 +18,13 @@ public class WinScreenHandler : MonoBehaviour
 
     private void InitWinScreen(PlayerType? winner, GameOverCondition endGameCondition)
     {
-        gameOverText.gameObject.SetActive(false);
+        winningCondition.gameObject.SetActive(false);
 
         if (winner != null)
         {
-            gameOverText.text = endGameCondition.ToText(winner);
-            gameOverText.gameObject.SetActive(true);
+            winningCondition.StringReference.TableEntryReference = endGameCondition.ToText(winner);
+            winningCondition.gameObject.SetActive(true);
+            winningCondition.RefreshString();
         }
 
         blueWin.SetActive(winner == PlayerType.blue);

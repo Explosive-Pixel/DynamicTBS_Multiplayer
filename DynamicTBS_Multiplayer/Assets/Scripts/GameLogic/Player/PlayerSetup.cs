@@ -2,10 +2,13 @@ using UnityEngine;
 
 public class PlayerSetup : MonoBehaviour
 {
+    private static string localizedPink = "Pink";
+    private static string localizedBlue = "Blue";
+
     private static string playerName;
-    //public static string Name { get { return playerName ?? GetName(Side); } private set { playerName = value; } }
     public static string Name { get { return playerName; } private set { playerName = value; } }
     public static PlayerType Side { get; private set; } = PlayerType.none;
+    public static string SideName { get { return GetSideName(Side); } }
 
     public static bool SetupCompleted { get { return Name != null && Side != PlayerType.none; } }
     public static bool IsPlayer { get { return Side != PlayerType.none; } }
@@ -36,12 +39,20 @@ public class PlayerSetup : MonoBehaviour
         return IsPlayer && Side != side;
     }
 
-    private static string GetName(PlayerType side)
+    public static string GetSideName(PlayerType side)
     {
         if (side == PlayerType.none)
             return null;
 
-        return side == PlayerType.pink ? "Pink" : "Blue";
+        return side == PlayerType.pink ? localizedPink : localizedBlue;
+    }
+
+    public static void SetLocalizedDefault(PlayerType side, string value)
+    {
+        if (side == PlayerType.pink)
+            localizedPink = value;
+        else if (side == PlayerType.blue)
+            localizedBlue = value;
     }
 
     private void Reset()
