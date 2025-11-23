@@ -8,9 +8,12 @@ public class LobbyDetailsRematchHandler : MonoBehaviour
     [SerializeField] private GameObject content;
 
     [SerializeField] private TMPro.TMP_Text lobbyName;
-    [SerializeField] private TMPro.TMP_Text lobbyType;
+
+    [SerializeField] private GameObject lobbyTypePublic;
+    [SerializeField] private GameObject lobbyTypePrivate;
 
     [SerializeField] private List<TMPro.TMP_Text> playerNames;
+    [SerializeField] private List<GameObject> waitingForPlayerList;
 
     [SerializeField] private TMPro.TMP_Text spectators;
 
@@ -40,10 +43,24 @@ public class LobbyDetailsRematchHandler : MonoBehaviour
             return;
 
         lobbyName.text = selectedLobby.LobbyId.FullId;
-        lobbyType.text = selectedLobby.IsPrivate ? "PRIVATE" : "PUBLIC";
 
-        playerNames[0].text = selectedLobby.Players.Count > 0 ? selectedLobby.Players[0].name : "Waiting for player";
-        playerNames[1].text = selectedLobby.Players.Count > 1 ? selectedLobby.Players[1].name : "Waiting for player";
+        lobbyTypePublic.SetActive(!selectedLobby.IsPrivate);
+        lobbyTypePrivate.SetActive(selectedLobby.IsPrivate);
+
+        waitingForPlayerList.ForEach(go => go.SetActive(true));
+        playerNames.ForEach(t => t.gameObject.SetActive(false));
+        if (selectedLobby.Players.Count > 0)
+        {
+            playerNames[0].text = selectedLobby.Players[0].name;
+            playerNames[0].gameObject.SetActive(true);
+            waitingForPlayerList[0].SetActive(false);
+        }
+        if (selectedLobby.Players.Count > 1)
+        {
+            playerNames[1].text = selectedLobby.Players[0].name;
+            playerNames[1].gameObject.SetActive(true);
+            waitingForPlayerList[1].SetActive(false);
+        }
 
         spectators.text = selectedLobby.SpectatorCount.ToString();
     }
