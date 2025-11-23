@@ -16,7 +16,8 @@ MonoBehaviour:
     m_Code: de
   m_SharedData: {fileID: 11400000, guid: 5fe63ad03255ab043be4da51e6c25db3, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 7633715146469408777
   m_TableData:
   - m_Id: 141716086784
     m_Localized: SPIELEN
@@ -503,11 +504,78 @@ MonoBehaviour:
   - m_Id: 12961084309757952
     m_Localized: Du bist Spieler {}.
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 7633715146469408777
   - m_Id: 12971706430775296
     m_Localized: BEREIT
     m_Metadata:
       m_Items: []
+  - m_Id: 12981795518668800
+    m_Localized: Du bist mit dem Server verbunden.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12981991698849792
+    m_Localized: Eine Verbindung zum Server konnte nicht hergestellt werden.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12982152625905664
+    m_Localized: Verbindung zum Server wird aufgebaut ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12983023191449600
+    m_Localized: 'Lobby ID: {id}'
+    m_Metadata:
+      m_Items:
+      - rid: 7633715146469408777
+  - m_Id: 12983263583789056
+    m_Localized: 'Verbundene Spieler: {players}'
+    m_Metadata:
+      m_Items:
+      - rid: 7633715146469408777
+  - m_Id: 12983529473302528
+    m_Localized: 'Zuschauer: {spectators}'
+    m_Metadata:
+      m_Items:
+      - rid: 7633715146469408777
+  - m_Id: 12987046070050816
+    m_Localized: 'Einheiten zum Draften: {count}'
+    m_Metadata:
+      m_Items:
+      - rid: 7633715146469408777
+  - m_Id: 12987261355286528
+    m_Localized: 'Einheiten zu platzieren: {count}'
+    m_Metadata:
+      m_Items:
+      - rid: 7633715146469408777
+  - m_Id: 12987372063940608
+    m_Localized: 'Aktionen: {count}'
+    m_Metadata:
+      m_Items:
+      - rid: 7633715146469408777
+  - m_Id: 13002978930712576
+    m_Localized: "Verbindung zum Server wurde hergestellt. Lade online Men\xFC ..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13003042180816896
+    m_Localized: Eine Verbindung zum Server konnte nicht hergestellt werden.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13003079459790848
+    m_Localized: Verbindung zum Server wird aufgebaut ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13005024102703104
+    m_Localized: Lobby konnte nicht gefunden werden.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13005084546818048
+    m_Localized: Lobby ist bereits voll.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 7633715146469408777
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 00e02f8673202e0000e0ef9d35202e0000e06fa5fd1f2e0000e02f9a090c2e0000e0af4ba6232e0000e0af6bd8232e0000e06f32f2232e00

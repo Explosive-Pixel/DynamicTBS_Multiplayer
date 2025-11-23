@@ -1,39 +1,93 @@
 using UnityEngine;
-using UnityEngine.Localization.Components;
-using UnityEngine.UI;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
+using TMPro;
 
 public class WinScreenHandler : MonoBehaviour
 {
+    [System.Serializable]
+    public class ConditionEntry
+    {
+        public GameOverCondition condition;
+        public PlayerType winner;
+        public LocalizedString localizedString;
+    }
+
+    [Header("UI Objects")]
     [SerializeField] private GameObject blueWin;
     [SerializeField] private GameObject pinkWin;
     [SerializeField] private GameObject draw;
 
-    [SerializeField] private Text gameOverText;
-    [SerializeField] private LocalizeStringEvent winningCondition;
+    [Header("Text Output")]
+    [SerializeField] private TMP_Text gameOverText;
+
+    [Header("Localized Strings")]
+    [SerializeField] private ConditionEntry[] conditionEntries;
+
+    private PlayerType? lastWinner = null;
+    private GameOverCondition lastCondition;
 
     private void Awake()
     {
         GameplayEvents.OnGameOver += InitWinScreen;
-    }
-
-    private void InitWinScreen(PlayerType? winner, GameOverCondition endGameCondition)
-    {
-        winningCondition.gameObject.SetActive(false);
-
-        if (winner != null)
-        {
-            winningCondition.StringReference.TableEntryReference = endGameCondition.ToText(winner);
-            winningCondition.gameObject.SetActive(true);
-            winningCondition.RefreshString();
-        }
-
-        blueWin.SetActive(winner == PlayerType.blue);
-        pinkWin.SetActive(winner == PlayerType.pink);
-        draw.SetActive(winner == null);
+        LocalizationSettings.SelectedLocaleChanged += OnLanguageChanged;
     }
 
     private void OnDestroy()
     {
         GameplayEvents.OnGameOver -= InitWinScreen;
+        LocalizationSettings.SelectedLocaleChanged -= OnLanguageChanged;
+    }
+
+    private void InitWinScreen(PlayerType? winner, GameOverCondition endGameCondition)
+    {
+        lastWinner = winner;
+        lastCondition = endGameCondition;
+
+        UpdateLocalizedText();
+    }
+
+    /// <summary>
+    /// Wird aufgerufen, wenn die Sprache geändert wird.
+    /// </summary>
+    private void OnLanguageChanged(Locale _)
+    {
+        if (lastWinner != null)
+            UpdateLocalizedText();
+    }
+
+    /// <summary>
+    /// Setzt UI + Text basierend auf Winner + Condition.
+    /// Wird bei GameOver UND Sprachwechsel aufgerufen.
+    /// </summary>
+    private void UpdateLocalizedText()
+    {
+        gameOverText.text = "";
+
+        // Update UI visibility
+        blueWin.SetActive(lastWinner == PlayerType.blue);
+        pinkWin.SetActive(lastWinner == PlayerType.pink);
+        draw.SetActive(lastWinner == null);
+
+        // No condition text in case of draw
+        if (lastWinner == null)
+            return;
+
+        // Find matching entry
+        foreach (var entry in conditionEntries)
+        {
+            if (entry.condition == lastCondition &&
+                entry.winner == lastWinner)
+            {
+                var handle = entry.localizedString.GetLocalizedStringAsync();
+                handle.Completed += op =>
+                {
+                    gameOverText.text = op.Result;
+                };
+                return;
+            }
+        }
+
+        Debug.LogWarning($"[WinScreenHandler] Kein LocalizedString für {lastCondition} / Winner {lastWinner} gefunden.");
     }
 }

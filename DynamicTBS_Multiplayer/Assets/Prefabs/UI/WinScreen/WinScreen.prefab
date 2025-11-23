@@ -57,8 +57,121 @@ MonoBehaviour:
   blueWin: {fileID: 8399252423585504209}
   pinkWin: {fileID: 9155411149818874631}
   draw: {fileID: 3058361720900899638}
-  gameOverText: {fileID: 0}
-  winningCondition: {fileID: 5157003048382041781}
+  gameOverText: {fileID: 7251580814254463590}
+  conditionEntries:
+  - condition: 0
+    winner: 1
+    localizedString:
+      m_TableReference:
+        m_TableCollectionName: GUID:5fe63ad03255ab043be4da51e6c25db3
+      m_TableEntryReference:
+        m_KeyId: 5139797860409344
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+  - condition: 0
+    winner: 2
+    localizedString:
+      m_TableReference:
+        m_TableCollectionName: GUID:5fe63ad03255ab043be4da51e6c25db3
+      m_TableEntryReference:
+        m_KeyId: 5134877493026816
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+  - condition: 1
+    winner: 2
+    localizedString:
+      m_TableReference:
+        m_TableCollectionName: GUID:5fe63ad03255ab043be4da51e6c25db3
+      m_TableEntryReference:
+        m_KeyId: 5141130411761664
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+  - condition: 1
+    winner: 1
+    localizedString:
+      m_TableReference:
+        m_TableCollectionName: GUID:5fe63ad03255ab043be4da51e6c25db3
+      m_TableEntryReference:
+        m_KeyId: 5140931920519168
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+  - condition: 2
+    winner: 2
+    localizedString:
+      m_TableReference:
+        m_TableCollectionName: GUID:5fe63ad03255ab043be4da51e6c25db3
+      m_TableEntryReference:
+        m_KeyId: 5141865320931328
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+  - condition: 2
+    winner: 1
+    localizedString:
+      m_TableReference:
+        m_TableCollectionName: GUID:5fe63ad03255ab043be4da51e6c25db3
+      m_TableEntryReference:
+        m_KeyId: 5141663683960832
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+  - condition: 3
+    winner: 2
+    localizedString:
+      m_TableReference:
+        m_TableCollectionName: GUID:5fe63ad03255ab043be4da51e6c25db3
+      m_TableEntryReference:
+        m_KeyId: 5143308975202304
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+  - condition: 3
+    winner: 1
+    localizedString:
+      m_TableReference:
+        m_TableCollectionName: GUID:5fe63ad03255ab043be4da51e6c25db3
+      m_TableEntryReference:
+        m_KeyId: 5142848486760448
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+  - condition: 5
+    winner: 2
+    localizedString:
+      m_TableReference:
+        m_TableCollectionName: GUID:5fe63ad03255ab043be4da51e6c25db3
+      m_TableEntryReference:
+        m_KeyId: 5143957414600704
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+  - condition: 5
+    winner: 1
+    localizedString:
+      m_TableReference:
+        m_TableCollectionName: GUID:5fe63ad03255ab043be4da51e6c25db3
+      m_TableEntryReference:
+        m_KeyId: 5143566664851456
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &3021331475584307504
 GameObject:
   m_ObjectHideFlags: 0
@@ -202,7 +315,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3021331475584307504}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
   m_Name: 

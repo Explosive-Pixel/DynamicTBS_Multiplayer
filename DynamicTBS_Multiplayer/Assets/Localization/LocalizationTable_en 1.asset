@@ -16,7 +16,8 @@ MonoBehaviour:
     m_Code: en
   m_SharedData: {fileID: 11400000, guid: 5fe63ad03255ab043be4da51e6c25db3, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 7633715146469408776
   m_TableData:
   - m_Id: 141716086784
     m_Localized: PLAY
@@ -585,11 +586,78 @@ MonoBehaviour:
   - m_Id: 12961084309757952
     m_Localized: You are player {0}.
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 7633715146469408776
   - m_Id: 12971706430775296
     m_Localized: READY
     m_Metadata:
       m_Items: []
+  - m_Id: 12981795518668800
+    m_Localized: You are connected to server.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12981991698849792
+    m_Localized: Unable to connect to server.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12982152625905664
+    m_Localized: No connection to server. Trying to connect ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12983023191449600
+    m_Localized: 'Lobby ID: {id}'
+    m_Metadata:
+      m_Items:
+      - rid: 7633715146469408776
+  - m_Id: 12983263583789056
+    m_Localized: 'Connected Players: {players}'
+    m_Metadata:
+      m_Items:
+      - rid: 7633715146469408776
+  - m_Id: 12983529473302528
+    m_Localized: 'Spectators: {spectators}'
+    m_Metadata:
+      m_Items:
+      - rid: 7633715146469408776
+  - m_Id: 12987046070050816
+    m_Localized: 'Units to draft: {count}'
+    m_Metadata:
+      m_Items:
+      - rid: 7633715146469408776
+  - m_Id: 12987261355286528
+    m_Localized: 'Units to place: {count}'
+    m_Metadata:
+      m_Items:
+      - rid: 7633715146469408776
+  - m_Id: 12987372063940608
+    m_Localized: 'Actions: {count}'
+    m_Metadata:
+      m_Items:
+      - rid: 7633715146469408776
+  - m_Id: 13002978930712576
+    m_Localized: You are connected to server. Loading setup menu ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13003042180816896
+    m_Localized: Unable to connect to server.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13003079459790848
+    m_Localized: Trying to connect to server ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13005024102703104
+    m_Localized: Lobby not found.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13005084546818048
+    m_Localized: Lobby is already full.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 7633715146469408776
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 00e02f8673202e0000e0ef9d35202e0000e06fa5fd1f2e0000e02f9a090c2e0000e0af4ba6232e0000e06f32f2232e0000e0af6bd8232e00

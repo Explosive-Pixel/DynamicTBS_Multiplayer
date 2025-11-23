@@ -9584,6 +9584,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gamePhase: 2
+  draftCounterString:
+    m_TableReference:
+      m_TableCollectionName: GUID:5fe63ad03255ab043be4da51e6c25db3
+    m_TableEntryReference:
+      m_KeyId: 12987046070050816
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  placementCounterString:
+    m_TableReference:
+      m_TableCollectionName: GUID:5fe63ad03255ab043be4da51e6c25db3
+    m_TableEntryReference:
+      m_KeyId: 12987261355286528
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  gameplayCounterString:
+    m_TableReference:
+      m_TableCollectionName: GUID:5fe63ad03255ab043be4da51e6c25db3
+    m_TableEntryReference:
+      m_KeyId: 12987372063940608
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &719150816 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 912895033735788164, guid: bdc7243fbd79f444dabb39ffabc27076, type: 3}
@@ -12440,6 +12470,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gamePhase: 1
+  draftCounterString:
+    m_TableReference:
+      m_TableCollectionName: GUID:5fe63ad03255ab043be4da51e6c25db3
+    m_TableEntryReference:
+      m_KeyId: 12987046070050816
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  placementCounterString:
+    m_TableReference:
+      m_TableCollectionName: GUID:5fe63ad03255ab043be4da51e6c25db3
+    m_TableEntryReference:
+      m_KeyId: 12987261355286528
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  gameplayCounterString:
+    m_TableReference:
+      m_TableCollectionName: GUID:5fe63ad03255ab043be4da51e6c25db3
+    m_TableEntryReference:
+      m_KeyId: 12987372063940608
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &1353708073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13413,24 +13473,6 @@ MonoBehaviour:
   playerNamePink: {fileID: 1736078543}
   playerNameBlue: {fileID: 1736078544}
   youArePlayer: {fileID: 2039254972}
-  defaultPinkNameLocalized:
-    m_TableReference:
-      m_TableCollectionName: GUID:5fe63ad03255ab043be4da51e6c25db3
-    m_TableEntryReference:
-      m_KeyId: 12960688287768576
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  defaultBlueNameLocalized:
-    m_TableReference:
-      m_TableCollectionName: GUID:5fe63ad03255ab043be4da51e6c25db3
-    m_TableEntryReference:
-      m_KeyId: 12960616548392960
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
   youArePlayerLocalized:
     m_TableReference:
       m_TableCollectionName: GUID:5fe63ad03255ab043be4da51e6c25db3
@@ -14164,24 +14206,6 @@ MonoBehaviour:
   playerNamePink: {fileID: 493265324}
   playerNameBlue: {fileID: 493265325}
   youArePlayer: {fileID: 71818917}
-  defaultPinkNameLocalized:
-    m_TableReference:
-      m_TableCollectionName: 
-    m_TableEntryReference:
-      m_KeyId: 0
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  defaultBlueNameLocalized:
-    m_TableReference:
-      m_TableCollectionName: 
-    m_TableEntryReference:
-      m_KeyId: 0
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
   youArePlayerLocalized:
     m_TableReference:
       m_TableCollectionName: 
@@ -14267,6 +14291,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gamePhase: 3
+  draftCounterString:
+    m_TableReference:
+      m_TableCollectionName: GUID:5fe63ad03255ab043be4da51e6c25db3
+    m_TableEntryReference:
+      m_KeyId: 12987046070050816
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  placementCounterString:
+    m_TableReference:
+      m_TableCollectionName: GUID:5fe63ad03255ab043be4da51e6c25db3
+    m_TableEntryReference:
+      m_KeyId: 12987261355286528
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  gameplayCounterString:
+    m_TableReference:
+      m_TableCollectionName: GUID:5fe63ad03255ab043be4da51e6c25db3
+    m_TableEntryReference:
+      m_KeyId: 12987372063940608
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &1878221952
 MonoBehaviour:
   m_ObjectHideFlags: 0
