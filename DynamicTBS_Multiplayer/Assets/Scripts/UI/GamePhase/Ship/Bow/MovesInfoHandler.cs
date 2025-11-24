@@ -1,11 +1,24 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Localization;
 
 public class MovesInfoHandler : MonoBehaviour
 {
     [SerializeField] private TMPro.TextMeshPro displayText;
     [SerializeField] private Color blue;
     [SerializeField] private Color pink;
+
+    [Header("Localized Strings")]
+    [SerializeField] private LocalizedString endTurnText;
+    [SerializeField] private LocalizedString refreshAAText;
+    [SerializeField] private LocalizedString turnAbortedText;
+    [SerializeField] private LocalizedString turnAbortedReasonNoAvailableActionText;
+    [SerializeField] private LocalizedString turnAbortedReasonTimeoutText;
+    [SerializeField] private LocalizedString andText;
+    [SerializeField] private LocalizedString onText;
+    [SerializeField] private LocalizedString actionMoveText;
+    [SerializeField] private LocalizedString actionAttackText;
+    [SerializeField] private LocalizedString actionActiveAAText;
 
     private readonly List<string> movesList = new();
     private int actionCount = 0;
@@ -35,10 +48,11 @@ public class MovesInfoHandler : MonoBehaviour
             switch (action.PlayerActionType)
             {
                 case PlayerActionType.Skip:
-                    newLine += TranslatePlayerSide(action.ExecutingPlayer) + " ended their turn";
+                    newLine += Format(endTurnText, ("player", TranslatePlayerSide(action.ExecutingPlayer)));
                     break;
+
                 case PlayerActionType.Refresh:
-                    newLine += TranslatePlayerSide(action.ExecutingPlayer) + " refreshed their active abilities";
+                    newLine += Format(refreshAAText, ("player", TranslatePlayerSide(action.ExecutingPlayer)));
                     break;
             }
         }
@@ -48,22 +62,23 @@ public class MovesInfoHandler : MonoBehaviour
             while (i < action.ActionSteps.Count)
             {
                 ActionStep actionStep = action.ActionSteps[i];
-                newLine += TranslateCharacterName(actionStep.CharacterInAction) +
-                    "on " +
-                    TranslateTilePosition(actionStep.CharacterInitialPosition) +
-                    TranslateActionType(actionStep.ActionType, actionStep.CharacterInAction) +
-                    TranslateTilePosition(actionStep.ActionDestinationPosition);
 
+                string actionDestinationsText = TranslateTilePosition(actionStep.ActionDestinationPosition);
                 while ((i + 1) < action.ActionSteps.Count && action.ActionSteps[i + 1].ActionType == actionStep.ActionType && action.ActionSteps[i + 1].CharacterInAction == actionStep.CharacterInAction)
                 {
-                    newLine += " and " + TranslateTilePosition(action.ActionSteps[i + 1].ActionDestinationPosition);
+                    actionDestinationsText += " " + GetLocalized(andText) + " " + TranslateTilePosition(action.ActionSteps[i + 1].ActionDestinationPosition);
                     i++;
                 }
+
+                newLine += TranslateCharacterName(actionStep.CharacterInAction) +
+                    GetLocalized(onText) + " " +
+                    TranslateTilePosition(actionStep.CharacterInitialPosition) + " " +
+                    TranslateActionType(actionStep.ActionType, actionStep.CharacterInAction, actionDestinationsText);
 
                 i++;
 
                 if (i < action.ActionSteps.Count)
-                    newLine += " and ";
+                    newLine += " " + GetLocalized(andText) + " ";
             }
         }
 
@@ -74,15 +89,10 @@ public class MovesInfoHandler : MonoBehaviour
 
     private void WriteAbortTurnToString(PlayerType abortedTurnPlayer, int remainingActions, AbortTurnCondition abortTurnCondition)
     {
-        string newLine = TranslatePlayerSide(abortedTurnPlayer).Trim() + "'s turn was aborted since " + abortedTurnPlayer + " ";
-        if (abortTurnCondition == AbortTurnCondition.NO_AVAILABLE_ACTION)
-        {
-            newLine += "had no more available action.";
-        }
-        else if (abortTurnCondition == AbortTurnCondition.PLAYER_TIMEOUT)
-        {
-            newLine += "ran out of time.";
-        }
+        string newLine = Format(turnAbortedText,
+            ("player", TranslatePlayerSide(abortedTurnPlayer).Trim()),
+            ("reason", abortTurnCondition == AbortTurnCondition.NO_AVAILABLE_ACTION ? GetLocalized(turnAbortedReasonNoAvailableActionText) : GetLocalized(turnAbortedReasonTimeoutText))
+            );
 
         newLine += "\n";
 
@@ -98,7 +108,7 @@ public class MovesInfoHandler : MonoBehaviour
 
         for (int i = movesList.Count - 1; i >= Mathf.Max(0, movesList.Count - 4); i--)
         {
-            displayText.text += "<color=#" + (movesList[i].StartsWith("Blue") ? ColorUtility.ToHtmlStringRGB(blue) : ColorUtility.ToHtmlStringRGB(pink)) + ">" + movesList[i] + "</color>";
+            displayText.text += "<color=#" + (movesList[i].StartsWith("B") ? ColorUtility.ToHtmlStringRGB(blue) : ColorUtility.ToHtmlStringRGB(pink)) + ">" + movesList[i] + "</color>";
         }
     }
 
@@ -132,17 +142,17 @@ public class MovesInfoHandler : MonoBehaviour
         return "";
     }
 
-    private string TranslateActionType(ActionType actiontype, Character character)
+    private string TranslateActionType(ActionType actiontype, Character character, string position)
     {
         if (actiontype == ActionType.Move)
-            return " moved to ";
+            return Format(actionMoveText, ("position", position));
 
         if (actiontype == ActionType.Attack)
-            return " attacked ";
+            return Format(actionAttackText, ("position", position));
 
         if (actiontype == ActionType.ActiveAbility)
         {
-            return " used " + character.ActiveAbility.AbilityType.Description() + " on ";
+            return Format(actionActiveAAText, ("activeAbilityType", character.ActiveAbility.AbilityType.LocalizedDescription()), ("position", position));
         }
 
         return "";
@@ -159,7 +169,7 @@ public class MovesInfoHandler : MonoBehaviour
 
     private string TranslatePlayerSide(PlayerType playerType)
     {
-        return playerType == PlayerType.blue ? "Blue" : "Pink";
+        return PlayerSetup.GetSideName(playerType);
     }
 
     private void OnDestroy()
@@ -167,5 +177,33 @@ public class MovesInfoHandler : MonoBehaviour
         GameEvents.OnGamePhaseStart -= SetActive;
         GameplayEvents.OnFinishAction -= WriteMovesToString;
         GameplayEvents.OnPlayerTurnAborted -= WriteAbortTurnToString;
+    }
+
+    // -----------------------------------------------------------
+    //  Localized Helpers
+    // -----------------------------------------------------------
+
+    private string GetLocalized(LocalizedString s)
+    {
+        if (s == null) return "";
+        var handle = s.GetLocalizedStringAsync();
+        handle.WaitForCompletion(); // synchron warten (kurzes Blockieren möglich)
+        return handle.Result ?? "";
+    }
+
+    private string Format(LocalizedString s, params (string key, object value)[] args)
+    {
+        if (s == null) return "";
+
+        // Baue ein anonymes Objekt mit den named placeholders
+        // SmartFormat in Localization akzeptiert ein Objekt mit Properties -> wir erzeugen ein Dictionary,
+        // das wir als einzelnes Objekt übergeben.
+        var dict = new System.Dynamic.ExpandoObject() as IDictionary<string, object>;
+        foreach (var (key, value) in args)
+            dict[key] = value;
+
+        var handle = s.GetLocalizedStringAsync(dict);
+        handle.WaitForCompletion();
+        return handle.Result ?? "";
     }
 }

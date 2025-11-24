@@ -588,10 +588,68 @@ MonoBehaviour:
     m_Localized: 'Zuschauer:'
     m_Metadata:
       m_Items: []
+  - m_Id: 13422693796798464
+    m_Localized: Warte auf Spieler
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13422932138123264
+    m_Localized: In Erstellung
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13423101843857408
+    m_Localized: "Spiel l\xE4uft"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13441356482469888
+    m_Localized: '{player} hat den Zug beendet.'
+    m_Metadata:
+      m_Items:
+      - rid: 7633715146469408777
+  - m_Id: 13441690663641088
+    m_Localized: "{player} hat seine Spezialf\xE4higkeiten aufgeladen."
+    m_Metadata:
+      m_Items:
+      - rid: 7633715146469408777
+  - m_Id: 13442780301877248
+    m_Localized: '{player}s Zug wurde beendet, da {player} {reason}.'
+    m_Metadata:
+      m_Items:
+      - rid: 7633715146469408777
+  - m_Id: 13443269928148992
+    m_Localized: "keine m\xF6glichen Aktionen mehr hat"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13443917306388480
+    m_Localized: die Zeit ausgegangen ist
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13446262484361216
+    m_Localized: und
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13446457527885824
+    m_Localized: hat sich auf {position} bewegt
+    m_Metadata:
+      m_Items:
+      - rid: 7633715146469408777
+  - m_Id: 13446679901495296
+    m_Localized: hat Figur auf {position} angegriffen
+    m_Metadata:
+      m_Items:
+      - rid: 7633715146469408777
+  - m_Id: 13447452160942080
+    m_Localized: "hat {activeAbilityType} auf {position} ausgef\xFChrt"
+    m_Metadata:
+      m_Items:
+      - rid: 7633715146469408777
+  - m_Id: 13461270152863744
+    m_Localized: auf
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
     - rid: 7633715146469408777
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_Entries: 00e02f8673202e0000e0ef9d35202e0000e06fa5fd1f2e0000e02f9a090c2e0000e0af4ba6232e0000e0af6bd8232e0000e06f32f2232e00
+        m_Entries: 00e02f8673202e0000e0ef9d35202e0000e06fa5fd1f2e0000e02f9a090c2e0000e0af4ba6232e0000e0af6bd8232e0000e06f32f2232e0000e06faed7c02f0000e02f7d25c12f0000e0af3023c22f0000e06f5c7bc52f0000e0ef22afc52f0000e02ff162c62f00
