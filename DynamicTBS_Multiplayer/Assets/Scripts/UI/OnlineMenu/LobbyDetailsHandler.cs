@@ -7,7 +7,9 @@ public class LobbyDetailsHandler : MonoBehaviour
     [SerializeField] private GameObject content;
 
     [SerializeField] private TMPro.TMP_Text lobbyName;
-    [SerializeField] private TMPro.TMP_Text lobbyType;
+
+    [SerializeField] private GameObject lobbyTypePublic;
+    [SerializeField] private GameObject lobbyTypePrivate;
 
     [SerializeField] private TMPro.TMP_Text bluePlayerName;
     [SerializeField] private TMPro.TMP_Text pinkPlayerName;
@@ -38,12 +40,14 @@ public class LobbyDetailsHandler : MonoBehaviour
             return;
 
         lobbyName.text = selectedLobby.LobbyId.FullId;
-        lobbyType.text = selectedLobby.IsPrivate ? "PRIVATE" : "PUBLIC";
+
+        lobbyTypePublic.SetActive(!selectedLobby.IsPrivate);
+        lobbyTypePrivate.SetActive(selectedLobby.IsPrivate);
 
         HandlePlayerText(selectedLobby, PlayerType.blue);
         HandlePlayerText(selectedLobby, PlayerType.pink);
 
-        spectators.text = selectedLobby.SpectatorCount.ToString() + " Spectator" + (selectedLobby.SpectatorCount != 1 ? "s" : "");
+        spectators.text = selectedLobby.SpectatorCount.ToString();
         joinAsSpectatorButton.gameObject.SetActive(!Client.InLobby);
     }
 

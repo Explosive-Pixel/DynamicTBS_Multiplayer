@@ -1,18 +1,47 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
 
 public class OnlineMetadata : MonoBehaviour
 {
+    [Header("UI")]
     [SerializeField] private GameObject multiplayerMetadata;
-
     [SerializeField] private Text infoText;
+
+    [Header("Localized Strings")]
+    [SerializeField] private LocalizedString connectedText;
+    [SerializeField] private LocalizedString unconnectedText;
+    [SerializeField] private LocalizedString attemptConnectionText;
+
+    [Header("Localized Smart Strings (with placeholders)")]
+    [SerializeField] private LocalizedString lobbyIdText;
+    [SerializeField] private LocalizedString connectedPlayersText;
+    [SerializeField] private LocalizedString spectatorsText;
 
     private void Awake()
     {
         infoText.text = "";
+        LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
+    }
+
+    private void OnDestroy()
+    {
+        LocalizationSettings.SelectedLocaleChanged -= OnLocaleChanged;
+    }
+
+    private void OnLocaleChanged(UnityEngine.Localization.Locale _)
+    {
+        // Aktualisiere Text bei Sprachwechsel
+        UpdateText();
     }
 
     private void Update()
+    {
+        UpdateText();
+    }
+
+    private void UpdateText()
     {
         if (Client.InLobby)
         {
@@ -23,13 +52,24 @@ public class OnlineMetadata : MonoBehaviour
         switch (Client.ConnectionStatus)
         {
             case ConnectionStatus.CONNECTED:
-                infoText.text = "You are connected to server.";
+                connectedText.GetLocalizedStringAsync().Completed += op =>
+                {
+                    SetInfoText(op.Result);
+                };
                 break;
+
             case ConnectionStatus.UNCONNECTED:
-                infoText.text = "Unable to connect to server.";
+                unconnectedText.GetLocalizedStringAsync().Completed += op =>
+                {
+                    SetInfoText(op.Result);
+                };
                 break;
+
             case ConnectionStatus.ATTEMPT_CONNECTION:
-                infoText.text = "No connection to server. Trying to connect ...";
+                attemptConnectionText.GetLocalizedStringAsync().Completed += op =>
+                {
+                    SetInfoText(op.Result);
+                };
                 break;
         }
     }
@@ -39,11 +79,46 @@ public class OnlineMetadata : MonoBehaviour
         if (!Client.InLobby)
             return;
 
-        infoText.text = "Lobby ID: " + Client.CurrentLobby.LobbyId.FullId;
-        infoText.text += "\nConnected players: " + Client.CurrentLobby.PlayerCount;
-        if (Client.CurrentLobby.SpectatorCount > 0)
+        string lobbyId = Client.CurrentLobby.LobbyId.FullId;
+        int players = Client.CurrentLobby.PlayerCount;
+        int spectators = Client.CurrentLobby.SpectatorCount;
+
+        infoText.text = "";
+
+        // Lobby ID
+        lobbyIdText.GetLocalizedStringAsync(new { id = lobbyId }).Completed += op =>
         {
-            infoText.text += "\nSpectators: " + Client.CurrentLobby.SpectatorCount;
+            SetInfoText(op.Result);
+        };
+
+        // Player count
+        connectedPlayersText.GetLocalizedStringAsync(new { players }).Completed += op =>
+        {
+            SetInfoText("\n" + op.Result, true);
+        };
+
+        // Spectators (optional)
+        if (spectators > 0)
+        {
+            spectatorsText.GetLocalizedStringAsync(new { spectators }).Completed += op =>
+            {
+                SetInfoText("\n" + op.Result, true);
+            };
+        }
+    }
+
+    private void SetInfoText(string text, bool append = false)
+    {
+        if (infoText)
+        {
+            if (append)
+            {
+                infoText.text += text;
+            }
+            else
+            {
+                infoText.text = text;
+            }
         }
     }
 }

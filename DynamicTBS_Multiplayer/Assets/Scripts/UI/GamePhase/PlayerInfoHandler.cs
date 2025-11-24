@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Localization;
 using UnityEngine.UI;
 
 public class PlayerInfoHandler : MonoBehaviour
@@ -8,18 +9,29 @@ public class PlayerInfoHandler : MonoBehaviour
 
     [SerializeField] private Text youArePlayer;
 
+    [SerializeField] private LocalizedString youArePlayerLocalized;
+
     private void Awake()
     {
-        playerNamePink.text = "Pink";
-        playerNameBlue.text = "Blue";
+        playerNamePink.text = PlayerSetup.GetSideName(PlayerType.pink);
+        playerNameBlue.text = PlayerSetup.GetSideName(PlayerType.blue);
     }
 
     private void Start()
     {
         youArePlayer.text = "";
+
         if (GameManager.IsPlayer() && GameManager.GameType == GameType.ONLINE)
         {
-            youArePlayer.text = "You are player " + PlayerSetup.Side + ".";
+            youArePlayerLocalized.Arguments = new object[]
+            {
+                PlayerSetup.SideName
+            };
+
+            youArePlayerLocalized.StringChanged += (value) =>
+            {
+                youArePlayer.text = value;
+            };
         }
     }
 

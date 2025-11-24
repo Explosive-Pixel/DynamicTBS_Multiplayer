@@ -2,33 +2,28 @@ using System.ComponentModel;
 
 public enum ActiveAbilityType
 {
-    [Description("Block")]
-    BLOCK = 1,
-    [Description("Change Floor")]
-    CHANGE_FLOOR = 2,
-    [Description("Electrify")]
-    ELECTRIFY = 3,
-    [Description("Heal")]
-    HEAL = 4,
     [Description("Jump")]
-    JUMP = 5,
-    [Description("Powershot")]
-    POWERSHOT = 6,
-    [Description("Take Control")]
-    TAKE_CONTROL = 7,
-    [Description("Charm")]
-    CHARM = 8,
+    JUMP = 0,
     [Description("Longshot")]
-    LONGSHOT = 9,
+    LONGSHOT = 1,
     [Description("Ram")]
-    RAM = 10,
+    RAM = 2,
     [Description("Repair")]
-    REPAIR = 11,
+    REPAIR = 3,
     [Description("Hypnotize")]
-    HYPNOTIZE = 12,
+    HYPNOTIZE = 4,
     [Description("Transfusion")]
-    TRANSFUSION = 13
+    TRANSFUSION = 5
 }
+
+static class ActiveAbilityTypeMethods
+{
+    public static string LocalizedDescription(this ActiveAbilityType activeAbilityType)
+    {
+        return AbilityLocalization.GetActiveAbilityName(activeAbilityType);
+    }
+}
+
 
 public interface IActiveAbility
 {

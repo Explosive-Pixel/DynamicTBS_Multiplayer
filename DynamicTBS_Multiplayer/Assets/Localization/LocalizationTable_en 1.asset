@@ -16,7 +16,8 @@ MonoBehaviour:
     m_Code: en
   m_SharedData: {fileID: 11400000, guid: 5fe63ad03255ab043be4da51e6c25db3, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 7633715146469408776
   m_TableData:
   - m_Id: 141716086784
     m_Localized: PLAY
@@ -534,6 +535,203 @@ MonoBehaviour:
     m_Localized: START GAME
     m_Metadata:
       m_Items: []
+  - m_Id: 5134877493026816
+    m_Localized: The blue Captain took control over the engine.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5139797860409344
+    m_Localized: The pink Captain took control over the engine.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5140931920519168
+    m_Localized: The blue Captain died.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5141130411761664
+    m_Localized: The pink Captain died.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5141663683960832
+    m_Localized: Player blue surrendered.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5141865320931328
+    m_Localized: Player pink surrendered.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5142848486760448
+    m_Localized: Player blue has no available actions.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5143308975202304
+    m_Localized: Player pink has no available actions.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5143566664851456
+    m_Localized: Player blue took too much time.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5143957414600704
+    m_Localized: Player pink took too much time.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12960616548392960
+    m_Localized: Blue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12960688287768576
+    m_Localized: Pink
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12961084309757952
+    m_Localized: You are player {0}.
+    m_Metadata:
+      m_Items:
+      - rid: 7633715146469408776
+  - m_Id: 12971706430775296
+    m_Localized: READY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12981795518668800
+    m_Localized: You are connected to server.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12981991698849792
+    m_Localized: Unable to connect to server.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12982152625905664
+    m_Localized: No connection to server. Trying to connect ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12983023191449600
+    m_Localized: 'Lobby ID: {id}'
+    m_Metadata:
+      m_Items:
+      - rid: 7633715146469408776
+  - m_Id: 12983263583789056
+    m_Localized: 'Connected Players: {players}'
+    m_Metadata:
+      m_Items:
+      - rid: 7633715146469408776
+  - m_Id: 12983529473302528
+    m_Localized: 'Spectators: {spectators}'
+    m_Metadata:
+      m_Items:
+      - rid: 7633715146469408776
+  - m_Id: 12987046070050816
+    m_Localized: 'Units to draft: {count}'
+    m_Metadata:
+      m_Items:
+      - rid: 7633715146469408776
+  - m_Id: 12987261355286528
+    m_Localized: 'Units to place: {count}'
+    m_Metadata:
+      m_Items:
+      - rid: 7633715146469408776
+  - m_Id: 12987372063940608
+    m_Localized: 'Actions: {count}'
+    m_Metadata:
+      m_Items:
+      - rid: 7633715146469408776
+  - m_Id: 13002978930712576
+    m_Localized: You are connected to server. Loading setup menu ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13003042180816896
+    m_Localized: Unable to connect to server.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13003079459790848
+    m_Localized: Trying to connect to server ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13005024102703104
+    m_Localized: Lobby not found.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13005084546818048
+    m_Localized: Lobby is already full.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13017719514324992
+    m_Localized: PUBLIC LOBBY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13017831141531648
+    m_Localized: PRIVATE LOBBY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13019833930080256
+    m_Localized: Waiting for player
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13022078771912704
+    m_Localized: 'Spectators:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13422693796798464
+    m_Localized: Waiting for player
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13422932138123264
+    m_Localized: Under construction
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13423101843857408
+    m_Localized: In game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13441356482469888
+    m_Localized: '{player} ended their turn'
+    m_Metadata:
+      m_Items:
+      - rid: 7633715146469408776
+  - m_Id: 13441690663641088
+    m_Localized: '{player} refreshed their powers'
+    m_Metadata:
+      m_Items:
+      - rid: 7633715146469408776
+  - m_Id: 13442780301877248
+    m_Localized: '{player}''s turn was aborted since {player} {reason}'
+    m_Metadata:
+      m_Items:
+      - rid: 7633715146469408776
+  - m_Id: 13443269928148992
+    m_Localized: had no more available action
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13443917306388480
+    m_Localized: ran out of time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13446262484361216
+    m_Localized: and
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13446457527885824
+    m_Localized: moved to {position}
+    m_Metadata:
+      m_Items:
+      - rid: 7633715146469408776
+  - m_Id: 13446679901495296
+    m_Localized: attacked character on {position}
+    m_Metadata:
+      m_Items:
+      - rid: 7633715146469408776
+  - m_Id: 13447452160942080
+    m_Localized: used {activeAbilityType} on {position}
+    m_Metadata:
+      m_Items:
+      - rid: 7633715146469408776
+  - m_Id: 13461270152863744
+    m_Localized: on
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 7633715146469408776
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 00e02f8673202e0000e0ef9d35202e0000e06fa5fd1f2e0000e02f9a090c2e0000e0af4ba6232e0000e06f32f2232e0000e0af6bd8232e0000e06faed7c02f0000e02f7d25c12f0000e0af3023c22f0000e06f5c7bc52f0000e0ef22afc52f0000e02ff162c62f00
