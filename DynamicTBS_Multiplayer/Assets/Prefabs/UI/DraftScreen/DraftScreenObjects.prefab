@@ -1767,26 +1767,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '<b>SHOOTER</b>
-
-
-    Health: <b>2</b>
-
-    Range: <b>2</b>
-
-    Damage:
-    <b>1</b>
-
-    Steps: <b>1</b>
-
-    Movement pattern: <b>Cross</b>
-
-
-    Power:
-    <b>Longshot</b>
-
-    Attack a target without range restriction whilst dealing
-    <b>1</b> damage to yourself.'
+  m_text: "<b>SHOOTER</b>\n\nLeben: <b>2</b>\nReichweite: <b>2</b>\nSchaden: <b>1</b>\nSchritte:
+    <b>1</b>\nBewegungsmuster: <b>Kreuz</b>\n\nPower: <b>Weitschuss</b>\nAttackiere
+    eine Einheit ohne Reichweiten-Einschr\xE4nkung. F\xFCge dir selbst <b>1</b> Schaden
+    zu."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_sharedMaterial: {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
@@ -1894,7 +1878,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
   references:
     version: 2
     RefIds: []
@@ -2227,26 +2211,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '<b>MECHANIC</b>
-
-
-    Health: <b>2</b>
-
-    Range: <b>1</b>
-
-    Damage:
-    <b>1</b>
-
-    Steps: <b>1</b>
-
-    Movement pattern: <b>Cross</b>
-
-
-    Power:
-    <b>Repair</b>
-
-    Rip out an unoccupied floor square in range <b>2</b> and use
-    it to cover a hole in range <b>2</b>.'
+  m_text: "<b>MECHANIC</b>\n\nLeben: <b>2</b>\nReichweite: <b>1</b>\nSchaden: <b>1</b>\nSchritte:
+    <b>1</b>\nBewegungsmuster: <b>Kreuz</b>\n\nPower: <b>Reparieren</b>\nRei\xDFe
+    ein unbesetztes Bodenfeld in Reichweite <b>2</b> heraus und platziere es auf
+    einem Loch in Reichweite <b>2</b>.\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_sharedMaterial: {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
@@ -2354,7 +2322,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
   references:
     version: 2
     RefIds: []
@@ -2727,22 +2695,23 @@ MonoBehaviour:
   m_text: '<b>DOC</b>
 
 
-    Health: <b>2</b>
+    Leben: <b>2</b>
 
-    Range: <b>1</b>
+    Reichweite: <b>1</b>
 
-    Damage: <b>1</b>
-
-    Steps:
+    Schaden:
     <b>1</b>
 
-    Movement pattern: <b>Cross</b>
+    Schritte: <b>1</b>
+
+    Bewegungsmuster: <b>Kreuz</b>
 
 
-    Power: <b>Transfusion</b>
+    Power:
+    <b>Transfusion</b>
 
-    Move
-    <b>1</b> health point from a unit in range <b>2</b> to another.'
+    Bewege <b>1</b> Lebenspunkt von einer Einheit in Reichweite
+    <b>2</b> zu einer anderen.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_sharedMaterial: {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
@@ -2850,7 +2819,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
   references:
     version: 2
     RefIds: []
@@ -2991,29 +2960,14 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '<b>TANK</b>
-
-
-    Health: <b>3</b>
-
-    Range: <b>1</b>
-
-    Damage: <b>1</b>
-
-    Steps:
-    <b>1</b>
-
-    Movement pattern: <b>Cross</b>
-
-
-    Power: <b>Ram</b>
-
-    Rush
-    onto a floor square in range <b>1</b>. If the floor square is occupied, the occupying
-    unit is pushed <b>1</b> square in the same direction (as are any units on adjacent
-    squares in this direction) and both the pushed unit und the Tank take <b>1</b>
-    damage. If this pushes a unit into a hole, it dies immediately. Units cannot
-    be pushed across the edge of the board. '
+  m_text: "<b>TANK</b>\n\nLeben: <b>3</b>\nReichweite: <b>1</b>\nSchaden: <b>1</b>\nSchritte:
+    <b>1</b>\nBewegungsmuster: <b>Kreuz</b>\n\nPower: <b>Rammen</b>\nRase auf ein
+    Bodenfeld in Reichweite 1. Ist das Feld besetzt, wird die darauf befindliche
+    Einheit um <b>1</b> Feld in die Bewegungsrichtung verschoben (sowie alle Einheiten
+    auf benachbarten Feldern in derselben Richtung) und jede verschobene Einheit,
+    sowie der Tank nehmen <b>1</b> Schaden. Schiebt dies eine Einheit in ein Loch,
+    stirbt diese sofort. Einheiten k\xF6nnen nicht \xFCber den Rand des Feldes geschoben
+    werden."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_sharedMaterial: {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
@@ -3121,7 +3075,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
   references:
     version: 2
     RefIds: []
@@ -3274,26 +3228,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '<b>RUNNER</b>
-
-
-    Health: <b>1</b>
-
-    Range: <b>1</b>
-
-    Damage:
-    <b>2</b>
-
-    Steps: <b>2</b>
-
-    Movement pattern: <b>Star</b>
-
-
-    Power:
-    <b>Jump</b>
-
-    Jump up to <b>3</b> squares across units and holes onto an unoccupied
-    floor square.'
+  m_text: "<b>RUNNER</b>\n\nLeben: <b>1</b>\nReichweite: <b>1</b>\nSchaden: <b>2</b>\nSchritte:
+    <b>2</b>\nBewegungsmuster: <b>Stern</b>\n\nPower: <b>Sprung</b>\nSpringe bis
+    zu <b>3</b> Felder weit \xFCber Einheiten und L\xF6cher hinweg auf ein unbesetztes
+    Bodenfeld."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_sharedMaterial: {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
@@ -3401,7 +3339,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
   references:
     version: 2
     RefIds: []
@@ -3672,29 +3610,14 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '<b>TANK</b>
-
-
-    Health: <b>3</b>
-
-    Range: <b>1</b>
-
-    Damage: <b>1</b>
-
-    Steps:
-    <b>1</b>
-
-    Movement pattern: <b>Cross</b>
-
-
-    Power: <b>Ram</b>
-
-    Rush
-    onto a floor square in range <b>1</b>. If the floor square is occupied, the occupying
-    unit is pushed <b>1</b> square in the same direction (as are any units on adjacent
-    squares in this direction) and both the pushed unit und the Tank take <b>1</b>
-    damage. If this pushes a unit into a hole, it dies immediately. Units cannot
-    be pushed across the edge of the board. '
+  m_text: "<b>TANK</b>\n\nLeben: <b>3</b>\nReichweite: <b>1</b>\nSchaden: <b>1</b>\nSchritte:
+    <b>1</b>\nBewegungsmuster: <b>Kreuz</b>\n\nPower: <b>Rammen</b>\nRase auf ein
+    Bodenfeld in Reichweite 1. Ist das Feld besetzt, wird die darauf befindliche
+    Einheit um <b>1</b> Feld in die Bewegungsrichtung verschoben (sowie alle Einheiten
+    auf benachbarten Feldern in derselben Richtung) und jede verschobene Einheit,
+    sowie der Tank nehmen <b>1</b> Schaden. Schiebt dies eine Einheit in ein Loch,
+    stirbt diese sofort. Einheiten k\xF6nnen nicht \xFCber den Rand des Feldes geschoben
+    werden."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_sharedMaterial: {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
@@ -3802,7 +3725,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
   references:
     version: 2
     RefIds: []
@@ -3907,26 +3830,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '<b>SHOOTER</b>
-
-
-    Health: <b>2</b>
-
-    Range: <b>2</b>
-
-    Damage:
-    <b>1</b>
-
-    Steps: <b>1</b>
-
-    Movement pattern: <b>Cross</b>
-
-
-    Power:
-    <b>Longshot</b>
-
-    Attack a target without range restriction whilst dealing
-    <b>1</b> damage to yourself.'
+  m_text: "<b>SHOOTER</b>\n\nLeben: <b>2</b>\nReichweite: <b>2</b>\nSchaden: <b>1</b>\nSchritte:
+    <b>1</b>\nBewegungsmuster: <b>Kreuz</b>\n\nPower: <b>Weitschuss</b>\nAttackiere
+    eine Einheit ohne Reichweiten-Einschr\xE4nkung. F\xFCge dir selbst <b>1</b> Schaden
+    zu."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_sharedMaterial: {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
@@ -4034,7 +3941,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
   references:
     version: 2
     RefIds: []
@@ -5156,26 +5063,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '<b>MECHANIC</b>
-
-
-    Health: <b>2</b>
-
-    Range: <b>1</b>
-
-    Damage:
-    <b>1</b>
-
-    Steps: <b>1</b>
-
-    Movement pattern: <b>Cross</b>
-
-
-    Power:
-    <b>Repair</b>
-
-    Rip out an unoccupied floor square in range <b>2</b> and use
-    it to cover a hole in range <b>2</b>.'
+  m_text: "<b>MECHANIC</b>\n\nLeben: <b>2</b>\nReichweite: <b>1</b>\nSchaden: <b>1</b>\nSchritte:
+    <b>1</b>\nBewegungsmuster: <b>Kreuz</b>\n\nPower: <b>Reparieren</b>\nRei\xDFe
+    ein unbesetztes Bodenfeld in Reichweite <b>2</b> heraus und platziere es auf
+    einem Loch in Reichweite <b>2</b>.\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_sharedMaterial: {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
@@ -5283,7 +5174,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
   references:
     version: 2
     RefIds: []
@@ -7121,22 +7012,23 @@ MonoBehaviour:
   m_text: '<b>DOC</b>
 
 
-    Health: <b>2</b>
+    Leben: <b>2</b>
 
-    Range: <b>1</b>
+    Reichweite: <b>1</b>
 
-    Damage: <b>1</b>
-
-    Steps:
+    Schaden:
     <b>1</b>
 
-    Movement pattern: <b>Cross</b>
+    Schritte: <b>1</b>
+
+    Bewegungsmuster: <b>Kreuz</b>
 
 
-    Power: <b>Transfusion</b>
+    Power:
+    <b>Transfusion</b>
 
-    Move
-    <b>1</b> health point from a unit in range <b>2</b> to another.'
+    Bewege <b>1</b> Lebenspunkt von einer Einheit in Reichweite
+    <b>2</b> zu einer anderen.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_sharedMaterial: {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
@@ -7244,7 +7136,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
   references:
     version: 2
     RefIds: []
@@ -8283,26 +8175,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '<b>RUNNER</b>
-
-
-    Health: <b>1</b>
-
-    Range: <b>1</b>
-
-    Damage:
-    <b>2</b>
-
-    Steps: <b>2</b>
-
-    Movement pattern: <b>Star</b>
-
-
-    Power:
-    <b>Jump</b>
-
-    Jump up to <b>3</b> squares across units and holes onto an unoccupied
-    floor square.'
+  m_text: "<b>RUNNER</b>\n\nLeben: <b>1</b>\nReichweite: <b>1</b>\nSchaden: <b>2</b>\nSchritte:
+    <b>2</b>\nBewegungsmuster: <b>Stern</b>\n\nPower: <b>Sprung</b>\nSpringe bis
+    zu <b>3</b> Felder weit \xFCber Einheiten und L\xF6cher hinweg auf ein unbesetztes
+    Bodenfeld."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_sharedMaterial: {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
@@ -8410,7 +8286,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
   references:
     version: 2
     RefIds: []
