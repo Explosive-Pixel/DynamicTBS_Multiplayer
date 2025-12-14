@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 86364775189297550, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: -5638732994581352410, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
+      objectReference: {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
     - target: {fileID: 952792709278910801, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -57,18 +57,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1234039959914733649, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_text
-      value: '<i>Power</i>
-
-        Rush onto a floor square in range <b>1</b>. If
-        the floor square is occupied, the occupying unit is pushed <b>1</b> square
-        in the same direction (as are any units on adjacent squares in this direction)
-        and both the pushed unit und the Tank take <b>1</b> damage. If this pushes
-        a unit into a hole, it dies immediately. Units cannot be pushed across the
-        edge of the board. '
+      value: "<i>Power</i>\nRase auf ein Bodenfeld in Reichweite <b>1</b>. Ist das
+        Feld besetzt, wird die darauf befindliche Einheit um <b>1</b> Feld in die
+        Bewegungsrichtung verschoben (sowie alle Einheiten auf benachbarten Feldern
+        in derselben Richtung) und jede verschobene Einheit, sowie der Tank nehmen
+        <b>1</b> Schaden. Schiebt dies eine Einheit in ein Loch, stirbt diese sofort.
+        Einheiten k\xF6nnen nicht \xFCber den Rand des Feldes geschoben werden."
       objectReference: {fileID: 0}
     - target: {fileID: 1234039959914733649, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_fontSize
-      value: 0.2
+      value: 0.19
       objectReference: {fileID: 0}
     - target: {fileID: 1234039959914733649, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_fontAsset
@@ -76,7 +74,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: be19911be0cb47a409e9003c0084646e, type: 2}
     - target: {fileID: 1234039959914733649, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_fontSizeBase
-      value: 0.2
+      value: 0.19
       objectReference: {fileID: 0}
     - target: {fileID: 1234039959914733649, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_sharedMaterial
@@ -128,12 +126,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5802362004618636893, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_text
-      value: Ram
+      value: Rammen
       objectReference: {fileID: 0}
     - target: {fileID: 5802362004618636893, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_fontSize
       value: 0.4
       objectReference: {fileID: 0}
+    - target: {fileID: 5802362004618636893, guid: fbb8951a8db15334980ef8f798960134, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: be19911be0cb47a409e9003c0084646e, type: 2}
     - target: {fileID: 5802362004618636893, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_fontSizeBase
       value: 0.4
@@ -141,7 +143,7 @@ PrefabInstance:
     - target: {fileID: 5802362004618636893, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: -5638732994581352410, guid: 91701494955ed3b4e82ddd89fd55bff5, type: 2}
+      objectReference: {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
     - target: {fileID: 5802362004618636893, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_VerticalAlignment
       value: 512
@@ -220,7 +222,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
   references:
     version: 2
     RefIds: []
@@ -265,7 +267,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
   references:
     version: 2
     RefIds: []

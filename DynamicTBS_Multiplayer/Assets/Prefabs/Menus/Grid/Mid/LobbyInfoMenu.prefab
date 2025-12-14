@@ -537,6 +537,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2914676721365567774, guid: d8adde4410e1e40e1bc6c444b74482f9, type: 3}
+      propertyPath: m_fontSize
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2914676721365567774, guid: d8adde4410e1e40e1bc6c444b74482f9, type: 3}
       propertyPath: m_fontColor.b
       value: 0
       objectReference: {fileID: 0}
@@ -549,14 +553,26 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2914676721365567774, guid: d8adde4410e1e40e1bc6c444b74482f9, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2914676721365567774, guid: d8adde4410e1e40e1bc6c444b74482f9, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4278190080
+      objectReference: {fileID: 0}
+    - target: {fileID: 4690727768990613945, guid: d8adde4410e1e40e1bc6c444b74482f9, type: 3}
+      propertyPath: m_UpdateString.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5657996530520994318, guid: d8adde4410e1e40e1bc6c444b74482f9, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5665063471413249016, guid: d8adde4410e1e40e1bc6c444b74482f9, type: 3}
+      propertyPath: m_fontSize
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5665063471413249016, guid: d8adde4410e1e40e1bc6c444b74482f9, type: 3}
       propertyPath: m_fontColor.b
       value: 0
       objectReference: {fileID: 0}
@@ -567,6 +583,10 @@ PrefabInstance:
     - target: {fileID: 5665063471413249016, guid: d8adde4410e1e40e1bc6c444b74482f9, type: 3}
       propertyPath: m_fontColor.r
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5665063471413249016, guid: d8adde4410e1e40e1bc6c444b74482f9, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 5665063471413249016, guid: d8adde4410e1e40e1bc6c444b74482f9, type: 3}
       propertyPath: m_fontColor32.rgba
@@ -583,6 +603,18 @@ PrefabInstance:
     - target: {fileID: 5816831981197722599, guid: d8adde4410e1e40e1bc6c444b74482f9, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 5938267120747994638, guid: d8adde4410e1e40e1bc6c444b74482f9, type: 3}
+      propertyPath: m_UpdateString.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5958785744362107683, guid: d8adde4410e1e40e1bc6c444b74482f9, type: 3}
+      propertyPath: m_UpdateString.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7265126030665060183, guid: d8adde4410e1e40e1bc6c444b74482f9, type: 3}
+      propertyPath: m_UpdateString.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8261938422866936906, guid: d8adde4410e1e40e1bc6c444b74482f9, type: 3}
       propertyPath: m_Pivot.x
@@ -680,6 +712,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 252
       objectReference: {fileID: 0}
+    - target: {fileID: 9018764091756554239, guid: d8adde4410e1e40e1bc6c444b74482f9, type: 3}
+      propertyPath: m_UpdateString.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d8adde4410e1e40e1bc6c444b74482f9, type: 3}
 --- !u!114 &429888021999531553 stripped
@@ -705,6 +741,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1482478774534172701}
     m_Modifications:
+    - target: {fileID: 888551292426072660, guid: 12e25c221b1a14fd6b7ad9a456bd1d7b, type: 3}
+      propertyPath: m_UpdateString.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 998104382014907858, guid: 12e25c221b1a14fd6b7ad9a456bd1d7b, type: 3}
       propertyPath: m_fontSize
       value: 18
@@ -736,6 +776,14 @@ PrefabInstance:
     - target: {fileID: 2015073666935615256, guid: 12e25c221b1a14fd6b7ad9a456bd1d7b, type: 3}
       propertyPath: m_fontSizeBase
       value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 2107975071380262696, guid: 12e25c221b1a14fd6b7ad9a456bd1d7b, type: 3}
+      propertyPath: m_fontSize
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 2107975071380262696, guid: 12e25c221b1a14fd6b7ad9a456bd1d7b, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 2132496964416528465, guid: 12e25c221b1a14fd6b7ad9a456bd1d7b, type: 3}
       propertyPath: m_IsActive
@@ -904,6 +952,10 @@ PrefabInstance:
     - target: {fileID: 4651924231944333138, guid: 12e25c221b1a14fd6b7ad9a456bd1d7b, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 236.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4789358390076728759, guid: 12e25c221b1a14fd6b7ad9a456bd1d7b, type: 3}
+      propertyPath: m_UpdateString.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5228197918794543211, guid: 12e25c221b1a14fd6b7ad9a456bd1d7b, type: 3}
       propertyPath: m_UpdateString.m_PersistentCalls.m_Calls.Array.size

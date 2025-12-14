@@ -57,10 +57,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1234039959914733649, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_text
-      value: '<i>Power</i>
-
-        Perform <b>1</b> action with an enemy unit within
-        range <b>2</b>. Cannot target Captains.'
+      value: "<i>Power</i>\nF\xFChre <b>1</b> Aktion mit einer gegnerischen Einheit
+        in Reichweite <b>2</b> aus. Kann nicht auf Captains angewendet werden."
       objectReference: {fileID: 0}
     - target: {fileID: 1234039959914733649, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_fontSize
@@ -104,7 +102,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5802362004618636893, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_text
-      value: Hypnotize
+      value: Hypnotisieren
       objectReference: {fileID: 0}
     - target: {fileID: 5802362004618636893, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_fontSize
@@ -180,7 +178,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
   references:
     version: 2
     RefIds: []
@@ -225,7 +223,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
   references:
     version: 2
     RefIds: []

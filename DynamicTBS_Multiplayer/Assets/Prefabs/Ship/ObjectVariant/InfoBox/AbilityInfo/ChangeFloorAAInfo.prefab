@@ -57,10 +57,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1234039959914733649, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_text
-      value: '<i>Power</i>
-
-        Rip out an unoccupied floor square in range <b>2</b>
-        and use it to cover a hole in range <b>2</b>.'
+      value: "<i>Power</i>\nRei\xDFe ein unbesetztes Bodenfeld in Reichweite <b>2</b>
+        heraus und platziere es auf einem Loch in Reichweite <b>2</b>."
       objectReference: {fileID: 0}
     - target: {fileID: 1234039959914733649, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_fontSize
@@ -92,7 +90,7 @@ PrefabInstance:
       objectReference: {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
     - target: {fileID: 5802362004618636893, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_text
-      value: Repair
+      value: Reparieren
       objectReference: {fileID: 0}
     - target: {fileID: 5802362004618636893, guid: fbb8951a8db15334980ef8f798960134, type: 3}
       propertyPath: m_fontSize
@@ -168,7 +166,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
   references:
     version: 2
     RefIds: []
@@ -213,7 +211,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
   references:
     version: 2
     RefIds: []
