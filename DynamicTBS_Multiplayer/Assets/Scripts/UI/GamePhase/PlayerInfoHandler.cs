@@ -28,10 +28,7 @@ public class PlayerInfoHandler : MonoBehaviour
                 PlayerSetup.SideName
             };
 
-            youArePlayerLocalized.StringChanged += (value) =>
-            {
-                youArePlayer.text = value;
-            };
+            youArePlayerLocalized.StringChanged += UpdateYouArePlayerText;
         }
     }
 
@@ -45,5 +42,15 @@ public class PlayerInfoHandler : MonoBehaviour
             playerNamePink.text = Client.CurrentLobby.GetPlayerName(PlayerType.pink);
             playerNameBlue.text = Client.CurrentLobby.GetPlayerName(PlayerType.blue);
         }
+    }
+
+    private void UpdateYouArePlayerText(string value)
+    {
+        youArePlayer.text = value;
+    }
+
+    private void OnDestroy()
+    {
+        youArePlayerLocalized.StringChanged -= UpdateYouArePlayerText;
     }
 }

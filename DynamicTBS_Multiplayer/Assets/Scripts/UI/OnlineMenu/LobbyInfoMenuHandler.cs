@@ -51,16 +51,19 @@ public class LobbyInfoMenuHandler : MonoBehaviour
     {
         SelectedLobby = selectedLobby;
 
-        lobbyDetailsHandler.UpdateInfo(selectedLobby);
-        timeAndMapInfoHandler.UpdateInfo(selectedLobby?.GameConfig);
+        if (selectedLobby != null)
+        {
+            lobbyDetailsHandler.UpdateInfo(selectedLobby);
+            timeAndMapInfoHandler.UpdateInfo(selectedLobby?.GameConfig);
 
-        joinLobbyButton.gameObject.SetActive(!Client.InLobby && SelectedLobby != null && !SelectedLobby.IsFull);
+            joinLobbyButton.gameObject.SetActive(!Client.InLobby && SelectedLobby != null && !SelectedLobby.IsFull);
 
-        bool readyCheckAvailable = Client.InLobby && Client.Role == ClientType.PLAYER && Client.CurrentLobby.IsFull;
-        if (!readyCheckAvailable)
-            Client.IsReady = false;
-        readyButton.interactable = readyCheckAvailable && !Client.IsReady;
-        readyButton.gameObject.SetActive(readyCheckAvailable);
+            bool readyCheckAvailable = Client.InLobby && Client.Role == ClientType.PLAYER && Client.CurrentLobby.IsFull;
+            if (!readyCheckAvailable)
+                Client.IsReady = false;
+            readyButton.interactable = readyCheckAvailable && !Client.IsReady;
+            readyButton.gameObject.SetActive(readyCheckAvailable);
+        }
     }
 
     private void UpdateInfo()
@@ -89,7 +92,7 @@ public class LobbyInfoMenuHandler : MonoBehaviour
 
     private void OnDisable()
     {
-        SelectedLobby = null;
+        MenuEvents.ChangeLobbySelection(null);
     }
 
     private void OnDestroy()

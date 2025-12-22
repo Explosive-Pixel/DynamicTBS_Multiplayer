@@ -10,9 +10,12 @@ public class LobbyListHandler : MonoBehaviour
     [SerializeField] private GameObject loadingInfo;
     [SerializeField] private GameObject noLobbiesInfo;
 
+    private Lobby selectedLobby;
+
     private void Awake()
     {
         MessageReceiver.OnWSMessageReceive += UpdateLobbyList;
+        MenuEvents.OnChangeLobbySelection += UpdateSelectedLobby;
     }
 
     private void OnEnable()
@@ -69,7 +72,7 @@ public class LobbyListHandler : MonoBehaviour
         {
             GameObject lobbyInfoGO = GameObject.Instantiate(lobbyInfoPrefab);
             lobbyInfoGO.transform.SetParent(content.transform);
-            lobbyInfoGO.GetComponent<LobbyInfoHandler>().Init(lobbyInfo);
+            lobbyInfoGO.GetComponent<LobbyInfoHandler>().Init(lobbyInfo, selectedLobby);
             ChangeActiveGameObjectOnClickHandler clickHandler = lobbyInfoGO.GetComponent<ChangeActiveGameObjectOnClickHandler>();
             clickHandler.activeHandler = onlineMenuScreenHandler.MidActiveHandler;
             clickHandler.activeOnClickGameObject = onlineMenuScreenHandler.LobbyInfoMenu;
@@ -77,8 +80,14 @@ public class LobbyListHandler : MonoBehaviour
         }
     }
 
+    private void UpdateSelectedLobby(Lobby lobby)
+    {
+        selectedLobby = lobby;
+    }
+
     private void OnDestroy()
     {
         MessageReceiver.OnWSMessageReceive -= UpdateLobbyList;
+        MenuEvents.OnChangeLobbySelection -= UpdateSelectedLobby;
     }
 }

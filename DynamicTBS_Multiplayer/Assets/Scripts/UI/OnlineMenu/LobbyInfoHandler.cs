@@ -1,9 +1,9 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.Localization;
 using System.Linq;
+using UnityEngine.EventSystems;
 
-public class LobbyInfoHandler : MonoBehaviour
+public class LobbyInfoHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [System.Serializable]
     public class LobbyStatusEntry
@@ -11,6 +11,8 @@ public class LobbyInfoHandler : MonoBehaviour
         public LobbyStatus lobbyStatus;
         public GameObject text;
     }
+
+    [SerializeField] private GameObject highlightBackground;
 
     [SerializeField] private TMP_Text lobbyName;
     [SerializeField] private TMP_Text playerCount;
@@ -23,7 +25,14 @@ public class LobbyInfoHandler : MonoBehaviour
 
     public Lobby Lobby { get; private set; }
 
-    public Lobby Init(LobbyInfo lobbyInfo)
+    private bool selected = false;
+
+    private void Awake()
+    {
+        MenuEvents.OnChangeLobbySelection += Highlight;
+    }
+
+    public Lobby Init(LobbyInfo lobbyInfo, Lobby selectedLobby)
     {
         Lobby = new(lobbyInfo);
 
@@ -36,6 +45,29 @@ public class LobbyInfoHandler : MonoBehaviour
 
         lobbyStatusEntries.ToList().ForEach(entry => entry.text.SetActive(entry.lobbyStatus == Lobby.Status));
 
+        Highlight(selectedLobby);
+
         return Lobby;
+    }
+
+    private void Highlight(Lobby selectedLobby)
+    {
+        selected = Lobby != null && selectedLobby != null && selectedLobby.LobbyId == Lobby.LobbyId;
+        highlightBackground.SetActive(selected);
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        highlightBackground.SetActive(true);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        highlightBackground.SetActive(selected);
+    }
+
+    private void OnDestroy()
+    {
+        MenuEvents.OnChangeLobbySelection -= Highlight;
     }
 }

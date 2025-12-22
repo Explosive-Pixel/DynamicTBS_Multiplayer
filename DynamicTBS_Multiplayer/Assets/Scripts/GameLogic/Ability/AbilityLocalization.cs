@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Localization;
@@ -39,21 +38,36 @@ public class AbilityLocalization : MonoBehaviour
         .Cast<ActiveAbilityType>()
         .ToDictionary(a => a, a => a.Description());
 
+    private readonly Dictionary<LocalizedString, LocalizedString.ChangeHandler> handlers
+        = new();
+
     void Start()
     {
-        activeAbilityEntries.ToList()
-            .ForEach(entry =>
+        foreach (var entry in activeAbilityEntries)
+        {
+            LocalizedString.ChangeHandler handler = (value) =>
             {
-                entry.localizedString.StringChanged += (value) =>
-                {
-                    activeAbilityLocalizedNames[entry.activeAbilityType] = value;
-                };
-                entry.localizedString.RefreshString();
-            });
+                activeAbilityLocalizedNames[entry.activeAbilityType] = value;
+            };
+
+            handlers[entry.localizedString] = handler;
+            entry.localizedString.StringChanged += handler;
+            entry.localizedString.RefreshString();
+        }
     }
 
     public static string GetActiveAbilityName(ActiveAbilityType activeAbilityType)
     {
         return activeAbilityLocalizedNames.GetValueOrDefault(activeAbilityType, "???");
+    }
+
+    private void OnDestroy()
+    {
+        foreach (var kv in handlers)
+        {
+            kv.Key.StringChanged -= kv.Value;
+        }
+
+        handlers.Clear();
     }
 }

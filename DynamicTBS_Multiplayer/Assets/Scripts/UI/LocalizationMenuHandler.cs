@@ -49,10 +49,13 @@ public class LocalizationMenuHandler : MonoBehaviour
         SetLanguage("de");
     }
 
-    private void SetLanguage(string languageCode) {
-        for(int i = 0; i < LocalizationSettings.AvailableLocales.Locales.Count; i++) {
+    private void SetLanguage(string languageCode)
+    {
+        for (int i = 0; i < LocalizationSettings.AvailableLocales.Locales.Count; i++)
+        {
             var language = LocalizationSettings.AvailableLocales.Locales[i];
-            if(language.Identifier.Code == languageCode) {
+            if (language.Identifier.Code == languageCode)
+            {
                 SetLanguage(i);
             }
         }
@@ -65,5 +68,10 @@ public class LocalizationMenuHandler : MonoBehaviour
 
         PlayerPrefs.SetInt(LanguageKey, localeIndex);
         PlayerPrefs.Save();
+    }
+
+    private void OnDestroy()
+    {
+        LocalizationSettings.InitializationOperation.Completed -= InitComplete;
     }
 }

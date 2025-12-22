@@ -109,6 +109,11 @@ public static class Client
         MenuEvents.UpdateCurrentLobby();
     }
 
+    public static void LeaveLobby()
+    {
+        CurrentLobby = null;
+    }
+
     public static void Reconnect()
     {
         if (!InLobby)

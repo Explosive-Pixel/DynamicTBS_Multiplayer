@@ -39,8 +39,19 @@ public class OnlineMenuScreenHandler : MonoBehaviour
             case WSMessageCode.WSMsgLobbyInfoCode:
                 HandleWSMsgLobbyInfo((WSMsgLobbyInfo)msg);
                 break;
+            case WSMessageCode.WSMsgCloseLobbyCode:
+                ShowLobbyList((WSMsgCloseLobby)msg);
+                break;
         }
     }
+
+    private void ShowLobbyList(WSMsgCloseLobby msg)
+    {
+        leftActiveHandler.SetActive(lobbyOverviewDisplay);
+        midActiveHandler.SetInactive();
+        rightActiveHandler.SetInactive();
+    }
+
 
     private void HandleWSMsgLobbyInfo(WSMsgLobbyInfo msg)
     {
