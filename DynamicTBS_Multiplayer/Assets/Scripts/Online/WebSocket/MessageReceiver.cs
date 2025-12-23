@@ -13,12 +13,10 @@ public static class MessageReceiver
 
     public static void ReceiveMessage(string rawMsg)
     {
-        Debug.Log("raw: " + rawMsg);
         WSMessage msg = WSMessage.Deserialize(rawMsg);
 
         if (msg != null)
         {
-            Debug.Log(msg);
             ReceiveMessage(msg);
             msg.HandleMessage();
         }

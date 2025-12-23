@@ -64,6 +64,10 @@ public class LobbyInfoMenuHandler : MonoBehaviour
             readyButton.interactable = readyCheckAvailable && !Client.IsReady;
             readyButton.gameObject.SetActive(readyCheckAvailable);
         }
+        else
+        {
+            gameObject.GetComponentInParent<BaseActiveHandler>(true).SetInactive();
+        }
     }
 
     private void UpdateInfo()

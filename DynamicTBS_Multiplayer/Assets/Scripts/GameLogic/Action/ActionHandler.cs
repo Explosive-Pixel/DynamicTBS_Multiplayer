@@ -68,7 +68,6 @@ public class ActionHandler : MonoBehaviour
 
         if (actionStep.ActionFinished)
         {
-            Debug.Log("Attack action finished.");
             GameplayEvents.ActionFinished(new Action
             {
                 ExecutingPlayer = PlayerManager.CurrentPlayer,

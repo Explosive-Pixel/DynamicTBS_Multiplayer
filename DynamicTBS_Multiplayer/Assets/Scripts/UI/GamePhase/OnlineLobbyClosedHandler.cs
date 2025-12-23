@@ -4,7 +4,7 @@ public class OnlineLobbyClosedHandler : MonoBehaviour
 {
     private void Awake()
     {
-        gameObject.SetActive(!Client.InLobby);
+        gameObject.SetActive(GameManager.GameType == GameType.ONLINE && !Client.InLobby);
 
         if (GameManager.GameType == GameType.ONLINE)
             MenuEvents.OnClosedCurrentLobby += ActivateLobbyClosedCanvas;

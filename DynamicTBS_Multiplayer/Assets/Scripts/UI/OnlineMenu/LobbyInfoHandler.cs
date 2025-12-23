@@ -52,7 +52,7 @@ public class LobbyInfoHandler : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     private void Highlight(Lobby selectedLobby)
     {
-        selected = Lobby != null && selectedLobby != null && selectedLobby.LobbyId == Lobby.LobbyId;
+        selected = Lobby != null && selectedLobby != null && selectedLobby.LobbyId.Id == Lobby.LobbyId.Id;
         highlightBackground.SetActive(selected);
     }
 

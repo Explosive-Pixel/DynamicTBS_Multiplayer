@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SetupNameHandler : MonoBehaviour, ISetupHandler
 {
@@ -17,6 +18,7 @@ public class SetupNameHandler : MonoBehaviour, ISetupHandler
         }
 
         clientName.onValueChanged.AddListener(delegate { SetName(); });
+        SetOutline();
     }
 
     private void Update()
@@ -27,5 +29,11 @@ public class SetupNameHandler : MonoBehaviour, ISetupHandler
     private void SetName()
     {
         PlayerSetup.SetupName(ClientName);
+        SetOutline();
+    }
+
+    private void SetOutline()
+    {
+        clientName.gameObject.GetComponent<Outline>().enabled = clientName.interactable && !SetupCompleted;
     }
 }

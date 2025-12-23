@@ -2,6 +2,7 @@ using System;
 using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SetupTimeHandler : MonoBehaviour, ISetupHandler
 {
@@ -12,6 +13,9 @@ public class SetupTimeHandler : MonoBehaviour, ISetupHandler
 
     private void Awake()
     {
+        draftAndPlacementTime.onValueChanged.AddListener(delegate { SetOutline(draftAndPlacementTime); });
+        gameplayTime.onValueChanged.AddListener(delegate { SetOutline(gameplayTime); });
+
         if (GameSetup.TimerSetup != null)
         {
             draftAndPlacementTime.text = GameSetup.TimerSetup.DraftAndPlacementTimeFormatted;
@@ -22,6 +26,8 @@ public class SetupTimeHandler : MonoBehaviour, ISetupHandler
         gameplayTime.onValueChanged.AddListener(delegate { SetTime(); });
 
         SetTime();
+        SetOutline(draftAndPlacementTime);
+        SetOutline(gameplayTime);
     }
 
     private void SetTime()
@@ -31,6 +37,11 @@ public class SetupTimeHandler : MonoBehaviour, ISetupHandler
         {
             GameSetup.SetupTimer(new TimerSetup(ConvertTimeToSeconds(draftAndPlacementTime.text), ConvertTimeToSeconds(gameplayTime.text)));
         }
+    }
+
+    private void SetOutline(TMP_InputField tMP_Input)
+    {
+        tMP_Input.gameObject.GetComponent<Outline>().enabled = !IsValidTime(tMP_Input.text);
     }
 
     private bool IsValidTime(string input)

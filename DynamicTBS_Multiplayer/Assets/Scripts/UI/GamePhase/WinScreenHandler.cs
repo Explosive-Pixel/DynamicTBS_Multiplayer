@@ -17,6 +17,8 @@ public class WinScreenHandler : MonoBehaviour
     [SerializeField] private GameObject blueWin;
     [SerializeField] private GameObject pinkWin;
     [SerializeField] private GameObject draw;
+    [SerializeField] private GameObject rematchButton_online;
+    [SerializeField] private GameObject rematchButton_offline;
 
     [Header("Text Output")]
     [SerializeField] private TMP_Text gameOverText;
@@ -43,6 +45,9 @@ public class WinScreenHandler : MonoBehaviour
     {
         lastWinner = winner;
         lastCondition = endGameCondition;
+
+        rematchButton_offline.SetActive(GameManager.GameType == GameType.LOCAL);
+        rematchButton_offline.SetActive(GameManager.GameType == GameType.ONLINE);
 
         UpdateLocalizedText();
     }
