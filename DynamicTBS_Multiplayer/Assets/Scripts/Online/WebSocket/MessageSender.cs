@@ -1,6 +1,4 @@
 using UnityEngine;
-using System.Collections.Generic;
-using System.Linq;
 
 public class MessageSender : MonoBehaviour
 {
@@ -23,10 +21,8 @@ public class MessageSender : MonoBehaviour
 
     private void SendPerformActionMessage(Action action)
     {
-        Debug.Log("Send Perform Action Message?");
         if (Client.ShouldSendMessage(action.ExecutingPlayer))
         {
-            Debug.Log("Send Perform Action Message as executing player");
             Client.SendToServer(new WSMsgPerformAction
             {
                 playerId = action.ExecutingPlayer,
@@ -91,10 +87,8 @@ public class MessageSender : MonoBehaviour
 
     private void SendGameOverMessage(PlayerType? winner, GameOverCondition endGameCondition)
     {
-        Debug.Log("Send Game Over Message?");
         if (Client.IsAdmin)
         {
-            Debug.Log("Sending Game Over Message as Admin");
             Client.SendToServer(new WSMsgGameOver { winner = winner ?? PlayerType.none, gameOverCondition = endGameCondition });
         }
     }

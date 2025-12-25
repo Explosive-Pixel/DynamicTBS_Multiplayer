@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class OnlineLobbyLostConnectionHandler : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject reconnectInfo;
+    [SerializeField] private GameObject canvas;
+    [SerializeField] private GameObject reconnectInfo;
 
     private void Awake()
     {
-        gameObject.SetActive(false);
+        canvas.SetActive(false);
     }
 
     void Update()
@@ -15,7 +15,7 @@ public class OnlineLobbyLostConnectionHandler : MonoBehaviour
         if (GameManager.GameType != GameType.ONLINE)
             return;
 
-        gameObject.SetActive(!Client.IsConnectedToServer);
+        canvas.SetActive(!Client.IsConnectedToServer);
         reconnectInfo.SetActive(Client.ConnectionStatus == ConnectionStatus.ATTEMPT_CONNECTION);
     }
 }
