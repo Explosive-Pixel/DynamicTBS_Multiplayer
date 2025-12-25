@@ -19,13 +19,13 @@ public class OnlineMetadata : MonoBehaviour
     [SerializeField] private LocalizedString connectedPlayersText;
     [SerializeField] private LocalizedString spectatorsText;
 
-    private void Awake()
+    void Awake()
     {
         infoText.text = "";
         LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
     }
 
-    private void OnDestroy()
+    void OnDestroy()
     {
         LocalizationSettings.SelectedLocaleChanged -= OnLocaleChanged;
     }
@@ -52,24 +52,15 @@ public class OnlineMetadata : MonoBehaviour
         switch (Client.ConnectionStatus)
         {
             case ConnectionStatus.CONNECTED:
-                connectedText.GetLocalizedStringAsync().Completed += op =>
-                {
-                    SetInfoText(op.Result);
-                };
+                SetInfoText(connectedText);
                 break;
 
             case ConnectionStatus.UNCONNECTED:
-                unconnectedText.GetLocalizedStringAsync().Completed += op =>
-                {
-                    SetInfoText(op.Result);
-                };
+                SetInfoText(unconnectedText);
                 break;
 
             case ConnectionStatus.ATTEMPT_CONNECTION:
-                attemptConnectionText.GetLocalizedStringAsync().Completed += op =>
-                {
-                    SetInfoText(op.Result);
-                };
+                SetInfoText(attemptConnectionText);
                 break;
         }
     }
@@ -83,37 +74,37 @@ public class OnlineMetadata : MonoBehaviour
         int players = Client.CurrentLobby.PlayerCount;
         int spectators = Client.CurrentLobby.SpectatorCount;
 
-        infoText.text = "";
-
-        // Lobby ID
-        lobbyIdText.GetLocalizedStringAsync(new { id = lobbyId }).Completed += op =>
-        {
-            SetInfoText(op.Result);
-        };
-
-        // Player count
-        connectedPlayersText.GetLocalizedStringAsync(new { players }).Completed += op =>
-        {
-            SetInfoText("\n" + op.Result, true);
-        };
-
-        // Spectators (optional)
+        SetInfoText(lobbyIdText, false, new { id = lobbyId });
+        SetInfoText(connectedPlayersText, true, new { players });
         if (spectators > 0)
         {
-            spectatorsText.GetLocalizedStringAsync(new { spectators }).Completed += op =>
-            {
-                SetInfoText("\n" + op.Result, true);
-            };
+            SetInfoText(spectatorsText, true, new { spectators });
         }
     }
 
-    private void SetInfoText(string text, bool append = false)
+    private void SetInfoText(LocalizedString localizedString, bool append = false)
+    {
+        localizedString.GetLocalizedStringAsync().Completed += op =>
+        {
+            SetInfoText(op.Result, append);
+        };
+    }
+
+    private void SetInfoText(LocalizedString localizedString, bool append, params object[] arguments)
+    {
+        localizedString.GetLocalizedStringAsync(arguments).Completed += op =>
+        {
+            SetInfoText(op.Result, append);
+        };
+    }
+
+    private void SetInfoText(string text, bool append)
     {
         if (infoText)
         {
             if (append)
             {
-                infoText.text += text;
+                infoText.text += "\n" + text;
             }
             else
             {

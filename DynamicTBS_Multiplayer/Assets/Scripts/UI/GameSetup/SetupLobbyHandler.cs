@@ -15,9 +15,15 @@ public class SetupLobbyHandler : MonoBehaviour, ISetupHandler
 
     private void Awake()
     {
+        lobbyName.onValueChanged.AddListener((value) => SetOutline());
         privateLobbyButton.onClick.AddListener(() => SelectPrivateLobbyButton());
         publicLobbyButton.onClick.AddListener(() => SelectPublicLobbyButton());
         SelectLobbyTypeButton(false);
+    }
+
+    private void SetOutline()
+    {
+        lobbyName.gameObject.GetComponent<Outline>().enabled = !SetupCompleted;
     }
 
     private void SelectPrivateLobbyButton()

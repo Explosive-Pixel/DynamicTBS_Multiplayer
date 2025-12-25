@@ -8,19 +8,28 @@ public class PlayerLocalizationBootstrap : MonoBehaviour
 
     private void Start()
     {
-        pinkNameLocalized.StringChanged += (value) =>
-        {
-            PlayerSetup.SetLocalizedDefault(PlayerType.pink, value);
-        };
-
-        blueNameLocalized.StringChanged += (value) =>
-        {
-            PlayerSetup.SetLocalizedDefault(PlayerType.blue, value);
-        };
+        pinkNameLocalized.StringChanged += UpdatePinkValue;
+        blueNameLocalized.StringChanged += UpdateBlueValue;
 
         // Initial load now
         pinkNameLocalized.RefreshString();
         blueNameLocalized.RefreshString();
+    }
+
+    private void UpdatePinkValue(string value)
+    {
+        PlayerSetup.SetLocalizedDefault(PlayerType.pink, value);
+    }
+
+    private void UpdateBlueValue(string value)
+    {
+        PlayerSetup.SetLocalizedDefault(PlayerType.blue, value);
+    }
+
+    private void OnDestroy()
+    {
+        pinkNameLocalized.StringChanged -= UpdatePinkValue;
+        blueNameLocalized.StringChanged -= UpdateBlueValue;
     }
 }
 

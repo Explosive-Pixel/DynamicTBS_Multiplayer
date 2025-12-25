@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public static class MessageReceiver
 {
     public delegate void WSServerMessage(WSMessage msg);
@@ -11,9 +13,16 @@ public static class MessageReceiver
 
     public static void ReceiveMessage(string rawMsg)
     {
-        // Debug.Log(rawMsg);
         WSMessage msg = WSMessage.Deserialize(rawMsg);
-        ReceiveMessage(msg);
-        msg.HandleMessage();
+
+        if (msg != null)
+        {
+            ReceiveMessage(msg);
+            msg.HandleMessage();
+        }
+        else
+        {
+            Debug.Log("Message '" + rawMsg + "' could not be serialized.");
+        }
     }
 }

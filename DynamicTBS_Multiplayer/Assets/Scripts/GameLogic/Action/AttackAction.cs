@@ -64,6 +64,7 @@ public class AttackAction : MonoBehaviour, IAction
 
     public ActionStep ExecuteAction(GameObject actionDestination)
     {
+        Debug.Log("Execute Attack Action");
         Vector3 initialPosition = CharacterInAction.gameObject.transform.position;
         Vector3 actionDestinationPosition = actionDestination.transform.position;
 

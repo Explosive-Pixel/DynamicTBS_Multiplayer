@@ -8,6 +8,8 @@ public class SetupSideHandler : MonoBehaviour, ISetupHandler
     [SerializeField] private Button selectBlueButton;
     [SerializeField] private Button selectRandomSideButton;
 
+    [SerializeField] private PlayerType defaultSide;
+
     public PlayerType SelectedSide { get; private set; } = PlayerType.none;
 
     public bool SetupCompleted { get { return SelectedSide != PlayerType.none; } }
@@ -17,6 +19,10 @@ public class SetupSideHandler : MonoBehaviour, ISetupHandler
         if (PlayerSetup.Side != PlayerType.none)
         {
             SetSide(PlayerSetup.Side, false);
+        }
+        else
+        {
+            SetSide(defaultSide, false);
         }
 
         selectPinkButton.onClick.AddListener(() => SelectPinkSide());

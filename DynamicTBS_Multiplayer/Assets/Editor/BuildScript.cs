@@ -89,7 +89,7 @@ public static class BuildScript
 
     private static void SetPlayerSettings()
     {
-        PlayerSettings.resizableWindow = true;
+        PlayerSettings.resizableWindow = false;
         PlayerSettings.allowFullscreenSwitch = true;
         PlayerSettings.runInBackground = true;
         PlayerSettings.resetResolutionOnWindowResize = true;

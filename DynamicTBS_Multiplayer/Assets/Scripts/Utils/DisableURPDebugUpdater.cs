@@ -1,11 +1,15 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class DisableURPDebugUpdater : MonoBehaviour
+public static class DisableURPDebug
 {
-    private void Awake()
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    private static void DisableDebug()
     {
-        DebugManager.instance.enableRuntimeUI = false;
+        if (DebugManager.instance != null)
+        {
+            DebugManager.instance.enableRuntimeUI = false;
+        }
     }
 }
 
