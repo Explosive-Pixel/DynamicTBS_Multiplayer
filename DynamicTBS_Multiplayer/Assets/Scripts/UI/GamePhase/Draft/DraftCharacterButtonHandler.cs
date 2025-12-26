@@ -18,7 +18,6 @@ public class DraftCharacterButtonHandler : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        // Test
         pinkHoverObject.SetActive(PlayerManager.CurrentPlayer == PlayerType.pink);
         blueHoverObject.SetActive(PlayerManager.CurrentPlayer == PlayerType.blue);
     }

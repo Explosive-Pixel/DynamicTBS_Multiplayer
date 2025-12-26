@@ -11,8 +11,14 @@ public class PauseHandler : MonoBehaviour
 
     public static void HandlePause()
     {
+        if (GameManager.CurrentGamePhase == GamePhase.NONE)
+            return;
+
         if (GameManager.GameType == GameType.ONLINE)
-            GameplayEvents.UIActionExecuted(PlayerManager.ExecutingPlayer, GameplayManager.gameIsPaused ? UIAction.UNPAUSE_GAME : UIAction.PAUSE_GAME);
+        {
+            if (Client.IsConnectedToServer && Client.InLobby && Client.CurrentLobby.IsFull)
+                GameplayEvents.UIActionExecuted(PlayerManager.ExecutingPlayer, GameplayManager.gameIsPaused ? UIAction.UNPAUSE_GAME : UIAction.PAUSE_GAME);
+        }
         else
             GameplayEvents.PauseGame(!GameplayManager.gameIsPaused);
     }

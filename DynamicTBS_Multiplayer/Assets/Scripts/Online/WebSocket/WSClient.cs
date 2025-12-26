@@ -9,8 +9,11 @@ public class WSClient : MonoBehaviour
     WebSocket websocket;
 
     private string hostname;
-    public int retryIntervalMs = 3000;
-    public int maxRetries = 5;
+    private readonly int retryIntervalMs = 3000;
+    private readonly int maxRetries = 5;
+
+    public readonly int reconnectRetryIntervalMs = 3000;
+    private readonly int reconnectMaxRetries = 20;
 
     private bool destroyed = false;
 
@@ -92,7 +95,7 @@ public class WSClient : MonoBehaviour
             Client.ConnectionStatus = ConnectionStatus.UNCONNECTED;
             Debug.Log("Connection to server closed!");
 
-            //TryReconnect(); // TODO: Timer einbauen
+            TryReconnect(); // TODO: Timer einbauen
         };
 
         websocket.OnMessage += (bytes) =>
