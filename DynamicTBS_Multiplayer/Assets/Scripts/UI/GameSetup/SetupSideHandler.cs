@@ -16,14 +16,12 @@ public class SetupSideHandler : MonoBehaviour, ISetupHandler
 
     private void Awake()
     {
-        if (PlayerSetup.Side != PlayerType.none)
+        if (PlayerSetup.Side == PlayerType.none)
         {
-            SetSide(PlayerSetup.Side, false);
+            PlayerSetup.SetupSide(defaultSide);
         }
-        else
-        {
-            SetSide(defaultSide, false);
-        }
+
+        SetSide(PlayerSetup.Side, false);
 
         selectPinkButton.onClick.AddListener(() => SelectPinkSide());
         selectBlueButton.onClick.AddListener(() => SelectBlueSide());

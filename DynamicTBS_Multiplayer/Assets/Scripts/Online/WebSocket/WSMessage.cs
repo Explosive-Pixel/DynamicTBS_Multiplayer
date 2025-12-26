@@ -3,33 +3,35 @@ using UnityEngine;
 
 public enum WSMessageCode
 {
-    WSMsgKeepAliveCode = 0,
-    WSMsgWelcomeClientCode = 1,
+    WSMsgAcknowledgeCode = 0,
+    WSMsgKeepAliveCode = 1,
+    WSMsgWelcomeClientCode = 2,
 
-    WSMsgLobbyListCode = 2,
-    WSMsgCreateLobbyCode = 3,
-    WSMsgJoinLobbyCode = 4,
-    WSMsgLobbyInfoCode = 5,
-    WSMsgSetReadyCode = 6,
-    WSMsgConfigLobbyCode = 7,
-    WSMsgCloseLobbyCode = 8,
+    WSMsgLobbyListCode = 3,
+    WSMsgCreateLobbyCode = 4,
+    WSMsgJoinLobbyCode = 5,
+    WSMsgLobbyInfoCode = 6,
+    WSMsgSetReadyCode = 7,
+    WSMsgConfigLobbyCode = 8,
+    WSMsgCloseLobbyCode = 9,
 
-    WSMsgGameHistoryCode = 9,
-    WSMsgStartGameCode = 10,
-    WSMsgPauseGameCode = 11,
-    WSMsgServerNotificationCode = 12,
-    WSMsgUpdateServerCode = 13,
-    WSMsgUpdateClientCode = 14,
-    WSMsgGameOverCode = 15,
-    WSMsgDraftCharacterCode = 16,
-    WSMsgPerformActionCode = 17,
-    WSMsgUIActionCode = 18
+    WSMsgGameHistoryCode = 10,
+    WSMsgStartGameCode = 11,
+    WSMsgPauseGameCode = 12,
+    WSMsgServerNotificationCode = 13,
+    WSMsgUpdateServerCode = 14,
+    WSMsgUpdateClientCode = 15,
+    WSMsgGameOverCode = 16,
+    WSMsgDraftCharacterCode = 17,
+    WSMsgPerformActionCode = 18,
+    WSMsgUIActionCode = 19
 }
 
 [Serializable]
 public abstract class WSMessage
 {
     public WSMessageCode code;
+    public string uuid = Guid.NewGuid().ToString();
     public int lobbyId;
 
     public string Serialize()
@@ -45,6 +47,8 @@ public abstract class WSMessage
 
         switch (code)
         {
+            case WSMessageCode.WSMsgAcknowledgeCode:
+                return Deserialize<WSMsgAcknowledge>(json);
             case WSMessageCode.WSMsgKeepAliveCode:
                 return Deserialize<WSMsgKeepAlive>(json);
             case WSMessageCode.WSMsgLobbyListCode:
@@ -86,6 +90,25 @@ public abstract class WSMessage
         }
 
         return null;
+    }
+
+    public static bool Record(WSMessage msg)
+    {
+        switch (msg.code)
+        {
+            case WSMessageCode.WSMsgCloseLobbyCode:
+            case WSMessageCode.WSMsgStartGameCode:
+            case WSMessageCode.WSMsgPauseGameCode:
+            case WSMessageCode.WSMsgServerNotificationCode:
+            case WSMessageCode.WSMsgUpdateServerCode:
+            case WSMessageCode.WSMsgUpdateClientCode:
+            case WSMessageCode.WSMsgDraftCharacterCode:
+            case WSMessageCode.WSMsgPerformActionCode:
+            case WSMessageCode.WSMsgUIActionCode:
+                return true;
+            default:
+                return false;
+        }
     }
 
     private static T Deserialize<T>(string json) where T : WSMessage
