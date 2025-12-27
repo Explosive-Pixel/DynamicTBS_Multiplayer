@@ -88,7 +88,7 @@ public class WSClient : MonoBehaviour
 
         state = isReconnect ? ConnectionState.RECONNECTING : ConnectionState.CONNECTING;
 
-        await CleanupWebSocket();
+        CleanupWebSocket();
 
         websocket = new WebSocket(hostname);
 
@@ -100,7 +100,7 @@ public class WSClient : MonoBehaviour
         await websocket.Connect();
     }
 
-    private async Task CleanupWebSocket()
+    private void CleanupWebSocket()
     {
         if (websocket == null) return;
 
@@ -109,7 +109,7 @@ public class WSClient : MonoBehaviour
         websocket.OnError -= OnWebSocketError;
         websocket.OnMessage -= HandleMessage;
 
-        await websocket.Close();
+        //await websocket.Close();
         websocket = null;
     }
 
