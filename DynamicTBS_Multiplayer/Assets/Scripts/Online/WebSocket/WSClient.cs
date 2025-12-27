@@ -190,6 +190,7 @@ public class WSClient : MonoBehaviour
             if (!processedMessages.ContainsKey(msg.uuid))
             {
                 UpdateProcessedMessages(msg);
+                Debug.Log("Reloading message " + msg + " with uuid " + msg.uuid);
                 msg.HandleMessage();
             }
         }
