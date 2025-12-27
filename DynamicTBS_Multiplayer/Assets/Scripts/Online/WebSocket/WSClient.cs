@@ -88,7 +88,7 @@ public class WSClient : MonoBehaviour
 
         state = isReconnect ? ConnectionState.RECONNECTING : ConnectionState.CONNECTING;
 
-        CleanupWebSocket();
+        await CleanupWebSocket();
 
         websocket = new WebSocket(hostname);
 
@@ -100,7 +100,7 @@ public class WSClient : MonoBehaviour
         await websocket.Connect();
     }
 
-    private void CleanupWebSocket()
+    private async Task CleanupWebSocket()
     {
         if (websocket == null) return;
 
@@ -109,7 +109,7 @@ public class WSClient : MonoBehaviour
         websocket.OnError -= OnWebSocketError;
         websocket.OnMessage -= HandleMessage;
 
-        //await websocket.Close();
+        await websocket.Close();
         websocket = null;
     }
 
@@ -129,6 +129,8 @@ public class WSClient : MonoBehaviour
 
     private void OnWebSocketClosed(WebSocketCloseCode closeCode)
     {
+        if (destroyed) return;
+
         Debug.Log($"WebSocket closed: {closeCode}");
         state = ConnectionState.DICONNECTED;
 
@@ -331,7 +333,7 @@ public class WSClient : MonoBehaviour
         processedMessages.Clear();
     }
 
-    private void OnDestroy()
+    private async void OnDestroy()
     {
         if (Instance != this)
             return;
@@ -340,6 +342,6 @@ public class WSClient : MonoBehaviour
 
         Client.Reset();
         GameplayEvents.OnGameOver -= ResetMsgHistory;
-        CleanupWebSocket();
+        await CleanupWebSocket();
     }
 }
