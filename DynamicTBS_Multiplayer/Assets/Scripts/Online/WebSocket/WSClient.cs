@@ -331,7 +331,7 @@ public class WSClient : MonoBehaviour
         processedMessages.Clear();
     }
 
-    private async void OnDestroy()
+    private void OnDestroy()
     {
         if (Instance != this)
             return;
@@ -340,6 +340,6 @@ public class WSClient : MonoBehaviour
 
         Client.Reset();
         GameplayEvents.OnGameOver -= ResetMsgHistory;
-        await CleanupWebSocket();
+        CleanupWebSocket();
     }
 }
