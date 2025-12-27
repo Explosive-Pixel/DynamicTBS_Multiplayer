@@ -1,17 +1,11 @@
 using UnityEngine;
 using System;
+using System.Collections.Generic;
 
 public enum ClientType
 {
     PLAYER = 1,
     SPECTATOR = 2
-}
-
-public enum ConnectionStatus
-{
-    UNCONNECTED = 0,
-    ATTEMPT_CONNECTION = 1,
-    CONNECTED = 2
 }
 
 public static class Client
@@ -21,8 +15,7 @@ public static class Client
     public static ClientType Role { get; set; }
     public static Lobby CurrentLobby { get; private set; }
 
-    public static bool Active { get; set; } = false;
-    public static ConnectionStatus ConnectionStatus { get; set; } = ConnectionStatus.UNCONNECTED;
+    public static ConnectionState ConnectionStatus { get { return WSClient.Instance.ConnectionState; } }
     public static float ServerTimeDiff { get; private set; } = 0;
 
     public static bool IsLoadingGame { get; private set; } = false;
@@ -54,7 +47,7 @@ public static class Client
         }
     }
 
-    public static bool IsConnectedToServer { get { return ConnectionStatus >= ConnectionStatus.CONNECTED; } }
+    public static bool IsConnectedToServer { get { return ConnectionStatus == ConnectionState.CONNECTED; } }
     public static bool InLobby { get { return CurrentLobby != null; } }
 
     public static bool ShouldReadMessage(PlayerType playerType)
@@ -127,6 +120,12 @@ public static class Client
         });
     }
 
+    public static void LoadGame(List<WSMessage> msgHistory)
+    {
+        ToggleIsLoadingGame();
+        WSClient.Instance.LoadGame(msgHistory);
+    }
+
     public static void SyncTimeWithServer(long syncTimestamp)
     {
         var serverTime = TimerUtils.UnixTimeStampToDateTime(syncTimestamp);
@@ -140,10 +139,8 @@ public static class Client
         GameEvents.IsGameLoading(IsLoadingGame);
     }
 
-
     public static void Reset()
     {
-        ConnectionStatus = ConnectionStatus.UNCONNECTED;
         CurrentLobby = null;
         ServerTimeDiff = 0;
         IsReady = false;

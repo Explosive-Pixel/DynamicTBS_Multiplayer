@@ -1,26 +1,42 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using NativeWebSocket;
-using System;
+using System.Collections;
+
+public enum ConnectionState
+{
+    DICONNECTED,
+    CONNECTING,
+    CONNECTED,
+    RECONNECTING,
+    DEAD
+}
 
 public class WSClient : MonoBehaviour
 {
-    WebSocket websocket;
+    public ConnectionState ConnectionState { get { return state; } }
 
+    #region Private attributes
+
+    private WebSocket websocket;
     private string hostname;
-    private readonly int retryIntervalMs = 3000;
-    private readonly int maxRetries = 5;
 
-    public readonly int reconnectRetryIntervalMs = 3000;
-    private readonly int reconnectMaxRetries = 20;
+    private const int retryIntervalMs = 3000;
+    private const int maxRetries = 5;
 
-    private bool destroyed = false;
+    private const int reconnectBaseDelayMs = 3000;
+    private const int reconnectMaxDelayMs = 30000;
+    private const int reconnectMaxRetries = 20;
+
+    private bool destroyed;
+    private int reconnectAttempts;
+
+    private ConnectionState state = ConnectionState.DICONNECTED;
 
     private readonly Queue<WSMessage> outgoingQueue = new();
     private PendingMessage currentMessage;
 
-    [Serializable]
     private class PendingMessage
     {
         public WSMessage msg;
@@ -28,229 +44,133 @@ public class WSClient : MonoBehaviour
         public float lastSentTime;
     }
 
-    private readonly List<WSMessage> msgHistory = new();
+    private readonly Dictionary<string, WSMessage> processedMessages = new();
 
-    private float timer = 0f;
-    private const float keepAliveInterval = 20f; // in Seconds
+    private float keepAliveTimer;
+    private const float keepAliveInterval = 20f;
 
-    private bool IsConnectedToServer { get { return websocket.State == WebSocketState.Open; } }
+    private bool IsConnected =>
+        websocket != null && websocket.State == WebSocketState.Open;
 
-    #region SingletonImplementation
+    #endregion
 
-    public static WSClient Instance { set; get; }
+    #region Singleton
+
+    public static WSClient Instance { get; private set; }
 
     private void Awake()
     {
         if (Instance != null)
         {
             Destroy(gameObject);
+            return;
         }
-        else
-        {
-            Instance = this;
-            destroyed = false;
 
-            hostname = ConfigManager.Instance.Hostname;
-            CreateWebsocketConnection(false);
+        Instance = this;
+        hostname = ConfigManager.Instance.Hostname;
 
-            GameplayEvents.OnGameOver += ResetMsgHistory;
-        }
+        GameplayEvents.OnGameOver += ResetMsgHistory;
+
+        _ = ConnectAsync(false);
     }
 
     #endregion
 
-    private void CreateWebsocketConnection(bool isReconnect)
-    {
-        Client.ConnectionStatus = ConnectionStatus.ATTEMPT_CONNECTION;
+    // ===================== CONNECTION =====================
 
-        CreateWebsocketConnectionAsync(isReconnect);
-    }
-
-    private async void CreateWebsocketConnectionAsync(bool isReconnect)
+    private async Task ConnectAsync(bool isReconnect)
     {
-        Debug.Log("Trying to connect to server with hostname " + hostname);
+        if (destroyed || state == ConnectionState.CONNECTING)
+            return;
+
+        state = isReconnect ? ConnectionState.RECONNECTING : ConnectionState.CONNECTING;
+
+        await CleanupWebSocket();
 
         websocket = new WebSocket(hostname);
 
-        websocket.OnOpen += () =>
-        {
-            Debug.Log("Successfully connected to server!");
-            Client.Active = true;
-            Client.ConnectionStatus = ConnectionStatus.CONNECTED;
-
-            if (isReconnect)
-            {
-                Client.Reconnect();
-            }
-        };
-
-        websocket.OnError += (e) =>
-        {
-            Client.ConnectionStatus = ConnectionStatus.UNCONNECTED;
-            Debug.Log("Error! Cannot connect to server: " + e);
-        };
-
-        websocket.OnClose += (e) =>
-        {
-            Client.ConnectionStatus = ConnectionStatus.UNCONNECTED;
-            Debug.Log("Connection to server closed!");
-
-            TryReconnect(); // TODO: Timer einbauen
-        };
-
-        websocket.OnMessage += (bytes) =>
-        {
-            var message = System.Text.Encoding.UTF8.GetString(bytes);
-            WSMessage msg = WSMessage.Deserialize(message);
-
-            if (msg != null)
-            {
-
-                if (msg.code == WSMessageCode.WSMsgAcknowledgeCode)
-                {
-                    Debug.Log("Received Acknowledgement for message with uuid: " + ((WSMsgAcknowledge)msg).messageUuid);
-                    HandleAck(((WSMsgAcknowledge)msg).messageUuid);
-                    return;
-                }
-
-                Debug.Log("Received message: " + msg + " with uuid " + msg.uuid);
-                SendAck(msg.uuid);
-                UpdateMsgHistory(msg);
-                MessageReceiver.ReceiveMessage(msg);
-                msg.HandleMessage();
-            }
-            else
-            {
-                Debug.Log("Message '" + message + "' could not be serialized.");
-            }
-        };
+        websocket.OnOpen += OnWebSocketOpen;
+        websocket.OnClose += OnWebSocketClosed;
+        websocket.OnError += OnWebSocketError;
+        websocket.OnMessage += HandleMessage;
 
         await websocket.Connect();
     }
 
-    private void TryReconnect()
+    private async Task CleanupWebSocket()
     {
-        if (Client.Active && !IsConnectedToServer && !destroyed)
-        {
-            CreateWebsocketConnection(true);
-        }
+        if (websocket == null) return;
+
+        websocket.OnOpen -= OnWebSocketOpen;
+        websocket.OnClose -= OnWebSocketClosed;
+        websocket.OnError -= OnWebSocketError;
+        websocket.OnMessage -= HandleMessage;
+
+        await websocket.Close();
+        websocket = null;
     }
 
-    void Update()
+    private void OnWebSocketOpen()
     {
-        if (!IsConnectedToServer)
+        state = ConnectionState.CONNECTED;
+        reconnectAttempts = 0;
+
+        Debug.Log("WebSocket connected");
+    }
+
+    private void OnWebSocketClosed(WebSocketCloseCode closeCode)
+    {
+        Debug.Log($"WebSocket closed: {closeCode}");
+        state = ConnectionState.DICONNECTED;
+
+        _ = ReconnectLoopAsync();
+    }
+
+    private void OnWebSocketError(string error)
+    {
+        Debug.LogError($"WebSocket error: {error}");
+    }
+
+
+    // ===================== RECONNECT =====================
+
+    private async Task ReconnectLoopAsync()
+    {
+        if (state == ConnectionState.RECONNECTING || destroyed)
             return;
 
-        ProcessQueue();
+        state = ConnectionState.RECONNECTING;
+        reconnectAttempts = 0;
 
-        timer += Time.deltaTime;
-        if (timer >= keepAliveInterval)
+        int delay = reconnectBaseDelayMs;
+
+        while (!destroyed && reconnectAttempts < reconnectMaxRetries)
         {
-            SendMessage(new WSMsgKeepAlive());
-            timer = 0f;
+            reconnectAttempts++;
+            Debug.Log($"Reconnect attempt {reconnectAttempts}");
+
+            await Task.Delay(delay);
+            await ConnectAsync(true);
+
+            if (IsConnected)
+            {
+                Client.Reconnect();
+
+                // Resume Queue
+                if (currentMessage != null)
+                    SendCurrent();
+                else
+                    TrySendNext();
+
+                return;
+            }
+
+
+            delay = Mathf.Min(delay * 2, reconnectMaxDelayMs);
         }
 
-#if !UNITY_WEBGL || UNITY_EDITOR
-        websocket.DispatchMessageQueue();
-#endif
-    }
-
-    public void SendMessage(WSMessage msg)
-    {
-        /*if (!IsConnectedToServer)
-        {
-            unsendMsgs.Enqueue(msg);
-            return;
-        }
-
-        Debug.Log("Sending message: " + msg.Serialize());
-        await websocket.SendText(msg.Serialize());*/
-        outgoingQueue.Enqueue(msg);
-        TrySendNext();
-    }
-
-    private void HandleAck(string messageUuid)
-    {
-        if (currentMessage == null) return;
-        if (currentMessage.msg.uuid != messageUuid) return;
-
-        currentMessage = null;
-        TrySendNext();
-    }
-
-    private void ProcessQueue()
-    {
-        if (currentMessage == null) return;
-
-        float now = Time.time * 1000f;
-        if (now - currentMessage.lastSentTime < retryIntervalMs) return;
-
-        if (currentMessage.retries >= maxRetries)
-        {
-            Debug.LogWarning("Message not acknowledged, disconnecting from server.");
-            websocket.Close();
-            return;
-        }
-
-        ResendCurrent();
-    }
-
-    private void TrySendNext()
-    {
-        if (currentMessage != null) return;
-        if (outgoingQueue.Count == 0) return;
-
-        var next = outgoingQueue.Dequeue();
-        currentMessage = new PendingMessage
-        {
-            msg = next,
-            retries = 0,
-            lastSentTime = 0
-        };
-
-        SendCurrent();
-    }
-
-    private async void SendAck(string messageUuid)
-    {
-        string ackMsg = new WSMsgAcknowledge { messageUuid = messageUuid }.Serialize();
-        await websocket.SendText(ackMsg);
-        Debug.Log($"Sent acknowlesge message for uuid: {messageUuid}");
-    }
-
-    private async void SendCurrent()
-    {
-        if (currentMessage == null) return;
-
-        currentMessage.lastSentTime = Time.time * 1000f;
-        currentMessage.retries++;
-
-        await websocket.SendText(currentMessage.msg.Serialize());
-        Debug.Log($"Sent message ({currentMessage.retries}/{maxRetries}): {currentMessage.msg.Serialize()}");
-    }
-
-    private void ResendCurrent()
-    {
-        Debug.Log($"Retrying ({currentMessage.retries + 1}/{maxRetries}) for message {currentMessage.msg.uuid}");
-        SendCurrent();
-    }
-
-    private void UpdateMsgHistory(WSMessage msg)
-    {
-        if (WSMessage.Record(msg))
-        {
-            msgHistory.Add(msg);
-        }
-    }
-
-    private bool IsNewMessage(WSMessage msg)
-    {
-        return msgHistory.Find(hm => hm.uuid == msg.uuid) == null;
-    }
-
-    private void ResetMsgHistory(PlayerType? winner, GameOverCondition endGameCondition)
-    {
-        msgHistory.Clear();
+        Debug.LogError("Reconnect permanently failed");
+        state = ConnectionState.DEAD;
     }
 
     public void LoadGame(List<WSMessage> msgHistory)
@@ -263,14 +183,150 @@ public class WSClient : MonoBehaviour
         foreach (var msg in msgHistory)
         {
             yield return new WaitForEndOfFrame();
-            if (IsNewMessage(msg))
+            if (!processedMessages.ContainsKey(msg.uuid))
             {
-                UpdateMsgHistory(msg);
+                UpdateProcessedMessages(msg);
                 msg.HandleMessage();
             }
         }
 
         Client.ToggleIsLoadingGame();
+    }
+
+    // ===================== UPDATE =====================
+
+    private void Update()
+    {
+        if (!IsConnected || destroyed)
+            return;
+
+        ProcessQueue();
+        KeepAlive();
+
+#if !UNITY_WEBGL || UNITY_EDITOR
+        websocket.DispatchMessageQueue();
+#endif
+    }
+
+    private void KeepAlive()
+    {
+        keepAliveTimer += Time.deltaTime;
+        if (keepAliveTimer >= keepAliveInterval)
+        {
+            SendMessage(new WSMsgKeepAlive());
+            keepAliveTimer = 0f;
+        }
+    }
+
+    // ===================== MESSAGING =====================
+
+    public void SendMessage(WSMessage msg)
+    {
+        outgoingQueue.Enqueue(msg);
+        TrySendNext();
+    }
+
+    private void HandleMessage(byte[] bytes)
+    {
+        var json = System.Text.Encoding.UTF8.GetString(bytes);
+        var msg = WSMessage.Deserialize(json);
+
+        if (msg == null)
+        {
+            Debug.Log("Message '" + json + "' could not be serialized.");
+            return;
+        }
+
+        if (msg.code == WSMessageCode.WSMsgAcknowledgeCode)
+        {
+            Debug.Log("Received Acknowledgement for message with uuid: " + ((WSMsgAcknowledge)msg).messageUuid);
+            HandleAck(((WSMsgAcknowledge)msg).messageUuid);
+            return;
+        }
+
+        Debug.Log("Received message: " + msg + " with uuid " + msg.uuid);
+        SendAck(msg.uuid);
+        UpdateProcessedMessages(msg);
+        MessageReceiver.ReceiveMessage(msg);
+        msg.HandleMessage();
+    }
+
+    private void HandleAck(string uuid)
+    {
+        if (currentMessage == null || currentMessage.msg.uuid != uuid)
+            return;
+
+        currentMessage = null;
+        TrySendNext();
+    }
+
+    private void ProcessQueue()
+    {
+        if (currentMessage == null)
+            return;
+
+        float now = Time.time * 1000f;
+        if (now - currentMessage.lastSentTime < retryIntervalMs)
+            return;
+
+        if (currentMessage.retries >= maxRetries)
+        {
+            Debug.LogWarning("ACK timeout → forcing reconnect");
+            _ = websocket.Close();
+            return;
+        }
+
+        SendCurrent();
+    }
+
+    private void TrySendNext()
+    {
+        if (currentMessage != null || outgoingQueue.Count == 0)
+            return;
+
+        currentMessage = new PendingMessage
+        {
+            msg = outgoingQueue.Dequeue(),
+            retries = 0,
+            lastSentTime = 0
+        };
+
+        SendCurrent();
+    }
+
+    private async void SendCurrent()
+    {
+        if (!IsConnected || currentMessage == null)
+            return;
+
+        currentMessage.lastSentTime = Time.time * 1000f;
+        currentMessage.retries++;
+
+        await websocket.SendText(currentMessage.msg.Serialize());
+        Debug.Log($"Sent message ({currentMessage.retries}/{maxRetries}): {currentMessage.msg.Serialize()}");
+    }
+
+    private async void SendAck(string uuid)
+    {
+        await websocket.SendText(
+            new WSMsgAcknowledge { messageUuid = uuid }.Serialize()
+        );
+        Debug.Log($"Sent acknowlesge message for uuid: {uuid}");
+    }
+
+    private void UpdateProcessedMessages(WSMessage msg)
+    {
+        if (WSMessage.Record(msg))
+        {
+            processedMessages.Add(msg.uuid, msg);
+        }
+    }
+
+    // ===================== CLEANUP =====================
+
+    private void ResetMsgHistory(PlayerType? _, GameOverCondition __)
+    {
+        processedMessages.Clear();
     }
 
     private async void OnDestroy()
@@ -281,10 +337,7 @@ public class WSClient : MonoBehaviour
         destroyed = true;
 
         Client.Reset();
-
         GameplayEvents.OnGameOver -= ResetMsgHistory;
-
-        if (websocket != null)
-            await websocket.Close();
+        await CleanupWebSocket();
     }
 }
