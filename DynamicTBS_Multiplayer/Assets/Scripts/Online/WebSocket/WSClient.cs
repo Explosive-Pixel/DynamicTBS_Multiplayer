@@ -32,6 +32,8 @@ public class WSClient : MonoBehaviour
     private bool destroyed;
     private int reconnectAttempts;
 
+    private bool gameIsUpToDate = true;
+
     private ConnectionState state = ConnectionState.DICONNECTED;
 
     private readonly Queue<WSMessage> outgoingQueue = new();
@@ -80,7 +82,7 @@ public class WSClient : MonoBehaviour
 
     private async Task ConnectAsync(bool isReconnect)
     {
-        if (destroyed || state == ConnectionState.CONNECTING)
+        if (destroyed || state == ConnectionState.CONNECTING || state == ConnectionState.RECONNECTING)
             return;
 
         state = isReconnect ? ConnectionState.RECONNECTING : ConnectionState.CONNECTING;
@@ -123,6 +125,7 @@ public class WSClient : MonoBehaviour
         Debug.Log($"WebSocket closed: {closeCode}");
         state = ConnectionState.DICONNECTED;
 
+        gameIsUpToDate = false;
         _ = ReconnectLoopAsync();
     }
 
@@ -154,13 +157,14 @@ public class WSClient : MonoBehaviour
 
             if (IsConnected)
             {
+                // TODO: What to do if game has not yet started?
                 Client.Reconnect();
 
                 // Resume Queue
-                if (currentMessage != null)
+                /*if (currentMessage != null)
                     SendCurrent();
                 else
-                    TrySendNext();
+                    TrySendNext();*/
 
                 return;
             }
@@ -191,6 +195,7 @@ public class WSClient : MonoBehaviour
         }
 
         Client.ToggleIsLoadingGame();
+        gameIsUpToDate = true;
     }
 
     // ===================== UPDATE =====================
@@ -224,6 +229,11 @@ public class WSClient : MonoBehaviour
     {
         outgoingQueue.Enqueue(msg);
         TrySendNext();
+    }
+
+    public async Task SendDirectly(WSMessage msg)
+    {
+        await websocket.SendText(msg.Serialize());
     }
 
     private void HandleMessage(byte[] bytes)
@@ -262,7 +272,7 @@ public class WSClient : MonoBehaviour
 
     private void ProcessQueue()
     {
-        if (currentMessage == null)
+        if (currentMessage == null || !gameIsUpToDate)
             return;
 
         float now = Time.time * 1000f;
@@ -302,14 +312,14 @@ public class WSClient : MonoBehaviour
         currentMessage.lastSentTime = Time.time * 1000f;
         currentMessage.retries++;
 
-        await websocket.SendText(currentMessage.msg.Serialize());
+        await SendDirectly(currentMessage.msg);
         Debug.Log($"Sent message ({currentMessage.retries}/{maxRetries}): {currentMessage.msg.Serialize()}");
     }
 
     private async void SendAck(string uuid)
     {
-        await websocket.SendText(
-            new WSMsgAcknowledge { messageUuid = uuid }.Serialize()
+        await SendDirectly(
+            new WSMsgAcknowledge { messageUuid = uuid }
         );
         Debug.Log($"Sent acknowlesge message for uuid: {uuid}");
     }

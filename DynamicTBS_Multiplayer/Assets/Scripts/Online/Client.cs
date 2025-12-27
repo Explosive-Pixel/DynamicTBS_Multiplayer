@@ -107,14 +107,15 @@ public static class Client
         CurrentLobby = null;
     }
 
-    public static void Reconnect()
+    public static async void Reconnect()
     {
         if (!InLobby)
             return;
 
-        SendToServer(new WSMsgJoinLobby()
+        await WSClient.Instance.SendDirectly(new WSMsgJoinLobby()
         {
             lobbyFullName = CurrentLobby.LobbyId.FullId,
+            lobbyId = 0,
             clientInfo = ClientInfo,
             isReconnect = true
         });
