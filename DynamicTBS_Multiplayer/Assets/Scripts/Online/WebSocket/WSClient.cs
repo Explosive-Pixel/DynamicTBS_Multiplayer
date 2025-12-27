@@ -30,7 +30,8 @@ public class WSClient : MonoBehaviour
     private const int reconnectMaxRetries = 20;
 
     private bool destroyed;
-    private int reconnectAttempts;
+    private int reconnectAttempts = 0;
+    private int delay = reconnectBaseDelayMs;
 
     private bool gameIsUpToDate = true;
 
@@ -114,8 +115,13 @@ public class WSClient : MonoBehaviour
 
     private void OnWebSocketOpen()
     {
+        if (state == ConnectionState.RECONNECTING)
+        {
+            reconnectAttempts = 0;
+            delay = reconnectBaseDelayMs;
+            Client.Reconnect();
+        }
         state = ConnectionState.CONNECTED;
-        reconnectAttempts = 0;
 
         Debug.Log("WebSocket connected");
     }
@@ -126,7 +132,7 @@ public class WSClient : MonoBehaviour
         state = ConnectionState.DICONNECTED;
 
         gameIsUpToDate = false;
-        _ = ReconnectLoopAsync();
+        _ = TryReconnect();
     }
 
     private void OnWebSocketError(string error)
@@ -137,40 +143,22 @@ public class WSClient : MonoBehaviour
 
     // ===================== RECONNECT =====================
 
-    private async Task ReconnectLoopAsync()
+    private async Task TryReconnect()
     {
         if (state == ConnectionState.RECONNECTING || destroyed)
             return;
 
         state = ConnectionState.RECONNECTING;
-        reconnectAttempts = 0;
 
-        int delay = reconnectBaseDelayMs;
-
-        while (!destroyed && reconnectAttempts < reconnectMaxRetries)
+        if (!destroyed && reconnectAttempts < reconnectMaxRetries)
         {
             reconnectAttempts++;
             Debug.Log($"Reconnect attempt {reconnectAttempts}");
 
             await Task.Delay(delay);
-            await ConnectAsync(true);
-
-            if (IsConnected)
-            {
-                // TODO: What to do if game has not yet started?
-                Client.Reconnect();
-
-                // Resume Queue
-                /*if (currentMessage != null)
-                    SendCurrent();
-                else
-                    TrySendNext();*/
-
-                return;
-            }
-
-
             delay = Mathf.Min(delay * 2, reconnectMaxDelayMs);
+
+            await ConnectAsync(true);
         }
 
         Debug.LogError("Reconnect permanently failed");
