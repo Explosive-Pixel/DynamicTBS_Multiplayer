@@ -320,7 +320,7 @@ public class WSClient : MonoBehaviour
 
     private void UpdateProcessedMessages(WSMessage msg)
     {
-        if (WSMessage.Record(msg))
+        if (WSMessage.Record(msg) && !processedMessages.ContainsKey(msg.uuid))
         {
             processedMessages.Add(msg.uuid, msg);
         }
