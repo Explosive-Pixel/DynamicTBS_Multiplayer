@@ -83,7 +83,7 @@ public class WSClient : MonoBehaviour
 
     private async Task ConnectAsync(bool isReconnect)
     {
-        if (destroyed || state == ConnectionState.CONNECTING || state == ConnectionState.RECONNECTING)
+        if (destroyed || state == ConnectionState.CONNECTING)
             return;
 
         state = isReconnect ? ConnectionState.RECONNECTING : ConnectionState.CONNECTING;
@@ -117,6 +117,7 @@ public class WSClient : MonoBehaviour
     {
         if (state == ConnectionState.RECONNECTING)
         {
+            Debug.Log("Reconnected to websocket!");
             reconnectAttempts = 0;
             delay = reconnectBaseDelayMs;
             Client.Reconnect();
@@ -160,9 +161,11 @@ public class WSClient : MonoBehaviour
 
             await ConnectAsync(true);
         }
-
-        Debug.LogError("Reconnect permanently failed");
-        state = ConnectionState.DEAD;
+        else if (reconnectAttempts == reconnectMaxRetries)
+        {
+            Debug.LogError("Reconnect permanently failed");
+            state = ConnectionState.DEAD;
+        }
     }
 
     public void LoadGame(List<WSMessage> msgHistory)
