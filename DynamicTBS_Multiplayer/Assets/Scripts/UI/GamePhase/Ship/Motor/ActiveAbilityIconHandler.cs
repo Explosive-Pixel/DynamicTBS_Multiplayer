@@ -4,7 +4,7 @@ public class ActiveAbilityIconHandler : MonoBehaviour
 {
     public static void ExecuteActiveAbility()
     {
-        if (CharacterManager.SelectedCharacter == null || GameManager.CurrentGamePhase != GamePhase.GAMEPLAY)
+        if (CharacterManager.SelectedCharacter == null || !GameplayManager.UIInteractionAllowed)
             return;
 
         ActionHandler.Instance.ResetActionDestinations();

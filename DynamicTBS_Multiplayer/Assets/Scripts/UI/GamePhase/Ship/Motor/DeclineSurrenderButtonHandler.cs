@@ -7,7 +7,7 @@ public class DeclineSurrenderButtonHandler : MonoBehaviour
 
     public void OnMouseDown()
     {
-        if (GameManager.IsSpectator() || GameplayManager.gameIsPaused)
+        if (!GameplayManager.UIPlayerActionAllowed)
             return;
 
         AudioEvents.PressingButton();

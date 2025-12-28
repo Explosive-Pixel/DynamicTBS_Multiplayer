@@ -12,6 +12,23 @@ public class GameplayManager : MonoBehaviour
 
     private static bool hasGameStarted;
     public static bool HasGameStarted { get { return hasGameStarted; } }
+    public static bool UIInteractionAllowed
+    {
+        get
+        {
+            return GameManager.CurrentGamePhase != GamePhase.NONE
+                && !gameIsPaused &&
+                (GameManager.GameType == GameType.LOCAL
+                || (!Client.IsLoadingGame && Client.InLobby));
+        }
+    }
+    public static bool UIPlayerActionAllowed
+    {
+        get
+        {
+            return UIInteractionAllowed && GameManager.IsPlayer();
+        }
+    }
     public static bool gameIsPaused;
     public static int MaxActionsPerRound;
 
