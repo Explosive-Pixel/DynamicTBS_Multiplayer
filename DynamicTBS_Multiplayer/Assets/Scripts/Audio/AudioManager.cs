@@ -52,6 +52,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip adrenalinClip;
     [SerializeField] private AudioClip lastTenSeconds;
     [SerializeField] private AudioClip timeRanOut;
+    [SerializeField] private AudioClip rechargeClip;
 
     // Voicelines
     [SerializeField] private AudioClip masterVoicelineClip1;
