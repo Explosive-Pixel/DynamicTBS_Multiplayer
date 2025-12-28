@@ -29,6 +29,7 @@ public class GameplayManager : MonoBehaviour
             return UIInteractionAllowed && GameManager.IsPlayer();
         }
     }
+    public static bool IsLoadingGame { get { return GameManager.GameType == GameType.ONLINE && Client.IsLoadingGame; } }
     public static bool gameIsPaused;
     public static int MaxActionsPerRound;
 

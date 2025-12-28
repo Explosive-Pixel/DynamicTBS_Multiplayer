@@ -48,8 +48,6 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip jumpClip;
     [SerializeField] private AudioClip changeFloorClip;
     [SerializeField] private AudioClip healClip;
-    [SerializeField] private AudioClip explosionClip;
-    [SerializeField] private AudioClip adrenalinClip;
     [SerializeField] private AudioClip lastTenSeconds;
     [SerializeField] private AudioClip timeRanOut;
     [SerializeField] private AudioClip rechargeClip;
@@ -186,122 +184,147 @@ public class AudioManager : MonoBehaviour
 
     private void ActionAudio(Action action)
     {
-        if (action.ActionSteps == null || action.ActionSteps.Count == 0)
+        if (action.PlayerActionType != null)
+        {
+            if (action.PlayerActionType == PlayerActionType.Refresh)
+                PlayRefreshAudio();
+        }
+
+        if (action.ActionSteps == null)
             return;
 
-        ActionType actionType = action.ActionSteps[0].ActionType;
-        Character character = action.ActionSteps[0].CharacterInAction;
+        foreach (ActionStep actionStep in action.ActionSteps)
+        {
+            if (!actionStep.ActionFinished || actionStep.CharacterInAction == null)
+                continue;
 
+            switch (actionStep.ActionType)
+            {
+                case ActionType.Move:
+                    PlayMoveAudio();
+                    break;
+                case ActionType.Attack:
+                    PlayAttackAudio(actionStep.CharacterInAction);
+                    break;
+                case ActionType.ActiveAbility:
+                    PlayActiveAbilityAudio(actionStep.CharacterInAction.ActiveAbility);
+                    break;
+            }
+        }
+    }
+
+    private void PlayRefreshAudio()
+    {
+        PlayOneShot(fxSource, rechargeClip);
+    }
+
+    private void PlayMoveAudio()
+    {
+        int rnd;
+        rnd = Random.Range(0, moveClipsList.Count);
+        PlayOneShot(fxSource, moveClipsList[rnd]);
+    }
+
+    private void PlayAttackAudio(Character character)
+    {
         if (character == null)
             return;
 
-        if (actionType == ActionType.Move)
+        var clip = character.CharacterType switch
         {
-            int rnd;
-            rnd = Random.Range(0, moveClipsList.Count);
-            fxSource.PlayOneShot(moveClipsList[rnd]);
-        }
-        if (actionType == ActionType.Attack)
+            CharacterType.TankChar => tankAttackClip,
+            CharacterType.ShooterChar => shooterAttackClip,
+            CharacterType.RunnerChar => runnerDoubleAttackClip,
+            CharacterType.DocChar => medicAttackClip,
+            CharacterType.MechanicChar => mechanicAttackClip,
+            _ => null
+        };
+
+        PlayOneShot(fxSource, clip);
+    }
+
+    private void PlayActiveAbilityAudio(IActiveAbility ability)
+    {
+        var clip = ability switch
         {
-            if (character.CharacterType == CharacterType.TankChar)
-                fxSource.PlayOneShot(tankAttackClip);
-            if (character.CharacterType == CharacterType.ShooterChar)
-                fxSource.PlayOneShot(shooterAttackClip);
-            if (character.CharacterType == CharacterType.RunnerChar)
-                fxSource.PlayOneShot(runnerDoubleAttackClip);
-            if (character.CharacterType == CharacterType.MechanicChar)
-                fxSource.PlayOneShot(mechanicAttackClip);
-            if (character.CharacterType == CharacterType.DocChar)
-                fxSource.PlayOneShot(medicAttackClip);
-        }
-        // TODO: Sounds für neue Abilities!
-        if (actionType == ActionType.ActiveAbility)
-        {
-            /*if (character.ActiveAbility.GetType() == typeof(ElectrifyAA))
-                fxSource.PlayOneShot(takeControlClip);
-            if (character.ActiveAbility.GetType() == typeof(BlockAA))
-                fxSource.PlayOneShot(blockClip);
-            if (character.ActiveAbility.GetType() == typeof(PowershotAA))
-                fxSource.PlayOneShot(powershotClip);*/
-            if (character.ActiveAbility.GetType() == typeof(JumpAA))
-                fxSource.PlayOneShot(jumpClip);
-            /*if (character.ActiveAbility.GetType() == typeof(ChangeFloorAA))
-                fxSource.PlayOneShot(changeFloorClip);
-            if (character.ActiveAbility.GetType() == typeof(HealAA))
-                fxSource.PlayOneShot(healClip);*/
-        }
+            JumpAA => jumpClip,
+            RamAA => blockClip,
+            LongshotAA => powershotClip,
+            RepairAA => changeFloorClip,
+            TransfusionAA => healClip,
+            HypnotizeAA => takeControlClip,
+            _ => null
+        };
+
+        PlayOneShot(fxSource, clip);
     }
 
     #region GameplayAudio
     private void TurnChangeAudio(PlayerType player)
     {
-        fxSource.PlayOneShot(turnChangeClip);
+        PlayOneShot(fxSource, turnChangeClip);
     }
 
     private void UnitDraftAudio(Character character)
     {
-        fxSource.PlayOneShot(unitDraftedClip);
+        PlayOneShot(fxSource, unitDraftedClip);
     }
 
     private void UnitPlacementAudio(Character character)
     {
-        fxSource.PlayOneShot(unitPlacedClip);
+        PlayOneShot(fxSource, unitPlacedClip);
 
         if (character.CharacterType == CharacterType.TankChar)
         {
             int rnd = Random.Range(0, tankVoiceClipsList.Count);
-            voiceSource.PlayOneShot(tankVoiceClipsList[rnd]);
+            PlayOneShot(voiceSource, tankVoiceClipsList[rnd]);
         }
         if (character.CharacterType == CharacterType.ShooterChar)
         {
             int rnd = Random.Range(0, shooterVoiceClipsList.Count);
-            voiceSource.PlayOneShot(shooterVoiceClipsList[rnd]);
+            PlayOneShot(voiceSource, shooterVoiceClipsList[rnd]);
         }
         if (character.CharacterType == CharacterType.RunnerChar)
         {
             int rnd = Random.Range(0, runnerVoiceClipsList.Count);
-            voiceSource.PlayOneShot(runnerVoiceClipsList[rnd]);
+            PlayOneShot(voiceSource, runnerVoiceClipsList[rnd]);
         }
         if (character.CharacterType == CharacterType.MechanicChar)
         {
             int rnd = Random.Range(0, mechanicVoiceClipsList.Count);
-            voiceSource.PlayOneShot(mechanicVoiceClipsList[rnd]);
+            PlayOneShot(voiceSource, mechanicVoiceClipsList[rnd]);
         }
         if (character.CharacterType == CharacterType.DocChar)
         {
             int rnd = Random.Range(0, medicVoiceClipsList.Count);
-            voiceSource.PlayOneShot(medicVoiceClipsList[rnd]);
+            PlayOneShot(voiceSource, medicVoiceClipsList[rnd]);
         }
     }
 
     private void MasterSpawnAudio()
     {
         int rnd = Random.Range(0, masterVoiceClipsList.Count);
-        voiceSource.PlayOneShot(masterVoiceClipsList[rnd]);
+        PlayOneShot(voiceSource, masterVoiceClipsList[rnd]);
     }
 
     private void LowTimeAudio()
     {
-        fxSource.PlayOneShot(lastTenSeconds);
+        PlayOneShot(fxSource, lastTenSeconds);
     }
 
     private void TimeoutAudio()
     {
-        fxSource.PlayOneShot(timeRanOut);
+        PlayOneShot(fxSource, timeRanOut);
     }
     #endregion
 
-    #region AbilityAudio
-    private void ExplosionAudio()
+    private void PlayOneShot(AudioSource source, AudioClip clip)
     {
-        fxSource.PlayOneShot(explosionClip);
-    }
+        if (GameplayManager.IsLoadingGame || clip == null || source == null)
+            return;
 
-    private void AdrenalinAudio()
-    {
-        fxSource.PlayOneShot(adrenalinClip);
+        source.PlayOneShot(clip);
     }
-    #endregion
 
     private IEnumerator FadeAudio(AudioSource audioSource, float duration, float targetVolume)
     {
@@ -351,8 +374,6 @@ public class AudioManager : MonoBehaviour
         if (!subscriptionsActive && gamePhase == GamePhase.GAMEPLAY)
         {
             GameplayEvents.OnFinishAction += ActionAudio;
-            AudioEvents.OnAdrenalin += AdrenalinAudio;
-            AudioEvents.OnExplode += ExplosionAudio;
             subscriptionsActive = true;
         }
     }
@@ -360,8 +381,6 @@ public class AudioManager : MonoBehaviour
     private void UnsubscribeEventsOnReturnToMenu()
     {
         GameplayEvents.OnFinishAction -= ActionAudio;
-        AudioEvents.OnAdrenalin -= AdrenalinAudio;
-        AudioEvents.OnExplode -= ExplosionAudio;
         DraftEvents.OnCharacterCreated -= UnitDraftAudio;
         PlacementEvents.OnPlaceCharacter -= UnitPlacementAudio;
         GameplayEvents.OnPlayerTurnEnded -= TurnChangeAudio;
