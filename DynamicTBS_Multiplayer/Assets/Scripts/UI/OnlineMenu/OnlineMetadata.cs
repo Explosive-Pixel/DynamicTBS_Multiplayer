@@ -51,15 +51,17 @@ public class OnlineMetadata : MonoBehaviour
 
         switch (Client.ConnectionStatus)
         {
-            case ConnectionStatus.CONNECTED:
+            case ConnectionState.CONNECTED:
                 SetInfoText(connectedText);
                 break;
 
-            case ConnectionStatus.UNCONNECTED:
+            case ConnectionState.DICONNECTED:
+            case ConnectionState.DEAD:
                 SetInfoText(unconnectedText);
                 break;
 
-            case ConnectionStatus.ATTEMPT_CONNECTION:
+            case ConnectionState.CONNECTING:
+            case ConnectionState.RECONNECTING:
                 SetInfoText(attemptConnectionText);
                 break;
         }

@@ -41,13 +41,15 @@ public class InfoScreenHandler : MonoBehaviour
 
         switch (Client.ConnectionStatus)
         {
-            case ConnectionStatus.CONNECTED:
+            case ConnectionState.CONNECTED:
                 currentString = connectedText;
                 break;
-            case ConnectionStatus.UNCONNECTED:
+            case ConnectionState.DICONNECTED:
+            case ConnectionState.DEAD:
                 currentString = unconnectedText;
                 break;
-            case ConnectionStatus.ATTEMPT_CONNECTION:
+            case ConnectionState.CONNECTING:
+            case ConnectionState.RECONNECTING:
                 currentString = attemptConnectionText;
                 break;
         }

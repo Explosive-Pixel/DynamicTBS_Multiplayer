@@ -19,7 +19,6 @@ public class WSMsgGameHistory : WSMessage
 
     public override void HandleMessage()
     {
-        Client.ToggleIsLoadingGame();
-        WSClient.Instance.LoadGame(Deserialize());
+        Client.LoadGame(Deserialize());
     }
 }
