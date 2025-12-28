@@ -47,7 +47,8 @@ public class WSClient : MonoBehaviour
         public float lastSentTime;
     }
 
-    private readonly Dictionary<string, WSMessage> processedMessages = new();
+    private readonly Dictionary<string, WSMessage> messageHistory = new();
+    private readonly HashSet<string> processedMessages = new();
 
     private float keepAliveTimer;
     private const float keepAliveInterval = 20f;
@@ -88,8 +89,6 @@ public class WSClient : MonoBehaviour
 
         state = isReconnect ? ConnectionState.RECONNECTING : ConnectionState.CONNECTING;
 
-        await CleanupWebSocket();
-
         websocket = new WebSocket(hostname);
 
         websocket.OnOpen += OnWebSocketOpen;
@@ -127,20 +126,24 @@ public class WSClient : MonoBehaviour
         Debug.Log("WebSocket connected");
     }
 
-    private void OnWebSocketClosed(WebSocketCloseCode closeCode)
+    private async void OnWebSocketClosed(WebSocketCloseCode closeCode)
     {
         if (destroyed) return;
 
         Debug.Log($"WebSocket closed: {closeCode}");
         state = ConnectionState.DICONNECTED;
 
-        gameIsUpToDate = false;
+        await CleanupWebSocket();
+
+        if (GameplayManager.HasGameStarted)
+            gameIsUpToDate = false;
+
         _ = TryReconnect();
     }
 
     private void OnWebSocketError(string error)
     {
-        Debug.LogError($"WebSocket error: {error}");
+        Debug.Log($"WebSocket error: {error}");
     }
 
 
@@ -180,9 +183,9 @@ public class WSClient : MonoBehaviour
         foreach (var msg in msgHistory)
         {
             yield return new WaitForEndOfFrame();
-            if (!processedMessages.ContainsKey(msg.uuid))
+            if (!messageHistory.ContainsKey(msg.uuid))
             {
-                UpdateProcessedMessages(msg);
+                UpdateMessageHistory(msg);
                 Debug.Log("Reloading message " + msg + " with uuid " + msg.uuid);
                 msg.HandleMessage();
             }
@@ -250,9 +253,13 @@ public class WSClient : MonoBehaviour
 
         Debug.Log("Received message: " + msg + " with uuid " + msg.uuid);
         SendAck(msg.uuid);
-        UpdateProcessedMessages(msg);
-        MessageReceiver.ReceiveMessage(msg);
-        msg.HandleMessage();
+
+        if (IsNewMessage(msg))
+        {
+            UpdateMessageHistory(msg);
+            MessageReceiver.ReceiveMessage(msg);
+            msg.HandleMessage();
+        }
     }
 
     private void HandleAck(string uuid)
@@ -273,9 +280,11 @@ public class WSClient : MonoBehaviour
         if (now - currentMessage.lastSentTime < retryIntervalMs)
             return;
 
+        Debug.Log("Try sending current message ...");
         if (currentMessage.retries >= maxRetries)
         {
-            Debug.LogWarning("ACK timeout → forcing reconnect");
+            Debug.Log("Message could not be sent. Disconnecting ...");
+            currentMessage.retries = 0;
             _ = websocket.Close();
             return;
         }
@@ -318,11 +327,20 @@ public class WSClient : MonoBehaviour
         Debug.Log($"Sent acknowlesge message for uuid: {uuid}");
     }
 
-    private void UpdateProcessedMessages(WSMessage msg)
+    private bool IsNewMessage(WSMessage msg)
     {
-        if (WSMessage.Record(msg) && !processedMessages.ContainsKey(msg.uuid))
+        if (processedMessages.Contains(msg.uuid))
+            return false;
+
+        processedMessages.Add(msg.uuid);
+        return true;
+    }
+
+    private void UpdateMessageHistory(WSMessage msg)
+    {
+        if (WSMessage.Record(msg) && !messageHistory.ContainsKey(msg.uuid))
         {
-            processedMessages.Add(msg.uuid, msg);
+            messageHistory.Add(msg.uuid, msg);
         }
     }
 
@@ -330,7 +348,7 @@ public class WSClient : MonoBehaviour
 
     private void ResetMsgHistory(PlayerType? _, GameOverCondition __)
     {
-        processedMessages.Clear();
+        messageHistory.Clear();
     }
 
     private async void OnDestroy()

@@ -75,22 +75,16 @@ public class MessageSender : MonoBehaviour
 
     private void SendUpdateServerMessage(PlayerType currentPlayer)
     {
-        if (Client.IsAdmin)
+        Client.SendToServer(new WSMsgUpdateServer
         {
-            Client.SendToServer(new WSMsgUpdateServer
-            {
-                currentPlayer = currentPlayer,
-                gamePhase = GameManager.CurrentGamePhase
-            });
-        }
+            currentPlayer = currentPlayer,
+            gamePhase = GameManager.CurrentGamePhase
+        });
     }
 
     private void SendGameOverMessage(PlayerType? winner, GameOverCondition endGameCondition)
     {
-        if (Client.IsAdmin)
-        {
-            Client.SendToServer(new WSMsgGameOver { winner = winner ?? PlayerType.none, gameOverCondition = endGameCondition });
-        }
+        Client.SendToServer(new WSMsgGameOver { winner = winner ?? PlayerType.none, gameOverCondition = endGameCondition });
     }
 
     #region EventsRegion
