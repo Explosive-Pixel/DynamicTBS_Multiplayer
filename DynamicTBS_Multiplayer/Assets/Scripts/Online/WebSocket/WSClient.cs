@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using UnityEngine;
 using NativeWebSocket;
 using System.Collections;
+using System.Linq;
+using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 public enum ConnectionState
 {
@@ -47,7 +49,7 @@ public class WSClient : MonoBehaviour
         public float lastSentTime;
     }
 
-    private readonly Dictionary<string, WSMessage> messageHistory = new();
+    private readonly List<WSMessage> messageHistory = new();
     private readonly HashSet<string> processedMessages = new();
 
     private float keepAliveTimer;
@@ -183,7 +185,7 @@ public class WSClient : MonoBehaviour
         foreach (var msg in msgHistory)
         {
             yield return new WaitForEndOfFrame();
-            if (!messageHistory.ContainsKey(msg.uuid))
+            if (!messageHistory.Any(hm => hm.uuid == msg.uuid))
             {
                 UpdateMessageHistory(msg);
                 Debug.Log("Reloading message " + msg + " with uuid " + msg.uuid);
@@ -338,9 +340,10 @@ public class WSClient : MonoBehaviour
 
     private void UpdateMessageHistory(WSMessage msg)
     {
-        if (WSMessage.Record(msg) && !messageHistory.ContainsKey(msg.uuid))
+        if (WSMessage.Record(msg))
         {
-            messageHistory.Add(msg.uuid, msg);
+            messageHistory.Add(msg);
+            Debug.Log("Updated Message History (count: " + messageHistory.Count + "):\n" + string.Join(", ", messageHistory));
         }
     }
 

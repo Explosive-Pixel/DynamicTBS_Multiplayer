@@ -75,6 +75,9 @@ public class MessageSender : MonoBehaviour
 
     private void SendUpdateServerMessage(PlayerType currentPlayer)
     {
+        if (Client.Role != ClientType.PLAYER || Client.IsLoadingGame)
+            return;
+
         Client.SendToServer(new WSMsgUpdateServer
         {
             currentPlayer = currentPlayer,
@@ -84,6 +87,9 @@ public class MessageSender : MonoBehaviour
 
     private void SendGameOverMessage(PlayerType? winner, GameOverCondition endGameCondition)
     {
+        if (Client.Role != ClientType.PLAYER || Client.IsLoadingGame)
+            return;
+
         Client.SendToServer(new WSMsgGameOver { winner = winner ?? PlayerType.none, gameOverCondition = endGameCondition });
     }
 
