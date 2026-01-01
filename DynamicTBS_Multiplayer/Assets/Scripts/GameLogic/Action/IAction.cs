@@ -15,7 +15,9 @@ public interface IAction
 
     void CreateActionDestinations(Character character);
 
-    ActionStep ExecuteAction(GameObject actionDestination);
+    ActionStep BuildAction(GameObject actionDestination);
+
+    void ExecuteAction(Action action);
 
     void AbortAction();
 }

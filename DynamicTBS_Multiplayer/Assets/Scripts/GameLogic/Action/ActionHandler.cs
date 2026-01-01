@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class ActionHandler : MonoBehaviour
@@ -13,7 +13,7 @@ public class ActionHandler : MonoBehaviour
             Instance = this;
     }
 
-    private List<ActionStep> CurrentAction { get; set; } = new();
+    private Action CurrentAction { get; set; } = new();
 
     public void InstantiateAllActionPositions(Character character)
     {
@@ -38,40 +38,34 @@ public class ActionHandler : MonoBehaviour
         }
     }
 
-    public bool ExecuteAction(Vector3 position)
+    public void ExecuteAction(Action actionToExecute)
     {
-        foreach (IAction action in ActionRegistry.GetActions())
+        if (actionToExecute.ActionSteps == null || actionToExecute.ActionSteps.Count == 0)
+            return;
+
+        if (actionToExecute.IsAction(ActionType.ActiveAbility))
         {
-            GameObject hit = UIUtils.FindGameObjectByPosition(action.ActionDestinations, position);
-            if (hit != null)
-            {
-                return ExecuteAction(action, hit);
-            }
-            else
-                action.AbortAction();
+            actionToExecute.ActionSteps[0].CharacterInAction.ActiveAbility.Execute();
         }
 
-        return false;
+        foreach (IAction action in ActionRegistry.GetActions())
+        {
+            if (action.ActionType == actionToExecute.ActionSteps[0].ActionType)
+            {
+                FinishAction(action, actionToExecute);
+            }
+        }
     }
-
 
     public bool ExecuteAction(IAction action, GameObject actionDestination)
     {
-        ActionStep actionStep = action.ExecuteAction(actionDestination);
-
-        if (CurrentAction.Count > 0 && CurrentAction[^1].ActionFinished)
-        {
-            CurrentAction = new();
-        }
-        CurrentAction.Add(actionStep);
+        ActionStep actionStep = action.BuildAction(actionDestination);
+        CurrentAction.AddActionStep(actionStep);
 
         if (actionStep.ActionFinished)
         {
-            GameplayEvents.ActionFinished(new Action
-            {
-                ExecutingPlayer = PlayerManager.CurrentPlayer,
-                ActionSteps = CurrentAction
-            });
+            CurrentAction.ExecutingPlayer = PlayerManager.CurrentPlayer;
+            ExecuteAction(action, CurrentAction);
 
             ResetActionDestinations();
 
@@ -81,16 +75,33 @@ public class ActionHandler : MonoBehaviour
         return false;
     }
 
+    public void ExecuteAction(IAction action, Action actionToExecute)
+    {
+        if (GameManager.GameType == GameType.LOCAL)
+        {
+            FinishAction(action, actionToExecute);
+            return;
+        }
+
+        WSMsgPerformAction.SendPerformActionMessage(actionToExecute);
+    }
+
+    public void FinishAction(IAction action, Action actionToExecute)
+    {
+        action.ExecuteAction(actionToExecute);
+        ResetActionDestinations();
+    }
+
     public void ResetActions()
     {
         ResetActionDestinations();
-        CurrentAction = new();
     }
 
     public void ResetActionDestinations()
     {
         AbortAllActions();
         HideAllActionPatterns();
+        CurrentAction = new();
     }
 
     public void AbortAllActions()

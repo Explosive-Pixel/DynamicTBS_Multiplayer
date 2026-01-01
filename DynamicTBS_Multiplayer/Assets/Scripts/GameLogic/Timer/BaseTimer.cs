@@ -22,7 +22,6 @@ public class BaseTimer : MonoBehaviour
     {
         if (isRunning && !isPaused)
         {
-            Debug.Log("Timer ist running: GamePhase: " + gamePhase + ", PlayerType: " + playerType);
             float timePassed = TimerUtils.TimeSince(startTime) - ServerTimeDiff;
             timeleft = duration - timePassed;
 

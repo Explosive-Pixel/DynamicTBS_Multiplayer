@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 public class GameTimer : BaseTimer
 {
@@ -23,8 +24,10 @@ public class GameTimer : BaseTimer
 
     private void UpdateTimerOnline(float pinkTimeLeft, float blueTimeLeft, DateTime startTimestamp, GamePhase gamePhase, PlayerType currentPlayer)
     {
+        Debug.Log("Update timer online for gamePhase " + gamePhase + " and currentPlayer " + currentPlayer);
         if (GameManager.GameType == GameType.ONLINE && this.gamePhase == gamePhase)
         {
+            Debug.Log("Actually updating timer for gamePhase " + this.gamePhase);
             UpdateTimeleft(pinkTimeLeft, blueTimeLeft);
             SetActive(currentPlayer, startTimestamp);
         }

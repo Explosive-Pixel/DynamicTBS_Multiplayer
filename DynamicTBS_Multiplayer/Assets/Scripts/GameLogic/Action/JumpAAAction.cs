@@ -54,15 +54,9 @@ public class JumpAAAction : MonoBehaviour, IAction
         }
     }
 
-    public ActionStep ExecuteAction(GameObject actionDestination)
+    public ActionStep BuildAction(GameObject actionDestination)
     {
         Vector3 initialPosition = characterInAction.gameObject.transform.position;
-
-        Tile tile = Board.GetTileByPosition(actionDestination.transform.position);
-        if (tile != null)
-        {
-            MoveAction.MoveCharacter(characterInAction, tile);
-        }
 
         return new ActionStep()
         {
@@ -72,6 +66,21 @@ public class JumpAAAction : MonoBehaviour, IAction
             ActionDestinationPosition = actionDestination.transform.position,
             ActionFinished = true
         };
+    }
+
+    public void ExecuteAction(Action action)
+    {
+        if (!action.IsAction(ActionType))
+            return;
+
+        ActionStep actionStep = action.ActionSteps[0];
+        Tile tile = Board.GetTileByPosition(actionStep.ActionDestinationPosition.Value);
+        if (tile == null)
+            return;
+
+        MoveAction.MoveCharacter(characterInAction, tile);
+
+        GameplayEvents.ActionFinished(action);
     }
 
     public void AbortAction()

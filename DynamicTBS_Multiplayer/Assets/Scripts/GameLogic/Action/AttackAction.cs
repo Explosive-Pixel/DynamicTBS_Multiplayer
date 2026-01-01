@@ -62,18 +62,10 @@ public class AttackAction : MonoBehaviour, IAction
         }
     }
 
-    public ActionStep ExecuteAction(GameObject actionDestination)
+    public ActionStep BuildAction(GameObject actionDestination)
     {
-        Debug.Log("Execute Attack Action");
         Vector3 initialPosition = CharacterInAction.gameObject.transform.position;
         Vector3 actionDestinationPosition = actionDestination.transform.position;
-
-        Tile tile = Board.GetTileByPosition(actionDestination.transform.position);
-        if (tile != null)
-        {
-            Character characterToAttack = tile.CurrentInhabitant;
-            characterToAttack.TakeDamage(characterInAction.AttackDamage);
-        }
 
         return new ActionStep()
         {
@@ -83,6 +75,21 @@ public class AttackAction : MonoBehaviour, IAction
             ActionDestinationPosition = actionDestinationPosition,
             ActionFinished = true
         };
+    }
+
+    public void ExecuteAction(Action action)
+    {
+        if (!action.IsAction(ActionType))
+            return;
+
+        Tile tile = Board.GetTileByPosition(action.ActionSteps[0].ActionDestinationPosition.Value);
+        if (tile == null)
+            return;
+
+        Character characterToAttack = tile.CurrentInhabitant;
+        characterToAttack.TakeDamage(action.ActionSteps[0].CharacterInAction.AttackDamage);
+
+        GameplayEvents.ActionFinished(action);
     }
 
     public void AbortAction()

@@ -22,6 +22,7 @@ public class MoveAction : MonoBehaviour, IAction
 
     public static void MoveCharacter(Character character, Tile tile)
     {
+        Debug.Log("Move character " + character + " to tile " + tile);
         character.gameObject.transform.SetParent(tile.gameObject.transform);
         character.gameObject.transform.position = tile.gameObject.transform.position;
     }
@@ -64,12 +65,10 @@ public class MoveAction : MonoBehaviour, IAction
         }
     }
 
-    public ActionStep ExecuteAction(GameObject actionDestination)
+    public ActionStep BuildAction(GameObject actionDestination)
     {
         Vector3 initialPosition = CharacterInAction.gameObject.transform.position;
         Vector3 actionDestinationPosition = actionDestination.transform.position;
-
-        MoveCharacter(characterInAction, Board.GetTileByPosition(actionDestination.transform.position));
 
         return new ActionStep()
         {
@@ -79,6 +78,18 @@ public class MoveAction : MonoBehaviour, IAction
             ActionDestinationPosition = actionDestinationPosition,
             ActionFinished = true
         };
+    }
+
+    public void ExecuteAction(Action action)
+    {
+        if (!action.IsAction(ActionType))
+            return;
+
+        Debug.Log("Execute Move action: " + action);
+        ActionStep moveActionStep = action.ActionSteps[0];
+        MoveCharacter(moveActionStep.CharacterInAction, Board.GetTileByPosition(moveActionStep.ActionDestinationPosition.Value));
+
+        GameplayEvents.ActionFinished(action);
     }
 
     public void AbortAction()

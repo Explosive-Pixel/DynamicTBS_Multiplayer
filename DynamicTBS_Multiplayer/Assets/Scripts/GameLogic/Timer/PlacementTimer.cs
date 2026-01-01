@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 public class PlacementTimer : GameTimer
 {
@@ -17,9 +18,10 @@ public class PlacementTimer : GameTimer
 
     public override void DrawNoTimeLeftConsequences()
     {
-        if (GameManager.GameType == GameType.ONLINE && Client.ShouldReadMessage(playerType))
-            return;
+        //if (GameManager.GameType == GameType.ONLINE && Client.ShouldReadMessage(playerType))
+        //    return;
 
-        PlacementManager.RandomPlacements(playerType);
+        Debug.Log("Draw no time left consequence for placement.");
+        PlacementManager.StartRandomPlacement(playerType);
     }
 }

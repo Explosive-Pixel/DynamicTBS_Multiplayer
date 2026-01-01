@@ -169,6 +169,8 @@ public class GameplayManager : MonoBehaviour
         GameplayEvents.OnPlayerTurnEnded += OnPlayerTurnEnded;
         GameplayEvents.OnPlayerTurnAborted += AbortTurn;
         hasGameStarted = true;
+
+        WSMsgUpdateServer.SendUpdateServerMessage(GamePhase.GAMEPLAY);
     }
 
     #region EventSubscriptions

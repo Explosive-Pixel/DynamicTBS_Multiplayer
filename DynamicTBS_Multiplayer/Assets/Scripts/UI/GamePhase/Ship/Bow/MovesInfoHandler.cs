@@ -43,7 +43,7 @@ public class MovesInfoHandler : MonoBehaviour
     {
         string newLine = GetMoveCountString() + ": ";
 
-        if (action.PlayerActionType != null)
+        if (action.ActionSteps == null || action.ActionSteps.Count == 0)
         {
             switch (action.PlayerActionType)
             {
@@ -56,7 +56,7 @@ public class MovesInfoHandler : MonoBehaviour
                     break;
             }
         }
-        else if (action.ActionSteps != null)
+        else
         {
             int i = 0;
             while (i < action.ActionSteps.Count)
