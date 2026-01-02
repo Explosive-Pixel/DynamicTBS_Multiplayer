@@ -79,15 +79,13 @@ public class WSMsgPerformAction : WSMessage
             ActionSteps = actionSteps != null ? actionSteps.ToList().ConvertAll(actionStep =>
             {
                 index++;
-                Debug.Log("Character Position: " + actionStep.characterX + ", " + actionStep.characterY);
                 Character characterInAction = CharacterManager.GetCharacterByPosition(new Vector3(actionStep.characterX, actionStep.characterY, 0));
-                Debug.Log("CharacterInAction: " + characterInAction);
                 return new ActionStep()
                 {
                     ActionType = actionStep.actionType,
                     CharacterInAction = characterInAction,
-                    CharacterInitialPosition = new Vector3(actionStep.characterX, actionStep.characterY, 0),
-                    ActionDestinationPosition = new Vector3(actionStep.actionDestinationX, actionStep.actionDestinationY, 0),
+                    CharacterInitialPosition = new Vector3(actionStep.characterX, actionStep.characterY, 1),
+                    ActionDestinationPosition = new Vector3(actionStep.actionDestinationX, actionStep.actionDestinationY, 1),
                     ActionFinished = index == actionSteps.Length
                 };
             }) : new()

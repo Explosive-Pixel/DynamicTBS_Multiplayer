@@ -17,7 +17,6 @@ public class OnlineMenuScreenHandler : MonoBehaviour
     public BaseActiveHandler MidActiveHandler { get { return midActiveHandler; } }
     public GameObject LobbyInfoMenu { get { return lobbyInfoMenu; } }
 
-    // TODO: Refactor script
     private void Awake()
     {
         MessageReceiver.OnWSMessageReceive += UpdateMetadata;

@@ -66,23 +66,9 @@ public class PlacementManager : MonoBehaviour
             RandomPlacement(action.ExecutingPlayer);
     }
 
-    // TODO: nicht alle Placements in einer Schleife, sondern immer erst nächstes Placement, wenn Placement Nachricht empfangen wurde ...
-    /*public static void RandomPlacements(PlayerType side)
-    {
-        int i = GetRemainingPlacementCount(side);
-        while (i-- > 0)
-        {
-            RandomPlacement(side);
-        }
-    }*/
-
     public static void StartRandomPlacement(PlayerType side)
     {
         placeRandom[side] = true;
-
-        Debug.Log("Starting random placement for side " + side);
-        Debug.Log("Client is current player: " + PlayerManager.ClientIsCurrentPlayer());
-        Debug.Log("Executing player is side: " + (side == PlayerManager.ExecutingPlayer));
 
         if (side == PlayerManager.ExecutingPlayer)
             RandomPlacement(side);
@@ -90,7 +76,6 @@ public class PlacementManager : MonoBehaviour
 
     public static void RandomPlacement(PlayerType side)
     {
-        Debug.Log("Do random placement for side " + side);
         List<Character> charactersOfPlayer = CharacterManager.GetAllLivingCharactersOfSide(side)
                 .FindAll(character => character.IsClickable && character.CurrentTile == null);
         if (charactersOfPlayer.Count > 0)

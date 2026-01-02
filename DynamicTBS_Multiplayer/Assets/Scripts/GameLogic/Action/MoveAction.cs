@@ -22,7 +22,6 @@ public class MoveAction : MonoBehaviour, IAction
 
     public static void MoveCharacter(Character character, Tile tile)
     {
-        Debug.Log("Move character " + character + " to tile " + tile);
         character.gameObject.transform.SetParent(tile.gameObject.transform);
         character.gameObject.transform.position = tile.gameObject.transform.position;
     }
@@ -85,7 +84,6 @@ public class MoveAction : MonoBehaviour, IAction
         if (!action.IsAction(ActionType))
             return;
 
-        Debug.Log("Execute Move action: " + action);
         ActionStep moveActionStep = action.ActionSteps[0];
         MoveCharacter(moveActionStep.CharacterInAction, Board.GetTileByPosition(moveActionStep.ActionDestinationPosition.Value));
 

@@ -18,6 +18,7 @@ public class PlayerManager : MonoBehaviour
     {
         startPlayer = new Dictionary<GamePhase, PlayerType>()
         {
+            { GamePhase.NONE, PlayerType.none },
             { GamePhase.DRAFT, draftStartPlayer },
             { GamePhase.PLACEMENT, placementStartPlayer },
             { GamePhase.GAMEPLAY, gameplayStartPlayer }

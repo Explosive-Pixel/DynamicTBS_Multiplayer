@@ -18,10 +18,6 @@ public class PlacementTimer : GameTimer
 
     public override void DrawNoTimeLeftConsequences()
     {
-        //if (GameManager.GameType == GameType.ONLINE && Client.ShouldReadMessage(playerType))
-        //    return;
-
-        Debug.Log("Draw no time left consequence for placement.");
         PlacementManager.StartRandomPlacement(playerType);
     }
 }

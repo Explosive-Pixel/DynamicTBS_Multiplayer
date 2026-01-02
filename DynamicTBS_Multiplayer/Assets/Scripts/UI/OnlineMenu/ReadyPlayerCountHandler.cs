@@ -9,6 +9,14 @@ public class ReadyPlayerCountHandler : MonoBehaviour
         MenuEvents.OnUpdateCurrentLobby += UpdateReadyPlayerCount;
     }
 
+    private void Start()
+    {
+        if (Client.InLobby)
+        {
+            OnlineLogicHandler.Instance.LastWSMsgLobbyInfo.HandleMessage();
+        }
+    }
+
     private void UpdateReadyPlayerCount()
     {
         if (!Client.InLobby)
