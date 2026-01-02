@@ -1,14 +1,15 @@
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class LobbyListHandler : MonoBehaviour
 {
-    [SerializeField] private GameObject content;
-    [SerializeField] private GameObject lobbyInfoPrefab;
-
     [SerializeField] private GameObject loadingInfo;
     [SerializeField] private GameObject noLobbiesInfo;
+
+    [SerializeField] private ScrollableLobbyList scrollableLobbyList;
+    [SerializeField] private TMPro.TMP_Text lobbyCount;
+
+    public bool MaxLobbyCountReached { get; private set; }
 
     private Lobby selectedLobby;
 
@@ -30,30 +31,24 @@ public class LobbyListHandler : MonoBehaviour
             WSMsgLobbyList wSMsgLobbyList = (WSMsgLobbyList)msg;
 
             loadingInfo.SetActive(true);
-            DeleteContent();
-            CreateContent(wSMsgLobbyList.lobbies);
+            CreateContent(wSMsgLobbyList.lobbies, wSMsgLobbyList.maxLobbyCount);
             loadingInfo.SetActive(false);
         }
     }
 
-    private void DeleteContent()
+    private void CreateContent(LobbyInfo[] lobbyList, int maxLobbyCount)
     {
-        foreach (Transform child in content.transform)
-        {
-            GameObject.Destroy(child.gameObject);
-        }
-    }
+        lobbyCount.text = lobbyList.Length + "/" + maxLobbyCount;
+        MaxLobbyCountReached = lobbyList.Length >= maxLobbyCount;
 
-    private void CreateContent(LobbyInfo[] lobbyList)
-    {
         if (lobbyList.Length == 0)
         {
             noLobbiesInfo.SetActive(true);
+            scrollableLobbyList.SetLobbies(lobbyList, selectedLobby);
             return;
         }
 
         noLobbiesInfo.SetActive(false);
-        OnlineMenuScreenHandler onlineMenuScreenHandler = gameObject.GetComponentInParent<OnlineMenuScreenHandler>(true);
 
         LobbyInfo[] sortedLobbies = lobbyList
             .OrderBy(lobby =>
@@ -68,16 +63,7 @@ public class LobbyListHandler : MonoBehaviour
             })
             .ToArray();
 
-        foreach (LobbyInfo lobbyInfo in sortedLobbies)
-        {
-            GameObject lobbyInfoGO = GameObject.Instantiate(lobbyInfoPrefab);
-            lobbyInfoGO.transform.SetParent(content.transform);
-            lobbyInfoGO.GetComponent<LobbyInfoHandler>().Init(lobbyInfo, selectedLobby);
-            ChangeActiveGameObjectOnClickHandler clickHandler = lobbyInfoGO.GetComponent<ChangeActiveGameObjectOnClickHandler>();
-            clickHandler.activeHandler = onlineMenuScreenHandler.MidActiveHandler;
-            clickHandler.activeOnClickGameObject = onlineMenuScreenHandler.LobbyInfoMenu;
-            lobbyInfoGO.GetComponent<Button>().onClick.AddListener(() => MenuEvents.ChangeLobbySelection(lobbyInfoGO.GetComponent<LobbyInfoHandler>().Lobby));
-        }
+        scrollableLobbyList.SetLobbies(sortedLobbies, selectedLobby);
     }
 
     private void UpdateSelectedLobby(Lobby lobby)

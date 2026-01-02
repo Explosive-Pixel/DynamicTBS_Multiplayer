@@ -6,9 +6,10 @@ public class WSMsgServerNotification : WSMessage
     public enum ServerNotification
     {
         LOBBY_NOT_FOUND = 0,
-        CONNECTION_FORBIDDEN_FULL_LOBBY = 1,
-        TOGGLE_LOAD_GAME_STATUS = 2,
-        TIMEOUT = 3
+        LOBBY_CREATION_FORBITTEN_MAX_LOBBY_COUNT_REACHED = 1,
+        CONNECTION_FORBIDDEN_FULL_LOBBY = 2,
+        TOGGLE_LOAD_GAME_STATUS = 3,
+        TIMEOUT = 4
     }
 
     public ServerNotification serverNotification;
