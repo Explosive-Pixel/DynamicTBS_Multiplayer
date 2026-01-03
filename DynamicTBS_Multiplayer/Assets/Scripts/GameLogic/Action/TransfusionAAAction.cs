@@ -100,12 +100,15 @@ public class TransfusionAAAction : MonoBehaviour, IAction
         if (steal == null || give == null)
             return;
 
+        bool isHypnotized = action.ActionSteps[0].CharacterInAction.IsHypnotized();
+
         Character stealHPCharacter = steal.CurrentInhabitant;
         Character giveHPCharacter = give.CurrentInhabitant;
         stealHPCharacter.TakeDamage(TransfusionAA.hpCount);
         giveHPCharacter.Heal(TransfusionAA.hpCount);
 
-        GameplayEvents.ActionFinished(action);
+        if (!isHypnotized)
+            GameplayEvents.ActionFinished(action);
     }
 
     public void AbortAction()

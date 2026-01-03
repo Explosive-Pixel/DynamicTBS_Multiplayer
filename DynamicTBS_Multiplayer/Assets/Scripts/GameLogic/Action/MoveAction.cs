@@ -87,7 +87,8 @@ public class MoveAction : MonoBehaviour, IAction
         ActionStep moveActionStep = action.ActionSteps[0];
         MoveCharacter(moveActionStep.CharacterInAction, Board.GetTileByPosition(moveActionStep.ActionDestinationPosition.Value));
 
-        GameplayEvents.ActionFinished(action);
+        if (!moveActionStep.CharacterInAction.IsHypnotized())
+            GameplayEvents.ActionFinished(action);
     }
 
     public void AbortAction()

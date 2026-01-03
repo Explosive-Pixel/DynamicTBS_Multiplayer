@@ -77,11 +77,14 @@ public class LongshotAAAction : MonoBehaviour, IAction
         if (tile == null)
             return;
 
+        Character characterInAction = action.ActionSteps[0].CharacterInAction;
+        bool isHypnotized = characterInAction.IsHypnotized();
         Character characterToAttack = tile.CurrentInhabitant;
         characterToAttack.TakeDamage(LongshotAA.damage);
         characterInAction.TakeDamage(LongshotAA.selfDamage);
 
-        GameplayEvents.ActionFinished(action);
+        if (!isHypnotized)
+            GameplayEvents.ActionFinished(action);
     }
 
     public void AbortAction()

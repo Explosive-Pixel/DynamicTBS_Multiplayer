@@ -78,6 +78,7 @@ public class RamAAAction : MonoBehaviour, IAction
             return;
 
         Character characterInAction = action.ActionSteps[0].CharacterInAction;
+        bool isHypnotized = characterInAction.IsHypnotized();
         Tile currentTile = characterInAction.CurrentTile;
         Tile nextTile = tile;
         List<Tile> neighbors = new();
@@ -119,7 +120,8 @@ public class RamAAAction : MonoBehaviour, IAction
                 characterInAction.TakeDamage(RamAA.selfDamage);
         }
 
-        GameplayEvents.ActionFinished(action);
+        if (!isHypnotized)
+            GameplayEvents.ActionFinished(action);
     }
 
     public void AbortAction()

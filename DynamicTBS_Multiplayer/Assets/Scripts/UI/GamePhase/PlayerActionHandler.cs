@@ -15,7 +15,7 @@ public class PlayerActionHandler : MonoBehaviour
 
     public void OnMouseDown()
     {
-        if (!PlayerManager.ClientIsCurrentPlayer() || !GameplayManager.UIPlayerActionAllowed)
+        if (!PlayerManager.ClientIsCurrentPlayer() || GameplayManager.gameIsPaused)
             return;
 
         if (trigger_interactable.activeSelf)
