@@ -4,7 +4,6 @@ using UnityEngine;
 using NativeWebSocket;
 using System.Collections;
 using System.Linq;
-using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 public enum ConnectionState
 {

@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 
 public class GameTimer : BaseTimer
 {
@@ -56,6 +55,7 @@ public class GameTimer : BaseTimer
     {
         if (msg.timerUpdate.gamePhase == gamePhase && msg.timerUpdate.currentPlayer == playerType)
         {
+            UpdateTimer();
             UpdateTimeleft(msg.timerUpdate.pinkTimeLeft, msg.timerUpdate.blueTimeLeft);
             if (msg.pause)
                 PauseTimer();
