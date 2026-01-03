@@ -6,6 +6,11 @@ public class HypnotizedState : MonoBehaviour, IState
 
     public static HypnotizedState Create(GameObject parent)
     {
+        if (parent.TryGetComponent<HypnotizedState>(out var oldHs))
+        {
+            return oldHs;
+        }
+
         HypnotizedState hs = parent.AddComponent<HypnotizedState>();
         hs.Init();
         return hs;

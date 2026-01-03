@@ -101,7 +101,8 @@ public class RepairAAAction : MonoBehaviour, IAction
         floor.Transform(OtherTileType(floor.TileType));
         hole.Transform(OtherTileType(hole.TileType));
 
-        GameplayEvents.ActionFinished(action);
+        if (!action.ActionSteps[0].CharacterInAction.IsHypnotized())
+            GameplayEvents.ActionFinished(action);
     }
 
     public void AbortAction()

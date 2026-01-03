@@ -78,9 +78,10 @@ public class JumpAAAction : MonoBehaviour, IAction
         if (tile == null)
             return;
 
-        MoveAction.MoveCharacter(characterInAction, tile);
+        MoveAction.MoveCharacter(action.ActionSteps[0].CharacterInAction, tile);
 
-        GameplayEvents.ActionFinished(action);
+        if (!action.ActionSteps[0].CharacterInAction.IsHypnotized())
+            GameplayEvents.ActionFinished(action);
     }
 
     public void AbortAction()

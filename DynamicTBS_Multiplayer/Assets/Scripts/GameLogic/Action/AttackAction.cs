@@ -89,7 +89,8 @@ public class AttackAction : MonoBehaviour, IAction
         Character characterToAttack = tile.CurrentInhabitant;
         characterToAttack.TakeDamage(action.ActionSteps[0].CharacterInAction.AttackDamage);
 
-        GameplayEvents.ActionFinished(action);
+        if (!action.ActionSteps[0].CharacterInAction.IsHypnotized())
+            GameplayEvents.ActionFinished(action);
     }
 
     public void AbortAction()

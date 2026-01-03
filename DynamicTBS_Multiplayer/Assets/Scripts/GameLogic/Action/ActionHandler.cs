@@ -65,7 +65,7 @@ public class ActionHandler : MonoBehaviour
         if (actionStep.ActionFinished)
         {
             CurrentAction.ExecutingPlayer = PlayerManager.CurrentPlayer;
-            ExecuteAction(action, CurrentAction);
+            ExecuteOriginalAction(CurrentAction);
 
             ResetActionDestinations();
 
@@ -75,15 +75,26 @@ public class ActionHandler : MonoBehaviour
         return false;
     }
 
-    public void ExecuteAction(IAction action, Action actionToExecute)
+    public void ExecuteOriginalAction(Action actionToExecute)
     {
-        if (GameManager.GameType == GameType.LOCAL)
+        if (actionToExecute.IsAction(ActionType.ActiveAbility) && ActionRegistry.GetActions().Find(action => action.ActionType == actionToExecute.ActionSteps[0].ActionType) == null)
         {
-            FinishAction(action, actionToExecute);
-            return;
+            actionToExecute.ActionSteps[0].CharacterInAction.ActiveAbility.Execute();
         }
 
-        WSMsgPerformAction.SendPerformActionMessage(actionToExecute);
+        foreach (IAction action in ActionRegistry.GetActions())
+        {
+            if (action.ActionType == actionToExecute.ActionSteps[0].ActionType)
+            {
+                if (GameManager.GameType == GameType.LOCAL)
+                {
+                    FinishAction(action, actionToExecute);
+                    return;
+                }
+
+                WSMsgPerformAction.SendPerformActionMessage(actionToExecute);
+            }
+        }
     }
 
     public void FinishAction(IAction action, Action actionToExecute)
@@ -101,6 +112,10 @@ public class ActionHandler : MonoBehaviour
     {
         AbortAllActions();
         HideAllActionPatterns();
+
+        if (CharacterManager.GetAllLivingCharacters().Find(character => character.IsHypnotized()) != null)
+            return;
+
         CurrentAction = new();
     }
 
