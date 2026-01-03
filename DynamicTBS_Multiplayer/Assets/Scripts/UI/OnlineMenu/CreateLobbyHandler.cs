@@ -84,7 +84,7 @@ public class CreateLobbyHandler : MonoBehaviour
 
     private void HandleWSMsgLobbyList(WSMsgLobbyList msg)
     {
-        maxLobbyCountReached = msg.lobbies.Count() >= msg.maxLobbyCount;
+        maxLobbyCountReached = msg.lobbyCount >= msg.maxLobbyCount;
     }
 
     private void HandleWSMsgServerNotification(WSMsgServerNotification msg)

@@ -262,7 +262,7 @@ MonoBehaviour:
   loadingInfo: {fileID: 6449408654986764881}
   noLobbiesInfo: {fileID: 4150740853559584370}
   scrollableLobbyList: {fileID: 5544511915044573184}
-  lobbyCount: {fileID: 6702944288677288373}
+  lobbyCountText: {fileID: 6702944288677288373}
 --- !u!114 &5544511915044573184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -563,57 +563,12 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 9052056093243362341, guid: d2eacc4db99bc4d199ec2341b3b541c5, type: 3}
   m_PrefabInstance: {fileID: 7622352029934143733}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &5430688399493091306 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2492081152407176991, guid: d2eacc4db99bc4d199ec2341b3b541c5, type: 3}
-  m_PrefabInstance: {fileID: 7622352029934143733}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &5606701622540755089
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5430688399493091306}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_StringReference:
-    m_TableReference:
-      m_TableCollectionName: GUID:5fe63ad03255ab043be4da51e6c25db3
-    m_TableEntryReference:
-      m_KeyId: 90163622436864
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  m_FormatArguments: []
-  m_UpdateString:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6702944288677288373}
-        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
-        m_MethodName: set_text
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 1
-  references:
-    version: 2
-    RefIds: []
 --- !u!114 &6702944288677288373 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3804887030423621952, guid: d2eacc4db99bc4d199ec2341b3b541c5, type: 3}
   m_PrefabInstance: {fileID: 7622352029934143733}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5430688399493091306}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
@@ -768,7 +723,7 @@ MonoBehaviour:
     m_TableReference:
       m_TableCollectionName: GUID:5fe63ad03255ab043be4da51e6c25db3
     m_TableEntryReference:
-      m_KeyId: 91385804873728
+      m_KeyId: 27618912156770304
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0

@@ -4,6 +4,7 @@ using System;
 public class WSMsgLobbyList : WSMessage
 {
     public LobbyInfo[] lobbies;
+    public int lobbyCount;
     public int maxLobbyCount;
 
     public WSMsgLobbyList()

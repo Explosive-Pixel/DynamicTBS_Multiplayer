@@ -7,7 +7,7 @@ public class LobbyListHandler : MonoBehaviour
     [SerializeField] private GameObject noLobbiesInfo;
 
     [SerializeField] private ScrollableLobbyList scrollableLobbyList;
-    [SerializeField] private TMPro.TMP_Text lobbyCount;
+    [SerializeField] private TMPro.TMP_Text lobbyCountText;
 
     public bool MaxLobbyCountReached { get; private set; }
 
@@ -31,14 +31,14 @@ public class LobbyListHandler : MonoBehaviour
             WSMsgLobbyList wSMsgLobbyList = (WSMsgLobbyList)msg;
 
             loadingInfo.SetActive(true);
-            CreateContent(wSMsgLobbyList.lobbies, wSMsgLobbyList.maxLobbyCount);
+            CreateContent(wSMsgLobbyList.lobbies, wSMsgLobbyList.lobbyCount, wSMsgLobbyList.maxLobbyCount);
             loadingInfo.SetActive(false);
         }
     }
 
-    private void CreateContent(LobbyInfo[] lobbyList, int maxLobbyCount)
+    private void CreateContent(LobbyInfo[] lobbyList, int lobbyCount, int maxLobbyCount)
     {
-        lobbyCount.text = lobbyList.Length + "/" + maxLobbyCount;
+        lobbyCountText.text = lobbyCount + "/" + maxLobbyCount;
         MaxLobbyCountReached = lobbyList.Length >= maxLobbyCount;
 
         if (lobbyList.Length == 0)
