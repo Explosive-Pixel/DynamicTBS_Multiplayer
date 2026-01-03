@@ -64,6 +64,21 @@ public class TransfusionAAAction : MonoBehaviour, IAction
     {
         Vector3 initialPosition = characterInAction.gameObject.transform.position;
 
+        Tile tile = Board.GetTileByPosition(actionDestination.transform.position);
+        if (tile != null)
+        {
+            if (stealHPCharacter == null)
+            {
+                stealHPCharacter = tile.CurrentInhabitant;
+                ActionUtils.Clear(actionDestinations);
+                CreateActionDestinations(characterInAction);
+            }
+            else
+            {
+                giveHPCharacter = tile.CurrentInhabitant;
+            }
+        }
+
         return new ActionStep()
         {
             ActionType = ActionType,
