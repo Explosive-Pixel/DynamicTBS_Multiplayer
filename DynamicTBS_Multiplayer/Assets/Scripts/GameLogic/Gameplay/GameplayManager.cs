@@ -16,10 +16,11 @@ public class GameplayManager : MonoBehaviour
     {
         get
         {
-            return GameManager.CurrentGamePhase != GamePhase.NONE
+            return SceneChangeManager.Instance.CurrentScene == Scene.TUTORIAL
+                || (GameManager.CurrentGamePhase != GamePhase.NONE
                 && !gameIsPaused &&
                 (GameManager.GameType == GameType.LOCAL
-                || (!Client.IsLoadingGame && Client.InLobby));
+                || (!Client.IsLoadingGame && Client.InLobby)));
         }
     }
     public static bool UIPlayerActionAllowed

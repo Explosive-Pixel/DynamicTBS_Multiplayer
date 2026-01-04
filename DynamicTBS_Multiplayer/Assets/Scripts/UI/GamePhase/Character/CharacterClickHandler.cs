@@ -24,7 +24,7 @@ public class CharacterClickHandler : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (!GameplayManager.UIInteractionAllowed)
+        if (SceneChangeManager.Instance.CurrentScene == Scene.GAME && !GameplayManager.UIInteractionAllowed)
             return;
 
         SelectCharacter();

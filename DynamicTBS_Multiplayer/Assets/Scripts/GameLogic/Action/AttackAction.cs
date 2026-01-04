@@ -20,6 +20,12 @@ public class AttackAction : MonoBehaviour, IAction
 
     private void Awake()
     {
+        if (SceneChangeManager.Instance.CurrentScene == Scene.TUTORIAL)
+        {
+            ActionRegistry.Register(this);
+            return;
+        }
+
         GameEvents.OnGamePhaseStart += Register;
     }
 

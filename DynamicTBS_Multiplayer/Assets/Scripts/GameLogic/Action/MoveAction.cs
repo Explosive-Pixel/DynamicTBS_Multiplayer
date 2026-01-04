@@ -17,6 +17,12 @@ public class MoveAction : MonoBehaviour, IAction
 
     private void Awake()
     {
+        if (SceneChangeManager.Instance.CurrentScene == Scene.TUTORIAL)
+        {
+            ActionRegistry.Register(this);
+            return;
+        }
+
         GameEvents.OnGamePhaseStart += Register;
     }
 
@@ -99,7 +105,7 @@ public class MoveAction : MonoBehaviour, IAction
 
     private List<Vector3> FindMovePositions(Character character, bool pattern = false)
     {
-        if (character.CurrentTile == null || (!GameplayManager.HasGameStarted && !pattern))
+        if (SceneChangeManager.Instance.CurrentScene != Scene.TUTORIAL && (character.CurrentTile == null || (!GameplayManager.HasGameStarted && !pattern)))
         {
             return FindAccessibleStartPositions(character);
         }

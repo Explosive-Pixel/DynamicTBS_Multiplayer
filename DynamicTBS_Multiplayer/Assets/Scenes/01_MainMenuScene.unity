@@ -1795,8 +1795,6 @@ MonoBehaviour:
   jumpClip: {fileID: 8300000, guid: 2787ac5b54c357c4fae30fcd035fd65b, type: 3}
   changeFloorClip: {fileID: 8300000, guid: f605f962946061c419b04c152259a96f, type: 3}
   healClip: {fileID: 8300000, guid: 5ebee8f77b1f6004c948d584cd43f6d2, type: 3}
-  explosionClip: {fileID: 8300000, guid: ce2c50c8520453e479ca6cc66ab64b00, type: 3}
-  adrenalinClip: {fileID: 8300000, guid: a703d1b389df73a4ab871f4dc08353a7, type: 3}
   lastTenSeconds: {fileID: 8300000, guid: 69426c17db1bedd498f469599a0bf791, type: 3}
   timeRanOut: {fileID: 8300000, guid: 629893daa79fa474a94339f08dc9bd4e, type: 3}
   rechargeClip: {fileID: 8300000, guid: 73415276b99f0624ebe1165722fd7c25, type: 3}
@@ -3072,7 +3070,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &626879530
 RectTransform:
   m_ObjectHideFlags: 0

@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class ActionHandler : MonoBehaviour
@@ -20,7 +19,7 @@ public class ActionHandler : MonoBehaviour
         ResetActionDestinations();
         foreach (IAction action in ActionRegistry.GetActions())
         {
-            if (GameplayManager.ActionAvailable(character, action.ActionType) && !character.isDisabled())
+            if ((SceneChangeManager.Instance.CurrentScene == Scene.TUTORIAL || GameplayManager.ActionAvailable(character, action.ActionType)) && !character.isDisabled())
             {
                 action.CreateActionDestinations(character);
             }

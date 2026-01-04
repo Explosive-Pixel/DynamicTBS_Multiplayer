@@ -8,7 +8,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private PlayerType gameplayStartPlayer;
 
     private static PlayerType currentPlayer;
-    public static PlayerType CurrentPlayer { get { return currentPlayer; } }
+    public static PlayerType CurrentPlayer { get { return currentPlayer; } set { currentPlayer = value; } }
     public static PlayerType ExecutingPlayer { get { return GameManager.GameType == GameType.ONLINE ? PlayerSetup.Side : CurrentPlayer; } }
 
     private static Dictionary<GamePhase, PlayerType> startPlayer;
@@ -16,6 +16,11 @@ public class PlayerManager : MonoBehaviour
 
     private void Awake()
     {
+        if (SceneChangeManager.Instance.CurrentScene == Scene.TUTORIAL)
+        {
+            return;
+        }
+
         startPlayer = new Dictionary<GamePhase, PlayerType>()
         {
             { GamePhase.NONE, PlayerType.none },

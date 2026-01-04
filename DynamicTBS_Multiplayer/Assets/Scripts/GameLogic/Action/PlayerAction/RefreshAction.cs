@@ -7,6 +7,12 @@ public class RefreshAction : MonoBehaviour, IPlayerAction
 
     private void Awake()
     {
+        if (SceneChangeManager.Instance.CurrentScene == Scene.TUTORIAL)
+        {
+            PlayerActionRegistry.Register(this);
+            return;
+        }
+
         GameEvents.OnGamePhaseStart += Register;
     }
 
