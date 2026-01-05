@@ -21,7 +21,7 @@ public class ActionUtils : MonoBehaviour
         GameObject actionPosition = Instantiate(prefab);
         Tile tile = Board.GetTileByPosition(position);
         if (tile != null)
-            actionPosition.transform.SetParent(tile.gameObject.transform);
+            actionPosition.transform.SetParent(tile.gameObject.transform, false);
         actionPosition.transform.position = new Vector3(position.x, position.y, prefab.transform.position.z);
 
         ActionTileHandler.Create(action, actionPosition);

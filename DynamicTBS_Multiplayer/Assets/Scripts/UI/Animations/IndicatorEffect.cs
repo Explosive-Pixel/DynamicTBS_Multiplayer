@@ -11,8 +11,10 @@ public abstract class IndicatorEffect : MonoBehaviour
         if (GameplayManager.IsLoadingGame)
             return;
 
-        GameObject indicatorGameObject = Instantiate(prefab, position, Quaternion.identity);
-        indicatorGameObject.transform.SetParent(Board.GetTileByPosition(position).transform);
+        Tile effectTile = Board.GetTileByPosition(position);
+        GameObject indicatorGameObject = Instantiate(prefab);
+        indicatorGameObject.transform.SetParent(effectTile.transform, false);
+        indicatorGameObject.transform.position = effectTile.transform.position;
         StartCoroutine(EffectCoroutine(indicatorGameObject, indicatorTime));
     }
 
