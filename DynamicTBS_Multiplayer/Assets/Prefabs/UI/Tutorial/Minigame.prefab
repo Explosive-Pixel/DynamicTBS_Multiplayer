@@ -107,10 +107,13 @@ MonoBehaviour:
   characterInActionIndex: 0
   availableActions: 
   showRefreshButton: 0
+  resetTime: 10
   tilePrefab: {fileID: 5958506305574636110}
   boardGameObject: {fileID: 2799870329555908153}
   activeAbilityButton: {fileID: 8374761852713816238}
   refreshButton: {fileID: 7214320509586384079}
+  refreshButton_disabled: {fileID: 5684056408581617101}
+  refreshButton_enabled: {fileID: 3501620671315919418}
   refreshButton_pink: {fileID: 6836396643863256590}
   refreshButton_blue: {fileID: 5711366648182533087}
 --- !u!1 &2799870329555908153
@@ -385,6 +388,16 @@ PrefabInstance:
     - {fileID: 7955392929515151469, guid: dae3d12c71107460a8ad4c2f3ea4f0ca, type: 3}
     - {fileID: 5246624030690484453, guid: dae3d12c71107460a8ad4c2f3ea4f0ca, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: dae3d12c71107460a8ad4c2f3ea4f0ca, type: 3}
+--- !u!1 &3501620671315919418 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2055669239345797842, guid: dae3d12c71107460a8ad4c2f3ea4f0ca, type: 3}
+  m_PrefabInstance: {fileID: 3179388756483643624}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5684056408581617101 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7133321424732564773, guid: dae3d12c71107460a8ad4c2f3ea4f0ca, type: 3}
+  m_PrefabInstance: {fileID: 3179388756483643624}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &5711366648182533087 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7160068709816136503, guid: dae3d12c71107460a8ad4c2f3ea4f0ca, type: 3}

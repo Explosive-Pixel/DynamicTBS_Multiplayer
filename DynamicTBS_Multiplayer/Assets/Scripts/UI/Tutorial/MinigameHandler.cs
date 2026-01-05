@@ -43,13 +43,15 @@ public class MinigameHandler : MonoBehaviour
     [SerializeField] private bool showRefreshButton;
 
     [Header("ResetTime")]
-    [SerializeField] private float resetTime = 10;
+    [SerializeField] private float resetTime = -1;
 
     [Header("GameObjects")]
     [SerializeField] private GameObject tilePrefab;
     [SerializeField] private GameObject boardGameObject;
     [SerializeField] private GameObject activeAbilityButton;
     [SerializeField] private GameObject refreshButton;
+    [SerializeField] private GameObject refreshButton_disabled;
+    [SerializeField] private GameObject refreshButton_enabled;
     [SerializeField] private GameObject refreshButton_pink;
     [SerializeField] private GameObject refreshButton_blue;
 
@@ -82,7 +84,7 @@ public class MinigameHandler : MonoBehaviour
 
     private void Update()
     {
-        if (!active)
+        if (!active || resetTime <= 0)
             return;
 
         timer += Time.deltaTime;
@@ -107,8 +109,10 @@ public class MinigameHandler : MonoBehaviour
         AddButtons(availableActions, showRefreshButton);
 
         UpdateGlobalScripts();
-
         active = true;
+
+        ActionHandler.Instance.InstantiateAllActionPositions(mainCharacter);
+        GameplayEvents.ChangeCharacterSelection(mainCharacter);
     }
 
     private void UpdateGlobalScripts()
@@ -190,21 +194,53 @@ public class MinigameHandler : MonoBehaviour
     {
         if (availableActions.Contains(ActionType.ActiveAbility))
         {
-            List<AbilityClass> activeAbilityIcons = activeAbilityButton.GetComponentsInChildren<AbilityClass>(true).ToList();
-            activeAbilityIcons.ForEach(aaIcon => aaIcon.gameObject.SetActive(aaIcon.activeAbilityType == mainCharacter.ActiveAbility.AbilityType && aaIcon.disabled == !mainCharacter.MayPerformActiveAbility() && (aaIcon.side == mainCharacter.Side || aaIcon.disabled)));
+            GameplayEvents.OnCharacterSelectionChange += UpdateAbilityButton;
         }
         activeAbilityButton.SetActive(availableActions.Contains(ActionType.ActiveAbility));
 
-        refreshButton_blue.SetActive(mainCharacter.Side == PlayerType.blue);
-        refreshButton_pink.SetActive(mainCharacter.Side == PlayerType.pink);
+        if (showRefreshButton)
+        {
+            refreshButton_blue.SetActive(mainCharacter.Side == PlayerType.blue);
+            refreshButton_pink.SetActive(mainCharacter.Side == PlayerType.pink);
+            refreshButton_disabled.SetActive(true);
+            refreshButton_enabled.SetActive(false);
+            GameplayEvents.OnFinishAction += UpdateRefreshButton;
+        }
+
         refreshButton.SetActive(showRefreshButton);
+    }
+
+    private void UpdateAbilityButton(Character character)
+    {
+        if (!active)
+            return;
+
+        if (character == null)
+        {
+            activeAbilityButton.SetActive(false);
+            return;
+        }
+
+        List<AbilityClass> activeAbilityIcons = activeAbilityButton.GetComponentsInChildren<AbilityClass>(true).ToList();
+        activeAbilityIcons.ForEach(aaIcon => aaIcon.gameObject.SetActive(aaIcon.activeAbilityType == character.ActiveAbility.AbilityType && aaIcon.disabled == !character.MayPerformActiveAbility() && (aaIcon.side == character.Side || aaIcon.disabled)));
+        activeAbilityButton.SetActive(true);
+    }
+
+    private void UpdateRefreshButton(Action action)
+    {
+        refreshButton_disabled.SetActive(!mainCharacter.IsActiveAbilityOnCooldown());
+        refreshButton_enabled.SetActive(mainCharacter.IsActiveAbilityOnCooldown());
     }
 
     private void Delete()
     {
+        GameplayEvents.ChangeCharacterSelection(null);
+
         active = false;
 
-        GameplayEvents.ChangeCharacterSelection(null);
+        GameplayEvents.OnCharacterSelectionChange -= UpdateAbilityButton;
+        GameplayEvents.OnFinishAction -= UpdateRefreshButton;
+
         for (int i = 0; i < tiles.Count; i++)
         {
             Destroy(tiles[i].gameObject);
@@ -212,5 +248,11 @@ public class MinigameHandler : MonoBehaviour
 
         tiles.Clear();
         mainCharacter = null;
+    }
+
+    private void OnDestroy()
+    {
+        GameplayEvents.OnCharacterSelectionChange -= UpdateAbilityButton;
+        GameplayEvents.OnFinishAction -= UpdateRefreshButton;
     }
 }
