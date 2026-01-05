@@ -62,7 +62,7 @@ public class HealthBarHandler : MonoBehaviour
     private GameObject AppendHealthPoint(GameObject hpPrefab)
     {
         GameObject hp = Instantiate(hpPrefab);
-        hp.transform.SetParent(this.transform);
+        hp.transform.SetParent(this.transform, false);
         hp.transform.localScale = hpPrefab.transform.localScale;
 
         if (healthPoints.Count == 0)

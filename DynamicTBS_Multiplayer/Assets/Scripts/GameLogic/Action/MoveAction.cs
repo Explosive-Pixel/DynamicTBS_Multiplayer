@@ -28,7 +28,7 @@ public class MoveAction : MonoBehaviour, IAction
 
     public static void MoveCharacter(Character character, Tile tile)
     {
-        character.gameObject.transform.SetParent(tile.gameObject.transform);
+        character.gameObject.transform.SetParent(tile.gameObject.transform, false);
         character.gameObject.transform.position = tile.gameObject.transform.position;
     }
 

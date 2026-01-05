@@ -127,33 +127,43 @@ public class MinigameHandler : MonoBehaviour
     {
         float startX = layout.startX;
         float startY = layout.startY;
-        float size = tilePrefab.GetComponent<SpriteRenderer>().bounds.size.x;
 
-        float x = startX;
-        float y = startY;
+        float size = tilePrefab
+            .GetComponent<SpriteRenderer>()
+            .sprite.bounds.size.x;
+
         int rowIndex = 0;
-        int columnIndex;
 
         foreach (RowLayout row in layout.rows)
         {
-            columnIndex = 0;
+            int columnIndex = 0;
+
             foreach (TileLayout tileLayout in row.tiles)
             {
-                GameObject tileGameObject = Instantiate(tilePrefab);
-                tileGameObject.transform.SetParent(boardGameObject.transform);
-                tileGameObject.transform.position = new Vector3(x, y, 1);
-                tileGameObject.SetActive(true);
-                Tile tile = tileGameObject.GetComponent<Tile>();
+                GameObject tileGO = Instantiate(tilePrefab);
+                tileGO.SetActive(true);
+
+                tileGO.transform.SetParent(boardGameObject.transform, false);
+
+                tileGO.transform.localPosition = new Vector3(
+                    startX + columnIndex * size,
+                    startY + rowIndex * size,
+                    1
+                );
+
+                tileGO.transform.localScale = Vector3.one;
+
+                Tile tile = tileGO.GetComponent<Tile>();
                 tile.Init(tileLayout.tileType, tileLayout.side, rowIndex, columnIndex);
                 tiles.Add(tile);
-                x += size;
+
                 columnIndex++;
             }
-            x = startX;
-            y += size;
+
             rowIndex++;
         }
     }
+
 
     private void CreateCharacter(List<CharacterLayout> characterSetup)
     {
