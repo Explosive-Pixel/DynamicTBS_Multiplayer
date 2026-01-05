@@ -73,6 +73,12 @@ public class MapLayout : MonoBehaviour
     {
         BaseActiveHandler activeHandler = gameObject.GetComponentInParent<BaseActiveHandler>(true);
 
+        if (activeHandler == null)
+        {
+            gameObject.SetActive(active);
+            return;
+        }
+
         if (active && !gameObject.activeSelf)
             activeHandler.SetActive(gameObject);
         else if (!active && gameObject.activeSelf)
