@@ -9,13 +9,12 @@ public class MainMenuSceneManager : MonoBehaviour
     private void Start()
     {
         AudioEvents.EnteringMainMenu();
-        tutorialButton.SetActive(false);
     }
 
     public void TogglePlayOptionsMenu()
     {
         playOptionsMenu.SetActive(!playOptionsMenu.activeSelf);
-        //tutorialButton.SetActive(!tutorialButton.activeSelf);
+        tutorialButton.SetActive(!tutorialButton.activeSelf);
 
         AudioEvents.PressingButton();
     }
