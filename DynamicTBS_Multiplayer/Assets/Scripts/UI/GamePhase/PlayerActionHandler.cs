@@ -9,6 +9,13 @@ public class PlayerActionHandler : MonoBehaviour
 
     private void Awake()
     {
+        if (SceneChangeManager.Instance.CurrentScene == Scene.TUTORIAL)
+        {
+            SetActive(true, false);
+            GameplayEvents.OnFinishAction += ChangeButtonInteractability;
+            return;
+        }
+
         SubscribeEvents();
         SetActive(false, true);
     }
@@ -48,6 +55,16 @@ public class PlayerActionHandler : MonoBehaviour
         SetActive(!PlayerSetup.IsNotSide(player), playerAction.IsActionAvailable(PlayerManager.CurrentPlayer));
     }
 
+    private void ChangeButtonInteractability(Action action)
+    {
+        IPlayerAction playerAction = PlayerActionRegistry.GetAction(playerActionType);
+
+        if (playerAction == null)
+            return;
+
+        SetActive(true, playerAction.IsActionAvailable(PlayerManager.CurrentPlayer) || (action.ActionSteps != null && action.ActionSteps.Count > 0) && action.ActionSteps[0].ActionType == ActionType.ActiveAbility);
+    }
+
     private void SetActive(GamePhase gamePhase)
     {
         if (gamePhase != GamePhase.GAMEPLAY)
@@ -68,6 +85,7 @@ public class PlayerActionHandler : MonoBehaviour
     private void UnsubscribeEvents()
     {
         GameEvents.OnGamePhaseStart -= SetActive;
+        GameplayEvents.OnFinishAction -= ChangeButtonInteractability;
         GameplayEvents.OnChangeRemainingActions -= ChangeButtonInteractability;
         GameplayEvents.OnCurrentPlayerChanged -= ChangeButtonInteractability;
     }

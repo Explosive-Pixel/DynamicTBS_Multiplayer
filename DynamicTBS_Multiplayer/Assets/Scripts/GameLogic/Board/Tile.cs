@@ -33,15 +33,23 @@ public class Tile : MonoBehaviour
 
     public void Init(TileType tileType, PlayerType side)
     {
-        this.side = side;
-
         row = int.Parse(Name[1].ToString()) - 1;
         column = ((int)Name[0]) - 65;
 
-        Transform(tileType);
-        isChangeable = () => !IsGoal();
+        Init(tileType, side, row, column);
 
         SubscribeEvents();
+    }
+
+    public void Init(TileType tileType, PlayerType side, int row, int column)
+    {
+        this.side = side;
+
+        this.row = row;
+        this.column = column;
+
+        Transform(tileType);
+        isChangeable = () => !IsGoal();
     }
 
     public void Transform(TileType tileType)

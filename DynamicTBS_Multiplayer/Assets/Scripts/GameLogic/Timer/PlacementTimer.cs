@@ -20,6 +20,6 @@ public class PlacementTimer : GameTimer
         if (GameManager.GameType == GameType.ONLINE && Client.ShouldReadMessage(playerType))
             return;
 
-        PlacementManager.RandomPlacements(playerType);
+        PlacementManager.StartRandomPlacement(playerType);
     }
 }

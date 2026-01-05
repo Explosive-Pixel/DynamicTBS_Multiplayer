@@ -12,6 +12,25 @@ public class GameplayManager : MonoBehaviour
 
     private static bool hasGameStarted;
     public static bool HasGameStarted { get { return hasGameStarted; } }
+    public static bool UIInteractionAllowed
+    {
+        get
+        {
+            return SceneChangeManager.Instance.CurrentScene == Scene.TUTORIAL
+                || (GameManager.CurrentGamePhase != GamePhase.NONE
+                && !gameIsPaused &&
+                (GameManager.GameType == GameType.LOCAL
+                || (!Client.IsLoadingGame && Client.InLobby)));
+        }
+    }
+    public static bool UIPlayerActionAllowed
+    {
+        get
+        {
+            return UIInteractionAllowed && GameManager.IsPlayer();
+        }
+    }
+    public static bool IsLoadingGame { get { return GameManager.GameType == GameType.ONLINE && Client.IsLoadingGame; } }
     public static bool gameIsPaused;
     public static int MaxActionsPerRound;
 
@@ -151,6 +170,8 @@ public class GameplayManager : MonoBehaviour
         GameplayEvents.OnPlayerTurnEnded += OnPlayerTurnEnded;
         GameplayEvents.OnPlayerTurnAborted += AbortTurn;
         hasGameStarted = true;
+
+        WSMsgUpdateServer.SendUpdateServerMessage(GamePhase.GAMEPLAY);
     }
 
     #region EventSubscriptions

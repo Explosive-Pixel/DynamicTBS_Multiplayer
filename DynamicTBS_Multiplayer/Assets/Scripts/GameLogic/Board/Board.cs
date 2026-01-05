@@ -59,6 +59,12 @@ public class Board : MonoBehaviour
         tileGameObjects.Clear();
     }
 
+    public static void InitBoard(List<Tile> tiles)
+    {
+        Tiles = tiles;
+        tileGameObjects = Tiles.ConvertAll(tile => tile.gameObject);
+    }
+
     private void InitBoard(GamePhase gamePhase)
     {
         if (gamePhase != GamePhase.PLACEMENT)

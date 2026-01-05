@@ -19,6 +19,7 @@ public class WinScreenHandler : MonoBehaviour
     [SerializeField] private GameObject draw;
     [SerializeField] private GameObject rematchButton_online;
     [SerializeField] private GameObject rematchButton_offline;
+    [SerializeField] private GameObject toLobbyButton;
 
     [Header("Text Output")]
     [SerializeField] private TMP_Text gameOverText;
@@ -47,7 +48,8 @@ public class WinScreenHandler : MonoBehaviour
         lastCondition = endGameCondition;
 
         rematchButton_offline.SetActive(GameManager.GameType == GameType.LOCAL);
-        rematchButton_offline.SetActive(GameManager.GameType == GameType.ONLINE);
+        rematchButton_online.SetActive(GameManager.GameType == GameType.ONLINE && GameManager.IsPlayer());
+        toLobbyButton.SetActive(GameManager.GameType == GameType.ONLINE && GameManager.IsSpectator());
 
         UpdateLocalizedText();
     }

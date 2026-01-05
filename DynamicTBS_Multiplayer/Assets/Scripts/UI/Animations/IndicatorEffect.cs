@@ -8,13 +8,16 @@ public abstract class IndicatorEffect : MonoBehaviour
 {
     protected void AnimateIndicator(GameObject prefab, Vector3 position, float indicatorTime)
     {
+        if (GameplayManager.IsLoadingGame)
+            return;
+
         GameObject indicatorGameObject = Instantiate(prefab, position, Quaternion.identity);
         indicatorGameObject.transform.SetParent(Board.GetTileByPosition(position).transform);
-        StartCoroutine(ExplosionCoroutine(indicatorGameObject, indicatorTime));
+        StartCoroutine(EffectCoroutine(indicatorGameObject, indicatorTime));
     }
 
 
-    protected IEnumerator ExplosionCoroutine(GameObject indicatorGameObject, float timerDuration)
+    protected IEnumerator EffectCoroutine(GameObject indicatorGameObject, float timerDuration)
     {
         float timerEndpoint = 0;
 

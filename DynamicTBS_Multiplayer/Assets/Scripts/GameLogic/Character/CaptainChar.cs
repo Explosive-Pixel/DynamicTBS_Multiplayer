@@ -31,7 +31,6 @@ public class CaptainChar : Character
         if (isDead)
         {
             base.Die();
-            Debug.Log("Captain dies.");
             GameplayEvents.GameIsOver(PlayerManager.GetOtherSide(Side), GameOverCondition.CAPTAIN_DIED);
         }
     }

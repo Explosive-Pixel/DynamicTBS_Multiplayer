@@ -58,7 +58,7 @@ public class RepairAAAction : MonoBehaviour, IAction
         }
     }
 
-    public ActionStep ExecuteAction(GameObject actionDestination)
+    public ActionStep BuildAction(GameObject actionDestination)
     {
         Vector3 initialPosition = characterInAction.gameObject.transform.position;
 
@@ -74,8 +74,8 @@ public class RepairAAAction : MonoBehaviour, IAction
             else
             {
                 selectedHole = tile;
-                selectedFloor.Transform(OtherTileType(selectedFloor.TileType));
-                selectedHole.Transform(OtherTileType(selectedHole.TileType));
+                //selectedFloor.Transform(OtherTileType(selectedFloor.TileType));
+                //selectedHole.Transform(OtherTileType(selectedHole.TileType));
                 ActionUtils.Clear(actionDestinations);
             }
         }
@@ -88,6 +88,21 @@ public class RepairAAAction : MonoBehaviour, IAction
             ActionDestinationPosition = actionDestination.transform.position,
             ActionFinished = selectedHole != null
         };
+    }
+
+    public void ExecuteAction(Action action)
+    {
+        if (!action.IsAction(ActionType) || action.ActionSteps.Count < 2)
+            return;
+
+        Tile floor = Board.GetTileByPosition(action.ActionSteps[0].ActionDestinationPosition.Value);
+        Tile hole = Board.GetTileByPosition(action.ActionSteps[1].ActionDestinationPosition.Value);
+
+        floor.Transform(OtherTileType(floor.TileType));
+        hole.Transform(OtherTileType(hole.TileType));
+
+        if (!action.ActionSteps[0].CharacterInAction.IsHypnotized())
+            GameplayEvents.ActionFinished(action);
     }
 
     public void AbortAction()

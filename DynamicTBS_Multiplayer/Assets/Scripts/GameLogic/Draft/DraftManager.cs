@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public class DraftManager : MonoBehaviour
 {
@@ -35,6 +36,8 @@ public class DraftManager : MonoBehaviour
         draftSequenceIndex = 0;
         currentPlayerDraftCount = 0;
         characterInformation = unitInformation;
+
+        WSMsgUpdateServer.SendUpdateServerMessage(GamePhase.DRAFT);
     }
 
     private void Init()
@@ -47,6 +50,17 @@ public class DraftManager : MonoBehaviour
     }
 
     public static void DraftCharacter(CharacterType type, PlayerType side)
+    {
+        if (GameManager.GameType == GameType.LOCAL)
+        {
+            ExecuteDraftCharacter(type, side);
+            return;
+        }
+
+        WSMsgDraftCharacter.SendDraftCharacterMessage(type, side);
+    }
+
+    public static void ExecuteDraftCharacter(CharacterType type, PlayerType side)
     {
         if (CurrentPlayerTotalDraftCount == 0) return;
 

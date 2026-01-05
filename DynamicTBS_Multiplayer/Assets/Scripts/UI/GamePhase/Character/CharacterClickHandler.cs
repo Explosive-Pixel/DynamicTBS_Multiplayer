@@ -11,11 +11,6 @@ public class CharacterClickHandler : MonoBehaviour
 
     public void SelectCharacter()
     {
-        OnMouseDown();
-    }
-
-    private void OnMouseDown()
-    {
         if (!character.IsClickable)
             return;
 
@@ -25,5 +20,13 @@ public class CharacterClickHandler : MonoBehaviour
             ActionHandler.Instance.InstantiateAllActionPositions(character);
 
         GameplayEvents.ChangeCharacterSelection(character);
+    }
+
+    private void OnMouseDown()
+    {
+        if (SceneChangeManager.Instance.CurrentScene == Scene.GAME && !GameplayManager.UIInteractionAllowed)
+            return;
+
+        SelectCharacter();
     }
 }

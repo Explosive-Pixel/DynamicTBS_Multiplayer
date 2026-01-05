@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 
 [Serializable]
@@ -15,49 +16,79 @@ public class WSMsgPerformAction : WSMessage
 
     public override void HandleMessage()
     {
-        if (Client.ShouldReadMessage(playerId))
+        Action action = ToAction();
+
+        if (actionSteps == null || actionSteps.Length == 0)
+        {
+            PlayerActionUtils.ExecuteAction(action);
+        }
+        else
         {
             Character currentlySelectedCharacter = CharacterManager.SelectedCharacter;
-            GameplayEvents.ChangeCharacterSelection(null);
 
-            if (actionSteps == null || actionSteps.Length == 0)
-            {
-                PlayerActionUtils.ExecuteAction(PlayerActionRegistry.GetAction(playerActionType), playerId);
-            }
-            else
-            {
-                {
-                    int i = 0;
-                    while (i < actionSteps.Length)
-                    {
-                        ActionStepDto actionStep = actionSteps[i];
-                        Character character = CharacterManager.GetCharacterByPosition(new Vector3(actionStep.characterX, actionStep.characterY, 0));
-                        if (actionStep.actionType == ActionType.ActiveAbility)
-                        {
-                            character.ActiveAbility.Execute();
-                        }
-                        else
-                        {
-                            ActionHandler.Instance.InstantiateAllActionPositions(character);
-                        }
-
-                        ActionHandler.Instance.ExecuteAction(new Vector3(actionStep.actionDestinationX, actionStep.actionDestinationY, 0));
-
-                        while ((i + 1) < actionSteps.Length && actionSteps[i + 1].actionType == actionStep.actionType && actionSteps[i + 1].characterInitialTileName == actionStep.characterInitialTileName)
-                        {
-                            ActionHandler.Instance.ExecuteAction(new Vector3(actionSteps[i + 1].actionDestinationX, actionSteps[i + 1].actionDestinationY, 0));
-                            i++;
-                        }
-
-                        i++;
-                    }
-                }
-            }
+            ActionHandler.Instance.ExecuteAction(action);
 
             if (currentlySelectedCharacter != null && !currentlySelectedCharacter.IsDead())
                 currentlySelectedCharacter.Select();
             else
                 GameplayEvents.ChangeCharacterSelection(null);
+
         }
+    }
+
+    public static void SendPerformActionMessage(Action action)
+    {
+        if (!Client.IsLoadingGame)
+        {
+            Client.SendToServer(FromAction(action));
+        }
+    }
+
+    private static WSMsgPerformAction FromAction(Action action)
+    {
+        return new WSMsgPerformAction
+        {
+            playerId = action.ExecutingPlayer,
+            playerActionType = action.PlayerActionType != null ? action.PlayerActionType.Value : 0,
+            actionSteps = (action.ActionSteps != null ? action.ActionSteps.ConvertAll(actionStep =>
+            {
+                Tile characterInitialTile = actionStep.CharacterInitialPosition != null ? Board.GetTileByPosition(actionStep.CharacterInitialPosition.Value) : null;
+                Tile actionDestinationTile = actionStep.ActionDestinationPosition != null ? Board.GetTileByPosition(actionStep.ActionDestinationPosition.Value) : null;
+                return new ActionStepDto()
+                {
+                    characterType = (int)actionStep.CharacterInAction.CharacterType,
+                    characterInitialTileName = characterInitialTile != null ? characterInitialTile.Name : null,
+                    characterX = actionStep.CharacterInitialPosition != null ? actionStep.CharacterInitialPosition.Value.x : 0f,
+                    characterY = actionStep.CharacterInitialPosition != null ? actionStep.CharacterInitialPosition.Value.y : 0f,
+                    actionType = actionStep.ActionType,
+                    actionDestinationTileName = actionDestinationTile != null ? actionDestinationTile.Name : null,
+                    actionDestinationX = actionStep.ActionDestinationPosition != null ? actionStep.ActionDestinationPosition.Value.x : 0f,
+                    actionDestinationY = actionStep.ActionDestinationPosition != null ? actionStep.ActionDestinationPosition.Value.y : 0f
+                };
+            }) : new()).ToArray()
+        };
+    }
+
+    private Action ToAction()
+    {
+        int index = 0;
+        return new Action()
+        {
+            ExecutingPlayer = playerId,
+            PlayerActionType = playerActionType,
+            ActionSteps = actionSteps != null ? actionSteps.ToList().ConvertAll(actionStep =>
+            {
+                index++;
+                Character characterInAction = CharacterManager.GetCharacterByPosition(new Vector3(actionStep.characterX, actionStep.characterY, 0));
+                return new ActionStep()
+                {
+                    ActionType = actionStep.actionType,
+                    CharacterInAction = characterInAction,
+                    CharacterInitialPosition = new Vector3(actionStep.characterX, actionStep.characterY, 1),
+                    ActionDestinationPosition = new Vector3(actionStep.actionDestinationX, actionStep.actionDestinationY, 1),
+                    ActionFinished = index == actionSteps.Length
+                };
+            }) : new()
+        };
     }
 }

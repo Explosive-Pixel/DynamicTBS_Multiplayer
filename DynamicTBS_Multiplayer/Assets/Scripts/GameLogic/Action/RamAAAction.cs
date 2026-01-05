@@ -54,54 +54,9 @@ public class RamAAAction : MonoBehaviour, IAction
         }
     }
 
-    public ActionStep ExecuteAction(GameObject actionDestination)
+    public ActionStep BuildAction(GameObject actionDestination)
     {
         Vector3 initialPosition = characterInAction.gameObject.transform.position;
-
-        Tile tile = Board.GetTileByPosition(actionDestination.transform.position);
-        if (tile != null)
-        {
-            Tile currentTile = characterInAction.CurrentTile;
-            Tile nextTile = tile;
-            List<Tile> neighbors = new();
-
-            while (nextTile != null)
-            {
-                neighbors.Add(nextTile);
-
-                if (!nextTile.IsOccupied())
-                    break;
-
-                Tile neighbor = nextTile;
-                nextTile = Board.GetNextTileInSameDirection(currentTile, nextTile);
-                currentTile = neighbor;
-            }
-
-            if (neighbors.Last().IsOccupied())
-            {
-                foreach (Tile t in neighbors)
-                {
-                    t.CurrentInhabitant.TakeDamage(RamAA.damage);
-                }
-                characterInAction.TakeDamage(RamAA.selfDamage);
-            }
-            else
-            {
-                for (int i = neighbors.Count - 1; i > 0; i--)
-                {
-                    Character c = neighbors[i - 1].CurrentInhabitant;
-                    MoveAction.MoveCharacter(c, neighbors[i]);
-                    if (neighbors[i].IsHole())
-                        c.Die();
-                    else
-                        c.TakeDamage(RamAA.damage);
-                }
-
-                MoveAction.MoveCharacter(characterInAction, tile);
-                if (neighbors.Count > 1)
-                    characterInAction.TakeDamage(RamAA.selfDamage);
-            }
-        }
 
         return new ActionStep()
         {
@@ -111,6 +66,62 @@ public class RamAAAction : MonoBehaviour, IAction
             ActionDestinationPosition = actionDestination.transform.position,
             ActionFinished = true
         };
+    }
+
+    public void ExecuteAction(Action action)
+    {
+        if (!action.IsAction(ActionType))
+            return;
+
+        Tile tile = Board.GetTileByPosition(action.ActionSteps[0].ActionDestinationPosition.Value);
+        if (tile == null)
+            return;
+
+        Character characterInAction = action.ActionSteps[0].CharacterInAction;
+        bool isHypnotized = characterInAction.IsHypnotized();
+        Tile currentTile = characterInAction.CurrentTile;
+        Tile nextTile = tile;
+        List<Tile> neighbors = new();
+
+        while (nextTile != null)
+        {
+            neighbors.Add(nextTile);
+
+            if (!nextTile.IsOccupied())
+                break;
+
+            Tile neighbor = nextTile;
+            nextTile = Board.GetNextTileInSameDirection(currentTile, nextTile);
+            currentTile = neighbor;
+        }
+
+        if (neighbors.Last().IsOccupied())
+        {
+            foreach (Tile t in neighbors)
+            {
+                t.CurrentInhabitant.TakeDamage(RamAA.damage);
+            }
+            characterInAction.TakeDamage(RamAA.selfDamage);
+        }
+        else
+        {
+            for (int i = neighbors.Count - 1; i > 0; i--)
+            {
+                Character c = neighbors[i - 1].CurrentInhabitant;
+                MoveAction.MoveCharacter(c, neighbors[i]);
+                if (neighbors[i].IsHole())
+                    c.Die();
+                else
+                    c.TakeDamage(RamAA.damage);
+            }
+
+            MoveAction.MoveCharacter(characterInAction, tile);
+            if (neighbors.Count > 1)
+                characterInAction.TakeDamage(RamAA.selfDamage);
+        }
+
+        if (!isHypnotized)
+            GameplayEvents.ActionFinished(action);
     }
 
     public void AbortAction()

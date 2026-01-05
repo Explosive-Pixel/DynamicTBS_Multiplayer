@@ -20,6 +20,8 @@ public class PlacementManager : MonoBehaviour
     public static int MaxPlacementCount { get { return PlacementSequence.Sum(); } }
     private List<Vector3> CharacterPositions(PlayerType side) { return side == PlayerType.blue ? blueCharacterPositions : pinkCharacterPositions; }
 
+    private static Dictionary<PlayerType, bool> placeRandom = new() { { PlayerType.blue, false }, { PlayerType.pink, false } };
+
     private static bool init = false;
 
     private void Awake()
@@ -34,6 +36,8 @@ public class PlacementManager : MonoBehaviour
 
         placementSequenceIndex = 0;
         currentPlayerPlacementCount = 0;
+        placeRandom[PlayerType.blue] = false;
+        placeRandom[PlayerType.pink] = false;
 
         SubscribeEvents();
     }
@@ -54,16 +58,20 @@ public class PlacementManager : MonoBehaviour
         if (placementSequenceIndex == PlacementSequence.Count)
         {
             PlacementCompleted();
+            return;
         }
+
+        if (placeRandom[action.ExecutingPlayer] && action.ExecutingPlayer == PlayerManager.CurrentPlayer
+             && PlayerManager.ClientIsCurrentPlayer() && GetRemainingPlacementCount(PlayerManager.CurrentPlayer) > 0)
+            RandomPlacement(action.ExecutingPlayer);
     }
 
-    public static void RandomPlacements(PlayerType side)
+    public static void StartRandomPlacement(PlayerType side)
     {
-        int i = GetRemainingPlacementCount(side);
-        while (i-- > 0)
-        {
+        placeRandom[side] = true;
+
+        if (side == PlayerManager.ExecutingPlayer)
             RandomPlacement(side);
-        }
     }
 
     public static void RandomPlacement(PlayerType side)
@@ -95,6 +103,8 @@ public class PlacementManager : MonoBehaviour
         SpawnCaptain(PlayerType.blue);
         SpawnCaptain(PlayerType.pink);
         AudioEvents.SpawningMasters();
+
+        WSMsgUpdateServer.SendUpdateServerMessage(GamePhase.PLACEMENT);
     }
 
     private void SpawnCaptain(PlayerType playerType)

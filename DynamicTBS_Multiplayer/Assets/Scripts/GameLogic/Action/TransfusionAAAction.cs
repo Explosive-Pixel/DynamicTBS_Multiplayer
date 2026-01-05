@@ -60,7 +60,7 @@ public class TransfusionAAAction : MonoBehaviour, IAction
         }
     }
 
-    public ActionStep ExecuteAction(GameObject actionDestination)
+    public ActionStep BuildAction(GameObject actionDestination)
     {
         Vector3 initialPosition = characterInAction.gameObject.transform.position;
 
@@ -76,8 +76,6 @@ public class TransfusionAAAction : MonoBehaviour, IAction
             else
             {
                 giveHPCharacter = tile.CurrentInhabitant;
-                stealHPCharacter.TakeDamage(TransfusionAA.hpCount);
-                giveHPCharacter.Heal(TransfusionAA.hpCount);
             }
         }
 
@@ -89,6 +87,28 @@ public class TransfusionAAAction : MonoBehaviour, IAction
             ActionDestinationPosition = actionDestination.transform.position,
             ActionFinished = giveHPCharacter != null
         };
+    }
+
+    public void ExecuteAction(Action action)
+    {
+        if (!action.IsAction(ActionType) || action.ActionSteps.Count < 2)
+            return;
+
+        Tile steal = Board.GetTileByPosition(action.ActionSteps[0].ActionDestinationPosition.Value);
+        Tile give = Board.GetTileByPosition(action.ActionSteps[1].ActionDestinationPosition.Value);
+
+        if (steal == null || give == null)
+            return;
+
+        bool isHypnotized = action.ActionSteps[0].CharacterInAction.IsHypnotized();
+
+        Character stealHPCharacter = steal.CurrentInhabitant;
+        Character giveHPCharacter = give.CurrentInhabitant;
+        stealHPCharacter.TakeDamage(TransfusionAA.hpCount);
+        giveHPCharacter.Heal(TransfusionAA.hpCount);
+
+        if (!isHypnotized)
+            GameplayEvents.ActionFinished(action);
     }
 
     public void AbortAction()

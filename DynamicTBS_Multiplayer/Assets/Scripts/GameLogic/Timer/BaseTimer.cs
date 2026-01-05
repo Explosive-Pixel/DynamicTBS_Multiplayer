@@ -17,15 +17,13 @@ public class BaseTimer : MonoBehaviour
     protected bool isPaused = false;
 
     private float ServerTimeDiff { get { return GameManager.GameType == GameType.ONLINE ? Client.ServerTimeDiff : 0; } }
+    private bool IsLoadingGame { get { return GameManager.GameType == GameType.ONLINE && Client.IsLoadingGame; } }
 
     void Update()
     {
-        if (isRunning && !isPaused)
+        if (isRunning && !isPaused && !IsLoadingGame)
         {
-            float timePassed = TimerUtils.TimeSince(startTime) - ServerTimeDiff;
-            timeleft = duration - timePassed;
-
-            UpdateUI();
+            UpdateTimer();
 
             if (timeleft <= 0)
             {
@@ -45,6 +43,9 @@ public class BaseTimer : MonoBehaviour
         this.playerType = playerType;
         this.originalDuration = originalDuration;
 
+        timeleft = this.originalDuration;
+        UpdateUI();
+
         isRunning = false;
         isPaused = false;
     }
@@ -62,6 +63,17 @@ public class BaseTimer : MonoBehaviour
         timeleft = this.duration;
 
         isRunning = true;
+    }
+
+    public void UpdateTimer()
+    {
+        if (!isRunning)
+            return;
+
+        float timePassed = TimerUtils.TimeSince(startTime) - ServerTimeDiff;
+        timeleft = duration - timePassed;
+
+        UpdateUI();
     }
 
     public void StopTimer()

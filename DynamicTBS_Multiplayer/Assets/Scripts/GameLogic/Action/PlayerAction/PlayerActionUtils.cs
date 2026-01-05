@@ -11,14 +11,35 @@ public class PlayerActionUtils
         return false;
     }
 
-    public static void ExecuteAction(IPlayerAction action, PlayerType player)
+    public static void ExecuteAction(IPlayerAction playerAction, PlayerType player)
     {
-        action.ExecuteAction(player);
-
-        GameplayEvents.ActionFinished(new Action
+        Action action = new()
         {
             ExecutingPlayer = player,
-            PlayerActionType = action.PlayerActionType
-        });
+            PlayerActionType = playerAction.PlayerActionType
+        };
+
+        if (GameManager.GameType == GameType.LOCAL)
+        {
+            FinishAction(action);
+            return;
+        }
+
+        WSMsgPerformAction.SendPerformActionMessage(action);
+    }
+
+    public static void ExecuteAction(Action action)
+    {
+        FinishAction(action);
+    }
+
+    private static void FinishAction(Action action)
+    {
+        if (action.PlayerActionType == null)
+            return;
+
+        IPlayerAction playerAction = PlayerActionRegistry.GetAction(action.PlayerActionType.Value);
+        playerAction.ExecuteAction(action.ExecutingPlayer);
+        GameplayEvents.ActionFinished(action);
     }
 }

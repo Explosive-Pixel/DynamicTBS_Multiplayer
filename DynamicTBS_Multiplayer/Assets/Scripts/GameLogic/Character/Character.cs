@@ -148,6 +148,15 @@ public class Character : MonoBehaviour
         ActiveAbilityCooldown = 0;
     }
 
+    public bool IsHypnotized()
+    {
+        if (gameObject.TryGetComponent<HypnotizedState>(out var _))
+        {
+            return true;
+        }
+        return false;
+    }
+
     private void SetActiveAbilityOnCooldown(Action action)
     {
         if (action.ActionSteps != null)

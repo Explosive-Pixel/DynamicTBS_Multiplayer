@@ -54,17 +54,9 @@ public class LongshotAAAction : MonoBehaviour, IAction
         }
     }
 
-    public ActionStep ExecuteAction(GameObject actionDestination)
+    public ActionStep BuildAction(GameObject actionDestination)
     {
         Vector3 initialPosition = characterInAction.gameObject.transform.position;
-
-        Tile tile = Board.GetTileByPosition(actionDestination.transform.position);
-        if (tile != null)
-        {
-            Character characterToAttack = tile.CurrentInhabitant;
-            characterToAttack.TakeDamage(LongshotAA.damage);
-            characterInAction.TakeDamage(LongshotAA.selfDamage);
-        }
 
         return new ActionStep()
         {
@@ -74,6 +66,25 @@ public class LongshotAAAction : MonoBehaviour, IAction
             ActionDestinationPosition = actionDestination.transform.position,
             ActionFinished = true
         };
+    }
+
+    public void ExecuteAction(Action action)
+    {
+        if (!action.IsAction(ActionType))
+            return;
+
+        Tile tile = Board.GetTileByPosition(action.ActionSteps[0].ActionDestinationPosition.Value);
+        if (tile == null)
+            return;
+
+        Character characterInAction = action.ActionSteps[0].CharacterInAction;
+        bool isHypnotized = characterInAction.IsHypnotized();
+        Character characterToAttack = tile.CurrentInhabitant;
+        characterToAttack.TakeDamage(LongshotAA.damage);
+        characterInAction.TakeDamage(LongshotAA.selfDamage);
+
+        if (!isHypnotized)
+            GameplayEvents.ActionFinished(action);
     }
 
     public void AbortAction()

@@ -17,6 +17,12 @@ public class MoveAction : MonoBehaviour, IAction
 
     private void Awake()
     {
+        if (SceneChangeManager.Instance.CurrentScene == Scene.TUTORIAL)
+        {
+            ActionRegistry.Register(this);
+            return;
+        }
+
         GameEvents.OnGamePhaseStart += Register;
     }
 
@@ -64,12 +70,10 @@ public class MoveAction : MonoBehaviour, IAction
         }
     }
 
-    public ActionStep ExecuteAction(GameObject actionDestination)
+    public ActionStep BuildAction(GameObject actionDestination)
     {
         Vector3 initialPosition = CharacterInAction.gameObject.transform.position;
         Vector3 actionDestinationPosition = actionDestination.transform.position;
-
-        MoveCharacter(characterInAction, Board.GetTileByPosition(actionDestination.transform.position));
 
         return new ActionStep()
         {
@@ -81,6 +85,18 @@ public class MoveAction : MonoBehaviour, IAction
         };
     }
 
+    public void ExecuteAction(Action action)
+    {
+        if (!action.IsAction(ActionType))
+            return;
+
+        ActionStep moveActionStep = action.ActionSteps[0];
+        MoveCharacter(moveActionStep.CharacterInAction, Board.GetTileByPosition(moveActionStep.ActionDestinationPosition.Value));
+
+        if (!moveActionStep.CharacterInAction.IsHypnotized())
+            GameplayEvents.ActionFinished(action);
+    }
+
     public void AbortAction()
     {
         ActionUtils.Clear(moveDestinations);
@@ -89,7 +105,7 @@ public class MoveAction : MonoBehaviour, IAction
 
     private List<Vector3> FindMovePositions(Character character, bool pattern = false)
     {
-        if (character.CurrentTile == null || (!GameplayManager.HasGameStarted && !pattern))
+        if (SceneChangeManager.Instance.CurrentScene != Scene.TUTORIAL && (character.CurrentTile == null || (!GameplayManager.HasGameStarted && !pattern)))
         {
             return FindAccessibleStartPositions(character);
         }

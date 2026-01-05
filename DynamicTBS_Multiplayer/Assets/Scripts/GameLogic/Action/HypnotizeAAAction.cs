@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class HypnotizeAAAction : MonoBehaviour, IAction
@@ -51,7 +52,7 @@ public class HypnotizeAAAction : MonoBehaviour, IAction
         }
     }
 
-    public ActionStep ExecuteAction(GameObject actionDestination)
+    public ActionStep BuildAction(GameObject actionDestination)
     {
         Vector3 initialPosition = characterInAction.gameObject.transform.position;
         Character character = CharacterInAction;
@@ -75,6 +76,27 @@ public class HypnotizeAAAction : MonoBehaviour, IAction
         ActionUtils.Clear(actionDestinations);
 
         return actionStep;
+    }
+
+    public void ExecuteAction(Action action)
+    {
+        if (!action.IsAction(ActionType) || action.ActionSteps.Count < 2)
+            return;
+
+        Tile tile = Board.GetTileByPosition(action.ActionSteps[0].ActionDestinationPosition.Value);
+        if (tile == null)
+            return;
+
+        HypnotizedState.Create(tile.CurrentInhabitant.gameObject);
+
+        Action secondAction = new()
+        {
+            ExecutingPlayer = action.ExecutingPlayer,
+            ActionSteps = action.ActionSteps.Skip(1).ToList()
+        };
+        ActionHandler.Instance.ExecuteAction(secondAction);
+
+        GameplayEvents.ActionFinished(action);
     }
 
     public void AbortAction()

@@ -100,7 +100,6 @@ public abstract class WSMessage
             case WSMessageCode.WSMsgStartGameCode:
             case WSMessageCode.WSMsgPauseGameCode:
             case WSMessageCode.WSMsgServerNotificationCode:
-            case WSMessageCode.WSMsgUpdateServerCode:
             case WSMessageCode.WSMsgUpdateClientCode:
             case WSMessageCode.WSMsgDraftCharacterCode:
             case WSMessageCode.WSMsgPerformActionCode:
@@ -117,4 +116,9 @@ public abstract class WSMessage
     }
 
     public virtual void HandleMessage() { }
+
+    public override string ToString()
+    {
+        return $"{GetType().Name} (UUID={uuid})";
+    }
 }

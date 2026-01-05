@@ -17,7 +17,6 @@ public class OnlineMenuScreenHandler : MonoBehaviour
     public BaseActiveHandler MidActiveHandler { get { return midActiveHandler; } }
     public GameObject LobbyInfoMenu { get { return lobbyInfoMenu; } }
 
-    // TODO: Refactor script
     private void Awake()
     {
         MessageReceiver.OnWSMessageReceive += UpdateMetadata;
@@ -70,8 +69,14 @@ public class OnlineMenuScreenHandler : MonoBehaviour
 
     private void ShowRematchMenu()
     {
-        if (!Client.InLobby || Client.CurrentLobby.Status != LobbyStatus.UNDER_CONSTRUCTION)
+        if (!Client.InLobby)
             return;
+
+        if (Client.CurrentLobby.Status == LobbyStatus.WAITING_FOR_PLAYER)
+        {
+            ShowLobbyInfoMenu();
+            return;
+        }
 
         leftActiveHandler.SetInactive();
         if (Client.IsAdmin)

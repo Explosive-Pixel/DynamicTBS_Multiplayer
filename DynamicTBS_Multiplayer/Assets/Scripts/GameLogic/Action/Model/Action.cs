@@ -15,4 +15,15 @@ public class Action
 
         return null;
     }
+
+    public bool IsAction(ActionType actionType)
+    {
+        return ActionSteps != null && ActionSteps.Count > 0 && ActionSteps[0].ActionType == actionType;
+    }
+
+    public void AddActionStep(ActionStep actionStep)
+    {
+        ActionSteps ??= new();
+        ActionSteps.Add(actionStep);
+    }
 }

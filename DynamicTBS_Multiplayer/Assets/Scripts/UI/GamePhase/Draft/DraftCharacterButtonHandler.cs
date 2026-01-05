@@ -8,7 +8,7 @@ public class DraftCharacterButtonHandler : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (!PlayerManager.ClientIsCurrentPlayer() || GameplayManager.gameIsPaused)
+        if (!PlayerManager.ClientIsCurrentPlayer() || !GameplayManager.UIPlayerActionAllowed)
             return;
 
         AudioEvents.PressingButton();

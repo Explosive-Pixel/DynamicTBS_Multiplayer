@@ -14,7 +14,7 @@ public class MoveEffect : IndicatorEffect
 
     private void OnMoveCharacter(Action action)
     {
-        if (GameManager.CurrentGamePhase != GamePhase.GAMEPLAY)
+        if (SceneChangeManager.Instance.CurrentScene != Scene.TUTORIAL && GameManager.CurrentGamePhase != GamePhase.GAMEPLAY)
             return;
 
         action.ActionSteps?.ForEach(actionStep =>

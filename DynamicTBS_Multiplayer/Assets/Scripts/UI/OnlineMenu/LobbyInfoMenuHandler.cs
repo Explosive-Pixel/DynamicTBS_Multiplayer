@@ -28,6 +28,15 @@ public class LobbyInfoMenuHandler : MonoBehaviour
         joinLobbyButton.onClick.AddListener(() => JoinLobby());
     }
 
+    private void Start()
+    {
+        if (Client.InLobby)
+        {
+            OnlineLogicHandler.Instance.LastWSMsgLobbyInfo.HandleMessage();
+            UpdateInfo();
+        }
+    }
+
     private void Update()
     {
         joinLobbyButton.interactable = nameSetupHandler.SetupCompleted;

@@ -78,6 +78,11 @@ public class JoinPrivateLobbyHandler : MonoBehaviour
         }
     }
 
+    private void SetOutline(TMP_InputField tMP_Input, bool enabled)
+    {
+        tMP_Input.gameObject.GetComponent<Outline>().enabled = enabled;
+    }
+
     private void SetLobbyInfoText(LocalizedString localizedString)
     {
         if (localizedString == null || lobbyInfoText == null)
@@ -90,6 +95,8 @@ public class JoinPrivateLobbyHandler : MonoBehaviour
         {
             lobbyInfoText.text = op.Result;
         };
+
+        SetOutline(fullLobbyName, true);
     }
 
     private void OnLocaleChanged(UnityEngine.Localization.Locale _)
@@ -122,5 +129,6 @@ public class JoinPrivateLobbyHandler : MonoBehaviour
     {
         lobbyInfoText.text = "";
         lastDisplayedMessage = null;
+        SetOutline(fullLobbyName, !IsValidLobbyID());
     }
 }
