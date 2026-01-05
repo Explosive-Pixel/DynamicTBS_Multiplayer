@@ -10560,6 +10560,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8328979542709873830, guid: 956ddc6da73624f48a50ad671470f287, type: 3}
+      propertyPath: resetTime
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8328979542709873830, guid: 956ddc6da73624f48a50ad671470f287, type: 3}
       propertyPath: showRefreshButton
       value: 1
       objectReference: {fileID: 0}
@@ -10573,7 +10577,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8328979542709873830, guid: 956ddc6da73624f48a50ad671470f287, type: 3}
       propertyPath: availableActions.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8328979542709873830, guid: 956ddc6da73624f48a50ad671470f287, type: 3}
       propertyPath: availableActions.Array.data[0]
@@ -10621,7 +10625,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8328979542709873830, guid: 956ddc6da73624f48a50ad671470f287, type: 3}
       propertyPath: characterSetup.Array.data[0].characterType
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8328979542709873830, guid: 956ddc6da73624f48a50ad671470f287, type: 3}
       propertyPath: characterSetup.Array.data[1].characterType

@@ -74,8 +74,6 @@ public class RepairAAAction : MonoBehaviour, IAction
             else
             {
                 selectedHole = tile;
-                //selectedFloor.Transform(OtherTileType(selectedFloor.TileType));
-                //selectedHole.Transform(OtherTileType(selectedHole.TileType));
                 ActionUtils.Clear(actionDestinations);
             }
         }
