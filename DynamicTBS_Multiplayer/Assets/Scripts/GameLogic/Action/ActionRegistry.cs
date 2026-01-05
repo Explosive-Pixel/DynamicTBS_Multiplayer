@@ -7,8 +7,15 @@ public class ActionRegistry
 
     public static void Register(IAction action)
     {
-        if (!actions.Contains(action))
-            actions.Add(action);
+        if (action == null || actions.Contains(action))
+            return;
+
+        if (actions.ConvertAll(a => a.ActionType).Contains(action.ActionType))
+        {
+            IAction doubleAction = actions.Find(a => a.ActionType == action.ActionType);
+            doubleAction.AbortAction();
+        }
+        actions.Add(action);
     }
 
     public static void Remove(IAction action)

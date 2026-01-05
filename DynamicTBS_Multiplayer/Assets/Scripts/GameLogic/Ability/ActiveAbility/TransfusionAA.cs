@@ -11,6 +11,7 @@ public class TransfusionAA : MonoBehaviour, IActiveAbility
     public static int hpCount;
 
     public ActiveAbilityType AbilityType { get { return ActiveAbilityType.TRANSFUSION; } }
+    public IAction AssociatedAction { get { return transfusionAAAction; } }
 
     private TransfusionAAAction transfusionAAAction;
 

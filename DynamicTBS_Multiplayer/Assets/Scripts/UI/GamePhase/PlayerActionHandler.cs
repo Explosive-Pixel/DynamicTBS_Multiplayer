@@ -5,6 +5,8 @@ public class PlayerActionHandler : MonoBehaviour
     [SerializeField] private PlayerActionType playerActionType;
 
     [SerializeField] private GameObject trigger_interactable;
+    [SerializeField] private GameObject trigger_interactable_blue;
+    [SerializeField] private GameObject trigger_interactable_pink;
     [SerializeField] private GameObject trigger_noninteractive;
 
     private void Awake()
@@ -33,6 +35,8 @@ public class PlayerActionHandler : MonoBehaviour
     private void SetActive(bool active, bool interactable)
     {
         bool visible = GameManager.IsPlayer() && active;
+        if (visible && interactable)
+            UpdateSide();
         trigger_interactable.SetActive(visible && interactable);
         trigger_noninteractive.SetActive(visible && !interactable);
         this.gameObject.SetActive(visible);
@@ -51,6 +55,15 @@ public class PlayerActionHandler : MonoBehaviour
             return;
 
         SetActive(!PlayerSetup.IsNotSide(player), playerAction.IsActionAvailable(PlayerManager.CurrentPlayer));
+    }
+
+    private void UpdateSide()
+    {
+        if (trigger_interactable_blue != null && trigger_interactable_pink != null)
+        {
+            trigger_interactable_blue.SetActive(PlayerManager.CurrentPlayer == PlayerType.blue);
+            trigger_interactable_pink.SetActive(PlayerManager.CurrentPlayer == PlayerType.pink);
+        }
     }
 
     private void SetActive(GamePhase gamePhase)

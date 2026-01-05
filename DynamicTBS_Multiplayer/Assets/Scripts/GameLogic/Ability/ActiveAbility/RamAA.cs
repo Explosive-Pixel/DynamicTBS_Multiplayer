@@ -13,6 +13,7 @@ public class RamAA : MonoBehaviour, IActiveAbility
     public static PatternType pattern;
 
     public ActiveAbilityType AbilityType { get { return ActiveAbilityType.RAM; } }
+    public IAction AssociatedAction { get { return ramAAAction; } }
 
     private RamAAAction ramAAAction;
 

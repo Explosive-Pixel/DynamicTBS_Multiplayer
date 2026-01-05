@@ -11,6 +11,7 @@ public class LongshotAA : MonoBehaviour, IActiveAbility
     public static PatternType pattern;
 
     public ActiveAbilityType AbilityType { get { return ActiveAbilityType.LONGSHOT; } }
+    public IAction AssociatedAction { get { return longshotAAAction; } }
     private LongshotAAAction longshotAAAction;
 
     Character character;

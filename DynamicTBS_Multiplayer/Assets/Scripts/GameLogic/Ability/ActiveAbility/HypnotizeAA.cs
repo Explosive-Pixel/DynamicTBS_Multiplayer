@@ -9,6 +9,7 @@ public class HypnotizeAA : MonoBehaviour, IActiveAbility
     public static PatternType pattern;
 
     public ActiveAbilityType AbilityType { get { return ActiveAbilityType.HYPNOTIZE; } }
+    public IAction AssociatedAction { get { return hypnotizeAAAction; } }
 
     private HypnotizeAAAction hypnotizeAAAction;
 

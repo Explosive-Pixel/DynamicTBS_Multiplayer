@@ -9,6 +9,7 @@ public class RepairAA : MonoBehaviour, IActiveAbility
     public static PatternType pattern;
 
     public ActiveAbilityType AbilityType { get { return ActiveAbilityType.REPAIR; } }
+    public IAction AssociatedAction { get { return repairAAAction; } }
 
     private RepairAAAction repairAAAction;
 
