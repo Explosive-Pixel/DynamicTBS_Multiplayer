@@ -1395,7 +1395,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &254234851
 Transform:
   m_ObjectHideFlags: 0
@@ -2913,7 +2913,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &371191170
 Transform:
   m_ObjectHideFlags: 0
@@ -3207,7 +3207,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &387655523
 Transform:
   m_ObjectHideFlags: 0
@@ -9210,9 +9210,20 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Blue goes first.\n\nPlayers have 2 actions per turn. \n\nActions during
-    the same turn have to be of a different type or performed with different units.\n\nThe
-    first Captain to enter the Goal Square wins. \n\nThe first Captain to die loses."
+  m_text: 'Blue goes first.
+
+
+    Players have 2 actions per turn. Actions during
+    the same turn have to be of a different type or performed with different units.
+
+
+    The
+    first Captain to enter the Goal Square wins. The first Captain to die loses.
+
+
+    The
+    timer shows the time per turn. If the timer reaches 0 before all actions are
+    spent, the turn is ended and there is a 25 percent time penalty for future turns.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_sharedMaterial: {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
@@ -9239,8 +9250,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 3
-  m_fontSizeBase: 3
+  m_fontSize: 2.8
+  m_fontSizeBase: 2.8
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -9386,7 +9397,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "During the draft phase players assemble their team. \n\nA total of <b>7</b>
     Mates are drafted for each side. Additionally, each side gets <b>1</b> Captain.\n\nEach
-    type of Mate can be drafted multiple times."
+    type of Mate can be drafted multiple times.\n\nEach side has a set time for the
+    draft. If the timer reaches 0, all remaining units are drafted randomly."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_sharedMaterial: {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
@@ -11071,7 +11083,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1409787208
 Transform:
   m_ObjectHideFlags: 0
@@ -15963,7 +15975,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "During Placement phase players strategically place their team on the board.
     \n\nUnits can be placed on the squares marked by an X.\n\nBe careful during placement!
-    Once the fight starts Blue will go first."
+    Once the fight starts Blue will go first.\n\nEach side has a set time for placement.
+    If the timer reaches 0, all remaining units are placed randomly."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: be19911be0cb47a409e9003c0084646e, type: 2}
   m_sharedMaterial: {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
