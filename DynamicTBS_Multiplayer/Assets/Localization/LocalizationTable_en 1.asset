@@ -837,6 +837,352 @@ MonoBehaviour:
     m_Localized: JOIN LOBBY BY NAME
     m_Metadata:
       m_Items: []
+  - m_Id: 28638842356002816
+    m_Localized: Learn how to play the game!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28640301134934016
+    m_Localized: Introduction and Goals
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28640567263522816
+    m_Localized: Actions
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28640880489951232
+    m_Localized: Board
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28641053727289344
+    m_Localized: Phases
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28641247890010112
+    m_Localized: Units
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28641496100532224
+    m_Localized: We recommend going through the tutorials in order.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28641978047033344
+    m_Localized: INTRODUCTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28642263616221184
+    m_Localized: '<b>What is this game?</b>
+
+
+      <i>Sky Mates</i> is a turn-based
+      tactics game, in which two teams battle for the control of a crumbling airship.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28642723861393408
+    m_Localized: '<b>Goal</b>
+
+
+      The first Captain to reach the goal square
+      in the center of the board wins the game for their side. If a Captain dies,
+      their team loses.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28643305053515776
+    m_Localized: ACTIONS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28643524910542848
+    m_Localized: MOVEMENT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28643700899344384
+    m_Localized: ATTACK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28643855388143616
+    m_Localized: REFRESH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28644256858533888
+    m_Localized: IMPORTANT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28644478733021184
+    m_Localized: <b>2</b> Actions per turn. Actions must be of different type or
+      performed with different units.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28645005445328896
+    m_Localized: "1. Click on the Mate you want to move.\n\n2. Click on the highlighted
+      square you want to move to.\n\nMovement patterns can be:\n\n<b>Cross</b>: Horizontal,
+      vertical\n\n<b>Star</b>: Horizontal, vertical, diagonal \n\nThey are specified
+      in a Mate's stats."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28645620955246592
+    m_Localized: '1. Click on the Mate you want to attack with.
+
+
+      2. Click
+      on the Mate you want to attack within range, highlighted in red.
+
+
+      Attacks
+      can only hit targets if no units block the path.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28646106819227648
+    m_Localized: "Every unit has a unique special power they can perform as long
+      as they have an energy charge. \n\n1. Click the unit you want to perform the
+      power.\n\n2. Click the power button.\n\n3. Click one of the highlighted squares
+      to use the power on.\n\nPowers can only be performed on a square that isn't
+      blocked by a unit."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28647062533337088
+    m_Localized: Click the Refresh Button to restore the energy charge on all of
+      your units.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28647480541868032
+    m_Localized: BOARD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28647684376653824
+    m_Localized: 'The board consists of:
+
+
+      FLOOR SQUARES
+
+      Walkable, can
+      be changed.
+
+
+      GOAL SQAURE
+
+      In the middle, walkable, can not be
+      changed.
+
+
+      HOLES
+
+      Not walkable.
+
+
+      There are several board
+      layouts available. To the right you can see our standard map.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28649076403236864
+    m_Localized: PHASES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28649248503918592
+    m_Localized: DRAFT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28649629564825600
+    m_Localized: PLACEMENT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28649794967203840
+    m_Localized: FIGHT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28649991931719680
+    m_Localized: "During the draft phase players assemble their team. \n\nA total
+      of <b>7</b> Mates are drafted for each side. Additionally, each side gets <b>1</b>
+      Captain.\n\nEach type of Mate can be drafted multiple times.\n\nEach side has
+      a set time for the draft. If the timer reaches 0, all remaining Mates are drafted
+      randomly."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28650790241988608
+    m_Localized: "During Placement phase players strategically place their team on
+      the board. \n\nUnits can be placed on the squares marked by an X.\n\nBe careful
+      during placement! Once the fight starts Blue will go first.\n\nEach side has
+      a set time for placement. If the timer reaches 0, all remaining units are placed
+      randomly."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28651424403976192
+    m_Localized: 'Blue goes first.
+
+
+      Players have 2 actions per turn. Actions
+      during the same turn have to be of a different type or performed with different
+      units.
+
+
+      The timer shows the time per turn. If the timer reaches 0 before
+      all actions are spent, the turn is ended and there is a 25 percent time penalty
+      for future turns. The third times this happens triggers an automatic loss.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28652588029734912
+    m_Localized: UNITS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28652897661644800
+    m_Localized: '"When I look at you, it feels electric."
+
+
+      Health: <b>3</b>
+
+      Damage:
+      <b>0</b>
+
+      Range: <b>0</b>
+
+      Steps: <b>1</b>
+
+      Movement: <b>Cross</b>
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28653252608815104
+    m_Localized: 'HYPNOTIZE
+
+
+      Perform <b>1</b> action with an enemy unit within
+      range <b>2</b>. Cannot target Captains.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28653687902072832
+    m_Localized: '"We''re gonna need a bigger hammer."
+
+
+      Health: <b>2</b>
+
+      Damage:
+      <b>1</b>
+
+      Range: <b>1</b>
+
+      Steps: <b>1</b>
+
+      Movement: <b>Cross</b>
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28653846098636800
+    m_Localized: 'REPAIR
+
+
+      Rip out an unoccupied floor square in range <b>2</b>
+      and use it to cover a hole in range <b>2</b>.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28654477018427392
+    m_Localized: '"If I''m too strong, you''re too weak."
+
+
+      Health: <b>3</b>
+
+      Damage:
+      <b>1</b>
+
+      Range: <b>1</b>
+
+      Steps: <b>1</b>
+
+      Movement: <b>Cross</b>
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28654773379559424
+    m_Localized: 'RAM
+
+
+      Rush onto a floor square in range <b>1</b>. If the
+      floor square is occupied, the occupying unit is pushed <b>1</b> square in the
+      same direction (as are any units on adjacent squares in this direction) and
+      both the pushed unit und the Tank take <b>1</b> damage. If this pushes a unit
+      into a hole, it dies immediately. Units cannot be pushed across the edge of
+      the board. '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28655149264695296
+    m_Localized: '"I love the smell of gunpowder in the morning."
+
+
+      Health:
+      <b>2</b>
+
+      Damage: <b>1</b>
+
+      Range: <b>2</b>
+
+      Steps: <b>1</b>
+
+      Movement:
+      <b>Cross</b>
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28655477968105472
+    m_Localized: 'LONGSHOT
+
+
+      Attack a target without range restriction whilst
+      dealing <b>1</b> damage to yourself.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28655762178338816
+    m_Localized: '"Cut me baby, one more time."
+
+
+      Health: <b>1</b>
+
+      Damage:
+      <b>2</b>
+
+      Range: <b>1</b>
+
+      Steps: <b>2</b>
+
+      Movement: <b>Star</b>
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28655905917136896
+    m_Localized: 'JUMP
+
+
+      Jump up to <b>3</b> squares across units and holes
+      onto an unoccupied floor square.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28656313901281280
+    m_Localized: '"Sometimes you have to steal to heal."
+
+
+      Health: <b>2</b>
+
+      Damage:
+      <b>1</b>
+
+      Range: <b>1</b>
+
+      Steps: <b>1</b>
+
+      Movement: <b>Cross</b>
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28656462299951104
+    m_Localized: 'TRANSFUSION
+
+
+      Move <b>1</b> health point from a unit in range
+      <b>2</b> to another.'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
