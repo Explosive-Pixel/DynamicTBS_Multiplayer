@@ -28,6 +28,7 @@ static class ActiveAbilityTypeMethods
 public interface IActiveAbility
 {
     ActiveAbilityType AbilityType { get; }
+    IAction AssociatedAction { get; }
     int Cooldown { get { return 1; } }
     void Execute();
 

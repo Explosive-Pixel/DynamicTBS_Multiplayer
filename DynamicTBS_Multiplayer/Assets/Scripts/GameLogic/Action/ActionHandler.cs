@@ -39,21 +39,9 @@ public class ActionHandler : MonoBehaviour
 
     public void ExecuteAction(Action actionToExecute)
     {
-        if (actionToExecute.ActionSteps == null || actionToExecute.ActionSteps.Count == 0)
-            return;
-
-        if (actionToExecute.IsAction(ActionType.ActiveAbility))
-        {
-            actionToExecute.ActionSteps[0].CharacterInAction.ActiveAbility.Execute();
-        }
-
-        foreach (IAction action in ActionRegistry.GetActions())
-        {
-            if (action.ActionType == actionToExecute.ActionSteps[0].ActionType)
-            {
-                FinishAction(action, actionToExecute);
-            }
-        }
+        IAction action = FindAction(actionToExecute);
+        if (action != null)
+            FinishAction(action, actionToExecute);
     }
 
     public bool ExecuteAction(IAction action, GameObject actionDestination)
@@ -76,23 +64,16 @@ public class ActionHandler : MonoBehaviour
 
     public void ExecuteOriginalAction(Action actionToExecute)
     {
-        if (actionToExecute.IsAction(ActionType.ActiveAbility) && ActionRegistry.GetActions().Find(action => action.ActionType == actionToExecute.ActionSteps[0].ActionType) == null)
+        IAction action = FindAction(actionToExecute);
+        if (action != null)
         {
-            actionToExecute.ActionSteps[0].CharacterInAction.ActiveAbility.Execute();
-        }
-
-        foreach (IAction action in ActionRegistry.GetActions())
-        {
-            if (action.ActionType == actionToExecute.ActionSteps[0].ActionType)
+            if (GameManager.GameType == GameType.LOCAL)
             {
-                if (GameManager.GameType == GameType.LOCAL)
-                {
-                    FinishAction(action, actionToExecute);
-                    return;
-                }
-
-                WSMsgPerformAction.SendPerformActionMessage(actionToExecute);
+                FinishAction(action, actionToExecute);
+                return;
             }
+
+            WSMsgPerformAction.SendPerformActionMessage(actionToExecute);
         }
     }
 
@@ -129,5 +110,26 @@ public class ActionHandler : MonoBehaviour
     public void HideAllActionPatterns()
     {
         ActionRegistry.HideAllActionPatterns();
+    }
+
+    private IAction FindAction(Action actionToExecute)
+    {
+        if (actionToExecute.ActionSteps == null || actionToExecute.ActionSteps.Count == 0)
+            return null;
+
+        if (actionToExecute.IsAction(ActionType.ActiveAbility))
+        {
+            ActionRegistry.Register(actionToExecute.ActionSteps[0].CharacterInAction.ActiveAbility.AssociatedAction);
+        }
+
+        foreach (IAction action in ActionRegistry.GetActions())
+        {
+            if (action.ActionType == actionToExecute.ActionSteps[0].ActionType)
+            {
+                return action;
+            }
+        }
+
+        return null;
     }
 }

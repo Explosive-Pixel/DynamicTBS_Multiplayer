@@ -9,6 +9,7 @@ public class JumpAA : MonoBehaviour, IActiveAbility
     public static int distance;
 
     public ActiveAbilityType AbilityType { get { return ActiveAbilityType.JUMP; } }
+    public IAction AssociatedAction { get { return jumpAAAction; } }
 
     private JumpAAAction jumpAAAction;
 
