@@ -11,6 +11,7 @@ public enum ConnectionState
     DICONNECTED,
     CONNECTING,
     CONNECTED,
+    INSTABLE,
     RECONNECTING,
     DEAD,
     OUTDATED
@@ -153,14 +154,14 @@ public class WSClient : MonoBehaviour
         Debug.Log($"WebSocket error: {error}");
     }
 
-    private void CheckIfClientIsUpToDate(string requiredVersion)
-    {
-        if (VersionUtils.IsGreater(requiredVersion, PlayerSettings.bundleVersion))
-        {
-            state = ConnectionState.OUTDATED;
-            websocket.Close();
-        }
-    }
+    /* private void CheckIfClientIsUpToDate(string requiredVersion)
+     {
+         if (VersionUtils.IsGreater(requiredVersion, PlayerSettings.bundleVersion))
+         {
+             state = ConnectionState.OUTDATED;
+             websocket.Close();
+         }
+     } */
 
 
     // ===================== RECONNECT =====================
@@ -226,13 +227,12 @@ public class WSClient : MonoBehaviour
 #endif
     }
 
-    private void KeepAlive()
+    private async void KeepAlive()
     {
         keepAliveTimer += Time.deltaTime;
         if (keepAliveTimer >= keepAliveInterval)
         {
-            SendMessage(new WSMsgKeepAlive());
-            keepAliveTimer = 0f;
+            await SendDirectly(new WSMsgKeepAlive());
         }
     }
 
@@ -252,6 +252,8 @@ public class WSClient : MonoBehaviour
 
     private void HandleMessage(byte[] bytes)
     {
+        state = ConnectionState.CONNECTED;
+
         var json = System.Text.Encoding.UTF8.GetString(bytes);
         var msg = WSMessage.Deserialize(json);
 
@@ -273,6 +275,11 @@ public class WSClient : MonoBehaviour
 
         if (IsNewMessage(msg))
         {
+            if (msg.code == WSMessageCode.WSMsgDraftCharacterCode || msg.code == WSMessageCode.WSMsgPerformActionCode)
+            {
+                Client.IsWaitingForActionExecution = false;
+            }
+
             UpdateMessageHistory(msg);
             MessageReceiver.ReceiveMessage(msg);
             msg.HandleMessage();
@@ -311,7 +318,7 @@ public class WSClient : MonoBehaviour
 
     private void TrySendNext()
     {
-        if (currentMessage != null || outgoingQueue.Count == 0)
+        if (currentMessage != null || outgoingQueue.Count == 0 || !gameIsUpToDate)
             return;
 
         currentMessage = new PendingMessage
@@ -328,6 +335,11 @@ public class WSClient : MonoBehaviour
     {
         if (!IsConnected || currentMessage == null)
             return;
+
+        if (currentMessage.retries > 0)
+        {
+            state = ConnectionState.INSTABLE;
+        }
 
         currentMessage.lastSentTime = Time.time * 1000f;
         currentMessage.retries++;

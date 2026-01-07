@@ -20,7 +20,7 @@ public class PlacementManager : MonoBehaviour
     public static int MaxPlacementCount { get { return PlacementSequence.Sum(); } }
     private List<Vector3> CharacterPositions(PlayerType side) { return side == PlayerType.blue ? blueCharacterPositions : pinkCharacterPositions; }
 
-    private static Dictionary<PlayerType, bool> placeRandom = new() { { PlayerType.blue, false }, { PlayerType.pink, false } };
+    private static readonly Dictionary<PlayerType, bool> placeRandom = new() { { PlayerType.blue, false }, { PlayerType.pink, false } };
 
     private static bool init = false;
 
@@ -70,7 +70,7 @@ public class PlacementManager : MonoBehaviour
     {
         placeRandom[side] = true;
 
-        if (side == PlayerManager.ExecutingPlayer)
+        if (side == PlayerManager.ExecutingPlayer && GetRemainingPlacementCount(side) > 0)
             RandomPlacement(side);
     }
 

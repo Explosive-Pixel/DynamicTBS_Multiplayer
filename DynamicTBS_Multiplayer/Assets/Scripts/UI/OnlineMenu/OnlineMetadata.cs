@@ -52,6 +52,7 @@ public class OnlineMetadata : MonoBehaviour
         switch (Client.ConnectionStatus)
         {
             case ConnectionState.CONNECTED:
+            case ConnectionState.INSTABLE:
                 SetInfoText(connectedText);
                 break;
 

@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 
 public class DraftManager : MonoBehaviour
 {
@@ -23,6 +22,8 @@ public class DraftManager : MonoBehaviour
     public static int MaxDraftCount { get { return DraftSequence.Sum(); } }
     public static int DraftCounter { get { return draftCounter; } }
 
+    private static readonly Dictionary<PlayerType, bool> draftRandom = new() { { PlayerType.blue, false }, { PlayerType.pink, false } };
+
     private static bool init = false;
 
     private void Awake()
@@ -36,6 +37,9 @@ public class DraftManager : MonoBehaviour
         draftSequenceIndex = 0;
         currentPlayerDraftCount = 0;
         characterInformation = unitInformation;
+
+        draftRandom[PlayerType.blue] = false;
+        draftRandom[PlayerType.pink] = false;
 
         WSMsgUpdateServer.SendUpdateServerMessage(GamePhase.DRAFT);
     }
@@ -77,12 +81,17 @@ public class DraftManager : MonoBehaviour
         AdvanceDraftOrder();
 
         DraftEvents.FinishDraftAction();
+
+        if (draftRandom[side] && side == PlayerManager.CurrentPlayer
+             && PlayerManager.ClientIsCurrentPlayer() && GetRemainingDraftCount(PlayerManager.CurrentPlayer) > 0)
+            RandomDraft(side);
     }
 
-    public static void RandomDrafts(PlayerType side)
+    public static void StartRandomDraft(PlayerType side)
     {
-        int i = GetRemainingDraftCount(side);
-        while (i-- > 0)
+        draftRandom[side] = true;
+
+        if (side == PlayerManager.ExecutingPlayer && GetRemainingDraftCount(side) > 0)
         {
             RandomDraft(side);
         }

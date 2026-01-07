@@ -5,6 +5,7 @@ public class OnlineLobbyLostConnectionHandler : MonoBehaviour
     [SerializeField] private GameObject canvas;
 
     [SerializeField] private GameObject notConnectedInfo;
+    [SerializeField] private GameObject connectionInstableInfo;
     [SerializeField] private GameObject reconnectInfo;
     [SerializeField] private GameObject connectionDeadInfo;
 
@@ -17,13 +18,15 @@ public class OnlineLobbyLostConnectionHandler : MonoBehaviour
 
     void Update()
     {
-        if (GameManager.GameType != GameType.ONLINE || GameManager.CurrentGamePhase == GamePhase.NONE || Client.Role != ClientType.PLAYER)
+        if (GameManager.GameType != GameType.ONLINE || GameManager.CurrentGamePhase == GamePhase.NONE)
             return;
 
-        canvas.SetActive(!Client.IsConnectedToServer || !Client.CurrentLobby.IsFull);
         notConnectedInfo.SetActive(!Client.IsConnectedToServer);
+        connectionInstableInfo.SetActive(Client.ConnectionStatus == ConnectionState.INSTABLE);
         reconnectInfo.SetActive(Client.ConnectionStatus == ConnectionState.RECONNECTING);
         connectionDeadInfo.SetActive(Client.ConnectionStatus == ConnectionState.DEAD);
         opponentLostConnectionInfo.SetActive(Client.IsConnectedToServer && !Client.CurrentLobby.IsFull);
+
+        canvas.SetActive(notConnectedInfo.activeSelf || connectionInstableInfo.activeSelf || reconnectInfo.activeSelf || connectionDeadInfo.activeSelf || opponentLostConnectionInfo.activeSelf);
     }
 }

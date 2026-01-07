@@ -13,11 +13,6 @@ public class WSMsgDraftCharacter : WSMessage
 
     public override void HandleMessage()
     {
-        /*if (Client.ShouldReadMessage(playerId))
-        {
-            DraftManager.DraftCharacter(characterType, playerId);
-        }*/
-
         DraftManager.ExecuteDraftCharacter(characterType, playerId);
     }
 

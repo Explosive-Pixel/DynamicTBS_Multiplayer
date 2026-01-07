@@ -20,6 +20,6 @@ public class DraftTimer : GameTimer
         if (GameManager.GameType == GameType.ONLINE && Client.ShouldReadMessage(playerType))
             return;
 
-        DraftManager.RandomDrafts(playerType);
+        DraftManager.StartRandomDraft(playerType);
     }
 }
