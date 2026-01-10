@@ -10,7 +10,8 @@ public class UIUtils : MonoBehaviour
 
     public static bool HasSamePosition(GameObject gameObject, Vector3 position)
     {
-        return gameObject != null && gameObject.transform.position.x == position.x && gameObject.transform.position.y == position.y;
+        return gameObject != null && Mathf.Approximately(gameObject.transform.position.x, position.x) &&
+                                            Mathf.Approximately(gameObject.transform.position.y, position.y);
     }
 
     public static GameObject FindChildGameObject(GameObject parent, string childName)
