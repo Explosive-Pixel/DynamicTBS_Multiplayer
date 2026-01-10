@@ -12,6 +12,9 @@ public class KeyInputHandler : MonoBehaviour
             PauseHandler.HandlePause();
         }
 
+        if (!GameplayManager.UIPlayerActionAllowed)
+            return;
+
         if (Input.GetKeyDown(KeyCode.A))
         {
             ActiveAbilityIconHandler.ExecuteActiveAbility();

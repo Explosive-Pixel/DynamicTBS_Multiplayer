@@ -20,7 +20,7 @@ public class GameplayManager : MonoBehaviour
                 || (GameManager.CurrentGamePhase != GamePhase.NONE
                 && !gameIsPaused &&
                 (GameManager.GameType == GameType.LOCAL
-                || (!Client.IsLoadingGame && Client.InLobby)));
+                || (!Client.IsLoadingGame && Client.InLobby && Client.IsConnectedToServer && !Client.IsWaitingForActionExecution)));
         }
     }
     public static bool UIPlayerActionAllowed

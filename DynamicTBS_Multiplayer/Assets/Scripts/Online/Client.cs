@@ -24,6 +24,8 @@ public static class Client
 
     public static bool IsAdmin { get { return CurrentLobby != null && CurrentLobby.Admin != null && CurrentLobby.Admin.uuid == Uuid; } }
 
+    public static bool IsWaitingForActionExecution { get; set; }
+
     public static ClientInfo ClientInfo
     {
         get
@@ -47,7 +49,7 @@ public static class Client
         }
     }
 
-    public static bool IsConnectedToServer { get { return ConnectionStatus == ConnectionState.CONNECTED; } }
+    public static bool IsConnectedToServer { get { return ConnectionStatus == ConnectionState.CONNECTED || ConnectionStatus == ConnectionState.INSTABLE; } }
     public static bool InLobby { get { return CurrentLobby != null; } }
 
     public static bool ShouldReadMessage(PlayerType playerType)
@@ -153,6 +155,12 @@ public static class Client
             return;
 
         wSMessage.lobbyId = InLobby ? CurrentLobby.LobbyId.Id : 0;
+
+
+        if (wSMessage.code == WSMessageCode.WSMsgDraftCharacterCode || wSMessage.code == WSMessageCode.WSMsgPerformActionCode)
+        {
+            IsWaitingForActionExecution = true;
+        }
 
         WSClient.Instance.SendMessage(wSMessage);
     }
