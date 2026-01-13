@@ -72,6 +72,7 @@ public static class BuildScript
             buildTarget = BuildTarget.WebGL;
         }
 
+        // TODO: Set Build Settings
         SetPlayerSettings();
 
         BuildReport report = BuildPipeline.BuildPlayer(scenePaths, buildPath, buildTarget, developmentBuild ? BuildOptions.Development : BuildOptions.None);
@@ -99,22 +100,25 @@ public static class BuildScript
     [PostProcessBuild]
     public static void OnPostprocessBuild(BuildTarget target, string pathToBuiltProject)
     {
-        // Pfade zur Readme-Datei und zum Build-Ordner
-        string readmePath = Path.Combine(Application.dataPath, "readme.txt");
+        CopyFile("readme.txt", pathToBuiltProject);
+        //CopyFile("steam_appid.txt", pathToBuiltProject);
+    }
+
+    private static void CopyFile(string filename, string pathToBuiltProject)
+    {
+        string readmePath = Path.Combine(Application.dataPath, filename);
         string buildFolderPath = Path.GetDirectoryName(pathToBuiltProject);
 
-        // Überprüfe, ob die Readme-Datei existiert
         if (File.Exists(readmePath))
         {
-            // Kopiere die Readme-Datei in den Build-Ordner
-            string buildReadmePath = Path.Combine(buildFolderPath, "readme.txt");
+            string buildReadmePath = Path.Combine(buildFolderPath, filename);
             File.Copy(readmePath, buildReadmePath, true);
 
-            Debug.Log("Readme copied to build folder.");
+            Debug.Log("File '" + filename + "' copied to build folder.");
         }
         else
         {
-            Debug.LogError("Readme file not found.");
+            Debug.LogError("File '" + filename + "' not found.");
         }
     }
 }
