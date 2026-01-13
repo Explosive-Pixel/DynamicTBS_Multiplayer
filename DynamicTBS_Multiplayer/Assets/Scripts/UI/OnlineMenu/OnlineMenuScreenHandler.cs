@@ -21,6 +21,7 @@ public class OnlineMenuScreenHandler : MonoBehaviour
     {
         MessageReceiver.OnWSMessageReceive += UpdateMetadata;
         MenuEvents.OnUpdateCurrentLobby += ShowRematchMenu;
+        MenuEvents.OnLeftLobby += ShowLobbyList;
     }
 
     private void OnEnable()
@@ -38,13 +39,10 @@ public class OnlineMenuScreenHandler : MonoBehaviour
             case WSMessageCode.WSMsgLobbyInfoCode:
                 HandleWSMsgLobbyInfo((WSMsgLobbyInfo)msg);
                 break;
-            case WSMessageCode.WSMsgCloseLobbyCode:
-                ShowLobbyList((WSMsgCloseLobby)msg);
-                break;
         }
     }
 
-    private void ShowLobbyList(WSMsgCloseLobby msg)
+    private void ShowLobbyList()
     {
         leftActiveHandler.SetActive(lobbyOverviewDisplay);
         midActiveHandler.SetInactive();
@@ -95,5 +93,6 @@ public class OnlineMenuScreenHandler : MonoBehaviour
     {
         MessageReceiver.OnWSMessageReceive -= UpdateMetadata;
         MenuEvents.OnUpdateCurrentLobby -= ShowRematchMenu;
+        MenuEvents.OnLeftLobby -= ShowLobbyList;
     }
 }

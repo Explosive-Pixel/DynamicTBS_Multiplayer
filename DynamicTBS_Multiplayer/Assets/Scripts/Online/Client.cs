@@ -106,6 +106,11 @@ public static class Client
 
     public static void LeaveLobby()
     {
+        if (CurrentLobby != null)
+        {
+            MenuEvents.LeaveLobby();
+        }
+
         CurrentLobby = null;
     }
 

@@ -5,7 +5,9 @@ public static class MenuEvents
 
     public delegate void CurrentLobby();
     public static event CurrentLobby OnUpdateCurrentLobby;
-    public static event CurrentLobby OnClosedCurrentLobby;
+
+    public delegate void ClosedLobby();
+    public static event ClosedLobby OnLeftLobby;
 
     public static void ChangeLobbySelection(Lobby lobby)
     {
@@ -19,9 +21,9 @@ public static class MenuEvents
             OnUpdateCurrentLobby();
     }
 
-    public static void CurrentLobbyClosed()
+    public static void LeaveLobby()
     {
-        if (OnClosedCurrentLobby != null)
-            OnClosedCurrentLobby();
+        if (OnLeftLobby != null)
+            OnLeftLobby();
     }
 }
