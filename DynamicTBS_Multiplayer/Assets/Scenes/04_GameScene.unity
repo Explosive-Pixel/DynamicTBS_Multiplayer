@@ -450,18 +450,46 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1958638195}
     m_Modifications:
+    - target: {fileID: 149441085284609384, guid: adfeae6a19ad5ae45988757e5db46f88, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0.67
+      objectReference: {fileID: 0}
+    - target: {fileID: 149441085284609384, guid: adfeae6a19ad5ae45988757e5db46f88, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0.57
+      objectReference: {fileID: 0}
+    - target: {fileID: 149441085284609384, guid: adfeae6a19ad5ae45988757e5db46f88, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.0000000088476
+      objectReference: {fileID: 0}
+    - target: {fileID: 149441085284609384, guid: adfeae6a19ad5ae45988757e5db46f88, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.0000000069849
+      objectReference: {fileID: 0}
     - target: {fileID: 149441085284609386, guid: adfeae6a19ad5ae45988757e5db46f88, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
     - target: {fileID: 149441085284609387, guid: adfeae6a19ad5ae45988757e5db46f88, type: 3}
+      propertyPath: m_fontSize
+      value: 0.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 149441085284609387, guid: adfeae6a19ad5ae45988757e5db46f88, type: 3}
       propertyPath: m_fontAsset
       value: 
       objectReference: {fileID: 11400000, guid: be19911be0cb47a409e9003c0084646e, type: 2}
     - target: {fileID: 149441085284609387, guid: adfeae6a19ad5ae45988757e5db46f88, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 0.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 149441085284609387, guid: adfeae6a19ad5ae45988757e5db46f88, type: 3}
       propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: 4345326908585679400, guid: be19911be0cb47a409e9003c0084646e, type: 2}
+    - target: {fileID: 149441085284609387, guid: adfeae6a19ad5ae45988757e5db46f88, type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 512
+      objectReference: {fileID: 0}
     - target: {fileID: 149441085427658596, guid: adfeae6a19ad5ae45988757e5db46f88, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -585,6 +613,10 @@ PrefabInstance:
     - target: {fileID: 834435128512467020, guid: adfeae6a19ad5ae45988757e5db46f88, type: 3}
       propertyPath: gamePhase
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4120232643584056371, guid: adfeae6a19ad5ae45988757e5db46f88, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0.57
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: adfeae6a19ad5ae45988757e5db46f88, type: 3}

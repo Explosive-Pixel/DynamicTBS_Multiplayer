@@ -35,6 +35,7 @@ public class CreateLobbyHandler : MonoBehaviour
         created = false;
 
         MessageReceiver.OnWSMessageReceive += UpdateCreateLobbyMenu;
+        MenuEvents.OnLeftLobby += ResetCreated;
     }
 
     private void Update()
@@ -69,6 +70,11 @@ public class CreateLobbyHandler : MonoBehaviour
         }
     }
 
+    private void ResetCreated()
+    {
+        created = false;
+    }
+
     private void UpdateCreateLobbyMenu(WSMessage msg)
     {
         switch (msg.code)
@@ -99,5 +105,6 @@ public class CreateLobbyHandler : MonoBehaviour
     private void OnDestroy()
     {
         MessageReceiver.OnWSMessageReceive -= UpdateCreateLobbyMenu;
+        MenuEvents.OnLeftLobby -= ResetCreated;
     }
 }
