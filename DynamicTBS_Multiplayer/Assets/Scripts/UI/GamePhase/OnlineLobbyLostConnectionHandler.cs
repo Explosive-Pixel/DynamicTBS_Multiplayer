@@ -25,7 +25,7 @@ public class OnlineLobbyLostConnectionHandler : MonoBehaviour
         connectionInstableInfo.SetActive(Client.ConnectionStatus == ConnectionState.INSTABLE);
         reconnectInfo.SetActive(Client.ConnectionStatus == ConnectionState.RECONNECTING);
         connectionDeadInfo.SetActive(Client.ConnectionStatus == ConnectionState.DEAD);
-        opponentLostConnectionInfo.SetActive(Client.IsConnectedToServer && !Client.CurrentLobby.IsFull);
+        opponentLostConnectionInfo.SetActive(Client.IsConnectedToServer && Client.InLobby && !Client.CurrentLobby.IsFull);
 
         canvas.SetActive(notConnectedInfo.activeSelf || connectionInstableInfo.activeSelf || reconnectInfo.activeSelf || connectionDeadInfo.activeSelf || opponentLostConnectionInfo.activeSelf);
     }
