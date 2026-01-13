@@ -74,11 +74,6 @@ public class GameTimer : BaseTimer
         }
     }
 
-    private void SetInactive()
-    {
-        Destroy(this);
-    }
-
     private void UpdateTimeleft(float pinkTimeLeft, float blueTimeLeft)
     {
         timeleft = playerType == PlayerType.pink ? pinkTimeLeft : blueTimeLeft;
@@ -93,7 +88,7 @@ public class GameTimer : BaseTimer
         GameplayEvents.OnGamePause += PauseTimerLocal;
         GameplayEvents.OnGamePauseOnline += PauseTimerOnline;
         GameEvents.OnGamePhaseEnd += SetInactive;
-        MenuEvents.OnLeftLobby += SetInactive;
+        MenuEvents.OnLeftLobby += StopTimer;
     }
 
     private void UnsubscribeEvents()
@@ -104,7 +99,7 @@ public class GameTimer : BaseTimer
         GameplayEvents.OnGamePause -= PauseTimerLocal;
         GameplayEvents.OnGamePauseOnline -= PauseTimerOnline;
         GameEvents.OnGamePhaseEnd -= SetInactive;
-        MenuEvents.OnLeftLobby -= SetInactive;
+        MenuEvents.OnLeftLobby -= StopTimer;
     }
 
     private void OnDestroy()
