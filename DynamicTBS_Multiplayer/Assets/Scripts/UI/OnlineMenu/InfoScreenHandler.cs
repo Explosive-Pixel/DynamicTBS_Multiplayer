@@ -11,6 +11,7 @@ public class InfoScreenHandler : MonoBehaviour
     [SerializeField] private LocalizedString connectedText;
     [SerializeField] private LocalizedString unconnectedText;
     [SerializeField] private LocalizedString attemptConnectionText;
+    [SerializeField] private LocalizedString outdatedText;
 
     private void Awake()
     {
@@ -51,6 +52,9 @@ public class InfoScreenHandler : MonoBehaviour
             case ConnectionState.CONNECTING:
             case ConnectionState.RECONNECTING:
                 currentString = attemptConnectionText;
+                break;
+            case ConnectionState.OUTDATED:
+                currentString = outdatedText;
                 break;
         }
 
