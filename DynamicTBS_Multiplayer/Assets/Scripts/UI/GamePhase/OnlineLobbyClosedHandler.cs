@@ -22,7 +22,6 @@ public class OnlineLobbyClosedHandler : MonoBehaviour
         {
             bool regularly = ((WSMsgCloseLobby)msg).regularly;
             SetActive(regularly);
-
         }
         else if (msg.code == WSMessageCode.WSMsgServerNotificationCode)
         {
