@@ -8,8 +8,7 @@ public class BaseActiveHandler : MonoBehaviour
 
     public void SetActive(GameObject gameObject)
     {
-        if (currentActiveGameObject)
-            currentActiveGameObject.SetActive(false);
+        SetInactive();
 
         gameObject.SetActive(true);
         currentActiveGameObject = gameObject;
@@ -17,12 +16,10 @@ public class BaseActiveHandler : MonoBehaviour
 
     public void SetActive(Button clickedButton, GameObject gameObject)
     {
-        if (lastClickedButton != null)
-            lastClickedButton.interactable = true;
+        SetActive(gameObject);
+
         clickedButton.interactable = false;
         lastClickedButton = clickedButton;
-
-        SetActive(gameObject);
     }
 
     public void SetInactive()
@@ -31,6 +28,10 @@ public class BaseActiveHandler : MonoBehaviour
         {
             currentActiveGameObject.SetActive(false);
             currentActiveGameObject = null;
+        }
+        if (lastClickedButton != null)
+        {
+            lastClickedButton.interactable = true;
         }
     }
 }

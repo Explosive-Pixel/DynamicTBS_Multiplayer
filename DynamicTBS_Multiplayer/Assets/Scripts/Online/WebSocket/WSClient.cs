@@ -4,7 +4,6 @@ using UnityEngine;
 using NativeWebSocket;
 using System.Collections;
 using System.Linq;
-using UnityEditor;
 
 public enum ConnectionState
 {
@@ -137,16 +136,18 @@ public class WSClient : MonoBehaviour
     {
         if (destroyed) return;
 
-        Debug.Log($"WebSocket closed: {closeCode}");
-        state = ConnectionState.DICONNECTED;
-
         await CleanupWebSocket();
 
         if (GameplayManager.HasGameStarted)
             gameIsUpToDate = false;
 
-        if (state != ConnectionState.DEAD && state != ConnectionState.OUTDATED)
-            _ = TryReconnect();
+        if (state == ConnectionState.OUTDATED || state == ConnectionState.DEAD)
+            return;
+
+        Debug.Log($"WebSocket closed: {closeCode}");
+        state = ConnectionState.DICONNECTED;
+
+        await TryReconnect();
     }
 
     private void OnWebSocketError(string error)
@@ -154,21 +155,22 @@ public class WSClient : MonoBehaviour
         Debug.Log($"WebSocket error: {error}");
     }
 
-    /* private void CheckIfClientIsUpToDate(string requiredVersion)
-     {
-         if (VersionUtils.IsGreater(requiredVersion, PlayerSettings.bundleVersion))
-         {
-             state = ConnectionState.OUTDATED;
-             websocket.Close();
-         }
-     } */
+    private void CheckIfClientIsUpToDate(string requiredVersion)
+    {
+        if (VersionUtils.IsGreater(requiredVersion, Application.version))
+        {
+            state = ConnectionState.OUTDATED;
+            Debug.Log("Client version is too old! Closing connection ...");
+            websocket.Close();
+        }
+    }
 
 
     // ===================== RECONNECT =====================
 
     private async Task TryReconnect()
     {
-        if (state == ConnectionState.RECONNECTING || destroyed)
+        if (state != ConnectionState.DICONNECTED || destroyed)
             return;
 
         state = ConnectionState.RECONNECTING;
@@ -252,7 +254,8 @@ public class WSClient : MonoBehaviour
 
     private void HandleMessage(byte[] bytes)
     {
-        state = ConnectionState.CONNECTED;
+        if (state != ConnectionState.OUTDATED)
+            state = ConnectionState.CONNECTED;
 
         var json = System.Text.Encoding.UTF8.GetString(bytes);
         var msg = WSMessage.Deserialize(json);
@@ -275,6 +278,11 @@ public class WSClient : MonoBehaviour
 
         if (IsNewMessage(msg))
         {
+            if (msg.code == WSMessageCode.WSMsgWelcomeClientCode)
+            {
+                CheckIfClientIsUpToDate(((WSMsgWelcomeClient)msg).requiredVersion);
+            }
+
             if (msg.code == WSMessageCode.WSMsgDraftCharacterCode || msg.code == WSMessageCode.WSMsgPerformActionCode)
             {
                 Client.IsWaitingForActionExecution = false;
@@ -363,10 +371,10 @@ public class WSClient : MonoBehaviour
 
     private void UpdateMessageHistory(WSMessage msg)
     {
-        if (WSMessage.Record(msg))
+        if (WSMessage.Record(msg) && (messageHistory.Count() > 0 || msg.code == WSMessageCode.WSMsgStartGameCode))
         {
             messageHistory.Add(msg);
-            Debug.Log("Updated Message History (count: " + messageHistory.Count + "):\n" + string.Join(", ", messageHistory));
+            //Debug.Log("Updated Message History (count: " + messageHistory.Count + "):\n" + string.Join(", ", messageHistory));
         }
     }
 

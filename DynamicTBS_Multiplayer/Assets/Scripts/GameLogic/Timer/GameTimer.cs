@@ -88,6 +88,7 @@ public class GameTimer : BaseTimer
         GameplayEvents.OnGamePause += PauseTimerLocal;
         GameplayEvents.OnGamePauseOnline += PauseTimerOnline;
         GameEvents.OnGamePhaseEnd += SetInactive;
+        MenuEvents.OnLeftLobby += StopTimer;
     }
 
     private void UnsubscribeEvents()
@@ -98,6 +99,7 @@ public class GameTimer : BaseTimer
         GameplayEvents.OnGamePause -= PauseTimerLocal;
         GameplayEvents.OnGamePauseOnline -= PauseTimerOnline;
         GameEvents.OnGamePhaseEnd -= SetInactive;
+        MenuEvents.OnLeftLobby -= StopTimer;
     }
 
     private void OnDestroy()

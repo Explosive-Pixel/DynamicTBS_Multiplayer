@@ -10,6 +10,9 @@ public class OnlineLobbyLostConnectionHandler : MonoBehaviour
     [SerializeField] private GameObject connectionDeadInfo;
 
     [SerializeField] private GameObject opponentLostConnectionInfo;
+    [SerializeField] private GameObject playerLostConnectionInfo;
+
+    [SerializeField] private GameObject mainMenuButton;
 
     private void Awake()
     {
@@ -25,8 +28,10 @@ public class OnlineLobbyLostConnectionHandler : MonoBehaviour
         connectionInstableInfo.SetActive(Client.ConnectionStatus == ConnectionState.INSTABLE);
         reconnectInfo.SetActive(Client.ConnectionStatus == ConnectionState.RECONNECTING);
         connectionDeadInfo.SetActive(Client.ConnectionStatus == ConnectionState.DEAD);
-        opponentLostConnectionInfo.SetActive(Client.IsConnectedToServer && !Client.CurrentLobby.IsFull);
+        opponentLostConnectionInfo.SetActive(Client.IsConnectedToServer && Client.InLobby && !Client.CurrentLobby.IsFull && Client.Role == ClientType.PLAYER);
+        playerLostConnectionInfo.SetActive(Client.IsConnectedToServer && Client.InLobby && !Client.CurrentLobby.IsFull && Client.Role == ClientType.SPECTATOR);
 
-        canvas.SetActive(notConnectedInfo.activeSelf || connectionInstableInfo.activeSelf || reconnectInfo.activeSelf || connectionDeadInfo.activeSelf || opponentLostConnectionInfo.activeSelf);
+        mainMenuButton.SetActive(connectionDeadInfo.activeSelf || opponentLostConnectionInfo.activeSelf || playerLostConnectionInfo.activeSelf || Client.Role == ClientType.SPECTATOR);
+        canvas.SetActive(notConnectedInfo.activeSelf || connectionInstableInfo.activeSelf || reconnectInfo.activeSelf || connectionDeadInfo.activeSelf || opponentLostConnectionInfo.activeSelf || playerLostConnectionInfo.activeSelf);
     }
 }

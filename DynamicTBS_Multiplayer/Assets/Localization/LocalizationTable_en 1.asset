@@ -76,9 +76,11 @@ MonoBehaviour:
 
       R. MOUSE: Undo Selection
 
+      A:
+      Activate Ability of selected Unit
 
-      SPACE:
-      Pause Game'
+
+      SPACE: Pause Game'
     m_Metadata:
       m_Items: []
   - m_Id: 40588463300608
@@ -486,7 +488,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 99023087198208
-    m_Localized: JOIN AS SPECTATOR
+    m_Localized: WATCH MATCH
     m_Metadata:
       m_Items: []
   - m_Id: 99718964174848
@@ -1190,6 +1192,38 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 30391331539902464
     m_Localized: BACK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31548656707428352
+    m_Localized: Join as spectator
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31585069066870784
+    m_Localized: 'Oops, this lobby was closed unexpectedly.
+
+      This was likely
+      caused by a server update or a temporary server issue.
+
+      Please create
+      a new lobby and start a new match - sorry!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31588280741912576
+    m_Localized: 'Oops, this lobby was closed unexpectedly.
+
+      This was likely
+      caused by a server update or a temporary server issue.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31593628919914496
+    m_Localized: 'Your game client is out of date.
+
+      Please update the game
+      to play online.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31797584124174336
+    m_Localized: 'A player has disconnected from the server. '
     m_Metadata:
       m_Items: []
   references:

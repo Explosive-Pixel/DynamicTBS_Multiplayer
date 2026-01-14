@@ -9,7 +9,7 @@ public class JoinPrivateLobbyHandler : MonoBehaviour
 {
     [SerializeField] private TMP_InputField fullLobbyName;
 
-    [SerializeField] private Button joinAsSpectatorButton;
+    [SerializeField] private Toggle joinAsSpectator;
     [SerializeField] private Button joinLobbyButton;
 
     [SerializeField] private TMP_Text lobbyInfoText;
@@ -34,8 +34,7 @@ public class JoinPrivateLobbyHandler : MonoBehaviour
         ResetLobbyInfoText();
         fullLobbyName.onValueChanged.AddListener(value => ResetLobbyInfoText());
 
-        joinAsSpectatorButton.onClick.AddListener(() => JoinLobby(ClientType.SPECTATOR));
-        joinLobbyButton.onClick.AddListener(() => JoinLobby(ClientType.PLAYER));
+        joinLobbyButton.onClick.AddListener(() => JoinLobby());
 
         LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
     }
@@ -58,7 +57,6 @@ public class JoinPrivateLobbyHandler : MonoBehaviour
 
     private void Update()
     {
-        joinAsSpectatorButton.interactable = IsValidLobbyID();
         joinLobbyButton.interactable = SetupCompleted;
     }
 
@@ -112,10 +110,11 @@ public class JoinPrivateLobbyHandler : MonoBehaviour
         }
     }
 
-    private void JoinLobby(ClientType role)
+    private void JoinLobby()
     {
         if (IsValidLobbyID())
         {
+            ClientType role = joinAsSpectator.isOn ? ClientType.SPECTATOR : ClientType.PLAYER;
             Client.JoinLobby(fullLobbyName.text != null ? fullLobbyName.text.Trim() : "", role);
         }
     }

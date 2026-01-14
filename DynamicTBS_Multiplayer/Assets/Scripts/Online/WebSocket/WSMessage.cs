@@ -24,7 +24,8 @@ public enum WSMessageCode
     WSMsgGameOverCode = 16,
     WSMsgDraftCharacterCode = 17,
     WSMsgPerformActionCode = 18,
-    WSMsgUIActionCode = 19
+    WSMsgUIActionCode = 19,
+    WSMsgTimeoutCode = 20
 }
 
 [Serializable]
@@ -87,6 +88,8 @@ public abstract class WSMessage
                 return Deserialize<WSMsgLobbyInfo>(json);
             case WSMessageCode.WSMsgConfigLobbyCode:
                 return Deserialize<WSMsgConfigLobby>(json);
+            case WSMessageCode.WSMsgTimeoutCode:
+                return Deserialize<WSMsgTimeout>(json);
         }
 
         return null;
@@ -99,11 +102,11 @@ public abstract class WSMessage
             case WSMessageCode.WSMsgCloseLobbyCode:
             case WSMessageCode.WSMsgStartGameCode:
             case WSMessageCode.WSMsgPauseGameCode:
-            case WSMessageCode.WSMsgServerNotificationCode:
             case WSMessageCode.WSMsgUpdateClientCode:
             case WSMessageCode.WSMsgDraftCharacterCode:
             case WSMessageCode.WSMsgPerformActionCode:
             case WSMessageCode.WSMsgUIActionCode:
+            case WSMessageCode.WSMsgTimeoutCode:
                 return true;
             default:
                 return false;
