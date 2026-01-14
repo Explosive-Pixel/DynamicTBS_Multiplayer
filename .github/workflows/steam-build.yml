@@ -1,0 +1,51 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - steam-integration
+
+jobs:
+  build:
+    name: Build for ${{ matrix.targetPlatform }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        targetPlatform:
+          - StandaloneWindows64 # Build a Windows 64-bit standalone.
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          lfs: true
+      - uses: actions/cache@v4
+        with:
+          path: DynamicTBS_Multiplayer/Library
+          key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-
+      - name: Set platform
+        id: set_platform
+        run: |
+          if [ "${{ matrix.targetPlatform }}" == "StandaloneWindows64" ]; then
+            echo "BUILD_METHOD=BuildScript.PerformBuildWindows" >> $GITHUB_ENV
+            echo "PLATFORM=Windows" >> $GITHUB_ENV
+          else
+            echo "Unsupported targetPlatform: ${{ matrix.targetPlatform }}"
+            exit 1
+          fi
+      - uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          targetPlatform: ${{ matrix.targetPlatform }}
+          unityVersion: 2021.3.6f1
+          projectPath: DynamicTBS_Multiplayer
+          buildMethod: ${{ steps.set_platform.outputs.BUILD_METHOD }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Build_${{ matrix.targetPlatform }}
+          path: DynamicTBS_Multiplayer/Builds/${{ steps.set_platform.outputs.PLATFORM }}

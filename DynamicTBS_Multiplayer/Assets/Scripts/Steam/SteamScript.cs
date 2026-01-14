@@ -5,6 +5,23 @@ public class SteamScript : MonoBehaviour
 {
     protected Callback<GameOverlayActivated_t> m_GameOverlayActivated;
 
+    #region SingletonImplementation
+    public static SteamScript Instance { set; get; }
+
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+    }
+    #endregion
+
     private void Start()
     {
         if (SteamManager.Initialized)
