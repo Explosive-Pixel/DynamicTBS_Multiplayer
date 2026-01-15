@@ -27,6 +27,7 @@ public class SteamScript : MonoBehaviour
         if (SteamManager.Initialized)
         {
             string name = SteamFriends.GetPersonaName();
+            PlayerSetup.SetupName(name);
             Debug.Log(name);
         }
     }
