@@ -9,6 +9,9 @@ public static class MenuEvents
     public delegate void ClosedLobby();
     public static event ClosedLobby OnLeftLobby;
 
+    public delegate void Rematch();
+    public static event Rematch OnRematchClicked;
+
     public static void ChangeLobbySelection(Lobby lobby)
     {
         if (OnChangeLobbySelection != null)
@@ -25,5 +28,11 @@ public static class MenuEvents
     {
         if (OnLeftLobby != null)
             OnLeftLobby();
+    }
+
+    public static void ClickOnRematch()
+    {
+        if (OnRematchClicked != null)
+            OnRematchClicked();
     }
 }
