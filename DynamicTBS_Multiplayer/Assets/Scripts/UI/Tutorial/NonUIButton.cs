@@ -7,6 +7,7 @@ public class NonUIButton : MonoBehaviour
 
     private void OnMouseDown()
     {
+        AudioEvents.PressingButton();
         OnButtonUsed?.Invoke();
     }
 }
