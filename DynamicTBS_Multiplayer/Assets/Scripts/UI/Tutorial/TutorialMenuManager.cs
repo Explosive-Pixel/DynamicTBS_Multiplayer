@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -12,9 +11,9 @@ public class TutorialMenuManager : MonoBehaviour
     public void ReturnToSelection()
     {
         CloseAll();
-        if(SelectionMenu != null)
+        if (SelectionMenu != null)
             SelectionMenu.SetActive(true);
-        if(Returnbutton != null)
+        if (Returnbutton != null)
             Returnbutton.SetActive(false);
     }
 
@@ -22,7 +21,7 @@ public class TutorialMenuManager : MonoBehaviour
     {
         CloseAll();
         subMenu.SetActive(true);
-        if(Returnbutton != null)
+        if (Returnbutton != null)
             Returnbutton.SetActive(true);
     }
 
