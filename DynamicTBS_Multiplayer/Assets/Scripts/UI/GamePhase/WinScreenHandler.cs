@@ -54,6 +54,11 @@ public class WinScreenHandler : MonoBehaviour
         UpdateLocalizedText();
     }
 
+    public void ClickOnRematchButton()
+    {
+        MenuEvents.ClickOnRematch();
+    }
+
     /// <summary>
     /// Wird aufgerufen, wenn die Sprache geändert wird.
     /// </summary>
