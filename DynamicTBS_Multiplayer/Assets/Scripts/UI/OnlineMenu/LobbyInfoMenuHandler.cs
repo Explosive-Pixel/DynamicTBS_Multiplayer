@@ -50,6 +50,7 @@ public class LobbyInfoMenuHandler : MonoBehaviour
 
     private void SetReady()
     {
+        AudioEvents.PressingButton();
         Client.IsReady = true;
         Client.SendToServer(new WSMsgSetReady());
     }
@@ -59,6 +60,7 @@ public class LobbyInfoMenuHandler : MonoBehaviour
         if (SelectedLobby == null || !nameSetupHandler.SetupCompleted)
             return;
 
+        AudioEvents.PressingButton();
         Client.JoinLobby(SelectedLobby.LobbyId.FullId, ClientType.PLAYER);
     }
 

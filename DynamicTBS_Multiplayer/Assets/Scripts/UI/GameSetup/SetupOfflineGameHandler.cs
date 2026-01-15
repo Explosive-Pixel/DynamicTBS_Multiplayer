@@ -29,6 +29,7 @@ public class SetupOfflineGameHandler : MonoBehaviour
 
     private void StartGame()
     {
+        AudioEvents.PressingButton();
         GameEvents.StartGame();
         started = true;
     }

@@ -41,6 +41,7 @@ public class OfferDrawAnswerHandler : MonoBehaviour
     {
         if (uIAction == UIAction.OFFER_DRAW)
         {
+            AudioEvents.PressingButton();
             if (!PlayerSetup.IsSide(player))
             {
                 SetActive(answerDrawBox, true);
@@ -55,10 +56,12 @@ public class OfferDrawAnswerHandler : MonoBehaviour
         }
         else if (uIAction == UIAction.ACCEPT_DRAW)
         {
+            AudioEvents.PressingButton();
             GameplayEvents.GameIsOver(null, GameOverCondition.DRAW_ACCEPTED);
         }
         else if (uIAction == UIAction.DECLINE_DRAW)
         {
+            AudioEvents.PressingButton();
             SetInactive();
             buttons.SetActive(true);
         }
