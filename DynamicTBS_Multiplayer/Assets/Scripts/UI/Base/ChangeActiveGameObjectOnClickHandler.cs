@@ -8,6 +8,8 @@ public class ChangeActiveGameObjectOnClickHandler : MonoBehaviour
 
     public void OnMouseDown()
     {
+        AudioEvents.PressingButton();
+
         if (gameObject.GetComponent<Button>() != null)
         {
             activeHandler.SetActive(gameObject.GetComponent<Button>(), activeOnClickGameObject);

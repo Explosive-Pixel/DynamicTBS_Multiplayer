@@ -114,6 +114,7 @@ public class JoinPrivateLobbyHandler : MonoBehaviour
     {
         if (IsValidLobbyID())
         {
+            AudioEvents.PressingButton();
             ClientType role = joinAsSpectator.isOn ? ClientType.SPECTATOR : ClientType.PLAYER;
             Client.JoinLobby(fullLobbyName.text != null ? fullLobbyName.text.Trim() : "", role);
         }

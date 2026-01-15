@@ -1,9 +1,11 @@
+using System;
 using UnityEngine;
 
 public class PlayerSetup : MonoBehaviour
 {
     private static string localizedPink = "Pink";
     private static string localizedBlue = "Blue";
+    private static readonly int maxPlayerNameCharacters = 16;
 
     private static string playerName;
     public static string Name { get { return playerName; } private set { playerName = value; } }
@@ -21,7 +23,13 @@ public class PlayerSetup : MonoBehaviour
 
     public static void SetupName(string name)
     {
-        Name = name;
+        if (name == null)
+            Name = null;
+        else
+        {
+            string trimmed = name.Trim();
+            Name = trimmed[..Math.Min(maxPlayerNameCharacters, trimmed.Length)];
+        }
     }
 
     public static void SetupSide(PlayerType side)

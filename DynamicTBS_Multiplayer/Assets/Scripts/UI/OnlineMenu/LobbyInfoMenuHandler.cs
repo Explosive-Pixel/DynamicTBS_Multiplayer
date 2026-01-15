@@ -4,13 +4,16 @@ using UnityEngine.UI;
 
 public class LobbyInfoMenuHandler : MonoBehaviour
 {
-    [SerializeField] private Button joinLobbyButton;
-    [SerializeField] private Button readyButton;
+    [SerializeField] private GameObject joinLobbyButton;
+    [SerializeField] private GameObject readyButton;
 
     [SerializeField] private LobbyDetailsHandler lobbyDetailsHandler;
     [SerializeField] private TimeAndMapInfoHandler timeAndMapInfoHandler;
 
     [SerializeField] private GameObject nameSetup;
+
+    private Button joinLobby_button;
+    private Button ready_button;
 
     private ISetupHandler nameSetupHandler;
 
@@ -24,8 +27,11 @@ public class LobbyInfoMenuHandler : MonoBehaviour
         MenuEvents.OnUpdateCurrentLobby += UpdateInfo;
         MessageReceiver.OnWSMessageReceive += UpdateInfo;
 
-        readyButton.onClick.AddListener(() => SetReady());
-        joinLobbyButton.onClick.AddListener(() => JoinLobby());
+        joinLobby_button = joinLobbyButton.GetComponentInChildren<Button>(true);
+        ready_button = readyButton.GetComponentInChildren<Button>(true);
+
+        ready_button.onClick.AddListener(() => SetReady());
+        joinLobby_button.onClick.AddListener(() => JoinLobby());
     }
 
     private void Start()
@@ -39,11 +45,12 @@ public class LobbyInfoMenuHandler : MonoBehaviour
 
     private void Update()
     {
-        joinLobbyButton.interactable = nameSetupHandler.SetupCompleted;
+        joinLobby_button.interactable = nameSetupHandler.SetupCompleted;
     }
 
     private void SetReady()
     {
+        AudioEvents.PressingButton();
         Client.IsReady = true;
         Client.SendToServer(new WSMsgSetReady());
     }
@@ -53,6 +60,7 @@ public class LobbyInfoMenuHandler : MonoBehaviour
         if (SelectedLobby == null || !nameSetupHandler.SetupCompleted)
             return;
 
+        AudioEvents.PressingButton();
         Client.JoinLobby(SelectedLobby.LobbyId.FullId, ClientType.PLAYER);
     }
 
@@ -65,13 +73,13 @@ public class LobbyInfoMenuHandler : MonoBehaviour
             lobbyDetailsHandler.UpdateInfo(selectedLobby);
             timeAndMapInfoHandler.UpdateInfo(selectedLobby?.GameConfig);
 
-            joinLobbyButton.gameObject.SetActive(!Client.InLobby && SelectedLobby != null && !SelectedLobby.IsFull);
+            joinLobbyButton.SetActive(!Client.InLobby && SelectedLobby != null && !SelectedLobby.IsFull);
 
             bool readyCheckAvailable = Client.InLobby && Client.Role == ClientType.PLAYER && Client.CurrentLobby.IsFull;
             if (!readyCheckAvailable)
                 Client.IsReady = false;
-            readyButton.interactable = readyCheckAvailable && !Client.IsReady;
-            readyButton.gameObject.SetActive(readyCheckAvailable);
+            ready_button.interactable = readyCheckAvailable && !Client.IsReady;
+            readyButton.SetActive(readyCheckAvailable);
         }
         else
         {

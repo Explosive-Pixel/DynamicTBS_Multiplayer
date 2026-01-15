@@ -19,6 +19,8 @@ public class SettingsManager : MonoBehaviour
 
     [SerializeField] private AudioMixer audioMixer;
 
+    private FullScreenMode fullScreenMode;
+
     private void Awake()
     {
         if (instance != null)
@@ -42,6 +44,12 @@ public class SettingsManager : MonoBehaviour
         {
             ToggleSettings();
         }
+
+        if (Screen.fullScreenMode != fullScreenMode)
+        {
+            fullScreenMode = Screen.fullScreenMode;
+            fullscreenToggle.isOn = Screen.fullScreen;
+        }
     }
 
     public void ToggleSettings()
@@ -56,7 +64,6 @@ public class SettingsManager : MonoBehaviour
     public void SetFullscreen(bool isFullscreen)
     {
         Screen.fullScreen = isFullscreen;
-        fullscreenToggle.isOn = isFullscreen;
     }
 
     public void SetMainVolume(float volume)
@@ -104,7 +111,7 @@ public class SettingsManager : MonoBehaviour
     private void LoadSettings()
     {
         if (PlayerPrefs.HasKey("FullscreenSetting"))
-            SetFullscreen(PlayerPrefs.GetInt("FullscreenSetting") == 1);
+            fullscreenToggle.isOn = PlayerPrefs.GetInt("FullscreenSetting") == 1;
         if (PlayerPrefs.HasKey("MainVolumeSetting"))
             SetMainVolume(PlayerPrefs.GetFloat("MainVolumeSetting"));
         if (PlayerPrefs.HasKey("MusicVolumeSetting"))
@@ -116,12 +123,6 @@ public class SettingsManager : MonoBehaviour
         if (PlayerPrefs.HasKey("VoiceVolumeSetting"))
             SetVoiceVolume(PlayerPrefs.GetFloat("VoiceVolumeSetting"));
     }
-
-    //public void QuitGame()
-    //{
-    //    //SaveSettings();
-    //    Application.Quit();
-    //}
 
     private void OnDestroy()
     {
