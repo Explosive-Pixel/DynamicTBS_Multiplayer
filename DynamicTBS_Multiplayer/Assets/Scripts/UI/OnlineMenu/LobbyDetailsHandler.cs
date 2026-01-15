@@ -91,6 +91,7 @@ public class LobbyDetailsHandler : MonoBehaviour
         if (SelectedLobby == null)
             return;
 
+        AudioEvents.PressingButton();
         Client.JoinLobby(SelectedLobby.LobbyId.FullId, ClientType.SPECTATOR);
     }
 }

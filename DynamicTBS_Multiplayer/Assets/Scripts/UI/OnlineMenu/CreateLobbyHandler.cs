@@ -54,6 +54,7 @@ public class CreateLobbyHandler : MonoBehaviour
     {
         if (SetupCompleted)
         {
+            AudioEvents.PressingButton();
             Client.Role = ClientType.PLAYER;
 
             if (newLobby)

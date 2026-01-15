@@ -45,7 +45,11 @@ public class ScrollableLobbyList : MonoBehaviour,
             ChangeActiveGameObjectOnClickHandler clickHandler = lobbyInfoGO.GetComponent<ChangeActiveGameObjectOnClickHandler>();
             clickHandler.activeHandler = onlineMenuScreenHandler.MidActiveHandler;
             clickHandler.activeOnClickGameObject = onlineMenuScreenHandler.LobbyInfoMenu;
-            lobbyInfoGO.GetComponent<Button>().onClick.AddListener(() => MenuEvents.ChangeLobbySelection(lobbyInfoGO.GetComponent<LobbyInfoHandler>().Lobby));
+            lobbyInfoGO.GetComponent<Button>().onClick.AddListener(() =>
+            {
+                AudioEvents.PressingButton();
+                MenuEvents.ChangeLobbySelection(lobbyInfoGO.GetComponent<LobbyInfoHandler>().Lobby);
+            });
 
             items.Add(lobbyInfoGO);
         }
