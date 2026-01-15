@@ -136,12 +136,18 @@ public class SteamScript : MonoBehaviour
         }
     }
 
+    private void TriggerAchievement()
+    {
+        UnlockAchievement(rematchAchievement);
+    }
+
     private void SubscribeEvents()
     {
         DraftEvents.OnCharacterCreated += TriggerAchievement;
         GameplayEvents.OnFinishAction += TriggerAchievement;
         GameplayEvents.OnTimerTimeout += TriggerAchievement;
         GameplayEvents.OnGameOver += TriggerAchievement;
+        MenuEvents.OnRematchClicked += TriggerAchievement;
     }
 
     private void OnDestroy()
@@ -150,5 +156,6 @@ public class SteamScript : MonoBehaviour
         GameplayEvents.OnFinishAction -= TriggerAchievement;
         GameplayEvents.OnTimerTimeout -= TriggerAchievement;
         GameplayEvents.OnGameOver -= TriggerAchievement;
+        MenuEvents.OnRematchClicked -= TriggerAchievement;
     }
 }
