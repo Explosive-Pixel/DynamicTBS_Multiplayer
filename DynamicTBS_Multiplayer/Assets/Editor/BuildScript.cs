@@ -1,7 +1,5 @@
-using System.IO;
 using UnityEditor;
 using UnityEditor.Build.Reporting;
-using UnityEditor.Callbacks;
 using UnityEngine;
 
 public static class BuildScript
@@ -72,7 +70,6 @@ public static class BuildScript
             buildTarget = BuildTarget.WebGL;
         }
 
-        // TODO: Set Build Settings
         SetPlayerSettings();
 
         BuildReport report = BuildPipeline.BuildPlayer(scenePaths, buildPath, buildTarget, developmentBuild ? BuildOptions.Development : BuildOptions.None);
@@ -94,31 +91,5 @@ public static class BuildScript
         PlayerSettings.allowFullscreenSwitch = true;
         PlayerSettings.runInBackground = true;
         PlayerSettings.resetResolutionOnWindowResize = true;
-    }
-
-
-    [PostProcessBuild]
-    public static void OnPostprocessBuild(BuildTarget target, string pathToBuiltProject)
-    {
-        CopyFile("readme.txt", pathToBuiltProject);
-        //CopyFile("steam_appid.txt", pathToBuiltProject);
-    }
-
-    private static void CopyFile(string filename, string pathToBuiltProject)
-    {
-        string readmePath = Path.Combine(Application.dataPath, filename);
-        string buildFolderPath = Path.GetDirectoryName(pathToBuiltProject);
-
-        if (File.Exists(readmePath))
-        {
-            string buildReadmePath = Path.Combine(buildFolderPath, filename);
-            File.Copy(readmePath, buildReadmePath, true);
-
-            Debug.Log("File '" + filename + "' copied to build folder.");
-        }
-        else
-        {
-            Debug.LogError("File '" + filename + "' not found.");
-        }
     }
 }
