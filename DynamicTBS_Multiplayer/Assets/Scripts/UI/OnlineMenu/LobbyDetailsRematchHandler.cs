@@ -57,7 +57,7 @@ public class LobbyDetailsRematchHandler : MonoBehaviour
         }
         if (selectedLobby.Players.Count > 1)
         {
-            playerNames[1].text = selectedLobby.Players[0].name;
+            playerNames[1].text = selectedLobby.Players[1].name;
             playerNames[1].gameObject.SetActive(true);
             waitingForPlayerList[1].SetActive(false);
         }

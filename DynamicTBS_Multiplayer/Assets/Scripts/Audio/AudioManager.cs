@@ -182,6 +182,14 @@ public class AudioManager : MonoBehaviour
     }
     #endregion
 
+    private void TutorialActionAudio(Action action)
+    {
+        if (SceneChangeManager.Instance.CurrentScene == Scene.TUTORIAL)
+        {
+            ActionAudio(action);
+        }
+    }
+
     private void ActionAudio(Action action)
     {
         if (action.PlayerActionType != null)
@@ -353,6 +361,8 @@ public class AudioManager : MonoBehaviour
         GameEvents.OnGameStart += SubscribeEventsOnDraftStart;
         GameEvents.OnGamePhaseStart += SubscribeGameplayEvents;
         AudioEvents.OnMainMenuEnter += UnsubscribeEventsOnReturnToMenu;
+
+        GameplayEvents.OnFinishAction += TutorialActionAudio;
     }
 
     private void SubscribeEventsOnDraftStart()
@@ -401,6 +411,8 @@ public class AudioManager : MonoBehaviour
         GameEvents.OnGameStart -= SubscribeEventsOnDraftStart;
         GameEvents.OnGamePhaseStart -= SubscribeGameplayEvents;
         AudioEvents.OnMainMenuEnter -= UnsubscribeEventsOnReturnToMenu;
+
+        GameplayEvents.OnFinishAction -= TutorialActionAudio;
     }
 
     private void OnDestroy()

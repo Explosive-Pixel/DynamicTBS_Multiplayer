@@ -138,7 +138,7 @@ public static class Client
     {
         var serverTime = TimerUtils.UnixTimeStampToDateTime(syncTimestamp);
         ServerTimeDiff = TimerUtils.TimeSince(serverTime);
-        Debug.Log("Synchronized Time with Server. Difference is: " + Client.ServerTimeDiff);
+        Log.Info("Synchronized Time with Server. Difference is: " + Client.ServerTimeDiff);
     }
 
     public static void ToggleIsLoadingGame()

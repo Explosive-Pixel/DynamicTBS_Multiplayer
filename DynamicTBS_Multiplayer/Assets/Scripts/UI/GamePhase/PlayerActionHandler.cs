@@ -54,7 +54,7 @@ public class PlayerActionHandler : MonoBehaviour
         if (playerAction == null)
             return;
 
-        SetActive(!PlayerSetup.IsNotSide(player), playerAction.IsActionAvailable(PlayerManager.CurrentPlayer));
+        SetActive(PlayerManager.ExecutingPlayer == player, playerAction.IsActionAvailable(PlayerManager.CurrentPlayer));
     }
 
     private void UpdateSide()
@@ -71,7 +71,7 @@ public class PlayerActionHandler : MonoBehaviour
         if (gamePhase != GamePhase.GAMEPLAY)
             return;
 
-        SetActive(GameManager.IsPlayer() && !PlayerSetup.IsNotSide(PlayerManager.StartPlayer[GamePhase.GAMEPLAY]), false);
+        SetActive(GameManager.GameType == GameType.LOCAL || PlayerSetup.IsSide(PlayerManager.StartPlayer[GamePhase.GAMEPLAY]), false);
         GameplayEvents.OnChangeRemainingActions += ChangeButtonInteractability;
         GameplayEvents.OnCurrentPlayerChanged += ChangeButtonInteractability;
     }

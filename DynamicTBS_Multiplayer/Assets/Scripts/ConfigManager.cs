@@ -9,6 +9,7 @@ public class ConfigManager : MonoBehaviour
     public static ConfigManager Instance { get; private set; }
 
     public string Hostname { get; private set; }
+    public bool DebugEnabled { get; private set; } = false;
 
     [Serializable]
     private class ConfigData
@@ -16,6 +17,7 @@ public class ConfigManager : MonoBehaviour
         public string hostname;
         public string hostname_local;
         public bool local;
+        public bool debug;
     }
 
     private void Awake()
@@ -60,5 +62,6 @@ public class ConfigManager : MonoBehaviour
         ConfigData data = JsonUtility.FromJson<ConfigData>(json);
 
         Hostname = data.local ? data.hostname_local : data.hostname;
+        DebugEnabled = data.debug;
     }
 }

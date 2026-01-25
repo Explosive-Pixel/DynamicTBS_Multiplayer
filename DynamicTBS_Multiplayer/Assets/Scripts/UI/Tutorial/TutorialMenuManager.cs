@@ -10,6 +10,7 @@ public class TutorialMenuManager : MonoBehaviour
 
     public void ReturnToSelection()
     {
+        AudioEvents.PressingButton();
         CloseAll();
         if (SelectionMenu != null)
             SelectionMenu.SetActive(true);

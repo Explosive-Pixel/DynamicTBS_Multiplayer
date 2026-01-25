@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using TMPro;
 using System.IO;
 using System.Text;
-using System.Linq;
 
 public class ExtractAllTexts : EditorWindow
 {
