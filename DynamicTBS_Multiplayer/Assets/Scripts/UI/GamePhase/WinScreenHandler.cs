@@ -100,6 +100,6 @@ public class WinScreenHandler : MonoBehaviour
             }
         }
 
-        Debug.LogWarning($"[WinScreenHandler] Kein LocalizedString für {lastCondition} / Winner {lastWinner} gefunden.");
+        Log.Warn($"[WinScreenHandler] Kein LocalizedString für {lastCondition} / Winner {lastWinner} gefunden.");
     }
 }

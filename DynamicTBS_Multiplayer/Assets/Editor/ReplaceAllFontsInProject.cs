@@ -3,7 +3,6 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
-using System.IO;
 
 public class ReplaceFontsInScenesAndPrefabs : EditorWindow
 {

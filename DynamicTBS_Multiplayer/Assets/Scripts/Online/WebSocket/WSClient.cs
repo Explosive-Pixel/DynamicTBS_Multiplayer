@@ -94,7 +94,7 @@ public class WSClient : MonoBehaviour
 
         state = isReconnect ? ConnectionState.RECONNECTING : ConnectionState.CONNECTING;
 
-        Debug.Log("Trying to connect to server ...");
+        Log.Info("Trying to connect to server ...");
         websocket = new WebSocket(hostname);
 
         websocket.OnOpen += OnWebSocketOpen;
@@ -122,14 +122,14 @@ public class WSClient : MonoBehaviour
     {
         if (state == ConnectionState.RECONNECTING)
         {
-            Debug.Log("Reconnected to websocket!");
+            Log.Info("Reconnected to websocket!");
             reconnectAttempts = 0;
             delay = reconnectBaseDelayMs;
             Client.Reconnect();
         }
         state = ConnectionState.CONNECTED;
 
-        Debug.Log("WebSocket connected");
+        Log.Info("WebSocket connected");
     }
 
     private async void OnWebSocketClosed(WebSocketCloseCode closeCode)
@@ -144,7 +144,7 @@ public class WSClient : MonoBehaviour
         if (state == ConnectionState.OUTDATED || state == ConnectionState.DEAD)
             return;
 
-        Debug.Log($"WebSocket closed: {closeCode}");
+        Log.Info($"WebSocket closed: {closeCode}");
         state = ConnectionState.DICONNECTED;
 
         await TryReconnect();
@@ -152,7 +152,7 @@ public class WSClient : MonoBehaviour
 
     private void OnWebSocketError(string error)
     {
-        Debug.Log($"WebSocket error: {error}");
+        Log.Info($"WebSocket error: {error}");
     }
 
     private void CheckIfClientIsUpToDate(string requiredVersion)
@@ -160,7 +160,7 @@ public class WSClient : MonoBehaviour
         if (VersionUtils.IsGreater(requiredVersion, Application.version))
         {
             state = ConnectionState.OUTDATED;
-            Debug.Log("Client version is too old! Closing connection ...");
+            Log.Info("Client version is too old! Closing connection ...");
             websocket.Close();
         }
     }
@@ -178,7 +178,7 @@ public class WSClient : MonoBehaviour
         if (!destroyed && reconnectAttempts < reconnectMaxRetries)
         {
             reconnectAttempts++;
-            Debug.Log($"Reconnect attempt {reconnectAttempts}");
+            Log.Info($"Reconnect attempt {reconnectAttempts}");
 
             await Task.Delay(delay);
             delay = Mathf.Min(delay * 2, reconnectMaxDelayMs);
@@ -187,7 +187,7 @@ public class WSClient : MonoBehaviour
         }
         else if (reconnectAttempts == reconnectMaxRetries)
         {
-            Debug.Log("Reconnect permanently failed");
+            Log.Info("Reconnect permanently failed");
             state = ConnectionState.DEAD;
         }
     }
@@ -205,7 +205,7 @@ public class WSClient : MonoBehaviour
             if (!messageHistory.Any(hm => hm.uuid == msg.uuid))
             {
                 UpdateMessageHistory(msg);
-                Debug.Log("Reloading message " + msg + " with uuid " + msg.uuid);
+                Log.Info("Reloading message " + msg + " with uuid " + msg.uuid);
                 msg.HandleMessage();
             }
         }
@@ -262,18 +262,18 @@ public class WSClient : MonoBehaviour
 
         if (msg == null)
         {
-            Debug.Log("Message '" + json + "' could not be serialized.");
+            Log.Info("Message '" + json + "' could not be serialized.");
             return;
         }
 
         if (msg.code == WSMessageCode.WSMsgAcknowledgeCode)
         {
-            Debug.Log("Received Acknowledgement for message with uuid: " + ((WSMsgAcknowledge)msg).messageUuid);
+            Log.Info("Received Acknowledgement for message with uuid: " + ((WSMsgAcknowledge)msg).messageUuid);
             HandleAck(((WSMsgAcknowledge)msg).messageUuid);
             return;
         }
 
-        Debug.Log("Received message: " + msg + " with uuid " + msg.uuid);
+        Log.Info("Received message: " + msg + " with uuid " + msg.uuid);
         SendAck(msg.uuid);
 
         if (IsNewMessage(msg))
@@ -312,10 +312,10 @@ public class WSClient : MonoBehaviour
         if (now - currentMessage.lastSentTime < retryIntervalMs)
             return;
 
-        Debug.Log("Try sending current message ...");
+        Log.Info("Try sending current message ...");
         if (currentMessage.retries >= maxRetries)
         {
-            Debug.Log("Message could not be sent. Disconnecting ...");
+            Log.Info("Message could not be sent. Disconnecting ...");
             currentMessage.retries = 0;
             websocket.CancelConnection();
             return;
@@ -353,7 +353,7 @@ public class WSClient : MonoBehaviour
         currentMessage.retries++;
 
         await SendDirectly(currentMessage.msg);
-        Debug.Log($"Sent message ({currentMessage.retries}/{maxRetries}): {currentMessage.msg.Serialize()}");
+        Log.Info($"Sent message ({currentMessage.retries}/{maxRetries}): {currentMessage.msg.Serialize()}");
     }
 
     private async void SendAck(string uuid)
@@ -361,7 +361,7 @@ public class WSClient : MonoBehaviour
         await SendDirectly(
             new WSMsgAcknowledge { messageUuid = uuid }
         );
-        Debug.Log($"Sent acknowlesge message for uuid: {uuid}");
+        Log.Info($"Sent acknowlesge message for uuid: {uuid}");
     }
 
     private bool IsNewMessage(WSMessage msg)
@@ -374,7 +374,7 @@ public class WSClient : MonoBehaviour
         if (WSMessage.Record(msg) && (messageHistory.Count() > 0 || msg.code == WSMessageCode.WSMsgStartGameCode))
         {
             messageHistory.Add(msg);
-            //Debug.Log("Updated Message History (count: " + messageHistory.Count + "):\n" + string.Join(", ", messageHistory));
+            //Log.Info("Updated Message History (count: " + messageHistory.Count + "):\n" + string.Join(", ", messageHistory));
         }
     }
 
