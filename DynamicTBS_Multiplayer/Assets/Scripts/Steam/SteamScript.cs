@@ -55,7 +55,7 @@ public class SteamScript : MonoBehaviour
         {
             string name = SteamFriends.GetPersonaName();
             PlayerSetup.SetupName(name);
-            Debug.Log(name);
+            Log.Info(name);
 
             UnlockAchievement(startAchievement);
         }
@@ -68,7 +68,7 @@ public class SteamScript : MonoBehaviour
 
         if (!IsAchievementUnlocked(achievementId))
         {
-            Debug.Log("Unlocked achievement " + achievementId);
+            Log.Info("Unlocked achievement " + achievementId);
             SteamUserStats.SetAchievement(achievementId);
             SteamUserStats.StoreStats();
         }
@@ -95,11 +95,11 @@ public class SteamScript : MonoBehaviour
     {
         if (pCallback.m_bActive != 0)
         {
-            Debug.Log("Steam Overlay has been activated");
+            Log.Info("Steam Overlay has been activated");
         }
         else
         {
-            Debug.Log("Steam Overlay has been closed");
+            Log.Info("Steam Overlay has been closed");
         }
     }
 
